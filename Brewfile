@@ -21,3 +21,5 @@ brew "librsvg"
 brew "libwebsockets"
 # Tool to build, change, and version infrastructure
 brew "terraform"
+
+brew install --cask visual-studio-code
