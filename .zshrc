@@ -1,7 +1,3 @@
-PROMPT='CLI Environment: pattobrien
-
-%1~ %# '
-
 export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
 export PATH="$PATH:/Users/pattobrien/Development/flutter/bin"
 export PATH="${HOME}/Library/Android/sdk/tools:${HOME}/Library/Android/sdk/platform-tools:${PATH}"
