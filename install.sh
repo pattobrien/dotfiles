@@ -1,5 +1,5 @@
 # Install XCode CLI tools
-xcode-select --Install
+xcode-select --install
 
 # ...or use HTTPS and switch remotes later.
 git clone https://github.com/pattobrien/environment.git ~/.dotfiles
