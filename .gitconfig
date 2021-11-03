@@ -4,7 +4,7 @@
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f
 [user]
-	name = Patt's Mac Mini
+	name = Patt OBrien
 	email = pattobrien@themachinemedia.com
 [init]
 	defaultBranch = master

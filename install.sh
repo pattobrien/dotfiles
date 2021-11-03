@@ -1,19 +1,18 @@
-# Install XCode CLI tools
-xcode-select --install
+# Software Update (including Rosetta)
+sudo softwareupdate --all --install --force
 
-# ...or use HTTPS and switch remotes later.
-git clone https://github.com/pattobrien/environment.git ~/.dotfiles
-
-# Creating symlinks for zshrc and gitconfig files
+# Create symlinks for zshrc and gitconfig files
 ln -s ~/.dotfiles/.zshrc ~/.zshrc
 ln -s ~/.dotfiles/.gitconfig ~/.gitconfig
 
 # Install Homebrew
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
+# Install Essentials
+brew install --cask visual-studio-code
+brew install --cask google-chrome
+
 # Then pass in the Brewfile location...
 brew bundle --file ~/.dotfiles/Brewfile
 gem install bundler:2.2.22
 
-# Install VSCode
-brew install --cask visual-studio-code
