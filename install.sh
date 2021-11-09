@@ -11,3 +11,6 @@ ln -s ~/.dotfiles/.gitconfig ~/.gitconfig
 # Then pass in the Brewfile location...
 brew bundle --file ~/.dotfiles/Brewfile
 gem install bundler:2.2.22
+
+# Install Mac App Store cli tool
+brew install mas
