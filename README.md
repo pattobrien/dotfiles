@@ -27,3 +27,7 @@ sh ~/.dotfiles/install.sh
 ```sh
 brew bundle dump --force --describe --file=~/.dotfiles/brew/Brewfile
 ```
+
+## TODO
+
+- Clean up outdated /scripts/ folder
