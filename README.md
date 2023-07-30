@@ -30,8 +30,10 @@ brew bundle dump --force --describe --file=~/.dotfiles/brew/Brewfile
 
 ## TODO
 
-- Clean up outdated /scripts/ folder
-- Add NVIM config
+- [x] Add zsh config
+- [x] Add Brewfile
+- [x] Add NVIM config
+- [x] Add tmux config
 - Add VSCode config
 - Add kitty config
-- Add tmux config
+- Clean up outdated /scripts/ folder
