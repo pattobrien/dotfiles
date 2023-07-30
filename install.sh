@@ -2,7 +2,7 @@
 sudo softwareupdate --all --install --force
 
 # Create symlinks for zshrc and gitconfig files
-ln -s ~/.dotfiles/.zshrc ~/.zshrc
+ln -s ~/.dotfiles/zsh/zshrc ~/.zshrc
 ln -s ~/.dotfiles/.gitconfig ~/.gitconfig
 
 # Install Homebrew
