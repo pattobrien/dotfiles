@@ -1,6 +1,6 @@
 # Software Update (including Rosetta) 
 # TODO: was this necessary for M1 chips? might not be needed anymore
-sudo softwareupdate --all --install --force
+# sudo softwareupdate --all --install --force
 
 # Create symlinks for zshrc and gitconfig files
 ln -s ~/.dotfiles/zsh/zshrc ~/.zshrc
