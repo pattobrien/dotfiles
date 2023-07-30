@@ -69,6 +69,8 @@ brew "gh"
 brew "openjpeg"
 # Interpreter for PostScript and PDF
 brew "ghostscript"
+# Distributed revision control system
+brew "git"
 # X.509 and CMS library
 brew "libksba"
 # GNU Pretty Good Privacy (PGP) package
@@ -131,6 +133,8 @@ brew "vim"
 brew "yarn"
 # General-purpose lossless data-compression library
 brew "zlib"
+# UNIX shell (command interpreter)
+brew "zsh"
 # A command-line tool for The Flutter code generator for your assets, fonts, colors, … — Get rid of all String-based APIs. by Dart.
 brew "fluttergen/tap/fluttergen"
 # Everything you need to get started with Heroku
@@ -201,6 +205,19 @@ cask "visual-studio-code"
 cask "whatsapp"
 # Video communication and virtual meeting platform
 cask "zoom"
+mas "Be Focused", id: 973134470
+mas "BetterSnapTool", id: 417375580
+mas "DevCleaner", id: 1388020431
+mas "Disk Space Pro", id: 636899298
+mas "HP Smart", id: 1474276998
+mas "iMovie", id: 408981434
+mas "Keynote", id: 409183694
+mas "Notion Web Clipper", id: 1559269364
+mas "TestFlight", id: 899247664
+mas "Timery", id: 1425368544
+mas "Todoist", id: 585829637
+mas "Toggl Track", id: 957734279
+mas "Xcode", id: 497799835
 vscode "aaron-bond.better-comments"
 vscode "albert.TabOut"
 vscode "alexisvt.flutter-snippets"

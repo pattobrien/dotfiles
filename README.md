@@ -19,3 +19,11 @@ git clone https://github.com/pattobrien/.dotfiles.git ~/.dotfiles
 ```sh
 sh ~/.dotfiles/install.sh
 ```
+
+## Maintainance
+
+### Brew Dump
+
+```sh
+brew bundle dump --force --describe --file=~/.dotfiles/brew/Brewfile
+```
