@@ -1,16 +1,13 @@
-# Software Update (including Rosetta)
+# Software Update (including Rosetta) 
+# TODO: was this necessary for M1 chips? might not be needed anymore
 sudo softwareupdate --all --install --force
 
 # Create symlinks for zshrc and gitconfig files
 ln -s ~/.dotfiles/zsh/zshrc ~/.zshrc
-ln -s ~/.dotfiles/.gitconfig ~/.gitconfig
+ln -s ~/.dotfiles/git/.gitconfig ~/.gitconfig
 
 # Install Homebrew
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
 # Then pass in the Brewfile location...
-brew bundle --file ~/.dotfiles/Brewfile
-gem install bundler:2.2.22
-
-# Install Mac App Store cli tool
-brew install mas
+brew bundle --file ~/.dotfiles/brew/Brewfile
