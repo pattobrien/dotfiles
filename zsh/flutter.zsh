@@ -8,7 +8,7 @@ export PATH="${HOME}/Library/Android/sdk/tools:${HOME}/Library/Android/sdk/platf
 export PATH="$JAVA_HOME/bin:$PATH"
 
 
-export JAVA_HOME="/usr/local/opt/openjdk@11"
+# export JAVA_HOME="/usr/local/opt/openjdk@11"
 export PUB_CACHE="$HOME/.pub-cache"
 export FVM_HOME="$HOME/.fvm"
 export FLUTTER_ROOT="~/.fvm/default"

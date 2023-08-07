@@ -91,6 +91,8 @@ brew "libheif"
 brew "imagemagick"
 # Lightweight and flexible command-line JSON processor
 brew "jq"
+# Statically typed programming language for the JVM
+brew "kotlin"
 # Graphical front-end for GCC's coverage testing tool (gcov)
 brew "lcov"
 # Next-gen compiler infrastructure
@@ -103,10 +105,10 @@ brew "mas"
 brew "neovim"
 # Manage multiple Node.js versions
 brew "nvm"
-# Generate clients, server & docs from an OpenAPI spec (v2, v3)
-brew "openapi-generator"
 # Development kit for the Java programming language
 brew "openjdk@11"
+# Generate clients, server & docs from an OpenAPI spec (v2, v3)
+brew "openapi-generator"
 # Fast, disk space efficient package manager
 brew "pnpm"
 # Protocol buffers (Google's data interchange format)
@@ -163,6 +165,8 @@ cask "android-ndk"
 cask "android-platform-tools"
 # Tools for building Android applications
 cask "android-studio"
+# Redis desktop manager
+cask "another-redis-desktop-manager"
 # Voice and text chat software
 cask "discord"
 # App to build and share containerized applications and microservices
@@ -265,6 +269,7 @@ vscode "jspolancor.presentationmode"
 vscode "KevinRose.vsc-python-indent"
 vscode "localizely.flutter-intl"
 vscode "luanpotter.dart-import"
+vscode "mathiasfrohlich.Kotlin"
 vscode "monokai.theme-monokai-pro-vscode"
 vscode "ms-azuretools.vscode-docker"
 vscode "ms-dotnettools.vscode-dotnet-runtime"
@@ -298,6 +303,7 @@ vscode "plibither8.remove-comments"
 vscode "Prisma.prisma"
 vscode "redhat.java"
 vscode "redhat.vscode-commons"
+vscode "redhat.vscode-xml"
 vscode "redhat.vscode-yaml"
 vscode "RobbOwen.synthwave-vscode"
 vscode "robert-brunhage.flutter-riverpod-snippets"
@@ -311,6 +317,7 @@ vscode "usernamehw.errorlens"
 vscode "vadimcn.vscode-lldb"
 vscode "VisualStudioExptTeam.intellicode-api-usage-examples"
 vscode "VisualStudioExptTeam.vscodeintellicode"
+vscode "vscjava.vscode-gradle"
 vscode "vscjava.vscode-java-debug"
 vscode "vscjava.vscode-java-dependency"
 vscode "vscjava.vscode-java-pack"

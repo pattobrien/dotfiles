@@ -63,3 +63,8 @@ PATH=$PATH:~/.local/bin
 source ~/.dotfiles/zsh/python.zsh
 source ~/.dotfiles/zsh/credentials.zsh
 source ~/.dotfiles/zsh/flutter.zsh
+## [Completion] 
+## Completion scripts setup. Remove the following line to uninstall
+[[ -f /Users/pattobrien/.dart-cli-completion/zsh-config.zsh ]] && . /Users/pattobrien/.dart-cli-completion/zsh-config.zsh || true
+## [/Completion]
+
