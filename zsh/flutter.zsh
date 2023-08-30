@@ -11,7 +11,7 @@ export PATH="$JAVA_HOME/bin:$PATH"
 # export JAVA_HOME="/usr/local/opt/openjdk@11"
 export PUB_CACHE="$HOME/.pub-cache"
 export FVM_HOME="$HOME/.fvm"
-export FLUTTER_ROOT="~/.fvm/default"
+export FLUTTER_ROOT="$HOME/.fvm/default"
 
 
 ## [Completion] 
