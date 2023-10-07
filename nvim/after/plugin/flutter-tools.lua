@@ -71,8 +71,8 @@ flutter_tools.setup {
       virtual_text_str = "■", -- the virtual text character to highlight
     },
 
-    on_attach = custom_config.on_attach,
-    capabilities = custom_config.capabilities,
+    -- on_attach = custom_config.on_attach,
+    -- capabilities = custom_config.capabilities,
     -- flags = custom_config.flags,
     -- handlers = custom_config.handlers,
     -- see the link below for details on each option:

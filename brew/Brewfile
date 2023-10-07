@@ -49,6 +49,8 @@ brew "gnutls"
 brew "cask"
 # Tool to obtain certs from Let's Encrypt and autoenable HTTPS
 brew "certbot"
+# Formatting tools for C, C++, Obj-C, Java, JavaScript, TypeScript
+brew "clang-format"
 # Dependency manager for Cocoa projects
 brew "cocoapods"
 # Pack, ship and run any application as a lightweight container
@@ -59,8 +61,6 @@ brew "docker-compose"
 brew "doctl"
 # Easiest way to build and release mobile apps
 brew "fastlane"
-# Platform built on V8 to build network applications
-brew "node"
 # Firebase command-line tools
 brew "firebase-cli"
 # GitHub command-line tool
@@ -93,6 +93,8 @@ brew "imagemagick"
 brew "jq"
 # Statically typed programming language for the JVM
 brew "kotlin"
+# Kubernetes command-line interface
+brew "kubernetes-cli"
 # Graphical front-end for GCC's coverage testing tool (gcov)
 brew "lcov"
 # Next-gen compiler infrastructure
@@ -101,6 +103,8 @@ brew "llvm"
 brew "luv"
 # Mac App Store command-line interface
 brew "mas"
+# Run a Kubernetes cluster locally
+brew "minikube"
 # Ambitious Vim-fork focused on extensibility and agility
 brew "neovim"
 # Manage multiple Node.js versions
@@ -147,7 +151,7 @@ brew "koekeishiya/formulae/skhd"
 brew "koekeishiya/formulae/yabai"
 # Simple cli to manage Flutter SDK versions per project
 brew "leoafarias/fvm/fvm"
-# Command-line helper for the 1Password password manager
+# Command-line interface for 1Password
 cask "1password-cli"
 # Collection of apps and services for photography, design, video, web, and UX
 cask "adobe-creative-cloud"
@@ -191,6 +195,8 @@ cask "microsoft-auto-update"
 cask "microsoft-office"
 # Meet, chat, call, and collaborate in just one place
 cask "microsoft-teams"
+# Knowledge base that works on top of a local folder of plain text Markdown files
+cask "obsidian"
 # Administration and development platform for PostgreSQL
 cask "pgadmin4"
 # Collaboration platform for API development
@@ -205,7 +211,7 @@ cask "spotify"
 cask "utm"
 # Open-source code editor
 cask "visual-studio-code"
-# Desktop client for WhatsApp
+# Native desktop client for WhatsApp
 cask "whatsapp"
 # Video communication and virtual meeting platform
 cask "zoom"
@@ -258,6 +264,7 @@ vscode "GitHub.copilot-chat"
 vscode "GitHub.copilot-labs"
 vscode "github.vscode-github-actions"
 vscode "GitHub.vscode-pull-request-github"
+vscode "Google.arb-editor"
 vscode "GrapeCity.gc-excelviewer"
 vscode "Gruntfuggly.todo-tree"
 vscode "Gruntfuggly.triggertaskonsave"
@@ -269,10 +276,12 @@ vscode "jspolancor.presentationmode"
 vscode "KevinRose.vsc-python-indent"
 vscode "localizely.flutter-intl"
 vscode "luanpotter.dart-import"
+vscode "lunuan.kubernetes-templates"
 vscode "mathiasfrohlich.Kotlin"
 vscode "monokai.theme-monokai-pro-vscode"
 vscode "ms-azuretools.vscode-docker"
 vscode "ms-dotnettools.vscode-dotnet-runtime"
+vscode "ms-kubernetes-tools.vscode-kubernetes-tools"
 vscode "ms-python.black-formatter"
 vscode "ms-python.isort"
 vscode "ms-python.python"
@@ -286,6 +295,7 @@ vscode "ms-vscode-remote.remote-containers"
 vscode "ms-vscode-remote.remote-ssh"
 vscode "ms-vscode-remote.remote-ssh-edit"
 vscode "ms-vscode.cpptools"
+vscode "ms-vscode.js-debug-nightly"
 vscode "ms-vscode.remote-explorer"
 vscode "ms-vsliveshare.vsliveshare"
 vscode "ms-vsliveshare.vsliveshare-pack"
@@ -329,6 +339,8 @@ vscode "vscodevim.vim"
 vscode "wholroyd.jinja"
 vscode "wix.glean"
 vscode "Wscats.cors-browser"
+vscode "xaver.clang-format"
 vscode "yaamaa.disable-mouse"
 vscode "Zarifprogrammer.tailwind-snippets"
 vscode "zhuangtongfa.material-theme"
+vscode "zxh404.vscode-proto3"
