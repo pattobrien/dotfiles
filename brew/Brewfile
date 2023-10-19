@@ -11,6 +11,7 @@ tap "homebrew/core"
 tap "homebrew/services"
 tap "koekeishiya/formulae"
 tap "leoafarias/fvm"
+tap "stripe/stripe-cli"
 # Run your GitHub Actions locally
 brew "act"
 # Image format providing lossless and lossy compression for web images
@@ -19,6 +20,8 @@ brew "webp"
 brew "jpeg-xl"
 # Codec library for encoding and decoding AV1 video streams
 brew "aom"
+# GitOps Continuous Delivery for Kubernetes
+brew "argocd"
 # Configuration editing tool and API
 brew "augeas"
 # Automatic configure script builder
@@ -53,10 +56,6 @@ brew "certbot"
 brew "clang-format"
 # Dependency manager for Cocoa projects
 brew "cocoapods"
-# Pack, ship and run any application as a lightweight container
-brew "docker", link: false
-# Isolated development environments using Docker
-brew "docker-compose"
 # Command-line tool for DigitalOcean
 brew "doctl"
 # Easiest way to build and release mobile apps
@@ -81,6 +80,8 @@ brew "go"
 brew "pkg-config"
 # OpenType text shaping engine
 brew "harfbuzz"
+# Kubernetes package manager
+brew "helm"
 # Interpreted, interactive, object-oriented programming language
 brew "python@3.9"
 # Database of common MIME types
@@ -95,6 +96,8 @@ brew "jq"
 brew "kotlin"
 # Kubernetes command-line interface
 brew "kubernetes-cli"
+# Template-free customization of Kubernetes YAML manifests
+brew "kustomize"
 # Graphical front-end for GCC's coverage testing tool (gcov)
 brew "lcov"
 # Next-gen compiler infrastructure
@@ -113,6 +116,8 @@ brew "nvm"
 brew "openjdk@11"
 # Generate clients, server & docs from an OpenAPI spec (v2, v3)
 brew "openapi-generator"
+# OpenShift command-line interface tools
+brew "openshift-cli"
 # Fast, disk space efficient package manager
 brew "pnpm"
 # Protocol buffers (Google's data interchange format)
@@ -151,6 +156,8 @@ brew "koekeishiya/formulae/skhd"
 brew "koekeishiya/formulae/yabai"
 # Simple cli to manage Flutter SDK versions per project
 brew "leoafarias/fvm/fvm"
+# Stripe CLI utility
+brew "stripe/stripe-cli/stripe"
 # Command-line interface for 1Password
 cask "1password-cli"
 # Collection of apps and services for photography, design, video, web, and UX
