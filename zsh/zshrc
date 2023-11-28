@@ -113,5 +113,5 @@ esac
 export PATH="/Users/pattobrien/.rd/bin:$PATH"
 ### MANAGED BY RANCHER DESKTOP END (DO NOT EDIT)
 
-alias ls='ls -lAFh'
-
+alias exa='exa -laFh --git --icons'
+alias ls='exa'

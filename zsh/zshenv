@@ -1,0 +1,14 @@
+#!/usr/bin/env zsh
+echo "Running zshenv"
+# zshenv runs for interactive and non-interactive shells
+# making it ideal for variables and functions required for
+# both scripts and terminal sessions.
+# However, these should be kept light, since this file will run
+# on every script.
+
+# Check if a command exists
+function exists() {
+  # `command -v` is an alternative to the which command 
+  # see: https://stackoverflow.com/a/677212/1341838
+  command -v "$1" 1>/dev/null 2>/dev/null
+}
