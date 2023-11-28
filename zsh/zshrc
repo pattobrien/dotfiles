@@ -2,13 +2,11 @@
 
 # initialize tmux if it's not already running in the current shell
 # NOTE: this must be initialized before p10k is initialized
-# echo "Running zshrc"
-if [ -z "$TMUX" ]; then
-  # echo "Initializing tmux"
+if [ "$TERM_PROGRAM" != "vscode" ] && [ -z "$TMUX" ]; then
   exec tmux new-session -A -s workspace
-else 
-  # echo "tmux is already running"
 fi
+
+
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
@@ -17,19 +15,11 @@ fi
 
 export ZSH="$HOME/.oh-my-zsh" # Path to your oh-my-zsh installation.
 
+# if [ "$TERM_PROGRAM" != "vscode" ] || [ "$COLORTERM" != "truecolor" ]; then
+#       export TERM=xterm-kitty
+# fi
 
-if [ "$TERM_PROGRAM" != "vscode" ] || [ "$COLORTERM" != "truecolor" ]; then
-      export TERM=xterm-kitty
-
-fi
-
-
-
-# export the terminal's default directory as the VSCODE workspace root
-if [ "$TERM_PROGRAM" = "vscode" ]; then
-      export VSCODE_WORKSPACE_ROOT="$PWD"
-fi
-
+# sets the TERM var if $TMUX is set and not empty
 [[ -n $TMUX ]] && export TERM="xterm-256color"
 
 ZSH_THEME="powerlevel10k/powerlevel10k"
@@ -40,25 +30,29 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # DISABLE_UNTRACKED_FILES_DIRTY="true"
 # ZSH_CUSTOM=/path/to/new-custom-folder # use another custom folder than $ZSH/custom?
 
-# Custom plugins may be added to $ZSH_CUSTOM/plugins/, such as rails git textmate ruby lighthouse
+# Custom plugins may be added to $ZSH_CUSTOM/plugins/
 plugins=(
   git 
   zsh-autosuggestions 
   zsh-syntax-highlighting 
-  web-search
-  # zsh-completions
   zsh-interactive-cd
 
-  # other plugins available that we should install at some point
+  # untested plugins below:
+  web-search
   1password
-  doctl
   gh
+  keychain
+  kubectl
+  minikube
+  kind
+  skaffold # autocompletion
+  terraform # aliases and autocompletion
+  # doctl # this causes 1password prompt when re-sourcing zshrc file, for some reason... so we should not use this
+
+  # other plugins available that we should install at some point:
   # vi-mode
-  # keychain
-  # kubectl
   # nvm
   # npm
-  # minikube
   # macos
   # tmux
   # tmuxinator (?)
@@ -74,24 +68,22 @@ plugins=(
   # gitignore
   # git-lfs
   # helm
-  # kind
   # kubectx
   # mongocli
   # operator-sdk
   # pod - cocoaPods completion
   # redis-cli
   # salt
-  # skaffold - autocompletion
   # ssh-agent - configure ssh-agent settings
-  # terraform - aliases and autocompletion
   # web-search
   # xcode
 )
 
 # enable zsh completions from homebrew (note: must be done before oh-my-zsh.sh is sourced)
-FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
+PATH="$(brew --prefix)/share/zsh/site-functions:${PATH}"
 
-source $ZSH/oh-my-zsh.sh
+source $ZSH/oh-my-zsh.sh  
+
 
 # User configuration
 
@@ -110,8 +102,7 @@ source $ZSH/oh-my-zsh.sh
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh  
 
 export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
 
@@ -122,8 +113,10 @@ export PATH="/usr/local/opt/ruby/bin:$PATH"
 export GEM_HOME="$HOME/.gem" 
 export KUBE_CONFIG_PATH="$HOME/.kube/config"
 
+
 export NVM_DIR="$HOME/.nvm"
-[ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
+# TODO: The following line causes the terminal to have latency issues
+# [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
 [ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
 
 ## add tmux-sessionizer
@@ -135,22 +128,22 @@ source ~/.dotfiles/zsh/python.zsh
 source ~/.dotfiles/zsh/credentials.zsh
 source ~/.dotfiles/zsh/flutter.zsh
 source ~/.dotfiles/zsh/aliases.zsh
-## [Completion] 
-## Completion scripts setup. Remove the following line to uninstall
+# [Completion] 
+# Completion scripts setup. Remove the following line to uninstall
 [[ -f /Users/pattobrien/.dart-cli-completion/zsh-config.zsh ]] && . /Users/pattobrien/.dart-cli-completion/zsh-config.zsh || true
-## [/Completion]
+# [/Completion]
 
-source <(kubectl completion zsh)
-source <(k completion zsh)
-# source <(kubectx completion zsh)
-source <(helm completion zsh)
-source <(helmfile completion zsh)
+# source <(kubectl completion zsh)
+# source <(k completion zsh)
+# source <(helm completion zsh)
+# source <(helmfile completion zsh)
+## source <(kubectx completion zsh)
 
 # # set up vim motions in zsh
-# bindkey -v 
+bindkey -v 
 # tabtab source for packages
 # uninstall by removing these lines
-[[ -f ~/.config/tabtab/zsh/__tabtab.zsh ]] && . ~/.config/tabtab/zsh/__tabtab.zsh || true
+# [[ -f ~/.config/tabtab/zsh/__tabtab.zsh ]] && . ~/.config/tabtab/zsh/__tabtab.zsh || true
 
 # pnpm
 export PNPM_HOME="/Users/pattobrien/Library/pnpm"
@@ -158,7 +151,6 @@ case ":$PATH:" in
   *":$PNPM_HOME:"*) ;;
   *) export PATH="$PNPM_HOME:$PATH" ;;
 esac
-# pnpm end
 
 ### MANAGED BY RANCHER DESKTOP START (DO NOT EDIT)
 export PATH="/Users/pattobrien/.rd/bin:$PATH"

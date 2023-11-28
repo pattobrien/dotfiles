@@ -1,5 +1,7 @@
 #!/usr/bin/env zsh
-echo "Running zshenv"
+
+# echo "Running zshenv"
+
 # zshenv runs for interactive and non-interactive shells
 # making it ideal for variables and functions required for
 # both scripts and terminal sessions.
