@@ -12,3 +12,6 @@ function exists() {
   # see: https://stackoverflow.com/a/677212/1341838
   command -v "$1" 1>/dev/null 2>/dev/null
 }
+
+# Outputs all path variables, with each on a new line
+alias trail='<<<${(F)path}'

@@ -1,4 +1,14 @@
+#!/bin/zsh
 
+# initialize tmux if it's not already running in the current shell
+# NOTE: this must be initialized before p10k is initialized
+# echo "Running zshrc"
+if [ -z "$TMUX" ]; then
+  # echo "Initializing tmux"
+  exec tmux new-session -A -s workspace
+else 
+  # echo "tmux is already running"
+fi
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
@@ -12,6 +22,8 @@ if [ "$TERM_PROGRAM" != "vscode" ] || [ "$COLORTERM" != "truecolor" ]; then
       export TERM=xterm-kitty
 
 fi
+
+
 
 # export the terminal's default directory as the VSCODE workspace root
 if [ "$TERM_PROGRAM" = "vscode" ]; then
@@ -35,8 +47,45 @@ plugins=(
   zsh-syntax-highlighting 
   web-search
   # zsh-completions
-  # zsh-vi-mode
   zsh-interactive-cd
+
+  # other plugins available that we should install at some point
+  1password
+  doctl
+  gh
+  # vi-mode
+  # keychain
+  # kubectl
+  # nvm
+  # npm
+  # minikube
+  # macos
+  # tmux
+  # tmuxinator (?)
+  # vscode
+  # dotenv - source .env variables when you cd into a directory
+  # aliases - lists the shortcuts currently available
+  # common-aliases
+  # flutter - aliases for flutter commands
+  # fzf
+  # gcloud
+  # git-auto-fetch
+  # github
+  # gitignore
+  # git-lfs
+  # helm
+  # kind
+  # kubectx
+  # mongocli
+  # operator-sdk
+  # pod - cocoaPods completion
+  # redis-cli
+  # salt
+  # skaffold - autocompletion
+  # ssh-agent - configure ssh-agent settings
+  # terraform - aliases and autocompletion
+  # web-search
+  # xcode
 )
 
 # enable zsh completions from homebrew (note: must be done before oh-my-zsh.sh is sourced)
@@ -96,8 +145,8 @@ source <(k completion zsh)
 source <(helm completion zsh)
 source <(helmfile completion zsh)
 
-# set up vim motions in zsh
-bindkey -v 
+# # set up vim motions in zsh
+# bindkey -v 
 # tabtab source for packages
 # uninstall by removing these lines
 [[ -f ~/.config/tabtab/zsh/__tabtab.zsh ]] && . ~/.config/tabtab/zsh/__tabtab.zsh || true
