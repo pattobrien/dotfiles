@@ -5,11 +5,12 @@
 - clean: ['~']
 
 - link:
-    ~/.tmux.conf: tmux.conf
-    ~/.vim: vim
-    ~/.vimrc: vimrc
+    ~/.tmux.conf: tmux/.tmux.conf
+    ~/.zshrc: zsh/zshrc
+    ~/.gitconfig: git/.gitconfig
 
 - create:
+    - ~/dev2
     # - ~/downloads
     # - ~/.vim/undo-history
 
