@@ -134,6 +134,8 @@ brew "openapi-generator"
 brew "openshift-cli"
 # Fast, disk space efficient package manager
 brew "pnpm"
+# Emulator for x86 and PowerPC
+brew "qemu"
 # Tool for managing OCI containers and pods
 brew "podman"
 # Protocol buffers (Google's data interchange format)
@@ -238,16 +240,12 @@ cask "pgadmin4"
 cask "postman"
 # Kubernetes and container management on the desktop
 cask "rancher"
-# Data science software focusing on R and Python
-cask "rstudio"
 # Team communication and collaboration software
 cask "slack"
 # Music streaming service
 cask "spotify"
 # JDK from the Eclipse Foundation (Adoptium)
 cask "temurin"
-# Virtual machines UI using QEMU
-cask "utm"
 # Open-source code editor
 cask "visual-studio-code"
 # Native desktop client for WhatsApp
