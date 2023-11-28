@@ -13,8 +13,6 @@
 	editor = code --wait
 [http]
 	postBuffer = 100000000
-[safe]
-	directory = /Users/pattobrien/.github-runners/actions-runner/_work/sidecar/sidecar
 [gpg]
 	format = ssh
 [gpg "ssh"]

@@ -1,4 +1,3 @@
-tap "adoptopenjdk/openjdk"
 tap "dart-lang/dart"
 tap "felangel/mason"
 tap "fluttergen/tap"
@@ -11,6 +10,7 @@ tap "homebrew/core"
 tap "homebrew/services"
 tap "koekeishiya/formulae"
 tap "leoafarias/fvm"
+tap "shopify/shopify"
 tap "stripe/stripe-cli"
 # Run your GitHub Actions locally
 brew "act"
@@ -28,10 +28,14 @@ brew "augeas"
 brew "autoconf"
 # Tool for generating GNU Standards-compliant Makefiles
 brew "automake"
-# Interpreted, interactive, object-oriented programming language
-brew "python@3.11"
+# C parser in Python
+brew "pycparser"
+# C Foreign Function Interface for Python
+brew "cffi"
 # Text processing system for reStructuredText
 brew "docutils"
+# Interpreted, interactive, object-oriented programming language
+brew "python@3.11"
 # Official Amazon AWS command-line interface
 brew "awscli"
 # User-friendly launcher for Bazel
@@ -50,10 +54,14 @@ brew "unbound"
 brew "gnutls"
 # Emacs dependency management
 brew "cask"
+# Cryptographic recipes and primitives for Python
+brew "python-cryptography"
 # Tool to obtain certs from Let's Encrypt and autoenable HTTPS
 brew "certbot"
 # Formatting tools for C, C++, Obj-C, Java, JavaScript, TypeScript
 brew "clang-format"
+# Cross-platform make
+brew "cmake"
 # Dependency manager for Cocoa projects
 brew "cocoapods"
 # Command-line tool for DigitalOcean
@@ -82,26 +90,32 @@ brew "pkg-config"
 brew "harfbuzz"
 # Kubernetes package manager
 brew "helm"
-# Interpreted, interactive, object-oriented programming language
-brew "python@3.9"
+# Deploy Kubernetes Helm Charts
+brew "helmfile"
 # Database of common MIME types
 brew "shared-mime-info"
 # ISO/IEC 23008-12:2017 HEIF file format decoder and encoder
 brew "libheif"
+# Interpreted, interactive, object-oriented programming language
+brew "python@3.9"
 # Tools and libraries to manipulate images in many formats
 brew "imagemagick"
 # Lightweight and flexible command-line JSON processor
 brew "jq"
+# Run local Kubernetes cluster in Docker
+brew "kind"
+# Development kit for the Java programming language
+brew "openjdk"
 # Statically typed programming language for the JVM
 brew "kotlin"
 # Kubernetes command-line interface
 brew "kubernetes-cli"
+# Tool that can switch between kubectl contexts easily and create aliases
+brew "kubectx"
 # Template-free customization of Kubernetes YAML manifests
 brew "kustomize"
 # Graphical front-end for GCC's coverage testing tool (gcov)
 brew "lcov"
-# Next-gen compiler infrastructure
-brew "llvm"
 # Bare libuv bindings for lua
 brew "luv"
 # Mac App Store command-line interface
@@ -120,6 +134,8 @@ brew "openapi-generator"
 brew "openshift-cli"
 # Fast, disk space efficient package manager
 brew "pnpm"
+# Tool for managing OCI containers and pods
+brew "podman"
 # Protocol buffers (Google's data interchange format)
 brew "protobuf"
 # Interpreted, interactive, object-oriented programming language
@@ -128,6 +144,10 @@ brew "python@3.10"
 brew "ripgrep"
 # Safe, concurrent, practical language
 brew "rust"
+# Command-line tool for the Amazon S3 service
+brew "s3cmd"
+# Easy and Repeatable Kubernetes Development
+brew "skaffold"
 # Cleans your SVG files by removing unnecessary data
 brew "svgcleaner"
 # High-performance system programming language
@@ -140,6 +160,10 @@ brew "tflint"
 brew "tmux"
 # Vi 'workalike' with many additional features
 brew "vim"
+# Internet file retriever
+brew "wget"
+# Check your $HOME for unwanted files and directories
+brew "xdg-ninja"
 # JavaScript package manager
 brew "yarn"
 # General-purpose lossless data-compression library
@@ -156,16 +180,14 @@ brew "koekeishiya/formulae/skhd"
 brew "koekeishiya/formulae/yabai"
 # Simple cli to manage Flutter SDK versions per project
 brew "leoafarias/fvm/fvm"
+# A CLI tool to build for the Shopify platform
+brew "shopify/shopify/shopify-cli"
 # Stripe CLI utility
 brew "stripe/stripe-cli/stripe"
 # Command-line interface for 1Password
 cask "1password-cli"
 # Collection of apps and services for photography, design, video, web, and UX
 cask "adobe-creative-cloud"
-# AdoptOpenJDK OpenJDK (Java) Development Kit
-cask "adoptopenjdk12"
-# Prebuilt OpenJDK binaries
-cask "adoptopenjdk8"
 # Distribution of the Python and R programming languages for scientific computing
 cask "anaconda"
 # Command-line tools for building and debugging Android apps
@@ -178,6 +200,10 @@ cask "android-platform-tools"
 cask "android-studio"
 # Redis desktop manager
 cask "another-redis-desktop-manager"
+# Web browser focusing on privacy
+cask "brave-browser"
+# Run Stable Diffusion locally
+cask "diffusionbee"
 # Voice and text chat software
 cask "discord"
 # App to build and share containerized applications and microservices
@@ -188,6 +214,8 @@ cask "eul"
 cask "font-hack-nerd-font"
 # Desktop client for GitHub repositories
 cask "github"
+# Web browser
+cask "google-chrome"
 # HTTP and GraphQL Client
 cask "insomnia"
 # Terminal emulator as alternative to Apple's Terminal app
@@ -208,12 +236,16 @@ cask "obsidian"
 cask "pgadmin4"
 # Collaboration platform for API development
 cask "postman"
+# Kubernetes and container management on the desktop
+cask "rancher"
 # Data science software focusing on R and Python
 cask "rstudio"
 # Team communication and collaboration software
 cask "slack"
 # Music streaming service
 cask "spotify"
+# JDK from the Eclipse Foundation (Adoptium)
+cask "temurin"
 # Virtual machines UI using QEMU
 cask "utm"
 # Open-source code editor
@@ -227,7 +259,6 @@ mas "BetterSnapTool", id: 417375580
 mas "DevCleaner", id: 1388020431
 mas "Disk Space Pro", id: 636899298
 mas "HP Smart", id: 1474276998
-mas "iMovie", id: 408981434
 mas "Keynote", id: 409183694
 mas "Notion Web Clipper", id: 1559269364
 mas "TestFlight", id: 899247664
@@ -281,6 +312,7 @@ vscode "jeff-hykin.better-cpp-syntax"
 vscode "johnstew.gif"
 vscode "jspolancor.presentationmode"
 vscode "KevinRose.vsc-python-indent"
+vscode "LeetCode.vscode-leetcode"
 vscode "localizely.flutter-intl"
 vscode "luanpotter.dart-import"
 vscode "lunuan.kubernetes-templates"
@@ -301,11 +333,14 @@ vscode "ms-toolsai.vscode-jupyter-slideshow"
 vscode "ms-vscode-remote.remote-containers"
 vscode "ms-vscode-remote.remote-ssh"
 vscode "ms-vscode-remote.remote-ssh-edit"
-vscode "ms-vscode.cpptools"
+vscode "ms-vscode-remote.remote-wsl"
+vscode "ms-vscode-remote.vscode-remote-extensionpack"
 vscode "ms-vscode.js-debug-nightly"
 vscode "ms-vscode.remote-explorer"
+vscode "ms-vscode.remote-server"
 vscode "ms-vsliveshare.vsliveshare"
 vscode "ms-vsliveshare.vsliveshare-pack"
+vscode "mutantdino.resourcemonitor"
 vscode "Nash.awesome-flutter-snippets"
 vscode "nicollasr.vscode-streamdeck"
 vscode "njpwerner.autodocstring"
@@ -324,11 +359,14 @@ vscode "redhat.vscode-xml"
 vscode "redhat.vscode-yaml"
 vscode "RobbOwen.synthwave-vscode"
 vscode "robert-brunhage.flutter-riverpod-snippets"
+vscode "rust-lang.rust-analyzer"
 vscode "rvest.vs-code-prettier-eslint"
 vscode "SergeLamikhov.lcov-lang"
 vscode "sswg.swift-lang"
 vscode "streetsidesoftware.code-spell-checker"
 vscode "SupernovaIO.pulsar-vsc-extension"
+vscode "tamasfe.even-better-toml"
+vscode "tumido.crd-snippets"
 vscode "unifiedjs.vscode-mdx"
 vscode "usernamehw.errorlens"
 vscode "vadimcn.vscode-lldb"
