@@ -29,7 +29,18 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # ZSH_CUSTOM=/path/to/new-custom-folder # use another custom folder than $ZSH/custom?
 
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/, such as rails git textmate ruby lighthouse
-plugins=(git zsh-autosuggestions zsh-syntax-highlighting web-search)
+plugins=(
+  git 
+  zsh-autosuggestions 
+  zsh-syntax-highlighting 
+  web-search
+  # zsh-completions
+  # zsh-vi-mode
+  zsh-interactive-cd
+)
+
+# enable zsh completions from homebrew (note: must be done before oh-my-zsh.sh is sourced)
+FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
 
 source $ZSH/oh-my-zsh.sh
 
@@ -57,8 +68,10 @@ export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
 
 eval $(/opt/homebrew/bin/brew shellenv)
 
+# MISC PATHS
 export PATH="/usr/local/opt/ruby/bin:$PATH"
 export GEM_HOME="$HOME/.gem" 
+export KUBE_CONFIG_PATH="$HOME/.kube/config"
 
   export NVM_DIR="$HOME/.nvm"
   [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
@@ -79,3 +92,23 @@ source ~/.dotfiles/zsh/aliases.zsh
 
 source <(kubectl completion zsh)
 source <(k completion zsh)
+# source <(kubectx completion zsh)
+source <(helm completion zsh)
+source <(helmfile completion zsh)
+
+# set up vim motions in zsh
+bindkey -v 
+# tabtab source for packages
+# uninstall by removing these lines
+[[ -f ~/.config/tabtab/zsh/__tabtab.zsh ]] && . ~/.config/tabtab/zsh/__tabtab.zsh || true
+
+# pnpm
+export PNPM_HOME="/Users/pattobrien/Library/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end
+### MANAGED BY RANCHER DESKTOP START (DO NOT EDIT)
+export PATH="/Users/pattobrien/.rd/bin:$PATH"
+### MANAGED BY RANCHER DESKTOP END (DO NOT EDIT)

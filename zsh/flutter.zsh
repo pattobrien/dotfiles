@@ -21,6 +21,9 @@ export FVM_HOME="$HOME/.fvm"
 export FLUTTER_ROOT="$HOME/.fvm/default"
 
 
+export PATH="/Users/pattobrien/.shorebird/bin:$PATH"
+
+
 ## [Completion] 
 ## Completion scripts setup. Remove the following line to uninstall
 [[ -f /Users/pattobrien/.dart-cli-completion/zsh-config.zsh ]] && . /Users/pattobrien/.dart-cli-completion/zsh-config.zsh || true
