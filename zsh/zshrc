@@ -120,7 +120,7 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
 
 ## add tmux-sessionizer
-bindkey -s ^f "tmux-sessionizer\n"
+# bindkey -s ^f "tmux-sessionizer\n"
 PATH=$PATH:~/.local/bin
 
 
@@ -133,10 +133,10 @@ source ~/.dotfiles/zsh/aliases.zsh
 [[ -f /Users/pattobrien/.dart-cli-completion/zsh-config.zsh ]] && . /Users/pattobrien/.dart-cli-completion/zsh-config.zsh || true
 # [/Completion]
 
-# source <(kubectl completion zsh)
-# source <(k completion zsh)
-# source <(helm completion zsh)
-# source <(helmfile completion zsh)
+source <(kubectl completion zsh)
+source <(k completion zsh)
+source <(helm completion zsh)
+source <(helmfile completion zsh)
 ## source <(kubectx completion zsh)
 
 # # set up vim motions in zsh
@@ -146,7 +146,7 @@ bindkey -v
 # [[ -f ~/.config/tabtab/zsh/__tabtab.zsh ]] && . ~/.config/tabtab/zsh/__tabtab.zsh || true
 
 # pnpm
-export PNPM_HOME="/Users/pattobrien/Library/pnpm"
+export PNPM_HOME="$HOME/Library/pnpm"
 case ":$PATH:" in
   *":$PNPM_HOME:"*) ;;
   *) export PATH="$PNPM_HOME:$PATH" ;;

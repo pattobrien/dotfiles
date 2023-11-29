@@ -38,6 +38,8 @@ brew "docutils"
 brew "python@3.11"
 # Official Amazon AWS command-line interface
 brew "awscli"
+# Clone of cat(1) with syntax highlighting and Git integration
+brew "bat"
 # User-friendly launcher for Bazel
 brew "bazelisk"
 # Core application library for C
@@ -66,6 +68,8 @@ brew "cmake"
 brew "cocoapods"
 # Command-line tool for DigitalOcean
 brew "doctl"
+# Modern replacement for 'ls'
+brew "exa"
 # Easiest way to build and release mobile apps
 brew "fastlane"
 # Firebase command-line tools
@@ -116,6 +120,8 @@ brew "kubectx"
 brew "kustomize"
 # Graphical front-end for GCC's coverage testing tool (gcov)
 brew "lcov"
+# Pager program similar to more
+brew "less"
 # Bare libuv bindings for lua
 brew "luv"
 # Mac App Store command-line interface

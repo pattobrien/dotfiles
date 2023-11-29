@@ -54,6 +54,7 @@ require("lazy").setup({
   -- Enhanced file navigation
   'theprimeagen/harpoon',
   'christoomey/vim-tmux-navigator', -- tmux & split window navigation
+  'theprimeagen/git-worktree.nvim',
 
   -- Auto closing brackets, parenthesis, etc
 
@@ -80,7 +81,7 @@ require("lazy").setup({
 
   -- AI Tools
   'zbirenbaum/copilot.lua',
-  
+
   -- Git
   "tpope/vim-fugitive",
   'lewis6991/gitsigns.nvim',

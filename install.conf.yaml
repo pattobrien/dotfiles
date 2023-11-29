@@ -9,9 +9,6 @@
     ~/.zshrc: zsh/zshrc
     ~/.zshenv: zsh/zshenv
     ~/.gitconfig: git/.gitconfig
-    # ~/.config/bat/config:
-    #   create: true
-    #   path: config/bath
 
 - create:
     - ~/dev2

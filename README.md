@@ -20,6 +20,14 @@ git clone https://github.com/pattobrien/.dotfiles.git ~/.dotfiles
 sh ~/.dotfiles/install.sh
 ```
 
+### 4. Set permissions
+
+Sets permissions for required files (only required once on the system)
+
+```sh
+
+chmod +x ~/.local/scripts/tmux-sessionizer
+```
 ## Maintainance
 
 ### Brew Dump
