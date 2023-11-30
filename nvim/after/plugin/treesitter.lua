@@ -1,4 +1,9 @@
 --
+if vim.g.vscode then
+  return
+end
+
+
 require('nvim-treesitter.configs').setup {
   -- A list of parser names, or "all"
   ensure_installed = {

@@ -1,3 +1,8 @@
+
+if vim.g.vscode then
+  return
+end
+
 require('copilot').setup({
   panel = {
     enabled = true,

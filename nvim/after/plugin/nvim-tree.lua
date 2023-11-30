@@ -1,3 +1,7 @@
+if vim.g.vscode then 
+  return
+end
+
 local nvimtree = require("nvim-tree")
 
 -- suggested settings from nvim-tree

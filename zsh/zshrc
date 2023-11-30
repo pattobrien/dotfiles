@@ -137,6 +137,8 @@ source <(kubectl completion zsh)
 source <(k completion zsh)
 source <(helm completion zsh)
 source <(helmfile completion zsh)
+source <(mirrord completions zsh)
+source <(skaffold completion zsh)
 ## source <(kubectx completion zsh)
 
 # # set up vim motions in zsh
