@@ -1,6 +1,7 @@
 tap "dart-lang/dart"
 tap "felangel/mason"
 tap "fluttergen/tap"
+tap "hashicorp/tap"
 tap "heroku/brew"
 tap "homebrew/bundle"
 tap "homebrew/cask"
@@ -10,6 +11,8 @@ tap "homebrew/core"
 tap "homebrew/services"
 tap "koekeishiya/formulae"
 tap "leoafarias/fvm"
+tap "metalbear-co/mirrord"
+tap "scarvalhojr/tap"
 tap "shopify/shopify"
 tap "stripe/stripe-cli"
 # Run your GitHub Actions locally
@@ -22,12 +25,16 @@ brew "jpeg-xl"
 brew "aom"
 # GitOps Continuous Delivery for Kubernetes
 brew "argocd"
-# Configuration editing tool and API
-brew "augeas"
 # Automatic configure script builder
 brew "autoconf"
 # Tool for generating GNU Standards-compliant Makefiles
 brew "automake"
+# GNU File, Shell, and Text utilities
+brew "coreutils"
+# Extendable version manager with support for Ruby, Node.js, Erlang & more
+brew "asdf"
+# Configuration editing tool and API
+brew "augeas"
 # C parser in Python
 brew "pycparser"
 # C Foreign Function Interface for Python
@@ -44,8 +51,6 @@ brew "bat"
 brew "bazelisk"
 # Core application library for C
 brew "glib"
-# GNU File, Shell, and Text utilities
-brew "coreutils"
 # International domain name library (IDNA2008, Punycode and TR46)
 brew "libidn2"
 # Library to load and enumerate PKCS#11 modules
@@ -74,6 +79,8 @@ brew "exa"
 brew "fastlane"
 # Firebase command-line tools
 brew "firebase-cli"
+# Command-line fuzzy finder written in Go
+brew "fzf"
 # GitHub command-line tool
 brew "gh"
 # Library for JPEG-2000 image manipulation
@@ -108,8 +115,6 @@ brew "imagemagick"
 brew "jq"
 # Run local Kubernetes cluster in Docker
 brew "kind"
-# Development kit for the Java programming language
-brew "openjdk"
 # Statically typed programming language for the JVM
 brew "kotlin"
 # Kubernetes command-line interface
@@ -124,14 +129,14 @@ brew "lcov"
 brew "less"
 # Bare libuv bindings for lua
 brew "luv"
+# Keep your Mac's application settings in sync
+brew "mackup"
 # Mac App Store command-line interface
 brew "mas"
 # Run a Kubernetes cluster locally
 brew "minikube"
 # Ambitious Vim-fork focused on extensibility and agility
 brew "neovim"
-# Manage multiple Node.js versions
-brew "nvm"
 # Development kit for the Java programming language
 brew "openjdk@11"
 # Generate clients, server & docs from an OpenAPI spec (v2, v3)
@@ -160,8 +165,6 @@ brew "skaffold"
 brew "svgcleaner"
 # High-performance system programming language
 brew "swift"
-# Tool to build, change, and version infrastructure
-brew "terraform"
 # Linter for Terraform files
 brew "tflint"
 # Terminal multiplexer
@@ -180,6 +183,8 @@ brew "zlib"
 brew "zsh"
 # A command-line tool for The Flutter code generator for your assets, fonts, colors, … — Get rid of all String-based APIs. by Dart.
 brew "fluttergen/tap/fluttergen"
+# Terraform
+brew "hashicorp/tap/terraform"
 # Everything you need to get started with Heroku
 brew "heroku/brew/heroku"
 # Simple hotkey-daemon for macOS.
@@ -188,12 +193,16 @@ brew "koekeishiya/formulae/skhd"
 brew "koekeishiya/formulae/yabai"
 # Simple cli to manage Flutter SDK versions per project
 brew "leoafarias/fvm/fvm"
+# Connect your local process and your cloud environment
+brew "metalbear-co/mirrord/mirrord"
+# Advent of Code command-line helper tool
+brew "scarvalhojr/tap/aoc-cli"
 # A CLI tool to build for the Shopify platform
 brew "shopify/shopify/shopify-cli"
 # Stripe CLI utility
 brew "stripe/stripe-cli/stripe"
-# Command-line interface for 1Password
-cask "1password-cli"
+# Command-line helper for the 1Password password manager
+cask "1password-cli-beta"
 # Collection of apps and services for photography, design, video, web, and UX
 cask "adobe-creative-cloud"
 # Distribution of the Python and R programming languages for scientific computing
@@ -274,6 +283,7 @@ vscode "aaron-bond.better-comments"
 vscode "albert.TabOut"
 vscode "alexisvt.flutter-snippets"
 vscode "alexkrechik.cucumberautocomplete"
+vscode "andys8.jest-snippets"
 vscode "asvetliakov.vscode-neovim"
 vscode "batisteo.vscode-django"
 vscode "BendixMa.dart-data-class-generator"
@@ -285,6 +295,7 @@ vscode "csstools.postcss"
 vscode "Dart-Code.dart-code"
 vscode "Dart-Code.flutter"
 vscode "dbaeumer.vscode-eslint"
+vscode "dnicolson.binary-plist"
 vscode "donjayamanne.python-environment-manager"
 vscode "donjayamanne.python-extension-pack"
 vscode "dracula-theme.theme-dracula"
@@ -295,8 +306,11 @@ vscode "edonet.vscode-command-runner"
 vscode "emilast.LogFileHighlighter"
 vscode "enkia.tokyo-night"
 vscode "Equinusocio.vsc-community-material-theme"
+vscode "Equinusocio.vsc-material-theme"
+vscode "equinusocio.vsc-material-theme-icons"
 vscode "esbenp.prettier-vscode"
 vscode "EXCEEDSYSTEM.vscode-macros"
+vscode "firsttris.vscode-jest-runner"
 vscode "flutterando.flutter-coverage"
 vscode "Flutterbricksproductions.flutterbricks"
 vscode "gamunu.vscode-yarn"
@@ -311,10 +325,12 @@ vscode "GrapeCity.gc-excelviewer"
 vscode "Gruntfuggly.todo-tree"
 vscode "Gruntfuggly.triggertaskonsave"
 vscode "hashicorp.terraform"
+vscode "hbenl.vscode-test-explorer"
 vscode "humao.rest-client"
 vscode "jeff-hykin.better-cpp-syntax"
 vscode "johnstew.gif"
 vscode "jspolancor.presentationmode"
+vscode "kavod-io.vscode-jest-test-adapter"
 vscode "KevinRose.vsc-python-indent"
 vscode "LeetCode.vscode-leetcode"
 vscode "localizely.flutter-intl"
@@ -342,6 +358,7 @@ vscode "ms-vscode-remote.vscode-remote-extensionpack"
 vscode "ms-vscode.js-debug-nightly"
 vscode "ms-vscode.remote-explorer"
 vscode "ms-vscode.remote-server"
+vscode "ms-vscode.test-adapter-converter"
 vscode "ms-vsliveshare.vsliveshare"
 vscode "ms-vsliveshare.vsliveshare-pack"
 vscode "mutantdino.resourcemonitor"
@@ -349,6 +366,7 @@ vscode "Nash.awesome-flutter-snippets"
 vscode "nicollasr.vscode-streamdeck"
 vscode "njpwerner.autodocstring"
 vscode "orestesgaolin.dart-export-index"
+vscode "Orta.vscode-jest"
 vscode "oscarcs.dart-syntax-highlighting-only"
 vscode "patbenatar.advanced-new-file"
 vscode "paulshen.paul-typescript-toolkit"
@@ -378,10 +396,8 @@ vscode "VisualStudioExptTeam.intellicode-api-usage-examples"
 vscode "VisualStudioExptTeam.vscodeintellicode"
 vscode "vscjava.vscode-gradle"
 vscode "vscjava.vscode-java-debug"
-vscode "vscjava.vscode-java-dependency"
 vscode "vscjava.vscode-java-pack"
 vscode "vscjava.vscode-java-test"
-vscode "vscjava.vscode-maven"
 vscode "vscode-ext.sync-rsync"
 vscode "vscode-icons-team.vscode-icons"
 vscode "vscodevim.vim"

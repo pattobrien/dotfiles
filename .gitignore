@@ -3,3 +3,4 @@
 
 # **/Brewfile.lock.json
 .archive/**/*
+.env*

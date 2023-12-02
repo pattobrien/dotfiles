@@ -1,7 +1,12 @@
 #!/bin/zsh
 
+# if [ "$TERM_PROGRAM" = "vscode" ]; then
+#   return
+# fi
+
 # initialize tmux if it's not already running in the current shell
 # NOTE: this must be initialized before p10k is initialized
+
 if [ "$TERM_PROGRAM" != "vscode" ] && [ -z "$TMUX" ]; then
   exec tmux new-session -A -s workspace
 fi
@@ -46,7 +51,7 @@ plugins=(
   minikube
   kind
   skaffold # autocompletion
-  terraform # aliases and autocompletion
+  # terraform # aliases and autocompletion
   # doctl # this causes 1password prompt when re-sourcing zshrc file, for some reason... so we should not use this
 
   # other plugins available that we should install at some point:
@@ -81,8 +86,9 @@ plugins=(
 
 # enable zsh completions from homebrew (note: must be done before oh-my-zsh.sh is sourced)
 PATH="$(brew --prefix)/share/zsh/site-functions:${PATH}"
+FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
 
-source $ZSH/oh-my-zsh.sh  
+source $ZSH/oh-my-zsh.sh
 
 
 # User configuration
@@ -114,20 +120,17 @@ export GEM_HOME="$HOME/.gem"
 export KUBE_CONFIG_PATH="$HOME/.kube/config"
 
 
-export NVM_DIR="$HOME/.nvm"
-# TODO: The following line causes the terminal to have latency issues
-# [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
-[ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
-
 ## add tmux-sessionizer
 # bindkey -s ^f "tmux-sessionizer\n"
 PATH=$PATH:~/.local/bin
 
+. /opt/homebrew/opt/asdf/libexec/asdf.sh
 
 source ~/.dotfiles/zsh/python.zsh
 source ~/.dotfiles/zsh/credentials.zsh
 source ~/.dotfiles/zsh/flutter.zsh
 source ~/.dotfiles/zsh/aliases.zsh
+source ~/.dotfiles/zsh/.env.zsh
 # [Completion] 
 # Completion scripts setup. Remove the following line to uninstall
 [[ -f /Users/pattobrien/.dart-cli-completion/zsh-config.zsh ]] && . /Users/pattobrien/.dart-cli-completion/zsh-config.zsh || true
@@ -139,7 +142,7 @@ source <(helm completion zsh)
 source <(helmfile completion zsh)
 source <(mirrord completions zsh)
 source <(skaffold completion zsh)
-## source <(kubectx completion zsh)
+# source <(kubectx completion zsh)
 
 # # set up vim motions in zsh
 bindkey -v 
