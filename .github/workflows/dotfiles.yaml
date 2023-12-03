@@ -1,0 +1,20 @@
+name: Dotfiles CI
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  install-dotfiles:
+    runs-on: macOS-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Run install script
+        run: ./install
+
+      - name: Run install server script
+        run: ./install server
