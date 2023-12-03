@@ -232,12 +232,16 @@ cask "parallels-toolbox"
 cask "pgadmin4"
 # Collaboration platform for API development
 cask "postman"
+# Control your tools with a few keystrokes
+cask "raycast"
 # Team communication and collaboration software
 cask "slack"
 # Music streaming service
 cask "spotify"
 # JDK from the Eclipse Foundation (Adoptium)
 cask "temurin"
+# To-do list
+cask "todoist"
 # Open-source code editor
 cask "visual-studio-code"
 # Native desktop client for WhatsApp
@@ -251,9 +255,6 @@ mas "HP Smart", id: 1474276998
 mas "Keynote", id: 409183694
 mas "Notion Web Clipper", id: 1559269364
 mas "TestFlight", id: 899247664
-mas "Timery", id: 1425368544
-mas "Todoist", id: 585829637
-mas "Toggl Track", id: 957734279
 mas "Xcode", id: 497799835
 vscode "aaron-bond.better-comments"
 vscode "albert.TabOut"
