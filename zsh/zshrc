@@ -130,7 +130,10 @@ source ~/.dotfiles/zsh/python.zsh
 source ~/.dotfiles/zsh/credentials.zsh
 source ~/.dotfiles/zsh/flutter.zsh
 source ~/.dotfiles/zsh/aliases.zsh
-source ~/.dotfiles/zsh/.env.zsh
+
+if [ -f ~/.dotfiles/zsh/.env.zsh ]; then
+  source ~/.dotfiles/zsh/.env.zsh
+fi
 
 bindkey -v # set up vim motions in interactive terminal
 
