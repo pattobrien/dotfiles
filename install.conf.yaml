@@ -27,3 +27,6 @@
 
 - create:
         - ~/dev2
+
+- shell:
+        - command: ./scripts/setup_homebrew.zsh
