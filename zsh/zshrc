@@ -6,8 +6,8 @@
 
 # initialize tmux if it's not already running in the current shell
 # NOTE: this must be initialized before p10k is initialized
-
-if [ "$TERM_PROGRAM" != "vscode" ] && [ -z "$TMUX" ]; then
+DOES_TMUX_EXIST=$(tmux ls 2>/dev/null)
+if [ "$TERM_PROGRAM" != "vscode" ] && [ -z "$TMUX" ] && [ -z "$DOES_TMUX_EXIST" ]; then
   exec tmux new-session -A -s workspace
 fi
 
@@ -33,9 +33,8 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # CASE_SENSITIVE="true" # case-sensitive completion.
 # ENABLE_CORRECTION="true" # command auto-correction.
 # DISABLE_UNTRACKED_FILES_DIRTY="true"
-# ZSH_CUSTOM=/path/to/new-custom-folder # use another custom folder than $ZSH/custom?
 
-# Custom plugins may be added to $ZSH_CUSTOM/plugins/
+# ZSH plugins
 plugins=(
   git 
   zsh-autosuggestions 
@@ -132,24 +131,8 @@ source ~/.dotfiles/zsh/credentials.zsh
 source ~/.dotfiles/zsh/flutter.zsh
 source ~/.dotfiles/zsh/aliases.zsh
 source ~/.dotfiles/zsh/.env.zsh
-# [Completion] 
-# Completion scripts setup. Remove the following line to uninstall
-[[ -f /Users/pattobrien/.dart-cli-completion/zsh-config.zsh ]] && . /Users/pattobrien/.dart-cli-completion/zsh-config.zsh || true
-# [/Completion]
 
-# source <(kubectl completion zsh)
-# source <(k completion zsh)
-# source <(helm completion zsh)
-# source <(helmfile completion zsh)
-# source <(mirrord completions zsh)
-# source <(skaffold completion zsh)
-# source <(kubectx completion zsh)
-
-# # set up vim motions in zsh
-bindkey -v 
-# tabtab source for packages
-# uninstall by removing these lines
-# [[ -f ~/.config/tabtab/zsh/__tabtab.zsh ]] && . ~/.config/tabtab/zsh/__tabtab.zsh || true
+bindkey -v # set up vim motions in interactive terminal
 
 # pnpm
 export PNPM_HOME="$HOME/Library/pnpm"
