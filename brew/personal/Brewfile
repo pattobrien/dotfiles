@@ -36,6 +36,8 @@ brew "pycparser"
 brew "cffi"
 # Text processing system for reStructuredText
 brew "docutils"
+# Interpreted, interactive, object-oriented programming language
+brew "python@3.11"
 # Official Amazon AWS command-line interface
 brew "awscli"
 # Clone of cat(1) with syntax highlighting and Git integration
@@ -64,6 +66,8 @@ brew "clang-format"
 brew "cmake"
 # Dependency manager for Cocoa projects
 brew "cocoapods"
+# Pack, ship and run any application as a lightweight container
+brew "docker"
 # Command-line tool for DigitalOcean
 brew "doctl"
 # Modern replacement for 'ls'
@@ -86,8 +90,6 @@ brew "git"
 brew "libksba"
 # GNU Pretty Good Privacy (PGP) package
 brew "gnupg"
-# Manage compile and link flags for libraries
-brew "pkg-config"
 # OpenType text shaping engine
 brew "harfbuzz"
 # Kubernetes package manager
@@ -96,8 +98,6 @@ brew "helm"
 brew "shared-mime-info"
 # ISO/IEC 23008-12:2017 HEIF file format decoder and encoder
 brew "libheif"
-# Interpreted, interactive, object-oriented programming language
-brew "python@3.9"
 # Tools and libraries to manipulate images in many formats
 brew "imagemagick"
 # Lightweight and flexible command-line JSON processor
@@ -128,10 +128,10 @@ brew "neovim"
 brew "openjdk@11"
 # Generate clients, server & docs from an OpenAPI spec (v2, v3)
 brew "openapi-generator"
-# Development kit for the Java programming language
-brew "openjdk"
 # OpenShift command-line interface tools
 brew "openshift-cli"
+# Manage compile and link flags for libraries
+brew "pkg-config"
 # Fast, disk space efficient package manager
 brew "pnpm"
 # Theme for zsh
@@ -200,6 +200,8 @@ cask "android-platform-tools"
 cask "android-studio"
 # Redis desktop manager
 cask "another-redis-desktop-manager"
+# Web browser focusing on privacy
+cask "brave-browser"
 # Run Stable Diffusion locally
 cask "diffusionbee"
 # Voice and text chat software
@@ -210,6 +212,8 @@ cask "docker"
 cask "eul"
 # Developer targeted fonts with a high number of glyphs
 cask "font-hack-nerd-font"
+# Desktop client for GitHub repositories
+cask "github"
 # Web browser
 cask "google-chrome"
 # HTTP and GraphQL Client
@@ -234,6 +238,8 @@ cask "parallels-toolbox"
 cask "pgadmin4"
 # Collaboration platform for API development
 cask "postman"
+# Kubernetes and container management on the desktop
+cask "rancher"
 # Control your tools with a few keystrokes
 cask "raycast"
 # Team communication and collaboration software
@@ -242,8 +248,6 @@ cask "slack"
 cask "spotify"
 # JDK from the Eclipse Foundation (Adoptium)
 cask "temurin"
-# To-do list
-cask "todoist"
 # Open-source code editor
 cask "visual-studio-code"
 # Native desktop client for WhatsApp
@@ -253,21 +257,27 @@ cask "zoom"
 mas "Be Focused", id: 973134470
 mas "BetterSnapTool", id: 417375580
 mas "DevCleaner", id: 1388020431
+mas "Home Assistant", id: 1099568401
 mas "HP Smart", id: 1474276998
 mas "Keynote", id: 409183694
 mas "Notion Web Clipper", id: 1559269364
+mas "Spark", id: 1176895641
 mas "TestFlight", id: 899247664
-mas "Xcode", id: 497799835
+mas "Timery", id: 1425368544
+mas "Todoist", id: 585829637
+mas "Toggl Track", id: 957734279
 vscode "aaron-bond.better-comments"
 vscode "albert.TabOut"
 vscode "alexisvt.flutter-snippets"
 vscode "alexkrechik.cucumberautocomplete"
 vscode "andys8.jest-snippets"
 vscode "asvetliakov.vscode-neovim"
+vscode "atlassian.atlascode"
 vscode "batisteo.vscode-django"
 vscode "BendixMa.dart-data-class-generator"
 vscode "berublan.vscode-log-viewer"
 vscode "blaugold.melos-code"
+vscode "blaxou.freezed"
 vscode "bradlc.vscode-tailwindcss"
 vscode "CS50.vscode-presentation-mode"
 vscode "csstools.postcss"
@@ -289,9 +299,11 @@ vscode "Equinusocio.vsc-material-theme"
 vscode "equinusocio.vsc-material-theme-icons"
 vscode "esbenp.prettier-vscode"
 vscode "EXCEEDSYSTEM.vscode-macros"
+vscode "FelixAngelov.bloc"
 vscode "firsttris.vscode-jest-runner"
 vscode "flutterando.flutter-coverage"
 vscode "Flutterbricksproductions.flutterbricks"
+vscode "gaetschwartz.build-runner"
 vscode "gamunu.vscode-yarn"
 vscode "GitHub.codespaces"
 vscode "GitHub.copilot"
@@ -307,6 +319,7 @@ vscode "hashicorp.terraform"
 vscode "hbenl.vscode-test-explorer"
 vscode "humao.rest-client"
 vscode "jeff-hykin.better-cpp-syntax"
+vscode "jeroen-meijer.pubspec-assist"
 vscode "johnstew.gif"
 vscode "jspolancor.presentationmode"
 vscode "kavod-io.vscode-jest-test-adapter"
@@ -334,11 +347,14 @@ vscode "ms-vscode-remote.remote-ssh"
 vscode "ms-vscode-remote.remote-ssh-edit"
 vscode "ms-vscode-remote.remote-wsl"
 vscode "ms-vscode-remote.vscode-remote-extensionpack"
+vscode "ms-vscode.cmake-tools"
+vscode "ms-vscode.cpptools"
 vscode "ms-vscode.js-debug-nightly"
 vscode "ms-vscode.remote-explorer"
 vscode "ms-vscode.remote-server"
 vscode "ms-vscode.test-adapter-converter"
 vscode "ms-vsliveshare.vsliveshare"
+vscode "ms-vsliveshare.vsliveshare-audio"
 vscode "ms-vsliveshare.vsliveshare-pack"
 vscode "mutantdino.resourcemonitor"
 vscode "Nash.awesome-flutter-snippets"
@@ -358,6 +374,7 @@ vscode "redhat.java"
 vscode "redhat.vscode-commons"
 vscode "redhat.vscode-xml"
 vscode "redhat.vscode-yaml"
+vscode "RedVanWorkshop.explorer-exclude-vscode-extension"
 vscode "RobbOwen.synthwave-vscode"
 vscode "robert-brunhage.flutter-riverpod-snippets"
 vscode "rust-lang.rust-analyzer"
@@ -368,6 +385,7 @@ vscode "streetsidesoftware.code-spell-checker"
 vscode "SupernovaIO.pulsar-vsc-extension"
 vscode "tamasfe.even-better-toml"
 vscode "tumido.crd-snippets"
+vscode "twxs.cmake"
 vscode "unifiedjs.vscode-mdx"
 vscode "usernamehw.errorlens"
 vscode "vadimcn.vscode-lldb"
@@ -375,15 +393,19 @@ vscode "VisualStudioExptTeam.intellicode-api-usage-examples"
 vscode "VisualStudioExptTeam.vscodeintellicode"
 vscode "vscjava.vscode-gradle"
 vscode "vscjava.vscode-java-debug"
+vscode "vscjava.vscode-java-dependency"
 vscode "vscjava.vscode-java-pack"
 vscode "vscjava.vscode-java-test"
+vscode "vscjava.vscode-maven"
 vscode "vscode-ext.sync-rsync"
 vscode "vscode-icons-team.vscode-icons"
 vscode "vscodevim.vim"
 vscode "wholroyd.jinja"
+vscode "withfig.fig"
 vscode "wix.glean"
 vscode "Wscats.cors-browser"
 vscode "xaver.clang-format"
+vscode "yaamaa.disable-mouse"
 vscode "Zarifprogrammer.tailwind-snippets"
 vscode "zhuangtongfa.material-theme"
 vscode "zxh404.vscode-proto3"
