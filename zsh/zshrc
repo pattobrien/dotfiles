@@ -119,7 +119,21 @@ source $(brew --prefix)/share/powerlevel10k/powerlevel10k.zsh-theme
 
 export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
 
-eval $(/opt/homebrew/bin/brew shellenv)
+# Determine the Homebrew installation directory
+if [ -d "/usr/local/Homebrew" ]; then
+    # Intel x86_64 platform
+    HOMEBREW_PREFIX="/usr/local"
+elif [ -d "/opt/homebrew" ]; then
+    # Apple Silicon (M1/M2) platform
+    HOMEBREW_PREFIX="/opt/homebrew"
+else
+    echo "Homebrew not found"
+    return 1
+fi
+
+# Initialize Homebrew environment
+eval "$(${HOMEBREW_PREFIX}/bin/brew shellenv)"
+# echo $($(brew --prefix)/bin/brew shellenv)
 
 # get the path to homebrew bin, if it exists (for both intel and M1 macs)
 export PATH="$(brew --prefix)/bin:$PATH"
