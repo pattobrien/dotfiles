@@ -36,8 +36,6 @@ brew "pycparser"
 brew "cffi"
 # Text processing system for reStructuredText
 brew "docutils"
-# Interpreted, interactive, object-oriented programming language
-brew "python@3.11"
 # Official Amazon AWS command-line interface
 brew "awscli"
 # Clone of cat(1) with syntax highlighting and Git integration
@@ -88,8 +86,6 @@ brew "git"
 brew "libksba"
 # GNU Pretty Good Privacy (PGP) package
 brew "gnupg"
-# Open source programming language to build simple/reliable/efficient software
-brew "go"
 # Manage compile and link flags for libraries
 brew "pkg-config"
 # OpenType text shaping engine
@@ -154,8 +150,6 @@ brew "rust"
 brew "s3cmd"
 # Easy and Repeatable Kubernetes Development
 brew "skaffold"
-# High-performance system programming language
-brew "swift"
 # Linter for Terraform files
 brew "tflint"
 # Terminal multiplexer
@@ -164,8 +158,6 @@ brew "tmux"
 brew "vim"
 # Internet file retriever
 brew "wget"
-# JavaScript package manager
-brew "yarn"
 # General-purpose lossless data-compression library
 brew "zlib"
 # UNIX shell (command interpreter)

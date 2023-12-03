@@ -2,7 +2,25 @@
 
 set -e
 
-CONFIG="install.conf.yaml"
+PROFILE=$1
+shift
+BREWFILE="${PROFILE:+$PROFILE/}Brewfile"
+CONFIG="install${PROFILE:+.$PROFILE}.conf.yaml"
+
+echo "Using profile '${PROFILE}'"
+echo "Using config '${CONFIG}'"
+
+
+if [ ! -f $CONFIG ]; then
+    echo "Config file for profile '${PROFILE}' does not exist."
+    exit 1
+fi
+
+# Run Homebrew bundle with the specified profile's Brewfile, if it exists
+if [ -f $BREWFILE ]; then
+    brew bundle --file="$BREWFILE"
+fi
+
 DOTBOT_DIR="dotbot"
 
 DOTBOT_BIN="bin/dotbot"
@@ -13,3 +31,4 @@ git -C "${DOTBOT_DIR}" submodule sync --quiet --recursive
 git submodule update --init --recursive "${DOTBOT_DIR}"
 
 "${BASEDIR}/${DOTBOT_DIR}/${DOTBOT_BIN}" -d "${BASEDIR}" -c "${CONFIG}" "${@}"
+

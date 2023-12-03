@@ -7,4 +7,4 @@ echo "\n<<< Setting up Homebrew >>>\n"
 # disable gatekeeping just for the initial install
 export HOMEBREW_CASK_OPTS="--no-quarantine"
 
-brew bundle --file brew/Brewfile
+# brew bundle --file brew/Brewfile
