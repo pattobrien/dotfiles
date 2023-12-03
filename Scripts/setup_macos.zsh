@@ -1,6 +1,6 @@
 # #!/usr/bin/env zsh
 
-# echo "\n<<< Starting macOS Setup >>>\n"
+echo "\n<<< Starting macOS Setup >>>\n"
 
 # osascript -e 'tell application "System Preferences" to quit'
 
