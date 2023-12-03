@@ -134,6 +134,8 @@ brew "neovim"
 brew "openjdk@11"
 # Generate clients, server & docs from an OpenAPI spec (v2, v3)
 brew "openapi-generator"
+# Development kit for the Java programming language
+brew "openjdk"
 # OpenShift command-line interface tools
 brew "openshift-cli"
 # Fast, disk space efficient package manager
@@ -168,6 +170,10 @@ brew "yarn"
 brew "zlib"
 # UNIX shell (command interpreter)
 brew "zsh"
+# Fish-like fast/unobtrusive autosuggestions for zsh
+brew "zsh-autosuggestions"
+# Fish shell like syntax highlighting for zsh
+brew "zsh-syntax-highlighting"
 # A command-line tool for The Flutter code generator for your assets, fonts, colors, … — Get rid of all String-based APIs. by Dart.
 brew "fluttergen/tap/fluttergen"
 # Terraform
@@ -196,6 +202,8 @@ cask "android-commandlinetools"
 cask "android-ndk"
 # Android SDK component
 cask "android-platform-tools"
+# Tools for building Android applications
+cask "android-studio"
 # Redis desktop manager
 cask "another-redis-desktop-manager"
 # Run Stable Diffusion locally
