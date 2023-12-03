@@ -28,6 +28,7 @@ Sets permissions for required files (only required once on the system)
 
 chmod +x ~/.local/scripts/tmux-sessionizer
 ```
+
 ## Maintainance
 
 ### Brew Dump
@@ -45,3 +46,5 @@ brew bundle dump --force --describe --file=~/.dotfiles/brew/Brewfile
 - Add VSCode config
 - Add kitty config
 - Clean up outdated /scripts/ folder
+- Separate brew packages into separate files (based on if/when they would be needed to be installed)
+  - e.g. on a pipeline runner, few apps are needed
