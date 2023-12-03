@@ -138,14 +138,12 @@ brew "openapi-generator"
 brew "openshift-cli"
 # Fast, disk space efficient package manager
 brew "pnpm"
-# Emulator for x86 and PowerPC
-brew "qemu"
-# Tool for managing OCI containers and pods
-brew "podman"
 # Protocol buffers (Google's data interchange format)
 brew "protobuf"
 # Interpreted, interactive, object-oriented programming language
 brew "python@3.10"
+# Emulator for x86 and PowerPC
+brew "qemu"
 # Search tool like grep and The Silver Searcher
 brew "ripgrep"
 # Safe, concurrent, practical language
@@ -218,8 +216,6 @@ cask "github"
 cask "google-chrome"
 # HTTP and GraphQL Client
 cask "insomnia"
-# Terminal emulator as alternative to Apple's Terminal app
-cask "iterm2-beta"
 # GPU-based terminal emulator
 cask "kitty"
 # Optimize your webcam, headset, and Logi Dock for video meetings
@@ -240,8 +236,6 @@ cask "parallels-toolbox"
 cask "pgadmin4"
 # Collaboration platform for API development
 cask "postman"
-# Kubernetes and container management on the desktop
-cask "rancher"
 # Team communication and collaboration software
 cask "slack"
 # Music streaming service
@@ -257,7 +251,6 @@ cask "zoom"
 mas "Be Focused", id: 973134470
 mas "BetterSnapTool", id: 417375580
 mas "DevCleaner", id: 1388020431
-mas "Disk Space Pro", id: 636899298
 mas "HP Smart", id: 1474276998
 mas "Keynote", id: 409183694
 mas "Notion Web Clipper", id: 1559269364

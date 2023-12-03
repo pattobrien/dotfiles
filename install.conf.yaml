@@ -2,18 +2,24 @@
       link:
           relink: true
           create: true
+      shell:
+          stderr: true
 
-- clean: ["~"]
+- clean: ["~", "~/.oh-my-zsh/custom/", "~/.oh-my-zsh/custom/plugins/"]
 
 - link:
       ~/.tmux.conf: tmux/.tmux.conf
-      ~/.zshrc: zsh/zshrc
+      ~/.zshrc:
+          #   force: true
+          path: zsh/zshrc
       ~/.zshenv: zsh/zshenv
       ~/.gitconfig: git/.gitconfig
       ~/.config/kitty: kitty
       ~/.config/gh: gh
       ~/.config/yabai: yabai
       ~/.config/skhd: skhd
+      ~/.config/nvim: nvim
+      ~/.config/op/plugins.sh: op/.config/plugins.sh
 
 - create:
       - ~/dev2
@@ -23,7 +29,3 @@
 #         stderr: true
 #         stdin: true
 
-#       - command: ./scripts/setup_oh_my_zsh.zsh
-#         stdout: true
-#         stderr: true
-#         stdin: true
