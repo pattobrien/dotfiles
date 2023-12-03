@@ -4,6 +4,8 @@
           create: true
       shell:
           stderr: true
+          stdout: true
+          stdin: true
 
 - clean: ["~", "~/.oh-my-zsh/custom/", "~/.oh-my-zsh/custom/plugins/"]
 
@@ -23,9 +25,6 @@
 
 - create:
       - ~/dev2
-# - shell:
-#       - command: ./scripts/setup_homebrew.zsh
-#         stdout: true
-#         stderr: true
-#         stdin: true
-
+- shell:
+      # - command: brew install --cask docker
+      - command: ./scripts/setup_homebrew.zsh
