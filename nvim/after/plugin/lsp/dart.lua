@@ -1,10 +1,10 @@
-local lsp = require("lspconfig")
-
-local on_attach = require('pattobrien.lsp').on_attach
-local capabilities = require('pattobrien.lsp').capabilities
-
-local lastRootPath = nil
-
+-- local lsp = require("lspconfig")
+--
+-- local on_attach = require('pattobrien.lsp').on_attach
+-- local capabilities = require('pattobrien.lsp').capabilities
+--
+-- local lastRootPath = nil
+--
 -- lsp["dartls"].setup({
 --   capabilities = capabilities,
 --   on_attach = on_attach,

@@ -3,8 +3,8 @@ if vim.g.vscode then
   require('pattobrien.lazy')
   require('pattobrien.remap')
   require('pattobrien.set')
+  require('pattobrien.vscode.settings')
 else
-  -- ordinary Neovim
   require('pattobrien.lazy')
   require('pattobrien.remap')
   require('pattobrien.set')

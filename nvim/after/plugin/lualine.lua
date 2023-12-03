@@ -1,4 +1,8 @@
-local lualine = require('lualine')
+if vim.g.vscode then 
+  return
+end
+
+local lualine= require('lualine')
 
 local function is_process_running(name)
   -- os.execute returns true on success and nil + error message on failure.

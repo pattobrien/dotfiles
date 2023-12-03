@@ -1,3 +1,8 @@
+
+if vim.g.vscode then
+  return
+end
+
 local on_attach = require('pattobrien.lsp').on_attach
 local capabilities = require('pattobrien.lsp').capabilities
 

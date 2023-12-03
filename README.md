@@ -14,10 +14,25 @@ xcode-select --install
 git clone https://github.com/pattobrien/.dotfiles.git ~/.dotfiles
 ```
 
-### 3. Run install.sh
+### 3. Run dotbot install script
 
 ```sh
-sh ~/.dotfiles/install.sh
+sh ~/.dotfiles/install
+
+# then run one of the following:
+sh ~/.dotfiles/install personal
+sh ~/.dotfiles/install work
+sh ~/.dotfiles/install runner
+sh ~/.dotfiles/install server
+```
+
+### 4. Set permissions
+
+Sets permissions for required files (only required once on the system)
+
+```sh
+
+chmod +x ~/.local/scripts/tmux-sessionizer
 ```
 
 ## Maintainance
@@ -34,6 +49,14 @@ brew bundle dump --force --describe --file=~/.dotfiles/brew/Brewfile
 - [x] Add Brewfile
 - [x] Add NVIM config
 - [x] Add tmux config
+- [x] Add kitty config
 - Add VSCode config
-- Add kitty config
 - Clean up outdated /scripts/ folder
+- Separate brew packages into separate files (based on if/when they would be needed to be installed)
+
+  - e.g. on a pipeline runner, few apps are needed
+
+- setup 1password in case passwords are needed for app installations
+- BUG: tmux requirement in .zshrc causes terminal crash when tmux is not yet installed
+- post-install scripts for packages (e.g. Dart/Flutter is required for fvm)
+- can `xcode-select --install` be run from the install script?

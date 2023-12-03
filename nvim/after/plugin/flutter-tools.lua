@@ -1,5 +1,9 @@
+if vim.g.vscode then
+  return
+end
+
 local flutter_tools = require('flutter-tools')
-local custom_config = require('pattobrien.lsp')
+-- local custom_config = require('pattobrien.lsp')
 
 flutter_tools.setup {
   ui = {

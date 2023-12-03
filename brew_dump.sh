@@ -1,1 +1,1 @@
-brew bundle dump --force --describe --file=~/.dotfiles/brew/Brewfile
+brew bundle dump --force --describe --file=~/.dotfiles/brew/personal/Brewfile

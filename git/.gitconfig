@@ -6,11 +6,16 @@
 [user]
 	name = pattobrien
 	email = 12474318+pattobrien@users.noreply.github.com
+	signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINlKkfz5It5hj2VIVsEZaYl8PCcW6DIkWLCG7ivCGThB
 [init]
 	defaultBranch = main
 [core]
 	editor = code --wait
 [http]
 	postBuffer = 100000000
-[safe]
-	directory = /Users/pattobrien/.github-runners/actions-runner/_work/sidecar/sidecar
+[gpg]
+	format = ssh
+[gpg "ssh"]
+	program = /Applications/1Password.app/Contents/MacOS/op-ssh-sign
+[commit]
+	gpgsign = true

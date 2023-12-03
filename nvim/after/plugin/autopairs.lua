@@ -1,3 +1,10 @@
+
+-- Autopairs automatically inserts or deletes brackets, parens, quotes, etc.
+
+if vim.g.vscode then
+  return
+end
+
 local autopairs = require("nvim-autopairs")
 
 -- configure autopairs

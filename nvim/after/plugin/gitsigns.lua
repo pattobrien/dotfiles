@@ -1,3 +1,7 @@
+if vim.g.vscode then 
+  return
+end
+
 local gitsigns = require("gitsigns")
 
 gitsigns.setup({
