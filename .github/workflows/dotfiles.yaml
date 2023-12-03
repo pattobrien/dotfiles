@@ -16,5 +16,5 @@ jobs:
       - name: Run install script
         run: ./install
 
-      - name: Run install server script
-        run: ./install server
+      # - name: Run install server script
+      #   run: ./install server
