@@ -43,37 +43,38 @@ plugins=(
   zsh-interactive-cd
 
   # untested plugins below:
-  web-search
   1password
   gh
   keychain
   kubectl
   minikube
   kind
+  helm
+  kubectx
   skaffold # autocompletion
-  # terraform # aliases and autocompletion
+  terraform # aliases and autocompletion
+  fzf
+  github
+  vscode
+  xcode
+  tmux
+  dotenv # - source .env variables when you cd into a directory
+  gitignore
   # doctl # this causes 1password prompt when re-sourcing zshrc file, for some reason... so we should not use this
 
   # other plugins available that we should install at some point:
+  # web-search
   # vi-mode
   # nvm
   # npm
   # macos
-  # tmux
   # tmuxinator (?)
-  # vscode
-  # dotenv - source .env variables when you cd into a directory
   # aliases - lists the shortcuts currently available
   # common-aliases
   # flutter - aliases for flutter commands
-  # fzf
   # gcloud
   # git-auto-fetch
-  # github
-  # gitignore
   # git-lfs
-  # helm
-  # kubectx
   # mongocli
   # operator-sdk
   # pod - cocoaPods completion
@@ -81,7 +82,6 @@ plugins=(
   # salt
   # ssh-agent - configure ssh-agent settings
   # web-search
-  # xcode
 )
 
 # enable zsh completions from homebrew (note: must be done before oh-my-zsh.sh is sourced)
@@ -137,12 +137,12 @@ source ~/.dotfiles/zsh/.env.zsh
 [[ -f /Users/pattobrien/.dart-cli-completion/zsh-config.zsh ]] && . /Users/pattobrien/.dart-cli-completion/zsh-config.zsh || true
 # [/Completion]
 
-source <(kubectl completion zsh)
-source <(k completion zsh)
-source <(helm completion zsh)
-source <(helmfile completion zsh)
-source <(mirrord completions zsh)
-source <(skaffold completion zsh)
+# source <(kubectl completion zsh)
+# source <(k completion zsh)
+# source <(helm completion zsh)
+# source <(helmfile completion zsh)
+# source <(mirrord completions zsh)
+# source <(skaffold completion zsh)
 # source <(kubectx completion zsh)
 
 # # set up vim motions in zsh
