@@ -1,8 +1,6 @@
-tap "dart-lang/dart"
 tap "felangel/mason"
 tap "fluttergen/tap"
 tap "hashicorp/tap"
-tap "heroku/brew"
 tap "homebrew/bundle"
 tap "homebrew/cask"
 tap "homebrew/cask-fonts"
@@ -11,7 +9,6 @@ tap "homebrew/core"
 tap "homebrew/services"
 tap "koekeishiya/formulae"
 tap "leoafarias/fvm"
-tap "metalbear-co/mirrord"
 tap "scarvalhojr/tap"
 tap "shopify/shopify"
 tap "stripe/stripe-cli"
@@ -101,8 +98,6 @@ brew "pkg-config"
 brew "harfbuzz"
 # Kubernetes package manager
 brew "helm"
-# Deploy Kubernetes Helm Charts
-brew "helmfile"
 # Database of common MIME types
 brew "shared-mime-info"
 # ISO/IEC 23008-12:2017 HEIF file format decoder and encoder
@@ -115,8 +110,6 @@ brew "imagemagick"
 brew "jq"
 # Run local Kubernetes cluster in Docker
 brew "kind"
-# Statically typed programming language for the JVM
-brew "kotlin"
 # Kubernetes command-line interface
 brew "kubernetes-cli"
 # Tool that can switch between kubectl contexts easily and create aliases
@@ -161,8 +154,6 @@ brew "rust"
 brew "s3cmd"
 # Easy and Repeatable Kubernetes Development
 brew "skaffold"
-# Cleans your SVG files by removing unnecessary data
-brew "svgcleaner"
 # High-performance system programming language
 brew "swift"
 # Linter for Terraform files
@@ -173,8 +164,6 @@ brew "tmux"
 brew "vim"
 # Internet file retriever
 brew "wget"
-# Check your $HOME for unwanted files and directories
-brew "xdg-ninja"
 # JavaScript package manager
 brew "yarn"
 # General-purpose lossless data-compression library
@@ -185,16 +174,12 @@ brew "zsh"
 brew "fluttergen/tap/fluttergen"
 # Terraform
 brew "hashicorp/tap/terraform"
-# Everything you need to get started with Heroku
-brew "heroku/brew/heroku"
 # Simple hotkey-daemon for macOS.
 brew "koekeishiya/formulae/skhd"
 # A tiling window manager for macOS based on binary space partitioning.
 brew "koekeishiya/formulae/yabai"
 # Simple cli to manage Flutter SDK versions per project
 brew "leoafarias/fvm/fvm"
-# Connect your local process and your cloud environment
-brew "metalbear-co/mirrord/mirrord"
 # Advent of Code command-line helper tool
 brew "scarvalhojr/tap/aoc-cli"
 # A CLI tool to build for the Shopify platform
@@ -217,8 +202,6 @@ cask "android-platform-tools"
 cask "android-studio"
 # Redis desktop manager
 cask "another-redis-desktop-manager"
-# Web browser focusing on privacy
-cask "brave-browser"
 # Run Stable Diffusion locally
 cask "diffusionbee"
 # Voice and text chat software
@@ -239,6 +222,8 @@ cask "insomnia"
 cask "iterm2-beta"
 # GPU-based terminal emulator
 cask "kitty"
+# Optimize your webcam, headset, and Logi Dock for video meetings
+cask "logitune"
 # Screen and video recording software
 cask "loom"
 # Provides updates to various Microsoft products
@@ -249,6 +234,8 @@ cask "microsoft-office"
 cask "microsoft-teams"
 # Knowledge base that works on top of a local folder of plain text Markdown files
 cask "obsidian"
+# Bundle with over 30 tools
+cask "parallels-toolbox"
 # Administration and development platform for PostgreSQL
 cask "pgadmin4"
 # Collaboration platform for API development

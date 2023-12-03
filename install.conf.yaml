@@ -1,19 +1,29 @@
 - defaults:
-    link:
-      relink: true
+      link:
+          relink: true
+          create: true
 
 - clean: ["~"]
 
 - link:
-    ~/.tmux.conf: tmux/.tmux.conf
-    ~/.zshrc: zsh/zshrc
-    ~/.zshenv: zsh/zshenv
-    ~/.gitconfig: git/.gitconfig
+      ~/.tmux.conf: tmux/.tmux.conf
+      ~/.zshrc: zsh/zshrc
+      ~/.zshenv: zsh/zshenv
+      ~/.gitconfig: git/.gitconfig
+      ~/.config/kitty: kitty
+      ~/.config/gh: gh
+      ~/.config/yabai: yabai
+      ~/.config/skhd: skhd
 
 - create:
-    - ~/dev2
+      - ~/dev2
+# - shell:
+#       - command: ./scripts/setup_homebrew.zsh
+#         stdout: true
+#         stderr: true
+#         stdin: true
 
-- shell:
-    - command: ./scripts/setup_homebrew.zsh
-      stdout: true
-      stderr: true
+#       - command: ./scripts/setup_oh_my_zsh.zsh
+#         stdout: true
+#         stderr: true
+#         stdin: true
