@@ -1,6 +1,5 @@
 #!/bin/zsh
 
-
 XDG_CONFIG_HOME="$HOME/.config"
 XDG_CACHE_HOME="$HOME/.cache"
 XDG_DATA_HOME="$HOME/.local/share"
@@ -119,18 +118,18 @@ export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
 
 eval $(/opt/homebrew/bin/brew shellenv)
 
+# get the path to homebrew bin, if it exists (for both intel and M1 macs)
+export PATH="$(brew --prefix)/bin:$PATH"
+
 # MISC PATHS
-export PATH=/opt/homebrew/bin:$PATH
 export PATH="/usr/local/opt/ruby/bin:$PATH"
 export GEM_HOME="$HOME/.gem" 
 export KUBE_CONFIG_PATH="$HOME/.kube/config"
 
-
-## add tmux-sessionizer
-# bindkey -s ^f "tmux-sessionizer\n"
 PATH=$PATH:~/.local/bin
 
-. /opt/homebrew/opt/asdf/libexec/asdf.sh
+. $(brew --prefix asdf)/libexec/asdf.sh
+
 
 source ~/.dotfiles/zsh/python.zsh
 source ~/.dotfiles/zsh/credentials.zsh
@@ -150,9 +149,6 @@ case ":$PATH:" in
   *) export PATH="$PNPM_HOME:$PATH" ;;
 esac
 
-### MANAGED BY RANCHER DESKTOP START (DO NOT EDIT)
-export PATH="/Users/pattobrien/.rd/bin:$PATH"
-### MANAGED BY RANCHER DESKTOP END (DO NOT EDIT)
 
 alias exa='exa -laFh --git --icons'
 alias ls='exa'

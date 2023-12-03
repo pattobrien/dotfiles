@@ -196,8 +196,6 @@ cask "android-commandlinetools"
 cask "android-ndk"
 # Android SDK component
 cask "android-platform-tools"
-# Tools for building Android applications
-cask "android-studio"
 # Redis desktop manager
 cask "another-redis-desktop-manager"
 # Run Stable Diffusion locally
@@ -210,8 +208,6 @@ cask "docker"
 cask "eul"
 # Developer targeted fonts with a high number of glyphs
 cask "font-hack-nerd-font"
-# Desktop client for GitHub repositories
-cask "github"
 # Web browser
 cask "google-chrome"
 # HTTP and GraphQL Client
