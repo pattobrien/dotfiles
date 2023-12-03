@@ -18,6 +18,12 @@ git clone https://github.com/pattobrien/.dotfiles.git ~/.dotfiles
 
 ```sh
 sh ~/.dotfiles/install
+
+# then run one of the following:
+sh ~/.dotfiles/install personal
+sh ~/.dotfiles/install work
+sh ~/.dotfiles/install runner
+sh ~/.dotfiles/install server
 ```
 
 ### 4. Set permissions
