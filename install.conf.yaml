@@ -15,7 +15,9 @@
               #   force: true
               path: zsh/zshrc
         ~/.zshenv: zsh/zshenv
-        ~/.gitconfig: git/.gitconfig
+        ~/.gitconfig:
+              path: git/.gitconfig
+              force: true
         ~/.config/kitty/kitty.conf: kitty/kitty.conf
         ~/.config/gh: gh
         ~/.config/yabai: yabai
