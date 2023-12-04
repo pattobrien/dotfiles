@@ -40,7 +40,7 @@ chmod +x ~/.local/scripts/tmux-sessionizer
 ### Brew Dump
 
 ```sh
-brew bundle dump --force --describe --file=~/.dotfiles/brew/Brewfile
+brew bundle dump --force --describe --file=~/.dotfiles/brew/personal/Brewfile
 ```
 
 ## TODO
@@ -53,7 +53,8 @@ brew bundle dump --force --describe --file=~/.dotfiles/brew/Brewfile
 - [x] Separate brew packages into separate files
 - [x] Clean up outdated /scripts/ folder
 - [x] BUG: tmux requirement in .zshrc causes terminal crash when tmux is not yet installed
-- Add VSCode config
-- setup 1password in case passwords are needed for app installations
-- post-install scripts for packages (e.g. Dart/Flutter is required for fvm)
-- can `xcode-select --install` be run from the install script?
+- [ ] Steps for initializing TMUX plugins
+- [ ] Add VSCode config
+- [ ] setup 1password in case passwords are needed for app installations
+- [ ] post-install scripts for packages (e.g. Dart/Flutter is required for fvm)
+- [ ] can `xcode-select --install` be run from the install script?

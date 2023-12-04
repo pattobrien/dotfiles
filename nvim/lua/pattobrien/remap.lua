@@ -36,112 +36,115 @@ vim.keymap.set("n", "<C-f>", "<cmd>silent !tmux neww tmux-sessionizer<CR>")
 vim.keymap.set("n", "<leader>k", "<cmd>lnext<CR>zz")
 vim.keymap.set("n", "<leader>j", "<cmd>lprev<CR>zz")
 
--- nvim-tree
-vim.keymap.set("n", "<leader>e", ":NvimTreeToggle<CR>")
 
 -- re-source lua files
 vim.keymap.set("n", "<leader>sf", ":source %<CR>")    -- from current file
 vim.keymap.set('n', '<leader>sv', ':so $MYVIMRC<cr>') -- entire nvim config
 
 -- debugger
-local dap = require('dap')
-local dapui = require('dapui')
+if vim.g.vscode == nil then
+  
+  -- nvim-tree
+  vim.keymap.set("n", "<leader>e", ":NvimTreeToggle<CR>")
+    
+  local dap = require('dap')
+  local dapui = require('dapui')
 
-vim.keymap.set('n', '<leader>ds', dap.continue)
-vim.keymap.set('n', '<F10>', dap.step_over)
-vim.keymap.set('n', '<F11>', dap.step_into)
-vim.keymap.set('n', '<F12>', dap.step_out)
-vim.keymap.set('n', '<Leader>b', dap.toggle_breakpoint)
-vim.keymap.set('n', '<Leader>B', dap.set_breakpoint)
-vim.keymap.set('n', '<Leader>lp', function() dap.set_breakpoint(nil, nil, vim.fn.input('Log point message: ')) end)
-vim.keymap.set('n', '<Leader>dr', dap.repl.open)
-vim.keymap.set('n', '<Leader>dl', dap.run_last)
-vim.keymap.set('n', '<leader>dq', dapui.toggle)
+  vim.keymap.set('n', '<leader>ds', dap.continue)
+  vim.keymap.set('n', '<F10>', dap.step_over)
+  vim.keymap.set('n', '<F11>', dap.step_into)
+  vim.keymap.set('n', '<F12>', dap.step_out)
+  vim.keymap.set('n', '<Leader>b', dap.toggle_breakpoint)
+  vim.keymap.set('n', '<Leader>B', dap.set_breakpoint)
+  vim.keymap.set('n', '<Leader>lp', function() dap.set_breakpoint(nil, nil, vim.fn.input('Log point message: ')) end)
+  vim.keymap.set('n', '<Leader>dr', dap.repl.open)
+  vim.keymap.set('n', '<Leader>dl', dap.run_last)
+  vim.keymap.set('n', '<leader>dq', dapui.toggle)
 
--- chatgpt / copilot
-vim.keymap.set('n', '<leader>cc', ':ChatGPT<CR>')
-vim.keymap.set('n', '<leader>ce', ':Copilot enable<CR>')
-vim.keymap.set('n', '<leader>cd', ':Copilot disable<CR>')
+  -- chatgpt / copilot
+  vim.keymap.set('n', '<leader>cc', ':ChatGPT<CR>')
+  vim.keymap.set('n', '<leader>ce', ':Copilot enable<CR>')
+  vim.keymap.set('n', '<leader>cd', ':Copilot disable<CR>')
 
+  -- vim.keymap.set({'n', 'v'}, '<Leader>dh', function()
+  --   require('dap.ui.widgets').hover()
+  -- end)
+  -- vim.keymap.set({'n', 'v'}, '<Leader>dp', function()
+  --   require('dap.ui.widgets').preview()
+  -- end)
+  -- vim.keymap.set('n', '<Leader>df', function()
+  --   local widgets = require('dap.ui.widgets')
+  --   widgets.centered_float(widgets.frames)
+  -- end)
+  -- vim.keymap.set('n', '<Leader>ds', function()
+  --   local widgets = require('dap.ui.widgets')
+  --   widgets.centered_float(widgets.scopes)
+  -- end)
 
+  -- flutter specific
+  vim.keymap.set("n", "<leader>fa", ":FlutterRun<CR>")
+  vim.keymap.set("n", "<leader>fq", ":FlutterQuit<CR>")
+  vim.keymap.set("n", "<leader>fr", ":FlutterReload<CR>")
+  vim.keymap.set("n", "<leader>fR", ":FlutterRestart<CR>")
+  vim.keymap.set("n", "<leader>fD", ":FlutterVisualDebug<CR>")
+  vim.keymap.set("n", "<leader>fs", ":FlutterLspRestart<CR>")
+  -- TODO:
+  -- FlutterLspRestart for restarting analysis server
+  -- FlutterReanalyze - Forces LSP server reanalyze using custom LSP method dart/reanalyze.
 
--- vim.keymap.set({'n', 'v'}, '<Leader>dh', function()
---   require('dap.ui.widgets').hover()
--- end)
--- vim.keymap.set({'n', 'v'}, '<Leader>dp', function()
---   require('dap.ui.widgets').preview()
--- end)
--- vim.keymap.set('n', '<Leader>df', function()
---   local widgets = require('dap.ui.widgets')
---   widgets.centered_float(widgets.frames)
--- end)
--- vim.keymap.set('n', '<Leader>ds', function()
---   local widgets = require('dap.ui.widgets')
---   widgets.centered_float(widgets.scopes)
--- end)
+  -- Map this function to a key combination.
+  -- vim.keymap.set('n', '<leader>br', function()
+  --     require('telescope').extensions.flutter_build_runner.my_picker()
+  --   end,
+  --   { noremap = true, silent = true })
 
--- flutter specific
-vim.keymap.set("n", "<leader>fa", ":FlutterRun<CR>")
-vim.keymap.set("n", "<leader>fq", ":FlutterQuit<CR>")
-vim.keymap.set("n", "<leader>fr", ":FlutterReload<CR>")
-vim.keymap.set("n", "<leader>fR", ":FlutterRestart<CR>")
-vim.keymap.set("n", "<leader>fD", ":FlutterVisualDebug<CR>")
-vim.keymap.set("n", "<leader>fs", ":FlutterLspRestart<CR>")
--- TODO:
--- FlutterLspRestart for restarting analysis server
--- FlutterReanalyze - Forces LSP server reanalyze using custom LSP method dart/reanalyze.
+  -- Assuming you're using a `init.lua` file
 
--- Map this function to a key combination.
--- vim.keymap.set('n', '<leader>br', function()
---     require('telescope').extensions.flutter_build_runner.my_picker()
---   end,
---   { noremap = true, silent = true })
+  local myplugin = require('pattobrien.flutter-build-runner')
 
--- Assuming you're using a `init.lua` file
+  -- Then you can map your plugin function to a key
 
-local myplugin = require('pattobrien.flutter-build-runner')
-
--- Then you can map your plugin function to a key
-
-vim.keymap.set('n', '<leader>h',
-  function()
-    myplugin.my_picker()
-  end,
-  { noremap = true, silent = true, })
+  vim.keymap.set('n', '<leader>h',
+    function()
+      myplugin.my_picker()
+    end,
+    { noremap = true, silent = true, })
 
 
 
 
--- Setup autocmd to run each time the buffer is entered
-vim.cmd([[
-  augroup Statusline
-    autocmd!
-    autocmd BufEnter * lua UpdateStatusline()
-  augroup END
-]])
+  -- Setup autocmd to run each time the buffer is entered
+  vim.cmd([[
+    augroup Statusline
+      autocmd!
+      autocmd BufEnter * lua UpdateStatusline()
+    augroup END
+  ]])
 
-function UpdateStatusline()
-  -- Check if the buffer is modified
-  -- local is_modified = vim.api.nvim_buf_get_option(0, 'modified')
-  -- print('hello there')
-  local is_modified = true
+  function UpdateStatusline()
+    -- Check if the buffer is modified
+    -- local is_modified = vim.api.nvim_buf_get_option(0, 'modified')
+    -- print('hello there')
+    local is_modified = true
 
-  -- Define color and icon based on the condition
-  local color, icon
-  if is_modified then
-    color = '%#DiffAdd#' -- Use DiffAdd highlight group, you can define your own
-    icon = '💾'        -- Use an icon for modified buffer
-  else
-    color = '%#Normal#'  -- Use Normal highlight group
-    icon = '✔'         -- Use a different icon for unmodified buffer
+    -- Define color and icon based on the condition
+    local color, icon
+    if is_modified then
+      color = '%#DiffAdd#' -- Use DiffAdd highlight group, you can define your own
+      icon = '💾'        -- Use an icon for modified buffer
+    else
+      color = '%#Normal#'  -- Use Normal highlight group
+      icon = '✔'         -- Use a different icon for unmodified buffer
+    end
+
+    -- Apply to statusline
+    local statusline = string.format('%s %s %%f', color, icon)
+    vim.api.nvim_set_option('statusline', statusline)
   end
 
-  -- Apply to statusline
-  local statusline = string.format('%s %s %%f', color, icon)
-  vim.api.nvim_set_option('statusline', statusline)
+  -- print('hello')
+  UpdateStatusline()
+
+  -- M.my_picker()
+
 end
-
--- print('hello')
-UpdateStatusline()
-
--- M.my_picker()
