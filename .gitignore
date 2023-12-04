@@ -5,3 +5,4 @@
 .archive/**/*
 .env*
 .vscode/**/*
+.dart_tool/**/*
