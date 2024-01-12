@@ -49,3 +49,11 @@ vim.opt.colorcolumn = "80"
 -- vim.opt.spelllang = { 'en_us' }
 
 vim.g.mapleader = " "
+
+-- remove tildes from end of buffer
+vim.opt.fillchars = { vert = "│", fold = " ", eob = " " }
+
+-- enable the startup screen
+vim.g.nvim_tree_disable_netrw = 0
+vim.g.nvim_tree_hijack_netrw = 0
+vim.opt.shortmess:remove('l')

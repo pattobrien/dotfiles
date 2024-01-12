@@ -209,6 +209,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.0.0"
+  dart_nvim_api:
+    dependency: "direct main"
+    description:
+      name: dart_nvim_api
+      sha256: "7f2b6754b00cb4333d33711fe2c5ae22239f509e0af5871187778691d916aaf1"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.3.0"
   dart_style:
     dependency: transitive
     description:

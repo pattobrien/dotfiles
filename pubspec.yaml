@@ -6,6 +6,7 @@ environment:
   sdk: ^3.2.0
 
 dependencies:
+  dart_nvim_api: ^0.3.0
   dcli: ^3.2.0
   messagepack: ^0.2.1
   msgpack_dart: ^1.0.1
