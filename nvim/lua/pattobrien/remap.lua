@@ -41,7 +41,51 @@ vim.keymap.set("n", "<leader>j", "<cmd>lprev<CR>zz")
 vim.keymap.set("n", "<leader>sf", ":source %<CR>")    -- from current file
 vim.keymap.set('n', '<leader>sv', ':so $MYVIMRC<cr>') -- entire nvim config
 
+
 -- debugger
+if vim.g.vscode then 
+    local vscode = require('vscode-neovim')
+    -- toggle breakpoint
+    vim.keymap.set("n", "<leader>db", function()
+        vscode.action("editor.debug.action.toggleBreakpoint")
+    end)
+    -- continue
+    vim.keymap.set("n", "<leader>dc", function()
+        vscode.action("workbench.action.debug.continue")
+    end)
+
+    -- start debugging
+    vim.keymap.set("n", "<leader>dd", function()
+        vscode.action("workbench.action.debug.start")
+    end)
+
+    -- restart debugger
+    vim.keymap.set("n", "<leader>dr", function()
+        vscode.action("workbench.action.debug.restart")
+    end)
+
+    -- stop debugging
+    vim.keymap.set("n", "<leader>dq", function()
+        vscode.action("workbench.action.debug.stop")
+    end)
+
+    -- step over
+    -- using `n` because its the same key as `next` in vim, which might
+    -- make intuitive sense, 
+    vim.keymap.set("n", "<leader>dn", function()
+        vscode.action("workbench.action.debug.stepOver")
+    end)
+
+    -- step into
+    vim.keymap.set("n", "<leader>dj", function()
+        vscode.action("workbench.action.debug.stepInto")
+    end)
+
+    -- step out
+    vim.keymap.set("n", "<leader>dk", function()
+        vscode.action("workbench.action.debug.stepOut")
+    end)
+end
 if vim.g.vscode == nil then
     -- nvim-tree
     vim.keymap.set("n", "<leader>e", ":NvimTreeToggle<CR>")
