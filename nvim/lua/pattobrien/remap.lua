@@ -85,6 +85,14 @@ if vim.g.vscode then
     vim.keymap.set("n", "<leader>dk", function()
         vscode.action("workbench.action.debug.stepOut")
     end)
+
+    -- rename
+    vim.keymap.set("n", "<leader>rn", function()
+        vscode.action("editor.action.rename")
+    end)
+    vim.keymap.set("v", "<leader>rn", function()
+        vscode.action("editor.action.rename")
+    end)
 end
 if vim.g.vscode == nil then
     -- nvim-tree
