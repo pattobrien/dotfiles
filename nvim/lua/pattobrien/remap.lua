@@ -1,3 +1,11 @@
+
+local vim = vim
+local api = vim.api
+
+local xnoremap = function(lhs, rhs, opts)
+    api.nvim_set_keymap('x', lhs, rhs, opts or {})
+end
+
 vim.g.mapleader = " "
 
 -- general strategy for keymaps
@@ -24,8 +32,9 @@ vim.keymap.set("n", "<C-u>", "<C-u>zz")
 vim.keymap.set("n", "n", "nzzzv")
 vim.keymap.set("n", "N", "Nzzzv")
 
--- deletion goes to void buffer instead of normal buffer
-vim.keymap.set("x", "<leader>p", "\"_dp")
+-- deletion goes to void buffer instead of normalbuffer
+
+xnoremap("<leader>p", "\"_dP")
 
 -- start a new tmux session from sessionizer (TODO: fix this)
 vim.keymap.set("n", "<C-f>", "<cmd>silent !tmux neww tmux-sessionizer<CR>")
@@ -43,7 +52,7 @@ vim.keymap.set('n', '<leader>sv', ':so $MYVIMRC<cr>') -- entire nvim config
 
 
 -- debugger
-if vim.g.vscode then 
+if vim.g.vscode then
     local vscode = require('vscode-neovim')
     -- toggle breakpoint
     vim.keymap.set("n", "<leader>db", function()
@@ -69,9 +78,14 @@ if vim.g.vscode then
         vscode.action("workbench.action.debug.stop")
     end)
 
+
+    vim.keymap.set("n", "<leader>gd", function()
+        vscode.action("editor.action.goToDeclaration")
+    end)
+
     -- step over
     -- using `n` because its the same key as `next` in vim, which might
-    -- make intuitive sense, 
+    -- make intuitive sense,
     vim.keymap.set("n", "<leader>dn", function()
         vscode.action("workbench.action.debug.stepOver")
     end)
