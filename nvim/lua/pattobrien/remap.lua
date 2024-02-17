@@ -1,4 +1,3 @@
-
 local vim = vim
 local api = vim.api
 
@@ -50,6 +49,79 @@ vim.keymap.set("n", "<leader>j", "<cmd>lprev<CR>zz")
 vim.keymap.set("n", "<leader>sf", ":source %<CR>")    -- from current file
 vim.keymap.set('n', '<leader>sv', ':so $MYVIMRC<cr>') -- entire nvim config
 
+-- call fine-designs cli tool
+-- below is working!
+-- vim.keymap.set(
+--     "n", "<leader>fm",
+--     ':!/Users/pattobrien/.fvm/default/bin/dart /Users/pattobrien/dev/pattobrien/app_builder/bin/main.dart create model "$(pwd)/' .. vim.fn.expand('%:p') .. '"<CR>',
+--     { noremap = true, silent = false }
+-- )
+local telescope = require('telescope')
+local pickers = require('telescope.pickers')
+local finders = require('telescope.finders')
+local conf = require('telescope.config').values
+
+local sorters = require('telescope.sorters')
+local previewers = require('telescope.previewers')
+vim.keymap.set("n", "<leader>fm", function()
+    vim.fn.setenv("NVIM_SERVER", vim.v.servername)
+    local command =
+        "/Users/pattobrien/.fvm/default/bin/dart /Users/pattobrien/dev/pattobrien/app_builder/bin/main.dart create model " ..
+        vim.fn.fnameescape(vim.fn.expand('%:p'))
+
+    -- Use jobstart for asynchronous execution
+    vim.fn.jobstart(command, {
+        stdout_buffered = true,
+        on_stdout = function(_, data)
+            if data then
+                -- Assuming 'data' is a table of lines, similar to your io.popen approach
+                -- Use telescope to show the results in a popup picker
+                pickers.new({}, {
+                    prompt_title = "Custom Search",
+                    finder = finders.new_table {
+                        results = data,
+                    },
+                    sorter = sorters.get_fuzzy_file({}),
+                    -- previewer = previewers.previewer({})
+                }):find()
+            end
+        end,
+        on_stderr = function(_, data)
+            if data then
+                -- Handle errors
+                print("Error: ", table.concat(data, '\n'))
+            end
+        end,
+        on_exit = function(_, exit_code)
+            if exit_code ~= 0 then
+                print("Command failed with exit code", exit_code)
+            end
+        end,
+    })
+end, { noremap = true })
+-- vim.keymap.set("n", "<leader>fm", function()
+--     vim.fn.setenv("NVIM_SERVER", vim.v.servername)
+--     -- local command = "app_builder create model " .. vim.fn.fnameescape(vim.fn.expand('%:p'))
+--     local command =
+--         "/Users/pattobrien/.fvm/default/bin/dart /Users/pattobrien/dev/pattobrien/app_builder/bin/main.dart create model " ..
+--         vim.fn.fnameescape(vim.fn.expand('%:p'))
+--     local handle = io.popen(command, "r")
+--     local result = handle:read("*a")
+--     handle:close()
+--
+--     -- Split the result into lines
+--     local lines = vim.split(result, '\n', true)
+--
+--     -- Use telescope to show the results in a popup picker
+--     pickers.new({}, {
+--         prompt_title = "Custom Search",
+--         finder = finders.new_table {
+--             results = lines,
+--         },
+--         sorter = sorters.get_fuzzy_file({}),
+--         -- previewer = previewers.previewer({})
+--     }):find()
+-- end, { noremap = true })
 
 -- debugger
 if vim.g.vscode then
