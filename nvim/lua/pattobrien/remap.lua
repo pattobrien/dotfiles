@@ -48,14 +48,49 @@ vim.keymap.set("n", "<leader>j", "<cmd>lprev<CR>zz")
 -- re-source lua files
 vim.keymap.set("n", "<leader>sf", ":source %<CR>")    -- from current file
 vim.keymap.set('n', '<leader>sv', ':so $MYVIMRC<cr>') -- entire nvim config
+-- local actions = require("telescope.actions.")
 
--- call fine-designs cli tool
--- below is working!
--- vim.keymap.set(
---     "n", "<leader>fm",
---     ':!/Users/pattobrien/.fvm/default/bin/dart /Users/pattobrien/dev/pattobrien/app_builder/bin/main.dart create model "$(pwd)/' .. vim.fn.expand('%:p') .. '"<CR>',
---     { noremap = true, silent = false }
--- )
+---@type fun(command: string): function
+local function callDartCommand(command)
+    local callback = function()
+        vim.fn.setenv("NVIM_SERVER", vim.v.servername)
+        local fullCommand =
+            "/Users/pattobrien/.fvm/default/bin/dart " ..
+            -- "--observe=9231 " ..
+            "/Users/pattobrien/dev/pattobrien/app_builder/bin/main.dart " ..
+            command .. " -d" ..
+            vim.fn.fnameescape(vim.fn.expand('%:p'))
+
+
+        -- Use jobstart for asynchronous execution
+        vim.fn.jobstart(fullCommand, {
+            stdout_buffered = true,
+            on_stdout = function(_, data)
+                if data then
+                    print("Stdout: ", data)
+                end
+            end,
+            on_stderr = function(_, data)
+                if data then
+                    -- Handle errors
+                    print("Error: ", table.concat(data, '\n'))
+                end
+            end,
+            on_exit = function(_, exit_code)
+                if exit_code ~= 0 then
+                    print("Command failed with exit code", exit_code)
+                end
+            end,
+
+        })
+    end
+
+    return callback
+end
+
+vim.keymap.set("n", "<leader>fm", callDartCommand("create model"), { noremap = true })
+
+
 -- debugger
 if vim.g.vscode then
     local vscode = require('vscode-neovim')
@@ -216,33 +251,5 @@ if vim.g.vscode == nil then
     UpdateStatusline()
 
     -- M.my_picker()
-
-    vim.keymap.set("n", "<leader>fm", function()
-        vim.fn.setenv("NVIM_SERVER", vim.v.servername)
-        local command =
-            "/Users/pattobrien/.fvm/default/bin/dart /Users/pattobrien/dev/pattobrien/app_builder/bin/main.dart create model " ..
-            vim.fn.fnameescape(vim.fn.expand('%:p'))
-
-        -- Use jobstart for asynchronous execution
-        vim.fn.jobstart(command, {
-            stdout_buffered = true,
-            on_stdout = function(_, data)
-                if data then
-                    print("Stdout: ", data)
-                end
-            end,
-            on_stderr = function(_, data)
-                if data then
-                    -- Handle errors
-                    print("Error: ", table.concat(data, '\n'))
-                end
-            end,
-            on_exit = function(_, exit_code)
-                if exit_code ~= 0 then
-                    print("Command failed with exit code", exit_code)
-                end
-            end,
-        })
-    end, { noremap = true })
 end
 
