@@ -50,51 +50,69 @@ vim.keymap.set("n", "<leader>sf", ":source %<CR>")    -- from current file
 vim.keymap.set('n', '<leader>sv', ':so $MYVIMRC<cr>') -- entire nvim config
 -- local actions = require("telescope.actions.")
 
----@type fun(command: string): function
-local function callDartCommand(command)
-    local callback = function()
-        vim.fn.setenv("NVIM_SERVER", vim.v.servername)
-        local fullCommand =
-            "/Users/pattobrien/.fvm/default/bin/dart " ..
-            -- "--observe=9231 " ..
-            "/Users/pattobrien/dev/pattobrien/app_builder/bin/main.dart " ..
-            command .. " -d" ..
-            vim.fn.fnameescape(vim.fn.expand('%:p'))
+vim.api.nvim_create_autocmd("VimEnter", {
+    pattern = "*",
+    callback = function()
+        vim.fn.system(
+            '~/.fvm/default/bin/dart ' ..
+            '--enable-vm-service' ..
+            '~/dev/pattobrien/app_builder/bin/client.dart  '
+        )
+    end,
+})
+
+-- ---@type fun(command: string): function
+-- local function callDartCommand(command)
+-- local callback = function()
+--     vim.fn.setenv("NVIM_SERVER", vim.v.servername)
+--     local fullCommand =
+--         "/Users/pattobrien/.fvm/default/bin/dart " ..
+--         -- "--observe=9231 " ..
+--         "/Users/pattobrien/dev/pattobrien/app_builder/bin/main.dart " ..
+--         command .. " -d" ..
+--         vim.fn.fnameescape(vim.fn.expand('%:p'))
+--
+--
+--     -- Use jobstart for asynchronous execution
+--     vim.fn.jobstart(fullCommand, {
+--         stdout_buffered = true,
+--         on_stdout = function(_, data)
+--             if data then
+--                 print("Stdout: ", data)
+--             end
+--         end,
+--         on_stderr = function(_, data)
+--             if data then
+--                 -- Handle errors
+--                 print("Error: ", table.concat(data, '\n'))
+--             end
+--         end,
+--         on_exit = function(_, exit_code)
+--             if exit_code ~= 0 then
+--                 print("Command failed with exit code", exit_code)
+--             end
+--         end,
+--
+--     })
+-- end
+-- return callback
+-- end
 
 
-        -- Use jobstart for asynchronous execution
-        vim.fn.jobstart(fullCommand, {
-            stdout_buffered = true,
-            on_stdout = function(_, data)
-                if data then
-                    print("Stdout: ", data)
-                end
-            end,
-            on_stderr = function(_, data)
-                if data then
-                    -- Handle errors
-                    print("Error: ", table.concat(data, '\n'))
-                end
-            end,
-            on_exit = function(_, exit_code)
-                if exit_code ~= 0 then
-                    print("Command failed with exit code", exit_code)
-                end
-            end,
+-- vim.keymap.set("n", "<leader>fm", function() DartApp.send("create model") end, { noremap = true })
 
-        })
-    end
-
-    return callback
-end
-
-vim.keymap.set("n", "<leader>fm", callDartCommand("create model"), { noremap = true })
-
+-- ---@type fun(string) function
+-- local vscode_action = function(command)
+--     return function()
+--         vscode.action(command)
+--     end
+-- end
 
 -- debugger
 if vim.g.vscode then
     local vscode = require('vscode-neovim')
     -- toggle breakpoint
+    -- vim.keymap.set("n", "<leader>db", vscode_action("editor.debug.action.toggleBreakpoint"))
     vim.keymap.set("n", "<leader>db", function()
         vscode.action("editor.debug.action.toggleBreakpoint")
     end)
@@ -107,6 +125,7 @@ if vim.g.vscode then
     vim.keymap.set("n", "<leader>dd", function()
         vscode.action("workbench.action.debug.start")
     end)
+
 
     -- restart debugger
     vim.keymap.set("n", "<leader>dr", function()
@@ -252,4 +271,3 @@ if vim.g.vscode == nil then
 
     -- M.my_picker()
 end
-

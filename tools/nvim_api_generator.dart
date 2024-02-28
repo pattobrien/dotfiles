@@ -1,43 +1,41 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
+import 'dart:typed_data';
 
-import 'package:messagepack/messagepack.dart';
+import 'package:dart_nvim_api/dart_nvim_api.dart';
+import 'package:msgpack_dart/msgpack_dart.dart';
 
 class NeovimMetadataFetcher {
   Future<Map<dynamic, dynamic>> fetchApiInfo(String socketPath) async {
+    final nvim = Nvim.spawn(
+      onNotify: (p0, p1, p2) {
+        print('onNotify: $p0, $p1, $p2');
+      },
+      onRequest: (p0, p1, p2) {
+        print('onRequest: $p0, $p1, $p2');
+      },
+    );
+
     final address = InternetAddress(socketPath, type: InternetAddressType.unix);
     final socket = await Socket.connect(address, 0);
     final requestId = 1;
     // final serialized = msgpack.serialize([0, requestId, "nvim_get_api_info", []]);
-    final packer = Packer();
-    packer.packListLength(4);
-    packer.packInt(0);
-    packer.packInt(requestId);
-    packer.packString("nvim_get_api_info");
-    packer.packListLength(0);
-    final serialized = packer.takeBytes();
+    final request = serialize([0, requestId, "nvim_get_api_info", []]);
 
-    socket.add(serialized);
+    socket.add(request);
 
     await socket.flush();
 
-    final response = <int>[];
+    Timer(Duration(seconds: 2), () => socket.close());
 
-    final timer = Timer(Duration(seconds: 2), () {
-      socket.close();
-    });
+    final response = <int>[];
 
     await for (final data in socket) {
       response.addAll(data);
     }
 
-    // final List<int> response = await socket.first;
-    // if (response.length == 16384) {
-    //   final next = await socket.;
-    // }
-    final unpacker = Unpacker.fromList(response);
-    final result = unpacker.unpackList();
+    final result = deserialize(Uint8List.fromList(response));
     final api = result[3];
     if (api is! List) {
       throw Exception('Unexpected response from nvim_get_api_info');
@@ -53,21 +51,8 @@ class NeovimMetadataFetcher {
     final file = File('tools/test.json');
     await file.writeAsString(jsonEncode(apiMap));
 
-    // final response = <int>[];
-    // final result = msgpack.deserialize(
-    //   Uint8List.fromList(response.sublist(4, response.length - 1)),
-    // );
-    // await for (final data in socket) {
-    //   response.addAll(data);
-    //   // if (await socket.isEmpty) {
-    //   //   break;
-    //   // }
-    // }
-    // final List result = msgpack.deserialize(Uint8List.fromList(response));
     socket.close();
 
-    // The actual API metadata is in the second element of the response
-    // return result[1];
     return apiMap;
   }
 }

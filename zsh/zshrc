@@ -5,16 +5,16 @@ XDG_CACHE_HOME="$HOME/.cache"
 XDG_DATA_HOME="$HOME/.local/share"
 XDG_STATE_HOME="$HOME/.local/state"
 
-# if [ "$TERM_PROGRAM" = "vscode" ]; then
-#   return
-# fi
 
-# initialize tmux if it's not already running in the current shell
-# NOTE: this must be initialized before p10k is initialized
-DOES_TMUX_EXIST=$(tmux ls 2>/dev/null)
-if [ "$TERM_PROGRAM" != "vscode" ] && [ -z "$TMUX" ] && [ -z "$DOES_TMUX_EXIST" ]; then
-  exec tmux new-session -A -s workspace
-fi
+# NOTE: the below script is always causing vscode to crash on startup, 
+# because the shell that vscode initializes on startup is NOT the same as the
+# vscode terminal shell (i.e. TERM_PROGRAM is NOT 'vscode')
+# # initialize tmux if it's not already running in the current shell
+# # NOTE: this must be initialized before p10k is initialized
+# DOES_TMUX_EXIST=$(tmux ls 2>/dev/null)
+# if [ "$TERM_PROGRAM" != "vscode" ] && [ -z "$TMUX" ] && [ -z "$DOES_TMUX_EXIST" ]; then
+#   exec tmux new-session -A -s workspace
+# fi
 
 
 # Initialization code that may require console input (password prompts, [y/n]
