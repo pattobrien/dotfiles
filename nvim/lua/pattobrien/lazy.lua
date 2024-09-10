@@ -24,7 +24,15 @@ end
 
 if vim.g.vscode == nil then
     require("lazy").setup({
-        "folke/which-key.nvim",
+        {
+            "folke/which-key.nvim",
+            event = 'VeryLazy',
+            init = function()
+                vim.o.timeout = true
+                vim.o.timeoutlen = 300
+            end,
+
+        },
         "folke/neoconf.nvim",
         "folke/neodev.nvim",
         'nvim-lua/plenary.nvim',
@@ -36,9 +44,13 @@ if vim.g.vscode == nil then
         'onsails/lspkind.nvim', -- vscode-like icons for LSP
         {
             "j-hui/fidget.nvim",
-            -- tag = "v1.1.0",
+            dependencies = {
+                "nvim-telescope/telescope.nvim",
+            },
             tag = "legacy",
-        }, -- visualize LSP analyzer status
+        },
+        -- visualize LSP analyzer status
+        'folke/trouble.nvim',
 
         -- Autocompletion
         'hrsh7th/nvim-cmp',     -- Required
@@ -61,22 +73,21 @@ if vim.g.vscode == nil then
         { "nvim-telescope/telescope-fzf-native.nvim", build = 'make' },
         'nvim-telescope/telescope-dap.nvim',
         'nvim-telescope/telescope-ui-select.nvim',
-        -- fzf
 
         -- Enhanced file navigation
         'theprimeagen/harpoon',
         'christoomey/vim-tmux-navigator', -- tmux & split window navigation
         'theprimeagen/git-worktree.nvim',
 
-        -- Auto closing brackets, parenthesis, etc
-
+        -- Auto closing brackets/parentheses, comments etc
         'windwp/nvim-autopairs',
         'tpope/vim-surround',
         'numToStr/Comment.nvim', -- comment using gc
         'simrat39/symbols-outline.nvim',
-        'nvim-treesitter/nvim-treesitter',
         'mrjones2014/nvim-ts-rainbow',
 
+        -- treesitter
+        'nvim-treesitter/nvim-treesitter',
         -- Theme
         { "catppuccin/nvim",                          name = "catppuccin" },
         'kyazdani42/nvim-web-devicons',
@@ -98,7 +109,15 @@ if vim.g.vscode == nil then
         -- Git
         "tpope/vim-fugitive",
         'lewis6991/gitsigns.nvim',
-        --
+        -- Obsidian
+        {
+            'epwalsh/obsidian.nvim',
+            version = '*',
+        },
+
+        -- Command menu / picker
+        -- 'FeiyouG/commander.nvim',
+        'mrjones2014/legendary.nvim',
         -- Statusline
         'akinsho/bufferline.nvim',
         -- 'nvim-lualine/lualine.nvim',
@@ -114,15 +133,8 @@ if vim.g.vscode == nil then
         -- Lua specific
         'hrsh7th/cmp-nvim-lua',
 
-        -- Learn vim motions
-        'ThePrimeagen/vim-be-good',
-
         -- CheatSheet for remembering mappings
         'sudormrfbin/cheatsheet.nvim'
-
-        -- use('folke/trouble.nvim')
-        -- use('glepnir/lspsaga.nvim')
-
 
         -- testing
         -- use {

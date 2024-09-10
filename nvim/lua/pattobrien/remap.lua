@@ -18,6 +18,9 @@ vim.g.mapleader = " "
 vim.keymap.set("i", "jk", "<ESC>")
 vim.keymap.set("i", "jj", "<ESC>")
 
+-- -- set control to escape when pressed alone
+-- vim.keymap.set("i", "<C-c>", "<ESC>")
+--
 -- easily go to explorer
 vim.keymap.set("n", "<leader>pv", vim.cmd.Ex)
 
