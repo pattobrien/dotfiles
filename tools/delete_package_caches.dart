@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:dcli/dcli.dart';
 
 void main() {
-  // final rootDir = '/Users/pattobrien/dev/';
   final rootDir = '/Users/pattobrien/dev';
   late bool isDryRun = false;
   // final durationToKeep = 1;

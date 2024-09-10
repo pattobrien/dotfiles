@@ -152,6 +152,7 @@ source ~/.dotfiles/zsh/python.zsh
 source ~/.dotfiles/zsh/credentials.zsh
 source ~/.dotfiles/zsh/flutter.zsh
 source ~/.dotfiles/zsh/aliases.zsh
+source ~/.dotfiles/zsh/go.zsh
 
 if [ -f ~/.dotfiles/zsh/.env.zsh ]; then
   source ~/.dotfiles/zsh/.env.zsh
@@ -167,6 +168,12 @@ case ":$PATH:" in
 esac
 
 
-alias exa='exa -laFh --git --icons'
-alias ls='exa'
+# alias exa='exa -laFh --git --icons'
+# alias ls='exa'
+
+
+## [Completion]
+## Completion scripts setup. Remove the following line to uninstall
+[[ -f /Users/pattobrien/.dart-cli-completion/zsh-config.zsh ]] && . /Users/pattobrien/.dart-cli-completion/zsh-config.zsh || true
+## [/Completion]
 

@@ -20,7 +20,7 @@ alias fab="dart /Users/pattobrien/dev/pattobrien/app_builder/bin/main.dart"
 # export JAVA_HOME="/usr/local/opt/openjdk@11"
 # export JAVA_HOME="/usr/bin/java"
 export PUB_CACHE="$HOME/.pub-cache"
-export FVM_HOME="$HOME/.fvm"
+export FVM_CACHE_PATH="$HOME/.fvm"
 export FLUTTER_ROOT="$HOME/.fvm/default"
 
 export PATH="$PATH:$FLUTTER_ROOT/bin"
