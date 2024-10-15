@@ -1,6 +1,6 @@
-# .dotfiles
+# dotfiles
 
-## Installation Instructions
+## Setup
 
 ### 1. Install Xcode CLI tools
 
@@ -8,13 +8,15 @@
 xcode-select --install
 ```
 
-### 2. Use HTTPS to clone repository
+### 2. Clone repository
 
 ```sh
-git clone https://github.com/pattobrien/.dotfiles.git ~/.dotfiles
+git clone https://github.com/pattobrien/dotfiles.git ~/.dotfiles
 ```
 
 ### 3. Run dotbot install script
+
+NOTE: [`dotbot`](https://github.com/anishathalye/dotbot) is a utility app that supports syncing the settings of various applications to dotfiles (e.g. `kitty`, `skhd`).
 
 ```sh
 sh ~/.dotfiles/install
@@ -31,13 +33,14 @@ sh ~/.dotfiles/install server
 Sets permissions for required files (only required once on the system)
 
 ```sh
-
 chmod +x ~/.local/scripts/tmux-sessionizer
 ```
 
-## Maintainance
+## Maintenance
 
 ### Brew Dump
+
+Dumps a snapshot of all brew-installed applications.
 
 ```sh
 brew bundle dump --force --describe --file=~/.dotfiles/brew/personal/Brewfile
@@ -59,6 +62,3 @@ brew bundle dump --force --describe --file=~/.dotfiles/brew/personal/Brewfile
 - [ ] post-install scripts for packages (e.g. Dart/Flutter is required for fvm)
 - [ ] can `xcode-select --install` be run from the install script?
 
-## Feature Wishlist
-
-- [ ]
