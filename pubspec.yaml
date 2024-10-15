@@ -1,5 +1,5 @@
 name: dotfiles
-description: Scripts for setting up and running my development environment.
+description: Scripts for setting up and running a development environment.
 version: 0.1.0-dev.1
 
 environment:

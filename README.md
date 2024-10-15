@@ -1,5 +1,7 @@
 # dotfiles
 
+Configurations for Neovim, kitty, git, and other various developer tools.
+
 ## Setup
 
 ### 1. Install Xcode CLI tools
