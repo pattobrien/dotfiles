@@ -1,0 +1,29 @@
+
+# Things to add to cheat sheet (that I always forget):
+# - Flutter / Dart specific commands
+# - LSP commands: go to definition, view all diagnostics in file
+# - LSP code assists: view menu, navigate menu
+# - TMUX Windowizer / Sessionizer (if possible?)
+# - Create new file without using nvim-tree
+# - Create new directory without nvim-tree
+# - Debugger commands: run in debug mode, toggle breakpoints
+
+LSP: Go to definition           | <leader>gd
+LSP: View diagnostics in file   | <leader>dl
+LSP: Code Actions View menu     | <leader>ca
+LSP: Troubleshooting            | :LspInfo
+LSP: Rename                     | <leader>rn
+
+Flutter: Commands menu          | <leader>fl
+
+# example of cheatsheet
+
+# ## cheatsheet @quick @reference
+# Open (in telescope if installed)    | :Cheatsheet
+# Open (in telescope if installed)    | <leader>?
+# Force open in floating window       | :Cheatsheet!
+# Open user cheatsheet                | :CheatsheetEdit
+# Open user cheatsheet from Telescope | <C-E>
+# Toggle default cheatsheet Telescope | <C-D>
+
+

@@ -1,0 +1,16 @@
+name: dotfiles
+description: Scripts for setting up and running my development environment.
+version: 0.1.0-dev.1
+
+environment:
+  sdk: ^3.2.0
+
+dependencies:
+  dart_nvim_api: ^0.3.0
+  dcli: ^4.0.1-beta.4
+  messagepack: ^0.2.1
+  msgpack_dart: ^1.0.1
+  path: ^1.8.0
+
+dev_dependencies:
+  build_runner: ^2.4.9

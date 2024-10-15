@@ -5,16 +5,16 @@ XDG_CACHE_HOME="$HOME/.cache"
 XDG_DATA_HOME="$HOME/.local/share"
 XDG_STATE_HOME="$HOME/.local/state"
 
-# if [ "$TERM_PROGRAM" = "vscode" ]; then
-#   return
-# fi
 
-# initialize tmux if it's not already running in the current shell
-# NOTE: this must be initialized before p10k is initialized
-DOES_TMUX_EXIST=$(tmux ls 2>/dev/null)
-if [ "$TERM_PROGRAM" != "vscode" ] && [ -z "$TMUX" ] && [ -z "$DOES_TMUX_EXIST" ]; then
-  exec tmux new-session -A -s workspace
-fi
+# NOTE: the below script is always causing vscode to crash on startup, 
+# because the shell that vscode initializes on startup is NOT the same as the
+# vscode terminal shell (i.e. TERM_PROGRAM is NOT 'vscode')
+# # initialize tmux if it's not already running in the current shell
+# # NOTE: this must be initialized before p10k is initialized
+# DOES_TMUX_EXIST=$(tmux ls 2>/dev/null)
+# if [ "$TERM_PROGRAM" != "vscode" ] && [ -z "$TMUX" ] && [ -z "$DOES_TMUX_EXIST" ]; then
+#   exec tmux new-session -A -s workspace
+# fi
 
 
 # Initialization code that may require console input (password prompts, [y/n]
@@ -152,6 +152,7 @@ source ~/.dotfiles/zsh/python.zsh
 source ~/.dotfiles/zsh/credentials.zsh
 source ~/.dotfiles/zsh/flutter.zsh
 source ~/.dotfiles/zsh/aliases.zsh
+source ~/.dotfiles/zsh/go.zsh
 
 if [ -f ~/.dotfiles/zsh/.env.zsh ]; then
   source ~/.dotfiles/zsh/.env.zsh
@@ -167,6 +168,12 @@ case ":$PATH:" in
 esac
 
 
-alias exa='exa -laFh --git --icons'
-alias ls='exa'
+# alias exa='exa -laFh --git --icons'
+# alias ls='exa'
+
+
+## [Completion]
+## Completion scripts setup. Remove the following line to uninstall
+[[ -f /Users/pattobrien/.dart-cli-completion/zsh-config.zsh ]] && . /Users/pattobrien/.dart-cli-completion/zsh-config.zsh || true
+## [/Completion]
 

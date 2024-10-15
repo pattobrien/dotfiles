@@ -58,3 +58,7 @@ brew bundle dump --force --describe --file=~/.dotfiles/brew/personal/Brewfile
 - [ ] setup 1password in case passwords are needed for app installations
 - [ ] post-install scripts for packages (e.g. Dart/Flutter is required for fvm)
 - [ ] can `xcode-select --install` be run from the install script?
+
+## Feature Wishlist
+
+- [ ]
