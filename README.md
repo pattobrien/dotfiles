@@ -63,4 +63,51 @@ brew bundle dump --force --describe --file=~/.dotfiles/brew/personal/Brewfile
 - [ ] setup 1password in case passwords are needed for app installations
 - [ ] post-install scripts for packages (e.g. Dart/Flutter is required for fvm)
 - [ ] can `xcode-select --install` be run from the install script?
+- [ ] does asdf have a zsh autocomplete plugin?
 
+### Notes from Fern setup
+
+- existing zshrc file not overridden (probably good)'
+- error:
+
+```
+/Users/fern/.zshrc:source:97: no such file or directory: /Users/fern/.oh-my-zsh/oh-my-zsh.sh
+```
+
+- brew: too many apps were installed
+  - should maintain a `work` set of apps
+- mac settings
+  - mouse/trackpad
+  - window / desktop transition 
+  - finder settings
+  - apple account signed in? (should this just be a part of the get started guide?)
+  - accessibility/privacy settings per-app (e.g. Zoom needs screen-share access)
+  - settings for apps that open on startup (e.g. `BetterTouchTool`)
+  - auto-hide dock
+  - allow holding down `hjkl` keys (I think this was a keyboard config?)
+- vscode settings / profile not setup
+  - note: extensions are set up (via brew), but not user settings (`~/Library/Application Support/Code/User/settings.json`)
+- manual app setup steps:
+  - 1password sign-in
+  - github sign-in
+- make `/dev` default directory
+- chrome settings
+  - 1password extensions (and others)
+  - bookmarks?
+- install default sdks (asdf, fvm)
+  - e.g. `fvm install stable && fvm install beta && fvm install master`
+  - sdks to install:
+    - flutter (fvm)
+    - node (asdf)
+    - ts (asdf)
+    - go (asdf)
+    - typescript (via `npm i -g`)
+```console
+asdf plugin add golang && asdf plugin add nodejs && asdf plugin add deno
+asdf install golang latest && asdf install nodejs latest && asdf plugin install deno latest
+asdf global golang latest && asdf global nodejs latest && asdf global deno latest
+```
+- automatically accept xcode license (`xcodebuild -license accept`)
+- needed to comment out `1password` zsh plugin in `.zshrc`, because `op` doesnt
+  have the proper permissions
+- 

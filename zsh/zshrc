@@ -66,6 +66,7 @@ plugins=(
   tmux
   dotenv # - source .env variables when you cd into a directory
   gitignore
+  asdf
   # doctl # this causes 1password prompt when re-sourcing zshrc file, for some reason... so we should not use this
 
   # other plugins available that we should install at some point:
@@ -153,6 +154,7 @@ source ~/.dotfiles/zsh/credentials.zsh
 source ~/.dotfiles/zsh/flutter.zsh
 source ~/.dotfiles/zsh/aliases.zsh
 source ~/.dotfiles/zsh/go.zsh
+source ~/.dotfiles/zsh/php.zsh
 
 if [ -f ~/.dotfiles/zsh/.env.zsh ]; then
   source ~/.dotfiles/zsh/.env.zsh

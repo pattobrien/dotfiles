@@ -1,0 +1,11 @@
+- defaults:
+        link:
+              relink: true
+              create: true
+        shell:
+              stderr: true
+              stdout: true
+              stdin: true
+
+- shell:
+        - command: brew bundle --file brew/work/Brewfile

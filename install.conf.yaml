@@ -26,7 +26,19 @@
         ~/.config/op/plugins.sh: op/.config/plugins.sh
 
 - create:
-        - ~/dev2
+        - ~/dev
 
 - shell:
+        # Make scripts executable
+        - command: chmod +x scripts/*
+          description: Making scripts executable
+
+        # Create 1Password config directory with correct permissions
+        - command: mkdir -p ~/.config/op && chmod 700 ~/.config/op
+          description: Setting up 1Password config directory
+
+        # Run Homebrew setup
         - command: ./scripts/setup_homebrew.zsh
+
+        # Setup 1password CLI (will prompt to integrate CLI in 1password app)
+        - command: op account get
