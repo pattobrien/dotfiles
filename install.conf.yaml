@@ -7,7 +7,10 @@
               stdout: true
               stdin: true
 
-- clean: ["~", "~/.oh-my-zsh/custom/", "~/.oh-my-zsh/custom/plugins/"]
+- clean:
+        - "~"
+        - "~/.oh-my-zsh/custom/"
+        - "~/.oh-my-zsh/custom/plugins/"
 
 - link:
         ~/.tmux.conf: tmux/.tmux.conf
