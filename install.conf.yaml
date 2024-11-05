@@ -42,3 +42,7 @@
 
         # Setup 1password CLI (will prompt to integrate CLI in 1password app)
         - command: op account get
+        - command: op signin
+
+        # 1password agent setup
+        - command: ./scripts/1password_agent_setup.sh

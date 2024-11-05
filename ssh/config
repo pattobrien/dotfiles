@@ -1,0 +1,17 @@
+# General defaults
+Host *
+    IdentityAgent "~/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
+    AddKeysToAgent yes
+    UseKeychain yes
+    ServerAliveInterval 60
+
+# GitHub
+Host github.com
+    User git
+    IdentitiesOnly yes
+<!-- 
+# Example of development environments (non-sensitive)
+Host dev
+    HostName dev.example.com
+    User developer
+    ForwardAgent yes -->
