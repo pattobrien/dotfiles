@@ -1,51 +1,51 @@
 - defaults:
-        link:
-              relink: true
-              create: true
-        shell:
-              stderr: true
-              stdout: true
-              stdin: true
+          link:
+                  relink: true
+                  create: true
+          shell:
+                  stderr: true
+                  stdout: true
+                  stdin: true
 
 - clean:
-        - "~"
-        - "~/.oh-my-zsh/custom/"
-        - "~/.oh-my-zsh/custom/plugins/"
+          - "~"
+          - "~/.oh-my-zsh/custom/"
+          - "~/.oh-my-zsh/custom/plugins/"
 
 - link:
-        ~/.tmux.conf: tmux/.tmux.conf
-        ~/.zshrc:
-              #   force: true
-              path: zsh/zshrc
-        ~/.zshenv: zsh/zshenv
-        ~/.gitconfig:
-              path: git/.gitconfig
-              force: true
-        ~/.config/kitty/kitty.conf: kitty/kitty.conf
-        ~/.config/gh: gh
-        ~/.config/yabai: yabai
-        ~/.config/skhd: skhd
-        ~/.config/nvim: nvim
-        ~/.config/op/plugins.sh: op/.config/plugins.sh
+          ~/.tmux.conf: tmux/.tmux.conf
+          ~/.zshrc:
+                  #   force: true
+                  path: zsh/zshrc
+          ~/.zshenv: zsh/zshenv
+          ~/.gitconfig:
+                  path: git/.gitconfig
+                  force: true
+          ~/.config/kitty/kitty.conf: kitty/kitty.conf
+          ~/.config/gh: gh
+          ~/.config/yabai: yabai
+          ~/.config/skhd: skhd
+          ~/.config/nvim: nvim
+          ~/.config/op/plugins.sh: op/.config/plugins.sh
 
 - create:
-        - ~/dev
+          - ~/dev
 
 - shell:
-        # Make scripts executable
-        - command: chmod +x scripts/*
-          description: Making scripts executable
+          # Make scripts executable
+          - command: chmod +x scripts/*
+            description: Making scripts executable
 
-        # Create 1Password config directory with correct permissions
-        - command: mkdir -p ~/.config/op && chmod 700 ~/.config/op
-          description: Setting up 1Password config directory
+          # Create 1Password config directory with correct permissions
+          - command: mkdir -p ~/.config/op && chmod 700 ~/.config/op
+            description: Setting up 1Password config directory
 
-        # Run Homebrew setup
-        - command: ./scripts/setup_homebrew.zsh
+          # Run Homebrew setup
+          - command: ./scripts/setup_homebrew.zsh
 
-        # Setup 1password CLI (will prompt to integrate CLI in 1password app)
-        - command: op account get
-        - command: op signin
+          # Setup 1password CLI (will prompt to integrate CLI in 1password app)
+          - command: op account get
+          - command: op signin
 
-        # 1password agent setup
-        - command: ./scripts/1password_agent_setup.sh
+          # 1password agent setup
+          - command: ./scripts/1password_agent_setup.sh
