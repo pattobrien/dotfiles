@@ -82,9 +82,12 @@ brew bundle dump --force --describe --file=~/.dotfiles/brew/personal/Brewfile
   - finder settings
   - apple account signed in? (should this just be a part of the get started guide?)
   - accessibility/privacy settings per-app (e.g. Zoom needs screen-share access)
-  - settings for apps that open on startup (e.g. `BetterTouchTool`)
+  - settings for apps that open on startup
+    - BetterTouchTool
+    - RayCast
   - auto-hide dock
   - allow holding down `hjkl` keys (I think this was a keyboard config?)
+  - raycast did not override command+K
 - vscode settings / profile not setup
   - note: extensions are set up (via brew), but not user settings (`~/Library/Application Support/Code/User/settings.json`)
 - manual app setup steps:
@@ -110,4 +113,6 @@ asdf global golang latest && asdf global nodejs latest && asdf global deno lates
 - automatically accept xcode license (`xcodebuild -license accept`)
 - needed to comment out `1password` zsh plugin in `.zshrc`, because `op` doesnt
   have the proper permissions
-- 
+- xcode select tools:
+  - update to latest version (using `softwareupdate` ?)
+  - approve terms (using `softwareupdate` ?)
