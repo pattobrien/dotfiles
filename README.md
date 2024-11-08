@@ -85,6 +85,7 @@ brew bundle dump --force --describe --file=~/.dotfiles/brew/personal/Brewfile
   - settings for apps that open on startup
     - BetterTouchTool
     - RayCast
+    - 1Password
   - auto-hide dock
   - allow holding down `hjkl` keys (I think this was a keyboard config?)
   - raycast did not override command+K
