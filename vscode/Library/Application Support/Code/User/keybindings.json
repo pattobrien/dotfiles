@@ -1,0 +1,55 @@
+// Place your key bindings in this file to override the defaultsauto[]
+[
+  {
+    "key": "ctrl+shift+r",
+    "command": "editor.action.refactor",
+    "when": "editorHasCodeActionsProvider && editorTextFocus && !editorReadonly"
+  },
+  {
+    "key": "ctrl+shift+r",
+    "command": "-editor.action.refactor",
+    "when": "editorHasCodeActionsProvider && editorTextFocus && !editorReadonly"
+  },
+  // {
+  //     "key": "cmd+alt+g",
+  //     "command": "command-runner.run",
+  //     "args": {
+  //         "command": "flutter packages run build_runner build"
+  //     }
+  // },
+  {
+    "key": "cmd+alt+g",
+    "command": "command-runner.run",
+    "args": {
+      "command": "dart run build_runner watch -d"
+    }
+  },
+  {
+    "key": "cmd+n",
+    "command": "explorer.newFile"
+  },
+  {
+    "key": "shift+cmd+k",
+    "command": "cursorai.action.generateInTerminal",
+    "when": "terminalFocus && terminalHasBeenCreated || terminalFocus && terminalProcessSupported"
+  },
+  {
+    "key": "cmd+k",
+    "command": "-cursorai.action.generateInTerminal",
+    "when": "terminalFocus && terminalHasBeenCreated || terminalFocus && terminalProcessSupported"
+  },
+  {
+    "key": "cmd+k",
+    "command": "composer.startComposerPrompt",
+    "when": "composerIsEnabled && !terminalFocus"
+  },
+  {
+    "key": "cmd+k",
+    "command": "-composer.startComposerPrompt",
+    "when": "composerIsEnabled"
+  }
+  // {
+  //     "key": "cmd+shift+n",
+  //     "command": "explorer.newFolder"
+  // },
+]

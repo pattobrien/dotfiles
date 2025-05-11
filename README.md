@@ -40,6 +40,16 @@ Sets permissions for required files (only required once on the system)
 chmod +x ~/.local/scripts/tmux-sessionizer
 ```
 
+### 5. Sync VSCode Settings (Optional)
+
+To sync your global VSCode settings (like `settings.json`, `keybindings.json`) from this repository to their correct locations, run the stow script:
+
+```sh
+sh ~/.dotfiles/scripts/stow_vscode.sh
+```
+
+This will create symlinks from your home directory to the VSCode configuration files within this `.dotfiles` repository. If `stow` reports any conflicts, you may need to manually back up or remove existing VSCode configuration files from `~/Library/Application Support/Code/User/` before running the script again.
+
 ## Maintenance
 
 ### Brew Dump
@@ -61,10 +71,9 @@ brew bundle dump --force --describe --file=~/.dotfiles/brew/personal/Brewfile
 - [x] Clean up outdated /scripts/ folder
 - [x] BUG: tmux requirement in .zshrc causes terminal crash when tmux is not yet
       installed
+- [x] Add VSCode config
 - [ ] Steps for initializing TMUX plugins
-- [ ] Add VSCode config
 - [ ] setup 1password in case passwords are needed for app installations
-- [ ] post-install scripts for packages (e.g. Dart/Flutter is required for fvm)
 - [ ] can `xcode-select --install` be run from the install script?
 - [ ] docs: setup navigation when holding down hjkl on mac
   - see:

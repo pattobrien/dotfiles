@@ -1,0 +1,383 @@
+{
+  "chat.agent.enabled": true,
+  "go.testEnvFile": "${workspaceFolder}/.env",
+  "extensions.experimental.affinity": {
+    "asvetliakov.vscode-neovim": -1
+  },
+  "eslint.useFlatConfig": true,
+  "eslint.debug": true,
+  "npm.packageManager": "pnpm",
+  // "deno.enable": true,
+  "files.autoSaveWhenNoErrors": true,
+  "files.refactoring.autoSave": true,
+
+  "files.associations": {
+    "*.json": "jsonc",
+    "*.mdx": "markdown",
+    "*.mts": "typescript",
+    "*.astro": "astro",
+    "*.tsx": "typescriptreact",
+    "*.mjs": "javascript"
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "denoland.vscode-deno"
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "denoland.vscode-deno",
+    "editor.formatOnSave": true
+  },
+  "[php]": {
+    "editor.defaultFormatter": "bmewburn.vscode-intelephense-client",
+    "editor.formatOnSave": true
+  },
+  "[ruby]": {
+    "editor.defaultFormatter": "Shopify.ruby-lsp",
+    "editor.formatOnSave": true,
+    "editor.tabSize": 2,
+    "editor.insertSpaces": true,
+    "editor.semanticHighlighting.enabled": true,
+    "editor.formatOnType": true,
+    "editor.wordSeparators": "`~@#$%^&*()-=+[{]}\\|;:'\",.<>/"
+  },
+  "cSpell.enabled": false,
+  "files.watcherExclude": {
+    "**/.dart_tool": false,
+    "**/.fvm": true
+  },
+  "tinymist.exportPdf": "never",
+  "[typst]": {
+    "editor.formatOnSave": true,
+    "editor.wordSeparators": "`~!@#$%^&*()=+[{]}\\|;:'\",.<>/?"
+  },
+  "files.watcherInclude": [
+    ".dart_tool/sidecar_logs/",
+    ".dart_tool/sidecar_logs/latest.log"
+  ],
+  "files.exclude": {
+    "**/.git": true,
+    "**/.svn": true,
+    "**/.hg": true,
+    "**/CVS": true,
+    "**/.DS_Store": true,
+    "**/Thumbs.db": true,
+    "**/*.g.dart": true,
+    "**/*.freezed.dart": true,
+    "**/*.gr.dart": true
+  },
+  "[astro]": {
+    "editor.defaultFormatter": "astro-build.astro-vscode"
+  },
+  "explorerExclude.backup": {
+    // prevent ANY files from being backed up
+    "**": false
+  },
+
+  "search.exclude": {
+    "**/.fvm": true,
+    ".cache/**": true
+  },
+
+  "editor.tabSize": 2,
+  "editor.formatOnSaveMode": "file",
+  "editor.accessibilitySupport": "off",
+  "editor.semanticHighlighting.enabled": true,
+  "editor.bracketPairColorization.enabled": true,
+  "editor.guides.bracketPairs": "active",
+  "editor.rulers": [80],
+  "editor.formatOnSave": true,
+  "editor.lineNumbers": "relative",
+  "editor.codeActionsOnSave": {
+    "source.organizeImports": "explicit",
+    "source.fixAll": "never"
+  },
+  "editor.largeFileOptimizations": false,
+  "editor.suggest.snippetsPreventQuickSuggestions": false,
+  "editor.inlineSuggest.enabled": true,
+  "editor.defaultFormatter": null,
+  "editor.inlayHints.enabled": "off",
+
+  "terminal.integrated.inheritEnv": false,
+
+  "debug.allowBreakpointsEverywhere": true,
+  "debug.inlineValues": "on",
+  "debug.console.wordWrap": false,
+
+  "workbench.startupEditor": "none",
+  "workbench.editorAssociations": {
+    "git-rebase-todo": "default",
+    "*.plist": "default"
+  },
+  "telemetry.telemetryLevel": "off",
+
+  "git.autofetch": true,
+  "git.autoRepositoryDetection": false,
+  "git.confirmSync": false,
+  "git.ignoredRepositories": ["**/.fvm"],
+  "git.openRepositoryInParentFolders": "never",
+
+  "githubPullRequests.pullBranch": "never",
+  "githubIssues.queries": [
+    {
+      "label": "My Issues",
+      "query": "default"
+    },
+    {
+      "label": "Created Issues",
+      "query": "author:${user} state:open repo:${owner}/${repository} sort:created-desc"
+    }
+  ],
+
+  // -- copilot --
+  "github.copilot.editor.enableCodeActions": false,
+  "github.copilot.advanced": {
+    "debug.showScores": true
+  },
+  "github.copilot.enable": {
+    "*": true,
+    "plaintext": true,
+    "markdown": false,
+    "scminput": false,
+    "mdx": false,
+    "yaml": true,
+    "typescript": true,
+    "*.schema.yaml": true
+  },
+
+  // -- neovim --
+  "vscode-neovim.neovimExecutablePaths.darwin": "/opt/homebrew/bin/nvim",
+  "vscode-neovim.neovimInitVimPaths.darwin": "$HOME/.dotfiles/nvim/init.lua",
+  //   "extensions.experimental.affinity": {
+  //     "asvetliakov.vscode-neovim": 1
+  // },
+  "C_Cpp.intelliSenseCacheSize": 0,
+  "C_Cpp.default.configurationProvider": "ms-vscode.cpptools",
+  "C_Cpp.clang_format_style": "file",
+  "C_Cpp.clang_format_fallbackStyle": "Google",
+  "C_Cpp.intelliSenseEngine": "disabled",
+  "[markdown]": {
+    "editor.wordWrap": "bounded",
+    "editor.wordWrapColumn": 80,
+    "editor.rulers": [80],
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "denoland.vscode-deno"
+  },
+  "[mdx]": {
+    "editor.wordWrap": "bounded",
+    "editor.wordWrapColumn": 80,
+    "editor.formatOnSave": true
+  },
+  "[css]": {
+    "editor.defaultFormatter": "denoland.vscode-deno",
+    "editor.formatOnSave": true
+  },
+  "[postcss]": {
+    "editor.defaultFormatter": "denoland.vscode-deno",
+    "editor.formatOnSave": true
+  },
+  "[tailwindcss]": {
+    "editor.defaultFormatter": "denoland.vscode-deno",
+    "editor.formatOnSave": true
+  },
+  // "[md]": {
+  //   "editor.rulers": [80]
+  // },
+
+  // -- typescript --
+  "typescript.disableAutomaticTypeAcquisition": true,
+  "typescript.workspaceSymbols.excludeLibrarySymbols": true,
+  "typescript.workspaceSymbols.scope": "currentProject",
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "typescript.enablePromptUseWorkspaceTsdk": true,
+  "typescript.updateImportsOnFileMove.enabled": "always",
+  "javascript.updateImportsOnFileMove.enabled": "always",
+  "[typescript]": {
+    "editor.defaultFormatter": "denoland.vscode-deno",
+    "editor.formatOnSave": true
+  },
+  "prettier.requireConfig": false,
+  "tailwindCSS.includeLanguages": {
+    "\"html\"": "\"html\"",
+    "\"javascript\"": "\"javascript\"",
+    "\"css\"": "\"css\"",
+    "\"typescript\"": "\"typescript\""
+  },
+
+  // -- json --
+  "[jsonc]": {
+    "editor.wordWrap": "bounded",
+    "editor.wordWrapColumn": 120,
+    "editor.rulers": [120]
+  },
+
+  // -- yaml --
+  "yaml.schemas": {
+    "https://json.schemastore.org/dart-build.json": "build.yaml",
+    "file:///Users/pattobrien/.vscode/extensions/atlassian.atlascode-2.10.12/resources/schemas/pipelines-schema.json": "bitbucket-pipelines.yml"
+  },
+  "[yaml]": {
+    "editor.autoIndent": "advanced",
+    "editor.defaultFormatter": "redhat.vscode-yaml",
+    "editor.formatOnSave": true
+  },
+
+  // -- dart --
+  "[dart]": {
+    "editor.formatOnSave": true,
+    "editor.formatOnType": true,
+    "editor.rulers": [80],
+    "editor.selectionHighlight": false,
+    "editor.suggest.snippetsPreventQuickSuggestions": false,
+    "editor.suggestSelection": "first",
+    "editor.tabCompletion": "onlySnippets",
+    "editor.wordBasedSuggestions": "off"
+  },
+  "dart.sdkPaths": [
+    "/Users/pattobrien/.fvm/default/bin/cache/dart-sdk",
+    "/Users/pattobrien/.fvm/versions/",
+    "/Users/pattobrien/.dswitch/channels/dev/versions/"
+  ],
+  "dart.warnWhenEditingFilesInPubCache": false,
+  "dart.previewFlutterUiGuides": true,
+  "dart.flutterGenerateLocalizationsOnSave": "allIfDirty",
+  "dart.runPubGetOnNestedProjects": "both",
+  "dart.renameFilesWithClasses": "always",
+  "dart.checkForSdkUpdates": false,
+  "dart.addSdkToTerminalPath": true,
+  "dart.showInspectorNotificationsForWidgetErrors": false,
+  "dart.debugExternalPackageLibraries": true,
+  "dart.debugSdkLibraries": true,
+  "dart.projectSearchDepth": 5,
+  "dart.flutterSdkPath": "~/.fvm/default",
+  "dart.flutterSdkPaths": ["~/.fvm/versions/"],
+  "dart.vmAdditionalArgs": ["--enable-experiment=macros"],
+
+  // -- python --
+  "[python]": {
+    "editor.defaultFormatter": "ms-python.black-formatter",
+    "editor.formatOnSave": true
+  },
+  "python.defaultInterpreterPath": "/Users/pattobrien/.miniconda/bin/python",
+
+  // -- lua --
+  "Lua.diagnostics.globals": ["vim"],
+
+  // -- rust --
+  "[rust]": {
+    "editor.defaultFormatter": "rust-lang.rust-analyzer"
+  },
+
+  // -- go --
+  "[go]": {
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "golang.go",
+    "editor.codeActionsOnSave": {
+      "source.organizeImports": "never"
+    }
+  },
+  "gopls": {
+    "ui.diagnostic.analyses": {
+      "unusedvariable": false
+    }
+  },
+
+  "[proto3]": {
+    "editor.defaultFormatter": "xaver.clang-format"
+  },
+  "[prisma]": {
+    "editor.defaultFormatter": "Prisma.prisma",
+    "editor.formatOnSave": true
+  },
+  "[terraform]": {
+    "editor.defaultFormatter": "hashicorp.terraform"
+  },
+
+  // -- vscode theming --
+  "window.commandCenter": false,
+  "workbench.colorTheme": "Catppuccin Mocha",
+  "workbench.iconTheme": "vscode-icons",
+  // below is required, per the docs (see: https://github.com/be5invis/vscode-custom-css/tree/master#getting-started)
+  // for more custom css properties to use, see the vscode source code, for example:
+  // - https://github.com/microsoft/vscode/blob/main/src/vs/platform/quickinput/browser/media/quickInput.css
+  "vscode_custom_css.imports": [
+    "file:///Users/pattobrien/dev/fine_designs/sidecar2/.vscode/vscode.css"
+  ],
+
+  "zenMode.fullScreen": false,
+  "zenMode.hideLineNumbers": false,
+  "zenMode.centerLayout": false,
+
+  "notebook.formatOnSave.enabled": true,
+
+  "redhat.telemetry.enabled": false,
+  "cmake.showOptionsMovedNotification": false,
+  "cmake.configureOnOpen": false,
+
+  "cSpell.userWords": ["Wireframe"],
+  "vsicons.dontShowNewVersionMessage": true,
+
+  "todo-tree.general.debug": true,
+
+  "lldb.library": "/Applications/Xcode.app/Contents/SharedFrameworks/LLDB.framework/Versions/A/LLDB",
+  "lldb.launch.expressions": "native",
+
+  "diffEditor.ignoreTrimWhitespace": false,
+
+  "supernova.workspaceId": "14248",
+  "supernova.designSystemId": "16025",
+  "supernova.designSystemVersionId": "16347",
+  "supernova.designSystemBrandId": "15798",
+  "supernova.workspaceName": "test_project",
+  "supernova.designSystemName": "My Design System",
+  "supernova.designSystemVersionName": "Shared draft",
+  "supernova.designSystemBrandName": "Default",
+
+  "gitlens.graph.minimap.additionalTypes": [
+    "localBranches",
+    "stashes",
+    "remoteBranches",
+    "tags"
+  ],
+
+  "vs-kubernetes": {
+    "vs-kubernetes.minikube-show-information-expiration": "2025-07-15T11:26:51.214Z"
+  },
+
+  "antlr4.generation": {
+    "mode": "internal",
+    "listeners": true,
+    "visitors": false
+  },
+  "go.toolsManagement.autoUpdate": true,
+  "github.copilot.editor.enableAutoCompletions": true,
+  "prisma.showPrismaDataPlatformNotification": false,
+  "dart.showTodos": true,
+  "workbench.experimental.enableNewProfilesUI": true,
+  "scm.showHistoryGraph": false,
+  "[swift]": {
+    "editor.defaultFormatter": "sswg.swift-lang"
+  },
+  "dart.analyzerInstrumentationLogFile": null,
+  "yaml.maxItemsComputed": 10000,
+  "[typst-code]": {
+    "editor.wordSeparators": "`~!@#$%^&*()=+[{]}\\|;:'\",.<>/?"
+  },
+  "totalTypeScript.hideAllTips": false,
+  "totalTypeScript.hideBasicTips": false,
+  "totalTypeScript.hiddenTips": [
+    "literal-type",
+    "as-const",
+    "as-const-on-object",
+    "typing-function-parameters",
+    "basic-types",
+    "function-return-type",
+    "variable-type-annotation",
+    "type-alias-declaration",
+    "ts-object-type",
+    "typeof",
+    "array-type",
+    "interface-declaration"
+  ],
+  "chat.editing.alwaysSaveWithGeneratedChanges": true,
+  "lldb.suppressUpdateNotifications": true,
+  "tailwind-fold.autoFold": false
+}
