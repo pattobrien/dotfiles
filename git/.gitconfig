@@ -11,6 +11,7 @@
 	defaultBranch = main
 [core]
 	editor = code --wait
+	excludesfile = ~/.dotfiles/git/.gitignore_global
 [http]
 	postBuffer = 100000000
 [gpg]

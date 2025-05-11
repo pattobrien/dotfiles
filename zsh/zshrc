@@ -66,6 +66,7 @@ plugins=(
   tmux
   dotenv # - source .env variables when you cd into a directory
   gitignore
+  asdf
   # doctl # this causes 1password prompt when re-sourcing zshrc file, for some reason... so we should not use this
 
   # other plugins available that we should install at some point:
@@ -139,8 +140,6 @@ eval "$(${HOMEBREW_PREFIX}/bin/brew shellenv)"
 export PATH="$(brew --prefix)/bin:$PATH"
 
 # MISC PATHS
-export PATH="/usr/local/opt/ruby/bin:$PATH"
-export GEM_HOME="$HOME/.gem" 
 export KUBE_CONFIG_PATH="$HOME/.kube/config"
 
 PATH=$PATH:~/.local/bin
@@ -154,6 +153,8 @@ source ~/.dotfiles/zsh/credentials.zsh
 source ~/.dotfiles/zsh/flutter.zsh
 source ~/.dotfiles/zsh/aliases.zsh
 source ~/.dotfiles/zsh/go.zsh
+source ~/.dotfiles/zsh/php.zsh
+source ~/.dotfiles/zsh/ruby.zsh
 
 if [ -f ~/.dotfiles/zsh/.env.zsh ]; then
   source ~/.dotfiles/zsh/.env.zsh
