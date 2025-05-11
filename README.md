@@ -18,7 +18,9 @@ git clone https://github.com/pattobrien/dotfiles.git ~/.dotfiles
 
 ### 3. Run dotbot install script
 
-NOTE: [`dotbot`](https://github.com/anishathalye/dotbot) is a utility app that supports syncing the settings of various applications to dotfiles (e.g. `kitty`, `skhd`).
+NOTE: [`dotbot`](https://github.com/anishathalye/dotbot) is a utility app that
+supports syncing the settings of various applications to dotfiles (e.g. `kitty`,
+`skhd`).
 
 ```sh
 sh ~/.dotfiles/install
@@ -57,10 +59,13 @@ brew bundle dump --force --describe --file=~/.dotfiles/brew/personal/Brewfile
 - [x] Add kitty config
 - [x] Separate brew packages into separate files
 - [x] Clean up outdated /scripts/ folder
-- [x] BUG: tmux requirement in .zshrc causes terminal crash when tmux is not yet installed
+- [x] BUG: tmux requirement in .zshrc causes terminal crash when tmux is not yet
+      installed
 - [ ] Steps for initializing TMUX plugins
 - [ ] Add VSCode config
 - [ ] setup 1password in case passwords are needed for app installations
 - [ ] post-install scripts for packages (e.g. Dart/Flutter is required for fvm)
 - [ ] can `xcode-select --install` be run from the install script?
-
+- [ ] docs: setup navigation when holding down hjkl on mac
+  - see:
+    https://github.com/vscode-neovim/vscode-neovim/issues/2170#issuecomment-2569887113

@@ -9,13 +9,14 @@ tap "koekeishiya/formulae"
 tap "leoafarias/fvm"
 tap "scarvalhojr/tap"
 tap "shopify/shopify"
+tap "smithy-lang/tap"
 tap "stripe/stripe-cli"
 # Run your GitHub Actions locally
 brew "act"
-# Interpreted, interactive, object-oriented programming language
-brew "python@3.12"
 # Core application library for C
 brew "glib"
+# C/C++ and Java libraries for Unicode and globalization
+brew "icu4c@76"
 # OpenType text shaping engine
 brew "harfbuzz"
 # Development kit for the Java programming language
@@ -40,6 +41,14 @@ brew "coreutils"
 brew "asdf"
 # Configuration editing tool and API
 brew "augeas"
+# C parser in Python
+brew "pycparser"
+# C Foreign Function Interface for Python
+brew "cffi"
+# Cryptographic recipes and primitives for Python
+brew "cryptography"
+# Interpreted, interactive, object-oriented programming language
+brew "python@3.12"
 # Official Amazon AWS command-line interface
 brew "awscli"
 # Clone of cat(1) with syntax highlighting and Git integration
@@ -58,12 +67,6 @@ brew "gnutls"
 brew "emacs"
 # Emacs dependency management
 brew "cask"
-# C parser in Python
-brew "pycparser"
-# C Foreign Function Interface for Python
-brew "cffi"
-# Cryptographic recipes and primitives for Python
-brew "cryptography"
 # Tool to obtain certs from Let's Encrypt and autoenable HTTPS
 brew "certbot"
 # Formatting tools for C, C++, Obj-C, Java, JavaScript, TypeScript
@@ -142,6 +145,8 @@ brew "maven"
 brew "minikube"
 # Ambitious Vim-fork focused on extensibility and agility
 brew "neovim"
+# Small build system for use with gyp or CMake
+brew "ninja"
 # Development kit for the Java programming language
 brew "openjdk@11"
 # Generate clients, server & docs from an OpenAPI spec (v2, v3)
@@ -152,8 +157,8 @@ brew "openshift-cli"
 brew "pandoc"
 # Highly capable, feature-rich programming language
 brew "perl"
-# Manage compile and link flags for libraries
-brew "pkg-config"
+# Package compiler and linker metadata toolkit
+brew "pkgconf"
 # Fast, disk space efficient package manager
 brew "pnpm"
 # Theme for zsh
@@ -176,6 +181,8 @@ brew "s3cmd"
 brew "skaffold"
 # Organize software neatly under a single directory tree (e.g. /usr/local)
 brew "stow"
+# Formatting technology for Swift source code
+brew "swift-format"
 # User interface to the TELNET protocol
 brew "telnet"
 # Linter for Terraform files
@@ -184,6 +191,8 @@ brew "tflint"
 brew "tmux"
 # Display directories as trees (with optional color/HTML output)
 brew "tree"
+# Find and verify credentials
+brew "trufflehog"
 # Markup-based typesetting system
 brew "typst"
 # Vi 'workalike' with many additional features
@@ -212,6 +221,8 @@ brew "leoafarias/fvm/fvm"
 brew "scarvalhojr/tap/aoc-cli"
 # A CLI tool to build for the Shopify platform
 brew "shopify/shopify/shopify-cli"
+# Smithy CLI - A CLI for building, validating, querying, and iterating on Smithy models
+brew "smithy-lang/tap/smithy-cli"
 # Stripe CLI utility
 brew "stripe/stripe-cli/stripe"
 # Password manager that keeps all passwords secure behind one password
@@ -234,6 +245,10 @@ cask "android-studio"
 cask "another-redis-desktop-manager"
 # Free and open-source web browser
 cask "chromium"
+# Anthropic's official Claude AI desktop app
+cask "claude"
+# Write, edit, and chat about your code with AI
+cask "cursor"
 # Run Stable Diffusion locally
 cask "diffusionbee"
 # Voice and text chat software
@@ -299,16 +314,17 @@ vscode "albert.tabout"
 vscode "alexkrechik.cucumberautocomplete"
 vscode "amodio.tsl-problem-matcher"
 vscode "andys8.jest-snippets"
+vscode "arcanis.vscode-zipfs"
 vscode "astro-build.astro-vscode"
 vscode "asvetliakov.vscode-neovim"
 vscode "batisteo.vscode-django"
 vscode "be5invis.vscode-custom-css"
-vscode "bendixma.dart-data-class-generator"
 vscode "berublan.vscode-log-viewer"
 vscode "bierner.markdown-checkbox"
 vscode "bierner.markdown-mermaid"
 vscode "bierner.markdown-preview-github-styles"
 vscode "blaugold.melos-code"
+vscode "bmewburn.vscode-intelephense-client"
 vscode "bpruitt-goddard.mermaid-markdown-syntax-highlighting"
 vscode "bradlc.vscode-tailwindcss"
 vscode "catppuccin.catppuccin-vsc"
@@ -319,6 +335,7 @@ vscode "dart-code.flutter"
 vscode "davidanson.vscode-markdownlint"
 vscode "dbaeumer.vscode-eslint"
 vscode "dberezin.lox-language"
+vscode "denoland.vscode-deno"
 vscode "dnicolson.binary-plist"
 vscode "donjayamanne.python-environment-manager"
 vscode "donjayamanne.python-extension-pack"
@@ -341,6 +358,7 @@ vscode "github.copilot"
 vscode "github.copilot-chat"
 vscode "github.vscode-github-actions"
 vscode "github.vscode-pull-request-github"
+vscode "golang.go"
 vscode "google.arb-editor"
 vscode "grapecity.gc-excelviewer"
 vscode "gruntfuggly.todo-tree"
@@ -352,6 +370,7 @@ vscode "jeff-hykin.better-cpp-syntax"
 vscode "johnstew.gif"
 vscode "jspolancor.presentationmode"
 vscode "kaiqun.build-runner"
+vscode "kakumei.ts-debug"
 vscode "kevinrose.vsc-python-indent"
 vscode "llvm-vs-code-extensions.vscode-clangd"
 vscode "localizely.flutter-intl"
@@ -398,9 +417,7 @@ vscode "mutantdino.resourcemonitor"
 vscode "nash.awesome-flutter-snippets"
 vscode "nicollasr.vscode-streamdeck"
 vscode "njpwerner.autodocstring"
-vscode "nvarner.typst-lsp"
 vscode "orestesgaolin.dart-export-index"
-vscode "orta.vscode-jest"
 vscode "patbenatar.advanced-new-file"
 vscode "paulshen.paul-typescript-toolkit"
 vscode "peterschmalfeldt.explorer-exclude"
@@ -409,7 +426,6 @@ vscode "philstainer.git-worktree"
 vscode "plibither8.remove-comments"
 vscode "prisma.prisma"
 vscode "qcz.text-power-tools"
-vscode "redhat.java"
 vscode "redhat.vscode-commons"
 vscode "redhat.vscode-xml"
 vscode "redhat.vscode-yaml"
@@ -420,6 +436,8 @@ vscode "rust-lang.rust-analyzer"
 vscode "rvest.vs-code-prettier-eslint"
 vscode "saber2pr.ts-ast-viewer"
 vscode "sergelamikhov.lcov-lang"
+vscode "shopify.ruby-lsp"
+vscode "smithy.smithy-vscode-extension"
 vscode "sswg.swift-lang"
 vscode "streetsidesoftware.code-spell-checker"
 vscode "sumneko.lua"
@@ -431,17 +449,15 @@ vscode "twxs.cmake"
 vscode "unifiedjs.vscode-mdx"
 vscode "usernamehw.errorlens"
 vscode "vadimcn.vscode-lldb"
-vscode "visualstudioexptteam.intellicode-api-usage-examples"
-vscode "visualstudioexptteam.vscodeintellicode"
-vscode "vscjava.vscode-gradle"
-vscode "vscjava.vscode-java-debug"
-vscode "vscjava.vscode-java-pack"
-vscode "vscjava.vscode-java-test"
+vscode "vitest.explorer"
 vscode "vscode-ext.sync-rsync"
 vscode "vscode-icons-team.vscode-icons"
 vscode "wholroyd.jinja"
 vscode "wscats.cors-browser"
 vscode "xaver.clang-format"
+vscode "xdebug.php-debug"
+vscode "xdebug.php-pack"
 vscode "zarifprogrammer.tailwind-snippets"
 vscode "zhuangtongfa.material-theme"
+vscode "zobo.php-intellisense"
 vscode "zxh404.vscode-proto3"

@@ -147,6 +147,7 @@ PATH=$PATH:~/.local/bin
 
 . $(brew --prefix asdf)/libexec/asdf.sh
 
+# source <(railway completion zsh)
 
 source ~/.dotfiles/zsh/python.zsh
 source ~/.dotfiles/zsh/credentials.zsh
@@ -176,4 +177,9 @@ esac
 ## Completion scripts setup. Remove the following line to uninstall
 [[ -f /Users/pattobrien/.dart-cli-completion/zsh-config.zsh ]] && . /Users/pattobrien/.dart-cli-completion/zsh-config.zsh || true
 ## [/Completion]
+
+
+# Added by LM Studio CLI (lms)
+export PATH="$PATH:/Users/pattobrien/.cache/lm-studio/bin"
+# End of LM Studio CLI section
 
