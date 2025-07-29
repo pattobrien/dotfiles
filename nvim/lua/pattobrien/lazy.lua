@@ -15,12 +15,6 @@ vim.opt.rtp:prepend(lazypath)
 
 vim.g.mapleader = " " -- Make sure to set `mapleader` before lazy so your mappings are correct
 
-if vim.g.vscode then
-    require("lazy").setup({
-        'numToStr/Comment.nvim', -- comment using gc
-    })
-    return
-end
 
 if vim.g.vscode == nil then
     require("lazy").setup({
@@ -78,6 +72,7 @@ if vim.g.vscode == nil then
         'theprimeagen/harpoon',
         'christoomey/vim-tmux-navigator', -- tmux & split window navigation
         'theprimeagen/git-worktree.nvim',
+        'folke/flash.nvim',               -- search and jump to text
 
         -- Auto closing brackets/parentheses, comments etc
         'windwp/nvim-autopairs',
@@ -146,4 +141,33 @@ if vim.g.vscode == nil then
         -- }
 
     }, {})
+end
+
+if vim.g.vscode then
+    require("lazy").setup({
+        'numToStr/Comment.nvim', -- comment using gc
+        {
+            "folke/flash.nvim",
+            event = "VeryLazy",
+            ---@type Flash.Config
+            opts = {
+                modes = {
+                    search = {
+                        enabled = true,
+                    },
+                    char = {
+                        jump_labels = true,
+                    },
+                }
+            },
+            -- stylua: ignore
+            keys = {
+                { "s",     mode = { "n", "x", "o" }, function() require("flash").jump() end,              desc = "Flash" },
+                { "S",     mode = { "n", "x", "o" }, function() require("flash").treesitter() end,        desc = "Flash Treesitter" },
+                { "r",     mode = "o",               function() require("flash").remote() end,            desc = "Remote Flash" },
+                { "R",     mode = { "o", "x" },      function() require("flash").treesitter_search() end, desc = "Treesitter Search" },
+                { "<c-s>", mode = { "c" },           function() require("flash").toggle() end,            desc = "Toggle Flash Search" },
+            },
+        }
+    })
 end
