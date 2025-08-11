@@ -31,6 +31,31 @@ if vim.g.vscode == nil then
         "folke/neodev.nvim",
         'nvim-lua/plenary.nvim',
 
+        'numToStr/Comment.nvim', -- comment using gc
+        {
+            "folke/flash.nvim",
+            event = "VeryLazy",
+            ---@type Flash.Config
+            opts = {
+                modes = {
+                    search = {
+                        enabled = true,
+                    },
+                    char = {
+                        jump_labels = true,
+                    },
+                }
+            },
+            -- stylua: ignore
+            keys = {
+                { "s",     mode = { "n", "x", "o" }, function() require("flash").jump() end,              desc = "Flash" },
+                { "S",     mode = { "n", "x", "o" }, function() require("flash").treesitter() end,        desc = "Flash Treesitter" },
+                { "r",     mode = "o",               function() require("flash").remote() end,            desc = "Remote Flash" },
+                { "R",     mode = { "o", "x" },      function() require("flash").treesitter_search() end, desc = "Treesitter Search" },
+                { "<c-s>", mode = { "c" },           function() require("flash").toggle() end,            desc = "Toggle Flash Search" },
+            },
+        },
+
         -- LSP
         'neovim/nvim-lspconfig',
         'williamboman/mason.nvim',
@@ -77,7 +102,7 @@ if vim.g.vscode == nil then
         -- Auto closing brackets/parentheses, comments etc
         'windwp/nvim-autopairs',
         'tpope/vim-surround',
-        'numToStr/Comment.nvim', -- comment using gc
+        -- 'numToStr/Comment.nvim', -- comment using gc
         'simrat39/symbols-outline.nvim',
         'mrjones2014/nvim-ts-rainbow',
 
@@ -143,6 +168,7 @@ if vim.g.vscode == nil then
     }, {})
 end
 
+-- vscode-only plugins
 if vim.g.vscode then
     require("lazy").setup({
         'numToStr/Comment.nvim', -- comment using gc

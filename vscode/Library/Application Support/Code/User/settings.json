@@ -1,6 +1,22 @@
 {
+  "terminal.integrated.tabs.enabled": true,
+  "terminal.integrated.shellIntegration.enabled": true,
+  "typescript.experimental.expandableHover": true,
+  // -- VSCode Specific Settings -- //
   "chat.agent.enabled": true,
-  "go.testEnvFile": "${workspaceFolder}/.env",
+  "chat.mcp.enabled": true,
+  "chat.mcp.discovery.enabled": false,
+  "chat.mcp.serverSampling": {},
+
+  // -- Cursor Specific Settings -- //
+  "cursor.composer.shouldChimeAfterChatFinishes": true,
+  "cursor.composer.shouldAllowCustomModes": true,
+  "cursor.cpp.disabledLanguages": [
+    "scminput",
+    "mdx"
+  ],
+
+  // -- General Settings -- //
   "extensions.experimental.affinity": {
     "asvetliakov.vscode-neovim": -1
   },
@@ -22,6 +38,7 @@
   "[javascript]": {
     "editor.defaultFormatter": "denoland.vscode-deno"
   },
+  "debug.javascript.autoAttachFilter": "onlyWithFlag",
   "[typescriptreact]": {
     "editor.defaultFormatter": "denoland.vscode-deno",
     "editor.formatOnSave": true
@@ -109,6 +126,7 @@
   },
   "telemetry.telemetryLevel": "off",
 
+  "git.detectWorktrees": true,
   "git.autofetch": true,
   "git.autoRepositoryDetection": false,
   "git.confirmSync": false,
@@ -291,10 +309,12 @@
     "editor.defaultFormatter": "hashicorp.terraform"
   },
 
-  // -- vscode theming --
+  // -- vscode editor config --
   "window.commandCenter": false,
   "workbench.colorTheme": "Catppuccin Mocha",
   "workbench.iconTheme": "vscode-icons",
+  "workbench.tree.indent": 12,
+  "workbench.activityBar.orientation": "vertical",
   // below is required, per the docs (see: https://github.com/be5invis/vscode-custom-css/tree/master#getting-started)
   // for more custom css properties to use, see the vscode source code, for example:
   // - https://github.com/microsoft/vscode/blob/main/src/vs/platform/quickinput/browser/media/quickInput.css
@@ -339,7 +359,7 @@
   ],
 
   "vs-kubernetes": {
-    "vs-kubernetes.minikube-show-information-expiration": "2025-07-15T11:26:51.214Z"
+    "vs-kubernetes.minikube-show-information-expiration": "2026-01-20T09:07:34.496Z"
   },
 
   "antlr4.generation": {
@@ -354,7 +374,7 @@
   "workbench.experimental.enableNewProfilesUI": true,
   "scm.showHistoryGraph": false,
   "[swift]": {
-    "editor.defaultFormatter": "sswg.swift-lang"
+    "editor.defaultFormatter": "swiftlang.swift-vscode"
   },
   "dart.analyzerInstrumentationLogFile": null,
   "yaml.maxItemsComputed": 10000,
@@ -379,5 +399,19 @@
   ],
   "chat.editing.alwaysSaveWithGeneratedChanges": true,
   "lldb.suppressUpdateNotifications": true,
-  "tailwind-fold.autoFold": false
+  "tailwind-fold.autoFold": false,
+
+  "explorer.confirmDragAndDrop": false,
+  "window.confirmSaveUntitledWorkspace": false,
+  "explorer.confirmDelete": false,
+  "mssql.autoDisableNonTSqlLanguageService": true,
+  "chat.tools.autoApprove": true,
+  "chat.renderRelatedFiles": true,
+  "chat.editing.confirmEditRequestRetry": false,
+  "github.copilot.nextEditSuggestions.enabled": true,
+  "editor.minimap.enabled": false,
+  "security.workspace.trust.untrustedFiles": "open",
+  "editor.fontFamily": "IBM Plex Mono, Input, Menlo, Monaco, 'Courier New', monospace",
+  "terminal.integrated.suggest.enabled": true,
+  "docker.extension.enableComposeLanguageServer": false
 }

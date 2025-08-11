@@ -42,13 +42,17 @@ chmod +x ~/.local/scripts/tmux-sessionizer
 
 ### 5. Sync VSCode Settings (Optional)
 
-To sync your global VSCode settings (like `settings.json`, `keybindings.json`) from this repository to their correct locations, run the stow script:
+To sync your global VSCode settings (like `settings.json`, `keybindings.json`)
+from this repository to their correct locations, run the stow script:
 
 ```sh
 sh ~/.dotfiles/scripts/stow_vscode.sh
 ```
 
-This will create symlinks from your home directory to the VSCode configuration files within this `.dotfiles` repository. If `stow` reports any conflicts, you may need to manually back up or remove existing VSCode configuration files from `~/Library/Application Support/Code/User/` before running the script again.
+This will create symlinks from your home directory to the VSCode configuration
+files within this `.dotfiles` repository. If `stow` reports any conflicts, you
+may need to manually back up or remove existing VSCode configuration files from
+`~/Library/Application Support/Code/User/` before running the script again.
 
 ## Maintenance
 
@@ -93,9 +97,10 @@ brew bundle dump --force --describe --file=~/.dotfiles/brew/personal/Brewfile
   - should maintain a `work` set of apps
 - mac settings
   - mouse/trackpad
-  - window / desktop transition 
+  - window / desktop transition
   - finder settings
-  - apple account signed in? (should this just be a part of the get started guide?)
+  - apple account signed in? (should this just be a part of the get started
+    guide?)
   - accessibility/privacy settings per-app (e.g. Zoom needs screen-share access)
   - settings for apps that open on startup
     - BetterTouchTool
@@ -105,7 +110,8 @@ brew bundle dump --force --describe --file=~/.dotfiles/brew/personal/Brewfile
   - allow holding down `hjkl` keys (I think this was a keyboard config?)
   - raycast did not override command+K
 - vscode settings / profile not setup
-  - note: extensions are set up (via brew), but not user settings (`~/Library/Application Support/Code/User/settings.json`)
+  - note: extensions are set up (via brew), but not user settings
+    (`~/Library/Application Support/Code/User/settings.json`)
 - manual app setup steps:
   - 1password sign-in
   - github sign-in
@@ -121,11 +127,13 @@ brew bundle dump --force --describe --file=~/.dotfiles/brew/personal/Brewfile
     - ts (asdf)
     - go (asdf)
     - typescript (via `npm i -g`)
+
 ```console
 asdf plugin add golang && asdf plugin add nodejs && asdf plugin add deno
 asdf install golang latest && asdf install nodejs latest && asdf plugin install deno latest
 asdf global golang latest && asdf global nodejs latest && asdf global deno latest
 ```
+
 - automatically accept xcode license (`xcodebuild -license accept`)
 - needed to comment out `1password` zsh plugin in `.zshrc`, because `op` doesnt
   have the proper permissions
