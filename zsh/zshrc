@@ -68,7 +68,7 @@ plugins=(
   gitignore
   asdf
   # doctl # this causes 1password prompt when re-sourcing zshrc file, for some reason... so we should not use this
-
+  pnpm-shell-completion
   # other plugins available that we should install at some point:
   # web-search
   # vi-mode
@@ -145,6 +145,7 @@ export KUBE_CONFIG_PATH="$HOME/.kube/config"
 PATH=$PATH:~/.local/bin
 
 . $(brew --prefix asdf)/libexec/asdf.sh
+export ASDF_DIR="${ASDF_DATA_DIR:-$HOME/.asdf}"
 
 # source <(railway completion zsh)
 
@@ -183,4 +184,36 @@ esac
 # Added by LM Studio CLI (lms)
 export PATH="$PATH:/Users/pattobrien/.cache/lm-studio/bin"
 # End of LM Studio CLI section
+
+
+# bun completions
+[ -s "/Users/pattobrien/.bun/_bun" ] && source "/Users/pattobrien/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+# The following lines have been added by Docker Desktop to enable Docker CLI completions.
+fpath=(/Users/pattobrien/.docker/completions $fpath)
+autoload -Uz compinit
+compinit
+# End of Docker CLI completions
+#compdef neon
+###-begin-neon-completions-###
+#
+# yargs command completion script
+#
+# Installation: neon completion >> ~/.zshrc
+#    or neon completion >> ~/.zprofile on OSX.
+#
+_neon_yargs_completions()
+{
+  local reply
+  local si=$IFS
+  IFS=$'
+' reply=($(COMP_CWORD="$((CURRENT-1))" COMP_LINE="$BUFFER" COMP_POINT="$CURSOR" neon --get-yargs-completions "${words[@]}"))
+  IFS=$si
+  _describe 'values' reply
+}
+compdef _neon_yargs_completions neon
+###-end-neon-completions-###
 
