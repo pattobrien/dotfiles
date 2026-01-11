@@ -68,7 +68,7 @@ brew bundle dump --force --describe --file=~/.dotfiles/brew/personal/Brewfile
 - [ ] docs: setup navigation when holding down hjkl on mac
   - see:
     https://github.com/vscode-neovim/vscode-neovim/issues/2170#issuecomment-2569887113
-- [ ] does asdf have a zsh autocomplete plugin?
+- [x] does asdf have a zsh autocomplete plugin?
 
 ### Notes from Fern setup
 
