@@ -32,42 +32,13 @@
       "WebFetch(domain:code.claude.com/docs/en)",
       "Bash(grep:*)"
     ],
-    "deny": [
-      "Bash(find:*)",
-      "Bash(npm:*)",
-      "Bash(npx:*)"
-    ],
-    "ask": [
-      "Bash(pnpm*add*)"
-    ],
+    "deny": ["Bash(find:*)", "Bash(npm:*)", "Bash(npx:*)"],
+    "ask": ["Bash(pnpm*add*)"],
     "defaultMode": "default"
   },
   "model": "opus",
   "enableAllProjectMcpServers": true,
-  "hooks": {
-    "PreCompact": [
-      {
-        "matcher": "",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "bd prime"
-          }
-        ]
-      }
-    ],
-    "SessionStart": [
-      {
-        "matcher": "",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "bd prime"
-          }
-        ]
-      }
-    ]
-  },
+  "hooks": {},
   "statusLine": {
     "type": "command",
     "command": "bash -c 'input=$(cat); model=$(echo \"$input\" | jq -r \".model.display_name\"); total_in=$(echo \"$input\" | jq -r \".context_window.total_input_tokens\"); total_out=$(echo \"$input\" | jq -r \".context_window.total_output_tokens\"); total=$((total_in + total_out)); if [ $total -ge 1000000 ]; then tokens=$(printf \"%.1fM\" $(echo \"scale=1; $total / 1000000\" | bc)); elif [ $total -ge 1000 ]; then tokens=$(printf \"%.1fK\" $(echo \"scale=1; $total / 1000\" | bc)); else tokens=\"$total\"; fi; usage=$(echo \"$input\" | jq \".context_window.current_usage\"); if [ \"$usage\" != \"null\" ]; then current=$(echo \"$usage\" | jq \".input_tokens + .cache_creation_input_tokens + .cache_read_input_tokens\"); size=$(echo \"$input\" | jq \".context_window.context_window_size\"); pct=$((current * 100 / size)); context=\"${pct}%\"; else context=\"0%\"; fi; printf \"\\033[36m%s\\033[0m | \\033[33m%s tokens\\033[0m | \\033[35m%s context\\033[0m\" \"$model\" \"$tokens\" \"$context\"'"

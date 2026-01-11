@@ -65,12 +65,8 @@ brew "gnupg"
 brew "ideviceinstaller"
 # Tools and libraries to manipulate images in many formats
 brew "imagemagick"
-# Lightweight and flexible command-line JSON processor
-brew "jq"
 # FAST Kubernetes manifests validator, with support for Custom Resources!
 brew "kubeconform"
-# Kubernetes command-line interface
-brew "kubernetes-cli"
 # Command-line interface for deploying apps to the LangGraph platform
 brew "langgraph-cli"
 # Graphical front-end for GCC's coverage testing tool (gcov)
@@ -91,12 +87,8 @@ brew "openshift-cli"
 brew "ossp-uuid"
 # Package compiler and linker metadata toolkit
 brew "pkgconf"
-# Object-relational database system
-brew "postgresql@14"
 # Theme for zsh
 brew "powerlevel10k"
-# Protocol buffers (Google's data interchange format)
-brew "protobuf"
 # Develop and deploy code with zero configuration
 brew "railway"
 # Command-line tool for the Amazon S3 service
@@ -105,22 +97,14 @@ brew "s3cmd"
 brew "scc"
 # Organize software neatly under a single directory tree (e.g. /usr/local)
 brew "stow"
-# High-performance system programming language
-brew "swift"
 # User interface to the TELNET protocol
 brew "telnet"
-# Linter for Terraform files
-brew "tflint"
 # Terminal multiplexer
 brew "tmux"
 # Display directories as trees (with optional color/HTML output)
 brew "tree"
 # Find and verify credentials
 brew "trufflehog"
-# Markup-based typesetting system
-brew "typst"
-# Vi 'workalike' with many additional features
-brew "vim"
 # Universal WebAssembly Runtime
 brew "wasmer"
 # Execute commands when watched files change

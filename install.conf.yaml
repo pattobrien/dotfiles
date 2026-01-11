@@ -48,6 +48,10 @@
           # Run Homebrew setup
           - command: ./scripts/setup_homebrew.zsh
 
+          # Install asdf plugins from .tool-versions
+          - command: cat ~/.tool-versions | cut -d' ' -f1 | grep "^[^\#]" | xargs -I {} asdf plugin add {}
+            description: Installing asdf plugins
+
           # Setup 1password CLI (will prompt to integrate CLI in 1password app)
           - command: op account get
           - command: op signin

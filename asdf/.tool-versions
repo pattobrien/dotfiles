@@ -33,3 +33,7 @@ ruby 4.0.0
 cocoapods 1.16.2
 python 3.13.2t
 skaffold 2.17.1
+typst 0.14.2
+jq 1.8.1
+protoc 33.3
+tflint 0.60.0
