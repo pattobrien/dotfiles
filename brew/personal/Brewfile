@@ -21,32 +21,22 @@ tap "supabase/tap"
 brew "act"
 # ANother Tool for Language Recognition
 brew "antlr"
-# GitOps Continuous Delivery for Kubernetes
-brew "argocd"
 # Extendable version manager with support for Ruby, Node.js, Erlang & more
 brew "asdf"
 # Code searching, linting, rewriting
 brew "ast-grep"
-# Tool for generating GNU Standards-compliant Makefiles
-brew "automake"
+# Automatic configure script builder
+brew "autoconf"
 # Official Amazon AWS command-line interface
 brew "awscli"
 # Clone of cat(1) with syntax highlighting and Git integration
 brew "bat"
-# User-friendly launcher for Bazel
-brew "bazelisk"
 # Emacs dependency management
 brew "cask"
-# Tool to obtain certs from Let's Encrypt and autoenable HTTPS
-brew "certbot"
 # Formatting tools for C, C++, Obj-C, Java, JavaScript, TypeScript
 brew "clang-format"
 # Statistics utility to count lines of code
 brew "cloc"
-# Cross-platform make
-brew "cmake"
-# Dependency manager for Cocoa projects
-brew "cocoapods"
 # OpenAI's coding agent that runs in your terminal
 brew "codex"
 # Get a file from an HTTP, HTTPS or FTP server
@@ -55,16 +45,10 @@ brew "curl"
 brew "docker-compose"
 # Command-line tool for DigitalOcean
 brew "doctl"
-# Text processing system for reStructuredText
-brew "docutils"
 # Modern, maintained replacement for ls
 brew "eza"
-# Easiest way to build and release mobile apps
-brew "fastlane"
 # Simple, fast and user-friendly alternative to find
 brew "fd"
-# Firebase command-line tools
-brew "firebase-cli"
 # Command-line tools for fly.io services
 brew "flyctl"
 # Command-line fuzzy finder written in Go
@@ -75,30 +59,18 @@ brew "gcc"
 brew "gh"
 # Installer for the general purpose language Haskell
 brew "ghcup"
-# Interpreter for PostScript and PDF
-brew "ghostscript"
 # GNU Privacy Guard (OpenPGP)
 brew "gnupg"
-# Kubernetes package manager
-brew "helm"
 # Tool for managing apps on iOS devices
 brew "ideviceinstaller"
 # Tools and libraries to manipulate images in many formats
 brew "imagemagick"
 # Lightweight and flexible command-line JSON processor
 brew "jq"
-# Handy way to save and run project-specific commands
-brew "just"
-# Run local Kubernetes cluster in Docker
-brew "kind"
-# SDK for building Kubernetes APIs using CRDs
-brew "kubebuilder"
 # FAST Kubernetes manifests validator, with support for Custom Resources!
 brew "kubeconform"
-# Tool that can switch between kubectl contexts easily and create aliases
-brew "kubectx"
-# Template-free customization of Kubernetes YAML manifests
-brew "kustomize"
+# Kubernetes command-line interface
+brew "kubernetes-cli"
 # Command-line interface for deploying apps to the LangGraph platform
 brew "langgraph-cli"
 # Graphical front-end for GCC's coverage testing tool (gcov)
@@ -107,62 +79,34 @@ brew "lcov"
 brew "less"
 # Postgres C API library
 brew "libpq"
-# Library to render SVG files using Cairo
-brew "librsvg"
-# Bare libuv bindings for lua
-brew "luv"
 # Mac App Store command-line interface
 brew "mas"
-# Java-based project management
-brew "maven"
-# Run a Kubernetes cluster locally
-brew "minikube"
 # Neon CLI tool
 brew "neonctl"
-# Small build system for use with gyp or CMake
-brew "ninja"
-# Generate clients, server & docs from an OpenAPI spec (v2, v3)
-brew "openapi-generator"
 # Development kit for the Java programming language
 brew "openjdk@11"
 # OpenShift command-line interface tools
 brew "openshift-cli"
 # ISO-C API and CLI for generating UUIDs
 brew "ossp-uuid"
-# Swiss-army knife of markup format conversion
-brew "pandoc"
-# Highly capable, feature-rich programming language
-brew "perl"
-# Fast, disk space efficient package manager
-brew "pnpm@9"
+# Package compiler and linker metadata toolkit
+brew "pkgconf"
 # Object-relational database system
 brew "postgresql@14"
 # Theme for zsh
 brew "powerlevel10k"
 # Protocol buffers (Google's data interchange format)
 brew "protobuf"
-# Interpreted, interactive, object-oriented programming language
-brew "python@3.10"
-# Interpreted, interactive, object-oriented programming language
-brew "python@3.9"
-# Generic machine emulator and virtualizer
-brew "qemu"
 # Develop and deploy code with zero configuration
 brew "railway"
-# Safe, concurrent, practical language
-brew "rust"
 # Command-line tool for the Amazon S3 service
 brew "s3cmd"
 # Fast and accurate code counter with complexity and COCOMO estimates
 brew "scc"
-# Easy and Repeatable Kubernetes Development
-brew "skaffold"
 # Organize software neatly under a single directory tree (e.g. /usr/local)
 brew "stow"
 # High-performance system programming language
 brew "swift"
-# Formatting technology for Swift source code
-brew "swift-format"
 # User interface to the TELNET protocol
 brew "telnet"
 # Linter for Terraform files
@@ -199,8 +143,6 @@ brew "zsh-autosuggestions"
 brew "zsh-syntax-highlighting"
 # The AI coding agent built for the terminal.
 brew "anomalyco/tap/opencode"
-# Terraform
-brew "hashicorp/tap/terraform"
 # Official Language Server Protocol for the Kotlin language
 brew "jetbrains/utils/kotlin-lsp"
 # Simple hotkey-daemon for macOS.
@@ -211,8 +153,6 @@ brew "leoafarias/fvm/fvm"
 brew "scarvalhojr/tap/aoc-cli"
 # CLI tool for linear.app that uses git branch names and directory names to open issues and team pages
 brew "schpet/tap/linear"
-# A CLI tool to build for the Shopify platform
-brew "shopify/shopify/shopify-cli"
 # Smithy CLI - A CLI for building, validating, querying, and iterating on Smithy models
 brew "smithy-lang/tap/smithy-cli"
 # Stripe CLI utility

@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+echo "Updating asdf plugins..."
+asdf plugin update --all
+
+echo "Dumping Brewfile..."
+~/.dotfiles/scripts/brew-dump-leaves ~/.dotfiles/brew/personal/Brewfile
+
+echo "Cleaning up..."
+brew cleanup --prune=30 -s
+
+echo "Done!"
