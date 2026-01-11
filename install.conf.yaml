@@ -15,21 +15,22 @@
 - link:
           ~/.claude/CLAUDE.md: claude/CLAUDE.md
           ~/.claude/settings.json: claude/settings.json
-          ~/Library/Application Support/Cursor/User/settings.json: cursor/Library/Application Support/Cursor/User/settings.json
-          ~/Library/Application Support/Cursor/User/keybindings.json: cursor/Library/Application Support/Cursor/User/keybindings.json
-          ~/Library/Application Support/Cursor/User/snippets: cursor/Library/Application Support/Cursor/User/snippets
           ~/.tmux.conf: tmux/.tmux.conf
           ~/.zshrc: zsh/zshrc
           ~/.zshenv: zsh/zshenv
-          ~/.gitconfig:
-                  path: git/.gitconfig
-                  force: true
+          ~/.gitconfig: git/.gitconfig
           ~/.config/kitty/kitty.conf: kitty/kitty.conf
           ~/.config/gh: gh
           ~/.config/yabai: yabai
           ~/.config/skhd: skhd
           ~/.config/nvim: nvim
           ~/.config/op/plugins.sh: op/.config/plugins.sh
+          ~/Library/Application Support/Cursor/User/settings.json: cursor/Library/Application Support/Cursor/User/settings.json
+          ~/Library/Application Support/Cursor/User/keybindings.json: cursor/Library/Application Support/Cursor/User/keybindings.json
+          ~/Library/Application Support/Cursor/User/snippets: cursor/Library/Application Support/Cursor/User/snippets
+          ~/Library/Application Support/Code/User/settings.json: vscode/Library/Application Support/Code/User/settings.json
+          ~/Library/Application Support/Code/User/keybindings.json: vscode/Library/Application Support/Code/User/keybindings.json
+          ~/Library/Application Support/Code/User/tasks.json: vscode/Library/Application Support/Code/User/tasks.json
 
 - create:
           - ~/dev

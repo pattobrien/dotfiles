@@ -40,20 +40,6 @@ Sets permissions for required files (only required once on the system)
 chmod +x ~/.local/scripts/tmux-sessionizer
 ```
 
-### 5. Sync VSCode Settings (Optional)
-
-To sync your global VSCode settings (like `settings.json`, `keybindings.json`)
-from this repository to their correct locations, run the stow script:
-
-```sh
-sh ~/.dotfiles/scripts/stow_vscode.sh
-```
-
-This will create symlinks from your home directory to the VSCode configuration
-files within this `.dotfiles` repository. If `stow` reports any conflicts, you
-may need to manually back up or remove existing VSCode configuration files from
-`~/Library/Application Support/Code/User/` before running the script again.
-
 ## Maintenance
 
 ### Brew Dump
