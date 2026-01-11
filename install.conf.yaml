@@ -13,6 +13,17 @@
           - "~/.oh-my-zsh/custom/plugins/"
 
 - link:
+          ~/.claude/CLAUDE.md: claude/CLAUDE.md
+          ~/.claude/settings.json: claude/settings.json
+          ~/Library/Application Support/Cursor/User/settings.json:
+                  path: cursor/Library/Application Support/Cursor/User/settings.json
+                  force: true
+          ~/Library/Application Support/Cursor/User/keybindings.json:
+                  path: cursor/Library/Application Support/Cursor/User/keybindings.json
+                  force: true
+          ~/Library/Application Support/Cursor/User/snippets:
+                  path: cursor/Library/Application Support/Cursor/User/snippets
+                  force: true
           ~/.tmux.conf: tmux/.tmux.conf
           ~/.zshrc:
                   #   force: true
