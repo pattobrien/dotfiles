@@ -19,64 +19,22 @@ tap "stripe/stripe-cli"
 tap "supabase/tap"
 # Run your GitHub Actions locally
 brew "act"
-# Core application library for C
-brew "glib"
-# OpenType text shaping engine
-brew "harfbuzz"
-# C/C++ and Java libraries for Unicode and globalization
-brew "icu4c@76"
-# C/C++ and Java libraries for Unicode and globalization
-brew "icu4c@77"
-# Library for command-line editing
-brew "readline"
 # ANother Tool for Language Recognition
 brew "antlr"
-# Image format providing lossless and lossy compression for web images
-brew "webp"
-# New file format for still image compression
-brew "jpeg-xl"
-# Codec library for encoding and decoding AV1 video streams
-brew "aom"
 # GitOps Continuous Delivery for Kubernetes
 brew "argocd"
-# Distributed revision control system
-brew "git"
 # Extendable version manager with support for Ruby, Node.js, Erlang & more
 brew "asdf"
 # Code searching, linting, rewriting
 brew "ast-grep"
-# Configuration editing tool and API
-brew "augeas"
-# Automatic configure script builder
-brew "autoconf"
 # Tool for generating GNU Standards-compliant Makefiles
 brew "automake"
-# C parser in Python
-brew "pycparser"
-# C Foreign Function Interface for Python
-brew "cffi"
-# Cryptographic recipes and primitives for Python
-brew "cryptography"
 # Official Amazon AWS command-line interface
 brew "awscli"
 # Clone of cat(1) with syntax highlighting and Git integration
 brew "bat"
 # User-friendly launcher for Bazel
 brew "bazelisk"
-# Toolchain of the web
-brew "biome"
-# GNU File, Shell, and Text utilities
-brew "coreutils"
-# International domain name library (IDNA2008, Punycode and TR46)
-brew "libidn2"
-# Library to load and enumerate PKCS#11 modules
-brew "p11-kit"
-# Validating, recursive, caching DNS resolver
-brew "unbound"
-# GNU Transport Layer Security (TLS) Library
-brew "gnutls"
-# GNU Emacs text editor
-brew "emacs"
 # Emacs dependency management
 brew "cask"
 # Tool to obtain certs from Let's Encrypt and autoenable HTTPS
@@ -89,8 +47,6 @@ brew "cloc"
 brew "cmake"
 # Dependency manager for Cocoa projects
 brew "cocoapods"
-# Search tool like grep and The Silver Searcher
-brew "ripgrep"
 # OpenAI's coding agent that runs in your terminal
 brew "codex"
 # Get a file from an HTTP, HTTPS or FTP server
@@ -107,8 +63,6 @@ brew "eza"
 brew "fastlane"
 # Simple, fast and user-friendly alternative to find
 brew "fd"
-# Open-source, cross-platform JavaScript runtime environment
-brew "node"
 # Firebase command-line tools
 brew "firebase-cli"
 # Command-line tools for fly.io services
@@ -121,30 +75,14 @@ brew "gcc"
 brew "gh"
 # Installer for the general purpose language Haskell
 brew "ghcup"
-# Library for JPEG-2000 image manipulation
-brew "openjpeg"
 # Interpreter for PostScript and PDF
 brew "ghostscript"
-# X.509 and CMS library
-brew "libksba"
 # GNU Privacy Guard (OpenPGP)
 brew "gnupg"
 # Kubernetes package manager
 brew "helm"
-# Library with common system API code for libimobiledevice projects
-brew "libimobiledevice-glue"
-# USB multiplexor library for iOS devices
-brew "libusbmuxd"
-# Library to communicate with iOS devices natively
-brew "libimobiledevice"
 # Tool for managing apps on iOS devices
 brew "ideviceinstaller"
-# Database of common MIME types
-brew "shared-mime-info"
-# ISO/IEC 23008-12:2017 HEIF file format decoder and encoder
-brew "libheif"
-# Library for reading RAW files from digital photo cameras
-brew "libraw"
 # Tools and libraries to manipulate images in many formats
 brew "imagemagick"
 # Lightweight and flexible command-line JSON processor
@@ -157,8 +95,6 @@ brew "kind"
 brew "kubebuilder"
 # FAST Kubernetes manifests validator, with support for Custom Resources!
 brew "kubeconform"
-# Kubernetes command-line interface
-brew "kubernetes-cli"
 # Tool that can switch between kubectl contexts easily and create aliases
 brew "kubectx"
 # Template-free customization of Kubernetes YAML manifests
@@ -197,8 +133,6 @@ brew "ossp-uuid"
 brew "pandoc"
 # Highly capable, feature-rich programming language
 brew "perl"
-# Package compiler and linker metadata toolkit
-brew "pkgconf"
 # Fast, disk space efficient package manager
 brew "pnpm@9"
 # Object-relational database system
@@ -209,8 +143,6 @@ brew "powerlevel10k"
 brew "protobuf"
 # Interpreted, interactive, object-oriented programming language
 brew "python@3.10"
-# Interpreted, interactive, object-oriented programming language
-brew "python@3.12", link: false
 # Interpreted, interactive, object-oriented programming language
 brew "python@3.9"
 # Generic machine emulator and virtualizer
@@ -225,8 +157,6 @@ brew "s3cmd"
 brew "scc"
 # Easy and Repeatable Kubernetes Development
 brew "skaffold"
-# Command-line interface for SQLite
-brew "sqlite"
 # Organize software neatly under a single directory tree (e.g. /usr/local)
 brew "stow"
 # High-performance system programming language
@@ -295,8 +225,6 @@ cask "1password"
 cask "1password-cli"
 # Collection of apps and services for photography, design, video, web, and UX
 cask "adobe-creative-cloud"
-# Distribution of the Python and R programming languages for scientific computing
-cask "anaconda"
 # Command-line tools for building and debugging Android apps
 cask "android-commandlinetools"
 # Toolset to implement parts of Android apps in native code
