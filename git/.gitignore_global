@@ -77,3 +77,9 @@ coverage/
 .flutter-plugins
 .packages
 .fvm
+
+# Claude Code
+.claude/**/*.local.*
+CLAUDE.local.md
+
+.cache

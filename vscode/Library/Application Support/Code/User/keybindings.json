@@ -70,9 +70,15 @@
     "key": "tab",
     "command": "editor.action.inlineSuggest.commit",
     "when": "inInlineEditsPreviewEditor"
-  }
+  },
+  // {
+  //   "key": "ctrl+i",
+  //   "command": "github.copilot.chat.attachSelection",
+  //   "when": "editorTextFocus"
+  // }
   // {
   //     "key": "cmd+shift+n",
   //     "command": "explorer.newFolder"
   // },
+
 ]

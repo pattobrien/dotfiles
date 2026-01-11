@@ -1,11 +1,19 @@
 {
+
+  "extensions.autoUpdate": false,
   "terminal.integrated.tabs.enabled": true,
   "terminal.integrated.shellIntegration.enabled": true,
   "typescript.experimental.expandableHover": true,
+  "typescript.experimental.useTsgo": true,
   // -- VSCode Specific Settings -- //
   "chat.agent.enabled": true,
-  "chat.mcp.enabled": true,
-  "chat.mcp.discovery.enabled": false,
+  "chat.mcp.discovery.enabled": {
+    "claude-desktop": false,
+    "windsurf": false,
+    "cursor-global": false,
+    "cursor-workspace": false
+  },
+
   "chat.mcp.serverSampling": {},
 
   // -- Cursor Specific Settings -- //
@@ -156,13 +164,11 @@
     "markdown": false,
     "scminput": false,
     "mdx": false,
-    "yaml": true,
-    "typescript": true,
     "*.schema.yaml": true
   },
-
+  "editor.inlineSuggest.suppressInSnippetMode": true,
   // -- neovim --
-  "vscode-neovim.neovimExecutablePaths.darwin": "/opt/homebrew/bin/nvim",
+  "vscode-neovim.neovimExecutablePaths.darwin": "/Users/pattobrien/.asdf/shims/nvim",
   "vscode-neovim.neovimInitVimPaths.darwin": "$HOME/.dotfiles/nvim/init.lua",
   //   "extensions.experimental.affinity": {
   //     "asvetliakov.vscode-neovim": 1
@@ -413,5 +419,21 @@
   "security.workspace.trust.untrustedFiles": "open",
   "editor.fontFamily": "IBM Plex Mono, Input, Menlo, Monaco, 'Courier New', monospace",
   "terminal.integrated.suggest.enabled": true,
-  "docker.extension.enableComposeLanguageServer": false
+  "docker.extension.enableComposeLanguageServer": false,
+  "chat.mcp.access": "all",
+  "[dockercompose]": {
+    "editor.insertSpaces": true,
+    "editor.tabSize": 2,
+    "editor.autoIndent": "advanced",
+    "editor.quickSuggestions": {
+      "other": true,
+      "comments": false,
+      "strings": true
+    },
+    "editor.defaultFormatter": "redhat.vscode-yaml"
+  },
+  "[github-actions-workflow]": {
+    "editor.defaultFormatter": "redhat.vscode-yaml"
+  },
+  "githubLocalActions.dockerDesktopPath": "/Applications/Docker.app"
 }
