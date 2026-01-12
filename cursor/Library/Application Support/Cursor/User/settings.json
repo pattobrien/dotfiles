@@ -437,8 +437,5 @@
   "slidev.annotations-line-numbers": false,
   "claudeCode.preferredLocation": "panel",
   "claudeCode.useTerminal": true,
-  "git.enableSmartCommit": true,
-  "extensions.experimental.affinity": {
-    "asvetliakov.vscode-neovim": 1
-  }
+  "git.enableSmartCommit": true
 }

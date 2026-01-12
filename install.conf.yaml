@@ -16,6 +16,7 @@
           ~/.tool-versions: asdf/.tool-versions
           ~/.claude/CLAUDE.md: claude/CLAUDE.md
           ~/.claude/settings.json: claude/settings.json
+          ~/.claude/skills: claude/skills
           ~/.tmux.conf: tmux/.tmux.conf
           ~/.zshrc: zsh/zshrc
           ~/.zshenv: zsh/zshenv
