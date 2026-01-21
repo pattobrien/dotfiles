@@ -29,7 +29,7 @@ maven 3.9.12
 cmake 4.2.1
 ninja 1.13.2
 pandoc 3.8.3
-ruby 4.0.0
+ruby 3.4.8
 cocoapods 1.16.2
 python 3.13.2t
 skaffold 2.17.1

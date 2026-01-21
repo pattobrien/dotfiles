@@ -64,7 +64,7 @@ plugins=(
   vscode
   xcode
   tmux
-  dotenv # - source .env variables when you cd into a directory
+  # dotenv # - source .env variables when you cd into a directory
   gitignore
   asdf
   # doctl # this causes 1password prompt when re-sourcing zshrc file, for some reason... so we should not use this

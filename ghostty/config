@@ -1,0 +1,19 @@
+# Ghostty Configuration
+# Docs: https://ghostty.org/docs/config
+
+# Font
+font-family = JetBrains Mono
+font-size = 14
+
+# Theme (comment out to use default)
+theme = Catppuccin Mocha
+
+# Window
+window-padding-x = 8
+window-padding-y = 8
+
+# Shell integration
+shell-integration = zsh
+
+# macOS-specific
+macos-option-as-alt = true

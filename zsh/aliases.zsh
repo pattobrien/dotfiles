@@ -36,3 +36,6 @@ alias .....="cd ../../../.."
 
 # alias npm="pnpm"
 # alias npx="pnpx"
+
+alias cl="claude"
+alias clr="claude --resume"

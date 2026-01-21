@@ -20,3 +20,5 @@
 	program = /Applications/1Password.app/Contents/MacOS/op-ssh-sign
 [commit]
 	gpgsign = true
+[alias]
+	wt = "!f() { git worktree add .worktrees/\"$1\" -b patt/\"$1\"; }; f"

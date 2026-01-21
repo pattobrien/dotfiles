@@ -73,17 +73,17 @@
     "command": "bash -c 'input=$(cat); model=$(echo \"$input\" | jq -r \".model.display_name\"); total_in=$(echo \"$input\" | jq -r \".context_window.total_input_tokens\"); total_out=$(echo \"$input\" | jq -r \".context_window.total_output_tokens\"); total=$((total_in + total_out)); if [ $total -ge 1000000 ]; then tokens=$(printf \"%.1fM\" $(echo \"scale=1; $total / 1000000\" | bc)); elif [ $total -ge 1000 ]; then tokens=$(printf \"%.1fK\" $(echo \"scale=1; $total / 1000\" | bc)); else tokens=\"$total\"; fi; usage=$(echo \"$input\" | jq \".context_window.current_usage\"); if [ \"$usage\" != \"null\" ]; then current=$(echo \"$usage\" | jq \".input_tokens + .cache_creation_input_tokens + .cache_read_input_tokens\"); size=$(echo \"$input\" | jq \".context_window.context_window_size\"); pct=$((current * 100 / size)); context=\"${pct}%\"; else context=\"0%\"; fi; printf \"\\033[36m%s\\033[0m | \\033[33m%s tokens\\033[0m | \\033[35m%s context\\033[0m\" \"$model\" \"$tokens\" \"$context\"'"
   },
   "enabledPlugins": {
-    "beads@beads-marketplace": true,
+    "beads@beads-marketplace": false,
     "code-simplifier@claude-plugins-official": true,
     "commit-commands@claude-plugins-official": true,
-    "example-skills@anthropic-agent-skills": true,
+    "example-skills@anthropic-agent-skills": false,
     "neon-plugin@neon": false,
     "pattobrien@pattobrien": true,
-    "plugin-dev@claude-plugins-official": true,
-    "pr-review-toolkit@claude-plugins-official": true,
-    "superpowers@superpowers-marketplace": true,
-    "typescript-lsp@claude-plugins-official": true,
-    "claude-notifications-go@claude-notifications-go": true
+    "plugin-dev@claude-plugins-official": false,
+    "pr-review-toolkit@claude-plugins-official": false,
+    "superpowers@superpowers-marketplace": false,
+    "claude-notifications-go@claude-notifications-go": true,
+    "figma@claude-plugins-official": false
   },
   "alwaysThinkingEnabled": true
 }

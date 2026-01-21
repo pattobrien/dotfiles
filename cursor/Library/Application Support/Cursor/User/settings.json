@@ -1,4 +1,5 @@
 {
+  "workbench.panel.defaultLocation": "right",
   "beads.autoStartDaemon": false,
   "oxc.enable": false,
   "terminal.integrated.shellIntegration.enabled": true,
