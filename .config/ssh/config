@@ -1,39 +1,17 @@
-# Using your company key
+# General defaults
 Host *
     IdentityAgent "~/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
-    
-# Host 206.189.255.118
-#     HostName 206.189.255.118
-#     User root
-#     IdentityFile ~/Development/security/sidecar-pub-digitalocean.pem
-#
-# Host 18.232.191.200
-#     HostName 18.232.191.200
-#     IdentityFile ~/Development/security/sidecar-pub-pattobrien.pem
-#     User ubuntu
-#
-# Host 54.166.227.231
-#     HostName 54.166.227.231
-#     IdentityFile ~/Development/security/sidecar-pub-pattobrien.pem
-#     User ubuntu
-#
-# Host ec2-52-3-17-19.compute-1.amazonaws.com
-#     HostName ec2-52-3-17-19.compute-1.amazonaws.com
-#     IdentityFile ~/Development/security/sidecar-pub-pattobrien.pem
-#     User ubuntu
-#
-# Host ec2-54-86-83-214.compute-1.amazonaws.com
-#     HostName ec2-54-86-83-214.compute-1.amazonaws.com
-#     IdentityFile ~/Development/security/sidecar-pub-pattobrien.pem
-#     User ubuntu
-#
-# # Host github.com
-#     HostName github.com
-#     PreferredAuthentications publickey
-#     User git
-#     IdentityFile ~/Development/security/github_ssh
+    AddKeysToAgent yes
+    UseKeychain yes
+    ServerAliveInterval 60
 
-# Host github.com
-#   AddKeysToAgent yes
-#   UseKeychain yes
-#   IdentityFile ~/.ssh/id_ed25519
+# GitHub
+Host github.com
+    User git
+    IdentitiesOnly yes
+<!-- 
+# Example of development environments (non-sensitive)
+Host dev
+    HostName dev.example.com
+    User developer
+    ForwardAgent yes -->
