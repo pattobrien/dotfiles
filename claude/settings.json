@@ -85,5 +85,6 @@
     "claude-notifications-go@claude-notifications-go": true,
     "figma@claude-plugins-official": false
   },
+  "plansDirectory": "./docs/plans",
   "alwaysThinkingEnabled": true
 }
