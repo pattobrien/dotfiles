@@ -20,7 +20,8 @@
     ~/.tmux.conf: tmux/.tmux.conf
     ~/.zshrc: zsh/zshrc
     ~/.zshenv: zsh/zshenv
-    ~/.gitconfig: git/.gitconfig
+    ~/.config/act: .config/act
+    ~/.config/git: .config/git
     ~/.config/kitty: .config/kitty
     ~/.config/gh: .config/gh
     ~/.config/yabai: .config/yabai
