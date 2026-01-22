@@ -6,13 +6,17 @@
   "terminal.integrated.profiles.osx": {
     "zsh": {
       "path": "/bin/zsh",
-      "args": ["-l"]
+      "args": [
+        "-l"
+      ]
     },
     "bash": null
   },
   "terminal.integrated.automationProfile.osx": {
     "path": "/bin/zsh",
-    "args": ["-l"]
+    "args": [
+      "-l"
+    ]
   },
   "tailwindCSS.classAttributes": [
     "class",
@@ -53,7 +57,6 @@
     "editor.defaultFormatter": "bmewburn.vscode-intelephense-client",
     "editor.formatOnSave": true
   },
-
   "[ruby]": {
     "editor.defaultFormatter": "Shopify.ruby-lsp",
     "editor.formatOnSave": true,
@@ -112,7 +115,9 @@
   "editor.semanticHighlighting.enabled": true,
   "editor.bracketPairColorization.enabled": true,
   "editor.guides.bracketPairs": "active",
-  "editor.rulers": [80],
+  "editor.rulers": [
+    80
+  ],
   "editor.formatOnSave": true,
   "editor.lineNumbers": "relative",
   "editor.codeActionsOnSave": {
@@ -137,7 +142,9 @@
   "git.autofetch": true,
   "git.autoRepositoryDetection": false,
   "git.confirmSync": false,
-  "git.ignoredRepositories": ["**/.fvm"],
+  "git.ignoredRepositories": [
+    "**/.fvm"
+  ],
   "git.openRepositoryInParentFolders": "never",
   "githubPullRequests.pullBranch": "never",
   "githubIssues.queries": [
@@ -174,7 +181,9 @@
   "[markdown]": {
     "editor.wordWrap": "bounded",
     "editor.wordWrapColumn": 80,
-    "editor.rulers": [80],
+    "editor.rulers": [
+      80
+    ],
     "editor.formatOnSave": true,
     "editor.defaultFormatter": "denoland.vscode-deno",
     "editor.quickSuggestions": {
@@ -225,7 +234,9 @@
   "[jsonc]": {
     "editor.wordWrap": "bounded",
     "editor.wordWrapColumn": 120,
-    "editor.rulers": [120]
+    "editor.rulers": [
+      120
+    ]
   },
   "yaml.schemas": {
     "https://json.schemastore.org/dart-build.json": "build.yaml",
@@ -239,7 +250,9 @@
   "[dart]": {
     "editor.formatOnSave": true,
     "editor.formatOnType": true,
-    "editor.rulers": [80],
+    "editor.rulers": [
+      80
+    ],
     "editor.selectionHighlight": false,
     "editor.suggest.snippetsPreventQuickSuggestions": false,
     "editor.suggestSelection": "first",
@@ -263,14 +276,20 @@
   "dart.debugSdkLibraries": true,
   "dart.projectSearchDepth": 5,
   "dart.flutterSdkPath": "~/.fvm/default",
-  "dart.flutterSdkPaths": ["~/.fvm/versions/"],
-  "dart.vmAdditionalArgs": ["--enable-experiment=macros"],
+  "dart.flutterSdkPaths": [
+    "~/.fvm/versions/"
+  ],
+  "dart.vmAdditionalArgs": [
+    "--enable-experiment=macros"
+  ],
   "[python]": {
     "editor.defaultFormatter": "ms-python.black-formatter",
     "editor.formatOnSave": true
   },
   "python.defaultInterpreterPath": "/Users/pattobrien/.miniconda/bin/python",
-  "Lua.diagnostics.globals": ["vim"],
+  "Lua.diagnostics.globals": [
+    "vim"
+  ],
   "[rust]": {
     "editor.defaultFormatter": "rust-lang.rust-analyzer"
   },
@@ -293,7 +312,6 @@
     "editor.defaultFormatter": "Prisma.prisma",
     "editor.formatOnSave": true
   },
-
   "[terraform]": {
     "editor.defaultFormatter": "hashicorp.terraform"
   },
@@ -310,7 +328,9 @@
   "redhat.telemetry.enabled": false,
   "cmake.showOptionsMovedNotification": false,
   "cmake.configureOnOpen": false,
-  "cSpell.userWords": ["Wireframe"],
+  "cSpell.userWords": [
+    "Wireframe"
+  ],
   "vsicons.dontShowNewVersionMessage": true,
   "todo-tree.general.debug": true,
   "lldb.library": "/Applications/Xcode.app/Contents/SharedFrameworks/LLDB.framework/Versions/A/LLDB",
@@ -371,7 +391,11 @@
   "chat.editing.alwaysSaveWithGeneratedChanges": true,
   "lldb.suppressUpdateNotifications": true,
   "tailwind-fold.autoFold": false,
-  "cursor.cpp.disabledLanguages": ["scminput", "mdx"],
+  "cursor.cpp.disabledLanguages": [
+    "scminput",
+    "mdx",
+    "markdown"
+  ],
   "debug.javascript.autoAttachFilter": "onlyWithFlag",
   "explorer.confirmDragAndDrop": false,
   "window.confirmSaveUntitledWorkspace": false,
