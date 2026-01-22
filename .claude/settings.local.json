@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "permissions": {
+    "allow": [
+      "WebSearch",
+      "Bash(asdf plugin:*)",
+      "Bash(./scripts/brew-dump-leaves:*)",
+      "Bash(command grep -i \"^just \")",
+      "Bash(asdf list:*)",
+      "Bash(asdf install:*)",
+      "Bash(asdf set:*)",
+      "WebFetch(domain:mise.jdx.dev)",
+      "Skill(plugin-dev:hook-development)",
+      "Read",
+      "WebFetch(domain:containers.dev)",
+      "Bash(/bin/ls -la /Users/pattobrien/.dotfiles/)",
+      "Bash(/usr/bin/grep:*)",
+      "Bash(/bin/ls:*)",
+      "WebFetch(domain:hub.docker.com)",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:nektosact.com)"
+    ],
+    "deny": []
+  },
+  "outputStyle": "default"
+}

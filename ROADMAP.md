@@ -2,7 +2,7 @@
 
 ## Work
 
-- refactor: remove Dart from workspace root
+- [x] refactor: remove Dart from workspace root
 - replace asdf with mise
 - refactor: move all individual app config dirs to `.config` directory
 - configs to add:
