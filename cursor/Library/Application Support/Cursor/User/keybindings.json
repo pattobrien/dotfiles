@@ -1,21 +1,5 @@
 [
     {
-        "key": "ctrl+enter",
-        "command": "workbench.action.terminal.sendSequence",
-        "when": "terminalFocus",
-        "args": {
-            "text": "\\\r\n"
-        }
-    },
-    {
-        "key": "shift+enter",
-        "command": "workbench.action.terminal.sendSequence",
-        "when": "terminalFocus",
-        "args": {
-            "text": "\\\r\n"
-        }
-    },
-    {
         "key": "ctrl+shift+r",
         "command": "editor.action.refactor",
         "when": "editorHasCodeActionsProvider && editorTextFocus && !editorReadonly"
@@ -69,5 +53,13 @@
         "key": "shift+tab",
         "command": "acceptSelectedSuggestion",
         "when": "suggestWidgetHasFocusedSuggestion && suggestWidgetVisible && suggestionMakesTextEdit && textInputFocus"
+    },
+    {
+        "key": "shift+enter",
+        "command": "workbench.action.terminal.sendSequence",
+        "args": {
+            "text": "\u001b\r"
+        },
+        "when": "terminalFocus"
     }
 ]

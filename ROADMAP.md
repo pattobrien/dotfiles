@@ -7,8 +7,9 @@
 - [x] refactor: move all individual app config dirs to `.config` directory
 - configs to add:
   - [x] p10k (~/.p10k.zsh)
+  - see: [docs/plans/harmonic-twirling-frost.md]
 - script: combine vscode and cursor settings into one (see below)
-- fix: claude code + cursor; visible "/" when pressing SHIFT+ENTER
+- [x] fix: claude code + cursor; visible "/" when pressing SHIFT+ENTER
 
 ## Feature Wishlist
 

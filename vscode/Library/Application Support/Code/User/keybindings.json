@@ -49,14 +49,6 @@
     "when": "composerIsEnabled"
 },
 {
-    "key": "shift+enter",
-    "command": "workbench.action.terminal.sendSequence",
-    "args": {
-        "text": "\\\r\n"
-    },
-    "when": "terminalFocus"
-},
-{
     "key": "tab",
     "command": "editor.action.inlineSuggest.commit",
     "when": "editorTextFocus && inlineSuggestionVisible && !editorTabMovesFocus"
@@ -70,7 +62,15 @@
     "key": "tab",
     "command": "editor.action.inlineSuggest.commit",
     "when": "inInlineEditsPreviewEditor"
-  },
+},
+{
+    "key": "shift+enter",
+    "command": "workbench.action.terminal.sendSequence",
+    "args": {
+        "text": "\u001b\r"
+    },
+    "when": "terminalFocus"
+},
   // {
   //   "key": "ctrl+i",
   //   "command": "github.copilot.chat.attachSelection",
