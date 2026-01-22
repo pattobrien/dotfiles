@@ -18,7 +18,9 @@
       "WebFetch(domain:github.com)",
       "WebFetch(domain:mise.jdx.dev)",
       "WebFetch(domain:nektosact.com)",
-      "Bash(xargs:*)"
+      "Bash(xargs:*)",
+      "Bash(mise doctor:*)",
+      "Bash(mise list:*)"
     ],
     "deny": [],
     "additionalDirectories": [

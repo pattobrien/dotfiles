@@ -14,6 +14,7 @@
 
 - link:
     ~/.tool-versions: .config/asdf/.tool-versions
+    ~/.config/mise/config.toml: .config/mise/config.toml
     ~/.claude/CLAUDE.md: claude/CLAUDE.md
     ~/.claude/settings.json: claude/settings.json
     ~/.claude/skills: claude/skills

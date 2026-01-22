@@ -30,7 +30,10 @@
       "Bash(tail:*)",
       "Bash(sort:*)",
       "WebFetch(domain:code.claude.com/docs/en)",
-      "Bash(grep:*)"
+      "Bash(grep:*)",
+      "Bash(git status:*)",
+      "Bash(git pull:*)",
+      "Bash(git fetch:*)"
     ],
     "deny": [
       "Bash(npm:*)",

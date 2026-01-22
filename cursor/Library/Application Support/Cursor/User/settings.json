@@ -44,6 +44,7 @@
     "*.mjs": "javascript",
     "*.css": "tailwindcss"
   },
+  
   "[javascript]": {
     // "editor.defaultFormatter": "denoland.vscode-deno"
   },
@@ -127,7 +128,7 @@
   "editor.largeFileOptimizations": false,
   "editor.suggest.snippetsPreventQuickSuggestions": false,
   "editor.inlineSuggest.enabled": true,
-  "editor.defaultFormatter": null,
+  "editor.defaultFormatter": "oxc.oxc-vscode",
   "editor.inlayHints.enabled": "off",
   "terminal.integrated.inheritEnv": false,
   "debug.allowBreakpointsEverywhere": true,
@@ -185,7 +186,6 @@
       80
     ],
     "editor.formatOnSave": true,
-    "editor.defaultFormatter": "denoland.vscode-deno",
     "editor.quickSuggestions": {
       "other": "off",
       "comments": "off",
@@ -198,12 +198,10 @@
     "editor.formatOnSave": true
   },
   "[css]": {
-    "editor.defaultFormatter": "denoland.vscode-deno",
     "editor.formatOnSave": true,
     "editor.suggest.showColors": true
   },
   "[postcss]": {
-    "editor.defaultFormatter": "denoland.vscode-deno",
     "editor.formatOnSave": true
   },
   "[tailwindcss]": {
@@ -218,7 +216,6 @@
   "typescript.updateImportsOnFileMove.enabled": "always",
   "javascript.updateImportsOnFileMove.enabled": "always",
   "[typescript]": {
-    "editor.defaultFormatter": "denoland.vscode-deno",
     "editor.formatOnSave": true
     // "editor.codeActionsOnSave": {
     //   "source.fixAll.eslint": "explicit"
@@ -404,7 +401,6 @@
   "cursor.composer.shouldAllowCustomModes": true,
   "mssql.autoDisableNonTSqlLanguageService": true,
   "[html]": {
-    "editor.defaultFormatter": "denoland.vscode-deno"
   },
   "haskell.manageHLS": "GHCup",
   "explorer.fileNesting.patterns": {
