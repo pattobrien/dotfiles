@@ -13,11 +13,12 @@
     - "~/.oh-my-zsh/custom/plugins/"
 
 - link:
-    ~/.tool-versions: asdf/.tool-versions
+    ~/.tool-versions: .config/asdf/.tool-versions
     ~/.claude/CLAUDE.md: claude/CLAUDE.md
     ~/.claude/settings.json: claude/settings.json
     ~/.claude/skills: claude/skills
-    ~/.tmux.conf: tmux/.tmux.conf
+    ~/.tmux.conf: .config/tmux/.tmux.conf
+    ~/.ssh/config: .config/ssh/config
     ~/.zshrc: zsh/zshrc
     ~/.zshenv: zsh/zshenv
     ~/.p10k.zsh: zsh/p10k.zsh
