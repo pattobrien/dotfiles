@@ -20,6 +20,7 @@
     ~/.tmux.conf: tmux/.tmux.conf
     ~/.zshrc: zsh/zshrc
     ~/.zshenv: zsh/zshenv
+    ~/.p10k.zsh: zsh/p10k.zsh
     ~/.actrc: .config/act/.actrc
     ~/.config/git: .config/git
     ~/.config/kitty: .config/kitty

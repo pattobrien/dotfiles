@@ -6,7 +6,7 @@
 - replace asdf with mise
 - refactor: move all individual app config dirs to `.config` directory
 - configs to add:
-  - p10k (~/.p10k.zsh)
+  - [x] p10k (~/.p10k.zsh)
 - script: combine vscode and cursor settings into one (see below)
 
 ## Feature Wishlist
