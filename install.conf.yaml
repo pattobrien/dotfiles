@@ -21,13 +21,13 @@
     ~/.zshrc: zsh/zshrc
     ~/.zshenv: zsh/zshenv
     ~/.gitconfig: git/.gitconfig
-    ~/.config/kitty/kitty.conf: kitty/kitty.conf
+    ~/.config/kitty: .config/kitty
     ~/.config/gh: .config/gh
-    ~/.config/yabai: yabai
-    ~/.config/skhd: skhd
-    ~/.config/nvim: nvim
-    ~/.config/ghostty: ghostty
-    ~/.config/op/plugins.sh: op/.config/plugins.sh
+    ~/.config/yabai: .config/yabai
+    ~/.config/skhd: .config/skhd
+    ~/.config/nvim: .config/nvim
+    ~/.config/ghostty: .config/ghostty
+    ~/.config/op/plugins.sh: .config/op/plugins.sh
     ~/Library/Application Support/Cursor/User/settings.json: cursor/Library/Application Support/Cursor/User/settings.json
     ~/Library/Application Support/Cursor/User/keybindings.json: cursor/Library/Application Support/Cursor/User/keybindings.json
     ~/Library/Application Support/Cursor/User/snippets: cursor/Library/Application Support/Cursor/User/snippets
@@ -43,9 +43,9 @@
     - command: chmod +x scripts/*
       description: Making scripts executable
 
-    # Create 1Password config directory with correct permissions
-    - command: mkdir -p ~/.config/op && chmod 700 ~/.config/op
-      description: Setting up 1Password config directory
+    # Set 1Password config directory permissions
+    - command: chmod 700 ~/.config/op
+      description: Setting up 1Password config directory permissions
 
     # Run Homebrew setup
     - command: ./scripts/setup_homebrew.zsh
