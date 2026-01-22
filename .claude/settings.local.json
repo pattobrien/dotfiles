@@ -9,18 +9,21 @@
       "Bash(asdf list:*)",
       "Bash(asdf install:*)",
       "Bash(asdf set:*)",
-      "WebFetch(domain:mise.jdx.dev)",
       "Skill(plugin-dev:hook-development)",
       "Read",
       "WebFetch(domain:containers.dev)",
-      "Bash(/bin/ls -la /Users/pattobrien/.dotfiles/)",
-      "Bash(/usr/bin/grep:*)",
-      "Bash(/bin/ls:*)",
+      "Bash(grep:*)",
+      "Bash(ls:*)",
       "WebFetch(domain:hub.docker.com)",
       "WebFetch(domain:github.com)",
+      "WebFetch(domain:mise.jdx.dev)",
       "WebFetch(domain:nektosact.com)"
     ],
-    "deny": []
+    "deny": [],
+    "additionalDirectories": [
+      "~/dev",
+      "~"
+    ]
   },
   "outputStyle": "default"
 }

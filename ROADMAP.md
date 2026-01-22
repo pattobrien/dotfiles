@@ -4,10 +4,11 @@
 
 - [x] refactor: remove Dart from workspace root
 - replace asdf with mise
-- refactor: move all individual app config dirs to `.config` directory
+- [x] refactor: move all individual app config dirs to `.config` directory
 - configs to add:
   - [x] p10k (~/.p10k.zsh)
 - script: combine vscode and cursor settings into one (see below)
+- fix: claude code + cursor; visible "/" when pressing SHIFT+ENTER
 
 ## Feature Wishlist
 
