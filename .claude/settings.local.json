@@ -17,7 +17,8 @@
       "WebFetch(domain:hub.docker.com)",
       "WebFetch(domain:github.com)",
       "WebFetch(domain:mise.jdx.dev)",
-      "WebFetch(domain:nektosact.com)"
+      "WebFetch(domain:nektosact.com)",
+      "Bash(xargs:*)"
     ],
     "deny": [],
     "additionalDirectories": [

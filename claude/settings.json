@@ -33,7 +33,6 @@
       "Bash(grep:*)"
     ],
     "deny": [
-      "Bash(find:*)",
       "Bash(npm:*)",
       "Bash(npx:*)"
     ],
