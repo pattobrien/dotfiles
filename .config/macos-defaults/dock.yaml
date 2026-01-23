@@ -1,13 +1,9 @@
 # Dock settings
 # Apply with: macos-defaults apply ~/.config/macos-defaults/dock.yaml
 ---
-# Label for this config block (for reference only)
 description: Dock settings
-# Whether these settings require sudo to apply
 sudo: false
-# Whether to use ByHost preferences (machine-specific settings)
 current_host: false
-# Processes to restart after applying changes (to make them take effect)
 kill: [Dock]
 data:
   com.apple.dock:

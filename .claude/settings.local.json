@@ -21,7 +21,8 @@
       "Bash(xargs:*)",
       "Bash(mise doctor:*)",
       "Bash(mise list:*)",
-      "Bash(macos-defaults dump:*)"
+      "Bash(macos-defaults dump:*)",
+      "Bash(yq:*)"
     ],
     "deny": [],
     "additionalDirectories": [

@@ -1,0 +1,23 @@
+# Screenshot settings
+# Apply with: macos-defaults apply ~/.config/macos-defaults/screencapture.yaml
+---
+description: Screenshot settings
+sudo: false
+current_host: false
+kill: [SystemUIServer]
+data:
+  com.apple.screencapture:
+    # Directory where screenshots are saved
+    location: ~/Screenshots
+    # Default capture style: "window", "selection", or "fullscreen"
+    style: window
+    # Where to send captures: "file", "clipboard", "preview", "mail", "messages"
+    target: file
+    # File format: "png", "jpg", "gif", "pdf", "tiff"
+    # type: png
+    # Disable drop shadow on window captures (true = no shadow)
+    # disable-shadow: false
+    # Show floating thumbnail after capture (true = show)
+    # show-thumbnail: true
+    # Include date in screenshot filename
+    # include-date: true
