@@ -20,7 +20,8 @@
       "WebFetch(domain:nektosact.com)",
       "Bash(xargs:*)",
       "Bash(mise doctor:*)",
-      "Bash(mise list:*)"
+      "Bash(mise list:*)",
+      "Bash(macos-defaults dump:*)"
     ],
     "deny": [],
     "additionalDirectories": [

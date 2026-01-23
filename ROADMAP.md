@@ -10,6 +10,7 @@
   - see: [docs/plans/harmonic-twirling-frost.md]
 - script: combine vscode and cursor settings into one (see below)
 - [x] fix: claude code + cursor; visible "/" when pressing SHIFT+ENTER
+- [x] sync macOS defaults to this repo (see below)
 
 ## Feature Wishlist
 
@@ -18,6 +19,11 @@
 
 
 ## Planning
+
+### macOS defaults
+
+1. pick a tool to use for syncing / declaring defaults settings declaratively.
+2. export to this repo and begin sync process
 
 ### VSCode + Cursor Settings Sync (WIP)
 

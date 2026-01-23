@@ -38,6 +38,7 @@
     ~/Library/Application Support/Code/User/settings.json: vscode/Library/Application Support/Code/User/settings.json
     ~/Library/Application Support/Code/User/keybindings.json: vscode/Library/Application Support/Code/User/keybindings.json
     ~/Library/Application Support/Code/User/tasks.json: vscode/Library/Application Support/Code/User/tasks.json
+    ~/.config/macos-defaults: .config/macos-defaults
 
 - create:
     - ~/dev
@@ -64,3 +65,7 @@
 
     # 1password agent setup
     - command: ./scripts/1password_agent_setup.sh
+
+    # Apply macOS defaults (uncomment to run automatically)
+    # - command: macos-defaults apply ~/.config/macos-defaults/macos.yaml
+    #   description: Applying macOS defaults

@@ -1,4 +1,5 @@
 tap "anomalyco/tap"
+tap "dsully/tap"
 tap "desdaemon/repo"
 tap "felangel/mason"
 tap "hashicorp/tap"
@@ -74,6 +75,8 @@ brew "lcov"
 brew "less"
 # Postgres C API library
 brew "libpq"
+# Manage macOS defaults declaratively via YAML
+brew "dsully/tap/macos-defaults"
 # Mac App Store command-line interface
 brew "mas"
 # Neon CLI tool
