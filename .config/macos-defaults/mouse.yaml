@@ -1,0 +1,25 @@
+# Magic Mouse settings
+# Apply with: macos-defaults apply ~/.config/macos-defaults/mouse.yaml
+---
+description: Magic Mouse settings
+sudo: false
+current_host: false
+kill: []
+data:
+  com.apple.AppleMultitouchMouse:
+    # Button mode: OneButton, TwoButton
+    MouseButtonMode: TwoButton
+    # Where right-click zone starts (0-100, 55 = right 45%)
+    MouseButtonDivision: 55
+    # Enable horizontal scrolling
+    MouseHorizontalScroll: true
+    # Enable vertical scrolling
+    MouseVerticalScroll: true
+    # Momentum/inertia scrolling
+    MouseMomentumScroll: true
+    # One-finger double-tap: 0=off, 1=smart zoom
+    MouseOneFingerDoubleTapGesture: 1
+    # Two-finger double-tap: 0=off, 3=mission control
+    MouseTwoFingerDoubleTapGesture: 3
+    # Two-finger horizontal swipe: 0=off, 2=switch pages
+    MouseTwoFingerHorizSwipeGesture: 2
