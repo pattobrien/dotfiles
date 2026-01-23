@@ -1,0 +1,1928 @@
+---
+description: com.apple.finder
+sudo: false
+current_host: false
+data:
+  com.apple.finder:
+    ComputerViewSettings:
+      WindowState:
+        ContainerShowSidebar: true
+        ShowStatusBar: false
+        ShowSidebar: true
+        ShowToolbar: true
+        ShowTabView: false
+        WindowBounds: "{{652, 120}, {920, 436}}"
+      ExtendedListViewSettingsV2:
+        useRelativeDates: true
+        showIconPreview: true
+        columns:
+          -
+            width: 300
+            ascending: true
+            identifier: name
+            visible: true
+          -
+            visible: false
+            width: 35
+            ascending: false
+            identifier: ubiquity
+          -
+            width: 181
+            ascending: false
+            identifier: dateModified
+            visible: true
+          -
+            width: 181
+            ascending: false
+            identifier: dateCreated
+            visible: false
+          -
+            width: 97
+            ascending: false
+            identifier: size
+            visible: true
+          -
+            width: 115
+            ascending: true
+            identifier: kind
+            visible: true
+          -
+            width: 100
+            ascending: true
+            identifier: label
+            visible: false
+          -
+            width: 75
+            ascending: true
+            identifier: version
+            visible: false
+          -
+            width: 300
+            ascending: true
+            identifier: comments
+            visible: false
+          -
+            width: 200
+            ascending: false
+            identifier: dateLastOpened
+            visible: false
+          -
+            width: 200
+            ascending: false
+            identifier: shareOwner
+            visible: false
+          -
+            width: 200
+            ascending: false
+            identifier: shareLastEditor
+            visible: false
+          -
+            visible: false
+            width: 181
+            ascending: false
+            identifier: dateAdded
+          -
+            width: 210
+            ascending: false
+            identifier: invitationStatus
+            visible: false
+        calculateAllSizes: false
+        textSize: 13.0
+        sortColumn: name
+        iconSize: 16.0
+        viewOptionsVersion: 1
+      CustomViewStyleVersion: 1
+      ListViewSettings:
+        useRelativeDates: true
+        showIconPreview: true
+        columns:
+          comments:
+            visible: false
+            width: 300
+            ascending: true
+            index: 7
+          dateModified:
+            visible: true
+            width: 181
+            ascending: false
+            index: 1
+          dateCreated:
+            visible: false
+            width: 181
+            ascending: false
+            index: 2
+          size:
+            visible: true
+            width: 97
+            ascending: false
+            index: 3
+          label:
+            visible: false
+            width: 100
+            ascending: true
+            index: 5
+          kind:
+            visible: true
+            width: 115
+            ascending: true
+            index: 4
+          version:
+            visible: false
+            width: 75
+            ascending: true
+            index: 6
+          dateLastOpened:
+            visible: false
+            width: 200
+            ascending: false
+            index: 8
+          name:
+            visible: true
+            width: 300
+            ascending: true
+            index: 0
+        calculateAllSizes: false
+        textSize: 13.0
+        sortColumn: name
+        iconSize: 16.0
+        viewOptionsVersion: 1
+    CopyProgressWindowLocation: "{664, 271}"
+    DataSeparatedDisplayNameCache: ""
+    DesktopViewSettings:
+      GroupBy: Kind
+      IconViewSettings:
+        backgroundColorBlue: 1.0
+        gridSpacing: 54.0
+        textSize: 12.0
+        backgroundColorRed: 1.0
+        backgroundType: 0
+        backgroundColorGreen: 1.0
+        gridOffsetX: 0.0
+        gridOffsetY: 0.0
+        showItemInfo: false
+        viewOptionsVersion: 1
+        labelOnBottom: true
+        arrangeBy: dateAdded
+        showIconPreview: true
+        iconSize: 64.0
+    DownloadsFolderListViewSettingsVersion: 1
+    EmptyTrashProgressWindowLocation: "{0, 38}"
+    FK_AppCentricShowSidebar: true
+    FK_DefaultIconViewSettings:
+      backgroundColorBlue: 1.0
+      gridSpacing: 54.0
+      textSize: 12.0
+      backgroundColorRed: 1.0
+      backgroundType: 0
+      backgroundColorGreen: 1.0
+      gridOffsetX: 0.0
+      gridOffsetY: 0.0
+      showItemInfo: true
+      viewOptionsVersion: 1
+      labelOnBottom: true
+      arrangeBy: name
+      showIconPreview: true
+      iconSize: 64.0
+    FK_DefaultListViewSettingsV2:
+      iconSize: 16.0
+      showIconPreview: true
+      columns:
+        -
+          ascending: true
+          width: 446
+          identifier: name
+          visible: true
+        -
+          visible: false
+          ascending: false
+          width: 35
+          identifier: ubiquity
+        -
+          ascending: false
+          width: 181
+          identifier: dateModified
+          visible: true
+        -
+          ascending: false
+          width: 181
+          identifier: dateCreated
+          visible: false
+        -
+          ascending: false
+          width: 97
+          identifier: size
+          visible: true
+        -
+          ascending: true
+          width: 115
+          identifier: kind
+          visible: true
+        -
+          ascending: true
+          width: 100
+          identifier: label
+          visible: false
+        -
+          ascending: true
+          width: 75
+          identifier: version
+          visible: false
+        -
+          ascending: true
+          width: 300
+          identifier: comments
+          visible: false
+        -
+          ascending: false
+          width: 200
+          identifier: dateLastOpened
+          visible: false
+        -
+          ascending: false
+          width: 200
+          identifier: shareOwner
+          visible: false
+        -
+          ascending: false
+          width: 200
+          identifier: shareLastEditor
+          visible: false
+        -
+          ascending: false
+          width: 181
+          identifier: dateAdded
+          visible: true
+        -
+          ascending: false
+          width: 210
+          identifier: invitationStatus
+          visible: false
+      calculateAllSizes: false
+      textSize: 13.0
+      sortColumn: dateModified
+      useRelativeDates: true
+      viewOptionsVersion: 1
+    FK_RecentsIconViewSettings:
+      backgroundColorBlue: 1.0
+      gridSpacing: 54.0
+      textSize: 12.0
+      backgroundColorRed: 1.0
+      backgroundType: 0
+      backgroundColorGreen: 1.0
+      gridOffsetX: 0.0
+      gridOffsetY: 0.0
+      showItemInfo: false
+      viewOptionsVersion: 1
+      labelOnBottom: true
+      arrangeBy: dateModified
+      showIconPreview: true
+      iconSize: 64.0
+    FK_RecentsListViewSettingsV2:
+      iconSize: 16.0
+      showIconPreview: true
+      columns:
+        -
+          visible: true
+          identifier: name
+          width: 300
+          ascending: true
+        -
+          visible: false
+          identifier: ubiquity
+          width: 35
+          ascending: false
+        -
+          ascending: false
+          identifier: dateModified
+          width: 181
+          visible: true
+        -
+          ascending: false
+          identifier: dateCreated
+          width: 181
+          visible: false
+        -
+          ascending: false
+          identifier: size
+          width: 97
+          visible: true
+        -
+          ascending: true
+          identifier: kind
+          width: 115
+          visible: true
+        -
+          ascending: true
+          identifier: label
+          width: 100
+          visible: false
+        -
+          ascending: true
+          identifier: version
+          width: 75
+          visible: false
+        -
+          ascending: true
+          identifier: comments
+          width: 300
+          visible: false
+        -
+          ascending: false
+          identifier: dateLastOpened
+          width: 200
+          visible: false
+        -
+          ascending: false
+          identifier: shareOwner
+          width: 200
+          visible: false
+        -
+          ascending: false
+          identifier: shareLastEditor
+          width: 200
+          visible: false
+        -
+          visible: false
+          identifier: dateAdded
+          width: 181
+          ascending: false
+        -
+          ascending: false
+          identifier: invitationStatus
+          width: 210
+          visible: false
+      calculateAllSizes: false
+      textSize: 13.0
+      sortColumn: dateModified
+      useRelativeDates: true
+      viewOptionsVersion: 1
+    FK_SearchIconViewSettings:
+      backgroundColorBlue: 1.0
+      gridSpacing: 54.0
+      textSize: 12.0
+      backgroundColorRed: 1.0
+      backgroundType: 0
+      backgroundColorGreen: 1.0
+      gridOffsetX: 0.0
+      gridOffsetY: 0.0
+      showItemInfo: false
+      viewOptionsVersion: 1
+      labelOnBottom: true
+      arrangeBy: dateModified
+      showIconPreview: true
+      iconSize: 64.0
+    FK_SearchListViewSettingsV2:
+      iconSize: 16.0
+      showIconPreview: true
+      columns:
+        -
+          visible: true
+          identifier: name
+          width: 300
+          ascending: true
+        -
+          visible: false
+          identifier: ubiquity
+          width: 35
+          ascending: false
+        -
+          ascending: false
+          identifier: dateModified
+          width: 181
+          visible: true
+        -
+          ascending: false
+          identifier: dateCreated
+          width: 181
+          visible: false
+        -
+          ascending: false
+          identifier: size
+          width: 97
+          visible: true
+        -
+          ascending: true
+          identifier: kind
+          width: 115
+          visible: true
+        -
+          ascending: true
+          identifier: label
+          width: 100
+          visible: false
+        -
+          ascending: true
+          identifier: version
+          width: 75
+          visible: false
+        -
+          ascending: true
+          identifier: comments
+          width: 300
+          visible: false
+        -
+          ascending: false
+          identifier: dateLastOpened
+          width: 200
+          visible: false
+        -
+          ascending: false
+          identifier: shareOwner
+          width: 200
+          visible: false
+        -
+          ascending: false
+          identifier: shareLastEditor
+          width: 200
+          visible: false
+        -
+          visible: false
+          identifier: dateAdded
+          width: 181
+          ascending: false
+        -
+          ascending: false
+          identifier: invitationStatus
+          width: 210
+          visible: false
+      calculateAllSizes: false
+      textSize: 13.0
+      sortColumn: dateModified
+      useRelativeDates: true
+      viewOptionsVersion: 1
+    FK_SidebarWidth: 143.0
+    FK_StandardViewOptions2:
+      ColumnViewOptions:
+        ArrangeBy: dnam
+        ColumnShowFolderArrow: true
+        ShowPreview: true
+        FontSize: 13
+        SharedArrangeBy: kipl
+        ShowIconThumbnails: true
+        ColumnShowIcons: true
+        PreviewDisclosureState: true
+        ColumnWidth: 245
+    FK_StandardViewSettings:
+      ListViewSettings:
+        iconSize: 16
+        showIconPreview: true
+        columns:
+          comments:
+            visible: false
+            width: 300
+            ascending: true
+            index: 7
+          name:
+            visible: true
+            width: 300
+            ascending: true
+            index: 0
+          dateCreated:
+            visible: false
+            width: 181
+            ascending: false
+            index: 2
+          size:
+            visible: true
+            width: 97
+            ascending: false
+            index: 3
+          label:
+            visible: false
+            width: 100
+            ascending: true
+            index: 5
+          kind:
+            visible: true
+            width: 115
+            ascending: true
+            index: 4
+          version:
+            visible: false
+            width: 75
+            ascending: true
+            index: 6
+          dateLastOpened:
+            visible: false
+            width: 200
+            ascending: false
+            index: 8
+          dateModified:
+            visible: true
+            width: 181
+            ascending: false
+            index: 1
+        calculateAllSizes: false
+        textSize: 13
+        sortColumn: name
+        useRelativeDates: true
+        viewOptionsVersion: 1
+      ExtendedListViewSettingsV2:
+        iconSize: 16
+        showIconPreview: true
+        columns:
+          -
+            ascending: true
+            identifier: name
+            width: 300
+            visible: true
+          -
+            ascending: false
+            identifier: dateModified
+            width: 181
+            visible: true
+          -
+            ascending: false
+            identifier: dateCreated
+            width: 181
+            visible: false
+          -
+            ascending: false
+            identifier: size
+            width: 97
+            visible: true
+          -
+            ascending: true
+            identifier: kind
+            width: 115
+            visible: true
+          -
+            ascending: true
+            identifier: label
+            width: 100
+            visible: false
+          -
+            ascending: true
+            identifier: version
+            width: 75
+            visible: false
+          -
+            ascending: true
+            identifier: comments
+            width: 300
+            visible: false
+          -
+            ascending: false
+            identifier: dateLastOpened
+            width: 200
+            visible: false
+          -
+            ascending: false
+            identifier: shareOwner
+            width: 200
+            visible: false
+          -
+            ascending: false
+            identifier: shareLastEditor
+            width: 200
+            visible: false
+        calculateAllSizes: false
+        textSize: 13
+        sortColumn: name
+        useRelativeDates: true
+        viewOptionsVersion: 1
+      IconViewSettings:
+        backgroundColorBlue: 1.0
+        gridSpacing: 54.0
+        textSize: 12.0
+        backgroundColorRed: 1.0
+        backgroundType: 0
+        backgroundColorGreen: 1.0
+        gridOffsetX: 0.0
+        gridOffsetY: 0.0
+        showItemInfo: false
+        viewOptionsVersion: 1
+        arrangeBy: none
+        labelOnBottom: true
+        iconSize: 64.0
+        showIconPreview: true
+      SettingsType: FK_StandardViewSettings
+    FK_iCloudIconViewSettings:
+      backgroundColorBlue: 1.0
+      gridSpacing: 54.0
+      textSize: 12.0
+      backgroundColorRed: 1.0
+      backgroundType: 0
+      backgroundColorGreen: 1.0
+      gridOffsetX: 0.0
+      gridOffsetY: 0.0
+      showItemInfo: false
+      viewOptionsVersion: 1
+      labelOnBottom: true
+      arrangeBy: dateModified
+      showIconPreview: true
+      iconSize: 64.0
+    FK_iCloudListViewSettingsV2:
+      viewOptionsVersion: 1
+      showIconPreview: true
+      columns:
+        -
+          visible: true
+          identifier: name
+          width: 346
+          ascending: true
+        -
+          ascending: false
+          identifier: ubiquity
+          width: 35
+          visible: false
+        -
+          visible: true
+          identifier: dateModified
+          width: 181
+          ascending: false
+        -
+          visible: false
+          identifier: dateCreated
+          width: 181
+          ascending: false
+        -
+          visible: true
+          identifier: size
+          width: 97
+          ascending: false
+        -
+          ascending: true
+          identifier: kind
+          width: 115
+          visible: false
+        -
+          visible: false
+          identifier: label
+          width: 100
+          ascending: true
+        -
+          visible: false
+          identifier: version
+          width: 75
+          ascending: true
+        -
+          visible: false
+          identifier: comments
+          width: 300
+          ascending: true
+        -
+          visible: false
+          identifier: dateLastOpened
+          width: 200
+          ascending: false
+        -
+          visible: false
+          identifier: shareOwner
+          width: 200
+          ascending: false
+        -
+          visible: false
+          identifier: shareLastEditor
+          width: 200
+          ascending: false
+        -
+          ascending: false
+          identifier: dateAdded
+          width: 181
+          visible: false
+        -
+          visible: false
+          identifier: invitationStatus
+          width: 210
+          ascending: false
+      calculateAllSizes: false
+      textSize: 13.0
+      userDidChangeSort: true
+      sortColumn: dateModified
+      useRelativeDates: true
+      iconSize: 16.0
+    FXArrangeGroupViewBy: Name
+    FXDesktopTouchBarUpgradedToTenTwelveOne: 1
+    FXDesktopVolumePositions:
+      Singlebox 21.7.2-universal_0x1.3acdb09p+29:
+        xRelative: -299
+        ScreenID: 0
+        AnchorRelativeTo: 0
+        yRelative: -144
+      Google Chrome_0x1.39538f18p+29:
+        xRelative: -65
+        ScreenID: 0
+        AnchorRelativeTo: 1
+        yRelative: 78
+      Shift_0x1.3a1921p+29:
+        xRelative: -299
+        ScreenID: 0
+        AnchorRelativeTo: 0
+        yRelative: -256
+      WebCatalog 40.2.0-universal_0x1.3a6f4028p+29:
+        xRelative: -299
+        ScreenID: 0
+        AnchorRelativeTo: 0
+        yRelative: -32
+      Firefox_0x1.399732c8p+29:
+        xRelative: -309
+        ScreenID: 0
+        AnchorRelativeTo: 2
+        yRelative: -367
+    FXDetachedDesktopProviderID: com.apple.CloudDocs.iCloudDriveFileProvider/69E700E4-7AD3-4DFF-8C06-BB6303DE1ED7
+    FXDetachedDocumentsProviderID: com.apple.CloudDocs.iCloudDriveFileProvider/69E700E4-7AD3-4DFF-8C06-BB6303DE1ED7
+    FXICloudDriveDeclinedUpgrade: false
+    FXICloudDriveDesktop: true
+    FXICloudDriveDocuments: true
+    FXICloudDriveEnabled: true
+    FXICloudDriveFirstSyncDownComplete: true
+    FXICloudLoggedIn: true
+    FXInfoPanesExpanded:
+      Privileges: true
+      Comments: true
+      MetaData: true
+      Name: true
+      OpenWith: true
+    FXInfoWindowWidth: 400.0
+    FXLastSearchScope: SCcf
+    FXPreferencesWindow.Location: "{{10, 674}, {377, 381}}"
+    FXPreferredGroupBy: None
+    FXPreferredSearchViewStyle: Nlsv
+    FXPreferredSearchViewStyleVersion: "%00%00%00%01"
+    FXPreferredViewStyle: Nlsv
+    FXQuickActionsConfigUpgradeLevel: 3
+    FXRecentFolders:
+      -
+        file-bookmark: 626f6f6b740200000000041030000000000000000000000000000000000000000000000000000000000000000000000064010000040000000303000000020020050000000101000055736572730000000a00000001010000706174746f627269656e0000080000000106000010000000200000000800000004030000b95c0000000000000800000004030000b0a903000000000008000000010600004400000054000000080000000004000041c398e06c01b034180000000102000002000000000000000f0000000000000000000000000000000000000001050000080000000403000000000000000000000400000003030000f5010000080000000109000066696c653a2f2f2f0c000000010100004d6163696e746f736820484408000000040300000050a11b73000000080000000004000041c7288486800000240000000101000041353433354638452d454242362d343133352d424531432d36393832413943394339324118000000010200008100000001000000ef13000001000000000000000000000001000000010100002f000000d8000000feffffff01000000000000001100000004100000340000000000000005100000640000000000000010100000840000000000000040100000740000000000000002200000580100000000000005200000c80000000000000010200000d800000000000000112000000c0100000000000012200000ec0000000000000013200000fc0000000000000020200000380100000000000030200000a40000000000000001c00000ac0000000000000011c00000200000000000000012c00000bc0000000000000001d00000a40000000000000010d000000400000000000000
+        name: pattobrien
+      -
+        file-bookmark: 626f6f6b300300000000041030000000000000000000000000000000000000000000000000000000000000000000000044020000040000000303000000020020060000000101000053797374656d000007000000010100004c696272617279000c00000001010000436f726553657276696365730a0000000101000046696e6465722e61707000000800000001010000436f6e74656e747309000000010100005265736f75726365730000000b000000010100004d794c69627261726965730018000000010100006d79446f63756d656e74732e63616e6e656453656172636820000000010600001000000020000000300000004400000058000000680000007c00000090000000080000000403000017000000ffffff0f0800000004030000d0830000ffffff0f08000000040300009ac90200ffffff0f08000000040300007eee0200ffffff0f08000000040300007fee0200ffffff0f0800000004030000f0ef0200ffffff0f080000000403000098f00200ffffff0f080000000403000048f10200ffffff0f2000000001060000d8000000e8000000f80000000801000018010000280100003801000048010000080000000004000041c7288486800000180000000102000002000000000000000f0000000000000000000000000000000000000001050000080000000109000066696c653a2f2f2f0c000000010100004d6163696e746f736820484408000000040300000050a11b73000000240000000101000041353433354638452d454242362d343133352d424531432d36393832413943394339324118000000010200008100000001000000ef13000001000000000000000000000001000000010100002f000000b4000000feffffff01000000000000000e00000004100000b00000000000000005100000580100000000000010100000900100000000000040100000800100000000000002200000380200000000000005200000b80100000000000010200000c80100000000000011200000ec0100000000000012200000dc0100000000000013200000800100000000000020200000180200000000000030200000b00100000000000001d00000b00100000000000010d000000400000000000000
+        name: Recents
+      -
+        file-bookmark: 626f6f6ba00200000000041030000000000000000000000000000000000000000000000000000000000000000000000090010000040000000303000000020020050000000101000055736572730000000a00000001010000706174746f627269656e00000900000001010000446f776e6c6f6164730000000c000000010600001000000020000000340000000800000004030000b95c0000000000000800000004030000b0a90300000000000800000004030000e3a90300000000000c000000010600005c0000006c0000007c000000080000000004000041c37ae728000000180000000102000002000000000000000f0000000000000000000000000000000000000001050000080000000403000001000000000000000400000003030000f5010000080000000109000066696c653a2f2f2f0c000000010100004d6163696e746f736820484408000000040300000050a11b73000000080000000004000041c7288486800000240000000101000041353433354638452d454242362d343133352d424531432d36393832413943394339324118000000010200008100000001000000ef13000001000000000000000000000001000000010100002f000000d8000000feffffff010000000000000011000000041000004800000000000000051000008c0000000000000010100000b00000000000000040100000a00000000000000002200000840100000000000005200000f40000000000000010200000040100000000000011200000380100000000000012200000180100000000000013200000280100000000000020200000640100000000000030200000d00000000000000001c00000d80000000000000011c00000200000000000000012c00000e80000000000000001d00000d00000000000000010d000000400000000000000
+        name: Downloads
+      -
+        file-bookmark: 626f6f6b880300000000041030000000000000000000000000000000000000000000000000000000000000000000000078020000040000000303000000020020050000000101000055736572730000000a00000001010000706174746f627269656e00000300000001010000646576000700000001010000676574646f74730007000000010100006d65616761696e000a000000010100002e776f726b747265657300000400000001010000706174740c000000010100006d6564732d70686173652d310400000001010000646f637324000000010600001000000020000000340000004000000050000000600000007400000080000000940000000800000004030000b95c0000000000000800000004030000b0a90300000000000800000004030000d98b17080000000008000000040300009ccd8e1e000000000800000004030000c4cd8e1e0000000008000000040300007d17ce1e000000000800000004030000d55dce1e000000000800000004030000969e3b1f0000000008000000040300002ba53b1f000000002400000001060000cc000000dc000000ec000000fc0000000c0100001c0100002c0100003c0100004c010000080000000004000041c78cb1f9eaf364180000000102000002000000000000000f0000000000000000000000000000000000000001050000080000000403000007000000000000000400000003030000f5010000080000000109000066696c653a2f2f2f0c000000010100004d6163696e746f736820484408000000040300000050a11b73000000080000000004000041c7288486800000240000000101000041353433354638452d454242362d343133352d424531432d36393832413943394339324118000000010200008100000001000000ef13000001000000000000000000000001000000010100002f000000d8000000feffffff01000000000000001100000004100000a000000000000000051000005c01000000000000101000009801000000000000401000008801000000000000022000006c0200000000000005200000dc0100000000000010200000ec01000000000000112000002002000000000000122000000002000000000000132000001002000000000000202000004c0200000000000030200000b80100000000000001c00000c00100000000000011c00000200000000000000012c00000d00100000000000001d00000b80100000000000010d000000400000000000000
+        name: docs
+      -
+        file-bookmark: 626f6f6bf802000000000410300000000000000000000000000000000000000000000000000000000000000000000000e8010000040000000303000000020020050000000101000055736572730000000a00000001010000706174746f627269656e000007000000010100004c6962726172790013000000010100004170706c69636174696f6e20537570706f7274000600000001010000436c617564650000140000000106000010000000200000003400000044000000600000000800000004030000b95c0000000000000800000004030000b0a90300000000000800000004030000b7a90300000000000800000004030000b8a9030000000000080000000403000069b585140000000014000000010600008c0000009c000000ac000000bc000000cc000000080000000004000041c673d7e60ddb90180000000102000002000000000000000f0000000000000000000000000000000000000001050000080000000403000003000000000000000400000003030000f5010000080000000109000066696c653a2f2f2f0c000000010100004d6163696e746f736820484408000000040300000050a11b73000000080000000004000041c7288486800000240000000101000041353433354638452d454242362d343133352d424531432d36393832413943394339324118000000010200008100000001000000ef13000001000000000000000000000001000000010100002f000000d8000000feffffff01000000000000001100000004100000700000000000000005100000dc0000000000000010100000080100000000000040100000f80000000000000002200000dc01000000000000052000004c01000000000000102000005c0100000000000011200000900100000000000012200000700100000000000013200000800100000000000020200000bc0100000000000030200000280100000000000001c00000300100000000000011c00000200000000000000012c00000400100000000000001d00000280100000000000010d000000400000000000000
+        name: Claude
+      -
+        file-bookmark: 626f6f6b9c020000000004103000000000000000000000000000000000000000000000000000000000000000000000008c010000040000000303000000020020050000000101000055736572730000000a00000001010000706174746f627269656e0000080000000101000050696374757265730c000000010600001000000020000000340000000800000004030000b95c0000000000000800000004030000b0a90300000000000800000004030000b3a90300000000000c00000001060000580000006800000078000000080000000004000041c37ae728000000180000000102000002000000000000000f0000000000000000000000000000000000000001050000080000000403000001000000000000000400000003030000f5010000080000000109000066696c653a2f2f2f0c000000010100004d6163696e746f736820484408000000040300000050a11b73000000080000000004000041c7288486800000240000000101000041353433354638452d454242362d343133352d424531432d36393832413943394339324118000000010200008100000001000000ef13000001000000000000000000000001000000010100002f000000d8000000feffffff01000000000000001100000004100000440000000000000005100000880000000000000010100000ac00000000000000401000009c0000000000000002200000800100000000000005200000f00000000000000010200000000100000000000011200000340100000000000012200000140100000000000013200000240100000000000020200000600100000000000030200000cc0000000000000001c00000d40000000000000011c00000200000000000000012c00000e40000000000000001d00000cc0000000000000010d000000400000000000000
+        name: Pictures
+      -
+        file-bookmark: 626f6f6bc402000000000410300000000000000000000000000000000000000000000000000000000000000000000000b4010000040000000303000000020020050000000101000055736572730000000a00000001010000706174746f627269656e000007000000010100004c6962726172790008000000010100004d657373616765731000000001060000100000002000000034000000440000000800000004030000b95c0000000000000800000004030000b0a90300000000000800000004030000b7a90300000000000800000004030000a4c203000000000010000000010600006c0000007c0000008c0000009c000000080000000004000041c398e0797a5f4a180000000102000002000000000000000f0000000000000000000000000000000000000001050000080000000403000002000000000000000400000003030000f5010000080000000109000066696c653a2f2f2f0c000000010100004d6163696e746f736820484408000000040300000050a11b73000000080000000004000041c7288486800000240000000101000041353433354638452d454242362d343133352d424531432d36393832413943394339324118000000010200008100000001000000ef13000001000000000000000000000001000000010100002f000000d8000000feffffff01000000000000001100000004100000540000000000000005100000ac0000000000000010100000d40000000000000040100000c40000000000000002200000a801000000000000052000001801000000000000102000002801000000000000112000005c01000000000000122000003c01000000000000132000004c0100000000000020200000880100000000000030200000f40000000000000001c00000fc0000000000000011c00000200000000000000012c000000c0100000000000001d00000f40000000000000010d000000400000000000000
+        name: Messages
+      -
+        file-bookmark: 626f6f6b840300000000041030000000000000000000000000000000000000000000000000000000000000000000000068020000040000000303000000020020050000000101000055736572730000000a00000001010000706174746f627269656e000007000000010100004c6962726172790008000000010100004d6573736167657306000000010100004361636865730000080000000101000050726576696577730b000000010100004174746163686d656e7473001c00000001060000100000002000000034000000440000005400000064000000740000000800000004030000b95c0000000000000800000004030000b0a90300000000000800000004030000b7a90300000000000800000004030000a4c20300000000000800000004030000ac1925110000000008000000040300001b1a25110000000008000000040300001c1a2511000000001c00000001060000ac000000bc000000cc000000dc000000ec000000fc0000000c010000080000000004000041c5f152e745b2c4180000000102000002000000000000000f0000000000000000000000000000000000000001050000080000000403000005000000000000000400000003030000f5010000080000000109000066696c653a2f2f2f0c000000010100004d6163696e746f736820484408000000040300000050a11b73000000080000000004000041c7288486800000240000000101000041353433354638452d454242362d343133352d424531432d36393832413943394339324118000000010200008100000001000000ef13000001000000000000000000000001000000010100002f0000002f000000010100004e5355524c426f6f6b6d61726b51756172616e74696e654d6f756e7465644e6574776f726b566f6c756d65734b657900e4000000feffffff010000000000000012000000041000008800000000000000051000001c0100000000000010100000500100000000000040100000400100000000000002200000240200000000000005200000940100000000000010200000a40100000000000011200000d80100000000000012200000b80100000000000013200000c80100000000000020200000040200000000000030200000700100000000000001c00000780100000000000011c00000200000000000000012c00000880100000000000001d00000700100000000000010d000000400000000000000300200807001000000000000
+        name: Attachments
+      -
+        file-bookmark: 626f6f6b58030000000004103000000000000000000000000000000000000000000000000000000000000000000000003c020000040000000303000000020020050000000101000055736572730000000a00000001010000706174746f627269656e000007000000010100004c6962726172790008000000010100004d65737361676573060000000101000043616368657300000800000001010000507265766965777318000000010600001000000020000000340000004400000054000000640000000800000004030000b95c0000000000000800000004030000b0a90300000000000800000004030000b7a90300000000000800000004030000a4c20300000000000800000004030000ac1925110000000008000000040300001b1a251100000000180000000106000094000000a4000000b4000000c4000000d4000000e4000000080000000004000041c5f152e745b03e180000000102000002000000000000000f0000000000000000000000000000000000000001050000080000000403000004000000000000000400000003030000f5010000080000000109000066696c653a2f2f2f0c000000010100004d6163696e746f736820484408000000040300000050a11b73000000080000000004000041c7288486800000240000000101000041353433354638452d454242362d343133352d424531432d36393832413943394339324118000000010200008100000001000000ef13000001000000000000000000000001000000010100002f0000002f000000010100004e5355524c426f6f6b6d61726b51756172616e74696e654d6f756e7465644e6574776f726b566f6c756d65734b657900e4000000feffffff01000000000000001200000004100000740000000000000005100000f40000000000000010100000240100000000000040100000140100000000000002200000f80100000000000005200000680100000000000010200000780100000000000011200000ac01000000000000122000008c01000000000000132000009c0100000000000020200000d80100000000000030200000440100000000000001c000004c0100000000000011c00000200000000000000012c000005c0100000000000001d00000440100000000000010d000000400000000000000040200804401000000000000
+        name: Previews
+      -
+        file-bookmark: 626f6f6b300300000000041030000000000000000000000000000000000000000000000000000000000000000000000014020000040000000303000000020020050000000101000055736572730000000a00000001010000706174746f627269656e000007000000010100004c6962726172790008000000010100004d6573736167657306000000010100004361636865730000140000000106000010000000200000003400000044000000540000000800000004030000b95c0000000000000800000004030000b0a90300000000000800000004030000b7a90300000000000800000004030000a4c20300000000000800000004030000ac1925110000000014000000010600008000000090000000a0000000b0000000c0000000080000000004000041c5f152e701e357180000000102000002000000000000000f0000000000000000000000000000000000000001050000080000000403000003000000000000000400000003030000f5010000080000000109000066696c653a2f2f2f0c000000010100004d6163696e746f736820484408000000040300000050a11b73000000080000000004000041c7288486800000240000000101000041353433354638452d454242362d343133352d424531432d36393832413943394339324118000000010200008100000001000000ef13000001000000000000000000000001000000010100002f0000002f000000010100004e5355524c426f6f6b6d61726b51756172616e74696e654d6f756e7465644e6574776f726b566f6c756d65734b657900e4000000feffffff01000000000000001200000004100000640000000000000005100000d00000000000000010100000fc0000000000000040100000ec0000000000000002200000d00100000000000005200000400100000000000010200000500100000000000011200000840100000000000012200000640100000000000013200000740100000000000020200000b001000000000000302000001c0100000000000001c00000240100000000000011c00000200000000000000012c00000340100000000000001d000001c0100000000000010d000000400000000000000dc0100801c01000000000000
+        name: Caches
+    FXSidebarUpgradedOnMyMacToElevenOne: true
+    FXSidebarUpgradedSharedSearchToTwelve: true
+    FXSidebarUpgradedToTenFourteen: true
+    FXSidebarUpgradedToTenTen: true
+    FXSyncExtensionToolbarItemsAutomaticallyAdded:
+      - com.synology.SynologyDrive.FinderSync
+    FXSyncExtensionToolbarItemsPendingAdd: []
+    FXSyncExtensionToolbarItemsPendingRemove:
+      - com.microsoft.OneDrive.FinderSync
+    FXToolbarUpgradedToTenEight: 1
+    FXToolbarUpgradedToTenNine: 2
+    FXToolbarUpgradedToTenSeven: 1
+    FavoriteTagNames:
+      - ""
+      - Red
+      - Orange
+      - Yellow
+      - Green
+      - Blue
+      - Purple
+      - Gray
+    GoToField: /Users/pattobrien/.pub-cache/hosted/
+    GoToFieldHistory:
+      - /Users/pattobrien/.pub-cache/hosted
+      - /Users/pattobrien/.sidecar/projects/my_analyzed_codebase/sidecar_analyzer_plugin/sidecar_analyzer_plugin
+      - /private/var/folders/4g/ypl4dsnn1tzg1z6c6wrc2w4c0000gn/T/plugin/sidecar_analyzer_plugin
+      - /private/var/folders/4g/ypl4dsnn1tzg1z6c6wrc2w4c0000gn/T/plugin/sidecar_analyzer_plugin/tools/analyzer_plugin
+      - /Users/pattobrien/Library/Developer/Xcode/iOS DeviceSupport/15.4.1 (19E258) arm64e/Symbols
+    ICloudViewSettings:
+      ListViewSettings:
+        iconSize: 16.0
+        showIconPreview: true
+        columns:
+          comments:
+            index: 7
+            width: 300
+            ascending: true
+            visible: false
+          name:
+            index: 0
+            width: 157
+            ascending: true
+            visible: true
+          dateCreated:
+            index: 2
+            width: 181
+            ascending: false
+            visible: false
+          size:
+            index: 3
+            width: 97
+            ascending: false
+            visible: true
+          label:
+            index: 5
+            width: 100
+            ascending: true
+            visible: false
+          version:
+            index: 6
+            width: 75
+            ascending: true
+            visible: false
+          kind:
+            index: 4
+            width: 115
+            ascending: true
+            visible: true
+          dateLastOpened:
+            index: 8
+            width: 200
+            ascending: false
+            visible: false
+          dateModified:
+            index: 1
+            width: 181
+            ascending: false
+            visible: true
+        calculateAllSizes: false
+        scrollPositionY: 0.0
+        textSize: 13.0
+        scrollPositionX: 0.0
+        sortColumn: dateModified
+        useRelativeDates: true
+        viewOptionsVersion: 1
+      ExtendedListViewSettingsV2:
+        iconSize: 16.0
+        showIconPreview: true
+        columns:
+          -
+            visible: true
+            identifier: name
+            width: 157
+            ascending: true
+          -
+            visible: false
+            identifier: ubiquity
+            width: 35
+            ascending: false
+          -
+            visible: true
+            identifier: dateModified
+            width: 181
+            ascending: false
+          -
+            visible: false
+            identifier: dateCreated
+            width: 181
+            ascending: false
+          -
+            visible: true
+            identifier: size
+            width: 97
+            ascending: false
+          -
+            visible: true
+            identifier: kind
+            width: 115
+            ascending: true
+          -
+            visible: false
+            identifier: label
+            width: 100
+            ascending: true
+          -
+            visible: false
+            identifier: version
+            width: 75
+            ascending: true
+          -
+            visible: false
+            identifier: comments
+            width: 300
+            ascending: true
+          -
+            visible: false
+            identifier: dateLastOpened
+            width: 200
+            ascending: false
+          -
+            visible: false
+            identifier: shareOwner
+            width: 200
+            ascending: false
+          -
+            visible: false
+            identifier: shareLastEditor
+            width: 200
+            ascending: false
+          -
+            visible: false
+            identifier: dateAdded
+            width: 181
+            ascending: false
+          -
+            identifier: invitationStatus
+            width: 210
+            ascending: false
+            visible: false
+        calculateAllSizes: false
+        scrollPositionY: 0.0
+        textSize: 13.0
+        scrollPositionX: 0.0
+        sortColumn: dateModified
+        useRelativeDates: true
+        viewOptionsVersion: 1
+      WindowState:
+        ContainerShowSidebar: true
+        ShowStatusBar: false
+        ShowSidebar: true
+        ShowToolbar: true
+        ShowTabView: false
+        WindowBounds: "{{-1576, 294}, {757, 456}}"
+    LastTrashState: false
+    MeetingRoomViewSetting:
+      CustomViewStyleVersion: 1
+      WindowState:
+        ContainerShowSidebar: true
+        ShowStatusBar: false
+        ShowSidebar: true
+        ShowToolbar: true
+        ShowTabView: false
+        WindowBounds: "{{253, 411}, {920, 436}}"
+    NSNavPanelExpandedSizeForOpenMode: "{800, 448}"
+    NSOSPLastRootDirectory: 626f6f6b4c02000000000410300000000000000000000000000000000000000000000000000000000000000000000000480100000400000003030000000400000c000000010100004170706c69636174696f6e73040000000106000010000000080000000403000075d4bb1a00000000040000000106000030000000080000000004000041c7288486800000180000000102000002000000000000001f020000000000001f020000000000000000000001050000080000000109000066696c653a2f2f2f0c000000010100004d6163696e746f736820484408000000040300000050a11b73000000240000000101000041353433354638452d454242362d343133352d424531432d36393832413943394339324118000000010200008100000001000000ef13000001000000ef1300000100000001000000010100002f0000003000000001020000646e69620000000001000000000000000000000000000000000000000000000000000000737070610200000000000000cc000000feffffff010000000000000010000000041000002400000000000000051000004000000000000000101000005c00000000000000401000004c0000000000000002200000040100000000000005200000840000000000000010200000940000000000000011200000b80000000000000012200000a800000000000000132000004c0000000000000020200000e400000000000000302000007c0000000000000001d000007c0000000000000010d00000040000000000000017f00000100000000000000022f000001001000000000000
+    NSToolbar Configuration Browser:
+      TB Is Shown: true
+      TB Icon Size Mode: 1
+      TB Size Mode: 1
+      TB Display Mode: 2
+    NSWindow Frame NSNavPanelAutosaveName: "-1365 191 800 363 -1920 0 1920 1055 "
+    NSWindow Frame NSSpellCheckerSubstitutionsPanel2: "-1228 407 425 137 -1920 0 1920 1055 "
+    NetworkViewSettings:
+      CustomViewStyleVersion: 1
+      WindowState:
+        ContainerShowSidebar: true
+        ShowStatusBar: false
+        ShowSidebar: true
+        ShowToolbar: true
+        ShowTabView: false
+        WindowBounds: "{{404, 500}, {920, 436}}"
+    NewWindowTarget: PfAF
+    PackageViewSettings:
+      ListViewSettings:
+        iconSize: 16.0
+        showIconPreview: true
+        columns:
+          comments:
+            index: 7
+            width: 300
+            ascending: true
+            visible: false
+          dateLastOpened:
+            index: 8
+            width: 200
+            ascending: false
+            visible: false
+          dateCreated:
+            index: 2
+            width: 181
+            ascending: false
+            visible: false
+          size:
+            index: 3
+            width: 97
+            ascending: false
+            visible: true
+          label:
+            index: 5
+            width: 100
+            ascending: true
+            visible: false
+          kind:
+            index: 4
+            width: 115
+            ascending: true
+            visible: true
+          version:
+            index: 6
+            width: 75
+            ascending: true
+            visible: false
+          name:
+            index: 0
+            width: 300
+            ascending: true
+            visible: true
+          dateModified:
+            index: 1
+            width: 181
+            ascending: false
+            visible: true
+        calculateAllSizes: false
+        scrollPositionY: 0.0
+        textSize: 13.0
+        scrollPositionX: 0.0
+        sortColumn: name
+        useRelativeDates: true
+        viewOptionsVersion: 1
+      ExtendedListViewSettingsV2:
+        iconSize: 16.0
+        showIconPreview: true
+        columns:
+          -
+            visible: true
+            identifier: name
+            width: 300
+            ascending: true
+          -
+            visible: false
+            identifier: ubiquity
+            width: 35
+            ascending: false
+          -
+            visible: true
+            identifier: dateModified
+            width: 181
+            ascending: false
+          -
+            visible: false
+            identifier: dateCreated
+            width: 181
+            ascending: false
+          -
+            visible: true
+            identifier: size
+            width: 97
+            ascending: false
+          -
+            visible: true
+            identifier: kind
+            width: 115
+            ascending: true
+          -
+            visible: false
+            identifier: label
+            width: 100
+            ascending: true
+          -
+            visible: false
+            identifier: version
+            width: 75
+            ascending: true
+          -
+            visible: false
+            identifier: comments
+            width: 300
+            ascending: true
+          -
+            visible: false
+            identifier: dateLastOpened
+            width: 200
+            ascending: false
+          -
+            visible: false
+            identifier: dateAdded
+            width: 181
+            ascending: false
+          -
+            ascending: false
+            identifier: shareOwner
+            width: 210
+            visible: false
+          -
+            ascending: false
+            identifier: shareLastEditor
+            width: 210
+            visible: false
+          -
+            ascending: false
+            identifier: invitationStatus
+            width: 210
+            visible: false
+        calculateAllSizes: false
+        scrollPositionY: 0.0
+        textSize: 13.0
+        scrollPositionX: 0.0
+        sortColumn: name
+        useRelativeDates: true
+        viewOptionsVersion: 1
+      WindowState:
+        ContainerShowSidebar: true
+        ShowStatusBar: false
+        ShowSidebar: true
+        ShowToolbar: true
+        ShowTabView: false
+        WindowBounds: "{{455, 235}, {923, 670}}"
+    PreferencesWindow.LastSelection: ADVD
+    PreviewPaneGalleryWidth: 250.0
+    PreviewPaneWidth: 250.0
+    RecentMoveAndCopyDestinations:
+      - "file:///Applications/"
+      - "file:///Users/pattobrien/Downloads/"
+      - "file:///Users/pattobrien/Documents/Profile%20Pictures/"
+      - "file:///Users/pattobrien/dev/pattobrien/"
+      - "file:///Users/pattobrien/.kube/"
+      - "file:///Users/pattobrien/"
+      - "file:///Users/pattobrien/.ssh/.archive/"
+      - "file:///Users/pattobrien/Downloads/VentureBuilding/"
+      - "file:///Users/pattobrien/dev/security/"
+      - "file:///Users/pattobrien/dev/"
+    RecentsArrangeGroupViewBy: Date Last Opened
+    SearchRecentsSavedViewStyle: Nlsv
+    SearchRecentsSavedViewStyleVersion: "%00%00%00%01"
+    SearchRecentsViewSettings:
+      WindowState:
+        ContainerShowSidebar: true
+        ShowStatusBar: false
+        ShowSidebar: true
+        ShowToolbar: true
+        ShowTabView: false
+        WindowBounds: "{{743, 366}, {920, 436}}"
+      GroupBy: None
+      ExtendedListViewSettingsV2:
+        useRelativeDates: true
+        showIconPreview: true
+        columns:
+          -
+            visible: true
+            width: 202
+            ascending: false
+            identifier: name
+          -
+            visible: false
+            width: 35
+            ascending: false
+            identifier: ubiquity
+          -
+            width: 181
+            ascending: false
+            identifier: dateModified
+            visible: true
+          -
+            width: 181
+            ascending: false
+            identifier: dateCreated
+            visible: false
+          -
+            visible: false
+            width: 97
+            ascending: false
+            identifier: size
+          -
+            width: 115
+            ascending: true
+            identifier: kind
+            visible: true
+          -
+            width: 100
+            ascending: true
+            identifier: label
+            visible: false
+          -
+            width: 75
+            ascending: true
+            identifier: version
+            visible: false
+          -
+            width: 300
+            ascending: true
+            identifier: comments
+            visible: false
+          -
+            width: 200
+            ascending: false
+            identifier: dateLastOpened
+            visible: true
+          -
+            width: 200
+            ascending: false
+            identifier: shareOwner
+            visible: false
+          -
+            width: 200
+            ascending: false
+            identifier: shareLastEditor
+            visible: false
+          -
+            visible: false
+            width: 181
+            ascending: false
+            identifier: dateAdded
+          -
+            width: 210
+            ascending: false
+            identifier: invitationStatus
+            visible: false
+        calculateAllSizes: false
+        textSize: 13.0
+        sortColumn: dateModified
+        iconSize: 16.0
+        viewOptionsVersion: 1
+      ListViewSettings:
+        useRelativeDates: true
+        showIconPreview: true
+        columns:
+          comments:
+            visible: false
+            width: 300
+            ascending: true
+            index: 7
+          dateLastOpened:
+            visible: true
+            width: 200
+            ascending: false
+            index: 8
+          dateCreated:
+            visible: false
+            width: 181
+            ascending: false
+            index: 2
+          size:
+            index: 3
+            width: 97
+            ascending: false
+            visible: false
+          label:
+            visible: false
+            width: 100
+            ascending: true
+            index: 5
+          version:
+            visible: false
+            width: 75
+            ascending: true
+            index: 6
+          kind:
+            visible: true
+            width: 115
+            ascending: true
+            index: 4
+          name:
+            index: 0
+            width: 202
+            ascending: false
+            visible: true
+          dateModified:
+            visible: true
+            width: 181
+            ascending: false
+            index: 1
+        calculateAllSizes: false
+        textSize: 13.0
+        sortColumn: dateModified
+        iconSize: 16.0
+        viewOptionsVersion: 1
+    SearchViewSettings:
+      ListViewSettings:
+        useRelativeDates: true
+        showIconPreview: true
+        columns:
+          comments:
+            visible: false
+            ascending: true
+            width: 300
+            index: 7
+          name:
+            visible: true
+            ascending: true
+            width: 317
+            index: 0
+          dateCreated:
+            index: 2
+            width: 181
+            ascending: false
+            visible: true
+          size:
+            index: 3
+            width: 97
+            ascending: false
+            visible: false
+          label:
+            visible: false
+            ascending: true
+            width: 100
+            index: 5
+          version:
+            visible: false
+            ascending: true
+            width: 75
+            index: 6
+          kind:
+            visible: true
+            ascending: true
+            width: 115
+            index: 4
+          dateLastOpened:
+            visible: true
+            ascending: false
+            width: 200
+            index: 8
+          dateModified:
+            index: 1
+            width: 181
+            ascending: false
+            visible: false
+        calculateAllSizes: false
+        textSize: 13.0
+        sortColumn: name
+        iconSize: 16.0
+        viewOptionsVersion: 1
+      ExtendedListViewSettingsV2:
+        useRelativeDates: true
+        showIconPreview: true
+        columns:
+          -
+            ascending: true
+            width: 317
+            identifier: name
+            visible: true
+          -
+            ascending: false
+            width: 35
+            identifier: ubiquity
+            visible: false
+          -
+            visible: false
+            width: 181
+            ascending: false
+            identifier: dateModified
+          -
+            visible: true
+            width: 181
+            ascending: false
+            identifier: dateCreated
+          -
+            visible: false
+            width: 97
+            ascending: false
+            identifier: size
+          -
+            ascending: true
+            width: 115
+            identifier: kind
+            visible: true
+          -
+            ascending: true
+            width: 100
+            identifier: label
+            visible: false
+          -
+            ascending: true
+            width: 75
+            identifier: version
+            visible: false
+          -
+            ascending: true
+            width: 300
+            identifier: comments
+            visible: false
+          -
+            ascending: false
+            width: 200
+            identifier: dateLastOpened
+            visible: true
+          -
+            ascending: false
+            width: 200
+            identifier: shareOwner
+            visible: false
+          -
+            ascending: false
+            width: 200
+            identifier: shareLastEditor
+            visible: false
+          -
+            ascending: false
+            width: 181
+            identifier: dateAdded
+            visible: false
+          -
+            visible: false
+            width: 210
+            ascending: false
+            identifier: invitationStatus
+        calculateAllSizes: false
+        textSize: 13.0
+        sortColumn: name
+        iconSize: 16.0
+        viewOptionsVersion: 1
+      WindowState:
+        ContainerShowSidebar: true
+        ShowStatusBar: false
+        ShowSidebar: true
+        ShowToolbar: true
+        ShowTabView: false
+        WindowBounds: "{{404, 482}, {920, 436}}"
+    ShowExternalHardDrivesOnDesktop: true
+    ShowHardDrivesOnDesktop: false
+    ShowMountedServersOnDesktop: false
+    ShowPathbar: true
+    ShowPreviewPane: false
+    ShowRemovableMediaOnDesktop: true
+    ShowSidebar: true
+    SidebarDevicesSectionDisclosedState: true
+    SidebarPlacesSectionDisclosedState: true
+    SidebarShowingSignedIntoiCloud: true
+    SidebarShowingiCloudDesktop: true
+    SidebarTagsSctionDisclosedState: true
+    SidebarWidth: 189.0
+    SidebariCloudDriveSectionDisclosedState: true
+    SmartSharedSearchViewSettings:
+      ListViewSettings:
+        iconSize: 16.0
+        showIconPreview: true
+        columns:
+          comments:
+            index: 7
+            ascending: true
+            width: 300
+            visible: false
+          dateLastOpened:
+            index: 8
+            ascending: false
+            width: 200
+            visible: true
+          dateCreated:
+            index: 2
+            ascending: false
+            width: 181
+            visible: false
+          size:
+            index: 3
+            ascending: false
+            width: 97
+            visible: false
+          label:
+            index: 5
+            ascending: true
+            width: 100
+            visible: false
+          kind:
+            visible: false
+            ascending: true
+            width: 115
+            index: 4
+          version:
+            index: 6
+            ascending: true
+            width: 75
+            visible: false
+          name:
+            visible: true
+            ascending: true
+            width: 300
+            index: 0
+          dateModified:
+            visible: false
+            ascending: false
+            width: 181
+            index: 1
+        calculateAllSizes: false
+        textSize: 13.0
+        sortColumn: name
+        useRelativeDates: true
+        viewOptionsVersion: 1
+      ExtendedListViewSettingsV2:
+        iconSize: 16.0
+        showIconPreview: true
+        columns:
+          -
+            ascending: true
+            identifier: name
+            width: 300
+            visible: true
+          -
+            visible: false
+            identifier: ubiquity
+            width: 35
+            ascending: false
+          -
+            ascending: false
+            identifier: dateModified
+            width: 181
+            visible: false
+          -
+            visible: false
+            identifier: dateCreated
+            width: 181
+            ascending: false
+          -
+            visible: false
+            identifier: size
+            width: 97
+            ascending: false
+          -
+            ascending: true
+            identifier: kind
+            width: 115
+            visible: false
+          -
+            visible: false
+            identifier: label
+            width: 100
+            ascending: true
+          -
+            visible: false
+            identifier: version
+            width: 75
+            ascending: true
+          -
+            visible: false
+            identifier: comments
+            width: 300
+            ascending: true
+          -
+            visible: true
+            identifier: dateLastOpened
+            width: 200
+            ascending: false
+          -
+            visible: false
+            identifier: shareOwner
+            width: 200
+            ascending: true
+          -
+            ascending: false
+            identifier: shareLastEditor
+            width: 200
+            visible: true
+          -
+            visible: false
+            identifier: dateAdded
+            width: 181
+            ascending: false
+          -
+            ascending: false
+            identifier: invitationStatus
+            width: 210
+            visible: false
+        calculateAllSizes: false
+        textSize: 13.0
+        sortColumn: name
+        useRelativeDates: true
+        viewOptionsVersion: 1
+      WindowState:
+        ContainerShowSidebar: true
+        ShowStatusBar: false
+        ShowSidebar: true
+        ShowToolbar: true
+        ShowTabView: false
+        WindowBounds: "{{962, 679}, {747, 298}}"
+    StandardViewOptions:
+      ColumnViewOptions:
+        ArrangeBy: dnam
+        ColumnShowFolderArrow: true
+        ShowPreview: true
+        FontSize: 13
+        SharedArrangeBy: kipl
+        ShowIconThumbnails: true
+        ColumnShowIcons: true
+        PreviewDisclosureState: true
+        ColumnWidth: 245
+    StandardViewSettings:
+      SettingsType: StandardViewSettings
+      GalleryViewSettings:
+        arrangeBy: name
+        iconSize: 48.0
+        showIconPreview: true
+        viewOptionsVersion: 1
+      ExtendedListViewSettingsV2:
+        viewOptionsVersion: 1
+        showIconPreview: true
+        columns:
+          -
+            visible: true
+            ascending: true
+            identifier: name
+            width: 512
+          -
+            ascending: false
+            identifier: ubiquity
+            width: 35
+            visible: false
+          -
+            ascending: false
+            identifier: dateModified
+            width: 181
+            visible: true
+          -
+            ascending: false
+            identifier: dateCreated
+            width: 181
+            visible: false
+          -
+            ascending: false
+            identifier: size
+            width: 97
+            visible: true
+          -
+            ascending: true
+            identifier: kind
+            width: 115
+            visible: true
+          -
+            ascending: true
+            identifier: label
+            width: 100
+            visible: false
+          -
+            ascending: true
+            identifier: version
+            width: 75
+            visible: false
+          -
+            ascending: true
+            identifier: comments
+            width: 300
+            visible: false
+          -
+            ascending: false
+            identifier: dateLastOpened
+            width: 200
+            visible: false
+          -
+            ascending: false
+            identifier: shareOwner
+            width: 200
+            visible: false
+          -
+            ascending: false
+            identifier: shareLastEditor
+            width: 200
+            visible: false
+          -
+            ascending: false
+            identifier: dateAdded
+            width: 181
+            visible: true
+          -
+            visible: false
+            ascending: false
+            identifier: invitationStatus
+            width: 210
+        calculateAllSizes: true
+        scrollPositionY: 0.0
+        textSize: 13.0
+        scrollPositionX: 0.0
+        sortColumn: size
+        iconSize: 16.0
+        useRelativeDates: true
+      ListViewSettings:
+        viewOptionsVersion: 1
+        showIconPreview: true
+        columns:
+          comments:
+            visible: false
+            width: 300
+            ascending: true
+            index: 7
+          name:
+            index: 0
+            width: 512
+            ascending: true
+            visible: true
+          dateCreated:
+            visible: false
+            width: 181
+            ascending: false
+            index: 2
+          size:
+            visible: true
+            width: 97
+            ascending: false
+            index: 3
+          label:
+            visible: false
+            width: 100
+            ascending: true
+            index: 5
+          version:
+            visible: false
+            width: 75
+            ascending: true
+            index: 6
+          kind:
+            visible: true
+            width: 115
+            ascending: true
+            index: 4
+          dateLastOpened:
+            visible: false
+            width: 200
+            ascending: false
+            index: 8
+          dateModified:
+            visible: true
+            width: 181
+            ascending: false
+            index: 1
+        calculateAllSizes: true
+        scrollPositionY: 0.0
+        textSize: 13.0
+        scrollPositionX: 0.0
+        sortColumn: size
+        iconSize: 16.0
+        useRelativeDates: true
+      IconViewSettings:
+        backgroundColorBlue: 1.0
+        showIconPreview: true
+        textSize: 12.0
+        backgroundColorRed: 1.0
+        backgroundType: 0
+        backgroundColorGreen: 1.0
+        gridOffsetX: 0.0
+        gridOffsetY: 0.0
+        showItemInfo: false
+        viewOptionsVersion: 1
+        labelOnBottom: true
+        arrangeBy: none
+        iconSize: 64.0
+        gridSpacing: 54.0
+    TagsCloudSerialNumber: 2
+    TagsColumnWidth: 190.0
+    TrashViewSettings:
+      WindowState:
+        ContainerShowSidebar: true
+        ShowStatusBar: false
+        ShowSidebar: true
+        ShowToolbar: true
+        ShowTabView: false
+        WindowBounds: "{{0, 281}, {861, 594}}"
+      ExtendedListViewSettingsV2:
+        useRelativeDates: true
+        showIconPreview: true
+        columns:
+          -
+            visible: true
+            width: 246
+            identifier: name
+            ascending: true
+          -
+            visible: false
+            width: 35
+            identifier: ubiquity
+            ascending: false
+          -
+            ascending: false
+            width: 181
+            identifier: dateModified
+            visible: true
+          -
+            ascending: false
+            width: 181
+            identifier: dateCreated
+            visible: false
+          -
+            ascending: false
+            width: 97
+            identifier: size
+            visible: true
+          -
+            ascending: true
+            width: 115
+            identifier: kind
+            visible: true
+          -
+            ascending: true
+            width: 100
+            identifier: label
+            visible: false
+          -
+            ascending: true
+            width: 75
+            identifier: version
+            visible: false
+          -
+            ascending: true
+            width: 300
+            identifier: comments
+            visible: false
+          -
+            ascending: false
+            width: 200
+            identifier: dateLastOpened
+            visible: false
+          -
+            ascending: false
+            width: 200
+            identifier: shareOwner
+            visible: false
+          -
+            ascending: false
+            width: 200
+            identifier: shareLastEditor
+            visible: false
+          -
+            visible: false
+            width: 181
+            identifier: dateAdded
+            ascending: false
+          -
+            ascending: false
+            width: 210
+            identifier: invitationStatus
+            visible: false
+        calculateAllSizes: false
+        scrollPositionY: 0.0
+        textSize: 13.0
+        scrollPositionX: 0.0
+        sortColumn: dateModified
+        iconSize: 16.0
+        viewOptionsVersion: 1
+      CustomViewStyleVersion: 1
+      ListViewSettings:
+        useRelativeDates: true
+        showIconPreview: true
+        columns:
+          comments:
+            visible: false
+            ascending: true
+            width: 300
+            index: 7
+          dateModified:
+            visible: true
+            ascending: false
+            width: 181
+            index: 1
+          dateCreated:
+            visible: false
+            ascending: false
+            width: 181
+            index: 2
+          size:
+            visible: true
+            ascending: false
+            width: 97
+            index: 3
+          label:
+            visible: false
+            ascending: true
+            width: 100
+            index: 5
+          version:
+            visible: false
+            ascending: true
+            width: 75
+            index: 6
+          kind:
+            visible: true
+            ascending: true
+            width: 115
+            index: 4
+          dateLastOpened:
+            visible: false
+            ascending: false
+            width: 200
+            index: 8
+          name:
+            index: 0
+            ascending: true
+            width: 246
+            visible: true
+        calculateAllSizes: false
+        scrollPositionY: 0.0
+        textSize: 13.0
+        scrollPositionX: 0.0
+        sortColumn: dateModified
+        iconSize: 16.0
+        viewOptionsVersion: 1
+    ViewSettingsDictionary:
+      Important_Tag_ViewSettings:
+        WindowState:
+          ContainerShowSidebar: true
+          ShowStatusBar: false
+          ShowSidebar: true
+          ShowToolbar: true
+          ShowTabView: false
+          WindowBounds: "{{404, 503}, {920, 436}}"
+      Gray_Tag_ViewSettings:
+        WindowState:
+          ContainerShowSidebar: true
+          ShowStatusBar: false
+          ShowSidebar: true
+          ShowToolbar: true
+          ShowTabView: false
+          WindowBounds: "{{404, 503}, {920, 436}}"
+      Home_Tag_ViewSettings:
+        WindowState:
+          ContainerShowSidebar: true
+          ShowStatusBar: false
+          ShowSidebar: true
+          ShowToolbar: true
+          ShowTabView: false
+          WindowBounds: "{{404, 503}, {920, 436}}"
+      Work_Tag_ViewSettings:
+        WindowState:
+          ContainerShowSidebar: true
+          ShowStatusBar: false
+          ShowSidebar: true
+          ShowToolbar: true
+          ShowTabView: false
+          WindowBounds: "{{404, 503}, {920, 436}}"
