@@ -1,0 +1,9 @@
+---
+description: com.apple.menuextra.clock
+sudo: false
+current_host: false
+data:
+  com.apple.menuextra.clock:
+    ShowAMPM: true
+    ShowDate: 0
+    ShowDayOfWeek: true

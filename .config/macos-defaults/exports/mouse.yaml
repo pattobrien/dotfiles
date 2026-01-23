@@ -1,0 +1,16 @@
+---
+description: com.apple.AppleMultitouchMouse
+sudo: false
+current_host: false
+data:
+  com.apple.AppleMultitouchMouse:
+    MouseButtonDivision: 55
+    MouseButtonMode: TwoButton
+    MouseHorizontalScroll: true
+    MouseMomentumScroll: true
+    MouseOneFingerDoubleTapGesture: 1
+    MouseTwoFingerDoubleTapGesture: 3
+    MouseTwoFingerHorizSwipeGesture: 2
+    MouseVerticalScroll: true
+    UserPreferences: true
+    version: 1

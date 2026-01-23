@@ -1,0 +1,46 @@
+# Trackpad settings
+# Apply with: macos-defaults apply ~/.config/macos-defaults/trackpad.yaml
+---
+description: Trackpad settings
+sudo: false
+current_host: false
+kill: []
+data:
+  com.apple.AppleMultitouchTrackpad:
+    # Enable tap to click
+    Clicking: true
+    # Enable two-finger right-click
+    TrackpadRightClick: true
+    # Three-finger drag (instead of click-drag)
+    TrackpadThreeFingerDrag: false
+    # Pinch to zoom
+    TrackpadPinch: 1
+    # Rotate with two fingers
+    TrackpadRotate: 1
+    # Two-finger scroll
+    TrackpadScroll: true
+    # Horizontal scrolling
+    TrackpadHorizScroll: 1
+    # Momentum/inertia scrolling
+    TrackpadMomentumScroll: true
+    # Three-finger horizontal swipe: 0=off, 2=switch spaces
+    TrackpadThreeFingerHorizSwipeGesture: 2
+    # Three-finger vertical swipe: 0=off, 2=mission control/app windows
+    TrackpadThreeFingerVertSwipeGesture: 2
+    # Four-finger horizontal swipe: 0=off, 2=switch spaces
+    TrackpadFourFingerHorizSwipeGesture: 2
+    # Four-finger vertical swipe: 0=off, 2=mission control/app windows
+    TrackpadFourFingerVertSwipeGesture: 2
+    # Four-finger pinch: 0=off, 2=launchpad
+    TrackpadFourFingerPinchGesture: 2
+    # Five-finger pinch: 0=off, 2=launchpad
+    TrackpadFiveFingerPinchGesture: 2
+    # Two-finger swipe from right edge: 0=off, 3=notification center
+    TrackpadTwoFingerFromRightEdgeSwipeGesture: 3
+    # Two-finger double-tap: 0=off, 1=smart zoom
+    TrackpadTwoFingerDoubleTapGesture: 1
+    # Three-finger tap: 0=off, 2=look up
+    TrackpadThreeFingerTapGesture: 0
+    # Click pressure threshold: 0=light, 1=medium, 2=firm
+    FirstClickThreshold: 1
+    SecondClickThreshold: 1

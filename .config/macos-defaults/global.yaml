@@ -1,0 +1,43 @@
+# Global system settings (NSGlobalDomain)
+# Apply with: macos-defaults apply ~/.config/macos-defaults/global.yaml
+---
+description: Global system settings
+sudo: false
+current_host: false
+kill: []
+data:
+  NSGlobalDomain:
+    # Dark or Light mode (omit for Light)
+    AppleInterfaceStyle: Dark
+    # Full keyboard access: 0=text fields only, 2=all controls
+    AppleKeyboardUIMode: 0
+    # Double-click window title bar to minimize
+    AppleMiniaturizeOnDoubleClick: false
+    # Auto-capitalize first letter of sentences
+    NSAutomaticCapitalizationEnabled: false
+    # Replace double-hyphen with em-dash
+    NSAutomaticDashSubstitutionEnabled: true
+    # Double-space inserts period
+    NSAutomaticPeriodSubstitutionEnabled: false
+    # Replace straight quotes with smart quotes
+    NSAutomaticQuoteSubstitutionEnabled: true
+    # Auto-correct spelling
+    NSAutomaticSpellingCorrectionEnabled: true
+    # Show text completion suggestions
+    NSAutomaticTextCompletionEnabled: true
+    # Fn key behavior: false=show emoji picker, true=F1-F12 keys
+    com.apple.keyboard.fnState: false
+    # Mouse tracking speed (0.0 to 3.0)
+    com.apple.mouse.scaling: 2.5
+    # Enable Force Click on trackpad
+    com.apple.trackpad.forceClick: true
+    # Trackpad tracking speed (0.0 to 3.0)
+    com.apple.trackpad.scaling: 1.5
+    # Spring-loading folders (drag file over folder to open)
+    com.apple.springing.enabled: true
+    # Spring-loading delay in seconds
+    com.apple.springing.delay: 0.5
+    # Flash screen on system beep (accessibility)
+    com.apple.sound.beep.flash: 0
+    # Swipe between pages with mouse scroll
+    AppleEnableMouseSwipeNavigateWithScrolls: true
