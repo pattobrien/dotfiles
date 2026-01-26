@@ -4,7 +4,8 @@
 description: Global system settings
 sudo: false
 current_host: false
-kill: []
+kill:
+  - cfprefsd
 data:
   NSGlobalDomain:
     # Dark or Light mode (omit for Light)

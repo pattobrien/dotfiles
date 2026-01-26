@@ -1,5 +1,4 @@
 tap "dsully/tap"
-tap "homebrew/bundle"
 
 # Shell
 brew "zsh"
@@ -17,11 +16,9 @@ brew "tmux"
 brew "wget"
 brew "curl"
 
-# Git and GitHub
 brew "gh"
-
-# macOS defaults manager
 brew "dsully/tap/macos-defaults"
+brew "mise"
 
 # 1Password
 cask "1password"
@@ -30,3 +27,9 @@ cask "1password-cli"
 # Editor (pick one or both)
 cask "cursor"
 # cask "visual-studio-code"
+cask "kitty"
+cask "ghostty"
+
+
+cask "google-chrome"
+cask "raycast"

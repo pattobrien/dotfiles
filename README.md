@@ -27,8 +27,8 @@ sh ~/.dotfiles/install            # symlinks dotfiles to ~, creates ~/dev
 sh ~/.dotfiles/install homebrew   # installs Homebrew package manager
 sh ~/.dotfiles/install essentials # zsh, 1password, cursor, cli tools
 sh ~/.dotfiles/install 1password  # signs into 1Password CLI, configures SSH agent
-sh ~/.dotfiles/install mise       # installs dev tools from .tool-versions (node, go, etc.)
 sh ~/.dotfiles/install macos      # applies macOS system preferences
+sh ~/.dotfiles/install mise       # installs dev tools from .tool-versions (node, go, etc.)
 
 sh ~/.dotfiles/install personal   # all personal brew packages (or: work, runner, server)
 ```

@@ -4,7 +4,8 @@
 description: Trackpad settings
 sudo: false
 current_host: false
-kill: []
+kill:
+  - cfprefsd
 data:
   com.apple.AppleMultitouchTrackpad:
     # Enable tap to click

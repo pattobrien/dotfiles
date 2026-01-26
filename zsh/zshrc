@@ -66,7 +66,7 @@ plugins=(
   tmux
   # dotenv # - source .env variables when you cd into a directory
   gitignore
-  asdf
+  # asdf # replaced by mise
   # doctl # this causes 1password prompt when re-sourcing zshrc file, for some reason... so we should not use this
   pnpm-shell-completion
   # other plugins available that we should install at some point:
@@ -143,9 +143,6 @@ export PATH="$(brew --prefix)/bin:$PATH"
 export KUBE_CONFIG_PATH="$HOME/.kube/config"
 
 PATH=$PATH:~/.local/bin
-
-. $(brew --prefix asdf)/libexec/asdf.sh
-export ASDF_DIR="${ASDF_DATA_DIR:-$HOME/.asdf}"
 
 # mise (modern asdf replacement, backwards-compatible with .tool-versions)
 eval "$(mise activate zsh)"

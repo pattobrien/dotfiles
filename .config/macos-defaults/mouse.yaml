@@ -4,7 +4,8 @@
 description: Magic Mouse settings
 sudo: false
 current_host: false
-kill: []
+kill:
+  - cfprefsd
 data:
   com.apple.AppleMultitouchMouse:
     # Button mode: OneButton, TwoButton
