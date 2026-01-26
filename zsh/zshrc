@@ -67,6 +67,7 @@ plugins=(
   # dotenv # - source .env variables when you cd into a directory
   gitignore
   # asdf # replaced by mise
+  mise
   # doctl # this causes 1password prompt when re-sourcing zshrc file, for some reason... so we should not use this
   pnpm-shell-completion
   # other plugins available that we should install at some point:
@@ -144,8 +145,7 @@ export KUBE_CONFIG_PATH="$HOME/.kube/config"
 
 PATH=$PATH:~/.local/bin
 
-# mise (modern asdf replacement, backwards-compatible with .tool-versions)
-eval "$(mise activate zsh)"
+# mise is activated via oh-my-zsh plugin
 
 # source <(railway completion zsh)
 

@@ -5,5 +5,7 @@
       stdin: true
 
 - shell:
+    - command: ./scripts/setup_omz.zsh
+      description: Installing Oh My Zsh
     - command: brew bundle --file brew/essentials/Brewfile
       description: Installing essential packages
