@@ -1,0 +1,29 @@
+# Finder settings
+# Apply with: macos-defaults apply ~/.config/macos-defaults/finder.yaml
+---
+description: Finder settings
+sudo: false
+current_host: false
+kill: [Finder]
+data:
+  com.apple.finder:
+    # Default view: Nlsv=list, icnv=icon, clmv=column, Flwv=gallery
+    FXPreferredViewStyle: Nlsv
+    # Show path bar at bottom of window
+    ShowPathbar: true
+    # Show preview pane on right side
+    ShowPreviewPane: false
+    # Show sidebar with favorites/locations
+    ShowSidebar: true
+    # Show external drives on desktop
+    ShowExternalHardDrivesOnDesktop: true
+    # Show internal drives on desktop
+    ShowHardDrivesOnDesktop: false
+    # Show mounted servers on desktop
+    ShowMountedServersOnDesktop: false
+    # Show USB drives etc on desktop
+    ShowRemovableMediaOnDesktop: true
+    # New window opens: PfHm=Home, PfDe=Desktop, PfDo=Documents, PfLo=Computer
+    NewWindowTarget: PfAF
+    # Group files by: None, Name, Kind, Date, etc.
+    FXPreferredGroupBy: None

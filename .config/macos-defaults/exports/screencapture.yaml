@@ -1,0 +1,18 @@
+---
+description: com.apple.screencapture
+sudo: false
+current_host: false
+data:
+  com.apple.screencapture:
+    last-analytics-stamp: 790641314.299739
+    last-selection:
+      Width: 1920.0
+      Height: 888.0
+      Y: 186.0
+      X: 0.0
+    last-selection-display: 0
+    location: ~/Screenshots
+    location-last: ~/Screenshots
+    style: window
+    target: file
+    video: false

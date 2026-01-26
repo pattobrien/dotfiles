@@ -1,0 +1,29 @@
+# Dock settings
+# Apply with: macos-defaults apply ~/.config/macos-defaults/dock.yaml
+---
+description: Dock settings
+sudo: false
+current_host: false
+kill: [Dock]
+data:
+  com.apple.dock:
+    # Automatically hide the dock when not in use
+    autohide: true
+    # Size of icons when magnified (hovering over them)
+    largesize: 128.0
+    # Disable the bouncing animation when launching apps
+    launchanim: false
+    # Minimize windows into their app icon instead of separate dock items
+    minimize-to-application: true
+    # Don't automatically rearrange Spaces based on most recent use
+    mru-spaces: false
+    # Allow app icons to bounce to get attention (false = disable bouncing)
+    no-bouncing: false
+    # Enable App Expose gesture (swipe down on trackpad to show app windows)
+    showAppExposeGestureEnabled: true
+    # Default size of dock icons in pixels
+    tilesize: 58.0
+    # Hot corner: bottom-right action (1 = disabled)
+    wvous-br-corner: 1
+    # Hot corner: bottom-right modifier key (0 = none)
+    wvous-br-modifier: 0

@@ -40,20 +40,6 @@ Sets permissions for required files (only required once on the system)
 chmod +x ~/.local/scripts/tmux-sessionizer
 ```
 
-### 5. Sync VSCode Settings (Optional)
-
-To sync your global VSCode settings (like `settings.json`, `keybindings.json`)
-from this repository to their correct locations, run the stow script:
-
-```sh
-sh ~/.dotfiles/scripts/stow_vscode.sh
-```
-
-This will create symlinks from your home directory to the VSCode configuration
-files within this `.dotfiles` repository. If `stow` reports any conflicts, you
-may need to manually back up or remove existing VSCode configuration files from
-`~/Library/Application Support/Code/User/` before running the script again.
-
 ## Maintenance
 
 ### Brew Dump
@@ -82,7 +68,7 @@ brew bundle dump --force --describe --file=~/.dotfiles/brew/personal/Brewfile
 - [ ] docs: setup navigation when holding down hjkl on mac
   - see:
     https://github.com/vscode-neovim/vscode-neovim/issues/2170#issuecomment-2569887113
-- [ ] does asdf have a zsh autocomplete plugin?
+- [x] does asdf have a zsh autocomplete plugin?
 
 ### Notes from Fern setup
 

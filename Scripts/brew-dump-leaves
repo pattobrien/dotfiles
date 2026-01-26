@@ -1,0 +1,103 @@
+#!/usr/bin/env bash
+#
+# Dumps installed brew packages, filtered to only "leaves" (top-level packages,
+# not auto-installed dependencies).
+#
+# Usage: brew-dump-leaves [output-file]
+#   output-file: Path to write Brewfile (default: ./Brewfile)
+
+set -euo pipefail
+
+OUTPUT_FILE="${1:-./Brewfile}"
+TEMP_BREWFILE=$(mktemp)
+TEMP_LEAVES=$(mktemp)
+
+cleanup() {
+  rm -f "$TEMP_BREWFILE" "$TEMP_LEAVES"
+}
+trap cleanup EXIT
+
+echo "Dumping all packages..."
+brew bundle dump --force --describe --file="$TEMP_BREWFILE"
+
+echo "Getting leaf packages..."
+brew leaves > "$TEMP_LEAVES"
+
+echo "Filtering to leaves only..."
+
+# Process the Brewfile:
+# - Keep all tap, cask, mas, vscode lines
+# - Keep brew lines only if the package is in leaves
+# - Keep comment lines that precede kept brew lines
+awk -v leaves_file="$TEMP_LEAVES" '
+BEGIN {
+  # Load leaves into an associative array
+  while ((getline line < leaves_file) > 0) {
+    leaves[line] = 1
+  }
+  close(leaves_file)
+  pending_comment = ""
+}
+
+# Tap lines - always keep
+/^tap / {
+  print
+  next
+}
+
+# Comment lines - buffer them (they describe the next brew line)
+/^#/ {
+  pending_comment = $0
+  next
+}
+
+# Brew lines - keep if package is a leaf
+/^brew "/ {
+  # Extract package name: brew "name" or brew "tap/name"
+  # Remove brew " prefix and trailing " and any options
+  pkg = $0
+  gsub(/^brew "/, "", pkg)
+  gsub(/".*$/, "", pkg)
+
+  # Handle tap prefixes (e.g., "leoafarias/fvm" -> check both forms)
+  # brew leaves outputs without tap prefix for official taps
+  n = split(pkg, parts, "/")
+  base_name = (n > 1) ? parts[n] : pkg
+
+  if (pkg in leaves || base_name in leaves) {
+    if (pending_comment != "") {
+      print pending_comment
+    }
+    print
+  }
+  pending_comment = ""
+  next
+}
+
+# Cask, mas, vscode lines - always keep (with any pending comment)
+/^cask / || /^mas / || /^vscode / {
+  if (pending_comment != "") {
+    print pending_comment
+  }
+  print
+  pending_comment = ""
+  next
+}
+
+# Empty lines - print and clear pending comment
+/^$/ {
+  print
+  pending_comment = ""
+  next
+}
+' "$TEMP_BREWFILE" > "$OUTPUT_FILE"
+
+# Count results
+total_brew=$(grep -c '^brew ' "$TEMP_BREWFILE" || echo 0)
+filtered_brew=$(grep -c '^brew ' "$OUTPUT_FILE" || echo 0)
+removed=$((total_brew - filtered_brew))
+
+echo "Done! Wrote to $OUTPUT_FILE"
+echo "  Formulae: $filtered_brew (removed $removed dependencies)"
+echo "  Casks: $(grep -c '^cask ' "$OUTPUT_FILE" || echo 0)"
+echo "  Mac App Store: $(grep -c '^mas ' "$OUTPUT_FILE" || echo 0)"

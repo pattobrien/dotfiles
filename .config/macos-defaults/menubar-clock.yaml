@@ -1,0 +1,17 @@
+# Menu bar clock settings
+# Apply with: macos-defaults apply ~/.config/macos-defaults/menubar-clock.yaml
+---
+description: Menu bar clock
+sudo: false
+current_host: false
+kill: [ControlCenter]
+data:
+  # TODO(pattobrien): none of the below settings actually do anything??
+  # there might be a newer namespace for clock time
+  com.apple.menuextra.clock:
+    # Show AM/PM indicator
+    ShowAMPM: true
+    # Show date: 0=never, 1=always, 2=when space allows
+    ShowDate: 0
+    # Show day of week (Mon, Tue, etc.)
+    ShowDayOfWeek: false

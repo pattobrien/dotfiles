@@ -83,3 +83,5 @@ coverage/
 CLAUDE.local.md
 
 .cache
+
+**/.claude/settings.local.json

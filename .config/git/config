@@ -11,7 +11,6 @@
 	defaultBranch = main
 [core]
 	editor = code --wait
-	excludesfile = ~/.dotfiles/git/.gitignore_global
 [http]
 	postBuffer = 100000000
 [gpg]
@@ -20,3 +19,5 @@
 	program = /Applications/1Password.app/Contents/MacOS/op-ssh-sign
 [commit]
 	gpgsign = true
+[alias]
+	wt = "!f() { git worktree add .worktrees/\"$1\" -b patt/\"$1\"; }; f"

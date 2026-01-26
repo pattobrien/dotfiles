@@ -1,0 +1,431 @@
+{
+  "Id Class": {
+    "prefix": "fid",
+    "body": [
+      "class ${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/} {",
+      "  final String value;",
+      "  ",
+      "  const ${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/}(this.value);",
+      "  ",
+      "  factory ${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/}.fromJson(String json) => ${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/}(json);",
+      "  ",
+      "  String toJson() => value;",
+      "}",
+      ""
+    ],
+    "description": "Creates a filled-in id class"
+  },
+  "Part statement": {
+    "prefix": "pts",
+    "body": ["part '${TM_FILENAME_BASE}.g.dart';"],
+    "description": "Creates a filled-in part statement"
+  },
+  "Part 'Freezed' statement": {
+    "prefix": "ptf",
+    "body": ["part '${TM_FILENAME_BASE}.freezed.dart';"],
+    "description": "Creates a filled-in freezed part statement"
+  },
+  "Freezed Data Class": {
+    "prefix": "fdataclass",
+    "body": [
+      "@freezed",
+      "class ${1:DataClass} with _$${1:DataClass} {",
+      "  const ${1:DataClass}._();",
+      "  const factory ${1:DataClass}(${2}) = _${1:DataClass};",
+      "}"
+    ],
+    "description": "Freezed Data Class"
+  },
+  "Freezed Union": {
+    "prefix": "funion",
+    "body": [
+      "@freezed",
+      "class ${1:Union} with _$${1:Union} {",
+      "  const ${1:Union}._();",
+      "  const factory ${1:Union}.${2}(${4}) = ${3};",
+      "}"
+    ],
+    "description": "Freezed Union"
+  },
+  "Freezed Union Case": {
+    "prefix": "funioncase",
+    "body": ["const factory ${1:Union}.${2}(${4}) = ${3};"],
+    "description": "Freezed Union Case"
+  },
+  "From JSON": {
+    "prefix": "fromJson",
+    "body": [
+      "factory ${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/}.fromJson(Map<String, dynamic> json) => _\\$${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/}FromJson(json);"
+    ],
+    "description": "From JSON"
+  },
+  "Class With Filename": {
+    "prefix": "classfile",
+    "body": ["class ${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/g} {${1}}"],
+    "description": "Creates class which shares the name of the file"
+  },
+  "Import App Localization ": {
+    "prefix": "fiLocalization",
+    "body": ["import 'package:flutter_gen/gen_l10n/app_localizations.dart';"],
+    "description": "add localization import"
+  },
+  "App Localization Variable": {
+    "prefix": "localVariable",
+    "body": ["final text = AppLocalizations.of(context)!;"],
+    "description": "add localization variable"
+  },
+  "Provider StateNotifier": {
+    "prefix": "fdStateNotifierProvider",
+    "body": [
+      "final ${1:entity}${2:State}Notifier =",
+      "    StateNotifierProvider<${3:Entity}${2:State}Notifier, AsyncValue<List<${3:Entity}>>>(",
+      "  (ref) => ${3:Entity}${2:State}Notifier(",
+      "    fineFileRepository: ref.watch(fineFileRepositoryProvider),",
+      "    ${1:entity}Repository: ref.watch(${1:entity}RepositoryProvider),",
+      "  ),",
+      ");"
+    ],
+    "description": "FineDesigns StateNotifierProvider"
+  },
+  "Import Riverpod": {
+    "prefix": "fiRiverpod",
+    "body": ["import 'package:riverpod/riverpod.dart';"]
+  },
+  "Import Material": {
+    "prefix": "fiMaterial",
+    "body": ["import 'package:flutter/material.dart';"]
+  },
+  "Import Project Core": {
+    "prefix": "fiCore",
+    "body": ["import 'package:${WORKSPACE_NAME}/core.dart';"]
+  },
+  "Create Empty Widget": {
+    "prefix": "fcEmpty",
+    "body": [
+      "import 'package:flutter/material.dart';",
+      "import 'package:flutter_riverpod/flutter_riverpod.dart';",
+      "",
+      "class ${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/} extends ConsumerWidget {",
+      "  const ${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/}({super.key});",
+      "",
+      "  @override",
+      "  Widget build(BuildContext context, WidgetRef ref) {",
+      "    return ${0:Container()};",
+      "  }",
+      "}",
+      ""
+    ],
+    "description": "Empty Widget Class from Filename"
+  },
+  "Create with Scaffold": {
+    "prefix": "fcScaffold",
+    "body": [
+      "import 'package:flutter/material.dart';",
+      "import 'package:flutter_riverpod/flutter_riverpod.dart';",
+      "",
+      "class ${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/} extends ConsumerWidget {",
+      "  const ${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/}({super.key});",
+      "",
+      "  @override",
+      "  Widget build(BuildContext context, WidgetRef ref) {",
+      "    return Scaffold(",
+      "      body: ${0:Container()},",
+      "    );",
+      "  }",
+      "}",
+      ""
+    ],
+    "description": "Create with Scaffold"
+  },
+  "Page with Tabbed Bottom Nav Bar": {
+    "prefix": "fcTabPage",
+    "body": [
+      "import 'package:auto_route/auto_route.dart';",
+      "import 'package:flutter/material.dart';",
+      "import 'package:hooks_riverpod/hooks_riverpod.dart';",
+      "",
+      "class ${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/} extends ConsumerWidget {",
+      "  const ${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/}({super.key});",
+      "",
+      "  @override",
+      "  Widget build(BuildContext context, WidgetRef ref) {",
+      "    return AutoTabsRouter(",
+      "      routes: const [",
+      "        ${1:DashboardRoute()},${0}",
+      "        // ProgressRoute(),",
+      "        // SettingsRoute(),",
+      "      ],",
+      "      builder: (context, child, animation) {",
+      "        final tabsRouter = AutoTabsRouter.of(context);",
+      "        return Scaffold(",
+      "          body: FadeTransition(",
+      "            opacity: animation,",
+      "            child: child,",
+      "          ),",
+      "          bottomNavigationBar: BottomNavigationBar(",
+      "            currentIndex: tabsRouter.activeIndex,",
+      "            onTap: tabsRouter.setActiveIndex,",
+      "            items: [",
+      "              BottomNavigationBarItem(",
+      "                label: 'Home',",
+      "                icon: Icon(Icons.home),",
+      "              ),",
+      "              BottomNavigationBarItem(",
+      "                label: 'Progress',",
+      "                icon: Icon(Icons.insights),",
+      "              ),",
+      "              BottomNavigationBarItem(",
+      "                label: 'Settings',",
+      "                icon: Icon(Icons.settings_outlined),",
+      "              ),",
+      "            ],",
+      "          ),",
+      "        );",
+      "      },",
+      "    );",
+      "  }",
+      "}"
+    ],
+    "description": "Page with Tabbed Bottom Nav Bar"
+  },
+  "Widget Column": {
+    "prefix": "fwColumn",
+    "body": [
+      "Column(",
+      "\tcrossAxisAlignment: CrossAxisAlignment.start,",
+      "\tchildren: [",
+      "\t\t${0:Container()},",
+      "\t],",
+      ")"
+    ],
+    "description": "Widget Column"
+  },
+  "Widget Row": {
+    "prefix": "fwRow",
+    "body": ["Row(", "\tchildren: [", "\t\t${0:Container()},", "\t],", ")"],
+    "description": "Widget Column"
+  },
+  "Widget Icon": {
+    "prefix": "fwIcon",
+    "body": ["Icon(Icons.${1:garage}),${0}"],
+    "description": "Widget Icon"
+  },
+  "Widget Elevated Button": {
+    "prefix": "fwElevatedButton",
+    "body": [
+      "ElevatedButton(",
+      "  onPressed: ${1|null,() {}|},",
+      "  child: Text('${2:string}'),",
+      "),${0}"
+    ],
+    "description": "Widget Elevated Button"
+  },
+  "Widget Text": {
+    "prefix": "fwText",
+    "body": ["Text('${1:string}'),${0}"],
+    "description": "Widget Text"
+  },
+  "Widget Text with Style": {
+    "prefix": "fwTextStyle",
+    "body": [
+      "Text(",
+      "  '${1:String}',",
+      "  style: Theme.of(context).textTheme.${2:bodyText1},",
+      "),"
+    ],
+    "description": "Widget Text with Style"
+  },
+  "Widget Padding": {
+    "prefix": "fwPadding",
+    "body": [
+      "Padding(",
+      "  padding: EdgeInsets.${1|symmetric(horizontal: 10.0),symmetric(vertical: 10.0)|},",
+      "  child: ${0:Container()},",
+      "),"
+    ],
+    "description": "Widget Padding"
+  },
+  "Ref Watch": {
+    "prefix": "frWatch",
+    "body": [
+      "final ${3:variableName} = ref.watch(${1:someProvider}${2:.notifier});",
+      "${0}"
+    ],
+    "description": "Ref Watch"
+  },
+  "Ref Read": {
+    "prefix": "frRead",
+    "body": [
+      "final ${3:variableName} = ref.read(${1:someProvider}${2:.notifier});",
+      "${0}"
+    ],
+    "description": "Ref Read"
+  },
+  "Create Domain Class": {
+    "prefix": "fcDomain",
+    "body": [
+      "import 'package:freezed_annotation/freezed_annotation.dart';",
+      "",
+      "part '${TM_FILENAME_BASE}.freezed.dart';",
+      "     ",
+      "@freezed",
+      "class ${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/} with _$${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/} {",
+      "  const ${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/}._();",
+      "  const factory ${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/}({",
+      "    required ${2:String property},${0}",
+      "  }) = _${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/};",
+      "}",
+      ""
+    ],
+    "description": ""
+  },
+  "Create a `cliSubcommand` class": {
+    "prefix": "cliSubcommand",
+    "body": [
+      "import 'package:cli_annotations/cli_annotations.dart';",
+      "",
+      "part '${TM_FILENAME_BASE}.g.dart';",
+      "",
+      "@cliSubcommand",
+      "class ${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/}Subcommand extends _$${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/}Subcommand {",
+      "  ",
+      "  @cliCommand",
+      "  Future<void> ${2:command}() async {",
+      "    ${3:// TODO: Implement the command.}",
+      "  }",
+      "}",
+      ""
+    ],
+    "description": "Create a `cliSubcommand` class"
+  },
+  "Mount a subcommand": {
+    "prefix": "cliMount",
+    "body": [
+      "",
+      "  @cliMount",
+      "  ${1/(.*)/${1:/pascalcase}/}Subcommand get ${1/(.*)/${1:/camelcase}/} => ${1/(.*)/${1:/pascalcase}/}Subcommand();"
+    ],
+    "description": "Mount a subcommand"
+  },
+  "Create a `cliCommand` method": {
+    "prefix": "cliCommand",
+    "body": [
+      "",
+      "  @cliCommand",
+      "  Future<${2:void}> ${1:command}(",
+      "    ${0:String property},",
+      "  ) async {",
+      "    // Implement the command.",
+      "  }"
+    ],
+    "description": "Create a `cliCommand` method"
+  },
+  "Create Domain Class with Json": {
+    "prefix": "fcDJson",
+    "body": [
+      "import 'package:freezed_annotation/freezed_annotation.dart';",
+
+      "",
+      "part '${TM_FILENAME_BASE}.freezed.dart';",
+      "part '${TM_FILENAME_BASE}.g.dart';",
+      "     ",
+      "@freezed",
+      "class ${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/} with _$${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/} {",
+      "  const ${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/}._();",
+      "  ",
+      "  const factory ${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/}({",
+      "    required ${2:String property},${0}",
+      "  }) = _${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/};",
+      "  ",
+      "  factory ${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/}.fromJson(Map<String, dynamic> json) => ",
+      "      _$${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/}FromJson(json);",
+      "}",
+      ""
+    ],
+    "description": ""
+  },
+  "Create Domain Class with ID": {
+    "prefix": "fcDomainId",
+    "body": [
+      "import 'package:freezed_annotation/freezed_annotation.dart';",
+      "",
+      "part '${TM_FILENAME_BASE}.freezed.dart';",
+      "",
+      "@freezed",
+      "class ${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/} with _$${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/} {",
+      "  const ${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/}._();",
+      "  const factory ${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/}({",
+      "    required ${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/}Id id,",
+      "    required ${2:String property},${0}",
+      "  }) = _${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/};",
+      "}",
+      "",
+      "@freezed",
+      "class ${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/}Id with _$${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/}Id {",
+      "  const ${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/}Id._();",
+      "  const factory ${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/}Id(String value) = _${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/}Id;",
+      "}"
+    ],
+    "description": "Freezed Data Class"
+  },
+  "Create Page Widget": {
+    "prefix": "fPage",
+    "body": [
+      "import 'package:auto_route/annotations.dart';",
+      "import 'package:flutter/material.dart';",
+      "import 'package:flutter_riverpod/flutter_riverpod.dart';",
+      "",
+      "@RoutePage()",
+      "class ${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/} extends ConsumerWidget {",
+      "  const ${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/}({super.key});",
+      "  ",
+      "  @override",
+      "  Widget build(BuildContext context, WidgetRef ref) {",
+      "    return Scaffold(",
+      "      body: ${1:Center(",
+      "        child: Text('[ ${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/} ]'),",
+      "      )},",
+      "    );",
+      "  }",
+      "}"
+    ],
+    "description": "Flutter Page Widget with an AutoRoute annotation"
+  },
+  "": {
+    "prefix": "fWidget",
+    "body": [
+      "import 'package:flutter/material.dart';",
+      "import 'package:flutter_riverpod/flutter_riverpod.dart';",
+      "",
+      "class ${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/} extends ConsumerWidget {",
+      "  const ${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/}({",
+      "    super.key,",
+      "  });",
+      "",
+      "  @override",
+      "  Widget build(BuildContext context, WidgetRef ref) {",
+      "    return ${1:Center(",
+      "      child: Text('[ ${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/} ]'),",
+      "    )};",
+      "  }",
+      "}",
+      ""
+    ],
+    "description": "Create a regular widget"
+  },
+  "required": {
+    "prefix": "required",
+    "body": ["required "],
+    "description": "required"
+  },
+  "Width Spacer": {
+    "prefix": "width",
+    "body": ["Space.w${1:12}(),"],
+    "description": "Width Spacer"
+  },
+  "Height Spacer": {
+    "prefix": "height",
+    "body": ["Space.h${1:12}(),"],
+    "description": "Height Spacer"
+  }
+}

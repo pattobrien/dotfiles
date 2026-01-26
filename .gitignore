@@ -6,3 +6,4 @@
 .env*
 .vscode/**/*
 .dart_tool/**/*
+!.config

@@ -1,0 +1,153 @@
+{
+  "React Select with Label": {
+    "scope": "typescriptreact",
+    "prefix": "rselect",
+    "body": [
+      "<label htmlFor=\"${1:selectId}\">Country</label>",
+      "<select id=\"${1:selectId}\" aria-label=\"Select a country from the list\">",
+      "  <option value=\"us\">United States</option>",
+      "  $0",
+      "</select>"
+    ]
+  },
+  "React Map to Options": {
+    "prefix": "roptions",
+    "scope": "typescriptreact",
+    "body": [
+      "{${1:items}.map((item) => (",
+      "  <option key={item.${2:value}} value={item.${2:value}}>",
+      "    {item.${3:label}}",
+      "  </option>",
+      "))}$0"
+    ]
+  },
+
+  "React Input with Label": {
+    "prefix": "rinput",
+    "scope": "typescriptreact",
+    "body": [
+      "<label htmlFor=\"${1:inputId}\">",
+      "  ${0:Name}",
+      "</label>",
+      "<input",
+      "  id=\"${1:inputId}\"",
+      "  aria-label=\"Enter your name\"",
+      "/>"
+    ]
+  },
+
+  "React Tabs Map": {
+    "prefix": "rtabs",
+    "scope": "typescriptreact",
+    "body": [
+      "{${1:tabs}.map((item) => {",
+      "  const isActive = ${2:selectedId} === item.${3:id};",
+      "  return (",
+      "    <button",
+      "      key={item.${3:id}}",
+      "      role=\"tab\"",
+      "      aria-selected={isActive}",
+      "      aria-controls={`panel-\\${item.${3:id}}`}",
+      "      id={`tab-\\${item.${3:id}}`}",
+      "      tabIndex={isActive ? 0 : -1}",
+      "      hidden={!isActive}",
+      "    >",
+      "      {item.${4:label}}",
+      "    </button>",
+      "  );",
+      "})}$0"
+    ]
+  },
+
+  "React Tab Panels Map": {
+    "prefix": "rtabpanels",
+    "scope": "typescriptreact",
+    "body": [
+      "{${1:tabs}.map((item) => {",
+      "  const isActive = ${2:selectedId} === item.${3:id};",
+      "  return (",
+      "    <div",
+      "      key={item.${3:id}}",
+      "      role=\"tabpanel\"",
+      "      id={`panel-\\${item.${3:id}}`}",
+      "      aria-labelledby={`tab-\\${item.${3:id}}`}",
+      "      hidden={!isActive}",
+      "    >",
+      "      {item.${4:content}}",
+      "    </div>",
+      "  );",
+      "})}$0"
+    ]
+  },
+
+  "React Table": {
+    "prefix": "rtable",
+    "scope": "typescriptreact",
+    "body": [
+      "<table aria-label=\"${1:Data table}\">",
+      "  <thead>",
+      "    <tr>",
+      "      $0",
+      "    </tr>",
+      "  </thead>",
+      "  <tbody>",
+      "  </tbody>",
+      "</table>"
+    ]
+  },
+
+  "React Table Headers Map": {
+    "prefix": "rtheaders",
+    "scope": "typescriptreact",
+    "body": [
+      "{${1:columns}.map((item) => (",
+      "  <th key={item.${2:id}} scope=\"col\">",
+      "    {item.${3:label}}",
+      "  </th>",
+      "))}$0"
+    ]
+  },
+
+  "React Table Rows Map": {
+    "prefix": "rtrows",
+    "scope": "typescriptreact",
+    "body": [
+      "{${1:rows}.map((item) => (",
+      "  <tr key={item.${2:id}}>",
+      "    $0",
+      "  </tr>",
+      "))}"
+    ]
+  },
+  "React Component": {
+    "prefix": "rc",
+    "scope": "typescriptreact",
+    "body": [
+      "export function ${1:$TM_FILENAME_BASE}() {",
+      "  return (",
+      "    <div>",
+      "      $0",
+      "    </div>",
+      "  );",
+      "}"
+    ]
+  },
+
+  "React Component with Props": {
+    "prefix": "rc-props",
+    "scope": "typescriptreact",
+    "body": [
+      "interface ${1:$TM_FILENAME_BASE}Props {",
+      "  /* props here */",
+      "}",
+      "",
+      "export function ${1:$TM_FILENAME_BASE}(props: ${1:$TM_FILENAME_BASE}Props) {",
+      "  return (",
+      "    <div>",
+      "      $0",
+      "    </div>",
+      "  );",
+      "}"
+    ]
+  }
+}
