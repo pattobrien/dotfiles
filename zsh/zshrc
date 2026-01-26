@@ -6,6 +6,10 @@ XDG_DATA_HOME="$HOME/.local/share"
 XDG_STATE_HOME="$HOME/.local/state"
 
 
+# 1Password SSH Agent
+export SSH_AUTH_SOCK="$HOME/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
+
+
 # NOTE: the below script is always causing vscode to crash on startup, 
 # because the shell that vscode initializes on startup is NOT the same as the
 # vscode terminal shell (i.e. TERM_PROGRAM is NOT 'vscode')
