@@ -23,7 +23,9 @@
       "Bash(mise list:*)",
       "Bash(macos-defaults dump:*)",
       "Bash(yq:*)",
-      "Bash(defaults read:*)"
+      "Bash(defaults read:*)",
+      "Bash(brew cleanup:*)",
+      "Bash(xcrun simctl list:*)"
     ],
     "deny": [],
     "additionalDirectories": [

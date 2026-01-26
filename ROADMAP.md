@@ -11,6 +11,9 @@
 - script: combine vscode and cursor settings into one (see below)
 - [x] fix: claude code + cursor; visible "/" when pressing SHIFT+ENTER
 - [x] sync macOS defaults to this repo (see below)
+- [ ] define a shell autocompletion strategy
+  - files/dirs to store tool-specific autocompletions
+  - how can we use auto completion scripts for tools we don't install globally? (e.g. `prisma` that is installed to a local repo)
 
 ## Feature Wishlist
 
@@ -24,6 +27,13 @@
 
 1. pick a tool to use for syncing / declaring defaults settings declaratively.
 2. export to this repo and begin sync process
+
+#### Defaults Wishlist
+
+- caps lock remap to super key
+  - TODO: decide what super key does
+- screenshot remap to Shottr app
+- play button remap to Spotify (?)
 
 ### VSCode + Cursor Settings Sync (WIP)
 
