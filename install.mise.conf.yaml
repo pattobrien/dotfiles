@@ -1,0 +1,11 @@
+- defaults:
+    shell:
+      stderr: true
+      stdout: true
+      stdin: true
+
+- shell:
+    - command: mise trust ~/.tool-versions
+      description: Trusting .tool-versions
+    - command: mise install
+      description: Installing tools from .tool-versions

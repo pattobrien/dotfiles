@@ -1,0 +1,32 @@
+tap "dsully/tap"
+tap "homebrew/bundle"
+
+# Shell
+brew "zsh"
+brew "powerlevel10k"
+brew "zsh-autosuggestions"
+brew "zsh-syntax-highlighting"
+
+# Essential CLI tools
+brew "fd"
+brew "fzf"
+brew "bat"
+brew "eza"
+brew "tree"
+brew "tmux"
+brew "wget"
+brew "curl"
+
+# Git and GitHub
+brew "gh"
+
+# macOS defaults manager
+brew "dsully/tap/macos-defaults"
+
+# 1Password
+cask "1password"
+cask "1password-cli"
+
+# Editor (pick one or both)
+cask "cursor"
+# cask "visual-studio-code"

@@ -1,0 +1,9 @@
+- defaults:
+    shell:
+      stderr: true
+      stdout: true
+      stdin: true
+
+- shell:
+    - command: brew bundle --file brew/essentials/Brewfile
+      description: Installing essential packages

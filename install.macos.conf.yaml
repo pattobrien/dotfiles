@@ -1,0 +1,9 @@
+- defaults:
+    shell:
+      stderr: true
+      stdout: true
+      stdin: true
+
+- shell:
+    - command: macos-defaults apply ~/.config/macos-defaults/macos.yaml
+      description: Applying macOS defaults

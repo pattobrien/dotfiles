@@ -14,7 +14,6 @@
 
 - link:
     ~/.tool-versions: .config/asdf/.tool-versions
-    ~/.config/mise/config.toml: .config/mise/config.toml
     ~/.claude/CLAUDE.md: claude/CLAUDE.md
     ~/.claude/settings.json: claude/settings.json
     ~/.claude/skills: claude/skills
@@ -29,6 +28,7 @@
     ~/.config/gh: .config/gh
     ~/.config/yabai: .config/yabai
     ~/.config/skhd: .config/skhd
+    ~/.config/mise/config.toml: .config/mise/config.toml
     ~/.config/nvim: .config/nvim
     ~/.config/ghostty: .config/ghostty
     ~/.config/op/plugins.sh: .config/op/plugins.sh
@@ -47,25 +47,3 @@
     # Make scripts executable
     - command: chmod +x scripts/*
       description: Making scripts executable
-
-    # Set 1Password config directory permissions
-    - command: chmod 700 ~/.config/op
-      description: Setting up 1Password config directory permissions
-
-    # # Run Homebrew setup
-    # - command: ./scripts/setup_homebrew.zsh
-
-    # # Install asdf plugins from .tool-versions
-    # - command: cat ~/.tool-versions | cut -d' ' -f1 | grep "^[^\#]" | xargs -I {} asdf plugin add {}
-    #   description: Installing asdf plugins
-
-    # Setup 1password CLI (will prompt to integrate CLI in 1password app)
-    - command: op account get
-    - command: op signin
-
-    # 1password agent setup
-    - command: ./scripts/1password_agent_setup.sh
-
-    # Apply macOS defaults (uncomment to run automatically)
-    # - command: macos-defaults apply ~/.config/macos-defaults/macos.yaml
-    #   description: Applying macOS defaults

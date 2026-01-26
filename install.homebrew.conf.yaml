@@ -1,0 +1,9 @@
+- defaults:
+    shell:
+      stderr: true
+      stdout: true
+      stdin: true
+
+- shell:
+    - command: ./scripts/setup_homebrew.zsh
+      description: Installing Homebrew
