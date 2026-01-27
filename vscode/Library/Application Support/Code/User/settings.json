@@ -168,11 +168,8 @@
   },
   "editor.inlineSuggest.suppressInSnippetMode": true,
   // -- neovim --
-  "vscode-neovim.neovimExecutablePaths.darwin": "/Users/pattobrien/.local/share/mise/installs/neovim/0.11.4/bin/nvim",
-  "vscode-neovim.neovimInitVimPaths.darwin": "$HOME/.config/nvim/init.lua",
-  //   "extensions.experimental.affinity": {
-  //     "asvetliakov.vscode-neovim": 1
-  // },
+  "vscode-neovim.neovimExecutablePaths.darwin": "/Users/pattobrien/.asdf/shims/nvim",
+  "vscode-neovim.neovimInitVimPaths.darwin": "$HOME/.dotfiles/nvim/init.lua",
   "C_Cpp.intelliSenseCacheSize": 0,
   "C_Cpp.default.configurationProvider": "ms-vscode.cpptools",
   "C_Cpp.clang_format_style": "file",
@@ -272,7 +269,9 @@
   "dart.debugSdkLibraries": true,
   "dart.projectSearchDepth": 5,
   "dart.flutterSdkPath": "~/.fvm/default",
-  "dart.flutterSdkPaths": ["~/.fvm/versions/"],
+  "dart.flutterSdkPaths": [
+    "~/.fvm/versions/"
+  ],
   "dart.vmAdditionalArgs": ["--enable-experiment=macros"],
 
   // -- python --
@@ -435,8 +434,5 @@
   "[github-actions-workflow]": {
     "editor.defaultFormatter": "redhat.vscode-yaml"
   },
-  "githubLocalActions.dockerDesktopPath": "/Applications/Docker.app",
-  "chat.useAgentSkills": true,
-  "gitlens.ai.model": "vscode",
-  "gitlens.ai.vscode.model": "copilot:gpt-4.1"
+  "githubLocalActions.dockerDesktopPath": "/Applications/Docker.app"
 }

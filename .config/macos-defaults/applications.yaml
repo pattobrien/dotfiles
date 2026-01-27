@@ -1,0 +1,11 @@
+# Third-party application settings
+# Apply with: macos-defaults apply ~/.config/macos-defaults/applications.yaml
+description: Third-party application settings
+sudo: false
+current_host: false
+kill: []
+# Raycast - https://raycast.com
+data:
+  com.raycast.macos:
+    initialSpotlightHotkey: Command-49 # Global hotkey (Command-49 = Cmd+Space)
+    navigationCommandStyleIdentifierKey: vim # Navigation style: vim, arrows, or emacs

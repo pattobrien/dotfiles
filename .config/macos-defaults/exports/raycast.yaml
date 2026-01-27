@@ -1,0 +1,70 @@
+---
+description: com.raycast.macos
+sudo: false
+current_host: false
+data:
+  com.raycast.macos:
+    NSStatusItem Visible Item-1: false
+    NSStatusItem Visible Item-2: false
+    NSStatusItem Visible raycastIcon: false
+    aiDynamicPlaceholdersMigrationDate: "2023-06-07T21:06:58.77296102Z"
+    amplitudePulseAnalyticsTracker_didSendInstallationEvent: true
+    amplitudePulseAnalyticsTracker_nextHeartbeatDate: "2026-01-27T05:00:00Z"
+    calculator_currenciesRefresh: 7b22737563636565646564223a7b225f30223a3739313136313134302e3838393539367d7d
+    command-extension_github.open-issues__89648e03-cceb-4205-9f40-75fcb039a4c6-searchBarAccessory_default_dropdown_id_previousValue: pattobrien/sidecar
+    command-extension_github.unread-notifications__89648e03-cceb-4205-9f40-75fcb039a4c6_activated: true
+    commandScheduler_commandRuns: {}
+    commandsPreferencesExpandedItemIds: []
+    database_lastValidAppVersion: 1.69.0
+    database_lastValidOSVersion: 15.6.1
+    emojiPicker_skinTone: mediumLight
+    fallbackSearches_didMigrateScriptCommands: true
+    initialSpotlightHotkey: Command-49
+    mainWindowPositionCache:
+      "2(0.0, 0.0, 1920.0, 1080.0)": "{840, 860}"
+      "3(-107.0, 1117.0, 1920.0, 1080.0)": "{478, 2033}"
+      "1(0.0, 0.0, 1728.0, 1117.0)": "{489, 832}"
+      "2(-1920.0, 0.0, 1920.0, 1080.0)": "{-1335, 916}"
+      "3(0.0, 0.0, 1920.0, 1080.0)": "{263, 816}"
+      "3(-1920.0, 0.0, 1920.0, 1080.0)": "{-1736, 887}"
+      "2(-108.0, 1117.0, 1920.0, 1080.0)": "{477, 1931}"
+      "2(1920.0, 0.0, 1920.0, 1080.0)": "{2505, 814}"
+      "3(1920.0, 0.0, 1920.0, 1080.0)": "{2505, 814}"
+      "2(-1920.0, 37.0, 1920.0, 1080.0)": "{-1335, 953}"
+    navigationCommandStyleIdentifierKey: vim
+    onboardingCompleted: true
+    onboarding_completedTaskIdentifiers:
+      - startWalkthrough
+      - installFirstExtension
+      - snippets
+    onboarding_raycastShortcuts:
+      - Esc
+      - ⌘W
+    onboarding_showTasksProgress: true
+    organizationsPreferencesTabVisited: true
+    "permissions.folders.read:/Users/pattobrien/Desktop": true
+    "permissions.folders.read:/Users/pattobrien/Documents": true
+    "permissions.folders.read:/Users/pattobrien/Downloads": true
+    "permissions.folders.read:cloudStorage": true
+    pulseEventsRepository_data: 5b7b22616374696f6e73223a5b226f70656e4170704974656d225d2c22636f6d6d616e6473223a5b5d2c22657874656e73696f6e73223a5b226170704c61756e6368696e67225d2c226665617475726573223a5b5d2c2267726f7570223a7b2264617465223a3739313039363430302c2274696d65555443223a313736393338353630303030307d2c226f7267616e697a6174696f6e73223a5b5d2c22616374696f6e73436f756e74223a31367d5d
+    raycast-preferences-restorableData: 7b2270657273697374656e636544617465223a3738373831393730332e3533303735322c22747970654e616d65223a22457874656e73696f6e73507265666572656e6365735461624974656d227d
+    raycast-updates-lastAppUpdateCheckDate: 1769458055.689626
+    raycast-updates-lastTargetCommitishInstalled: abfa3ad4e7edf8929d201f5eb3b533bd2d639972
+    raycast-wrapped-2023-dataSummary: "days: 324 opened: 2217 topAppsRaw: 81 topApps: 10 actions: 19"
+    raycastAnonymousId: 8BC64DF7-2F79-4090-958D-45769F05F935
+    raycastFirstKnownAppVersion: 22312e34372e3322
+    raycastGlobalHotkey: Command-49
+    raycastInstallationDate: "2023-02-19T23:54:12.526736855Z"
+    raycastLoginItemAutoInstalled: "2023-02-19T23:54:13.465800046Z"
+    raycastPreferredWindowMode: compact
+    raycastShouldFollowSystemAppearance: true
+    showGettingStartedLink: true
+    siriShortcuts_searchRecordMigration: true
+    siriShortcuts_siriShortcutsPermissionState: rejected
+    store_everInstalled:
+      - 75824a08-91fb-49e4-97e7-6af780ffe21b
+      - 89648e03-cceb-4205-9f40-75fcb039a4c6
+    store_migratedHackerNews: true
+    store_migratedNative: true
+    store_migratedReminders: true
+    store_termsAccepted: true

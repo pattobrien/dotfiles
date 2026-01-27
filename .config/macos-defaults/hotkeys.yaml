@@ -1,0 +1,51 @@
+# Keyboard hotkey settings
+# Apply with: macos-defaults apply ~/.config/macos-defaults/hotkeys.yaml
+
+# Hotkey parameter format: [ascii_code, virtual_keycode, modifier_flags]
+# Modifier flags: 262144=Ctrl, 524288=Fn, 1048576=Cmd, 1572864=Cmd+Option, 786432=Ctrl+Option
+# Virtual keycode 49 = Space
+description: Keyboard hotkey settings
+sudo: false
+current_host: false
+kill:
+  - cfprefsd
+data:
+  com.apple.symbolichotkeys:
+    # Spotlight and input source shortcuts (disabled for Raycast)
+    AppleSymbolicHotKeys:
+      "64":
+        # Show Spotlight search (Cmd+Space) - disabled for Raycast
+        enabled: false
+        value:
+          type: standard
+          parameters:
+            - 65535
+            - 49
+            - 1048576
+      "65":
+        # Show Finder search window (Cmd+Option+Space) - disabled
+        enabled: false
+        value:
+          type: standard
+          parameters:
+            - 65535
+            - 49
+            - 1572864
+      "60":
+        # Select previous input source (Ctrl+Space) - disabled
+        enabled: false
+        value:
+          type: standard
+          parameters:
+            - 32
+            - 49
+            - 262144
+      "61":
+        # Select next input source (Ctrl+Option+Space) - disabled
+        value:
+          type: standard
+          parameters:
+            - 32
+            - 49
+            - 786432
+        enabled: false
