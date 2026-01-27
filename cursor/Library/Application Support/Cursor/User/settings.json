@@ -315,7 +315,7 @@
   },
   "window.commandCenter": false,
   "workbench.colorTheme": "Catppuccin Mocha",
-  // "workbench.iconTheme": "vscode-icons",
+  "workbench.iconTheme": "vscode-icons",
   "vscode_custom_css.imports": [
     "file:///Users/pattobrien/dev/fine_designs/sidecar2/.vscode/vscode.css"
   ],
