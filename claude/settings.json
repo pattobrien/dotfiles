@@ -1,7 +1,8 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-settings.json",
   "env": {
-    "EDITOR": "cursor"
+    "EDITOR": "cursor",
+    "DISABLE_AUTOUPDATER": "1"
   },
   "includeCoAuthoredBy": false,
   "permissions": {
@@ -74,41 +75,18 @@
     "command": "bash -c 'input=$(cat); model=$(echo \"$input\" | jq -r \".model.display_name\"); total_in=$(echo \"$input\" | jq -r \".context_window.total_input_tokens\"); total_out=$(echo \"$input\" | jq -r \".context_window.total_output_tokens\"); total=$((total_in + total_out)); if [ $total -ge 1000000 ]; then tokens=$(printf \"%.1fM\" $(echo \"scale=1; $total / 1000000\" | bc)); elif [ $total -ge 1000 ]; then tokens=$(printf \"%.1fK\" $(echo \"scale=1; $total / 1000\" | bc)); else tokens=\"$total\"; fi; usage=$(echo \"$input\" | jq \".context_window.current_usage\"); if [ \"$usage\" != \"null\" ]; then current=$(echo \"$usage\" | jq \".input_tokens + .cache_creation_input_tokens + .cache_read_input_tokens\"); size=$(echo \"$input\" | jq \".context_window.context_window_size\"); pct=$((current * 100 / size)); context=\"${pct}%\"; else context=\"0%\"; fi; printf \"\\033[36m%s\\033[0m | \\033[33m%s tokens\\033[0m | \\033[35m%s context\\033[0m\" \"$model\" \"$tokens\" \"$context\"'"
   },
   "enabledPlugins": {
-    "beads@beads-marketplace": false,
     "code-simplifier@claude-plugins-official": true,
     "commit-commands@claude-plugins-official": true,
-    "example-skills@anthropic-agent-skills": false,
     "plugin-dev@claude-plugins-official": false,
     "pr-review-toolkit@claude-plugins-official": false,
-    "superpowers@superpowers-marketplace": false,
-    "claude-notifications-go@claude-notifications-go": true,
     "figma@claude-plugins-official": false,
-    "expo-app-design@expo-plugins": true,
-    "neon-plugin@neon": true
+    "expo-app-design@expo-plugins": true
   },
   "extraKnownMarketplaces": {
     "claude-notifications-go": {
       "source": {
         "source": "github",
         "repo": "777genius/claude-notifications-go"
-      }
-    },
-    "neon": {
-      "source": {
-        "source": "github",
-        "repo": "neondatabase-labs/ai-rules"
-      }
-    },
-    "beads-marketplace": {
-      "source": {
-        "source": "github",
-        "repo": "steveyegge/beads"
-      }
-    },
-    "superpowers-marketplace": {
-      "source": {
-        "source": "github",
-        "repo": "obra/superpowers-marketplace"
       }
     },
     "expo-plugins": {
@@ -119,5 +97,6 @@
     }
   },
   "alwaysThinkingEnabled": true,
+  "minimumVersion": "2.1.19",
   "plansDirectory": "./docs/plans"
 }

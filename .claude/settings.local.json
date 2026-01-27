@@ -25,7 +25,8 @@
       "Bash(yq:*)",
       "Bash(defaults read:*)",
       "Bash(brew cleanup:*)",
-      "Bash(xcrun simctl list:*)"
+      "Bash(xcrun simctl list:*)",
+      "Bash(gh issue view:*)"
     ],
     "deny": [],
     "additionalDirectories": [
