@@ -208,13 +208,21 @@ cask "font-hack-nerd-font"
 # ===================
 # TIER 3 - Productivity
 # ===================
+# Disk space visualiser
+cask "daisydisk"
+# Voice and text chat software
+cask "discord"
 # Status monitoring
 cask "eul"
 # App to manage software development and track bugs
 cask "linear-linear"
+# Discover, download, and run local LLMs
+cask "lm-studio"
 # Screen and video recording software
 cask "loom"
 # Knowledge base that works on top of a local folder of plain text Markdown files
 cask "obsidian"
+# Dictation tool including LLM reformatting
+cask "superwhisper"
 # Video communication and virtual meeting platform
 cask "zoom"
