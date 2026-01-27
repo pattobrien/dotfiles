@@ -10,7 +10,7 @@
 - Chivo Mono (2022) — Héctor Gatti & Omnibus-Type Team
 - Courier Prime (2013) — Alan Dague-Greene
 - DM Mono (2020) — Colophon Foundry
-- Drafting* Mono (2021) — Owen Earl
+- Drafting\* Mono (2021) — Owen Earl
 - Fragment Mono (2022) — Wei H
 - Generic Mono (1980) — Luc Devroye
 - iA Writer Mono (2018) — Oliver Reichenstein, Bold Monday, Mike Abbink, Paul

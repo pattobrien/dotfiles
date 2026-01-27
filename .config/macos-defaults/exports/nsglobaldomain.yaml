@@ -71,12 +71,10 @@ data:
     NSSpellCheckerDictionaryContainerTransitionComplete: true
     NSSpellCheckerInputAnalyticsTime: "2024-10-29T08:41:12.104599952Z"
     NSUserDictionaryReplacementItems:
-      -
-        replace: kenny
+      - replace: kenny
         with: jenny
         "on": 1
-      -
-        replace: omw
+      - replace: omw
         with: omw
         "on": 1
     NSUserQuotesArray:

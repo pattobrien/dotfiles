@@ -1,13 +1,9 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-settings.json",
   "permissions": {
-    "allow": [
-      "WebSearch"
-    ],
+    "allow": ["WebSearch"],
     "deny": [],
-    "additionalDirectories": [
-      "~"
-    ]
+    "additionalDirectories": ["~"]
   },
   "outputStyle": "default"
 }

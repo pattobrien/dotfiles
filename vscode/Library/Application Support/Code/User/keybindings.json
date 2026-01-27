@@ -47,13 +47,13 @@
     "key": "cmd+k",
     "command": "-composer.startComposerPrompt",
     "when": "composerIsEnabled"
-},
-{
+  },
+  {
     "key": "tab",
     "command": "editor.action.inlineSuggest.commit",
     "when": "editorTextFocus && inlineSuggestionVisible && !editorTabMovesFocus"
-},
- {
+  },
+  {
     "key": "tab",
     "command": "editor.action.inlineSuggest.commit",
     "when": "inlineEditIsVisible && tabShouldAcceptInlineEdit && !editorHoverFocused && !editorTabMovesFocus && !suggestWidgetVisible || inlineSuggestionHasIndentationLessThanTabSize && inlineSuggestionVisible && !editorHoverFocused && !editorTabMovesFocus && !suggestWidgetVisible || inlineEditIsVisible && inlineSuggestionHasIndentationLessThanTabSize && inlineSuggestionVisible && !editorHoverFocused && !editorTabMovesFocus && !suggestWidgetVisible || inlineEditIsVisible && inlineSuggestionVisible && tabShouldAcceptInlineEdit && !editorHoverFocused && !editorTabMovesFocus && !suggestWidgetVisible"
@@ -62,15 +62,15 @@
     "key": "tab",
     "command": "editor.action.inlineSuggest.commit",
     "when": "inInlineEditsPreviewEditor"
-},
-{
+  },
+  {
     "key": "shift+enter",
     "command": "workbench.action.terminal.sendSequence",
     "args": {
-        "text": "\u001b\r"
+      "text": "\u001b\r"
     },
     "when": "terminalFocus"
-},
+  }
   // {
   //   "key": "ctrl+i",
   //   "command": "github.copilot.chat.attachSelection",
@@ -80,5 +80,4 @@
   //     "key": "cmd+shift+n",
   //     "command": "explorer.newFolder"
   // },
-
 ]

@@ -1,5 +1,4 @@
 {
-
   "extensions.autoUpdate": false,
   "terminal.integrated.tabs.enabled": true,
   "terminal.integrated.shellIntegration.enabled": true,
@@ -19,10 +18,7 @@
   // -- Cursor Specific Settings -- //
   "cursor.composer.shouldChimeAfterChatFinishes": true,
   "cursor.composer.shouldAllowCustomModes": true,
-  "cursor.cpp.disabledLanguages": [
-    "scminput",
-    "mdx"
-  ],
+  "cursor.cpp.disabledLanguages": ["scminput", "mdx"],
 
   // -- General Settings -- //
   "extensions.experimental.affinity": {
@@ -269,9 +265,7 @@
   "dart.debugSdkLibraries": true,
   "dart.projectSearchDepth": 5,
   "dart.flutterSdkPath": "~/.fvm/default",
-  "dart.flutterSdkPaths": [
-    "~/.fvm/versions/"
-  ],
+  "dart.flutterSdkPaths": ["~/.fvm/versions/"],
   "dart.vmAdditionalArgs": ["--enable-experiment=macros"],
 
   // -- python --

@@ -1,7 +1,6 @@
 ---
 name: search-packages
-description:
-  Search for the best modern library for a given purpose. Use when the user asks to find the best library for [purpose].
+description: Search for the best modern library for a given purpose. Use when the user asks to find the best library for [purpose].
 model: claude-haiku-4-5
 allowed-tools:
   - ListMcpResourcesTool

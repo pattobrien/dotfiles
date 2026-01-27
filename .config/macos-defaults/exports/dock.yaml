@@ -16,8 +16,7 @@ data:
     mru-spaces: false
     no-bouncing: false
     persistent-apps:
-      -
-        GUID: 3952611120
+      - GUID: 3952611120
         tile-data:
           dock-extra: false
           parent-mod-date: 3812428160
@@ -31,8 +30,7 @@ data:
           bundle-identifier: com.apple.launchpad.launcher
           is-beta: false
         tile-type: file-tile
-      -
-        GUID: 1553324347
+      - GUID: 1553324347
         tile-data:
           dock-extra: false
           parent-mod-date: 126705387107234
@@ -46,8 +44,7 @@ data:
           bundle-identifier: com.google.Chrome
           is-beta: false
         tile-type: file-tile
-      -
-        GUID: 3952611130
+      - GUID: 3952611130
         tile-data:
           dock-extra: false
           parent-mod-date: 3838214669
@@ -61,8 +58,7 @@ data:
           bundle-identifier: com.apple.Notes
           is-beta: false
         tile-type: file-tile
-      -
-        GUID: 3952611122
+      - GUID: 3952611122
         tile-data:
           dock-extra: false
           parent-mod-date: 3838214669
@@ -76,8 +72,7 @@ data:
           bundle-identifier: com.apple.MobileSMS
           is-beta: false
         tile-type: file-tile
-      -
-        GUID: 2439248848
+      - GUID: 2439248848
         tile-data:
           dock-extra: false
           parent-mod-date: 188703236586606
@@ -91,8 +86,7 @@ data:
           bundle-identifier: com.microsoft.Outlook
           is-beta: false
         tile-type: file-tile
-      -
-        GUID: 3952611127
+      - GUID: 3952611127
         tile-data:
           dock-extra: true
           parent-mod-date: 3838214669
@@ -106,8 +100,7 @@ data:
           bundle-identifier: com.apple.iCal
           is-beta: false
         tile-type: file-tile
-      -
-        GUID: 3074714447
+      - GUID: 3074714447
         tile-data:
           dock-extra: false
           parent-mod-date: 125296637237455
@@ -121,8 +114,7 @@ data:
           bundle-identifier: com.spotify.client
           is-beta: false
         tile-type: file-tile
-      -
-        GUID: 2470675591
+      - GUID: 2470675591
         tile-data:
           dock-extra: false
           parent-mod-date: 126705387107234
@@ -136,8 +128,7 @@ data:
           bundle-identifier: com.tinyspeck.slackmacgap
           is-beta: false
         tile-type: file-tile
-      -
-        GUID: 3952611138
+      - GUID: 3952611138
         tile-data:
           dock-extra: true
           parent-mod-date: 3838214669
@@ -151,8 +142,7 @@ data:
           bundle-identifier: com.apple.AppStore
           is-beta: false
         tile-type: file-tile
-      -
-        GUID: 2749683491
+      - GUID: 2749683491
         tile-data:
           dock-extra: false
           parent-mod-date: 126705387107234
@@ -166,8 +156,7 @@ data:
           bundle-identifier: com.todesktop.230313mzl4w4u92
           is-beta: false
         tile-type: file-tile
-      -
-        GUID: 6608570
+      - GUID: 6608570
         tile-data:
           dock-extra: false
           parent-mod-date: 126705387107234
@@ -181,8 +170,7 @@ data:
           bundle-identifier: com.microsoft.VSCode
           is-beta: false
         tile-type: file-tile
-      -
-        GUID: 1161278144
+      - GUID: 1161278144
         tile-data:
           dock-extra: false
           parent-mod-date: 233353719940483
@@ -196,8 +184,7 @@ data:
           bundle-identifier: net.kovidgoyal.kitty
           is-beta: false
         tile-type: file-tile
-      -
-        GUID: 3389984894
+      - GUID: 3389984894
         tile-data:
           dock-extra: false
           parent-mod-date: 126705387107234
@@ -211,8 +198,7 @@ data:
           bundle-identifier: com.mitchellh.ghostty
           is-beta: false
         tile-type: file-tile
-      -
-        GUID: 1529097026
+      - GUID: 1529097026
         tile-data:
           dock-extra: false
           parent-mod-date: 121637319212707
@@ -226,8 +212,7 @@ data:
           bundle-identifier: com.openai.atlas
           is-beta: false
         tile-type: file-tile
-      -
-        GUID: 2893868804
+      - GUID: 2893868804
         tile-data:
           dock-extra: false
           parent-mod-date: 233353719940483
@@ -241,8 +226,7 @@ data:
           bundle-identifier: com.linear
           is-beta: false
         tile-type: file-tile
-      -
-        GUID: 2749683492
+      - GUID: 2749683492
         tile-data:
           dock-extra: false
           parent-mod-date: 126705387107234
@@ -256,8 +240,7 @@ data:
           bundle-identifier: com.anthropic.claudefordesktop
           is-beta: false
         tile-type: file-tile
-      -
-        GUID: 2059035979
+      - GUID: 2059035979
         tile-data:
           dock-extra: false
           parent-mod-date: 3837934991
@@ -271,8 +254,7 @@ data:
           bundle-identifier: com.electron.dockerdesktop
           is-beta: false
         tile-type: file-tile
-      -
-        GUID: 3018184974
+      - GUID: 3018184974
         tile-data:
           dock-extra: false
           parent-mod-date: 133972470864091
@@ -286,8 +268,7 @@ data:
           bundle-identifier: com.rogueamoeba.audiohijack
           is-beta: false
         tile-type: file-tile
-      -
-        GUID: 3349397058
+      - GUID: 3349397058
         tile-data:
           dock-extra: false
           parent-mod-date: 126705387107234
@@ -301,8 +282,7 @@ data:
           bundle-identifier: md.obsidian
           is-beta: false
         tile-type: file-tile
-      -
-        GUID: 2470675586
+      - GUID: 2470675586
         tile-data:
           dock-extra: false
           parent-mod-date: 10466389083832
@@ -316,8 +296,7 @@ data:
           bundle-identifier: us.zoom.xos
           is-beta: false
         tile-type: file-tile
-      -
-        GUID: 2083693673
+      - GUID: 2083693673
         tile-data:
           dock-extra: false
           parent-mod-date: 177944343879526
@@ -331,8 +310,7 @@ data:
           bundle-identifier: com.obsproject.obs-studio
           is-beta: false
         tile-type: file-tile
-      -
-        GUID: 1756085215
+      - GUID: 1756085215
         tile-data:
           dock-extra: true
           parent-mod-date: 3838214669
@@ -346,8 +324,7 @@ data:
           bundle-identifier: com.apple.systempreferences
           is-beta: false
         tile-type: file-tile
-      -
-        GUID: 4152562766
+      - GUID: 4152562766
         tile-data:
           dock-extra: false
           parent-mod-date: 233860525679261
@@ -361,8 +338,7 @@ data:
           bundle-identifier: notion.id
           is-beta: false
         tile-type: file-tile
-      -
-        GUID: 481285985
+      - GUID: 481285985
         tile-data:
           dock-extra: false
           parent-mod-date: 126705387107234
@@ -376,8 +352,7 @@ data:
           bundle-identifier: com.1password.1password
           is-beta: false
         tile-type: file-tile
-      -
-        GUID: 643241804
+      - GUID: 643241804
         tile-data:
           dock-extra: false
           parent-mod-date: 233860525679261
@@ -391,8 +366,7 @@ data:
           bundle-identifier: com.figma.Desktop
           is-beta: false
         tile-type: file-tile
-      -
-        GUID: 1584815497
+      - GUID: 1584815497
         tile-data:
           dock-extra: true
           parent-mod-date: 3838214669
@@ -406,8 +380,7 @@ data:
           bundle-identifier: com.apple.ScreenContinuity
           is-beta: false
         tile-type: file-tile
-      -
-        GUID: 3515485059
+      - GUID: 3515485059
         tile-data:
           dock-extra: false
           parent-mod-date: 3812428160
@@ -421,8 +394,7 @@ data:
           bundle-identifier: com.apple.ScreenSharing
           is-beta: false
         tile-type: file-tile
-      -
-        GUID: 1529952393
+      - GUID: 1529952393
         tile-data:
           dock-extra: false
           parent-mod-date: 3829181962
@@ -437,8 +409,7 @@ data:
           is-beta: false
         tile-type: file-tile
     persistent-others:
-      -
-        GUID: 643241808
+      - GUID: 643241808
         tile-data:
           showas: 1
           parent-mod-date: 74912337677829
@@ -455,8 +426,7 @@ data:
           preferreditemsize: -1
         tile-type: directory-tile
     recent-apps:
-      -
-        GUID: 751749255
+      - GUID: 751749255
         tile-type: file-tile
         tile-data:
           dock-extra: false
@@ -470,8 +440,7 @@ data:
           file-mod-date: 3848870107
           bundle-identifier: cc.ffitch.shottr
           is-beta: false
-      -
-        GUID: 4028603369
+      - GUID: 4028603369
         tile-type: file-tile
         tile-data:
           dock-extra: false
@@ -485,8 +454,7 @@ data:
           file-mod-date: 3838214669
           bundle-identifier: com.apple.Music
           is-beta: false
-      -
-        GUID: 4028603370
+      - GUID: 4028603370
         tile-type: file-tile
         tile-data:
           dock-extra: false

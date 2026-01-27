@@ -7,8 +7,8 @@
       "<select id=\"${1:selectId}\" aria-label=\"Select a country from the list\">",
       "  <option value=\"us\">United States</option>",
       "  $0",
-      "</select>"
-    ]
+      "</select>",
+    ],
   },
   "React Map to Options": {
     "prefix": "roptions",
@@ -18,8 +18,8 @@
       "  <option key={item.${2:value}} value={item.${2:value}}>",
       "    {item.${3:label}}",
       "  </option>",
-      "))}$0"
-    ]
+      "))}$0",
+    ],
   },
 
   "React Input with Label": {
@@ -32,8 +32,8 @@
       "<input",
       "  id=\"${1:inputId}\"",
       "  aria-label=\"Enter your name\"",
-      "/>"
-    ]
+      "/>",
+    ],
   },
 
   "React Tabs Map": {
@@ -55,8 +55,8 @@
       "      {item.${4:label}}",
       "    </button>",
       "  );",
-      "})}$0"
-    ]
+      "})}$0",
+    ],
   },
 
   "React Tab Panels Map": {
@@ -76,8 +76,8 @@
       "      {item.${4:content}}",
       "    </div>",
       "  );",
-      "})}$0"
-    ]
+      "})}$0",
+    ],
   },
 
   "React Table": {
@@ -92,8 +92,8 @@
       "  </thead>",
       "  <tbody>",
       "  </tbody>",
-      "</table>"
-    ]
+      "</table>",
+    ],
   },
 
   "React Table Headers Map": {
@@ -104,8 +104,8 @@
       "  <th key={item.${2:id}} scope=\"col\">",
       "    {item.${3:label}}",
       "  </th>",
-      "))}$0"
-    ]
+      "))}$0",
+    ],
   },
 
   "React Table Rows Map": {
@@ -116,8 +116,8 @@
       "  <tr key={item.${2:id}}>",
       "    $0",
       "  </tr>",
-      "))}"
-    ]
+      "))}",
+    ],
   },
   "React Component": {
     "prefix": "rc",
@@ -129,8 +129,8 @@
       "      $0",
       "    </div>",
       "  );",
-      "}"
-    ]
+      "}",
+    ],
   },
 
   "React Component with Props": {
@@ -147,7 +147,7 @@
       "      $0",
       "    </div>",
       "  );",
-      "}"
-    ]
-  }
+      "}",
+    ],
+  },
 }

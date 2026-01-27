@@ -1,7 +1,6 @@
 ---
 name: fetch-docs
-description:
-  Fetch relevant links to docs sites. Use when the user asks to "look up docs", "find documentation for", "get docs for [library]", "check the docs", "/docs", or when Claude needs library/framework documentation to complete a task.
+description: Fetch relevant links to docs sites. Use when the user asks to "look up docs", "find documentation for", "get docs for [library]", "check the docs", "/docs", or when Claude needs library/framework documentation to complete a task.
 model: claude-haiku-4-5
 allowed-tools:
   - ListMcpResourcesTool

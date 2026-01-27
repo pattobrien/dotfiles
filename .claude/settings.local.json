@@ -29,10 +29,7 @@
       "Bash(gh issue view:*)"
     ],
     "deny": [],
-    "additionalDirectories": [
-      "~/dev",
-      "~"
-    ]
+    "additionalDirectories": ["~/dev", "~"]
   },
   "outputStyle": "default"
 }
