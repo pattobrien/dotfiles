@@ -8,4 +8,5 @@ kill: []
 data:
   com.raycast.macos:
     initialSpotlightHotkey: Command-49 # Global hotkey (Command-49 = Cmd+Space)
+    raycastGlobalHotkey: Command-49
     navigationCommandStyleIdentifierKey: vim # Navigation style: vim, arrows, or emacs
