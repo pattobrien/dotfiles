@@ -4,7 +4,6 @@ tap "hashicorp/tap"
 tap "koekeishiya/formulae"
 tap "leoafarias/fvm"
 tap "modularml/packages"
-tap "scarvalhojr/tap"
 tap "schpet/tap"
 tap "sst/tap"
 tap "stripe/stripe-cli"
@@ -127,85 +126,49 @@ brew "jetbrains/utils/kotlin-lsp"
 brew "koekeishiya/formulae/skhd"
 # Simple cli to manage Flutter SDK versions per project
 brew "leoafarias/fvm/fvm"
-# Advent of Code command-line helper tool
-brew "scarvalhojr/tap/aoc-cli"
 # CLI tool for linear.app that uses git branch names and directory names to open issues and team pages
 brew "schpet/tap/linear"
 # Smithy CLI - A CLI for building, validating, querying, and iterating on Smithy models
 brew "smithy-lang/tap/smithy-cli"
-# Stripe CLI utility
 brew "stripe/stripe-cli/stripe"
-# Supabase CLI
 brew "supabase/tap/supabase"
 
 # ===================
 # TIER 1 - Essential (install first)
 # ===================
-# Password manager that keeps all passwords secure behind one password
 cask "1password"
-# Command-line interface for 1Password
 cask "1password-cli"
-# OpenAI's official ChatGPT desktop app
 cask "chatgpt"
-# Anthropic's official Claude AI desktop app
 cask "claude"
-# OpenAI's coding agent that runs in your terminal
 cask "codex"
-# Write, edit, and chat about your code with AI
 cask "cursor"
-# Web browser
 cask "google-chrome"
-# GPU-based terminal emulator
 cask "kitty"
-# Control your tools with a few keystrokes
 cask "raycast"
-# Screenshot measurement and annotation tool
 cask "shottr"
-# Team communication and collaboration software
 cask "slack"
-# Music streaming service
 cask "spotify"
-# Open-source code editor
 cask "visual-studio-code"
-# App to build and share containerised applications and microservices
 cask "docker-desktop"
 
 # ===================
 # TIER 2 - Development Tools
 # ===================
-# Command-line tools for building and debugging Android apps
 cask "android-commandlinetools"
-# Android SDK component
 cask "android-platform-tools"
-# Redis desktop manager
 cask "another-redis-desktop-manager"
-# Launch builds and start simulators from your menu bar
 cask "expo-orbit"
-# Reverse proxy, secure introspectable tunnels to localhost
 cask "ngrok"
-# Administration and development platform for PostgreSQL
 cask "pgadmin4"
-
 cask "font-hack-nerd-font"
 
-# ===================
-# TIER 3 - Productivity
-# ===================
-# Disk space visualiser
 cask "daisydisk"
-# Voice and text chat software
 cask "discord"
-# Status monitoring
 cask "eul"
-# App to manage software development and track bugs
 cask "linear-linear"
-# Discover, download, and run local LLMs
 cask "lm-studio"
-# Screen and video recording software
 cask "loom"
-# Knowledge base that works on top of a local folder of plain text Markdown files
 cask "obsidian"
-# Dictation tool including LLM reformatting
+cask "sf-symbols"
 cask "superwhisper"
-# Video communication and virtual meeting platform
 cask "zoom"

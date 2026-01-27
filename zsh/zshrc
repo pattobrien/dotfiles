@@ -151,6 +151,8 @@ export KUBE_CONFIG_PATH="$HOME/.kube/config"
 PATH=$PATH:~/.local/bin
 
 # mise is activated via oh-my-zsh plugin
+# Add mise shims to PATH for stable executable paths (e.g. ~/.local/share/mise/shims/oxfmt)
+export PATH="$HOME/.local/share/mise/shims:$PATH"
 
 # source <(railway completion zsh)
 

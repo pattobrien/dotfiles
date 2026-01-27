@@ -1,0 +1,31 @@
+{
+  "printWidth": 80,
+  "trailingComma": "all",
+  "experimentalSortImports": {
+    "newlinesBetween": true,
+    "groups": [
+      "builtin",
+      ["value-external", "type-external"],
+      ["value-internal", "type-internal"],
+      ["type-parent", "value-parent"],
+      ["value-sibling", "type-sibling"],
+      ["type-index", "value-index"],
+      "side-effect"
+    ]
+  },
+  "experimentalSortPackageJson": false,
+  "experimentalTailwindcss": {
+    "functions": ["cn", "cva"]
+  },
+  "ignorePatterns": [
+    ".cache",
+    ".git",
+    ".next",
+    ".vercel",
+    ".turbo",
+    "node_modules",
+    "dist",
+    "build",
+    "coverage"
+  ]
+}

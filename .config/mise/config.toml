@@ -2,6 +2,8 @@
 "npm:@anthropic-ai/claude-code" = "latest"
 "npm:@beads/bd" = "latest"
 "npm:eas-cli" = "latest"
+"npm:oxfmt" = "latest"
+"npm:oxlint" = "latest"
 # Global tools are managed in .tool-versions, so leave this empty
 # or add any tools you want available globally but not in .tool-versions
 
