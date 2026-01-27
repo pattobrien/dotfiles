@@ -74,25 +74,26 @@ plugins=(
   mise
   # doctl # this causes 1password prompt when re-sourcing zshrc file, for some reason... so we should not use this
   # pnpm-shell-completion
+  zsh-pnpm-completions
   # other plugins available that we should install at some point:
   # web-search
   # vi-mode
   # nvm
   # npm
-  # macos
+  macos
   # tmuxinator (?)
-  # aliases - lists the shortcuts currently available
+  # aliases # lists the shortcuts currently available
   # common-aliases
-  # flutter - aliases for flutter commands
+  flutter # aliases for flutter commands
   # gcloud
   # git-auto-fetch
   # git-lfs
   # mongocli
   # operator-sdk
-  # pod - cocoaPods completion
-  # redis-cli
+  pod # cocoaPods completion
+  redis-cli
   # salt
-  # ssh-agent - configure ssh-agent settings
+  # ssh-agent # configure ssh-agent settings
   # web-search
 )
 

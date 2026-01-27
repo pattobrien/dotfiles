@@ -1,24 +1,14 @@
 tap "anomalyco/tap"
 tap "desdaemon/repo"
-tap "felangel/mason"
 tap "hashicorp/tap"
-tap "jetbrains/utils"
 tap "koekeishiya/formulae"
 tap "leoafarias/fvm"
 tap "modularml/packages"
 tap "scarvalhojr/tap"
 tap "schpet/tap"
-tap "shopify/shopify"
-tap "smithy-lang/tap"
 tap "sst/tap"
 tap "stripe/stripe-cli"
 tap "supabase/tap"
-# Run your GitHub Actions locally
-brew "act"
-# ANother Tool for Language Recognition
-brew "antlr"
-# Extendable version manager with support for Ruby, Node.js, Erlang & more
-brew "asdf"
 # Code searching, linting, rewriting
 brew "ast-grep"
 # Automatic configure script builder
@@ -185,24 +175,17 @@ cask "docker-desktop"
 # ===================
 # Command-line tools for building and debugging Android apps
 cask "android-commandlinetools"
-# Toolset to implement parts of Android apps in native code
-cask "android-ndk"
 # Android SDK component
 cask "android-platform-tools"
-# Tools for building Android applications
-cask "android-studio"
 # Redis desktop manager
 cask "another-redis-desktop-manager"
 # Launch builds and start simulators from your menu bar
 cask "expo-orbit"
-# HTTP and GraphQL Client
-cask "insomnia"
 # Reverse proxy, secure introspectable tunnels to localhost
 cask "ngrok"
 # Administration and development platform for PostgreSQL
 cask "pgadmin4"
-# Collaboration platform for API development
-cask "postman"
+
 cask "font-hack-nerd-font"
 
 # ===================

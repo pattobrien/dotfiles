@@ -16,6 +16,7 @@
       "Bash(pnpm*typecheck*)",
       "Bash(pnpm*format*)",
       "Bash(pnpm*install)",
+      "Bash(pnpm*list*)",
       "Bash(pnpm*validate*)",
       "Bash(* --version)",
       "Bash(* --help)",

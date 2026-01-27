@@ -9,3 +9,5 @@
       description: Installing Oh My Zsh
     - command: brew bundle --file brew/essentials/Brewfile
       description: Installing essential packages
+    - command: git clone https://github.com/michakfromparis/zsh-pnpm-completions ~/.oh-my-zsh/custom/plugins/zsh-pnpm-completions
+      description: Installing pnpm completions
