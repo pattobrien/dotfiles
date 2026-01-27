@@ -179,3 +179,42 @@ cask "spotify"
 cask "visual-studio-code"
 # App to build and share containerised applications and microservices
 cask "docker-desktop"
+
+# ===================
+# TIER 2 - Development Tools
+# ===================
+# Command-line tools for building and debugging Android apps
+cask "android-commandlinetools"
+# Toolset to implement parts of Android apps in native code
+cask "android-ndk"
+# Android SDK component
+cask "android-platform-tools"
+# Tools for building Android applications
+cask "android-studio"
+# Redis desktop manager
+cask "another-redis-desktop-manager"
+# Launch builds and start simulators from your menu bar
+cask "expo-orbit"
+# HTTP and GraphQL Client
+cask "insomnia"
+# Reverse proxy, secure introspectable tunnels to localhost
+cask "ngrok"
+# Administration and development platform for PostgreSQL
+cask "pgadmin4"
+# Collaboration platform for API development
+cask "postman"
+cask "font-hack-nerd-font"
+
+# ===================
+# TIER 3 - Productivity
+# ===================
+# Status monitoring
+cask "eul"
+# App to manage software development and track bugs
+cask "linear-linear"
+# Screen and video recording software
+cask "loom"
+# Knowledge base that works on top of a local folder of plain text Markdown files
+cask "obsidian"
+# Video communication and virtual meeting platform
+cask "zoom"
