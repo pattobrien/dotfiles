@@ -3,7 +3,8 @@
 description: Third-party application settings
 sudo: false
 current_host: false
-kill: []
+kill:
+  - Raycast
 # Raycast - https://raycast.com
 data:
   com.raycast.macos:
