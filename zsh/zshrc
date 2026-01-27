@@ -73,7 +73,7 @@ plugins=(
   # asdf # replaced by mise
   mise
   # doctl # this causes 1password prompt when re-sourcing zshrc file, for some reason... so we should not use this
-  pnpm-shell-completion
+  # pnpm-shell-completion
   # other plugins available that we should install at some point:
   # web-search
   # vi-mode
@@ -160,6 +160,7 @@ source ~/.dotfiles/zsh/aliases.zsh
 source ~/.dotfiles/zsh/go.zsh
 source ~/.dotfiles/zsh/php.zsh
 source ~/.dotfiles/zsh/ruby.zsh
+source ~/.dotfiles/zsh/completion-for-pnpm.zsh
 
 if [ -f ~/.dotfiles/zsh/.env.zsh ]; then
   source ~/.dotfiles/zsh/.env.zsh

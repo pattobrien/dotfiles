@@ -27,9 +27,9 @@
   "terminal.integrated.defaultProfile.osx": "zsh",
   "json.schemaDownload.enable": true,
   "workbench.tree.indent": 12,
-  "go.testEnvFile": "${workspaceFolder}/.env",
+//   "go.testEnvFile": "${workspaceFolder}/.env",
   "workbench.activityBar.orientation": "vertical",
-  "jest.enable": true,
+  "jest.enable": false,
   "eslint.useFlatConfig": true,
   "eslint.debug": true,
   "npm.packageManager": "pnpm",
@@ -59,7 +59,7 @@
     "editor.formatOnSave": true
   },
   "[ruby]": {
-    "editor.defaultFormatter": "Shopify.ruby-lsp",
+    // "editor.defaultFormatter": "Shopify.ruby-lsp",
     "editor.formatOnSave": true,
     "editor.tabSize": 2,
     "editor.insertSpaces": true,
@@ -281,10 +281,10 @@
     "--enable-experiment=macros"
   ],
   "[python]": {
-    "editor.defaultFormatter": "ms-python.black-formatter",
+    // "editor.defaultFormatter": "ms-python.black-formatter",
     "editor.formatOnSave": true
   },
-  "python.defaultInterpreterPath": "/Users/pattobrien/.miniconda/bin/python",
+//   "python.defaultInterpreterPath": "/Users/pattobrien/.miniconda/bin/python",
   "Lua.diagnostics.globals": [
     "vim"
   ],
@@ -304,7 +304,7 @@
     }
   },
   "[proto3]": {
-    "editor.defaultFormatter": "xaver.clang-format"
+    "editor.defaultFormatter": "zxh404.vscode-proto3"
   },
   "[prisma]": {
     "editor.defaultFormatter": "Prisma.prisma",
@@ -315,7 +315,7 @@
   },
   "window.commandCenter": false,
   "workbench.colorTheme": "Catppuccin Mocha",
-  "workbench.iconTheme": "vscode-icons",
+  // "workbench.iconTheme": "vscode-icons",
   "vscode_custom_css.imports": [
     "file:///Users/pattobrien/dev/fine_designs/sidecar2/.vscode/vscode.css"
   ],
