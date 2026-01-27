@@ -15,6 +15,10 @@
   - files/dirs to store tool-specific autocompletions
   - how can we use auto completion scripts for tools we don't install globally? (e.g. `prisma` that is installed to a local repo)
 - set oxlint as default formatter
+- claude: how can we set name/session as window name in cursor?
+- a way to default to ~/ having dotfiles visible
+- disable excessive macOS animations
+  - when navigating between windows/desktop views
 
 ## Feature Wishlist
 
@@ -34,6 +38,7 @@
   - TODO: decide what super key does
 - screenshot remap to Shottr app
 - play button remap to Spotify (?)
+- fast scroll when holding hjkl in vim mode
 
 ### VSCode + Cursor Settings Sync (WIP)
 
