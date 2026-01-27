@@ -2,6 +2,10 @@ if vim.g.vscode then
     return
 end
 
+-- Disabled: vault path doesn't exist
+-- TODO: Re-enable when Obsidian vault is set up
+do return end
+
 vim.opt.conceallevel = 2
 
 
