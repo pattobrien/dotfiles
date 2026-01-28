@@ -35,11 +35,14 @@
       "Bash(grep:*)",
       "Bash(git status:*)",
       "Bash(git pull:*)",
-      "Bash(git fetch:*)"
+      "Bash(git fetch:*)",
+      "Bash(gh*view:*)",
+      "Bash(gh*list:*)",
+      "Bash(defaults read:*)"
     ],
     "deny": ["Bash(npm:*)", "Bash(npx:*)"],
     "ask": ["Bash(pnpm*add*)"],
-    "defaultMode": "default"
+    "defaultMode": "acceptEdits"
   },
   "enableAllProjectMcpServers": true,
   "hooks": {

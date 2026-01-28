@@ -19,6 +19,7 @@
 - a way to default to ~/ having dotfiles visible
 - disable excessive macOS animations
   - when navigating between windows/desktop views
+- migrate brew CLI tools to mise (e.g. `neonctl`)
 
 ## Feature Wishlist
 

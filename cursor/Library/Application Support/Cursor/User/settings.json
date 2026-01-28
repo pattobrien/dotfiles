@@ -158,6 +158,7 @@
   "github.copilot.advanced": {
     "debug.showScores": true
   },
+  "swift.disableAutoResolve": true,
   "github.copilot.enable": {
     "*": false,
     "plaintext": true,
@@ -440,5 +441,15 @@
   "claudeCode.useTerminal": true,
   "git.enableSmartCommit": true,
   "workbench.editor.enablePreviewFromCodeNavigation": true,
-  "workbench.editor.enablePreviewFromQuickOpen": true
+  "workbench.editor.enablePreviewFromQuickOpen": true,
+  "swift.path": "/Users/pattobrien/.local/share/mise/installs/swift/6.2.3/bin",
+  "terminal.integrated.allowedLinkSchemes": [
+    "file",
+    "http",
+    "https",
+    "mailto",
+    "vscode",
+    "vscode-insiders",
+    "apps/expo/src/components/providers.tsx"
+  ]
 }

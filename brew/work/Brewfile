@@ -62,8 +62,6 @@ brew "less"
 brew "libpq"
 # Mac App Store command-line interface
 brew "mas"
-# Neon CLI tool
-brew "neonctl"
 # Development kit for the Java programming language
 brew "openjdk@11"
 # OpenShift command-line interface tools
