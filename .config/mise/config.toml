@@ -3,17 +3,20 @@ npm.package_manager = "pnpm"
 experimental = true
 
 [tools]
+node = "latest"
 "npm:@anthropic-ai/claude-code" = "latest"
 "npm:@beads/bd" = "latest"
 "npm:@ecrindigital/facet-cli" = "0.2"
 "npm:@voidzero-dev/vite-plus-core" = "latest"
 "npm:@voidzero-dev/vite-plus-test" = "latest"
+"npm:codemod" = "latest"
 "npm:eas-cli" = "latest"
 "npm:neonctl" = "latest"
 "npm:oxfmt" = "latest"
 "npm:oxlint" = "latest"
 "npm:turbo" = "latest"
 "npm:vite-plus" = "latest"
+yarn = "latest"
 # Global tools are managed in .tool-versions, so leave this empty
 # or add any tools you want available globally but not in .tool-versions
 

@@ -12,6 +12,8 @@
         Key-repeat speed (see: https://mac-key-repeat.zaymon.dev)
         You must log out or restart after changing these settings.
       command: |
-        defaults write -g InitialKeyRepeat -int 10
+        defaults write -g InitialKeyRepeat -int 12
         defaults write -g KeyRepeat -int 5
         defaults write -g ApplePressAndHoldEnabled -bool false
+
+    # TODO: "Reduce Motion" in accessibility settings

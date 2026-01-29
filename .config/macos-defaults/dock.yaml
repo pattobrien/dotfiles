@@ -4,7 +4,8 @@
 description: Dock settings
 sudo: false
 current_host: false
-kill: [Dock]
+kill:
+  - Dock
 data:
   com.apple.dock:
     # Automatically hide the dock when not in use
