@@ -3,7 +3,7 @@ npm.package_manager = "pnpm"
 experimental = true
 
 [tools]
-node = "latest"
+node = "24"
 "npm:@anthropic-ai/claude-code" = "latest"
 "npm:@beads/bd" = "latest"
 "npm:@ecrindigital/facet-cli" = "0.2"

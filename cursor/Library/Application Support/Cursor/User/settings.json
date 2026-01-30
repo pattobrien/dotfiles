@@ -158,6 +158,8 @@
   "github.copilot.advanced": {
     "debug.showScores": true
   },
+  "vsCodeGitWorktrees.add.autoPull": true,
+  "vsCodeGitWorktrees.worktrees.dir.path": "./.worktrees",
   "swift.disableAutoResolve": true,
   "github.copilot.enable": {
     "*": false,
