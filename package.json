@@ -1,0 +1,33 @@
+{
+  "name": "dotfiles-scripts",
+  "type": "module",
+  "version": "0.0.0",
+  "private": true,
+  "description": "A simple example library built by tsdown",
+  "exports": {
+    ".": "./dist/index.mjs",
+    "./package.json": "./package.json"
+  },
+  "main": "./dist/index.mjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.mts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "vite lib",
+    "dev": "vite lib --watch"
+  },
+  "devDependencies": {
+    "@typescript/native-preview": "^7.0.0-dev.20260129.1",
+    "typescript": "^5.9.3",
+    "vite-plus": "latest"
+  },
+  "pnpm": {
+    "overrides": {
+      "vite": "npm:@voidzero-dev/vite-plus-core@latest",
+      "vitest": "npm:@voidzero-dev/vite-plus-test@latest"
+    }
+  },
+  "packageManager": "pnpm@10.28.2"
+}

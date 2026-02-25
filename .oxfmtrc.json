@@ -9,8 +9,7 @@
       ["value-internal", "type-internal"],
       ["type-parent", "value-parent"],
       ["value-sibling", "type-sibling"],
-      ["type-index", "value-index"],
-      "side-effect"
+      ["type-index", "value-index"]
     ]
   },
   "experimentalSortPackageJson": false,
