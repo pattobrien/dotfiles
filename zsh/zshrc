@@ -47,9 +47,10 @@ source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zs
 
 # ZSH plugins
 plugins=(
-  git 
-  # zsh-autosuggestions 
-  # zsh-syntax-highlighting 
+  fzf-tab # must be before other completion plugins
+  git
+  # zsh-autosuggestions
+  # zsh-syntax-highlighting
   zsh-interactive-cd
 
   # untested plugins below:
@@ -103,6 +104,8 @@ FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
 
 source $ZSH/oh-my-zsh.sh
 
+# fzf-git.sh: rich git pickers via Ctrl-G chords (Ctrl-G Ctrl-B for branches, etc.)
+source ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/fzf-git.sh/fzf-git.sh
 
 # User configuration
 
