@@ -7,3 +7,4 @@
 .vscode/**/*
 .dart_tool/**/*
 !.config
+claude/**/*.local.*

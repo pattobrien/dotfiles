@@ -8,67 +8,80 @@
   "includeCoAuthoredBy": false,
   "permissions": {
     "allow": [
-      "mcp__ide__getDiagnostics",
-      "Bash(pnpm*run*)",
-      "Bash(pnpm*start*)",
-      "Bash(pnpm*build*)",
-      "Bash(pnpm*lint*)",
-      "Bash(pnpm*test*)",
-      "Bash(pnpm*typecheck*)",
-      "Bash(pnpm*format*)",
-      "Bash(pnpm*install)",
-      "Bash(pnpm*list*)",
-      "Bash(pnpm*validate*)",
+      "Bash(pnpm* build*)",
+      "Bash(pnpm* format*)",
+      "Bash(pnpm* install *)",
+      "Bash(pnpm* knip*)",
+      "Bash(pnpm* lint*)",
+      "Bash(pnpm* list *)",
+      "Bash(pnpm* run *)",
+      "Bash(pnpm* start*)",
+      "Bash(pnpm* typecheck*)",
+      "Bash(pnpm* test*)",
+      "Bash(pnpm* validate*)",
+      "Bash(pnpm* view*)",
+      "Bash(pnpm* why *)",
       "Bash(* --version)",
       "Bash(* --help)",
-      "Bash(mkdir*)",
       "Bash(bat:*)",
-      "Bash(rg:*)",
+      "Bash(cat:*)",
       "Bash(fd:*)",
-      "Bash(ls:*)",
+      "Bash(find:*)",
+      "Bash(for:*)",
       "Bash(fzf:*)",
-      "Bash(jq:*)",
-      "Bash(wc:*)",
-      "Bash(head:*)",
-      "Bash(tail:*)",
-      "Bash(sort:*)",
-      "WebFetch(domain:code.claude.com/docs/en)",
       "Bash(grep:*)",
-      "Bash(git status:*)",
-      "Bash(git pull:*)",
-      "Bash(git fetch:*)",
-      "Bash(gh*view:*)",
-      "Bash(gh*list:*)",
-      "Bash(defaults read:*)"
+      "Bash(head:*)",
+      "Bash(jq:*)",
+      "Bash(ls:*)",
+      "Bash(mkdir:*)",
+      "Bash(rg:*)",
+      "Bash(wc:*)",
+      "Bash(sed:*)",
+      "Bash(sort:*)",
+      "Bash(tail:*)",
+      "Bash(git add *)",
+      "Bash(git branch *)",
+      "Bash(git checkout *)",
+      "Bash(git diff *)",
+      "Bash(git fetch *)",
+      "Bash(git log *)",
+      "Bash(git mv *)",
+      "Bash(git pull *)",
+      "Bash(git rebase *)",
+      "Bash(git reset *)",
+      "Bash(git status *)",
+      "Bash(git worktree *)",
+      "Bash(git diff-branch *)",
+      "Bash(git diff-commit *)",
+      "Bash(git diff-files *)",
+      "Bash(git diff-index *)",
+      "Bash(git diff-tag *)",
+      "Bash(git diff-remote *)",
+      "Bash(git diff-stash *)",
+      "Bash(git diff-tree *)",
+      "Bash(git diff-worktree *)",
+      "Bash(gh list *)",
+      "Bash(gh pr view *)",
+      "Bash(gh pr *)",
+      "Bash(gh api *)",
+      "Bash(gh view *)",
+      "Bash(linear issue *)",
+      "Bash(defaults read *)",
+      "mcp__expo-mcp__*",
+      "mcp__plugin_figma_figma__*",
+      "mcp__plugin_figma_figma-desktop__*",
+      "WebFetch(domain:code.claude.com)",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "WebFetch(domain:unpkg.com)"
     ],
-    "deny": ["Bash(npm:*)", "Bash(npx:*)"],
-    "ask": ["Bash(pnpm*add*)"],
+    "deny": ["Bash(npm *)", "Bash(npx *)", "mcp__ide__getDiagnostics"],
+    "ask": ["Bash(pnpm * add *)"],
     "defaultMode": "acceptEdits"
   },
   "enableAllProjectMcpServers": true,
   "hooks": {
-    "PreCompact": [
-      {
-        "matcher": "",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "bd prime"
-          }
-        ]
-      }
-    ],
-    "SessionStart": [
-      {
-        "matcher": "",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "bd prime"
-          }
-        ]
-      }
-    ]
+    "PreCompact": [],
+    "SessionStart": []
   },
   "statusLine": {
     "type": "command",
@@ -79,16 +92,11 @@
     "commit-commands@claude-plugins-official": true,
     "plugin-dev@claude-plugins-official": false,
     "pr-review-toolkit@claude-plugins-official": false,
-    "figma@claude-plugins-official": false,
-    "expo-app-design@expo-plugins": true
+    "figma@claude-plugins-official": true,
+    "expo-app-design@expo-plugins": true,
+    "claude-notifications-go@claude-notifications-go": true
   },
   "extraKnownMarketplaces": {
-    "claude-notifications-go": {
-      "source": {
-        "source": "github",
-        "repo": "777genius/claude-notifications-go"
-      }
-    },
     "expo-plugins": {
       "source": {
         "source": "github",

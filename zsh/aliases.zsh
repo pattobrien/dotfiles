@@ -22,11 +22,15 @@ alias l="ls -la"
 alias ll="ls -lah"
 
 alias cat="bat"
-alias grep="rg"
-alias find="fd"
+# alias grep="rg"
+# alias find="fd"
 
 alias preview="fzf --preview 'bat --color=always {}'" # preview files in fzf
 alias branches="git branch | fzf | xargs git switch" # switch to a branch in fzf
+function gws() { # git worktree switch via fzf
+  local dir
+  dir=$(git worktree list | fzf --reverse | awk '{print $1}') && cursor "$dir"
+}
 
 # cd shortcuts
 alias ..="cd .."
