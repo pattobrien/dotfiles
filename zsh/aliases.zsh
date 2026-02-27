@@ -26,7 +26,7 @@ alias cat="bat"
 # alias find="fd"
 
 alias preview="fzf --preview 'bat --color=always {}'" # preview files in fzf
-alias branches="git branch | fzf | xargs git switch" # switch to a branch in fzf
+alias gbr="git branch | fzf | xargs git switch" # switch to a branch in fzf (also: Ctrl-G Ctrl-B via fzf-git.sh)
 function gws() { # git worktree switch via fzf
   local selected dir
   selected=$(git worktree list | awk '{name=$1; sub(/.*\//, "", name); print name "\t" $1}' | fzf --reverse --with-nth=1 | cut -f2) && cursor "$selected"
@@ -50,6 +50,9 @@ alias .....="cd ../../../.."
 # alias npx="pnpx"
 
 alias pnpx="pnpm dlx"
+
+alias reload="source ~/.zshrc"
+alias resource="source ~/.zshrc"
 
 alias cl="claude"
 alias clr="claude --resume"

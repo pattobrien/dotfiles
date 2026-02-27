@@ -104,6 +104,19 @@ FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
 
 source $ZSH/oh-my-zsh.sh
 
+# fzf: Catppuccin Mocha theme (matches kitty theme)
+export FZF_DEFAULT_OPTS=" \
+--color=bg+:#313244,bg:#1e1e2e,spinner:#f5e0dc,hl:#f38ba8 \
+--color=fg:#cdd6f4,header:#f38ba8,info:#cba6f7,pointer:#f5e0dc \
+--color=marker:#b4befe,fg+:#cdd6f4,prompt:#cba6f7,hl+:#f38ba8 \
+--color=selected-bg:#45475a \
+--color=border:#6C7086,label:#CDD6F4"
+
+# fzf-tab: use FZF_DEFAULT_OPTS (includes Catppuccin theme above)
+zstyle ':fzf-tab:*' use-fzf-default-opts yes
+# fzf-tab: accept focused item with tab instead of cycling
+zstyle ':fzf-tab:*' fzf-bindings 'tab:accept'
+
 # fzf-git.sh: rich git pickers via Ctrl-G chords (Ctrl-G Ctrl-B for branches, etc.)
 source ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/fzf-git.sh/fzf-git.sh
 
@@ -227,4 +240,7 @@ _neon_yargs_completions()
 }
 compdef _neon_yargs_completions neon
 ###-end-neon-completions-###
+
+# linear completions
+source <(linear completions zsh)
 
