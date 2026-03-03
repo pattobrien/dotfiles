@@ -20,4 +20,4 @@
 [commit]
 	gpgsign = true
 [alias]
-	wt = "!f() { git pull && git worktree add .worktrees/\"$1\" -b patt/\"$1\"; }; f"
+	wt = "!f() { root=\"$(dirname \"$(git rev-parse --path-format=absolute --git-common-dir)\")\"; git fetch origin && git worktree add --no-track \"$root/.worktrees/$1\" -b \"patt/$1\" origin/main; }; f"

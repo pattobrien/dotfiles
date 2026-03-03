@@ -81,7 +81,7 @@
       "WebFetch(domain:unpkg.com)"
     ],
     "deny": ["Bash(npm *)", "Bash(npx *)", "mcp__ide__getDiagnostics"],
-    "ask": ["Bash(pnpm * add *)"],
+    "ask": ["Bash(pnpm* add *)"],
     "defaultMode": "acceptEdits"
   },
   "enableAllProjectMcpServers": true,
