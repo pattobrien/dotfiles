@@ -5,31 +5,30 @@
       "WebSearch",
       "Bash(asdf plugin:*)",
       "Bash(./scripts/brew-dump-leaves:*)",
-      "Bash(command grep -i \"^just \")",
-      "Bash(asdf list:*)",
-      "Bash(asdf install:*)",
-      "Bash(asdf set:*)",
       "Skill(plugin-dev:hook-development)",
       "Read",
       "WebFetch(domain:containers.dev)",
-      "Bash(grep:*)",
-      "Bash(ls:*)",
       "WebFetch(domain:hub.docker.com)",
       "WebFetch(domain:github.com)",
       "WebFetch(domain:mise.jdx.dev)",
       "WebFetch(domain:nektosact.com)",
-      "Bash(xargs:*)",
       "Bash(mise doctor:*)",
       "Bash(mise list:*)",
       "Bash(macos-defaults dump:*)",
-      "Bash(yq:*)",
       "Bash(defaults read:*)",
       "Bash(brew cleanup:*)",
       "Bash(xcrun simctl list:*)",
-      "Bash(gh issue view:*)"
+      "Bash(git:*)",
+      "Bash(test:*)",
+      "Bash(source:*)",
+      "Bash(mise settings:*)",
+      "Bash(mise:*)"
     ],
     "deny": [],
-    "additionalDirectories": ["~/dev", "~"]
+    "additionalDirectories": [
+      "~/dev",
+      "~"
+    ]
   },
   "outputStyle": "default"
 }

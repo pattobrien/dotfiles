@@ -428,5 +428,6 @@
   "[github-actions-workflow]": {
     "editor.defaultFormatter": "redhat.vscode-yaml"
   },
-  "githubLocalActions.dockerDesktopPath": "/Applications/Docker.app"
+  "githubLocalActions.dockerDesktopPath": "/Applications/Docker.app",
+  "claudeCode.preferredLocation": "panel"
 }

@@ -51,7 +51,7 @@
     "editor.defaultFormatter": "oxc.oxc-vscode",
     "editor.formatOnSave": true,
     "editor.codeActionsOnSave": {
-      "source.fixAll.eslint": "explicit"
+      // "source.fixAll.eslint": "explicit"
     }
   },
   "[php]": {
@@ -158,8 +158,8 @@
   "github.copilot.advanced": {
     "debug.showScores": true
   },
-  "vsCodeGitWorktrees.add.autoPull": true,
-  "vsCodeGitWorktrees.worktrees.dir.path": "./.worktrees",
+  // "vsCodeGitWorktrees.add.autoPull": true,
+  // "vsCodeGitWorktrees.worktrees.dir.path": "./.worktrees",
   "swift.disableAutoResolve": true,
   "github.copilot.enable": {
     "*": false,
@@ -216,10 +216,10 @@
   "typescript.updateImportsOnFileMove.enabled": "always",
   "javascript.updateImportsOnFileMove.enabled": "always",
   "[typescript]": {
-    "editor.formatOnSave": true
-    // "editor.codeActionsOnSave": {
-    //   "source.fixAll.eslint": "explicit"
-    // }
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+      "source.fixAll.eslint": "explicit"
+    }
   },
   "prettier.requireConfig": false,
   "tailwindCSS.includeLanguages": {
@@ -376,7 +376,7 @@
   "chat.editing.alwaysSaveWithGeneratedChanges": true,
   "lldb.suppressUpdateNotifications": true,
   "tailwind-fold.autoFold": false,
-  "cursor.cpp.disabledLanguages": ["scminput", "mdx", "markdown"],
+  "cursor.cpp.disabledLanguages": ["scminput", "mdx"],
   "debug.javascript.autoAttachFilter": "onlyWithFlag",
   "explorer.confirmDragAndDrop": false,
   "window.confirmSaveUntitledWorkspace": false,
@@ -416,6 +416,7 @@
   "[github-actions-workflow]": {
     "editor.defaultFormatter": "redhat.vscode-yaml"
   },
+  "git.detectWorktrees": true,
   "neonLocal.port": 5432,
   "githubLocalActions.dockerDesktopPath": "/Applications/Docker.app",
   "filewatcher.commands": [
@@ -453,5 +454,10 @@
     "vscode",
     "vscode-insiders",
     "apps/expo/src/components/providers.tsx"
-  ]
+  ],
+  "swift.disableSwiftlyInstallPrompt": true,
+  "typescript.experimental.useTsgo": true,
+  "window.newWindowDimensions": "inherit",
+  "git-worktree-manager.treeView.toSCM": true,
+  "explorer.confirmPasteNative": false
 }
