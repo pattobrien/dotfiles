@@ -2,6 +2,7 @@
 
 import { mkdirSync } from "fs";
 import { join } from "path";
+
 import { GitClient } from "./git";
 
 const [branchName, baseRef = "HEAD"] = process.argv.slice(2);

@@ -1,6 +1,7 @@
 #!/usr/bin/env bun
 
 import pc from "picocolors";
+
 import { GitClient } from "./git";
 import { deriveSessionName, worktreeName } from "./lib";
 import * as tmux from "./tmux";
@@ -11,7 +12,10 @@ const worktrees = await repo.listWorktrees();
 const sessions = tmux.listSessions();
 const activeSession = tmux.getActiveSession();
 const sessionMap = new Map(
-  sessions.map((s) => [s.name, s.name === activeSession ? "active" : "detached"]),
+  sessions.map((s) => [
+    s.name,
+    s.name === activeSession ? "active" : "detached",
+  ]),
 );
 
 const names = worktrees.map(worktreeName);

@@ -2,6 +2,7 @@
 
 import { existsSync } from "fs";
 import { join } from "path";
+
 import { GitClient } from "./git";
 import { deriveSessionName, selectWorktree, worktreeName } from "./lib";
 import * as tmux from "./tmux";
@@ -9,7 +10,11 @@ import * as tmux from "./tmux";
 const repo = await GitClient.create();
 const worktrees = await repo.listWorktrees();
 
-const selected = await selectWorktree(worktrees, process.argv[2], "Select worktree: ");
+const selected = await selectWorktree(
+  worktrees,
+  process.argv[2],
+  "Select worktree: ",
+);
 if (!selected) process.exit(0);
 
 if (!existsSync(selected.path)) {

@@ -1,4 +1,5 @@
 import { basename } from "path";
+
 import type { Worktree } from "./git";
 
 export function deriveSessionName(

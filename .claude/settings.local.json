@@ -59,10 +59,7 @@
       "Bash(pnpm tsc:*)"
     ],
     "deny": [],
-    "additionalDirectories": [
-      "~/dev",
-      "~"
-    ]
+    "additionalDirectories": ["~/dev", "~"]
   },
   "outputStyle": "default"
 }

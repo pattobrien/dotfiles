@@ -13,10 +13,10 @@
     "dist"
   ],
   "scripts": {
-    "build": "vite lib",
-    "dev": "vite lib --watch",
-    "lint": "vite lint",
-    "typecheck": "vite typecheck"
+    "build": "vp lib",
+    "dev": "vp lib --watch",
+    "lint": "vp lint",
+    "check": "vp check"
   },
   "devDependencies": {
     "@typescript/native-preview": "^7.0.0-dev.20260129.1",

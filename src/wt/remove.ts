@@ -7,7 +7,11 @@ import * as tmux from "./tmux";
 const repo = await GitClient.create();
 const worktrees = await repo.listWorktrees();
 
-const selected = await selectWorktree(worktrees, process.argv[2], "Remove worktree: ");
+const selected = await selectWorktree(
+  worktrees,
+  process.argv[2],
+  "Remove worktree: ",
+);
 if (!selected) process.exit(0);
 
 const name = worktreeName(selected);
