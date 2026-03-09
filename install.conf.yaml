@@ -30,6 +30,7 @@
     ~/.config/skhd: .config/skhd
     ~/.config/mise/config.toml: .config/mise/config.toml
     ~/.config/nvim: .config/nvim
+    ~/.config/aerospace: .config/aerospace
     ~/.config/ghostty: .config/ghostty
     ~/.config/op/plugins.sh: .config/op/plugins.sh
     ~/Library/Application Support/Cursor/User/settings.json: cursor/Library/Application Support/Cursor/User/settings.json

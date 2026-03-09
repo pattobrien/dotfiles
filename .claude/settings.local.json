@@ -22,7 +22,10 @@
       "Bash(test:*)",
       "Bash(source:*)",
       "Bash(mise settings:*)",
-      "Bash(mise:*)"
+      "Bash(mise:*)",
+      "Bash(brew list:*)",
+      "Bash(brew services:*)",
+      "Bash(pgrep:*)"
     ],
     "deny": [],
     "additionalDirectories": [

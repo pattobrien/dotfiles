@@ -43,6 +43,7 @@
       "Bash(xargs *)",
       "Bash(wc *)",
       "Bash(yq *)",
+      "Bash(brew *)",
       "Bash(git add *)",
       "Bash(git branch *)",
       "Bash(git checkout *)",
@@ -80,14 +81,8 @@
       "WebFetch(domain:raw.githubusercontent.com)",
       "WebFetch(domain:unpkg.com)"
     ],
-    "deny": [
-      "Bash(npm *)",
-      "Bash(npx *)",
-      "mcp__ide__getDiagnostics"
-    ],
-    "ask": [
-      "Bash(pnpm* add *)"
-    ],
+    "deny": ["Bash(npm *)", "Bash(npx *)", "mcp__ide__getDiagnostics"],
+    "ask": ["Bash(pnpm* add *)", "Bash(brew install *)"],
     "defaultMode": "acceptEdits"
   },
   "enableAllProjectMcpServers": true,
