@@ -1,6 +1,6 @@
-import { basename } from "path";
+import { basename } from "node:path";
 
-import type { Worktree } from "./git";
+import type { Worktree } from "../services/git/models";
 
 export function deriveSessionName(
   repoName: string,

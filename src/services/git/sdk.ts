@@ -1,24 +1,8 @@
 import { basename, dirname } from "path";
 
 import simpleGit, { type SimpleGit } from "simple-git";
-import { z } from "zod/v4";
 
-const WorktreeSchema = z.object({
-  path: z.string(),
-  head: z.string(),
-  branch: z.string().optional(),
-  bare: z.boolean(),
-});
-
-export type Worktree = z.infer<typeof WorktreeSchema>;
-
-const RepoInfoSchema = z.object({
-  repoRoot: z.string(),
-  repoName: z.string(),
-  isBare: z.boolean(),
-});
-
-export type RepoInfo = z.infer<typeof RepoInfoSchema>;
+import { RepoInfoSchema, WorktreeSchema, type RepoInfo, type Worktree } from "./models";
 
 export class GitClient {
   private git: SimpleGit;

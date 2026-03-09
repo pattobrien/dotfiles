@@ -1,8 +1,9 @@
 #!/usr/bin/env bun
 
-import { GitClient } from "./git";
+import { GitClient } from "../services/git/sdk";
+import { TmuxClient } from "../services/tmux/sdk";
+
 import { deriveSessionName, fzfSelect, worktreeName } from "./lib";
-import * as tmux from "./tmux";
 
 if (!process.env.TMUX) {
   console.error("Error: not inside a tmux session (use wt-attach instead)");
@@ -10,6 +11,7 @@ if (!process.env.TMUX) {
 }
 
 const repo = await GitClient.create();
+const tmux = new TmuxClient();
 const worktrees = await repo.listWorktrees();
 
 const withSessions: Array<{ label: string; value: string }> = [];

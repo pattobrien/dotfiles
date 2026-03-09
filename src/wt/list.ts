@@ -2,11 +2,13 @@
 
 import pc from "picocolors";
 
-import { GitClient } from "./git";
+import { GitClient } from "../services/git/sdk";
+import { TmuxClient } from "../services/tmux/sdk";
+
 import { deriveSessionName, worktreeName } from "./lib";
-import * as tmux from "./tmux";
 
 const repo = await GitClient.create();
+const tmux = new TmuxClient();
 const worktrees = await repo.listWorktrees();
 
 const sessions = tmux.listSessions();

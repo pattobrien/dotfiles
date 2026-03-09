@@ -56,10 +56,15 @@
       "Bash(bun:*)",
       "WebFetch(domain:www.npmjs.com)",
       "WebFetch(domain:bundlephobia.com)",
-      "Bash(pnpm tsc:*)"
+      "Bash(pnpm tsc:*)",
+      "WebFetch(domain:oxc.rs)",
+      "Bash(vp lint:*)"
     ],
     "deny": [],
-    "additionalDirectories": ["~/dev", "~"]
+    "additionalDirectories": [
+      "~/dev",
+      "~"
+    ]
   },
   "outputStyle": "default"
 }

@@ -16,12 +16,10 @@
     "build": "vp lib",
     "dev": "vp lib --watch",
     "lint": "vp lint",
+    "lint:fix": "vp lint --write",
+    "format": "vp fmt --check",
+    "format:fix": "vp fmt --write",
     "check": "vp check"
-  },
-  "devDependencies": {
-    "@typescript/native-preview": "^7.0.0-dev.20260129.1",
-    "typescript": "^5.9.3",
-    "vite-plus": "latest"
   },
   "pnpm": {
     "overrides": {
@@ -34,5 +32,10 @@
     "picocolors": "^1.1.1",
     "simple-git": "^3.32.3",
     "zod": "^4.3.6"
+  },
+  "devDependencies": {
+    "@typescript/native-preview": "^7.0.0-dev.20260309.1",
+    "oxlint": "^1.51.0",
+    "vite-plus": "latest"
   }
 }

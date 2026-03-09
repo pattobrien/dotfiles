@@ -2,4 +2,5 @@
 
 Personal dotfiles managed with [dotbot](https://github.com/anishathalye/dotbot).
 
-see: @README.md
+- see: @README.md
+- @docs/vite-plus.md
