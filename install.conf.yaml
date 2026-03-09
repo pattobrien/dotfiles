@@ -33,6 +33,9 @@
     ~/.config/aerospace: .config/aerospace
     ~/.config/karabiner: .config/karabiner
     ~/.config/ghostty: .config/ghostty
+    ~/.hammerspoon:
+      path: .config/hammerspoon
+      force: true
     ~/.config/op/plugins.sh: .config/op/plugins.sh
     ~/Library/Application Support/Cursor/User/settings.json: cursor/Library/Application Support/Cursor/User/settings.json
     ~/Library/Application Support/Cursor/User/keybindings.json: cursor/Library/Application Support/Cursor/User/keybindings.json

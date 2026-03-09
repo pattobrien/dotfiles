@@ -55,3 +55,8 @@ Create scripts that sync vscode and cursor json settings together.
 Create shell prompt util that has:
 
 - segments: TODO
+
+### Shortcuts
+
+- disconnect/connect AirPods
+- open dotfiles repo

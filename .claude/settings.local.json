@@ -44,7 +44,10 @@
       "Bash(/usr/bin/which tmux)",
       "Read(//opt/homebrew/bin/**)",
       "Bash(chmod +x:*)",
-      "Bash(bun run:*)"
+      "Bash(bun run:*)",
+      "Bash(hs:*)",
+      "Bash(mkdir:*)",
+      "Bash(open:*)"
     ],
     "deny": [],
     "additionalDirectories": [
