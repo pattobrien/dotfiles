@@ -42,7 +42,9 @@
       "Bash(kitty +runpy:*)",
       "Bash(command -v tmux)",
       "Bash(/usr/bin/which tmux)",
-      "Read(//opt/homebrew/bin/**)"
+      "Read(//opt/homebrew/bin/**)",
+      "Bash(chmod +x:*)",
+      "Bash(bun run:*)"
     ],
     "deny": [],
     "additionalDirectories": [

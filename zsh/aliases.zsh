@@ -38,6 +38,10 @@ function gwc() { # git worktree checkout existing remote branch via fzf
   git worktree add --track -b "$branch" .worktrees/"$branch" origin/"$branch"
 }
 
+# worktree + tmux session management
+alias wtc="~/.dotfiles/src/wt/create.ts"   # create worktree: wtc <branch-name> [base-ref]
+alias wta="~/.dotfiles/src/wt/attach.ts"   # attach tmux session to worktree: wta [worktree-name]
+
 
 
 # cd shortcuts
