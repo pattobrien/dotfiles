@@ -1,11 +1,10 @@
-import { basename } from "node:path";
+import { existsSync } from "node:fs";
+import { basename, join } from "node:path";
 
 import type { Worktree } from "../services/git/models";
+import type { TmuxClient } from "../services/tmux/sdk";
 
-export function deriveSessionName(
-  repoName: string,
-  wtName: string,
-): string {
+export function deriveSessionName(repoName: string, wtName: string): string {
   return `${repoName}--${wtName}`.replace(/[.:]/g, "-");
 }
 
@@ -41,6 +40,20 @@ export async function fzfSelect(
 
   const parts = output.trim().split("\t");
   return parts[1] || parts[0];
+}
+
+export async function runWorktreeSetup(
+  tmux: TmuxClient,
+  sessionName: string,
+  worktreePath: string,
+): Promise<void> {
+  const setupScript = join(worktreePath, ".tmux-setup.sh");
+  if (existsSync(setupScript)) {
+    tmux.sendKeys({
+      target: sessionName,
+      keys: ["source .tmux-setup.sh", "Enter"],
+    });
+  }
 }
 
 export async function selectWorktree(

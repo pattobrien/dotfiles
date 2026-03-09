@@ -49,8 +49,7 @@ const sessionName = selected;
 
 if (!tmux.hasSession({ name: sessionName })) {
   const worktree = worktrees.find(
-    (wt) =>
-      deriveSessionName(repo.repoName, worktreeName(wt)) === sessionName,
+    (wt) => deriveSessionName(repo.repoName, worktreeName(wt)) === sessionName,
   );
   if (!worktree) {
     console.error("Error: could not resolve worktree path");

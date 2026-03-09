@@ -59,7 +59,11 @@
       "Bash(pnpm tsc:*)",
       "WebFetch(domain:oxc.rs)",
       "Bash(vp lint:*)",
-      "Bash(vite lint:*)"
+      "Bash(vite lint:*)",
+      "Bash(pnpm check:*)",
+      "Bash(ln:*)",
+      "Bash(/Users/pattobrien/.local/bin/wt:*)",
+      "Bash(/Users/pattobrien/.local/bin/wt foo:*)"
     ],
     "deny": [],
     "additionalDirectories": [

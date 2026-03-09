@@ -3,6 +3,7 @@
 import pc from "picocolors";
 
 import { GitClient } from "../services/git/sdk";
+import { SessionStatus } from "../services/tmux/models";
 import { TmuxClient } from "../services/tmux/sdk";
 
 import { deriveSessionName, worktreeName } from "./lib";
@@ -16,7 +17,7 @@ const activeSession = tmux.getActiveSession();
 const sessionMap = new Map(
   sessions.map((s) => [
     s.name,
-    s.name === activeSession ? "active" : "detached",
+    s.name === activeSession ? SessionStatus.Active : SessionStatus.Detached,
   ]),
 );
 
@@ -34,12 +35,12 @@ console.log(
 for (const wt of worktrees) {
   const name = worktreeName(wt);
   const sessionName = deriveSessionName(repo.repoName, name);
-  const status = sessionMap.get(sessionName) ?? "—";
+  const status = sessionMap.get(sessionName) ?? SessionStatus.None;
   const padded = status.padEnd(statusWidth);
   const colored =
-    status === "active"
+    status === SessionStatus.Active
       ? pc.green(padded)
-      : status === "detached"
+      : status === SessionStatus.Detached
         ? pc.yellow(padded)
         : pc.dim(padded);
 

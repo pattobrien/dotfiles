@@ -1,12 +1,16 @@
 #!/usr/bin/env bun
 
 import { existsSync } from "node:fs";
-import { join } from "node:path";
 
 import { GitClient } from "../services/git/sdk";
 import { TmuxClient } from "../services/tmux/sdk";
 
-import { deriveSessionName, selectWorktree, worktreeName } from "./lib";
+import {
+  deriveSessionName,
+  runWorktreeSetup,
+  selectWorktree,
+  worktreeName,
+} from "./lib";
 
 const repo = await GitClient.create();
 const tmux = new TmuxClient();
@@ -29,14 +33,7 @@ const sessionName = deriveSessionName(repo.repoName, name);
 
 if (!tmux.hasSession({ name: sessionName })) {
   tmux.newSession({ name: sessionName, cwd: selected.path });
-
-  const setupScript = join(selected.path, ".tmux-setup.sh");
-  if (existsSync(setupScript)) {
-    tmux.sendKeys({
-      target: sessionName,
-      keys: ["source .tmux-setup.sh", "Enter"],
-    });
-  }
+  await runWorktreeSetup(tmux, sessionName, selected.path);
 }
 
 tmux.switchOrAttach({ name: sessionName });
