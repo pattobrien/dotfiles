@@ -1,0 +1,14 @@
+{
+  "runtime": {
+    "version": "Lua 5.4"
+  },
+  "workspace": {
+    "library": [
+      "${3rd}/luassert/library",
+      "Spoons/EmmyLua.spoon/annotations"
+    ]
+  },
+  "diagnostics": {
+    "globals": ["hs", "spoon"]
+  }
+}

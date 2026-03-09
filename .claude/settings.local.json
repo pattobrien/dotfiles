@@ -47,7 +47,9 @@
       "Bash(bun run:*)",
       "Bash(hs:*)",
       "Bash(mkdir:*)",
-      "Bash(open:*)"
+      "Bash(open:*)",
+      "Bash(kill %1:*)",
+      "Bash(curl:*)"
     ],
     "deny": [],
     "additionalDirectories": [
