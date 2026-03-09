@@ -1,8 +1,13 @@
-import { basename, dirname } from "path";
+import { basename, dirname, join } from "node:path";
 
 import simpleGit, { type SimpleGit } from "simple-git";
 
-import { RepoInfoSchema, WorktreeSchema, type RepoInfo, type Worktree } from "./models";
+import {
+  RepoInfoSchema,
+  WorktreeSchema,
+  type RepoInfo,
+  type Worktree,
+} from "./models";
 
 export class GitClient {
   private git: SimpleGit;
@@ -18,8 +23,14 @@ export class GitClient {
     this.git = simpleGit(this.repoRoot);
   }
 
-  static async create(): Promise<GitClient> {
-    const git = simpleGit();
+  get worktreeDir(): string {
+    return join(this.repoRoot, ".worktrees");
+  }
+
+  static async create(opts: { cwd?: string } = {}): Promise<GitClient> {
+    const git = simpleGit(undefined, {
+      baseDir: opts.cwd,
+    });
 
     const isRepo = await git.checkIsRepo();
     if (!isRepo) {
@@ -72,24 +83,27 @@ export class GitClient {
     return worktrees;
   }
 
-  async addWorktree(path: string, branch: string): Promise<void> {
-    await this.git.raw(["worktree", "add", path, branch]);
+  async addWorktree(opts: { path: string; branch: string }): Promise<void> {
+    await this.git.raw(["worktree", "add", opts.path, opts.branch]);
   }
 
-  async removeWorktree(name: string): Promise<void> {
-    await this.git.raw(["worktree", "remove", name]);
+  async removeWorktree(opts: { name: string }): Promise<void> {
+    await this.git.raw(["worktree", "remove", opts.name]);
   }
 
-  async createBranch(name: string, baseRef: string): Promise<void> {
-    await this.git.branch([name, baseRef]);
+  async createBranch(opts: { name: string; baseRef: string }): Promise<void> {
+    await this.git.branch([opts.name, opts.baseRef]);
   }
 
-  async deleteBranch(name: string, force = false): Promise<void> {
-    await this.git.deleteLocalBranch(name, force);
+  async deleteBranch(opts: {
+    name: string;
+    force?: boolean;
+  }): Promise<void> {
+    await this.git.deleteLocalBranch(opts.name, opts.force ?? false);
   }
 
-  async hasLocalBranch(name: string): Promise<boolean> {
+  async hasLocalBranch(opts: { name: string }): Promise<boolean> {
     const branches = await this.git.branchLocal();
-    return branches.all.includes(name);
+    return branches.all.includes(opts.name);
   }
 }

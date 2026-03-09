@@ -58,7 +58,8 @@
       "WebFetch(domain:bundlephobia.com)",
       "Bash(pnpm tsc:*)",
       "WebFetch(domain:oxc.rs)",
-      "Bash(vp lint:*)"
+      "Bash(vp lint:*)",
+      "Bash(vite lint:*)"
     ],
     "deny": [],
     "additionalDirectories": [

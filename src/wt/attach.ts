@@ -27,13 +27,13 @@ if (!existsSync(selected.path)) {
 const name = worktreeName(selected);
 const sessionName = deriveSessionName(repo.repoName, name);
 
-if (!tmux.hasSession(sessionName)) {
-  tmux.newSession(sessionName, selected.path);
+if (!tmux.hasSession({ name: sessionName })) {
+  tmux.newSession({ name: sessionName, cwd: selected.path });
 
   const setupScript = join(selected.path, ".tmux-setup.sh");
   if (existsSync(setupScript)) {
-    tmux.sendKeys(sessionName, "source .tmux-setup.sh", "Enter");
+    tmux.sendKeys({ target: sessionName, keys: ["source .tmux-setup.sh", "Enter"] });
   }
 }
 
-tmux.switchOrAttach(sessionName);
+tmux.switchOrAttach({ name: sessionName });

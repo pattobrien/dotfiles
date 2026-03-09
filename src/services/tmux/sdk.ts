@@ -43,37 +43,37 @@ export class TmuxClient {
     return exitCode === 0 ? stdout : null;
   }
 
-  hasSession(name: string): boolean {
-    return this.run(["has-session", `-t=${name}`]).exitCode === 0;
+  hasSession(opts: { name: string }): boolean {
+    return this.run(["has-session", `-t=${opts.name}`]).exitCode === 0;
   }
 
-  newSession(name: string, cwd?: string): void {
-    const args = ["new-session", "-d", "-s", name];
-    if (cwd) args.push("-c", cwd);
+  newSession(opts: { name: string; cwd?: string }): void {
+    const args = ["new-session", "-d", "-s", opts.name];
+    if (opts.cwd) args.push("-c", opts.cwd);
     this.run(args);
   }
 
-  killSession(name: string): void {
-    this.run(["kill-session", "-t", name]);
+  killSession(opts: { name: string }): void {
+    this.run(["kill-session", "-t", opts.name]);
   }
 
-  switchClient(name: string): void {
-    this.runInherit(["switch-client", "-t", name]);
+  switchClient(opts: { name: string }): void {
+    this.runInherit(["switch-client", "-t", opts.name]);
   }
 
-  attachSession(name: string): void {
-    this.runInherit(["attach-session", "-t", name]);
+  attachSession(opts: { name: string }): void {
+    this.runInherit(["attach-session", "-t", opts.name]);
   }
 
-  switchOrAttach(name: string): void {
+  switchOrAttach(opts: { name: string }): void {
     if (process.env.TMUX) {
-      this.switchClient(name);
+      this.switchClient(opts);
     } else {
-      this.attachSession(name);
+      this.attachSession(opts);
     }
   }
 
-  sendKeys(target: string, ...keys: string[]): void {
-    this.run(["send-keys", "-t", target, ...keys]);
+  sendKeys(opts: { target: string; keys: string[] }): void {
+    this.run(["send-keys", "-t", opts.target, ...opts.keys]);
   }
 }

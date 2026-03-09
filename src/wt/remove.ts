@@ -19,16 +19,16 @@ if (!selected) process.exit(0);
 const name = worktreeName(selected);
 const sessionName = deriveSessionName(repo.repoName, name);
 
-if (tmux.hasSession(sessionName)) {
-  tmux.killSession(sessionName);
+if (tmux.hasSession({ name: sessionName })) {
+  tmux.killSession({ name: sessionName });
   console.log(`Killed tmux session: ${sessionName}`);
 }
 
-await repo.removeWorktree(name);
+await repo.removeWorktree({ name });
 console.log(`Removed worktree: ${name}`);
 
 const branchName = `patt/${name}`;
-if (await repo.hasLocalBranch(branchName)) {
-  await repo.deleteBranch(branchName, true);
+if (await repo.hasLocalBranch({ name: branchName })) {
+  await repo.deleteBranch({ name: branchName, force: true });
   console.log(`Deleted branch: ${branchName}`);
 }

@@ -9,7 +9,7 @@ export function deriveSessionName(
   return `${repoName}--${worktreeName}`.replace(/[.:]/g, "-");
 }
 
-export function worktreeName(wt: Worktree): string {
+export function deriveWorktreeName(wt: Worktree): string {
   return basename(wt.path);
 }
 
@@ -49,7 +49,7 @@ export async function selectWorktree(
   prompt: string,
 ): Promise<Worktree | null> {
   if (arg) {
-    const match = worktrees.find((wt) => worktreeName(wt) === arg);
+    const match = worktrees.find((wt) => deriveWorktreeName(wt) === arg);
     if (!match) {
       console.error(`Error: no worktree found matching '${arg}'`);
       process.exit(1);
@@ -58,7 +58,7 @@ export async function selectWorktree(
   }
 
   const selected = await fzfSelect(
-    worktrees.map((wt) => ({ label: worktreeName(wt), value: wt.path })),
+    worktrees.map((wt) => ({ label: deriveWorktreeName(wt), value: wt.path })),
     prompt,
   );
   if (!selected) return null;

@@ -17,13 +17,13 @@ if (!branchName) {
 }
 
 const repo = await GitClient.create();
-const worktreePath = join(repo.repoRoot, ".worktrees", branchName);
+const worktreePath = join(repo.worktreeDir, branchName);
 const fullBranch = `patt/${branchName}`;
 
-mkdirSync(join(repo.repoRoot, ".worktrees"), { recursive: true });
+mkdirSync(repo.worktreeDir, { recursive: true });
 
-await repo.createBranch(fullBranch, baseRef);
-await repo.addWorktree(worktreePath, fullBranch);
+await repo.createBranch({ name: fullBranch, baseRef });
+await repo.addWorktree({ path: worktreePath, branch: fullBranch });
 
 console.log("Created worktree:");
 console.log(`  Path:   ${worktreePath}`);
