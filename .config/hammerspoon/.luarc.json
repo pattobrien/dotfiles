@@ -7,8 +7,5 @@
       "${3rd}/luassert/library",
       "Spoons/EmmyLua.spoon/annotations"
     ]
-  },
-  "diagnostics": {
-    "globals": ["hs", "spoon"]
   }
 }
