@@ -41,6 +41,9 @@ function gwc() { # git worktree checkout existing remote branch via fzf
 # worktree + tmux session management
 alias wtc="~/.dotfiles/src/wt/create.ts"   # create worktree: wtc <branch-name> [base-ref]
 alias wta="~/.dotfiles/src/wt/attach.ts"   # attach tmux session to worktree: wta [worktree-name]
+alias wtl="~/.dotfiles/src/wt/list.ts"     # list worktrees with tmux session status
+alias wtr="~/.dotfiles/src/wt/remove.ts"   # remove worktree + tmux session + branch: wtr [worktree-name]
+alias wts="~/.dotfiles/src/wt/switch.ts"   # switch tmux session to worktree (fzf): wts
 
 
 
