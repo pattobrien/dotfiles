@@ -25,7 +25,8 @@
       "Bash(mise:*)",
       "Bash(brew list:*)",
       "Bash(brew services:*)",
-      "Bash(pgrep:*)"
+      "Bash(pgrep:*)",
+      "Bash(rm:*)"
     ],
     "deny": [],
     "additionalDirectories": [
