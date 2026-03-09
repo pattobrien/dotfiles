@@ -1,7 +1,7 @@
 #!/usr/bin/env bun
 
-import { existsSync } from "fs";
-import { join } from "path";
+import { existsSync } from "node:fs";
+import { join } from "node:path";
 
 import { GitClient } from "../services/git/sdk";
 import { TmuxClient } from "../services/tmux/sdk";
@@ -32,7 +32,10 @@ if (!tmux.hasSession({ name: sessionName })) {
 
   const setupScript = join(selected.path, ".tmux-setup.sh");
   if (existsSync(setupScript)) {
-    tmux.sendKeys({ target: sessionName, keys: ["source .tmux-setup.sh", "Enter"] });
+    tmux.sendKeys({
+      target: sessionName,
+      keys: ["source .tmux-setup.sh", "Enter"],
+    });
   }
 }
 

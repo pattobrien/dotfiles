@@ -3,7 +3,7 @@
 import { GitClient } from "../services/git/sdk";
 import { TmuxClient } from "../services/tmux/sdk";
 
-import { deriveSessionName, deriveWorktreeName, fzfSelect } from "./lib";
+import { deriveSessionName, worktreeName, fzfSelect } from "./lib";
 
 if (!process.env.TMUX) {
   console.error("Error: not inside a tmux session (use wt-attach instead)");
@@ -18,7 +18,7 @@ const withSessions: Array<{ label: string; value: string }> = [];
 const withoutSessions: Array<{ label: string; value: string }> = [];
 
 for (const wt of worktrees) {
-  const name = deriveWorktreeName(wt);
+  const name = worktreeName(wt);
   const sessionName = deriveSessionName(repo.repoName, name);
   const item = { label: name, value: sessionName };
 
@@ -50,7 +50,7 @@ const sessionName = selected;
 if (!tmux.hasSession({ name: sessionName })) {
   const worktree = worktrees.find(
     (wt) =>
-      deriveSessionName(repo.repoName, deriveWorktreeName(wt)) === sessionName,
+      deriveSessionName(repo.repoName, worktreeName(wt)) === sessionName,
   );
   if (!worktree) {
     console.error("Error: could not resolve worktree path");

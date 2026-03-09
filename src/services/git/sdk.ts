@@ -95,10 +95,7 @@ export class GitClient {
     await this.git.branch([opts.name, opts.baseRef]);
   }
 
-  async deleteBranch(opts: {
-    name: string;
-    force?: boolean;
-  }): Promise<void> {
+  async deleteBranch(opts: { name: string; force?: boolean }): Promise<void> {
     await this.git.deleteLocalBranch(opts.name, opts.force ?? false);
   }
 
