@@ -2,9 +2,6 @@
 
 import { mkdirSync } from "fs";
 import { join } from "path";
-
-import { $ } from "bun";
-
 import { getRepoInfo } from "./lib";
 
 const [branchName, baseRef = "HEAD"] = process.argv.slice(2);
@@ -18,13 +15,14 @@ if (!branchName) {
   process.exit(1);
 }
 
-const { repoRoot } = await getRepoInfo();
+const { git, repoRoot } = await getRepoInfo();
 const worktreePath = join(repoRoot, ".worktrees", branchName);
 const fullBranch = `patt/${branchName}`;
 
 mkdirSync(join(repoRoot, ".worktrees"), { recursive: true });
 
-await $`git worktree add -b ${fullBranch} ${worktreePath} ${baseRef}`.quiet();
+await git.branch([fullBranch, baseRef]);
+await git.raw(["worktree", "add", worktreePath, fullBranch]);
 
 console.log("Created worktree:");
 console.log(`  Path:   ${worktreePath}`);

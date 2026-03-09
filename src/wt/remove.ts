@@ -1,10 +1,14 @@
 #!/usr/bin/env bun
 
-import { getRepoInfo, listWorktrees, deriveSessionName, fzfSelect } from "./lib";
-import { $ } from "bun";
+import {
+  getRepoInfo,
+  listWorktrees,
+  deriveSessionName,
+  fzfSelect,
+} from "./lib";
 
-const { repoName } = await getRepoInfo();
-const worktrees = await listWorktrees();
+const { git, repoName } = await getRepoInfo();
+const worktrees = await listWorktrees(git);
 
 let worktreeName: string;
 
@@ -38,18 +42,13 @@ if (hasSession) {
 }
 
 // Remove the git worktree
-await $`git worktree remove ${worktreeName}`.quiet();
+await git.raw(["worktree", "remove", worktreeName]);
 console.log(`Removed worktree: ${worktreeName}`);
 
 // Delete the branch if it exists
 const branchName = `patt/${worktreeName}`;
-const branchExists =
-  Bun.spawnSync(["git", "rev-parse", "--verify", branchName], {
-    stdout: "pipe",
-    stderr: "pipe",
-  }).exitCode === 0;
-
-if (branchExists) {
-  await $`git branch -D ${branchName}`.quiet();
+const branches = await git.branchLocal();
+if (branches.all.includes(branchName)) {
+  await git.deleteLocalBranch(branchName, true);
   console.log(`Deleted branch: ${branchName}`);
 }

@@ -1,8 +1,8 @@
-import { basename, resolve } from "path";
-
-import { $ } from "bun";
+import { basename, dirname } from "path";
+import simpleGit, { type SimpleGit } from "simple-git";
 
 export interface RepoInfo {
+  git: SimpleGit;
   repoRoot: string;
   repoName: string;
   isBare: boolean;
@@ -14,28 +14,33 @@ export interface Worktree {
 }
 
 export async function getRepoInfo(): Promise<RepoInfo> {
-  try {
-    const gitDir = (await $`git rev-parse --git-dir`.text()).trim();
-    const isBare =
-      (await $`git rev-parse --is-bare-repository`.text()).trim() === "true";
+  const git = simpleGit();
 
-    const repoRoot = isBare
-      ? resolve(gitDir)
-      : (await $`git rev-parse --show-toplevel`.text()).trim();
-
-    const repoName = basename(repoRoot).replace(/-bare$/, "");
-
-    return { repoRoot, repoName, isBare };
-  } catch {
+  const isRepo = await git.checkIsRepo();
+  if (!isRepo) {
     console.error("Error: not in a git repository");
     process.exit(1);
   }
+
+  const commonDir = (await git.revparse(["--git-common-dir"])).trim();
+  const isBare = commonDir.endsWith("/.bare");
+
+  let repoRoot: string;
+  if (isBare) {
+    repoRoot = dirname(commonDir);
+  } else {
+    repoRoot = (await git.revparse(["--show-toplevel"])).trim();
+  }
+
+  const repoName = basename(repoRoot).replace(/-bare$/, "");
+
+  return { git: simpleGit(repoRoot), repoRoot, repoName, isBare };
 }
 
-export async function listWorktrees(): Promise<Worktree[]> {
-  const output = await $`git worktree list --porcelain`.text();
-  const worktrees: Worktree[] = [];
+export async function listWorktrees(git: SimpleGit): Promise<Worktree[]> {
+  const output = await git.raw(["worktree", "list", "--porcelain"]);
 
+  const worktrees: Worktree[] = [];
   for (const line of output.split("\n")) {
     if (line.startsWith("worktree ")) {
       const path = line.slice("worktree ".length);

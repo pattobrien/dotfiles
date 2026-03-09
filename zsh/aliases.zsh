@@ -39,11 +39,18 @@ function gwc() { # git worktree checkout existing remote branch via fzf
 }
 
 # worktree + tmux session management
-alias wtc="~/.dotfiles/src/wt/create.ts"   # create worktree: wtc <branch-name> [base-ref]
-alias wta="~/.dotfiles/src/wt/attach.ts"   # attach tmux session to worktree: wta [worktree-name]
-alias wtl="~/.dotfiles/src/wt/list.ts"     # list worktrees with tmux session status
-alias wtr="~/.dotfiles/src/wt/remove.ts"   # remove worktree + tmux session + branch: wtr [worktree-name]
-alias wts="~/.dotfiles/src/wt/switch.ts"   # switch tmux session to worktree (fzf): wts
+wtc() { ~/.dotfiles/src/wt/create.ts "$@" }   # create worktree: wtc <branch-name> [base-ref]
+wta() { ~/.dotfiles/src/wt/attach.ts "$@" }   # attach tmux session to worktree: wta [worktree-name]
+wtl() { ~/.dotfiles/src/wt/list.ts "$@" }     # list worktrees with tmux session status
+wtr() { ~/.dotfiles/src/wt/remove.ts "$@" }   # remove worktree + tmux session + branch: wtr [worktree-name]
+wts() { ~/.dotfiles/src/wt/switch.ts "$@" }   # switch tmux session to worktree (fzf): wts
+
+# completions: complete worktree names for wta/wtr
+_wt_complete_worktrees() {
+  local worktrees=("${(@f)$(git worktree list --porcelain 2>/dev/null | grep '^worktree ' | sed 's|^worktree ||' | xargs -I{} basename {})}")
+  compadd -a worktrees
+}
+compdef _wt_complete_worktrees wta wtr
 
 
 

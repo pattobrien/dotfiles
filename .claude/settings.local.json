@@ -38,7 +38,7 @@
       "Bash(tmux list-keys:*)",
       "Bash(tmux show-option:*)",
       "Bash(tmux source-file:*)",
-      "Bash(tmux:*)",
+      "Bash(tmux*)",
       "Bash(kitty +runpy:*)",
       "Bash(command -v tmux)",
       "Bash(/usr/bin/which tmux)",
@@ -51,13 +51,12 @@
       "Bash(kill %1:*)",
       "Bash(curl:*)",
       "Bash(lua-language-server:*)",
-      "WebFetch(domain:luals.github.io)"
+      "WebFetch(domain:luals.github.io)",
+      "Bash(zsh:*)",
+      "Bash(bun:*)"
     ],
     "deny": [],
-    "additionalDirectories": [
-      "~/dev",
-      "~"
-    ]
+    "additionalDirectories": ["~/dev", "~"]
   },
   "outputStyle": "default"
 }

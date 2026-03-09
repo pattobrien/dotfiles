@@ -2,7 +2,6 @@
 
 import { existsSync } from "fs";
 import { join } from "path";
-
 import {
   deriveSessionName,
   fzfSelect,
@@ -10,8 +9,8 @@ import {
   listWorktrees,
 } from "./lib";
 
-const { repoName } = await getRepoInfo();
-const worktrees = await listWorktrees();
+const { git, repoName } = await getRepoInfo();
+const worktrees = await listWorktrees(git);
 
 let worktreePath: string;
 let worktreeName: string;
@@ -56,25 +55,13 @@ if (hasSession) {
   });
 } else {
   Bun.spawnSync([
-    "tmux",
-    "new-session",
-    "-d",
-    "-s",
-    sessionName,
-    "-c",
-    worktreePath,
+    "tmux", "new-session", "-d", "-s", sessionName, "-c", worktreePath,
   ]);
 
-  // Run setup script if present
   const setupScript = join(worktreePath, ".tmux-setup.sh");
   if (existsSync(setupScript)) {
     Bun.spawnSync([
-      "tmux",
-      "send-keys",
-      "-t",
-      sessionName,
-      "source .tmux-setup.sh",
-      "Enter",
+      "tmux", "send-keys", "-t", sessionName, "source .tmux-setup.sh", "Enter",
     ]);
   }
 

@@ -1,16 +1,20 @@
 #!/usr/bin/env bun
 
-import { getRepoInfo, listWorktrees, deriveSessionName, fzfSelect } from "./lib";
+import {
+  getRepoInfo,
+  listWorktrees,
+  deriveSessionName,
+  fzfSelect,
+} from "./lib";
 
 if (!process.env.TMUX) {
   console.error("Error: not inside a tmux session (use wt-attach instead)");
   process.exit(1);
 }
 
-const { repoName } = await getRepoInfo();
-const worktrees = await listWorktrees();
+const { git, repoName } = await getRepoInfo();
+const worktrees = await listWorktrees(git);
 
-// Filter to worktrees that have existing tmux sessions
 const withSessions: Array<{ label: string; value: string }> = [];
 const withoutSessions: Array<{ label: string; value: string }> = [];
 
@@ -27,7 +31,6 @@ for (const wt of worktrees) {
   }
 }
 
-// Show sessions first, then worktrees without sessions (dimmed label)
 const items = [
   ...withSessions,
   ...withoutSessions.map((item) => ({
@@ -51,7 +54,6 @@ const hasSession =
   Bun.spawnSync(["tmux", "has-session", `-t=${sessionName}`]).exitCode === 0;
 
 if (!hasSession) {
-  // Find the worktree path for this session
   const wt = worktrees.find(
     (wt) => deriveSessionName(repoName, wt.name) === sessionName,
   );
