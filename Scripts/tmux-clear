@@ -1,0 +1,4 @@
+#!/bin/sh
+# Clear tmux pane screen and scrollback (used by kitty Cmd+K mapping)
+TMUX=/opt/homebrew/bin/tmux
+$TMUX send-keys -R C-l && sleep 0.05 && $TMUX clear-history
