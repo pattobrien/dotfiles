@@ -12,9 +12,15 @@ importers:
 
   .:
     dependencies:
+      picocolors:
+        specifier: ^1.1.1
+        version: 1.1.1
       simple-git:
         specifier: ^3.32.3
         version: 3.32.3
+      zod:
+        specifier: ^4.3.6
+        version: 4.3.6
     devDependencies:
       '@typescript/native-preview':
         specifier: ^7.0.0-dev.20260129.1
@@ -537,6 +543,9 @@ packages:
       utf-8-validate:
         optional: true
 
+  zod@4.3.6:
+    resolution: {integrity: sha512-rftlrkhHZOcjDwkGlnUtZZkvaPHCsDATp4pGpuOOMDaTdDDXF91wuVDJoWoPsKX/3YPQ5fHuF3STjcYyKr+Qhg==}
+
 snapshots:
 
   '@kwsites/file-exists@1.1.1':
@@ -916,3 +925,5 @@ snapshots:
       - yaml
 
   ws@8.19.0: {}
+
+  zod@4.3.6: {}

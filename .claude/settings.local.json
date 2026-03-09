@@ -53,10 +53,16 @@
       "Bash(lua-language-server:*)",
       "WebFetch(domain:luals.github.io)",
       "Bash(zsh:*)",
-      "Bash(bun:*)"
+      "Bash(bun:*)",
+      "WebFetch(domain:www.npmjs.com)",
+      "WebFetch(domain:bundlephobia.com)",
+      "Bash(pnpm tsc:*)"
     ],
     "deny": [],
-    "additionalDirectories": ["~/dev", "~"]
+    "additionalDirectories": [
+      "~/dev",
+      "~"
+    ]
   },
   "outputStyle": "default"
 }

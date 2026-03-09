@@ -1,61 +1,15 @@
-import { basename, dirname } from "path";
-import simpleGit, { type SimpleGit } from "simple-git";
-
-export interface RepoInfo {
-  git: SimpleGit;
-  repoRoot: string;
-  repoName: string;
-  isBare: boolean;
-}
-
-export interface Worktree {
-  path: string;
-  name: string;
-}
-
-export async function getRepoInfo(): Promise<RepoInfo> {
-  const git = simpleGit();
-
-  const isRepo = await git.checkIsRepo();
-  if (!isRepo) {
-    console.error("Error: not in a git repository");
-    process.exit(1);
-  }
-
-  const commonDir = (await git.revparse(["--git-common-dir"])).trim();
-  const isBare = commonDir.endsWith("/.bare");
-
-  let repoRoot: string;
-  if (isBare) {
-    repoRoot = dirname(commonDir);
-  } else {
-    repoRoot = (await git.revparse(["--show-toplevel"])).trim();
-  }
-
-  const repoName = basename(repoRoot).replace(/-bare$/, "");
-
-  return { git: simpleGit(repoRoot), repoRoot, repoName, isBare };
-}
-
-export async function listWorktrees(git: SimpleGit): Promise<Worktree[]> {
-  const output = await git.raw(["worktree", "list", "--porcelain"]);
-
-  const worktrees: Worktree[] = [];
-  for (const line of output.split("\n")) {
-    if (line.startsWith("worktree ")) {
-      const path = line.slice("worktree ".length);
-      worktrees.push({ path, name: basename(path) });
-    }
-  }
-
-  return worktrees;
-}
+import { basename } from "path";
+import type { Worktree } from "./git";
 
 export function deriveSessionName(
   repoName: string,
   worktreeName: string,
 ): string {
   return `${repoName}--${worktreeName}`.replace(/[.:]/g, "-");
+}
+
+export function worktreeName(wt: Worktree): string {
+  return basename(wt.path);
 }
 
 export async function fzfSelect(
@@ -86,4 +40,26 @@ export async function fzfSelect(
 
   const parts = output.trim().split("\t");
   return parts[1] || parts[0];
+}
+
+export async function selectWorktree(
+  worktrees: Worktree[],
+  arg: string | undefined,
+  prompt: string,
+): Promise<Worktree | null> {
+  if (arg) {
+    const match = worktrees.find((wt) => worktreeName(wt) === arg);
+    if (!match) {
+      console.error(`Error: no worktree found matching '${arg}'`);
+      process.exit(1);
+    }
+    return match;
+  }
+
+  const selected = await fzfSelect(
+    worktrees.map((wt) => ({ label: worktreeName(wt), value: wt.path })),
+    prompt,
+  );
+  if (!selected) return null;
+  return worktrees.find((wt) => wt.path === selected) ?? null;
 }

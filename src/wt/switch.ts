@@ -1,30 +1,26 @@
 #!/usr/bin/env bun
 
-import {
-  getRepoInfo,
-  listWorktrees,
-  deriveSessionName,
-  fzfSelect,
-} from "./lib";
+import { GitClient } from "./git";
+import { deriveSessionName, fzfSelect, worktreeName } from "./lib";
+import * as tmux from "./tmux";
 
 if (!process.env.TMUX) {
   console.error("Error: not inside a tmux session (use wt-attach instead)");
   process.exit(1);
 }
 
-const { git, repoName } = await getRepoInfo();
-const worktrees = await listWorktrees(git);
+const repo = await GitClient.create();
+const worktrees = await repo.listWorktrees();
 
 const withSessions: Array<{ label: string; value: string }> = [];
 const withoutSessions: Array<{ label: string; value: string }> = [];
 
 for (const wt of worktrees) {
-  const sessionName = deriveSessionName(repoName, wt.name);
-  const hasSession =
-    Bun.spawnSync(["tmux", "has-session", `-t=${sessionName}`]).exitCode === 0;
+  const name = worktreeName(wt);
+  const sessionName = deriveSessionName(repo.repoName, name);
+  const item = { label: name, value: sessionName };
 
-  const item = { label: wt.name, value: sessionName };
-  if (hasSession) {
+  if (tmux.hasSession(sessionName)) {
     withSessions.push(item);
   } else {
     withoutSessions.push(item);
@@ -49,25 +45,15 @@ if (!selected) process.exit(0);
 
 const sessionName = selected;
 
-// Create session if it doesn't exist
-const hasSession =
-  Bun.spawnSync(["tmux", "has-session", `-t=${sessionName}`]).exitCode === 0;
-
-if (!hasSession) {
+if (!tmux.hasSession(sessionName)) {
   const wt = worktrees.find(
-    (wt) => deriveSessionName(repoName, wt.name) === sessionName,
+    (wt) => deriveSessionName(repo.repoName, worktreeName(wt)) === sessionName,
   );
   if (!wt) {
     console.error("Error: could not resolve worktree path");
     process.exit(1);
   }
-  Bun.spawnSync([
-    "tmux", "new-session", "-d", "-s", sessionName, "-c", wt.path,
-  ]);
+  tmux.newSession(sessionName, wt.path);
 }
 
-Bun.spawnSync(["tmux", "switch-client", "-t", sessionName], {
-  stdin: "inherit",
-  stdout: "inherit",
-  stderr: "inherit",
-});
+tmux.switchClient(sessionName);

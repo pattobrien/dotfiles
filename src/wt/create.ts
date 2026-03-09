@@ -2,7 +2,7 @@
 
 import { mkdirSync } from "fs";
 import { join } from "path";
-import { getRepoInfo } from "./lib";
+import { GitClient } from "./git";
 
 const [branchName, baseRef = "HEAD"] = process.argv.slice(2);
 
@@ -15,14 +15,14 @@ if (!branchName) {
   process.exit(1);
 }
 
-const { git, repoRoot } = await getRepoInfo();
-const worktreePath = join(repoRoot, ".worktrees", branchName);
+const repo = await GitClient.create();
+const worktreePath = join(repo.repoRoot, ".worktrees", branchName);
 const fullBranch = `patt/${branchName}`;
 
-mkdirSync(join(repoRoot, ".worktrees"), { recursive: true });
+mkdirSync(join(repo.repoRoot, ".worktrees"), { recursive: true });
 
-await git.branch([fullBranch, baseRef]);
-await git.raw(["worktree", "add", worktreePath, fullBranch]);
+await repo.createBranch(fullBranch, baseRef);
+await repo.addWorktree(worktreePath, fullBranch);
 
 console.log("Created worktree:");
 console.log(`  Path:   ${worktreePath}`);

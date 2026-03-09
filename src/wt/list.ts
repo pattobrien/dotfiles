@@ -1,34 +1,21 @@
 #!/usr/bin/env bun
 
-import { getRepoInfo, listWorktrees, deriveSessionName } from "./lib";
+import pc from "picocolors";
+import { GitClient } from "./git";
+import { deriveSessionName, worktreeName } from "./lib";
+import * as tmux from "./tmux";
 
-const { git, repoName } = await getRepoInfo();
-const worktrees = await listWorktrees(git);
+const repo = await GitClient.create();
+const worktrees = await repo.listWorktrees();
 
-// Get tmux session info
-const tmuxSessions = new Map<string, string>();
-const activeSession = process.env.TMUX
-  ? Bun.spawnSync(["tmux", "display-message", "-p", "#S"], {
-      stdout: "pipe",
-    })
-      .stdout.toString()
-      .trim()
-  : null;
-
-const tmuxList = Bun.spawnSync(
-  ["tmux", "list-sessions", "-F", "#{session_name}"],
-  { stdout: "pipe", stderr: "pipe" },
+const sessions = tmux.listSessions();
+const activeSession = tmux.getActiveSession();
+const sessionMap = new Map(
+  sessions.map((s) => [s.name, s.name === activeSession ? "active" : "detached"]),
 );
 
-if (tmuxList.exitCode === 0) {
-  for (const name of tmuxList.stdout.toString().trim().split("\n")) {
-    if (!name) continue;
-    tmuxSessions.set(name, name === activeSession ? "active" : "detached");
-  }
-}
-
-// Display
-const nameWidth = Math.max(...worktrees.map((wt) => wt.name.length), 4);
+const names = worktrees.map(worktreeName);
+const nameWidth = Math.max(...names.map((n) => n.length), 4);
 const statusWidth = 10;
 
 console.log(
@@ -39,17 +26,16 @@ console.log(
 );
 
 for (const wt of worktrees) {
-  const sessionName = deriveSessionName(repoName, wt.name);
-  const status = tmuxSessions.get(sessionName) ?? "—";
-  const statusColor =
+  const name = worktreeName(wt);
+  const sessionName = deriveSessionName(repo.repoName, name);
+  const status = sessionMap.get(sessionName) ?? "—";
+  const padded = status.padEnd(statusWidth);
+  const colored =
     status === "active"
-      ? "\x1b[32m"
+      ? pc.green(padded)
       : status === "detached"
-        ? "\x1b[33m"
-        : "\x1b[90m";
-  const reset = "\x1b[0m";
+        ? pc.yellow(padded)
+        : pc.dim(padded);
 
-  console.log(
-    `${wt.name.padEnd(nameWidth)}  ${statusColor}${status.padEnd(statusWidth)}${reset}  ${wt.path}`,
-  );
+  console.log(`${name.padEnd(nameWidth)}  ${colored}  ${wt.path}`);
 }

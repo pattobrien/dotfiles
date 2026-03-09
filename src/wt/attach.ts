@@ -2,73 +2,31 @@
 
 import { existsSync } from "fs";
 import { join } from "path";
-import {
-  deriveSessionName,
-  fzfSelect,
-  getRepoInfo,
-  listWorktrees,
-} from "./lib";
+import { GitClient } from "./git";
+import { deriveSessionName, selectWorktree, worktreeName } from "./lib";
+import * as tmux from "./tmux";
 
-const { git, repoName } = await getRepoInfo();
-const worktrees = await listWorktrees(git);
+const repo = await GitClient.create();
+const worktrees = await repo.listWorktrees();
 
-let worktreePath: string;
-let worktreeName: string;
+const selected = await selectWorktree(worktrees, process.argv[2], "Select worktree: ");
+if (!selected) process.exit(0);
 
-const arg = process.argv[2];
-
-if (arg) {
-  const match = worktrees.find((wt) => wt.name === arg);
-  if (!match) {
-    console.error(`Error: no worktree found matching '${arg}'`);
-    process.exit(1);
-  }
-  worktreePath = match.path;
-  worktreeName = match.name;
-} else {
-  const selected = await fzfSelect(
-    worktrees.map((wt) => ({ label: wt.name, value: wt.path })),
-    "Select worktree: ",
-  );
-  if (!selected) process.exit(0);
-  worktreePath = selected;
-  worktreeName = worktrees.find((wt) => wt.path === selected)!.name;
-}
-
-if (!existsSync(worktreePath)) {
-  console.error(`Error: worktree not found at ${worktreePath}`);
+if (!existsSync(selected.path)) {
+  console.error(`Error: worktree not found at ${selected.path}`);
   process.exit(1);
 }
 
-const sessionName = deriveSessionName(repoName, worktreeName);
-const insideTmux = !!process.env.TMUX;
+const name = worktreeName(selected);
+const sessionName = deriveSessionName(repo.repoName, name);
 
-const hasSession =
-  Bun.spawnSync(["tmux", "has-session", `-t=${sessionName}`]).exitCode === 0;
+if (!tmux.hasSession(sessionName)) {
+  tmux.newSession(sessionName, selected.path);
 
-if (hasSession) {
-  const cmd = insideTmux ? "switch-client" : "attach-session";
-  Bun.spawnSync(["tmux", cmd, "-t", sessionName], {
-    stdin: "inherit",
-    stdout: "inherit",
-    stderr: "inherit",
-  });
-} else {
-  Bun.spawnSync([
-    "tmux", "new-session", "-d", "-s", sessionName, "-c", worktreePath,
-  ]);
-
-  const setupScript = join(worktreePath, ".tmux-setup.sh");
+  const setupScript = join(selected.path, ".tmux-setup.sh");
   if (existsSync(setupScript)) {
-    Bun.spawnSync([
-      "tmux", "send-keys", "-t", sessionName, "source .tmux-setup.sh", "Enter",
-    ]);
+    tmux.sendKeys(sessionName, "source .tmux-setup.sh", "Enter");
   }
-
-  const cmd = insideTmux ? "switch-client" : "attach-session";
-  Bun.spawnSync(["tmux", cmd, "-t", sessionName], {
-    stdin: "inherit",
-    stdout: "inherit",
-    stderr: "inherit",
-  });
 }
+
+tmux.switchOrAttach(sessionName);
