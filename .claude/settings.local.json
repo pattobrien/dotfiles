@@ -63,13 +63,15 @@
       "Bash(pnpm check:*)",
       "Bash(ln:*)",
       "Bash(/Users/pattobrien/.local/bin/wt:*)",
-      "Bash(/Users/pattobrien/.local/bin/wt foo:*)"
+      "Bash(/Users/pattobrien/.local/bin/wt foo:*)",
+      "Bash(vite add:*)",
+      "Bash(vp add:*)",
+      "Bash(vp install:*)",
+      "Bash(vp check:*)",
+      "Bash(vp fmt:*)"
     ],
     "deny": [],
-    "additionalDirectories": [
-      "~/dev",
-      "~"
-    ]
+    "additionalDirectories": ["~/dev", "~"]
   },
   "outputStyle": "default"
 }

@@ -1,37 +1,56 @@
 #!/usr/bin/env bun
 
-const command = process.argv[2];
+import { Command } from "commander";
 
-// Shift argv so subcommands see their own args at process.argv[2]
-process.argv = [process.argv[0], process.argv[1], ...process.argv.slice(3)];
+const program = new Command()
+  .name("wt")
+  .description("Git worktree + tmux session manager");
 
-switch (command) {
-  case "attach":
-    await import("./attach");
-    break;
-  case "create":
-    await import("./create");
-    break;
-  case "list":
-  case "ls":
-    await import("./list");
-    break;
-  case "remove":
-  case "rm":
-    await import("./remove");
-    break;
-  case "switch":
-  case "sw":
-    await import("./switch");
-    break;
-  default:
-    console.log("Usage: wt <command> [args]");
-    console.log("");
-    console.log("Commands:");
-    console.log("  attach [name]              Attach to a worktree tmux session");
-    console.log("  create <branch> [base-ref] Create a new worktree");
-    console.log("  list (ls)                  List worktrees and their sessions");
-    console.log("  remove (rm) [name]         Remove a worktree and its session");
-    console.log("  switch (sw)                Switch to another worktree session");
-    process.exit(command ? 1 : 0);
-}
+program
+  .command("attach")
+  .description("Attach to a worktree tmux session")
+  .argument("[name]", "worktree name")
+  .action(async (name?: string) => {
+    const { attach } = await import("./attach");
+    await attach(name);
+  });
+
+program
+  .command("create")
+  .description("Create a new worktree")
+  .argument("<branch>", "branch name")
+  .argument("[base-ref]", "base ref to branch from", "HEAD")
+  .action(async (branch: string, baseRef: string) => {
+    const { create } = await import("./create");
+    await create(branch, baseRef);
+  });
+
+program
+  .command("list")
+  .alias("ls")
+  .description("List worktrees and their sessions")
+  .action(async () => {
+    const { list } = await import("./list");
+    await list();
+  });
+
+program
+  .command("remove")
+  .alias("rm")
+  .description("Remove a worktree and its session")
+  .argument("[name]", "worktree name")
+  .action(async (name?: string) => {
+    const { remove } = await import("./remove");
+    await remove(name);
+  });
+
+program
+  .command("switch")
+  .alias("sw")
+  .description("Switch to another worktree session")
+  .action(async () => {
+    const { switchWorktree } = await import("./switch");
+    await switchWorktree();
+  });
+
+program.parse();
