@@ -277,6 +277,8 @@
   },
   //   "python.defaultInterpreterPath": "/Users/pattobrien/.miniconda/bin/python",
   "Lua.diagnostics.globals": ["vim"],
+  "Lua.workspace.ignoreDir": ["Spoons", "**/Spoons"],
+  "Lua.diagnostics.ignoredFiles": "Disable",
   "[rust]": {
     "editor.defaultFormatter": "rust-lang.rust-analyzer"
   },

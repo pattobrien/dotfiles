@@ -49,7 +49,9 @@
       "Bash(mkdir:*)",
       "Bash(open:*)",
       "Bash(kill %1:*)",
-      "Bash(curl:*)"
+      "Bash(curl:*)",
+      "Bash(lua-language-server:*)",
+      "WebFetch(domain:luals.github.io)"
     ],
     "deny": [],
     "additionalDirectories": [
