@@ -5,6 +5,7 @@ idiomatic_version_file_enable_tools = ["node"]
 
 [tools]
 lua-language-server = "latest"
+neovim = "nightly"
 node = "24"
 "npm:@anthropic-ai/claude-code" = "latest"
 "npm:@ecrindigital/facet-cli" = "0.2"

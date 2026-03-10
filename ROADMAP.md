@@ -69,3 +69,26 @@ Create shell prompt util that has:
 - statusline: `{}` for showing Language Status (incl. active LSP servers for a
   given buffer)
 - migrate to nvim 0.12 (enhanced LSP support)
+- vscode-like Command Palette for commands (to help with command visibility)
+- support for images via kitty graphics protocol
+
+#### Limitations
+
+- no image support
+  - related:
+    - nvim image API: https://github.com/neovim/neovim/issues/30889
+    - nvim open PR (expected to merge in Mar 2026):
+      https://github.com/neovim/neovim/pull/37914
+- no support for vector graphic icons (only supports monochrome icons)
+  - may be related to image support limitation
+- no support for variable text size and font family (would be useful for
+  Debugger UI)
+  - related:
+    - (approved) kitty text scaling RFC:
+      https://github.com/kovidgoyal/kitty/issues/8226
+    - tmux doesnt yet support protocol
+    - related nvim issue: https://github.com/neovim/neovim/issues/32539
+    - "presentation mode" parent neovim issue:
+      https://github.com/neovim/neovim/issues/31825
+    - Goneovim (experimental neovim GUI that utilizes different text sizes per
+      window): https://github.com/akiyosi/goneovim?tab=readme-ov-file

@@ -77,7 +77,13 @@
       "WebFetch(domain:neovim.io)",
       "WebFetch(domain:lugh.ch)",
       "WebFetch(domain:stephenvantran.com)",
-      "WebFetch(domain:ghostty.org)"
+      "WebFetch(domain:ghostty.org)",
+      "WebFetch(domain:www.lazyvim.org)",
+      "WebFetch(domain:neovide.dev)",
+      "WebFetch(domain:zed.dev)",
+      "WebFetch(domain:gitlab.freedesktop.org)",
+      "WebFetch(domain:mitchellh.com)",
+      "WebFetch(domain:wezfurlong.org)"
     ],
     "deny": [],
     "additionalDirectories": [
