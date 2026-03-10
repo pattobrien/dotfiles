@@ -87,8 +87,8 @@ export class GitClient {
     await this.git.raw(["worktree", "add", opts.path, opts.branch]);
   }
 
-  async removeWorktree(opts: { name: string }): Promise<void> {
-    await this.git.raw(["worktree", "remove", opts.name]);
+  async removeWorktree(opts: { path: string }): Promise<void> {
+    await this.git.raw(["worktree", "remove", opts.path]);
   }
 
   async createBranch(opts: { name: string; baseRef: string }): Promise<void> {

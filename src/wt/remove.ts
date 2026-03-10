@@ -51,11 +51,11 @@ export const remove = t.procedure
       console.log(`Killed tmux session: ${sessionName}`);
     }
 
-    await repo.removeWorktree({ name: wtName });
+    await repo.removeWorktree({ path: selected.path });
     console.log(`Removed worktree: ${wtName}`);
 
-    const branchName = `patt/${wtName}`;
-    if (await repo.hasLocalBranch({ name: branchName })) {
+    if (selected.branch) {
+      const branchName = selected.branch.replace(/^refs\/heads\//, "");
       await repo.deleteBranch({ name: branchName, force: true });
       console.log(`Deleted branch: ${branchName}`);
     }
