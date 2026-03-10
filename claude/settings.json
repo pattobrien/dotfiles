@@ -108,7 +108,8 @@
     "pr-review-toolkit@claude-plugins-official": false,
     "figma@claude-plugins-official": true,
     "expo-app-design@expo-plugins": true,
-    "claude-notifications-go@claude-notifications-go": true
+    "claude-notifications-go@claude-notifications-go": true,
+    "lua-lsp@claude-plugins-official": true
   },
   "extraKnownMarketplaces": {
     "expo-plugins": {
