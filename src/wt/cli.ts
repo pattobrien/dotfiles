@@ -1,9 +1,9 @@
 #!/usr/bin/env bun
 
-import omelette from "omelette";
 import { createCli } from "trpc-cli";
 
 import { attach } from "./attach";
+import { generateZshCompletions } from "./completions";
 import { create } from "./create";
 import { list } from "./list";
 import { remove } from "./remove";
@@ -20,15 +20,9 @@ const router = t.router({
 
 const cli = createCli({ router, name: "wt" });
 
-cli.run({
-  completion: async () => {
-    const completion = omelette("wt");
-    if (process.argv.includes("--setup-completions")) {
-      completion.setupShellInitFile();
-    }
-    if (process.argv.includes("--remove-completions")) {
-      completion.cleanupShellInitFile();
-    }
-    return completion;
-  },
-});
+if (process.argv.includes("--completions-zsh")) {
+  console.log(generateZshCompletions(cli));
+  process.exit(0);
+}
+
+cli.run();

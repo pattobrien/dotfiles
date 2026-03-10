@@ -180,6 +180,7 @@ source ~/.dotfiles/zsh/go.zsh
 source ~/.dotfiles/zsh/php.zsh
 source ~/.dotfiles/zsh/ruby.zsh
 source ~/.dotfiles/zsh/completion-for-pnpm.zsh
+source <(wt --completions-zsh)
 
 if [ -f ~/.dotfiles/zsh/.env.zsh ]; then
   source ~/.dotfiles/zsh/.env.zsh
@@ -243,8 +244,3 @@ compdef _neon_yargs_completions neon
 
 # linear completions
 source <(linear completions zsh)
-
-
-# begin wt completion
-. <(wt --completion)
-# end wt completion
