@@ -19,7 +19,8 @@ export const create = t.procedure
     description: "Create a new worktree",
     _completion: {
       branch: "git branch -r --format='%(refname:short)' | sed 's|^origin/||'",
-      baseRef: "git for-each-ref --format='%(refname:short)' refs/heads refs/tags",
+      baseRef:
+        "git for-each-ref --format='%(refname:short)' refs/heads refs/tags",
     },
   })
   .input(createInput)

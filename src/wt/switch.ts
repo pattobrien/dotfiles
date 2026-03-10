@@ -23,6 +23,7 @@ export const switchWorktree = t.procedure
     const repo = await GitClient.create();
     const tmux = new TmuxClient();
     const worktrees = await repo.listWorktrees();
+    const sessionNames = new Set(tmux.listSessions().map((s) => s.name));
 
     const withSessions: Array<{ label: string; value: string }> = [];
     const withoutSessions: Array<{ label: string; value: string }> = [];
@@ -32,7 +33,7 @@ export const switchWorktree = t.procedure
       const sessionName = deriveSessionName(repo.repoName, name);
       const item = { label: name, value: sessionName };
 
-      if (tmux.hasSession({ name: sessionName })) {
+      if (sessionNames.has(sessionName)) {
         withSessions.push(item);
       } else {
         withoutSessions.push(item);
@@ -57,7 +58,7 @@ export const switchWorktree = t.procedure
 
     const sessionName = selected;
 
-    if (!tmux.hasSession({ name: sessionName })) {
+    if (!sessionNames.has(sessionName)) {
       const worktree = worktrees.find(
         (wt) =>
           deriveSessionName(repo.repoName, worktreeName(wt)) === sessionName,

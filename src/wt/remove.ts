@@ -3,7 +3,12 @@ import { z } from "zod";
 import { GitClient } from "../services/git/sdk";
 import { TmuxClient } from "../services/tmux/sdk";
 
-import { deriveSessionName, selectWorktree, worktreeName } from "./lib";
+import {
+  WORKTREE_NAMES_COMPLETION,
+  deriveSessionName,
+  selectWorktree,
+  worktreeName,
+} from "./lib";
 import { t } from "./trpc";
 
 const removeInput = z.object({
@@ -13,6 +18,7 @@ const removeInput = z.object({
     .meta({ positional: true })
     .describe("worktree name"),
 });
+
 const removeOutput = z.void();
 
 export const remove = t.procedure
@@ -20,7 +26,7 @@ export const remove = t.procedure
     description: "Remove a worktree and its session",
     aliases: { command: ["rm"] },
     _completion: {
-      name: "git worktree list --porcelain | grep '^worktree ' | sed 's|.*/||'",
+      name: WORKTREE_NAMES_COMPLETION,
     },
   })
   .input(removeInput)

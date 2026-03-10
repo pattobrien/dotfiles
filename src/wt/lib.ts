@@ -4,6 +4,10 @@ import { basename, join } from "node:path";
 import type { Worktree } from "../services/git/models";
 import type { TmuxClient } from "../services/tmux/sdk";
 
+/** Shell command that lists worktree basenames (used in zsh completions). */
+export const WORKTREE_NAMES_COMPLETION =
+  "git worktree list --porcelain | grep '^worktree ' | sed 's|.*/||'";
+
 export function deriveSessionName(repoName: string, wtName: string): string {
   return `${repoName}--${wtName}`.replace(/[.:]/g, "-");
 }

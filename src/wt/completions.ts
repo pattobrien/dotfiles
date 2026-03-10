@@ -6,21 +6,26 @@ import type { WtMeta } from "./trpc";
 type CliJSON = ReturnType<ReturnType<typeof createCli>["toJSON"]>;
 type CommandJSON = NonNullable<CliJSON["commands"]>[number];
 
-function escapeZsh(s: string): string {
-  return s.replace(/'/g, "'\\''");
-}
-
 interface CompletionHelper {
   fnName: string;
   shell: string;
 }
 
-function commandArgs(
+interface CommandResult {
+  caseBlock: string;
+  helpers: CompletionHelper[];
+}
+
+function escapeZsh(s: string): string {
+  return s.replace(/'/g, "'\\''");
+}
+
+function buildCommandArgs(
   cmd: CommandJSON,
   completion: Record<string, string> | undefined,
-  helpers: CompletionHelper[],
-): string {
+): CommandResult | null {
   const specs: string[] = [];
+  const helpers: CompletionHelper[] = [];
 
   for (let i = 0; i < (cmd.arguments ?? []).length; i++) {
     const arg = cmd.arguments![i];
@@ -46,8 +51,10 @@ function commandArgs(
     specs.push(`    '--${opt.name}[${desc}]:${opt.name}:${action}'`);
   }
 
-  if (specs.length === 0) return "";
-  return `        ${cmd.name})\n          _arguments \\\n${specs.join(" \\\n")}\n          ;;`;
+  if (specs.length === 0) return null;
+
+  const caseBlock = `        ${cmd.name})\n          _arguments \\\n${specs.join(" \\\n")}\n          ;;`;
+  return { caseBlock, helpers };
 }
 
 export function generateZshCompletions(
@@ -66,15 +73,15 @@ export function generateZshCompletions(
     return `    '${cmd.name}:${desc}'`;
   });
 
-  const helpers: CompletionHelper[] = [];
-
-  const cases = commands
+  const results = commands
     .map((cmd) => {
       const meta = cmd.name ? procedures[cmd.name]?._def?.meta : undefined;
-      return commandArgs(cmd, meta?._completion, helpers);
+      return buildCommandArgs(cmd, meta?._completion);
     })
-    .filter(Boolean)
-    .join("\n");
+    .filter((r): r is CommandResult => r !== null);
+
+  const cases = results.map((r) => r.caseBlock).join("\n");
+  const helpers = results.flatMap((r) => r.helpers);
 
   const helperFns = helpers
     .map((h) => `${h.fnName}() {\n  compadd $(${h.shell})\n}`)

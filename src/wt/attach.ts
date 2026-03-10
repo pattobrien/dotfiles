@@ -6,6 +6,7 @@ import { GitClient } from "../services/git/sdk";
 import { TmuxClient } from "../services/tmux/sdk";
 
 import {
+  WORKTREE_NAMES_COMPLETION,
   deriveSessionName,
   runWorktreeSetup,
   selectWorktree,
@@ -28,7 +29,7 @@ export const attach = t.procedure
   .meta({
     description: "Attach to a worktree tmux session",
     _completion: {
-      name: "git worktree list --porcelain | grep '^worktree ' | sed 's|.*/||'",
+      name: WORKTREE_NAMES_COMPLETION,
     },
   })
   .input(attachInput)

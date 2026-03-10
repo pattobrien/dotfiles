@@ -22,13 +22,10 @@ export const list = t.procedure
     const worktrees = await repo.listWorktrees();
 
     const sessions = tmux.listSessions();
-    const activeSession = tmux.getActiveSession();
     const sessionMap = new Map(
       sessions.map((s) => [
         s.name,
-        s.name === activeSession
-          ? SessionStatus.Active
-          : SessionStatus.Detached,
+        s.attached ? SessionStatus.Active : SessionStatus.Detached,
       ]),
     );
 
