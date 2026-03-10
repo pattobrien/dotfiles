@@ -21,7 +21,7 @@ const router = t.router({
 const cli = createCli({ router, name: "wt" });
 
 if (process.argv.includes("--completions-zsh")) {
-  console.log(generateZshCompletions(cli));
+  console.log(generateZshCompletions(cli, router));
   process.exit(0);
 }
 

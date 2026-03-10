@@ -17,13 +17,20 @@ const attachInput = z.object({
   name: z
     .string()
     .optional()
-    .meta({ positional: true })
+    .meta({
+      positional: true,
+    })
     .describe("worktree name"),
 });
 const attachOutput = z.void();
 
 export const attach = t.procedure
-  .meta({ description: "Attach to a worktree tmux session" })
+  .meta({
+    description: "Attach to a worktree tmux session",
+    _completion: {
+      name: "git worktree list --porcelain | grep '^worktree ' | sed 's|.*/||'",
+    },
+  })
   .input(attachInput)
   .output(attachOutput)
   .mutation(async ({ input }) => {

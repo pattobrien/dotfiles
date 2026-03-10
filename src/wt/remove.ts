@@ -19,6 +19,9 @@ export const remove = t.procedure
   .meta({
     description: "Remove a worktree and its session",
     aliases: { command: ["rm"] },
+    _completion: {
+      name: "git worktree list --porcelain | grep '^worktree ' | sed 's|.*/||'",
+    },
   })
   .input(removeInput)
   .output(removeOutput)
