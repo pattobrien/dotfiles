@@ -76,4 +76,15 @@ export class TmuxClient {
   sendKeys(opts: { target: string; keys: string[] }): void {
     this.run(["send-keys", "-t", opts.target, ...opts.keys]);
   }
+
+  newWindow(opts: { target: string; name?: string; cwd?: string }): void {
+    const args = ["new-window", "-t", opts.target];
+    if (opts.name) args.push("-n", opts.name);
+    if (opts.cwd) args.push("-c", opts.cwd);
+    this.run(args);
+  }
+
+  renameWindow(opts: { target: string; name: string }): void {
+    this.run(["rename-window", "-t", opts.target, opts.name]);
+  }
 }

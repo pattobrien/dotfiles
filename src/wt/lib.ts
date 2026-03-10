@@ -1,5 +1,4 @@
-import { existsSync } from "node:fs";
-import { basename, join } from "node:path";
+import { basename } from "node:path";
 
 import type { Worktree } from "../services/git/models";
 import type { TmuxClient } from "../services/tmux/sdk";
@@ -51,13 +50,19 @@ export async function runWorktreeSetup(
   sessionName: string,
   worktreePath: string,
 ): Promise<void> {
-  const setupScript = join(worktreePath, ".tmux-setup.sh");
-  if (existsSync(setupScript)) {
-    tmux.sendKeys({
-      target: sessionName,
-      keys: ["source .tmux-setup.sh", "Enter"],
-    });
-  }
+  // Window 1: install deps, pull env, then start dev server
+  tmux.renameWindow({ target: `${sessionName}:1`, name: "pnpm:dev" });
+  tmux.sendKeys({
+    target: `${sessionName}:1`,
+    keys: ["pnpm install && pnpm env:pull && pnpm dev", "Enter"],
+  });
+
+  // Window 2: claude
+  tmux.newWindow({ target: sessionName, name: "claude", cwd: worktreePath });
+  tmux.sendKeys({ target: `${sessionName}:claude`, keys: ["claude", "Enter"] });
+
+  // Window 3: general shell
+  tmux.newWindow({ target: sessionName, cwd: worktreePath });
 }
 
 export async function selectWorktree(

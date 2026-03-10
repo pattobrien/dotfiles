@@ -23,6 +23,7 @@ const attachInput = z.object({
     })
     .describe("worktree name"),
 });
+
 const attachOutput = z.void();
 
 export const attach = t.procedure
