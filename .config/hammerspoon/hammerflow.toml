@@ -10,9 +10,10 @@ key_maps_per_line = 3 # optional, default 5, number of key maps per line in the 
 
 
 # app shortcuts
-b = ["Chrome", "Browser"]
+b = ["Google Chrome", "Browser"]
 e = ["Cursor", "Editor"]
 t = ["Kitty", "Terminal"]
+i = ["Simulator", "iOS Simulator"]
 # s = "Slack"
 # f = "Finder"
 # n = "Notes"

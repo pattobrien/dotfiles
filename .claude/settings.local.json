@@ -71,10 +71,18 @@
       "Bash(vp fmt:*)",
       "WebFetch(domain:dev.to)",
       "Bash(wt ls:*)",
-      "Bash(wt:*)"
+      "Bash(wt:*)",
+      "Bash(nvim:*)",
+      "WebFetch(domain:gpanders.com)",
+      "WebFetch(domain:neovim.io)",
+      "WebFetch(domain:lugh.ch)",
+      "WebFetch(domain:stephenvantran.com)"
     ],
     "deny": [],
-    "additionalDirectories": ["~/dev", "~"]
+    "additionalDirectories": [
+      "~/dev",
+      "~"
+    ]
   },
   "outputStyle": "default"
 }
