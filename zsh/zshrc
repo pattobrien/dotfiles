@@ -244,3 +244,7 @@ compdef _neon_yargs_completions neon
 # linear completions
 source <(linear completions zsh)
 
+
+# begin wt completion
+. <(wt --completion)
+# end wt completion

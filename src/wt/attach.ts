@@ -1,5 +1,7 @@
 import { existsSync } from "node:fs";
 
+import { z } from "zod";
+
 import { GitClient } from "../services/git/sdk";
 import { TmuxClient } from "../services/tmux/sdk";
 
@@ -9,27 +11,45 @@ import {
   selectWorktree,
   worktreeName,
 } from "./lib";
+import { t } from "./trpc";
 
-export async function attach(name?: string): Promise<void> {
-  const repo = await GitClient.create();
-  const tmux = new TmuxClient();
-  const worktrees = await repo.listWorktrees();
+const attachInput = z.object({
+  name: z
+    .string()
+    .optional()
+    .meta({ positional: true })
+    .describe("worktree name"),
+});
+const attachOutput = z.void();
 
-  const selected = await selectWorktree(worktrees, name, "Select worktree: ");
-  if (!selected) process.exit(0);
+export const attach = t.procedure
+  .meta({ description: "Attach to a worktree tmux session" })
+  .input(attachInput)
+  .output(attachOutput)
+  .mutation(async ({ input }) => {
+    const repo = await GitClient.create();
+    const tmux = new TmuxClient();
+    const worktrees = await repo.listWorktrees();
 
-  if (!existsSync(selected.path)) {
-    console.error(`Error: worktree not found at ${selected.path}`);
-    process.exit(1);
-  }
+    const selected = await selectWorktree(
+      worktrees,
+      input.name,
+      "Select worktree: ",
+    );
+    if (!selected) process.exit(0);
 
-  const wtName = worktreeName(selected);
-  const sessionName = deriveSessionName(repo.repoName, wtName);
+    if (!existsSync(selected.path)) {
+      console.error(`Error: worktree not found at ${selected.path}`);
+      process.exit(1);
+    }
 
-  if (!tmux.hasSession({ name: sessionName })) {
-    tmux.newSession({ name: sessionName, cwd: selected.path });
-    await runWorktreeSetup(tmux, sessionName, selected.path);
-  }
+    const wtName = worktreeName(selected);
+    const sessionName = deriveSessionName(repo.repoName, wtName);
 
-  tmux.switchOrAttach({ name: sessionName });
-}
+    if (!tmux.hasSession({ name: sessionName })) {
+      tmux.newSession({ name: sessionName, cwd: selected.path });
+      await runWorktreeSetup(tmux, sessionName, selected.path);
+    }
+
+    tmux.switchOrAttach({ name: sessionName });
+  });

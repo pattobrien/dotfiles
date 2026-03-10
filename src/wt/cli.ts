@@ -1,56 +1,34 @@
 #!/usr/bin/env bun
 
-import { Command } from "commander";
+import omelette from "omelette";
+import { createCli } from "trpc-cli";
 
-const program = new Command()
-  .name("wt")
-  .description("Git worktree + tmux session manager");
+import { attach } from "./attach";
+import { create } from "./create";
+import { list } from "./list";
+import { remove } from "./remove";
+import { switchWorktree } from "./switch";
+import { t } from "./trpc";
 
-program
-  .command("attach")
-  .description("Attach to a worktree tmux session")
-  .argument("[name]", "worktree name")
-  .action(async (name?: string) => {
-    const { attach } = await import("./attach");
-    await attach(name);
-  });
+const router = t.router({
+  attach,
+  create,
+  list,
+  remove,
+  switch: switchWorktree,
+});
 
-program
-  .command("create")
-  .description("Create a new worktree")
-  .argument("<branch>", "branch name")
-  .argument("[base-ref]", "base ref to branch from", "HEAD")
-  .action(async (branch: string, baseRef: string) => {
-    const { create } = await import("./create");
-    await create(branch, baseRef);
-  });
+const cli = createCli({ router, name: "wt" });
 
-program
-  .command("list")
-  .alias("ls")
-  .description("List worktrees and their sessions")
-  .action(async () => {
-    const { list } = await import("./list");
-    await list();
-  });
-
-program
-  .command("remove")
-  .alias("rm")
-  .description("Remove a worktree and its session")
-  .argument("[name]", "worktree name")
-  .action(async (name?: string) => {
-    const { remove } = await import("./remove");
-    await remove(name);
-  });
-
-program
-  .command("switch")
-  .alias("sw")
-  .description("Switch to another worktree session")
-  .action(async () => {
-    const { switchWorktree } = await import("./switch");
-    await switchWorktree();
-  });
-
-program.parse();
+cli.run({
+  completion: async () => {
+    const completion = omelette("wt");
+    if (process.argv.includes("--setup-completions")) {
+      completion.setupShellInitFile();
+    }
+    if (process.argv.includes("--remove-completions")) {
+      completion.cleanupShellInitFile();
+    }
+    return completion;
+  },
+});

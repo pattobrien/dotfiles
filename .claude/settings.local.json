@@ -68,7 +68,10 @@
       "Bash(vp add:*)",
       "Bash(vp install:*)",
       "Bash(vp check:*)",
-      "Bash(vp fmt:*)"
+      "Bash(vp fmt:*)",
+      "WebFetch(domain:dev.to)",
+      "Bash(wt ls:*)",
+      "Bash(wt:*)"
     ],
     "deny": [],
     "additionalDirectories": ["~/dev", "~"]

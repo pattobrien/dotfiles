@@ -1,22 +1,33 @@
 import { mkdirSync } from "node:fs";
 import { join } from "node:path";
 
+import { z } from "zod";
+
 import { GitClient } from "../services/git/sdk";
 
-export async function create(
-  branchName: string,
-  baseRef = "HEAD",
-): Promise<void> {
-  const repo = await GitClient.create();
-  const worktreePath = join(repo.worktreeDir, branchName);
-  const fullBranch = `patt/${branchName}`;
+import { t } from "./trpc";
 
-  mkdirSync(repo.worktreeDir, { recursive: true });
+const createInput = z.object({
+  branch: z.string().meta({ positional: true }).describe("branch name"),
+  baseRef: z.string().default("HEAD").describe("base ref to branch from"),
+});
+const createOutput = z.void();
 
-  await repo.createBranch({ name: fullBranch, baseRef });
-  await repo.addWorktree({ path: worktreePath, branch: fullBranch });
+export const create = t.procedure
+  .meta({ description: "Create a new worktree" })
+  .input(createInput)
+  .output(createOutput)
+  .mutation(async ({ input }) => {
+    const repo = await GitClient.create();
+    const worktreePath = join(repo.worktreeDir, input.branch);
+    const fullBranch = `patt/${input.branch}`;
 
-  console.log("Created worktree:");
-  console.log(`  Path:   ${worktreePath}`);
-  console.log(`  Branch: ${fullBranch}`);
-}
+    mkdirSync(repo.worktreeDir, { recursive: true });
+
+    await repo.createBranch({ name: fullBranch, baseRef: input.baseRef });
+    await repo.addWorktree({ path: worktreePath, branch: fullBranch });
+
+    console.log("Created worktree:");
+    console.log(`  Path:   ${worktreePath}`);
+    console.log(`  Branch: ${fullBranch}`);
+  });
