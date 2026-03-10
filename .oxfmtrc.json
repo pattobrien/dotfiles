@@ -16,6 +16,7 @@
   "experimentalTailwindcss": {
     "functions": ["cn", "cva"]
   },
+  "proseWrap": "always",
   "ignorePatterns": [
     ".cache",
     ".git",

@@ -13,7 +13,8 @@
 - [x] sync macOS defaults to this repo (see below)
 - [ ] define a shell autocompletion strategy
   - files/dirs to store tool-specific autocompletions
-  - how can we use auto completion scripts for tools we don't install globally? (e.g. `prisma` that is installed to a local repo)
+  - how can we use auto completion scripts for tools we don't install globally?
+    (e.g. `prisma` that is installed to a local repo)
 - set oxlint as default formatter
 - claude: how can we set name/session as window name in cursor?
 - a way to default to ~/ having dotfiles visible
@@ -45,9 +46,11 @@
 
 Create scripts that sync vscode and cursor json settings together.
 
-- create a unified schema, that has top-level namespaces for specific IDEs, similar to devcontainers spec
+- create a unified schema, that has top-level namespaces for specific IDEs,
+  similar to devcontainers spec
   - see: https://containers.dev/supporting
-  - allow top-level `.meta.vscode` and `.meta.cursor` properties, that match the same schema (can we still have intellisense?)
+  - allow top-level `.meta.vscode` and `.meta.cursor` properties, that match the
+    same schema (can we still have intellisense?)
 - sync script: TODO
 
 ### Shell Prompt
@@ -60,3 +63,9 @@ Create shell prompt util that has:
 
 - disconnect/connect AirPods
 - open dotfiles repo
+
+### Neovim
+
+- statusline: `{}` for showing Language Status (incl. active LSP servers for a
+  given buffer)
+- migrate to nvim 0.12 (enhanced LSP support)
