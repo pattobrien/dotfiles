@@ -243,7 +243,9 @@
     package.json
     stack.yaml
   )
-  typeset -g POWERLEVEL9K_SHORTEN_FOLDER_MARKER="(${(j:|:)anchor_files})"
+  # For truncate_before_marker=last, only use .git so that worktree roots are
+  # the truncation point (not subdirs with package.json, go.mod, etc.).
+  typeset -g POWERLEVEL9K_SHORTEN_FOLDER_MARKER='.git'
   # If set to "first" ("last"), remove everything before the first (last) subdirectory that contains
   # files matching $POWERLEVEL9K_SHORTEN_FOLDER_MARKER. For example, when the current directory is
   # /foo/bar/git_repo/nested_git_repo/baz, prompt will display git_repo/nested_git_repo/baz (first)
@@ -254,7 +256,7 @@
   # This moves the truncation point to the right (positive offset) or to the left (negative offset)
   # relative to the marker. Plain "first" and "last" are equivalent to "first:0" and "last:0"
   # respectively.
-  typeset -g POWERLEVEL9K_DIR_TRUNCATE_BEFORE_MARKER=false
+  typeset -g POWERLEVEL9K_DIR_TRUNCATE_BEFORE_MARKER=last
   # Don't shorten this many last directory segments. They are anchors.
   typeset -g POWERLEVEL9K_SHORTEN_DIR_LENGTH=1
   # Shorten directory if it's longer than this even if there is space for it. The value can
@@ -262,7 +264,7 @@
   # directory will be shortened only when prompt doesn't fit or when other parameters demand it
   # (see POWERLEVEL9K_DIR_MIN_COMMAND_COLUMNS and POWERLEVEL9K_DIR_MIN_COMMAND_COLUMNS_PCT below).
   # If set to `0`, directory will always be shortened to its minimum length.
-  typeset -g POWERLEVEL9K_DIR_MAX_LENGTH=80
+  typeset -g POWERLEVEL9K_DIR_MAX_LENGTH=40
   # When `dir` segment is on the last prompt line, try to shorten it enough to leave at least this
   # many columns for typing commands.
   typeset -g POWERLEVEL9K_DIR_MIN_COMMAND_COLUMNS=40
@@ -381,36 +383,10 @@
 
     local res
 
-    if [[ -n $VCS_STATUS_LOCAL_BRANCH ]]; then
-      local branch=${(V)VCS_STATUS_LOCAL_BRANCH}
-      # If local branch name is at most 32 characters long, show it in full.
-      # Otherwise show the first 12 … the last 12.
-      # Tip: To always show local branch name in full without truncation, delete the next line.
-      (( $#branch > 32 )) && branch[13,-13]="…"  # <-- this line
-      res+="${clean}${(g::)POWERLEVEL9K_VCS_BRANCH_ICON}${branch//\%/%%}"
-    fi
-
-    if [[ -n $VCS_STATUS_TAG
-          # Show tag only if not on a branch.
-          # Tip: To always show tag, delete the next line.
-          && -z $VCS_STATUS_LOCAL_BRANCH  # <-- this line
-        ]]; then
-      local tag=${(V)VCS_STATUS_TAG}
-      # If tag name is at most 32 characters long, show it in full.
-      # Otherwise show the first 12 … the last 12.
-      # Tip: To always show tag name in full without truncation, delete the next line.
-      (( $#tag > 32 )) && tag[13,-13]="…"  # <-- this line
-      res+="${meta}#${clean}${tag//\%/%%}"
-    fi
-
-    # Display the current Git commit if there is no branch and no tag.
-    # Tip: To always display the current Git commit, delete the next line.
-    [[ -z $VCS_STATUS_LOCAL_BRANCH && -z $VCS_STATUS_TAG ]] &&  # <-- this line
+    # Branch/tag/commit name hidden to save space (worktree name in dir is sufficient).
+    # Show commit hash in detached HEAD state (no branch, no tag) as a fallback.
+    if [[ -z $VCS_STATUS_LOCAL_BRANCH && -z $VCS_STATUS_TAG ]]; then
       res+="${meta}@${clean}${VCS_STATUS_COMMIT[1,8]}"
-
-    # Show tracking branch name if it differs from local branch.
-    if [[ -n ${VCS_STATUS_REMOTE_BRANCH:#$VCS_STATUS_LOCAL_BRANCH} ]]; then
-      res+="${meta}:${clean}${(V)VCS_STATUS_REMOTE_BRANCH//\%/%%}"
     fi
 
     # Display "wip" if the latest commit's summary contains "wip" or "WIP".

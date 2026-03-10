@@ -15,5 +15,15 @@ window-padding-y = 8
 # Shell integration
 shell-integration = zsh
 
+# Cmd+K: clear screen + scrollback, then run tmux-clear for tmux support
+keybind = super+k=csi:clear_scrollback
+keybind = super+k=text:\x0c
+
+# Cmd+K: clear screen + scrollback (works inside and outside tmux)
+# Sends an unused function-key escape sequence that is intercepted by:
+#   - tmux: clears pane screen + scrollback (see .tmux.conf)
+#   - zsh:  clears screen + scrollback (see .zshrc)
+keybind = super+k=text:\x1b[24~
+
 # macOS-specific
 macos-option-as-alt = true

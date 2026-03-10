@@ -76,7 +76,8 @@
       "WebFetch(domain:gpanders.com)",
       "WebFetch(domain:neovim.io)",
       "WebFetch(domain:lugh.ch)",
-      "WebFetch(domain:stephenvantran.com)"
+      "WebFetch(domain:stephenvantran.com)",
+      "WebFetch(domain:ghostty.org)"
     ],
     "deny": [],
     "additionalDirectories": [

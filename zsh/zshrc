@@ -188,6 +188,17 @@ fi
 
 bindkey -v # set up vim motions in interactive terminal
 
+# Cmd+K (via Ghostty F12 escape sequence): clear screen + scrollback when not in tmux
+# Inside tmux this is handled by tmux's F12 binding in .tmux.conf
+if [[ -z "$TMUX" ]]; then
+  function _clear-screen-and-scrollback() {
+    clear && printf '\e[3J'
+    zle reset-prompt
+  }
+  zle -N _clear-screen-and-scrollback
+  bindkey '\e[24~' _clear-screen-and-scrollback
+fi
+
 # pnpm
 export PNPM_HOME="$HOME/Library/pnpm"
 case ":$PATH:" in
