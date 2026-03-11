@@ -20,6 +20,11 @@ export const WT_PATH = [
   "/sbin",
 ].join(":");
 
+// Raycast sets TMPDIR to a per-app sandbox dir, but the tmux server socket
+// lives under /tmp (macOS symlink to /private/tmp). Override so tmux can
+// find the running server.
+export const TMUX_TMPDIR = "/tmp";
+
 export const DEFAULT_CWD = "~/dev/getdots/meagain-bare/.worktrees/main";
 
 export function resolvePath(path: string): string {

@@ -1,7 +1,7 @@
 import { Action, Color, Icon, List } from "@raycast/api";
 
 import { WorktreeListItem } from "./components/worktree-list-item";
-import { updateToastFailure, updateToastSuccess, showAnimatedToast } from "./data/toasts";
+import { showAnimatedToast, updateToastFailure, updateToastSuccess } from "./data/toasts";
 import { removeWorktree } from "./data/wt-service";
 import { useWorktrees } from "./hooks/use-worktrees";
 import { CommandArgsSchema } from "./models";

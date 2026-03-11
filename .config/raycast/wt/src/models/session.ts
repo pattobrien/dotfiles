@@ -18,4 +18,3 @@ export const TmuxSessionSchema = z.object({
   name: z.string(),
   attached: z.boolean(),
 });
-export type TmuxSession = z.infer<typeof TmuxSessionSchema>;

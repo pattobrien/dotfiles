@@ -8,18 +8,6 @@ export async function showAnimatedToast(title: string) {
   return showToast({ style: Toast.Style.Animated, title });
 }
 
-export async function showSuccessToast(title: string) {
-  return showToast({ style: Toast.Style.Success, title });
-}
-
-export async function showFailureToast(title: string, error: unknown) {
-  return showToast({
-    style: Toast.Style.Failure,
-    title,
-    message: formatError(error),
-  });
-}
-
 export function updateToastSuccess(toast: Toast, title: string) {
   toast.style = Toast.Style.Success;
   toast.title = title;
