@@ -29,73 +29,46 @@ if spoon.Hammerflow.auto_reload then
     spoon.ReloadConfiguration:start()
 end
 
--- Kitty + tmux info hotkey (only active when Kitty is focused)
-local kittyHotkey = hs.hotkey.new({"cmd", "shift"}, "i", function()
+-- Get the tmux session name attached in the focused Kitty window via kitty remote control.
+-- Returns the session name string, or nil if not found.
+local function getKittyTmuxSession()
     local win = hs.window.focusedWindow()
-    if not win then
-        print("[kitty-tmux] No focused window")
-        return
-    end
+    if not win then return nil end
 
     local app = win:application()
-    if not app then
-        print("[kitty-tmux] No application for focused window")
-        return
-    end
+    if not app then return nil end
 
-    local winId = win:id()
     local kittyPid = app:pid()
     local socketPath = string.format("unix:/tmp/kitty-%d", kittyPid)
-
-    print(string.format("[kitty-tmux] Kitty window ID: %s, PID: %d, socket: %s", tostring(winId), kittyPid, socketPath))
-
-    -- Use kitty @ ls via the PID-specific socket to get window/process info
     local kittyBin = "/opt/homebrew/bin/kitty"
-    local lsCmd = string.format("%s @ --to %s ls 2>&1", kittyBin, socketPath)
-    local output, status = hs.execute(lsCmd)
 
-    if not status or not output then
-        print("[kitty-tmux] Failed to query kitty remote control: " .. (output or "unknown error"))
-        return
-    end
+    local output, status = hs.execute(string.format("%s @ --to %s ls 2>&1", kittyBin, socketPath))
+    if not status or not output then return nil end
 
-    -- Parse the JSON output from kitty @ ls
     local json = hs.json.decode(output)
-    if not json then
-        print("[kitty-tmux] Failed to parse kitty @ ls output")
-        return
-    end
+    if not json then return nil end
 
-    -- Walk the kitty window tree to find the foreground process in the active tab/window
+    -- Walk the kitty window tree to find the tmux client PID in the focused window
     for _, osWindow in ipairs(json) do
         if osWindow.is_focused then
-            print(string.format("[kitty-tmux] Kitty OS window id: %d", osWindow.id))
             for _, tab in ipairs(osWindow.tabs) do
                 if tab.is_focused then
                     for _, kittyWin in ipairs(tab.windows) do
                         if kittyWin.is_focused then
-                            local fg = kittyWin.foreground_processes or {}
-                            for _, proc in ipairs(fg) do
+                            for _, proc in ipairs(kittyWin.foreground_processes or {}) do
                                 local cmdline = table.concat(proc.cmdline or {}, " ")
-                                print(string.format("[kitty-tmux] Foreground process (pid %d): %s", proc.pid, cmdline))
-
-                                -- Check if the foreground process is tmux client
                                 if cmdline:match("tmux") then
-                                    -- Get the tmux session for this specific client PID
-                                    local tmuxCmd = string.format(
+                                    local tmuxOut, tmuxOk = hs.execute(
                                         "/opt/homebrew/bin/tmux list-clients -F '#{client_pid} #{session_name}' 2>&1"
                                     )
-                                    local tmuxOut, tmuxOk = hs.execute(tmuxCmd)
                                     if tmuxOk and tmuxOut then
                                         for line in tmuxOut:gmatch("[^\n]+") do
                                             local clientPid, sessionName = line:match("^(%d+)%s+(.+)$")
                                             if clientPid and tonumber(clientPid) == proc.pid then
-                                                print(string.format("[kitty-tmux] Active tmux session: %s (client pid: %s)", sessionName, clientPid))
-                                                return
+                                                return sessionName
                                             end
                                         end
                                     end
-                                    print("[kitty-tmux] tmux process found but could not match client to session")
                                 end
                             end
                         end
@@ -105,7 +78,64 @@ local kittyHotkey = hs.hotkey.new({"cmd", "shift"}, "i", function()
         end
     end
 
-    print("[kitty-tmux] No tmux session found in focused kitty window")
+    return nil
+end
+
+-- Kitty worktree switcher hotkey (only active when Kitty is focused)
+-- Parses the tmux session name (<repo>--<worktree>), looks up the repo,
+-- and opens the Raycast worktree switch UI scoped to that repo.
+local kittyHotkey = hs.hotkey.new({"cmd", "shift"}, "i", function()
+    local sessionName = getKittyTmuxSession()
+    if not sessionName then
+        hs.alert.show("No tmux session found in this Kitty window")
+        return
+    end
+
+    print(string.format("[kitty-tmux] Session: %s", sessionName))
+
+    -- Parse session name: <repo>--<worktree>
+    local repoName = sessionName:match("^(.+)%-%-")
+    if not repoName then
+        hs.alert.show("Session name doesn't match <repo>--<worktree> format: " .. sessionName)
+        return
+    end
+
+    -- Look up repo via wt repos list (use login shell for PATH)
+    local output, status = hs.execute("wt repos list 2>&1", true)
+    if not status or not output or output == "" then
+        print("[kitty-tmux] wt repos list failed: " .. (output or "nil"))
+        hs.alert.show("Failed to list repos")
+        return
+    end
+
+    local repos = hs.json.decode(output)
+    if not repos then
+        hs.alert.show("Failed to parse repo list")
+        return
+    end
+
+    -- Find matching repo by name
+    local rootDir = nil
+    for _, repo in ipairs(repos) do
+        if repo.repoName == repoName then
+            rootDir = repo.rootDir
+            break
+        end
+    end
+
+    if not rootDir then
+        hs.alert.show("No repo found matching: " .. repoName)
+        return
+    end
+
+    print(string.format("[kitty-tmux] Repo: %s -> %s", repoName, rootDir))
+
+    -- Open Raycast switch command scoped to this repo
+    local argsJson = hs.json.encode({ cwd = rootDir })
+    local encoded = hs.http.encodeForQuery(argsJson)
+    local deeplink = "raycast://extensions/pattobrien/wt-manager/switch?arguments=" .. encoded
+    print(string.format("[kitty-tmux] Opening: %s", deeplink))
+    hs.urlevent.openURL(deeplink)
 end)
 
 -- Enable/disable the hotkey based on Kitty being focused

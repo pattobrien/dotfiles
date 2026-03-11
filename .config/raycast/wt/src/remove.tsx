@@ -1,12 +1,19 @@
 import { Action, Color, Icon, List } from "@raycast/api";
+import { z } from "zod/v4";
 
 import { WorktreeListItem } from "./components/worktree-list-item";
-import { showAnimatedToast, updateToastFailure, updateToastSuccess } from "./data/toasts";
+import {
+  showAnimatedToast,
+  updateToastFailure,
+  updateToastSuccess,
+} from "./data/toasts";
 import { removeWorktree } from "./data/wt-service";
 import { useWorktrees } from "./hooks/use-worktrees";
 import { CommandArgsSchema } from "./models";
 
-export default function Command(props: { arguments: { cwd?: string } }) {
+type RemoveCommandProps = z.infer<typeof CommandArgsSchema>;
+
+export default function Command(props: { arguments: RemoveCommandProps }) {
   const args = CommandArgsSchema.parse(props.arguments);
   const { data, isLoading, revalidate } = useWorktrees(args.cwd);
 

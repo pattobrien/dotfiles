@@ -6,13 +6,9 @@ export const SessionStatus = {
   None: "none",
 } as const;
 
-export type SessionStatus = (typeof SessionStatus)[keyof typeof SessionStatus];
+export const SessionStatusEnum = z.enum(SessionStatus);
 
-export const SessionStatusEnum = z.enum([
-  SessionStatus.Active,
-  SessionStatus.Detached,
-  SessionStatus.None,
-]);
+export type SessionStatus = z.infer<typeof SessionStatusEnum>;
 
 export const TmuxSessionSchema = z.object({
   name: z.string(),

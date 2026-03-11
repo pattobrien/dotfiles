@@ -7,6 +7,7 @@ import { generateZshCompletions } from "./completions";
 import { create } from "./create";
 import { list } from "./list";
 import { remove } from "./remove";
+import { repos } from "./repos";
 import { switchWorktree } from "./switch";
 import { t } from "./trpc";
 
@@ -15,6 +16,7 @@ const router = t.router({
   create,
   list,
   remove,
+  repos,
   switch: switchWorktree,
 });
 

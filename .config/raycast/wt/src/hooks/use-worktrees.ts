@@ -70,7 +70,7 @@ function fetchWorktreeItems(cwd: string): WorktreeItem[] {
     : git(["rev-parse", "--show-toplevel"], cwd);
   const repoName = basename(repoRoot).replace(/-bare$/, "");
 
-  const raw = git(["worktree", "list", "--porcelain"], repoRoot);
+  const raw = git(["worktree", "list", "--porcelain"], cwd);
   const worktrees = [];
   let current: Record<string, string | boolean> = {};
 
