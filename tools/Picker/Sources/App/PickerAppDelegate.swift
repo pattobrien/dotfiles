@@ -21,7 +21,8 @@ class PickerAppDelegate: NSObject, NSApplicationDelegate {
         let initialRows = min(pickerItems.count, pickerMaxRows)
         let initialHeight = CGFloat(40 + 1 + initialRows * 27 + 8)
 
-        let screenFrame = NSScreen.main?.visibleFrame ?? NSRect(x: 0, y: 0, width: 1920, height: 1080)
+        let screenFrame =
+            NSScreen.main?.visibleFrame ?? NSRect(x: 0, y: 0, width: 1920, height: 1080)
         let topOffset = screenFrame.height * 0.25
         let windowFrame = NSRect(
             x: screenFrame.midX - pickerWidth / 2,
@@ -44,7 +45,9 @@ class PickerAppDelegate: NSObject, NSApplicationDelegate {
 
         window.appearance = NSAppearance(named: .darkAqua)
 
-        let vc = PickerViewController(items: pickerItems, prompt: pickerPrompt, maxRows: pickerMaxRows, filterCommand: pickerFilterCmd)
+        let vc = PickerViewController(
+            items: pickerItems, prompt: pickerPrompt, maxRows: pickerMaxRows,
+            filterCommand: pickerFilterCmd)
         window.contentViewController = vc
         window.setFrame(windowFrame, display: false)
 

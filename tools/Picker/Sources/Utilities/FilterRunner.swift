@@ -30,7 +30,8 @@ func runFilter(query: String, items: [String], cmd: String) -> [String] {
     let outputData = stdoutPipe.fileHandleForReading.readDataToEndOfFile()
     let output = String(data: outputData, encoding: .utf8) ?? ""
 
-    return output
+    return
+        output
         .split(separator: "\n", omittingEmptySubsequences: true)
         .map { String($0) }
 }

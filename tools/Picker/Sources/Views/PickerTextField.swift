@@ -5,7 +5,7 @@ class PickerTextField: NSTextField {
 
     override func keyDown(with event: NSEvent) {
         switch event.keyCode {
-        case 125: onArrowKey?(true)   // down
+        case 125: onArrowKey?(true)  // down
         case 126: onArrowKey?(false)  // up
         default: super.keyDown(with: event)
         }

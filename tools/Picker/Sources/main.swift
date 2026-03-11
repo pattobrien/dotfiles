@@ -28,13 +28,17 @@ var i = 1
 while i < args.count {
     switch args[i] {
     case "--prompt" where i + 1 < args.count:
-        promptLabel = args[i + 1]; i += 2
+        promptLabel = args[i + 1]
+        i += 2
     case "--max-rows" where i + 1 < args.count:
-        maxVisible = Int(args[i + 1]) ?? maxVisible; i += 2
+        maxVisible = Int(args[i + 1]) ?? maxVisible
+        i += 2
     case "--width" where i + 1 < args.count:
-        windowWidth = CGFloat(Double(args[i + 1]) ?? Double(windowWidth)); i += 2
+        windowWidth = CGFloat(Double(args[i + 1]) ?? Double(windowWidth))
+        i += 2
     case "--filter-cmd" where i + 1 < args.count:
-        filterCmd = args[i + 1]; i += 2
+        filterCmd = args[i + 1]
+        i += 2
     default:
         i += 1
     }
