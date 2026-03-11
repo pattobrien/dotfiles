@@ -18,9 +18,9 @@ guard !items.isEmpty else {
 
 // MARK: - Parse arguments
 
-var promptLabel = "❯ "
+var promptLabel = ">"
 var maxVisible = 20
-var windowWidth: CGFloat = 500
+var windowWidth: CGFloat = 680
 var filterCmd = "fzf"
 
 let args = CommandLine.arguments
@@ -98,6 +98,20 @@ class PickerPanel: NSPanel {
     override var canBecomeMain: Bool { true }
 }
 
+// MARK: - Custom row view (VS Code-style selection highlight)
+
+class PickerRowView: NSTableRowView {
+    override func drawSelection(in dirtyRect: NSRect) {
+        if selectionHighlightStyle != .none {
+            let selectionColor = NSColor(red: 0.15, green: 0.20, blue: 0.35, alpha: 1.0)
+            selectionColor.setFill()
+            let selectionRect = bounds.insetBy(dx: 4, dy: 0)
+            let path = NSBezierPath(roundedRect: selectionRect, xRadius: 4, yRadius: 4)
+            path.fill()
+        }
+    }
+}
+
 // MARK: - PickerViewController
 
 class PickerViewController: NSViewController, NSTableViewDataSource, NSTableViewDelegate, NSTextFieldDelegate {
@@ -108,13 +122,21 @@ class PickerViewController: NSViewController, NSTableViewDataSource, NSTableView
     private let maxRows: Int
     private let filterCommand: String
 
-    private let rowHeight: CGFloat = 24
-    private let textFieldHeight: CGFloat = 36
-    private let padding: CGFloat = 12  // top + bottom padding
+    private let rowHeight: CGFloat = 26
+    private let inputAreaHeight: CGFloat = 40
+    private let separatorMargin: CGFloat = 8
 
+    private var promptLabel: NSTextField!
     private var textField: PickerTextField!
     private var scrollView: NSScrollView!
     private var tableView: NSTableView!
+
+    // VS Code dark theme colors
+    private let bgColor = NSColor(red: 0.12, green: 0.13, blue: 0.16, alpha: 1.0)       // #1f2128
+    private let inputBgColor = NSColor(red: 0.16, green: 0.17, blue: 0.21, alpha: 1.0)   // #292b35
+    private let textColor = NSColor(red: 0.85, green: 0.87, blue: 0.91, alpha: 1.0)      // #d9dee8
+    private let promptColor = NSColor(red: 0.55, green: 0.58, blue: 0.65, alpha: 1.0)    // #8c94a6
+    private let separatorColor = NSColor(red: 0.20, green: 0.22, blue: 0.26, alpha: 1.0) // #333842
 
     init(items: [String], prompt: String, maxRows: Int, filterCommand: String) {
         self.allItems = items
@@ -128,18 +150,31 @@ class PickerViewController: NSViewController, NSTableViewDataSource, NSTableView
     required init?(coder: NSCoder) { fatalError() }
 
     override func loadView() {
-        let container = NSVisualEffectView()
-        container.material = .sidebar
-        container.blendingMode = .behindWindow
-        container.state = .active
+        let container = NSView()
         container.wantsLayer = true
-        container.layer?.cornerRadius = 12
+        container.layer?.backgroundColor = bgColor.cgColor
+        container.layer?.cornerRadius = 10
         container.layer?.masksToBounds = true
+
+        // Input area background
+        let inputBg = NSView()
+        inputBg.wantsLayer = true
+        inputBg.layer?.backgroundColor = inputBgColor.cgColor
+        inputBg.translatesAutoresizingMaskIntoConstraints = false
+        container.addSubview(inputBg)
+
+        // Prompt label ">"
+        promptLabel = NSTextField(labelWithString: prompt)
+        promptLabel.font = .monospacedSystemFont(ofSize: 15, weight: .medium)
+        promptLabel.textColor = promptColor
+        promptLabel.translatesAutoresizingMaskIntoConstraints = false
+        container.addSubview(promptLabel)
 
         // Text field
         textField = PickerTextField()
-        textField.placeholderString = prompt
-        textField.font = .monospacedSystemFont(ofSize: 14, weight: .regular)
+        textField.placeholderString = ""
+        textField.font = .monospacedSystemFont(ofSize: 15, weight: .regular)
+        textField.textColor = textColor
         textField.isBordered = false
         textField.drawsBackground = false
         textField.focusRingType = .none
@@ -148,11 +183,20 @@ class PickerViewController: NSViewController, NSTableViewDataSource, NSTableView
         textField.onArrowKey = { [weak self] down in
             self?.moveSelection(down: down)
         }
+        // Set placeholder color
+        textField.placeholderAttributedString = NSAttributedString(
+            string: "Type to filter...",
+            attributes: [
+                .foregroundColor: NSColor(red: 0.40, green: 0.43, blue: 0.50, alpha: 1.0),
+                .font: NSFont.monospacedSystemFont(ofSize: 15, weight: .regular)
+            ]
+        )
         container.addSubview(textField)
 
-        // Separator
-        let separator = NSBox()
-        separator.boxType = .separator
+        // Separator line
+        let separator = NSView()
+        separator.wantsLayer = true
+        separator.layer?.backgroundColor = separatorColor.cgColor
         separator.translatesAutoresizingMaskIntoConstraints = false
         container.addSubview(separator)
 
@@ -168,7 +212,7 @@ class PickerViewController: NSViewController, NSTableViewDataSource, NSTableView
         tableView.rowHeight = rowHeight
         tableView.backgroundColor = .clear
         tableView.selectionHighlightStyle = .regular
-        tableView.intercellSpacing = NSSize(width: 0, height: 2)
+        tableView.intercellSpacing = NSSize(width: 0, height: 1)
         tableView.style = .plain
         tableView.gridStyleMask = []
 
@@ -180,16 +224,32 @@ class PickerViewController: NSViewController, NSTableViewDataSource, NSTableView
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         container.addSubview(scrollView)
 
+        let promptWidth: CGFloat = 22
+
         NSLayoutConstraint.activate([
-            textField.topAnchor.constraint(equalTo: container.topAnchor, constant: 8),
-            textField.leadingAnchor.constraint(equalTo: container.leadingAnchor, constant: 12),
-            textField.trailingAnchor.constraint(equalTo: container.trailingAnchor, constant: -12),
-            textField.heightAnchor.constraint(equalToConstant: textFieldHeight),
+            // Input background
+            inputBg.topAnchor.constraint(equalTo: container.topAnchor),
+            inputBg.leadingAnchor.constraint(equalTo: container.leadingAnchor),
+            inputBg.trailingAnchor.constraint(equalTo: container.trailingAnchor),
+            inputBg.heightAnchor.constraint(equalToConstant: inputAreaHeight),
 
-            separator.topAnchor.constraint(equalTo: textField.bottomAnchor, constant: 4),
-            separator.leadingAnchor.constraint(equalTo: container.leadingAnchor, constant: 8),
-            separator.trailingAnchor.constraint(equalTo: container.trailingAnchor, constant: -8),
+            // Prompt label
+            promptLabel.centerYAnchor.constraint(equalTo: inputBg.centerYAnchor),
+            promptLabel.leadingAnchor.constraint(equalTo: container.leadingAnchor, constant: 14),
 
+            // Text field
+            textField.centerYAnchor.constraint(equalTo: inputBg.centerYAnchor),
+            textField.leadingAnchor.constraint(equalTo: promptLabel.leadingAnchor, constant: promptWidth),
+            textField.trailingAnchor.constraint(equalTo: container.trailingAnchor, constant: -14),
+            textField.heightAnchor.constraint(equalToConstant: 24),
+
+            // Separator
+            separator.topAnchor.constraint(equalTo: inputBg.bottomAnchor),
+            separator.leadingAnchor.constraint(equalTo: container.leadingAnchor),
+            separator.trailingAnchor.constraint(equalTo: container.trailingAnchor),
+            separator.heightAnchor.constraint(equalToConstant: 1),
+
+            // Scroll view / table
             scrollView.topAnchor.constraint(equalTo: separator.bottomAnchor, constant: 4),
             scrollView.leadingAnchor.constraint(equalTo: container.leadingAnchor),
             scrollView.trailingAnchor.constraint(equalTo: container.trailingAnchor),
@@ -258,12 +318,12 @@ class PickerViewController: NSViewController, NSTableViewDataSource, NSTableView
         guard let window = view.window else { return }
 
         let visibleRows = min(filtered.count, maxRows)
-        let tableHeight = CGFloat(visibleRows) * (rowHeight + 2)  // +2 for intercell spacing
-        let totalHeight = textFieldHeight + padding + tableHeight + 16  // 16 for separator + margins
+        let tableHeight = CGFloat(visibleRows) * (rowHeight + 1)  // +1 for intercell spacing
+        let totalHeight = inputAreaHeight + 1 + tableHeight + 8   // 1 for separator, 8 for bottom padding
 
         var frame = window.frame
         let oldTop = frame.maxY
-        frame.size.height = max(totalHeight, textFieldHeight + padding + 16)
+        frame.size.height = max(totalHeight, inputAreaHeight + 9)
         frame.origin.y = oldTop - frame.size.height
         window.setFrame(frame, display: true, animate: false)
     }
@@ -282,7 +342,8 @@ class PickerViewController: NSViewController, NSTableViewDataSource, NSTableView
         if cell == nil {
             cell = NSTextField(labelWithString: "")
             cell?.identifier = id
-            cell?.font = .monospacedSystemFont(ofSize: 13, weight: .regular)
+            cell?.font = .systemFont(ofSize: 13, weight: .regular)
+            cell?.textColor = NSColor(red: 0.80, green: 0.82, blue: 0.87, alpha: 1.0)
             cell?.lineBreakMode = .byTruncatingTail
         }
         cell?.stringValue = filtered[row]
@@ -290,11 +351,14 @@ class PickerViewController: NSViewController, NSTableViewDataSource, NSTableView
     }
 
     func tableView(_ tableView: NSTableView, rowViewForRow row: Int) -> NSTableRowView? {
-        return NSTableRowView()
+        return PickerRowView()
     }
 
     func tableViewSelectionDidChange(_ notification: Notification) {
-        // Could add visual feedback here if needed
+        // Redraw rows to update selection colors
+        tableView.enumerateAvailableRowViews { rowView, _ in
+            rowView.needsDisplay = true
+        }
     }
 }
 
@@ -319,12 +383,14 @@ class PickerAppDelegate: NSObject, NSApplicationDelegate {
 
     func applicationDidFinishLaunching(_ notification: Notification) {
         let initialRows = min(pickerItems.count, pickerMaxRows)
-        let initialHeight = CGFloat(36 + 12 + initialRows * 26 + 16)
+        let initialHeight = CGFloat(40 + 1 + initialRows * 27 + 8)
 
         let screenFrame = NSScreen.main?.visibleFrame ?? NSRect(x: 0, y: 0, width: 1920, height: 1080)
+        // Position near top of screen like VS Code command palette (about 25% from top)
+        let topOffset = screenFrame.height * 0.25
         let windowFrame = NSRect(
             x: screenFrame.midX - pickerWidth / 2,
-            y: screenFrame.midY - initialHeight / 2,
+            y: screenFrame.maxY - topOffset - initialHeight,
             width: pickerWidth,
             height: initialHeight
         )
