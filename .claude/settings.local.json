@@ -106,7 +106,10 @@
       "Bash(/Applications/Kitty-nightly.app/Contents/MacOS/kitty \\\\\n  --title \"resize-test\" \\\\\n  -o confirm_os_window_close=0 \\\\\n  -o remember_window_size=no \\\\\n  /Users/pattobrien/.dotfiles/Scripts/picker-resize-inner)",
       "Bash(cd /Users/pattobrien/.dotfiles/Tools/Picker && swift build -c release 2>&1)",
       "Bash(echo \"alpha\\\\nbeta\\\\ngamma\\\\ndelta\\\\nepsilon\\\\nzeta\\\\neta\\\\ntheta\\\\niota\\\\nkappa\\\\nlambda\\\\nmu\" | /Users/pattobrien/.dotfiles/Tools/Picker/.build/release/picker --prompt \"pick: \")",
-      "Bash(swift build:*)"
+      "Bash(swift build:*)",
+      "Bash(cd /Users/pattobrien/.dotfiles/.config/raycast && pnpx create-raycast-extension@latest --name wt --title \"Worktree Manager\" --description \"Manage git worktrees with tmux sessions\" --type list --template react --organization \"\" 2>&1)",
+      "Bash(pnpx create-raycast-extension@latest -t list -o wt 2>&1)",
+      "Bash(rm -rf wt && pnpx create-raycast-extension -t people-directory 2>&1)"
     ],
     "deny": [],
     "additionalDirectories": [
