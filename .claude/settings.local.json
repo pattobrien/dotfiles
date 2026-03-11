@@ -83,7 +83,15 @@
       "WebFetch(domain:zed.dev)",
       "WebFetch(domain:gitlab.freedesktop.org)",
       "WebFetch(domain:mitchellh.com)",
-      "WebFetch(domain:wezfurlong.org)"
+      "WebFetch(domain:wezfurlong.org)",
+      "Bash(kitty +list-fonts 2>/dev/null | grep -i \"jetbrains\" || fc-list : family style | grep -i \"jetbrains\" | sort)",
+      "Bash(fc-list | grep -i \"jetbrains\" | sort)",
+      "Bash(system_profiler SPFontsDataType 2>/dev/null | grep -A2 -i \"jetbrains\" | head -30)",
+      "Read(//System/Library/Fonts/**)",
+      "Read(//Applications/Ghostty.app/**)",
+      "Read(//opt/homebrew/**)",
+      "Bash(pkill:*)",
+      "Bash(git log:*)"
     ],
     "deny": [],
     "additionalDirectories": [

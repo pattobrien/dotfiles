@@ -12,7 +12,9 @@ key_maps_per_line = 3 # optional, default 5, number of key maps per line in the 
 # app shortcuts
 b = ["Google Chrome", "Browser"]
 e = ["Cursor", "Editor"]
-t = ["Kitty", "Terminal"]
+k = ["Kitty", "Kitty"]
+t = ["Ghostty", "Terminal"]
+g = ["Ghostty", "Ghostty"]
 i = ["Simulator", "iOS Simulator"]
 # s = "Slack"
 # f = "Finder"
@@ -20,8 +22,8 @@ i = ["Simulator", "iOS Simulator"]
 # m = "Spotify"
 1 = "1Password"
 
-# or a url
-g = "https://google.com"
+# # or a url
+# g = "https://google.com"
 
 
 # create groups to nest actions
@@ -83,6 +85,11 @@ i = "input:https://google.com/search?q={input}" # capture input and insert it in
 #   "center half",
 # ]
 
+
+[w]
+label = "[worktrees]"
+a = ["cmd:open -na Ghostty --args -e /Users/pattobrien/.local/bin/wt-attach", "attach"]
+c = ["cmd:open -na Ghostty --args -e /Users/pattobrien/.local/bin/wt-create", "create"]
 
 # this group is handy to copy over
 # for quick access to your config
