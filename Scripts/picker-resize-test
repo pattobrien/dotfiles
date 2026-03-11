@@ -1,53 +1,7 @@
 #!/bin/zsh
-# Test: resize a ghostty window externally via Hammerspoon
+# Test: resize Terminal.app from within using xterm escape sequences
 set -euo pipefail
 
 inner_script="${0:A:h}/picker-resize-inner"
 
-# Launch ghostty in background
-ghostty \
-  --title="resize-test" \
-  --window-width=60 \
-  --window-height=8 \
-  --window-save-state=never \
-  --window-padding-x=8 \
-  --window-padding-y=4 \
-  --window-padding-balance=true \
-  --window-padding-color=extend \
-  --background-opacity=0.92 \
-  --background-blur-radius=20 \
-  --macos-titlebar-style=hidden \
-  -e "$inner_script" &
-
-# Wait for the window to appear (may need to accept the execute prompt)
-echo "Waiting for Ghostty window..."
-for i in {1..10}; do
-  found=$(hs -c "
-    local wins = hs.window.filter.new('Ghostty'):getWindows()
-    for _, w in ipairs(wins) do
-      return 'found'
-    end
-    return 'waiting'
-  ")
-  [[ "$found" == "found" ]] && break
-  sleep 1
-done
-
-# Resize externally via Hammerspoon (match any Ghostty window)
-for h in 200 300 400 500 600 500 400 300 200; do
-  echo "Resizing to ${h}px..."
-  hs -c "
-    local wins = hs.window.filter.new('Ghostty'):getWindows()
-    if #wins > 0 then
-      local w = wins[1]
-      local f = w:frame()
-      f.h = ${h}
-      w:setFrame(f, 0)
-      return 'done'
-    end
-    return 'Not found'
-  "
-  sleep 1
-done
-
-echo "Done."
+open -a Terminal "$inner_script"

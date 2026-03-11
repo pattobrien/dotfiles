@@ -97,7 +97,8 @@
       "WebFetch(domain:cerebroapp.com)",
       "WebFetch(domain:sol.ospfranco.com)",
       "WebFetch(domain:formulae.brew.sh)",
-      "Bash(gh search:*)"
+      "Bash(gh search:*)",
+      "Bash(brew info:*)"
     ],
     "deny": [],
     "additionalDirectories": [

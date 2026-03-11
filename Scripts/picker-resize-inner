@@ -1,5 +1,74 @@
 #!/bin/zsh
-echo "Waiting for external resize..."
-echo "Watch the window height change from outside."
-echo ""
-read -r "?Press enter to close..."
+cols=60
+min_rows=5
+max_rows=30
+base_rows=3  # prompt line + border + padding
+query=""
+
+redraw() {
+  local match_count=$1
+  local rows=$(( match_count + base_rows ))
+  (( rows < min_rows )) && rows=$min_rows
+  (( rows > max_rows )) && rows=$max_rows
+
+  # Resize window
+  printf '\e[8;%d;%dt' "$rows" "$cols"
+
+  # Clear screen and redraw
+  printf '\e[2J\e[H'
+  echo "Search: ${query}_"
+  echo ""
+
+  # Show matching lines
+  local i=0
+  for item in "${matches[@]}"; do
+    echo "  $item"
+    i=$(( i + 1 ))
+  done
+}
+
+# Generate sample items
+items=()
+for d in ~/dev/*(/:t); do
+  items+=("$d")
+done
+
+# Initial filter (show all)
+matches=("${items[@]}")
+redraw ${#matches[@]}
+
+while IFS= read -r -k 1 key; do
+  case "$key" in
+    $'\x7f'|$'\b')  # backspace/delete
+      if (( ${#query} > 0 )); then
+        query="${query[1,-2]}"
+      fi
+      ;;
+    $'\n'|$'\r')  # enter - select and quit
+      break
+      ;;
+    $'\x1b')  # escape - quit
+      exit 0
+      ;;
+    *)
+      query="${query}${key}"
+      ;;
+  esac
+
+  # Filter items by query
+  matches=()
+  for item in "${items[@]}"; do
+    if [[ -z "$query" || "${item:l}" == *"${query:l}"* ]]; then
+      matches+=("$item")
+    fi
+  done
+
+  redraw ${#matches[@]}
+done
+
+# Print selection
+if (( ${#matches[@]} > 0 )); then
+  printf '\e[2J\e[H'
+  echo "Selected: ${matches[1]}"
+  sleep 1
+fi
