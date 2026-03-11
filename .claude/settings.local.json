@@ -109,7 +109,13 @@
       "Bash(swift build:*)",
       "Bash(cd /Users/pattobrien/.dotfiles/.config/raycast && pnpx create-raycast-extension@latest --name wt --title \"Worktree Manager\" --description \"Manage git worktrees with tmux sessions\" --type list --template react --organization \"\" 2>&1)",
       "Bash(pnpx create-raycast-extension@latest -t list -o wt 2>&1)",
-      "Bash(rm -rf wt && pnpx create-raycast-extension -t people-directory 2>&1)"
+      "Bash(rm -rf wt && pnpx create-raycast-extension -t people-directory 2>&1)",
+      "Bash(/bin/zsh -l -c 'echo $PATH' | tr ':' '\\\\n' | head -20)",
+      "Bash(/bin/zsh -l -c 'which wt' 2>&1)",
+      "Bash(/bin/zsh -li -c 'which wt' 2>&1)",
+      "Bash(env -i HOME=/Users/pattobrien /bin/zsh -l -c 'which wt' 2>&1)",
+      "Bash(env -i HOME=/Users/pattobrien /bin/zsh -l -c 'echo $PATH' | tr ':' '\\\\n' | head -10)",
+      "WebFetch(domain:developers.raycast.com)"
     ],
     "deny": [],
     "additionalDirectories": [

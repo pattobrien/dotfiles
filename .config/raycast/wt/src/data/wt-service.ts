@@ -2,42 +2,39 @@ import { execSync } from "node:child_process";
 import { basename, dirname } from "node:path";
 
 import {
+  SessionStatus,
   TmuxSessionSchema,
   WorktreeItemSchema,
   WorktreeSchema,
   type TmuxSession,
   type Worktree,
   type WorktreeItem,
-} from "./schemas";
+} from "../models";
+import { DEFAULT_CWD, GIT_BIN, TMUX_BIN, WT_BIN, WT_PATH, resolvePath } from "./paths";
 
-const DEFAULT_CWD = "~/dev/getdots/meagain-bare/.worktrees/main";
-const WT_BIN = "/Users/pattobrien/.local/bin/wt";
-const SHELL_PATH =
-  "/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Users/pattobrien/.local/bin";
+const BRANCH_REF_PREFIX = "refs/heads/";
 
-function resolveCwd(cwd?: string): string {
-  const raw = cwd || DEFAULT_CWD;
-  return raw.replace(/^~/, process.env.HOME || "/Users/pattobrien");
-}
-
-function exec(cmd: string, cwd: string): string {
-  return execSync(cmd, {
+function exec(file: string, args: string[], cwd: string): string {
+  return execSync([file, ...args].join(" "), {
     cwd,
     encoding: "utf-8",
     timeout: 10_000,
-    env: { ...process.env, PATH: SHELL_PATH },
   }).trim();
 }
 
+function resolveCwd(cwd?: string): string {
+  return resolvePath(cwd || DEFAULT_CWD);
+}
+
 function getRepoRoot(cwd: string): { repoRoot: string; repoName: string } {
-  const commonDir = exec("git rev-parse --git-common-dir", cwd);
+  const commonDir = exec(GIT_BIN, ["rev-parse", "--git-common-dir"], cwd);
   const isBare = commonDir.endsWith("/.bare");
 
   let repoRoot: string;
   if (isBare) {
     repoRoot = dirname(commonDir);
   } else {
-    repoRoot = exec("git rev-parse --show-toplevel", cwd);
+    repoRoot = exec(GIT_BIN, ["rev-parse", "--show-toplevel"], cwd);
   }
 
   const repoName = basename(repoRoot).replace(/-bare$/, "");
@@ -46,6 +43,13 @@ function getRepoRoot(cwd: string): { repoRoot: string; repoName: string } {
 
 function deriveSessionName(repoName: string, wtName: string): string {
   return `${repoName}--${wtName}`.replace(/[.:]/g, "-");
+}
+
+function stripBranchRef(branch: string): string {
+  if (branch.startsWith(BRANCH_REF_PREFIX)) {
+    return branch.slice(BRANCH_REF_PREFIX.length);
+  }
+  return branch;
 }
 
 function parseWorktrees(output: string): Worktree[] {
@@ -79,7 +83,8 @@ function parseWorktrees(output: string): Worktree[] {
 function listTmuxSessions(): TmuxSession[] {
   try {
     const output = exec(
-      'tmux list-sessions -F "#{session_name}\t#{session_attached}"',
+      TMUX_BIN,
+      ["list-sessions", "-F", '"#{session_name}\t#{session_attached}"'],
       "/",
     );
     return output
@@ -97,44 +102,45 @@ function listTmuxSessions(): TmuxSession[] {
 export function listWorktreeItems(cwd?: string): WorktreeItem[] {
   const resolvedCwd = resolveCwd(cwd);
   const { repoRoot, repoName } = getRepoRoot(resolvedCwd);
-  const raw = exec("git worktree list --porcelain", repoRoot);
+  const raw = exec(GIT_BIN, ["worktree", "list", "--porcelain"], repoRoot);
   const worktrees = parseWorktrees(raw);
   const sessions = listTmuxSessions();
   const sessionMap = new Map(
-    sessions.map((s) => [s.name, s.attached ? "active" : "detached"] as const),
+    sessions.map((s) => [
+      s.name,
+      s.attached ? SessionStatus.Active : SessionStatus.Detached,
+    ]),
   );
 
   return worktrees.map((wt) => {
     const name = basename(wt.path);
     const sessionName = deriveSessionName(repoName, name);
-    const sessionStatus = sessionMap.get(sessionName) ?? "none";
+    const sessionStatus = sessionMap.get(sessionName) ?? SessionStatus.None;
 
     return WorktreeItemSchema.parse({
       name,
       path: wt.path,
       branch: wt.branch,
+      displayBranch: wt.branch ? stripBranchRef(wt.branch) : undefined,
       head: wt.head,
       sessionStatus,
     });
   });
 }
 
-export function attachWorktree(name: string, cwd?: string): void {
-  const resolvedCwd = resolveCwd(cwd);
-  execSync(`${WT_BIN} attach ${name}`, {
-    cwd: resolvedCwd,
+function execWt(args: string[], cwd: string): void {
+  execSync([WT_BIN, ...args].join(" "), {
+    cwd,
     encoding: "utf-8",
     timeout: 15_000,
-    env: { ...process.env, PATH: SHELL_PATH },
+    env: { ...process.env, PATH: WT_PATH },
   });
 }
 
+export function attachWorktree(name: string, cwd?: string): void {
+  execWt(["attach", name], resolveCwd(cwd));
+}
+
 export function removeWorktree(name: string, cwd?: string): void {
-  const resolvedCwd = resolveCwd(cwd);
-  execSync(`${WT_BIN} remove ${name}`, {
-    cwd: resolvedCwd,
-    encoding: "utf-8",
-    timeout: 15_000,
-    env: { ...process.env, PATH: SHELL_PATH },
-  });
+  execWt(["remove", name], resolveCwd(cwd));
 }
