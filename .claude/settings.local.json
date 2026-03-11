@@ -91,7 +91,13 @@
       "Read(//Applications/Ghostty.app/**)",
       "Read(//opt/homebrew/**)",
       "Bash(pkill:*)",
-      "Bash(git log:*)"
+      "Bash(git log:*)",
+      "WebFetch(domain:zsh.sourceforge.io)",
+      "WebFetch(domain:www.hammerspoon.org)",
+      "WebFetch(domain:cerebroapp.com)",
+      "WebFetch(domain:sol.ospfranco.com)",
+      "WebFetch(domain:formulae.brew.sh)",
+      "Bash(gh search:*)"
     ],
     "deny": [],
     "additionalDirectories": [

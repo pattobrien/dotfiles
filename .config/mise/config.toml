@@ -7,7 +7,6 @@ idiomatic_version_file_enable_tools = ["node"]
 lua-language-server = "latest"
 neovim = "nightly"
 node = "24"
-"npm:@anthropic-ai/claude-code" = "latest"
 "npm:@ecrindigital/facet-cli" = "0.2"
 "npm:@posthog/cli" = "latest"
 "npm:codemod" = "latest"

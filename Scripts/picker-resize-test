@@ -1,0 +1,49 @@
+#!/bin/zsh
+# Test: resize a kitty window externally via Hammerspoon
+# Usage:
+#   ./picker-resize-test              # launches kitty, then resizes via HS
+#   ./picker-resize-test --inner      # (internal) just holds the window open
+
+set -euo pipefail
+
+if [[ "${1:-}" == "--inner" ]]; then
+  echo "Waiting for external resize..."
+  echo "Watch the window height change from outside."
+  echo ""
+  # Just keep the window alive
+  read -r "?Press enter to close..."
+  exit 0
+fi
+
+script_path="${0:A}"
+
+# Launch kitty in background
+kitty \
+  --title "resize-test" \
+  -o hide_window_decorations=titlebar-only \
+  -o background_opacity=0.92 \
+  -o initial_window_width=60c \
+  -o initial_window_height=8c \
+  -o confirm_os_window_close=0 \
+  -o remember_window_size=no \
+  -o placement_strategy=center \
+  "$script_path" --inner &
+
+# Wait for the window to appear
+sleep 1
+
+# Resize externally via Hammerspoon
+for rows in 200 300 400 500 600 500 400 300 200; do
+  echo "Resizing to height=${rows}px via Hammerspoon..."
+  hs -c "
+    local win = hs.window.find('resize-test')
+    if win then
+      local f = win:frame()
+      f.h = ${rows}
+      win:setFrame(f, 0)
+    end
+  "
+  sleep 1
+done
+
+echo "Done."

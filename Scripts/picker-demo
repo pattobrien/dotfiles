@@ -1,0 +1,69 @@
+#!/bin/zsh
+# Demo: floating Kitty picker with fzf, auto-sized to results.
+# Usage:
+#   ./picker-demo              # launches a new Kitty window
+#   ./picker-demo --inner      # (internal) runs fzf inside the window
+
+set -euo pipefail
+
+SEARCH_DIR="${HOME}/dev"
+MAX_ROWS=25
+MIN_ROWS=6
+CHROME=5       # rows used by fzf border, prompt, padding
+WIDTH_COLS=80
+
+# ── resize helper: called by fzf on every filter change ──
+if [[ "${1:-}" == "--resize" ]]; then
+  match_count="${FZF_MATCH_COUNT:-0}"
+  rows=$(( match_count + CHROME ))
+  (( rows < MIN_ROWS )) && rows=$MIN_ROWS
+  (( rows > MAX_ROWS )) && rows=$MAX_ROWS
+  kitty @ resize-os-window --self --height "${rows}c" 2>/dev/null
+  exit 0
+fi
+
+# ── inner mode: runs inside the spawned kitty window ──
+if [[ "${1:-}" == "--inner" ]]; then
+  script_path="${0:A}"
+
+  selected=$(fd -t d -d 1 . "$SEARCH_DIR" \
+    | sed "s|${SEARCH_DIR}/||" \
+    | sort \
+    | fzf \
+        --reverse \
+        --border=rounded \
+        --margin=0,1 \
+        --padding=0,1 \
+        --prompt=" repo: " \
+        --pointer="▶" \
+        --color="bg+:#2d2d2d,fg+:#e0e0e0,hl:#7aa2f7,hl+:#7aa2f7,pointer:#7aa2f7,prompt:#7aa2f7,border:#565656" \
+        --no-scrollbar \
+        --bind "result:execute-silent($script_path --resize)" \
+  ) || exit 0
+
+  echo ""
+  echo "  Selected: ${SEARCH_DIR}/${selected}"
+  sleep 1.5
+  exit 0
+fi
+
+# ── outer mode: calculate size and launch kitty ──
+results=$(fd -t d -d 1 . "$SEARCH_DIR" | wc -l | tr -d ' ')
+rows=$(( results + CHROME ))
+(( rows < MIN_ROWS )) && rows=$MIN_ROWS
+(( rows > MAX_ROWS )) && rows=$MAX_ROWS
+
+script_path="${0:A}"  # absolute path to this script
+
+exec kitty \
+  --title "picker" \
+  -o allow_remote_control=yes \
+  -o hide_window_decorations=titlebar-only \
+  -o background_opacity=0.92 \
+  -o background_blur=20 \
+  -o initial_window_width=${WIDTH_COLS}c \
+  -o initial_window_height=${rows}c \
+  -o confirm_os_window_close=0 \
+  -o remember_window_size=no \
+  -o placement_strategy=center \
+  "$script_path" --inner
