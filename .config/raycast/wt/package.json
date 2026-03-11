@@ -9,9 +9,23 @@
   "license": "MIT",
   "commands": [
     {
+      "name": "attach",
+      "title": "Attach Worktree",
+      "description": "Attach to a worktree tmux session",
+      "mode": "view",
+      "arguments": [
+        {
+          "name": "cwd",
+          "type": "text",
+          "placeholder": "Working directory",
+          "required": false
+        }
+      ]
+    },
+    {
       "name": "switch",
       "title": "Switch Worktree",
-      "description": "Switch to or attach a worktree tmux session",
+      "description": "Switch to another worktree tmux session",
       "mode": "view",
       "arguments": [
         {

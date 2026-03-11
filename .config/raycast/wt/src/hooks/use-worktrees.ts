@@ -97,18 +97,31 @@ function fetchWorktreeItems(cwd: string): WorktreeItem[] {
 
   const sessionMap = listTmuxSessions();
 
-  return worktrees.map((wt) => {
-    const name = basename(wt.path);
-    const sessionName = deriveSessionName(repoName, name);
-    return WorktreeItemSchema.parse({
-      name,
-      path: wt.path,
-      branch: wt.branch,
-      displayBranch: wt.branch ? stripBranchRef(wt.branch) : undefined,
-      head: wt.head,
-      sessionStatus: sessionMap.get(sessionName) ?? SessionStatus.None,
+  const statusOrder = {
+    [SessionStatus.Active]: 0,
+    [SessionStatus.Detached]: 1,
+    [SessionStatus.None]: 2,
+  };
+
+  return worktrees
+    .map((wt) => {
+      const name = basename(wt.path);
+      const sessionName = deriveSessionName(repoName, name);
+      return WorktreeItemSchema.parse({
+        name,
+        path: wt.path,
+        branch: wt.branch,
+        displayBranch: wt.branch ? stripBranchRef(wt.branch) : undefined,
+        head: wt.head,
+        sessionName,
+        sessionStatus: sessionMap.get(sessionName) ?? SessionStatus.None,
+      });
+    })
+    .sort((a, b) => {
+      const statusDiff = statusOrder[a.sessionStatus] - statusOrder[b.sessionStatus];
+      if (statusDiff !== 0) return statusDiff;
+      return a.name.localeCompare(b.name);
     });
-  });
 }
 
 export function useWorktrees(cwd?: string) {

@@ -6,34 +6,32 @@ import {
   updateToastFailure,
   updateToastSuccess,
 } from "./data/toasts";
-import { switchWorktree } from "./data/wt-service";
+import { attachWorktree } from "./data/wt-service";
 import { useWorktrees } from "./hooks/use-worktrees";
-import { CommandArgsSchema, SessionStatus } from "./models";
+import { CommandArgsSchema } from "./models";
 
 export default function Command(props: { arguments: { cwd?: string } }) {
   const args = CommandArgsSchema.parse(props.arguments);
   const { data, isLoading } = useWorktrees(args.cwd);
 
-  const sessions = data?.filter((wt) => wt.sessionStatus !== SessionStatus.None);
-
   return (
-    <List isLoading={isLoading} searchBarPlaceholder="Search sessions...">
-      {sessions?.map((wt) => (
+    <List isLoading={isLoading} searchBarPlaceholder="Search worktrees...">
+      {data?.map((wt) => (
         <WorktreeListItem
           key={wt.path}
           worktree={wt}
           actions={
             <>
               <Action
-                title="Switch"
-                icon={Icon.Switch}
+                title="Attach"
+                icon={Icon.Terminal}
                 onAction={async () => {
-                  const toast = await showAnimatedToast("Switching...");
+                  const toast = await showAnimatedToast("Attaching...");
                   try {
-                    switchWorktree(wt.sessionName);
-                    updateToastSuccess(toast, `Switched to ${wt.name}`);
+                    attachWorktree(wt.name, args.cwd);
+                    updateToastSuccess(toast, `Attached to ${wt.name}`);
                   } catch (error) {
-                    updateToastFailure(toast, "Failed to switch", error);
+                    updateToastFailure(toast, "Failed to attach", error);
                   }
                 }}
               />

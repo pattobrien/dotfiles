@@ -13,6 +13,8 @@ type ExtensionPreferences = {}
 declare type Preferences = ExtensionPreferences
 
 declare namespace Preferences {
+  /** Preferences accessible in the `attach` command */
+  export type Attach = ExtensionPreferences & {}
   /** Preferences accessible in the `switch` command */
   export type Switch = ExtensionPreferences & {}
   /** Preferences accessible in the `remove` command */
@@ -20,6 +22,11 @@ declare namespace Preferences {
 }
 
 declare namespace Arguments {
+  /** Arguments passed to the `attach` command */
+  export type Attach = {
+  /** Working directory */
+  "cwd": string
+}
   /** Arguments passed to the `switch` command */
   export type Switch = {
   /** Working directory */
