@@ -98,7 +98,15 @@
       "WebFetch(domain:sol.ospfranco.com)",
       "WebFetch(domain:formulae.brew.sh)",
       "Bash(gh search:*)",
-      "Bash(brew info:*)"
+      "Bash(brew info:*)",
+      "Bash(hdiutil attach:*)",
+      "Bash(echo \"alpha\\\\nbeta\\\\ngamma\\\\ndelta\\\\nepsilon\\\\nzeta\\\\neta\\\\ntheta\" | /Users/pattobrien/.dotfiles/Scripts/picker --prompt \" pick: \")",
+      "Bash(/Users/pattobrien/.dotfiles/Scripts/picker --prompt \" pick: \")",
+      "Bash(/Applications/Kitty-nightly.app/Contents/MacOS/kitty \\\\\n  --title \"resize-test\" \\\\\n  -o hide_window_decorations=titlebar-only \\\\\n  -o background_opacity=0.92 \\\\\n  -o background_blur=20 \\\\\n  -o initial_window_width=60c \\\\\n  -o initial_window_height=30c \\\\\n  -o confirm_os_window_close=0 \\\\\n  -o remember_window_size=no \\\\\n  -o placement_strategy=center \\\\\n  /Users/pattobrien/.dotfiles/Scripts/picker-resize-inner)",
+      "Bash(/Applications/Kitty-nightly.app/Contents/MacOS/kitty \\\\\n  --title \"resize-test\" \\\\\n  -o confirm_os_window_close=0 \\\\\n  -o remember_window_size=no \\\\\n  /Users/pattobrien/.dotfiles/Scripts/picker-resize-inner)",
+      "Bash(cd /Users/pattobrien/.dotfiles/Tools/Picker && swift build -c release 2>&1)",
+      "Bash(echo \"alpha\\\\nbeta\\\\ngamma\\\\ndelta\\\\nepsilon\\\\nzeta\\\\neta\\\\ntheta\\\\niota\\\\nkappa\\\\nlambda\\\\nmu\" | /Users/pattobrien/.dotfiles/Tools/Picker/.build/release/picker --prompt \"pick: \")",
+      "Bash(swift build:*)"
     ],
     "deny": [],
     "additionalDirectories": [

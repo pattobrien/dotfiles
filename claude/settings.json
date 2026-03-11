@@ -109,7 +109,8 @@
     "figma@claude-plugins-official": true,
     "expo-app-design@expo-plugins": true,
     "claude-notifications-go@claude-notifications-go": true,
-    "lua-lsp@claude-plugins-official": true
+    "lua-lsp@claude-plugins-official": true,
+    "swift-lsp@claude-plugins-official": true
   },
   "extraKnownMarketplaces": {
     "expo-plugins": {

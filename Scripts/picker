@@ -1,0 +1,120 @@
+#!/bin/zsh
+# Generic floating picker using Kitty + fzf with dynamic window resizing.
+#
+# Usage:
+#   echo "foo\nbar\nbaz" | picker [--prompt LABEL] [--width COLS]
+#   fd -t d -d 1 . ~/dev | picker --prompt "project: "
+#
+# The selected item is printed to stdout. Exit code 0 on selection, 1 on cancel.
+
+set -euo pipefail
+
+# ── kitty nightly ──
+KITTY=/Applications/Kitty-nightly.app/Contents/MacOS/kitty
+
+# ── defaults ──
+PROMPT_LABEL=" ❯ "
+WIDTH_COLS=80
+MAX_ROWS=25
+MIN_ROWS=5
+CHROME=5  # fzf border + prompt + padding overhead
+
+# ── parse arguments ──
+ITEMS_FILE=""
+RESULT_FILE=""
+MODE="outer"
+
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+    --prompt)   PROMPT_LABEL="$2"; shift 2 ;;
+    --width)    WIDTH_COLS="$2"; shift 2 ;;
+    --max-rows) MAX_ROWS="$2"; shift 2 ;;
+    # internal flags (not for external use)
+    --_inner)   MODE="inner"; ITEMS_FILE="$2"; RESULT_FILE="$3"; shift 3 ;;
+    --_resize)  MODE="resize"; KITTY_SOCKET="$2"; shift 2 ;;
+    *) echo "picker: unknown option: $1" >&2; exit 1 ;;
+  esac
+done
+
+# ── resize mode: called by fzf on every filter change ──
+if [[ "$MODE" == "resize" ]]; then
+  match_count="${FZF_MATCH_COUNT:-0}"
+  rows=$(( match_count + CHROME ))
+  (( rows < MIN_ROWS )) && rows=$MIN_ROWS
+  (( rows > MAX_ROWS )) && rows=$MAX_ROWS
+  "$KITTY" @ --to "unix:${KITTY_SOCKET}" resize-os-window --self --unit cells --height "${rows}" 2>/dev/null
+  exit 0
+fi
+
+# ── inner mode: runs inside the spawned Kitty window ──
+if [[ "$MODE" == "inner" ]]; then
+  script_path="${0:A}"
+  kitty_socket="${KITTY_LISTEN_ON#unix:}"
+
+  kitty_bin="/Applications/Kitty-nightly.app/Contents/MacOS/kitty"
+  resize_cmd="$kitty_bin @ --to unix:$kitty_socket resize-os-window --self --unit cells --height \$(( (FZF_MATCH_COUNT < $MIN_ROWS - $CHROME ? $MIN_ROWS : (FZF_MATCH_COUNT > $MAX_ROWS - $CHROME ? $MAX_ROWS : FZF_MATCH_COUNT + $CHROME)) ))"
+
+  # Inline resize: start synchronized output, resize, end synchronized output
+  resize_script="count=\${FZF_MATCH_COUNT:-0}; rows=\$(( count + $CHROME )); [ \$rows -lt $MIN_ROWS ] && rows=$MIN_ROWS; [ \$rows -gt $MAX_ROWS ] && rows=$MAX_ROWS; printf '\\e[?2026h'; $kitty_bin @ --to unix:$kitty_socket resize-os-window --self --unit cells --height \$rows; printf '\\e[?2026l'"
+
+  selected=$(cat "$ITEMS_FILE" \
+    | fzf \
+        --reverse \
+        --border=rounded \
+        --margin=0,1 \
+        --padding=0,1 \
+        --prompt="$PROMPT_LABEL" \
+        --pointer="▶" \
+        --color="bg+:#2d2d2d,fg+:#e0e0e0,hl:#7aa2f7,hl+:#7aa2f7,pointer:#7aa2f7,prompt:#7aa2f7,border:#565656" \
+        --no-scrollbar \
+        --bind "result:execute-silent($resize_script)" \
+  ) || exit 0
+
+  printf '%s' "$selected" > "$RESULT_FILE"
+  exit 0
+fi
+
+# ── outer mode (default): read stdin, launch Kitty, return result ──
+if [[ -t 0 ]]; then
+  echo "picker: no input. Pipe items into picker or use a command." >&2
+  exit 1
+fi
+
+# Save items and prepare result file
+ITEMS_FILE="$(mktemp)"
+RESULT_FILE="$(mktemp)"
+cat > "$ITEMS_FILE"
+
+# Calculate initial window height from item count
+item_count=$(wc -l < "$ITEMS_FILE" | tr -d ' ')
+rows=$(( item_count + CHROME ))
+(( rows < MIN_ROWS )) && rows=$MIN_ROWS
+(( rows > MAX_ROWS )) && rows=$MAX_ROWS
+
+script_path="${0:A}"
+KITTY_SOCKET="/tmp/kitty-picker-$$.sock"
+trap 'rm -f "$ITEMS_FILE" "$RESULT_FILE" "$KITTY_SOCKET"' EXIT
+
+# Launch Kitty and wait for it to close
+"$KITTY" \
+  --title "picker" \
+  -o allow_remote_control=yes \
+  --listen-on "unix:${KITTY_SOCKET}" \
+  -o hide_window_decorations=titlebar-only \
+  -o background_opacity=0.92 \
+  -o background_blur=20 \
+  -o initial_window_width="${WIDTH_COLS}c" \
+  -o initial_window_height="${rows}c" \
+  -o confirm_os_window_close=0 \
+  -o remember_window_size=no \
+  -o placement_strategy=center \
+  -o resize_debounce_time=0 \
+  "$script_path" --_inner "$ITEMS_FILE" "$RESULT_FILE"
+
+# Return result
+if [[ -s "$RESULT_FILE" ]]; then
+  cat "$RESULT_FILE"
+  exit 0
+else
+  exit 1
+fi
