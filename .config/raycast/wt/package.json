@@ -49,6 +49,12 @@
           "required": false
         }
       ]
+    },
+    {
+      "name": "projects",
+      "title": "List Projects",
+      "description": "Browse discovered git projects",
+      "mode": "view"
     }
   ],
   "dependencies": {

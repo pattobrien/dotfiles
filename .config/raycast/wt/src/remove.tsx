@@ -1,7 +1,10 @@
-import { Action, Color, Icon, List } from "@raycast/api";
-import { z } from "zod/v4";
+import { useState } from "react";
 
+import { Action, Color, Icon, List } from "@raycast/api";
+
+import { ProjectDropdown } from "./components/project-dropdown";
 import { WorktreeListItem } from "./components/worktree-list-item";
+import { DEFAULT_CWD } from "./data/paths";
 import {
   showAnimatedToast,
   updateToastFailure,
@@ -11,17 +14,27 @@ import { removeWorktree } from "./data/wt-service";
 import { useWorktrees } from "./hooks/use-worktrees";
 import { CommandArgsSchema } from "./models";
 
-type RemoveCommandProps = z.infer<typeof CommandArgsSchema>;
-
-export default function Command(props: { arguments: RemoveCommandProps }) {
+export default function Command(props: { arguments: { cwd?: string } }) {
   const args = CommandArgsSchema.parse(props.arguments);
-  const { data, isLoading, revalidate } = useWorktrees(args.cwd);
+  const [selectedProject, setSelectedProject] = useState(args.cwd || DEFAULT_CWD);
+  const { data, isLoading, revalidate } = useWorktrees(selectedProject);
 
   return (
     <List
       isLoading={isLoading}
       searchBarPlaceholder="Search worktrees to remove..."
+      searchBarAccessory={
+        <ProjectDropdown
+          defaultCwd={selectedProject}
+          onProjectChange={setSelectedProject}
+        />
+      }
     >
+      <List.EmptyView
+        title="No Worktrees Found"
+        description="No git worktrees were found in the current directory."
+        icon={Icon.Tree}
+      />
       {data?.map((wt) => (
         <WorktreeListItem
           key={wt.path}
@@ -33,7 +46,7 @@ export default function Command(props: { arguments: RemoveCommandProps }) {
               onAction={async () => {
                 const toast = await showAnimatedToast("Removing...");
                 try {
-                  removeWorktree(wt.name, args.cwd);
+                  removeWorktree(wt.name, selectedProject);
                   updateToastSuccess(toast, `Removed ${wt.name}`);
                   revalidate();
                 } catch (error) {

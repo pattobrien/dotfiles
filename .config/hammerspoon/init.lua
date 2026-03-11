@@ -81,76 +81,27 @@ local function getKittyTmuxSession()
     return nil
 end
 
--- Kitty worktree switcher hotkey (only active when Kitty is focused)
--- Parses the tmux session name (<repo>--<worktree>), looks up the repo,
+-- Worktree switcher hotkey (Cmd+Shift+I)
+-- Detects the tmux session in the focused Kitty window, looks up the repo,
 -- and opens the Raycast worktree switch UI scoped to that repo.
-local kittyHotkey = hs.hotkey.new({"cmd", "shift"}, "i", function()
-    local sessionName = getKittyTmuxSession()
-    if not sessionName then
-        hs.alert.show("No tmux session found in this Kitty window")
-        return
-    end
+local repoMap = {
+    meagain = os.getenv("HOME") .. "/dev/getdots/meagain-bare/.worktrees/main",
+}
 
-    print(string.format("[kitty-tmux] Session: %s", sessionName))
+hs.hotkey.bind({"cmd", "shift"}, "i", function()
+    hs.timer.doAfter(0, function()
+        local sessionName = getKittyTmuxSession()
+        if not sessionName then return end
 
-    -- Parse session name: <repo>--<worktree>
-    local repoName = sessionName:match("^(.+)%-%-")
-    if not repoName then
-        hs.alert.show("Session name doesn't match <repo>--<worktree> format: " .. sessionName)
-        return
-    end
+        local repoName = sessionName:match("^(.+)%-%-")
+        if not repoName then return end
 
-    -- Look up repo via wt repos list (use login shell for PATH)
-    local output, status = hs.execute("wt repos list 2>&1", true)
-    if not status or not output or output == "" then
-        print("[kitty-tmux] wt repos list failed: " .. (output or "nil"))
-        hs.alert.show("Failed to list repos")
-        return
-    end
+        local rootDir = repoMap[repoName]
+        if not rootDir then return end
 
-    local repos = hs.json.decode(output)
-    if not repos then
-        hs.alert.show("Failed to parse repo list")
-        return
-    end
-
-    -- Find matching repo by name
-    local rootDir = nil
-    for _, repo in ipairs(repos) do
-        if repo.repoName == repoName then
-            rootDir = repo.rootDir
-            break
-        end
-    end
-
-    if not rootDir then
-        hs.alert.show("No repo found matching: " .. repoName)
-        return
-    end
-
-    print(string.format("[kitty-tmux] Repo: %s -> %s", repoName, rootDir))
-
-    -- Open Raycast switch command scoped to this repo
-    local argsJson = hs.json.encode({ cwd = rootDir })
-    local encoded = hs.http.encodeForQuery(argsJson)
-    local deeplink = "raycast://extensions/pattobrien/wt-manager/switch?arguments=" .. encoded
-    print(string.format("[kitty-tmux] Opening: %s", deeplink))
-    hs.urlevent.openURL(deeplink)
+        local argsJson = hs.json.encode({ cwd = rootDir })
+        local encoded = hs.http.encodeForQuery(argsJson)
+        hs.urlevent.openURL("raycast://extensions/pattobrien/wt-manager/switch?arguments=" .. encoded)
+    end)
 end)
 
--- Enable/disable the hotkey based on Kitty being focused
-local kittyWatcher = hs.application.watcher.new(function(appName, eventType, _)
-    if appName == "kitty" then
-        if eventType == hs.application.watcher.activated then
-            kittyHotkey:enable()
-        elseif eventType == hs.application.watcher.deactivated then
-            kittyHotkey:disable()
-        end
-    end
-end)
-kittyWatcher:start()
-
--- Enable immediately if Kitty is already focused
-if hs.application.frontmostApplication():name() == "kitty" then
-    kittyHotkey:enable()
-end

@@ -1,5 +1,6 @@
 import { execFileSync } from "node:child_process";
-import { basename, dirname } from "node:path";
+import { existsSync, readdirSync, statSync } from "node:fs";
+import { basename, dirname, join } from "node:path";
 
 import { useCachedPromise } from "@raycast/utils";
 
@@ -60,6 +61,36 @@ function listTmuxSessions(): Map<string, SessionStatus> {
     // tmux server not running — not an error for us
   }
   return map;
+}
+
+/**
+ * For bare repos, the project repoDir contains `.bare` but no `.git`,
+ * so git commands can't run there directly. Find a worktree checkout to use as cwd.
+ */
+function resolveGitCwd(dir: string): string {
+  if (existsSync(join(dir, ".git"))) return dir;
+
+  if (existsSync(join(dir, ".bare"))) {
+    const searchDirs = [dir];
+    const wtDir = join(dir, ".worktrees");
+    if (existsSync(wtDir)) searchDirs.push(wtDir);
+
+    for (const searchDir of searchDirs) {
+      try {
+        for (const entry of readdirSync(searchDir)) {
+          if (entry.startsWith(".")) continue;
+          const full = join(searchDir, entry);
+          if (statSync(full).isDirectory() && existsSync(join(full, ".git"))) {
+            return full;
+          }
+        }
+      } catch {
+        // skip
+      }
+    }
+  }
+
+  return dir;
 }
 
 function fetchWorktreeItems(cwd: string): WorktreeItem[] {
@@ -125,6 +156,9 @@ function fetchWorktreeItems(cwd: string): WorktreeItem[] {
 }
 
 export function useWorktrees(cwd?: string) {
-  const resolvedCwd = resolvePath(cwd || DEFAULT_CWD);
-  return useCachedPromise(() => Promise.resolve(fetchWorktreeItems(resolvedCwd)));
+  const resolvedCwd = resolveGitCwd(resolvePath(cwd || DEFAULT_CWD));
+  return useCachedPromise(
+    (dir: string) => Promise.resolve(fetchWorktreeItems(dir)),
+    [resolvedCwd],
+  );
 }

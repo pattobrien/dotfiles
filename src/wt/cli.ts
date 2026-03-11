@@ -6,8 +6,8 @@ import { attach } from "./attach";
 import { generateZshCompletions } from "./completions";
 import { create } from "./create";
 import { list } from "./list";
+import { projects } from "./projects";
 import { remove } from "./remove";
-import { repos } from "./repos";
 import { switchWorktree } from "./switch";
 import { t } from "./trpc";
 
@@ -15,8 +15,8 @@ const router = t.router({
   attach,
   create,
   list,
+  projects,
   remove,
-  repos,
   switch: switchWorktree,
 });
 

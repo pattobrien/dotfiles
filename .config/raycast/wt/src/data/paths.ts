@@ -27,6 +27,8 @@ export const TMUX_TMPDIR = "/tmp";
 
 export const DEFAULT_CWD = "~/dev/getdots/meagain-bare/.worktrees/main";
 
+export const PROJECTS_CACHE_PATH = resolvePath("~/.cache/wt/projects.json");
+
 export function resolvePath(path: string): string {
   return path.replace(/^~/, process.env.HOME || "/Users/pattobrien");
 }

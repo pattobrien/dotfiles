@@ -19,6 +19,8 @@ declare namespace Preferences {
   export type Switch = ExtensionPreferences & {}
   /** Preferences accessible in the `remove` command */
   export type Remove = ExtensionPreferences & {}
+  /** Preferences accessible in the `projects` command */
+  export type Projects = ExtensionPreferences & {}
 }
 
 declare namespace Arguments {
@@ -37,5 +39,7 @@ declare namespace Arguments {
   /** Working directory */
   "cwd": string
 }
+  /** Arguments passed to the `projects` command */
+  export type Projects = {}
 }
 

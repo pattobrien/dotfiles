@@ -1,9 +1,34 @@
 import { execFileSync, execSync } from "node:child_process";
+import { existsSync, readdirSync, statSync } from "node:fs";
+import { join } from "node:path";
 
 import { DEFAULT_CWD, TMUX_BIN, TMUX_TMPDIR, WT_BIN, WT_PATH, resolvePath } from "./paths";
 
+function resolveGitCwd(dir: string): string {
+  if (existsSync(join(dir, ".git"))) return dir;
+  if (existsSync(join(dir, ".bare"))) {
+    const searchDirs = [dir];
+    const wtDir = join(dir, ".worktrees");
+    if (existsSync(wtDir)) searchDirs.push(wtDir);
+    for (const searchDir of searchDirs) {
+      try {
+        for (const entry of readdirSync(searchDir)) {
+          if (entry.startsWith(".")) continue;
+          const full = join(searchDir, entry);
+          if (statSync(full).isDirectory() && existsSync(join(full, ".git"))) {
+            return full;
+          }
+        }
+      } catch {
+        // skip
+      }
+    }
+  }
+  return dir;
+}
+
 function resolveCwd(cwd?: string): string {
-  return resolvePath(cwd || DEFAULT_CWD);
+  return resolveGitCwd(resolvePath(cwd || DEFAULT_CWD));
 }
 
 function execWt(args: string[], cwd: string): void {

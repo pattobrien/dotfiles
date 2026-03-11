@@ -1,6 +1,10 @@
+import { useState } from "react";
+
 import { Action, Icon, List } from "@raycast/api";
 
+import { ProjectDropdown } from "./components/project-dropdown";
 import { WorktreeListItem } from "./components/worktree-list-item";
+import { DEFAULT_CWD } from "./data/paths";
 import {
   showAnimatedToast,
   updateToastFailure,
@@ -12,10 +16,25 @@ import { CommandArgsSchema } from "./models";
 
 export default function Command(props: { arguments: { cwd?: string } }) {
   const args = CommandArgsSchema.parse(props.arguments);
-  const { data, isLoading } = useWorktrees(args.cwd);
+  const [selectedProject, setSelectedProject] = useState(args.cwd || DEFAULT_CWD);
+  const { data, isLoading } = useWorktrees(selectedProject);
 
   return (
-    <List isLoading={isLoading} searchBarPlaceholder="Search worktrees...">
+    <List
+      isLoading={isLoading}
+      searchBarPlaceholder="Search worktrees..."
+      searchBarAccessory={
+        <ProjectDropdown
+          defaultCwd={selectedProject}
+          onProjectChange={setSelectedProject}
+        />
+      }
+    >
+      <List.EmptyView
+        title="No Worktrees Found"
+        description="No git worktrees were found in the current directory."
+        icon={Icon.Tree}
+      />
       {data?.map((wt) => (
         <WorktreeListItem
           key={wt.path}
@@ -28,7 +47,7 @@ export default function Command(props: { arguments: { cwd?: string } }) {
                 onAction={async () => {
                   const toast = await showAnimatedToast("Attaching...");
                   try {
-                    attachWorktree(wt.name, args.cwd);
+                    attachWorktree(wt.name, selectedProject);
                     updateToastSuccess(toast, `Attached to ${wt.name}`);
                   } catch (error) {
                     updateToastFailure(toast, "Failed to attach", error);

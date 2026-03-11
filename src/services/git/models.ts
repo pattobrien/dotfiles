@@ -16,3 +16,12 @@ export const RepoInfoSchema = z.object({
 });
 
 export type RepoInfo = z.infer<typeof RepoInfoSchema>;
+
+export const ProjectSchema = z.object({
+  repoDir: z.string(),
+  repoName: z.string(),
+  repoOrg: z.string(),
+  isBare: z.boolean(),
+});
+
+export type Project = z.infer<typeof ProjectSchema>;
