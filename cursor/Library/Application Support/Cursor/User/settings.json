@@ -454,7 +454,6 @@
   "git.enableSmartCommit": true,
   "workbench.editor.enablePreviewFromCodeNavigation": true,
   "workbench.editor.enablePreviewFromQuickOpen": true,
-  "swift.path": "/Users/pattobrien/.local/share/mise/installs/swift/6.2.3/bin",
   "terminal.integrated.allowedLinkSchemes": [
     "file",
     "http",

@@ -48,9 +48,9 @@ echo "alpha\nbeta\ngamma\ndelta" | picker
 
 | Flag           | Default | Description                                                             |
 | -------------- | ------- | ----------------------------------------------------------------------- |
-| `--prompt`     | `❯ `    | Prompt string shown in the text field                                   |
+| `--prompt`     | `>`     | Prompt string shown in the text field                                   |
 | `--max-rows`   | `20`    | Maximum visible rows before scrolling                                   |
-| `--width`      | `500`   | Window width in points                                                  |
+| `--width`      | `680`   | Window width in points                                                  |
 | `--filter-cmd` | `fzf`   | External CLI used for fuzzy filtering (must support `--filter <query>`) |
 
 ### Examples

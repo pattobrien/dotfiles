@@ -1,0 +1,24 @@
+{
+  "configurations": [
+    {
+      "type": "swift",
+      "request": "launch",
+      "args": [],
+      "cwd": "${workspaceFolder:Picker}",
+      "name": "Debug picker",
+      "target": "picker",
+      "configuration": "debug",
+      "preLaunchTask": "swift: Build Debug picker",
+    },
+    {
+      "type": "swift",
+      "request": "launch",
+      "args": [],
+      "cwd": "${workspaceFolder:Picker}",
+      "name": "Release picker",
+      "target": "picker",
+      "configuration": "release",
+      "preLaunchTask": "swift: Build Release picker",
+    },
+  ],
+}
