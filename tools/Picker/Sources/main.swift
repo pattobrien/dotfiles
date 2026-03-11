@@ -21,6 +21,7 @@ guard !items.isEmpty else {
 var promptLabel = "❯ "
 var maxVisible = 20
 var windowWidth: CGFloat = 500
+var filterCmd = "fzf"
 
 let args = CommandLine.arguments
 var i = 1
@@ -32,9 +33,48 @@ while i < args.count {
         maxVisible = Int(args[i + 1]) ?? maxVisible; i += 2
     case "--width" where i + 1 < args.count:
         windowWidth = CGFloat(Double(args[i + 1]) ?? Double(windowWidth)); i += 2
+    case "--filter-cmd" where i + 1 < args.count:
+        filterCmd = args[i + 1]; i += 2
     default:
         i += 1
     }
+}
+
+// MARK: - External filter
+
+func runFilter(query: String, items: [String], cmd: String) -> [String] {
+    guard !query.isEmpty else { return items }
+
+    let process = Process()
+    process.executableURL = URL(fileURLWithPath: "/usr/bin/env")
+    process.arguments = [cmd, "--filter", query]
+
+    let stdinPipe = Pipe()
+    let stdoutPipe = Pipe()
+    process.standardInput = stdinPipe
+    process.standardOutput = stdoutPipe
+    process.standardError = FileHandle.nullDevice
+
+    do {
+        try process.run()
+    } catch {
+        // Fall back to simple contains filter if the command fails to launch
+        let q = query.lowercased()
+        return items.filter { $0.lowercased().contains(q) }
+    }
+
+    let input = items.joined(separator: "\n") + "\n"
+    stdinPipe.fileHandleForWriting.write(input.data(using: .utf8)!)
+    stdinPipe.fileHandleForWriting.closeFile()
+
+    process.waitUntilExit()
+
+    let outputData = stdoutPipe.fileHandleForReading.readDataToEndOfFile()
+    let output = String(data: outputData, encoding: .utf8) ?? ""
+
+    return output
+        .split(separator: "\n", omittingEmptySubsequences: true)
+        .map { String($0) }
 }
 
 // MARK: - PickerTextField (forwards arrow keys)
@@ -66,6 +106,7 @@ class PickerViewController: NSViewController, NSTableViewDataSource, NSTableView
     private var filtered: [String]
     private let prompt: String
     private let maxRows: Int
+    private let filterCommand: String
 
     private let rowHeight: CGFloat = 24
     private let textFieldHeight: CGFloat = 36
@@ -75,11 +116,12 @@ class PickerViewController: NSViewController, NSTableViewDataSource, NSTableView
     private var scrollView: NSScrollView!
     private var tableView: NSTableView!
 
-    init(items: [String], prompt: String, maxRows: Int) {
+    init(items: [String], prompt: String, maxRows: Int, filterCommand: String) {
         self.allItems = items
         self.filtered = items
         self.prompt = prompt
         self.maxRows = maxRows
+        self.filterCommand = filterCommand
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -169,12 +211,8 @@ class PickerViewController: NSViewController, NSTableViewDataSource, NSTableView
     // MARK: - Filtering
 
     func controlTextDidChange(_ obj: Notification) {
-        let query = textField.stringValue.lowercased()
-        if query.isEmpty {
-            filtered = allItems
-        } else {
-            filtered = allItems.filter { $0.lowercased().contains(query) }
-        }
+        let query = textField.stringValue
+        filtered = runFilter(query: query, items: allItems, cmd: filterCommand)
         tableView.reloadData()
         if !filtered.isEmpty {
             tableView.selectRowIndexes(IndexSet(integer: 0), byExtendingSelection: false)
@@ -268,12 +306,14 @@ class PickerAppDelegate: NSObject, NSApplicationDelegate {
     let pickerPrompt: String
     let pickerMaxRows: Int
     let pickerWidth: CGFloat
+    let pickerFilterCmd: String
 
-    init(items: [String], prompt: String, maxRows: Int, width: CGFloat) {
+    init(items: [String], prompt: String, maxRows: Int, width: CGFloat, filterCmd: String) {
         self.pickerItems = items
         self.pickerPrompt = prompt
         self.pickerMaxRows = maxRows
         self.pickerWidth = width
+        self.pickerFilterCmd = filterCmd
         super.init()
     }
 
@@ -303,7 +343,7 @@ class PickerAppDelegate: NSObject, NSApplicationDelegate {
 
         window.appearance = NSAppearance(named: .darkAqua)
 
-        let vc = PickerViewController(items: pickerItems, prompt: pickerPrompt, maxRows: pickerMaxRows)
+        let vc = PickerViewController(items: pickerItems, prompt: pickerPrompt, maxRows: pickerMaxRows, filterCommand: pickerFilterCmd)
         window.contentViewController = vc
         window.setFrame(windowFrame, display: false)
 
@@ -325,7 +365,8 @@ let delegate = PickerAppDelegate(
     items: items,
     prompt: promptLabel,
     maxRows: maxVisible,
-    width: windowWidth
+    width: windowWidth,
+    filterCmd: filterCmd
 )
 app.delegate = delegate
 app.run()
