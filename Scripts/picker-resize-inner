@@ -1,0 +1,5 @@
+#!/bin/zsh
+echo "Waiting for external resize..."
+echo "Watch the window height change from outside."
+echo ""
+read -r "?Press enter to close..."

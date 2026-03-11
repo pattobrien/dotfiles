@@ -1,47 +1,51 @@
 #!/bin/zsh
-# Test: resize a kitty window externally via Hammerspoon
-# Usage:
-#   ./picker-resize-test              # launches kitty, then resizes via HS
-#   ./picker-resize-test --inner      # (internal) just holds the window open
-
+# Test: resize a ghostty window externally via Hammerspoon
 set -euo pipefail
 
-if [[ "${1:-}" == "--inner" ]]; then
-  echo "Waiting for external resize..."
-  echo "Watch the window height change from outside."
-  echo ""
-  # Just keep the window alive
-  read -r "?Press enter to close..."
-  exit 0
-fi
+inner_script="${0:A:h}/picker-resize-inner"
 
-script_path="${0:A}"
+# Launch ghostty in background
+ghostty \
+  --title="resize-test" \
+  --window-width=60 \
+  --window-height=8 \
+  --window-save-state=never \
+  --window-padding-x=8 \
+  --window-padding-y=4 \
+  --window-padding-balance=true \
+  --window-padding-color=extend \
+  --background-opacity=0.92 \
+  --background-blur-radius=20 \
+  --macos-titlebar-style=hidden \
+  -e "$inner_script" &
 
-# Launch kitty in background
-kitty \
-  --title "resize-test" \
-  -o hide_window_decorations=titlebar-only \
-  -o background_opacity=0.92 \
-  -o initial_window_width=60c \
-  -o initial_window_height=8c \
-  -o confirm_os_window_close=0 \
-  -o remember_window_size=no \
-  -o placement_strategy=center \
-  "$script_path" --inner &
-
-# Wait for the window to appear
-sleep 1
-
-# Resize externally via Hammerspoon
-for rows in 200 300 400 500 600 500 400 300 200; do
-  echo "Resizing to height=${rows}px via Hammerspoon..."
-  hs -c "
-    local win = hs.window.find('resize-test')
-    if win then
-      local f = win:frame()
-      f.h = ${rows}
-      win:setFrame(f, 0)
+# Wait for the window to appear (may need to accept the execute prompt)
+echo "Waiting for Ghostty window..."
+for i in {1..10}; do
+  found=$(hs -c "
+    local wins = hs.window.filter.new('Ghostty'):getWindows()
+    for _, w in ipairs(wins) do
+      return 'found'
     end
+    return 'waiting'
+  ")
+  [[ "$found" == "found" ]] && break
+  sleep 1
+done
+
+# Resize externally via Hammerspoon (match any Ghostty window)
+for h in 200 300 400 500 600 500 400 300 200; do
+  echo "Resizing to ${h}px..."
+  hs -c "
+    local wins = hs.window.filter.new('Ghostty'):getWindows()
+    if #wins > 0 then
+      local w = wins[1]
+      local f = w:frame()
+      f.h = ${h}
+      w:setFrame(f, 0)
+      return 'done'
+    end
+    return 'Not found'
   "
   sleep 1
 done
