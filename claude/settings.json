@@ -122,5 +122,6 @@
   },
   "alwaysThinkingEnabled": true,
   "minimumVersion": "2.1.19",
-  "plansDirectory": "./docs/plans"
+  "plansDirectory": "./docs/plans",
+  "voiceEnabled": false
 }

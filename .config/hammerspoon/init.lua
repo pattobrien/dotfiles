@@ -13,20 +13,22 @@ spoon.ReloadConfiguration:start()
 
 hs.alert.show("Hammerspoon loaded")
 
--- Load Hammerflow for declarative Leader-key bindings
-hs.loadSpoon("Hammerflow")
-spoon.Hammerflow.loadFirstValidTomlFile({
-    "hammerflow.toml",
-    "home.toml",
-    "work.toml",
-    "Spoons/Hammerflow.spoon/sample.toml"
-})
--- optionally respect auto_reload setting in the toml config.
-if spoon.Hammerflow.auto_reload then
-    hs.loadSpoon("ReloadConfiguration")
-    -- set any paths for auto reload
-    -- spoon.ReloadConfiguration.watch_paths = {hs.configDir, "~/path/to/my/configs/"}
-    spoon.ReloadConfiguration:start()
+-- Load Hammerflow for declarative Leader-key bindings (optional)
+local hammerflowOk, hammerflowErr = pcall(function()
+    hs.loadSpoon("Hammerflow")
+    spoon.Hammerflow.loadFirstValidTomlFile({
+        "hammerflow.toml",
+        "home.toml",
+        "work.toml",
+        "Spoons/Hammerflow.spoon/sample.toml"
+    })
+    if spoon.Hammerflow.auto_reload then
+        hs.loadSpoon("ReloadConfiguration")
+        spoon.ReloadConfiguration:start()
+    end
+end)
+if not hammerflowOk then
+    print("[init.lua] Hammerflow failed to load: " .. tostring(hammerflowErr))
 end
 
 -- Get the tmux session name attached in the focused Kitty window via kitty remote control.
@@ -89,6 +91,7 @@ local repoMap = {
 }
 
 hs.hotkey.bind({"cmd", "shift"}, "i", function()
+    print("[init.lua] Cmd+Shift+I hotkey triggered")
     hs.timer.doAfter(0, function()
         local sessionName = getKittyTmuxSession()
         if not sessionName then return end
