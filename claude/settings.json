@@ -106,11 +106,11 @@
     "commit-commands@claude-plugins-official": true,
     "plugin-dev@claude-plugins-official": false,
     "pr-review-toolkit@claude-plugins-official": false,
-    "figma@claude-plugins-official": true,
+    "figma@claude-plugins-official": false,
     "expo-app-design@expo-plugins": true,
     "claude-notifications-go@claude-notifications-go": true,
     "lua-lsp@claude-plugins-official": true,
-    "swift-lsp@claude-plugins-official": true
+    "swift-lsp@claude-plugins-official": false
   },
   "extraKnownMarketplaces": {
     "expo-plugins": {

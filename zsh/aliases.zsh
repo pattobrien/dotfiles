@@ -21,7 +21,7 @@ alias ls="eza --git-ignore"
 alias l="ls -la"
 alias ll="ls -lah"
 
-alias cat="bat"
+# alias cat="bat"
 # alias grep="rg"
 # alias find="fd"
 
