@@ -2,6 +2,30 @@
 
 Configurations for Neovim, kitty, git, and other various developer tools.
 
+## TypeScript Tooling
+
+This repo includes a pnpm + [Vite+](https://github.com/nicepkg/vite-plus) monorepo for TypeScript tools.
+
+### Workspace structure
+
+```
+packages/git      # Git client library (worktrees, branches, project discovery)
+packages/tmux     # Tmux client library (sessions, windows, keys)
+packages/utils    # Shared utilities
+tools/wt-cli      # Worktree manager CLI (trpc-cli)
+tools/wt-raycast  # Worktree manager Raycast extension
+tools/picker      # macOS picker (Swift, not in pnpm workspace)
+```
+
+### Development
+
+```sh
+vp install          # install dependencies
+vp check            # format + lint + typecheck
+vp test             # run tests
+vp run build -r     # build all packages
+```
+
 ## Setup
 
 ### 1. Install Xcode CLI tools

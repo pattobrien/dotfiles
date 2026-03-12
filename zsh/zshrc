@@ -173,7 +173,9 @@ source ~/.dotfiles/zsh/go.zsh
 source ~/.dotfiles/zsh/php.zsh
 source ~/.dotfiles/zsh/ruby.zsh
 source ~/.dotfiles/zsh/completion-for-pnpm.zsh
-source <(wt --completions-zsh)
+if command -v wt &>/dev/null; then
+  source <(wt --completions-zsh)
+fi
 
 if [ -f ~/.dotfiles/zsh/.env.zsh ]; then
   source ~/.dotfiles/zsh/.env.zsh

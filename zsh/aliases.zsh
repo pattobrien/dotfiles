@@ -38,19 +38,8 @@ function gwc() { # git worktree checkout existing remote branch via fzf
   git worktree add --track -b "$branch" .worktrees/"$branch" origin/"$branch"
 }
 
-# worktree + tmux session management
-wtc() { ~/.dotfiles/src/wt/create.ts "$@" }   # create worktree: wtc <branch-name> [base-ref]
-wta() { ~/.dotfiles/src/wt/attach.ts "$@" }   # attach tmux session to worktree: wta [worktree-name]
-wtl() { ~/.dotfiles/src/wt/list.ts "$@" }     # list worktrees with tmux session status
-wtr() { ~/.dotfiles/src/wt/remove.ts "$@" }   # remove worktree + tmux session + branch: wtr [worktree-name]
-wts() { ~/.dotfiles/src/wt/switch.ts "$@" }   # switch tmux session to worktree (fzf): wts
-
-# completions: complete worktree names for wta/wtr
-_wt_complete_worktrees() {
-  local worktrees=("${(@f)$(git worktree list --porcelain 2>/dev/null | grep '^worktree ' | sed 's|^worktree ||' | xargs -I{} basename {})}")
-  compadd -a worktrees
-}
-compdef _wt_complete_worktrees wta wtr
+# worktree + tmux session management (via `wt` CLI)
+# old aliases (wtc, wta, wtl, wtr, wts) replaced by: wt create, wt attach, wt list, wt remove, wt switch
 
 
 
