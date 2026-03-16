@@ -75,6 +75,28 @@ Dumps a snapshot of all brew-installed applications.
 brew bundle dump --force --describe --file=~/.dotfiles/brew/personal/Brewfile
 ```
 
+## Troubleshooting
+
+### macOS "would like to access data from other apps" dialog keeps reappearing
+
+On macOS Sequoia, apps can get stuck in a limbo permission state (`auth_value=5`) in the TCC database, causing the "would like to access data from other apps" dialog to reappear on every restart.
+
+**Check for stuck entries:**
+
+```sh
+sqlite3 ~/Library/Application\ Support/com.apple.TCC/TCC.db \
+  "SELECT client, auth_value FROM access WHERE service = 'kTCCServiceSystemPolicyAppData' AND auth_value = 5;"
+```
+
+**Fix all stuck entries:**
+
+```sh
+sqlite3 ~/Library/Application\ Support/com.apple.TCC/TCC.db \
+  "UPDATE access SET auth_value = 2 WHERE service = 'kTCCServiceSystemPolicyAppData' AND auth_value = 5;"
+```
+
+This sets the permission to "allowed" (2) directly, which persists across reboots. Using `tccutil reset` does **not** work — it deletes the entry, causing macOS to re-create it in the same broken state.
+
 ## TODO
 
 - [x] Add zsh config
