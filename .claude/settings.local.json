@@ -126,7 +126,9 @@
       "Bash(vp pack:*)",
       "Bash(pnpm approve-builds:*)",
       "Bash(pnpm link:*)",
-      "Bash(/Users/pattobrien/Library/pnpm/wt test:*)"
+      "Bash(/Users/pattobrien/Library/pnpm/wt test:*)",
+      "Bash(vp run:*)",
+      "Bash(./node_modules/.bin/tsc --noEmit 2>&1)"
     ],
     "deny": [],
     "additionalDirectories": [

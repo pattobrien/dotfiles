@@ -1,6 +1,8 @@
-import { execFileSync, execSync } from "node:child_process";
+import { execSync } from "node:child_process";
 import { existsSync, readdirSync, statSync } from "node:fs";
 import { join } from "node:path";
+
+import { TmuxClient } from "tmux";
 
 import { DEFAULT_CWD, TMUX_BIN, TMUX_TMPDIR, WT_BIN, WT_PATH, resolvePath } from "./paths";
 
@@ -45,12 +47,8 @@ export function attachWorktree(name: string, cwd?: string): void {
 }
 
 export function switchWorktree(sessionName: string): void {
-  // Switch the tmux client to the target session
-  execFileSync(TMUX_BIN, ["switch-client", "-t", sessionName], {
-    encoding: "utf-8",
-    timeout: 10_000,
-    env: { ...process.env, TMUX_TMPDIR },
-  });
+  const tmux = new TmuxClient({ bin: TMUX_BIN, env: { TMUX_TMPDIR } });
+  tmux.switchClient({ name: sessionName });
 
   // Bring kitty to the foreground without opening a new window
   execSync(`osascript -e 'tell application "kitty" to activate'`, { timeout: 5_000 });

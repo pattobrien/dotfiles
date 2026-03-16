@@ -1,6 +1,6 @@
 import { defineConfig } from "vite-plus/pack";
 
 export default defineConfig({
-  dts: false,
+  dts: true,
   exports: true,
 });

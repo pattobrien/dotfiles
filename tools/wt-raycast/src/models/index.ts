@@ -1,8 +1,4 @@
 export { CommandArgsSchema } from "./command";
-export { ProjectCacheSchema, ProjectSchema, type Project } from "./project";
-export { SessionStatus, SessionStatusEnum, TmuxSessionSchema } from "./session";
-export {
-  WorktreeItemSchema,
-  WorktreeSchema,
-  type WorktreeItem,
-} from "./worktree";
+export { ProjectCacheSchema, type Project } from "./project";
+export { SessionStatus, type TmuxSession } from "./session";
+export { WorktreeItemSchema, type Worktree, type WorktreeItem } from "./worktree";

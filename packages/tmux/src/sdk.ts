@@ -1,22 +1,37 @@
+import { spawnSync } from "node:child_process";
+
 import { SessionSchema, type TmuxSession } from "./models";
 
+export interface TmuxClientOptions {
+  bin?: string;
+  env?: Record<string, string>;
+}
+
 export class TmuxClient {
+  private readonly bin: string;
+  private readonly env: Record<string, string> | undefined;
+
+  constructor(opts?: TmuxClientOptions) {
+    this.bin = opts?.bin ?? "tmux";
+    this.env = opts?.env;
+  }
+
   private run(args: string[]): { exitCode: number; stdout: string } {
-    const proc = Bun.spawnSync(["tmux", ...args], {
-      stdout: "pipe",
-      stderr: "pipe",
+    const proc = spawnSync(this.bin, args, {
+      stdio: ["pipe", "pipe", "pipe"],
+      encoding: "utf-8",
+      env: this.env ? { ...process.env, ...this.env } : undefined,
     });
     return {
-      exitCode: proc.exitCode,
-      stdout: proc.stdout.toString().trim(),
+      exitCode: proc.status ?? 1,
+      stdout: (proc.stdout ?? "").trim(),
     };
   }
 
   private runInherit(args: string[]): void {
-    Bun.spawnSync(["tmux", ...args], {
-      stdin: "inherit",
-      stdout: "inherit",
-      stderr: "inherit",
+    spawnSync(this.bin, args, {
+      stdio: "inherit",
+      env: this.env ? { ...process.env, ...this.env } : undefined,
     });
   }
 

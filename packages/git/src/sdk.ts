@@ -27,9 +27,10 @@ export class GitClient {
     return join(this.repoRoot, ".worktrees");
   }
 
-  static async create(opts: { cwd?: string } = {}): Promise<GitClient> {
+  static async create(opts: { cwd?: string; binary?: string } = {}): Promise<GitClient> {
     const git = simpleGit(undefined, {
       baseDir: opts.cwd,
+      binary: opts.binary,
     });
 
     const isRepo = await git.checkIsRepo();

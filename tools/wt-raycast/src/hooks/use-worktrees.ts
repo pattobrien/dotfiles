@@ -1,7 +1,8 @@
-import { execFileSync } from "node:child_process";
 import { existsSync, readdirSync, statSync } from "node:fs";
-import { basename, dirname, join } from "node:path";
+import { basename, join } from "node:path";
 
+import { GitClient } from "git";
+import { TmuxClient } from "tmux";
 import { useCachedPromise } from "@raycast/utils";
 
 import {
@@ -13,14 +14,11 @@ import {
 } from "../data/paths";
 import {
   SessionStatus,
-  TmuxSessionSchema,
   WorktreeItemSchema,
-  WorktreeSchema,
   type WorktreeItem,
 } from "../models";
 
 const BRANCH_REF_PREFIX = "refs/heads/";
-const SESSION_DELIM = ":::";
 
 function stripBranchRef(branch: string): string {
   return branch.startsWith(BRANCH_REF_PREFIX)
@@ -30,37 +28,6 @@ function stripBranchRef(branch: string): string {
 
 function deriveSessionName(repoName: string, wtName: string): string {
   return `${repoName}--${wtName}`.replace(/[.:]/g, "-");
-}
-
-function git(args: string[], cwd: string): string {
-  return execFileSync(GIT_BIN, args, {
-    cwd,
-    encoding: "utf-8",
-    timeout: 10_000,
-  }).trim();
-}
-
-function listTmuxSessions(): Map<string, SessionStatus> {
-  const map = new Map<string, SessionStatus>();
-  try {
-    const output = execFileSync(
-      TMUX_BIN,
-      ["list-sessions", "-F", `#{session_name}${SESSION_DELIM}#{session_attached}`],
-      { cwd: "/", encoding: "utf-8", timeout: 10_000, env: { ...process.env, TMUX_TMPDIR } },
-    ).trim();
-    for (const line of output.split("\n").filter(Boolean)) {
-      const idx = line.lastIndexOf(SESSION_DELIM);
-      if (idx === -1) continue;
-      const session = TmuxSessionSchema.parse({
-        name: line.slice(0, idx),
-        attached: line.slice(idx + SESSION_DELIM.length) === "1",
-      });
-      map.set(session.name, session.attached ? SessionStatus.Active : SessionStatus.Detached);
-    }
-  } catch {
-    // tmux server not running — not an error for us
-  }
-  return map;
 }
 
 /**
@@ -93,40 +60,17 @@ function resolveGitCwd(dir: string): string {
   return dir;
 }
 
-function fetchWorktreeItems(cwd: string): WorktreeItem[] {
-  const commonDir = git(["rev-parse", "--git-common-dir"], cwd);
-  const isBare = commonDir.endsWith("/.bare");
-  const repoRoot = isBare
-    ? dirname(commonDir)
-    : git(["rev-parse", "--show-toplevel"], cwd);
-  const repoName = basename(repoRoot).replace(/-bare$/, "");
+async function fetchWorktreeItems(cwd: string): Promise<WorktreeItem[]> {
+  const gitClient = await GitClient.create({ cwd, binary: GIT_BIN });
+  const tmuxClient = new TmuxClient({ bin: TMUX_BIN, env: { TMUX_TMPDIR } });
 
-  const raw = git(["worktree", "list", "--porcelain"], cwd);
-  const worktrees = [];
-  let current: Record<string, string | boolean> = {};
+  const worktrees = await gitClient.listWorktrees();
 
-  for (const line of raw.split("\n")) {
-    if (line.startsWith("worktree ")) {
-      current = { path: line.slice("worktree ".length) };
-    } else if (line.startsWith("HEAD ")) {
-      current.head = line.slice("HEAD ".length);
-    } else if (line.startsWith("branch ")) {
-      current.branch = line.slice("branch ".length);
-    } else if (line === "bare") {
-      current.bare = true;
-    } else if (line === "" && current.path) {
-      worktrees.push(
-        WorktreeSchema.parse({
-          ...current,
-          head: current.head ?? "",
-          bare: current.bare ?? false,
-        }),
-      );
-      current = {};
-    }
+  const sessions = tmuxClient.listSessions();
+  const sessionMap = new Map<string, SessionStatus>();
+  for (const s of sessions) {
+    sessionMap.set(s.name, s.attached ? SessionStatus.Active : SessionStatus.Detached);
   }
-
-  const sessionMap = listTmuxSessions();
 
   const statusOrder = {
     [SessionStatus.Active]: 0,
@@ -137,7 +81,7 @@ function fetchWorktreeItems(cwd: string): WorktreeItem[] {
   return worktrees
     .map((wt) => {
       const name = basename(wt.path);
-      const sessionName = deriveSessionName(repoName, name);
+      const sessionName = deriveSessionName(gitClient.repoName, name);
       return WorktreeItemSchema.parse({
         name,
         path: wt.path,
@@ -158,7 +102,7 @@ function fetchWorktreeItems(cwd: string): WorktreeItem[] {
 export function useWorktrees(cwd?: string) {
   const resolvedCwd = resolveGitCwd(resolvePath(cwd || DEFAULT_CWD));
   return useCachedPromise(
-    (dir: string) => Promise.resolve(fetchWorktreeItems(dir)),
+    (dir: string) => fetchWorktreeItems(dir),
     [resolvedCwd],
   );
 }

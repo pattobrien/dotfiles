@@ -1,7 +1,9 @@
 import { defineConfig } from "vite-plus/pack";
 
 export default defineConfig({
-  dts: true,
+  dts: {
+    // tsgo: true,
+  },
   exports: true,
-  entry: ["src/index.ts"],
+  // ...config options
 });
