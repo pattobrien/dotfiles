@@ -1,0 +1,29 @@
+{
+  "name": "meagain",
+  "owner": {
+    "name": "Pat O'Brien"
+  },
+  "metadata": {
+    "description": "Observability, billing, and analytics MCP servers for Claude Code"
+  },
+  "plugins": [
+    {
+      "name": "meagain-plugin",
+      "source": "./meagain-plugin",
+      "description": "Configures MCP servers for NeonDB, PostHog, Sentry, RevenueCat, Stripe, and Vercel",
+      "version": "1.0.0",
+      "keywords": [
+        "observability",
+        "billing",
+        "analytics",
+        "neon",
+        "posthog",
+        "sentry",
+        "revenuecat",
+        "stripe",
+        "vercel",
+        "mcp"
+      ]
+    }
+  ]
+}

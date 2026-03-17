@@ -173,6 +173,7 @@ source ~/.dotfiles/zsh/go.zsh
 source ~/.dotfiles/zsh/php.zsh
 source ~/.dotfiles/zsh/ruby.zsh
 source ~/.dotfiles/zsh/completion-for-pnpm.zsh
+source ~/.dotfiles/zsh/completion-for-workmux.zsh
 if command -v wt &>/dev/null; then
   source <(wt --completions-zsh)
 fi

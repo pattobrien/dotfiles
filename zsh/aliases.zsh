@@ -59,3 +59,5 @@ alias resource="source ~/.zshrc"
 
 alias cl="claude"
 alias clr="claude --resume"
+alias claude="claude --dangerously-skip-permissions"
+alias wm="workmux"

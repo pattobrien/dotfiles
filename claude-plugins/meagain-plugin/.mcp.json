@@ -1,0 +1,34 @@
+{
+  "neondb": {
+    "type": "http",
+    "url": "https://mcp.neon.tech/mcp",
+    "headers": {
+      "x-read-only": "true",
+      "X-Neon-Project-Id": "${NEON_PROJECT_ID}"
+    }
+  },
+  "posthog": {
+    "type": "http",
+    "url": "https://mcp.posthog.com/sse",
+    "headers": {
+      "Authorization": "Bearer ${POSTHOG_API_KEY}",
+      "x-posthog-project-id": "${POSTHOG_PROJECT_ID}"
+    }
+  },
+  "sentry": {
+    "type": "http",
+    "url": "https://mcp.sentry.dev/mcp"
+  },
+  "revenuecat": {
+    "type": "http",
+    "url": "https://mcp.revenuecat.ai/mcp"
+  },
+  "stripe": {
+    "type": "http",
+    "url": "https://mcp.stripe.com"
+  },
+  "vercel": {
+    "type": "http",
+    "url": "https://mcp.vercel.com/getdots"
+  }
+}

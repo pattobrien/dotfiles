@@ -1,0 +1,20 @@
+{
+  "name": "meagain-plugin",
+  "description": "Configures MCP servers for NeonDB, PostHog, Sentry, RevenueCat, Stripe, and Vercel",
+  "version": "1.0.0",
+  "author": {
+    "name": "Pat O'Brien"
+  },
+  "keywords": [
+    "observability",
+    "billing",
+    "analytics",
+    "neon",
+    "posthog",
+    "sentry",
+    "revenuecat",
+    "stripe",
+    "vercel",
+    "mcp"
+  ]
+}
