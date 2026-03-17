@@ -17,6 +17,7 @@
     "node": ">=22.12.0"
   },
   "devDependencies": {
+    "@typescript/native-preview": "catalog:",
     "typescript": "catalog:",
     "vite-plus": "catalog:"
   },
