@@ -8,7 +8,9 @@
     "./package.json": "./package.json"
   },
   "types": "./dist/index.d.mts",
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "vp pack",
     "dev": "vp pack --watch",

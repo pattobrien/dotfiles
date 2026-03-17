@@ -27,6 +27,9 @@ importers:
 
   .:
     devDependencies:
+      typescript:
+        specifier: 'catalog:'
+        version: 5.9.3
       vite-plus:
         specifier: 'catalog:'
         version: 0.1.9(@types/node@25.4.0)(jiti@2.6.1)(typescript@5.9.3)(yaml@2.8.2)
