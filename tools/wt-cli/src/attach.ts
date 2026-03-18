@@ -1,9 +1,8 @@
 import { existsSync } from "node:fs";
 
-import { z } from "zod";
-
 import { GitClient } from "git";
 import { TmuxClient } from "tmux";
+import { z } from "zod";
 
 import {
   WORKTREE_NAMES_COMPLETION,
@@ -52,13 +51,16 @@ export const attach = t.procedure
       process.exit(1);
     }
 
-    const wtName = worktreeName(selected);
-    const sessionName = deriveSessionName(repo.repoName, wtName);
+    // Find existing session by matching session_path to worktree path
+    const existing = tmux.getSessionByPath(selected.path);
 
-    if (!tmux.hasSession({ name: sessionName })) {
+    if (existing) {
+      tmux.switchOrAttach({ name: existing.name });
+    } else {
+      const wtName = worktreeName(selected);
+      const sessionName = deriveSessionName(repo.repoName, wtName);
       tmux.newSession({ name: sessionName, cwd: selected.path });
       await runWorktreeSetup(tmux, sessionName, selected.path);
+      tmux.switchOrAttach({ name: sessionName });
     }
-
-    tmux.switchOrAttach({ name: sessionName });
   });

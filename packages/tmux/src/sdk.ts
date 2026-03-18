@@ -39,7 +39,7 @@ export class TmuxClient {
     const { exitCode, stdout } = this.run([
       "list-sessions",
       "-F",
-      "#{session_name}\t#{session_attached}",
+      "#{session_name}\t#{session_path}\t#{session_attached}",
     ]);
     if (exitCode !== 0) return [];
 
@@ -47,9 +47,13 @@ export class TmuxClient {
       .split("\n")
       .filter(Boolean)
       .map((line) => {
-        const [name, attached] = line.split("\t");
-        return SessionSchema.parse({ name, attached: attached === "1" });
+        const [name, path, attached] = line.split("\t");
+        return SessionSchema.parse({ name, path, attached: attached === "1" });
       });
+  }
+
+  getSessionByPath(path: string): TmuxSession | null {
+    return this.listSessions().find((s) => s.path === path) ?? null;
   }
 
   getActiveSession(): string | null {

@@ -10,6 +10,7 @@ export type SessionStatus = (typeof SessionStatus)[keyof typeof SessionStatus];
 
 export const SessionSchema = z.object({
   name: z.string(),
+  path: z.string(),
   attached: z.boolean(),
 });
 

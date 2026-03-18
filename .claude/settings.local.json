@@ -130,7 +130,8 @@
       "Bash(vp run:*)",
       "Bash(./node_modules/.bin/tsc --noEmit 2>&1)",
       "Bash(pnpm ls:*)",
-      "WebFetch(domain:tsdown.dev)"
+      "WebFetch(domain:tsdown.dev)",
+      "Bash(workmux config:*)"
     ],
     "deny": [],
     "additionalDirectories": [

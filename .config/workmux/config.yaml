@@ -10,9 +10,11 @@ workktree_naming: basename # full | basename
 #   - command: <agent>
 #     focus: true
 windows:
-  - name: <project>--<worktree>
-    panes:
+  # - name: <project>--<worktree>
+  - panes:
       - command: pnpm install && pnpm run env:pull
+        focus: false
+  - panes:
       - command: <agent>
         focus: true
 

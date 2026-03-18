@@ -8,6 +8,7 @@
   },
   "scripts": {
     "build": "vp pack",
+    "compile": "bun build --compile dist/cli.mjs --outfile dist/wt",
     "dev": "vp pack --watch",
     "typecheck": "tsc --noEmit"
   },

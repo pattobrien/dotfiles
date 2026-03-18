@@ -1,11 +1,10 @@
-import pc from "picocolors";
-import { z } from "zod";
-
 import { GitClient } from "git";
+import pc from "picocolors";
 import { SessionStatus } from "tmux";
 import { TmuxClient } from "tmux";
+import { z } from "zod";
 
-import { deriveSessionName, worktreeName } from "./lib";
+import { worktreeName } from "./lib";
 import { t } from "./trpc";
 
 const listOutput = z.void();
@@ -20,14 +19,9 @@ export const list = t.procedure
     const repo = await GitClient.create();
     const tmux = new TmuxClient();
     const worktrees = await repo.listWorktrees();
-
     const sessions = tmux.listSessions();
-    const sessionMap = new Map(
-      sessions.map((s) => [
-        s.name,
-        s.attached ? SessionStatus.Active : SessionStatus.Detached,
-      ]),
-    );
+
+    const sessionByPath = new Map(sessions.map((s) => [s.path, s]));
 
     const names = worktrees.map(worktreeName);
     const nameWidth = Math.max(...names.map((n) => n.length), 4);
@@ -42,8 +36,12 @@ export const list = t.procedure
 
     for (const wt of worktrees) {
       const name = worktreeName(wt);
-      const sessionName = deriveSessionName(repo.repoName, name);
-      const status = sessionMap.get(sessionName) ?? SessionStatus.None;
+      const session = sessionByPath.get(wt.path);
+      const status = session
+        ? session.attached
+          ? SessionStatus.Active
+          : SessionStatus.Detached
+        : SessionStatus.None;
       const padded = status.padEnd(statusWidth);
       const colored =
         status === SessionStatus.Active

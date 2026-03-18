@@ -251,3 +251,7 @@ compdef _neon_yargs_completions neon
 
 # linear completions
 source <(linear completions zsh)
+export LINEAR_ISSUE_SORT="priority"
+export LINEAR_VCS="git"
+export LINEAR_TEAM_ID="ENG"
+export LINEAR_WORKSPACE="getdots"

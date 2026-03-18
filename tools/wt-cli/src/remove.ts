@@ -1,14 +1,8 @@
-import { z } from "zod";
-
 import { GitClient } from "git";
 import { TmuxClient } from "tmux";
+import { z } from "zod";
 
-import {
-  WORKTREE_NAMES_COMPLETION,
-  deriveSessionName,
-  selectWorktree,
-  worktreeName,
-} from "./lib";
+import { WORKTREE_NAMES_COMPLETION, selectWorktree, worktreeName } from "./lib";
 import { t } from "./trpc";
 
 const removeInput = z.object({
@@ -44,11 +38,13 @@ export const remove = t.procedure
     if (!selected) process.exit(0);
 
     const wtName = worktreeName(selected);
-    const sessionName = deriveSessionName(repo.repoName, wtName);
 
-    if (tmux.hasSession({ name: sessionName })) {
-      tmux.killSession({ name: sessionName });
-      console.log(`Killed tmux session: ${sessionName}`);
+    // Find session by matching session_path to worktree path
+    const session = tmux.getSessionByPath(selected.path);
+
+    if (session) {
+      tmux.killSession({ name: session.name });
+      console.log(`Killed tmux session: ${session.name}`);
     }
 
     await repo.removeWorktree({ path: selected.path });

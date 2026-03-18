@@ -467,5 +467,6 @@
   "typescript.experimental.useTsgo": true,
   "window.newWindowDimensions": "inherit",
   "git-worktree-manager.treeView.toSCM": true,
-  "explorer.confirmPasteNative": false
+  "explorer.confirmPasteNative": false,
+  "security.promptForLocalFileProtocolHandling": false
 }
