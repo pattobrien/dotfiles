@@ -1,1 +1,21 @@
 nerdfont: true
+
+agent: claude
+merge_strategy: rebase
+mode: session
+
+workktree_naming: basename # full | basename
+
+# panes:
+#   - command: <agent>
+#     focus: true
+windows:
+  - name: <project>--<worktree>
+    panes:
+      - command: pnpm install && pnpm run env:pull
+      - command: <agent>
+        focus: true
+
+# post_create:
+#   - pnpm install
+#   - pnpm run env:pull
