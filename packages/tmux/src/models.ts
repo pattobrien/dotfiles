@@ -12,6 +12,7 @@ export const SessionSchema = z.object({
   name: z.string(),
   path: z.string(),
   attached: z.boolean(),
+  lastActivity: z.number(),
 });
 
 export type TmuxSession = z.infer<typeof SessionSchema>;

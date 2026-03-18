@@ -14,7 +14,7 @@ import { CommandArgsSchema, SessionStatus } from "./models";
 export default function Command(props: { arguments: { cwd?: string } }) {
   const args = CommandArgsSchema.parse(props.arguments);
   const cwd = args.cwd || DEFAULT_CWD;
-  const { data, isLoading } = useWorktrees(cwd);
+  const { data, isLoading, revalidate } = useWorktrees(cwd);
 
   const sessions = data?.filter(
     (wt) => wt.sessionStatus !== SessionStatus.None,
@@ -45,6 +45,7 @@ export default function Command(props: { arguments: { cwd?: string } }) {
                   try {
                     switchWorktree(wt.sessionName);
                     updateToastSuccess(toast, `Switched to ${wt.name}`);
+                    revalidate();
                   } catch (error) {
                     updateToastFailure(toast, "Failed to switch", error);
                   }

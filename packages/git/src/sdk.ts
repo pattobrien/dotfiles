@@ -44,9 +44,11 @@ export class GitClient {
 
     let repoRoot: string;
     if (isBare) {
+      // bare repo layout: commonDir = /path/to/repo/.bare
       repoRoot = dirname(commonDir);
     } else {
-      repoRoot = (await git.revparse(["--show-toplevel"])).trim();
+      // standard layout: commonDir = /path/to/repo/.git (even from worktrees)
+      repoRoot = dirname(commonDir);
     }
 
     const repoName = basename(repoRoot).replace(/-bare$/, "");

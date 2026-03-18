@@ -14,7 +14,7 @@ import { CommandArgsSchema } from "./models";
 export default function Command(props: { arguments: { cwd?: string } }) {
   const args = CommandArgsSchema.parse(props.arguments);
   const cwd = args.cwd || DEFAULT_CWD;
-  const { data, isLoading } = useWorktrees(cwd);
+  const { data, isLoading, revalidate } = useWorktrees(cwd);
 
   return (
     <List
@@ -40,6 +40,7 @@ export default function Command(props: { arguments: { cwd?: string } }) {
                   try {
                     attachWorktree(wt.name, cwd);
                     updateToastSuccess(toast, `Attached to ${wt.name}`);
+                    revalidate();
                   } catch (error) {
                     updateToastFailure(toast, "Failed to attach", error);
                   }

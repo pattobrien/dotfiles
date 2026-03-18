@@ -2,6 +2,11 @@ import { spawnSync } from "node:child_process";
 
 import { SessionSchema, type TmuxSession } from "./models";
 
+// Literal delimiter for tmux -F format strings. Avoids \t which tmux only
+// interprets as a tab when TERM is set (not the case in sandboxed environments
+// like Raycast).
+const SEP = "|||";
+
 export interface TmuxClientOptions {
   bin?: string;
   env?: Record<string, string>;
@@ -39,7 +44,7 @@ export class TmuxClient {
     const { exitCode, stdout } = this.run([
       "list-sessions",
       "-F",
-      "#{session_name}\t#{session_path}\t#{session_attached}",
+      `#{session_name}${SEP}#{session_path}${SEP}#{session_attached}${SEP}#{session_activity}`,
     ]);
     if (exitCode !== 0) return [];
 
@@ -47,8 +52,13 @@ export class TmuxClient {
       .split("\n")
       .filter(Boolean)
       .map((line) => {
-        const [name, path, attached] = line.split("\t");
-        return SessionSchema.parse({ name, path, attached: attached === "1" });
+        const [name, path, attached, activity] = line.split(SEP);
+        return SessionSchema.parse({
+          name,
+          path,
+          attached: attached === "1",
+          lastActivity: Number(activity) || 0,
+        });
       });
   }
 

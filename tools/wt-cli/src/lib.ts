@@ -18,23 +18,27 @@ export function worktreeName(wt: Worktree): string {
 export async function fzfSelect(
   items: Array<{ label: string; value: string }>,
   prompt: string,
+  header?: string,
 ): Promise<string | null> {
   const input = items.map((item) => `${item.label}\t${item.value}`).join("\n");
 
-  const proc = Bun.spawn(
-    [
-      "fzf",
-      "--reverse",
-      `--prompt=${prompt}`,
-      "--with-nth=1",
-      "--delimiter=\t",
-    ],
-    {
-      stdin: new Response(input),
-      stdout: "pipe",
-      stderr: "inherit",
-    },
-  );
+  const args = [
+    "fzf",
+    "--ansi",
+    "--reverse",
+    `--prompt=${prompt}`,
+    "--with-nth=1",
+    "--delimiter=\t",
+  ];
+  if (header) {
+    args.push(`--header=${header}`, "--header-first");
+  }
+
+  const proc = Bun.spawn(args, {
+    stdin: new Response(input),
+    stdout: "pipe",
+    stderr: "inherit",
+  });
 
   const output = await new Response(proc.stdout).text();
   const exitCode = await proc.exited;

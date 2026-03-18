@@ -16,5 +16,11 @@ window-padding-y = 8
 # Sends F12 escape sequence — intercepted by tmux (see .tmux.conf) or zsh (see zshrc)
 keybind = super+k=text:\x1b[24~
 
+# Cmd+E: open workmux dashboard (sends F11 — intercepted by tmux, see .tmux.conf)
+keybind = super+e=text:\x1b[23~
+
+# Cmd+L: worktree list popup (sends F10 — intercepted by tmux, see .tmux.conf)
+keybind = super+l=text:\x1b[21~
+
 # macOS-specific
 macos-option-as-alt = true
