@@ -4,7 +4,8 @@ agent: claude
 merge_strategy: rebase
 mode: session
 
-workktree_naming: basename # full | basename
+worktree_naming: basename # full | basename
+# worktree_dir: "{project}-wt"
 
 # panes:
 #   - command: <agent>
@@ -12,11 +13,11 @@ workktree_naming: basename # full | basename
 windows:
   # - name: <project>--<worktree>
   - panes:
-      - command: pnpm install && pnpm run env:pull
-        focus: false
-  - panes:
       - command: <agent>
         focus: true
+  - panes:
+      - command: pnpm install && pnpm run env:pull
+        focus: false
 
 # post_create:
 #   - pnpm install
