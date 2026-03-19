@@ -219,12 +219,6 @@ if vim.g.vscode == nil then
     -- FlutterLspRestart for restarting analysis server
     -- FlutterReanalyze - Forces LSP server reanalyze using custom LSP method dart/reanalyze.
 
-    -- Map this function to a key combination.
-    -- vim.keymap.set('n', '<leader>br', function()
-    --     require('telescope').extensions.flutter_build_runner.my_picker()
-    --   end,
-    --   { noremap = true, silent = true })
-
     -- Assuming you're using a `init.lua` file
 
     local myplugin = require('pattobrien.flutter-build-runner')
