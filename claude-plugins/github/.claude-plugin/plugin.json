@@ -1,0 +1,9 @@
+{
+  "name": "github",
+  "description": "Official GitHub MCP server for repository management. Create issues, manage pull requests, review code, search repositories, and interact with GitHub's full API.",
+  "version": "1.0.0",
+  "author": {
+    "name": "GitHub"
+  },
+  "keywords": ["github", "git", "issues", "pull-requests", "mcp"]
+}

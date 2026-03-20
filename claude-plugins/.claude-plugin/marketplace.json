@@ -24,6 +24,71 @@
         "vercel",
         "mcp"
       ]
+    },
+    {
+      "name": "neon",
+      "source": {
+        "source": "git-subdir",
+        "url": "neondatabase/agent-skills",
+        "path": "plugins/neon-postgres",
+        "ref": "main"
+      },
+      "description": "Manage your Neon projects and databases with the neon-postgres agent skill and the Neon MCP Server.",
+      "keywords": ["neon", "postgres", "database", "sql"]
+    },
+    {
+      "name": "posthog",
+      "source": {
+        "source": "url",
+        "url": "https://github.com/PostHog/ai-plugin.git"
+      },
+      "description": "Access PostHog analytics, feature flags, experiments, error tracking, and insights directly from Claude Code.",
+      "keywords": ["posthog", "analytics", "events", "feature-flags"]
+    },
+    {
+      "name": "sentry",
+      "source": {
+        "source": "url",
+        "url": "https://github.com/getsentry/sentry-for-claude.git"
+      },
+      "description": "Sentry error monitoring integration. Access error reports, analyze stack traces, search issues by fingerprint, and debug production errors.",
+      "keywords": ["sentry", "errors", "monitoring", "observability"]
+    },
+    {
+      "name": "revenuecat",
+      "source": {
+        "source": "url",
+        "url": "https://github.com/RevenueCat/rc-claude-code-plugin.git"
+      },
+      "description": "Configure RevenueCat projects, apps, products, entitlements, and offerings directly from Claude Code.",
+      "keywords": ["revenuecat", "subscriptions", "billing", "iap"]
+    },
+    {
+      "name": "stripe",
+      "source": {
+        "source": "git-subdir",
+        "url": "anthropics/claude-plugins-official",
+        "path": "external_plugins/stripe",
+        "ref": "main"
+      },
+      "description": "Stripe development plugin for Claude.",
+      "keywords": ["stripe", "payments", "billing"],
+      "homepage": "https://github.com/stripe/ai/tree/main/providers/claude/plugin"
+    },
+    {
+      "name": "vercel",
+      "source": {
+        "source": "url",
+        "url": "https://github.com/vercel/vercel-plugin.git"
+      },
+      "description": "Vercel deployment platform integration. Manage deployments, check build status, access logs, configure domains, and control your frontend infrastructure.",
+      "keywords": ["vercel", "deployment", "hosting"]
+    },
+    {
+      "name": "github",
+      "source": "./github",
+      "description": "Official GitHub MCP server. Create issues, manage pull requests, review code, search repositories, and interact with GitHub's full API. Requires GITHUB_PERSONAL_ACCESS_TOKEN.",
+      "keywords": ["github", "git", "issues", "pull-requests"]
     }
   ]
 }
