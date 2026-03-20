@@ -2,7 +2,7 @@ import pc from "picocolors";
 import { TmuxClient } from "tmux";
 import { z } from "zod";
 
-import { fzfMultiSelect } from "./lib";
+import { fzfMultiSelect, fzfSelect } from "./lib";
 import { t } from "./trpc";
 
 const DEV_WINDOW_NAME = "pnpm:dev";
@@ -27,8 +27,17 @@ const devList = t.procedure
     description: "List sessions with dev processes",
     aliases: { command: ["ls"] },
   })
+  .input(
+    z.object({
+      pick: z
+        .boolean()
+        .optional()
+        .default(false)
+        .describe("Interactive fzf picker — select a session to switch to"),
+    }),
+  )
   .output(z.void())
-  .query(() => {
+  .query(async ({ input }) => {
     const tmux = new TmuxClient();
     const devWindows = getDevWindows(tmux);
 
@@ -41,6 +50,25 @@ const devList = t.procedure
     const cmdWidth = Math.max(...devWindows.map((w) => w.paneCurrentCommand.length), 7);
     const statusWidth = 10;
 
+    if (input.pick) {
+      const items = devWindows.map((w) => {
+        const status = w.isRunning ? "running" : "idle";
+        const statusColored = w.isRunning
+          ? pc.green(status.padEnd(statusWidth))
+          : pc.dim(status.padEnd(statusWidth));
+        const label = `${w.sessionName.padEnd(nameWidth)}  ${statusColored}  ${w.paneCurrentCommand.padEnd(cmdWidth)}  ${pc.dim(w.session?.path ?? "-")}`;
+        return { label, value: w.sessionName };
+      });
+
+      const header = `${pc.bold("SESSION".padEnd(nameWidth))}  ${pc.bold("STATUS".padEnd(statusWidth))}  ${pc.bold("PROCESS".padEnd(cmdWidth))}  ${pc.bold("PATH")}`;
+      const selected = await fzfSelect(items, "Switch to: ", header);
+      if (!selected) process.exit(0);
+
+      tmux.switchOrAttach({ name: selected });
+      return;
+    }
+
+    // Default: plain table output
     console.log(
       `${"SESSION".padEnd(nameWidth)}  ${"STATUS".padEnd(statusWidth)}  ${"PROCESS".padEnd(cmdWidth)}  PATH`,
     );
