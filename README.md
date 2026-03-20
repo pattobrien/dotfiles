@@ -75,6 +75,27 @@ Dumps a snapshot of all brew-installed applications.
 brew bundle dump --force --describe --file=~/.dotfiles/brew/personal/Brewfile
 ```
 
+## Keyboard Shortcuts
+
+Shortcuts are split across layers, each scoped to a specific context.
+
+- **Terminal Cmd+key** — high-frequency tmux actions (popups, session switching, clear)
+  - Defined in: Kitty (`kitty.conf`), Ghostty (`config`), tmux (`.tmux.conf`), zsh (`zshrc`)
+  - Flow: terminal sends F-key escape sequence → tmux `bind-key -n` intercepts → runs command
+  - Avoid overriding: Cmd+Q/H/M/W (macOS window mgmt), Cmd+C/V/X/Z (clipboard), Cmd+Space (Raycast), Cmd+N (new window), Cmd+, (preferences), Cmd+Tab (app switcher)
+- **Terminal Cmd+Shift+key** — less frequent or destructive terminal actions
+  - Defined in: same as above (Kitty, Ghostty, tmux)
+  - Same F-key relay pattern as Cmd+key
+- **Hammerflow (F18 leader)** — system-wide app switching and cross-app workflows
+  - Defined in: `hammerflow.toml`
+  - F18 is mapped from Right Cmd via Karabiner
+- **Hammerspoon direct hotkeys** — system-wide shortcuts that need scripting logic
+  - Defined in: `hammerspoon/init.lua`
+- **Karabiner** — hardware-level key remaps (Caps Lock → Esc/Ctrl, Right Cmd → F18)
+  - Defined in: `karabiner/karabiner.json`
+- **Neovim** — editor keymaps (leader = Space)
+  - Defined in: `nvim/lua/pattobrien/remap.lua`, `nvim/after/plugin/*.lua`
+
 ## Troubleshooting
 
 ### macOS "would like to access data from other apps" dialog keeps reappearing

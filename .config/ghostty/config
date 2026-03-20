@@ -12,8 +12,8 @@ theme = Catppuccin Mocha
 window-padding-x = 8
 window-padding-y = 8
 
-# Cmd+K: clear screen + scrollback (works inside and outside tmux)
-# Sends F12 escape sequence — intercepted by tmux (see .tmux.conf) or zsh (see zshrc)
+# Cmd+key shortcuts: terminal sends F-key escape sequences, tmux intercepts them.
+# Available F-keys: F5-F9 (F10-F12 are taken). See README.md § Keyboard Shortcuts.
 keybind = super+k=text:\x1b[24~
 
 # Cmd+E: open workmux dashboard (sends F11 — intercepted by tmux, see .tmux.conf)

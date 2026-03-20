@@ -91,6 +91,9 @@ plugins=(
   # web-search
 )
 
+# Disable oh-my-zsh auto-update prompts (run `omz update` manually instead)
+DISABLE_AUTO_UPDATE=true
+
 # enable zsh completions from homebrew (note: must be done before oh-my-zsh.sh is sourced)
 PATH="$(brew --prefix)/share/zsh/site-functions:${PATH}"
 FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
