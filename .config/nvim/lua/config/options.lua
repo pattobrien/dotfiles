@@ -7,6 +7,11 @@
 --   clipboard="unnamedplus", splitright, splitbelow, undofile, inccommand="nosplit",
 --   showmode=false, laststatus=3, smoothscroll, shiftround, confirm, autowrite
 
+-- TypeScript LSP: "vtsls" (default), "ts_ls", or "tsgo"
+-- tsgo is Microsoft's Go-based TS type checker — much faster, but still preview.
+-- Install: npm install -g @typescript/native-preview
+-- vim.g.lazyvim_ts_lsp = "tsgo"
+
 -- Personal overrides (diverge from LazyVim defaults)
 vim.opt.scrolloff = 8
 -- vim.opt.updatetime = 50

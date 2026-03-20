@@ -1,6 +1,6 @@
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 
-if not (vim.uv or vim.loop).fs_stat(lazypath) then
+if not vim.uv.fs_stat(lazypath) then
   local lazyrepo = "https://github.com/folke/lazy.nvim.git"
   local out = vim.fn.system({
     "git",
@@ -26,10 +26,14 @@ vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
   spec = {
-    -- LazyVim base plugins
+    -- 1. LazyVim base plugins
     { "LazyVim/LazyVim", import = "lazyvim.plugins" },
 
-    -- personal plugins (lua/plugins/*.lua)
+    -- 2. LazyVim extras (must come before custom plugins)
+    { import = "lazyvim.plugins.extras.ai.copilot-native" },
+    { import = "lazyvim.plugins.extras.lang.typescript" }, -- tsgo config in options.lua
+
+    -- 3. personal plugins (lua/plugins/*.lua)
     { import = "plugins" },
   },
 

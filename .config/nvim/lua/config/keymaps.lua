@@ -35,6 +35,34 @@ vim.keymap.set("x", "<leader>p", '"_dP')
 -- vim.keymap.set("n", "<leader>j", "<cmd>lprev<CR>zz")
 
 -----------------------------------------------------------------------------
+-- LSP keymaps
+-----------------------------------------------------------------------------
+
+-- NOTE: LazyVim already provides:
+--   gd          go to definition (was <leader>gd)
+--   gr          references (was <leader>vrr)
+--   K           hover docs
+--   <leader>ca  code action
+--   <leader>cr  rename
+--   <leader>cd  line diagnostics (was <leader>vd)
+--   <leader>xx  list all diagnostics (was <leader>dl via Telescope)
+--   ]d/[d       next/prev diagnostic (was <leader>dj/<leader>dk)
+--   ]e/[e       next/prev error
+--   ]w/[w       next/prev warning
+--   gI          go to implementation
+--   gD          go to declaration
+--   <leader>uh  toggle inlay hints
+
+-- rename alias — keeping old muscle memory alongside LazyVim's <leader>cr
+vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, { desc = "Rename (alias)" })
+
+-- old LSP keymaps — disabled, switched to LazyVim conventions
+-- vim.keymap.set("n", "<leader>gd", vim.lsp.buf.definition)    -- now: gd
+-- vim.keymap.set("n", "<leader>dl", "<cmd>Trouble diagnostics<cr>")  -- now: <leader>xx
+-- vim.keymap.set("n", "<leader>dj", vim.diagnostic.goto_next)  -- now: ]d
+-- vim.keymap.set("n", "<leader>dk", vim.diagnostic.goto_prev)  -- now: [d
+
+-----------------------------------------------------------------------------
 -- VSCode-neovim keymaps
 -----------------------------------------------------------------------------
 if vim.g.vscode then
