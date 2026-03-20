@@ -62,11 +62,51 @@ export async function runWorktreeSetup(
   });
 
   // Window 2: claude
-  tmux.newWindow({ target: sessionName, name: "claude", cwd: worktreePath });
-  tmux.sendKeys({ target: `${sessionName}:claude`, keys: ["claude", "Enter"] });
+  tmux.newWindow({ target: sessionName, name: "claude", cwd: worktreePath, cmd: "claude" });
 
   // Window 3: general shell
   tmux.newWindow({ target: sessionName, cwd: worktreePath });
+}
+
+export async function fzfMultiSelect(
+  items: Array<{ label: string; value: string }>,
+  prompt: string,
+  header?: string,
+): Promise<string[]> {
+  const input = items.map((item) => `${item.label}\t${item.value}`).join("\n");
+
+  const args = [
+    "fzf",
+    "--ansi",
+    "--reverse",
+    "--multi",
+    `--prompt=${prompt}`,
+    "--with-nth=1",
+    "--delimiter=\t",
+  ];
+  if (header) {
+    args.push(`--header=${header}`, "--header-first");
+  }
+
+  const proc = Bun.spawn(args, {
+    stdin: new Response(input),
+    stdout: "pipe",
+    stderr: "inherit",
+  });
+
+  const output = await new Response(proc.stdout).text();
+  const exitCode = await proc.exited;
+
+  if (exitCode !== 0) return [];
+
+  return output
+    .trim()
+    .split("\n")
+    .filter(Boolean)
+    .map((line) => {
+      const parts = line.split("\t");
+      return parts[1] || parts[0];
+    });
 }
 
 export async function selectWorktree(

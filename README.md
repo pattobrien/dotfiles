@@ -4,7 +4,8 @@ Configurations for Neovim, kitty, git, and other various developer tools.
 
 ## TypeScript Tooling
 
-This repo includes a pnpm + [Vite+](https://github.com/nicepkg/vite-plus) monorepo for TypeScript tools.
+This repo includes a pnpm + [Vite+](https://github.com/nicepkg/vite-plus)
+monorepo for TypeScript tools.
 
 ### Workspace structure
 
@@ -79,19 +80,29 @@ brew bundle dump --force --describe --file=~/.dotfiles/brew/personal/Brewfile
 
 Shortcuts are split across layers, each scoped to a specific context.
 
-- **Terminal Cmd+key** — high-frequency tmux actions (popups, session switching, clear)
-  - Defined in: Kitty (`kitty.conf`), Ghostty (`config`), tmux (`.tmux.conf`), zsh (`zshrc`)
-  - Flow: terminal sends F-key escape sequence → tmux `bind-key -n` intercepts → runs command
-  - Avoid overriding: Cmd+Q/H/M/W (macOS window mgmt), Cmd+C/V/X/Z (clipboard), Cmd+Space (Raycast), Cmd+N (new window), Cmd+, (preferences), Cmd+Tab (app switcher)
+- **Terminal Cmd+key** — high-frequency tmux actions (popups, session switching,
+  clear)
+  - Defined in: Kitty (`kitty.conf`), Ghostty (`config`), tmux (`.tmux.conf`),
+    zsh (`zshrc`)
+  - Flow: terminal sends F-key escape sequence → tmux `bind-key -n` intercepts →
+    runs command
+  - Avoid overriding:
+    - Cmd+Q/H/M/W/N (macOS window mgmt)
+    - Cmd+C/V/X/Z (clipboard)
+    - Cmd+Space/Tab (Raycast, app switcher)
+    - Cmd+, (preferences)
 - **Terminal Cmd+Shift+key** — less frequent or destructive terminal actions
   - Defined in: same as above (Kitty, Ghostty, tmux)
   - Same F-key relay pattern as Cmd+key
-- **Hammerflow (F18 leader)** — system-wide app switching and cross-app workflows
+- **Hammerflow (F18 leader)** — system-wide app switching and cross-app
+  workflows
   - Defined in: `hammerflow.toml`
   - F18 is mapped from Right Cmd via Karabiner
-- **Hammerspoon direct hotkeys** — system-wide shortcuts that need scripting logic
+- **Hammerspoon direct hotkeys** — system-wide shortcuts that need scripting
+  logic
   - Defined in: `hammerspoon/init.lua`
-- **Karabiner** — hardware-level key remaps (Caps Lock → Esc/Ctrl, Right Cmd → F18)
+- **Karabiner** — hardware-level key remaps (Caps Lock → Esc/Ctrl, Right Cmd →
+  F18)
   - Defined in: `karabiner/karabiner.json`
 - **Neovim** — editor keymaps (leader = Space)
   - Defined in: `nvim/lua/pattobrien/remap.lua`, `nvim/after/plugin/*.lua`
@@ -100,7 +111,9 @@ Shortcuts are split across layers, each scoped to a specific context.
 
 ### macOS "would like to access data from other apps" dialog keeps reappearing
 
-On macOS Sequoia, apps can get stuck in a limbo permission state (`auth_value=5`) in the TCC database, causing the "would like to access data from other apps" dialog to reappear on every restart.
+On macOS Sequoia, apps can get stuck in a limbo permission state
+(`auth_value=5`) in the TCC database, causing the "would like to access data
+from other apps" dialog to reappear on every restart.
 
 **Check for stuck entries:**
 
@@ -116,7 +129,9 @@ sqlite3 ~/Library/Application\ Support/com.apple.TCC/TCC.db \
   "UPDATE access SET auth_value = 2 WHERE service = 'kTCCServiceSystemPolicyAppData' AND auth_value = 5;"
 ```
 
-This sets the permission to "allowed" (2) directly, which persists across reboots. Using `tccutil reset` does **not** work — it deletes the entry, causing macOS to re-create it in the same broken state.
+This sets the permission to "allowed" (2) directly, which persists across
+reboots. Using `tccutil reset` does **not** work — it deletes the entry, causing
+macOS to re-create it in the same broken state.
 
 ## TODO
 

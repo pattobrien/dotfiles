@@ -5,11 +5,11 @@ import { existsSync } from "node:fs";
 
 import type { Project } from "./models";
 
-const DEV_DIR = join(homedir(), "dev");
+const DEFAULT_DIRS = [join(homedir(), "dev"), join(homedir(), ".dotfiles")];
 
-function fdFind(pattern: string, type: "d" | "f", baseDir: string, maxDepth = 4): string[] {
+function fdFind(pattern: string, type: "d" | "f", baseDirs: string[], maxDepth = 4): string[] {
   try {
-    const output = execFileSync("fd", ["-H", "-t", type, pattern, baseDir, "--max-depth", String(maxDepth)], {
+    const output = execFileSync("fd", ["-H", "-t", type, pattern, ...baseDirs, "--max-depth", String(maxDepth)], {
       encoding: "utf-8",
       timeout: 30_000,
     }).trim();
@@ -19,9 +19,9 @@ function fdFind(pattern: string, type: "d" | "f", baseDir: string, maxDepth = 4)
   }
 }
 
-export function discoverProjects(baseDir = DEV_DIR): Project[] {
-  const barePaths = fdFind("^\\.bare$", "d", baseDir);
-  const gitDirPaths = fdFind("^\\.git$", "d", baseDir);
+export function discoverProjects(baseDirs = DEFAULT_DIRS): Project[] {
+  const barePaths = fdFind("^\\.bare$", "d", baseDirs);
+  const gitDirPaths = fdFind("^\\.git$", "d", baseDirs);
 
   const projects = new Map<string, Project>();
 

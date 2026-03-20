@@ -1,3 +1,4 @@
+// @ts-expect-error -- oxlint types are provided by vite-plus at runtime
 import { defineConfig } from "oxlint";
 
 export default defineConfig({

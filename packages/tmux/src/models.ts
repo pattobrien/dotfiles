@@ -16,3 +16,13 @@ export const SessionSchema = z.object({
 });
 
 export type TmuxSession = z.infer<typeof SessionSchema>;
+
+export const WindowSchema = z.object({
+  sessionName: z.string(),
+  windowIndex: z.string(),
+  windowName: z.string(),
+  paneCurrentCommand: z.string(),
+  panePid: z.number(),
+});
+
+export type TmuxWindow = z.infer<typeof WindowSchema>;

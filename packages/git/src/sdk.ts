@@ -35,8 +35,7 @@ export class GitClient {
 
     const isRepo = await git.checkIsRepo();
     if (!isRepo) {
-      console.error("Error: not in a git repository");
-      process.exit(1);
+      throw new Error(`Not in a git repository${opts.cwd ? `: ${opts.cwd}` : ""}`);
     }
 
     const commonDir = (await git.revparse(["--git-common-dir"])).trim();

@@ -3,8 +3,11 @@
 import { createCli } from "trpc-cli";
 
 import { attach } from "./attach";
+import { claude } from "./claude";
+import { cleanup } from "./cleanup";
 import { generateZshCompletions } from "./completions";
 import { create } from "./create";
+import { dev } from "./dev";
 import { list } from "./list";
 import { projects } from "./projects";
 import { remove } from "./remove";
@@ -14,7 +17,10 @@ import { t } from "./trpc";
 
 const router = t.router({
   attach,
+  claude,
+  cleanup,
   create,
+  dev,
   list,
   projects,
   remove,
@@ -29,4 +35,4 @@ if (process.argv.includes("--completions-zsh")) {
   process.exit(0);
 }
 
-cli.run();
+void cli.run();
