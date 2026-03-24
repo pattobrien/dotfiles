@@ -1,11 +1,10 @@
 return {
-  -- Additional picker keymaps to match old muscle memory
+  -- Aliases for old muscle memory — mapped to LazyVim's keymaps so behavior is identical
   {
     "ibhagwan/fzf-lua",
     keys = {
-      -- old ThePrimeagen-style keymaps (LazyVim also has <leader>ff and <leader>sg)
-      { "<leader>pf", "<cmd>FzfLua files<cr>", desc = "Find Files (pf)" },
-      { "<leader>ps", "<cmd>FzfLua live_grep<cr>", desc = "Live Grep (ps)" },
+      { "<leader>pf", LazyVim.pick("files"), desc = "Find Files (pf)" },
+      { "<leader>ps", LazyVim.pick("live_grep"), desc = "Live Grep (ps)" },
     },
   },
 
