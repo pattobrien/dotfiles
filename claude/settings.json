@@ -4,7 +4,8 @@
     "CLAUDE_CODE_ENABLE_TASKS": "true",
     "DISABLE_AUTOUPDATER": "1",
     "EDITOR": "cursor",
-    "ENABLE_LSP_TOOL": "1"
+    "ENABLE_LSP_TOOL": "1",
+    "CLAUDE_CODE_NEW_INIT": "1"
   },
   "includeCoAuthoredBy": false,
   "permissions": {
@@ -82,15 +83,8 @@
       "WebFetch(domain:raw.githubusercontent.com)",
       "WebFetch(domain:unpkg.com)"
     ],
-    "deny": [
-      "Bash(npm *)",
-      "Bash(npx *)",
-      "mcp__ide__getDiagnostics"
-    ],
-    "ask": [
-      "Bash(pnpm* add *)",
-      "Bash(brew install *)"
-    ],
+    "deny": ["Bash(npm *)", "Bash(npx *)", "mcp__ide__getDiagnostics"],
+    "ask": ["Bash(pnpm* add *)", "Bash(brew install *)"],
     "defaultMode": "acceptEdits"
   },
   "model": "opus[1m]",
