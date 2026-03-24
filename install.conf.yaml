@@ -34,6 +34,7 @@
     ~/.config/aerospace: .config/aerospace
     ~/.config/karabiner: .config/karabiner
     ~/.config/ghostty: .config/ghostty
+    ~/.config/lazygit: .config/lazygit
     ~/.hammerspoon:
       path: .config/hammerspoon
       force: true
