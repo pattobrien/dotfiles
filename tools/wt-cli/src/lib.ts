@@ -3,6 +3,35 @@ import { basename } from "node:path";
 import type { Worktree } from "git";
 import type { TmuxClient } from "tmux";
 
+export interface PrInfo {
+  number: number;
+  state: "OPEN" | "CLOSED" | "MERGED";
+}
+
+export async function fetchPrsByBranch(repoDir: string): Promise<Map<string, PrInfo>> {
+  const proc = Bun.spawn(
+    ["gh", "pr", "list", "--state", "all", "--json", "number,state,headRefName", "--limit", "200"],
+    { cwd: repoDir, stdout: "pipe", stderr: "pipe" },
+  );
+
+  const output = await new Response(proc.stdout).text();
+  const exitCode = await proc.exited;
+
+  if (exitCode !== 0) return new Map();
+
+  const prs: Array<{ number: number; state: PrInfo["state"]; headRefName: string }> = JSON.parse(output);
+
+  const map = new Map<string, PrInfo>();
+  for (const pr of prs) {
+    const existing = map.get(pr.headRefName);
+    // Prefer OPEN > MERGED > CLOSED if multiple PRs exist for the same branch
+    if (!existing || pr.state === "OPEN" || (pr.state === "MERGED" && existing.state === "CLOSED")) {
+      map.set(pr.headRefName, { number: pr.number, state: pr.state });
+    }
+  }
+  return map;
+}
+
 /** Shell command that lists worktree basenames (used in zsh completions). */
 export const WORKTREE_NAMES_COMPLETION =
   "git worktree list --porcelain | grep '^worktree ' | sed 's|.*/||'";

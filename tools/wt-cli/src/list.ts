@@ -4,8 +4,25 @@ import { SessionStatus } from "tmux";
 import { TmuxClient } from "tmux";
 import { z } from "zod";
 
-import { deriveSessionName, fzfSelect, runWorktreeSetup, worktreeName } from "./lib";
+import { deriveSessionName, fetchPrsByBranch, fzfSelect, runWorktreeSetup, worktreeName, type PrInfo } from "./lib";
 import { t } from "./trpc";
+
+function branchShortName(wt: { branch?: string }): string | undefined {
+  return wt.branch?.replace(/^refs\/heads\//, "");
+}
+
+function formatPr(pr: PrInfo | undefined): string {
+  if (!pr) return pc.dim("–".padEnd(12));
+  const num = `#${pr.number}`;
+  switch (pr.state) {
+    case "OPEN":
+      return pc.green(`${num} open`.padEnd(12));
+    case "MERGED":
+      return pc.magenta(`${num} merged`.padEnd(12));
+    case "CLOSED":
+      return pc.red(`${num} closed`.padEnd(12));
+  }
+}
 
 const listInput = z.object({
   pick: z
@@ -27,7 +44,10 @@ export const list = t.procedure
   .query(async ({ input }) => {
     const repo = await GitClient.create();
     const tmux = new TmuxClient();
-    const worktrees = await repo.listWorktrees();
+    const [worktrees, prsByBranch] = await Promise.all([
+      repo.listWorktrees(),
+      fetchPrsByBranch(repo.repoRoot),
+    ]);
     const sessions = tmux.listSessions();
 
     const sessionByPath = new Map(sessions.map((s) => [s.path, s]));
@@ -35,6 +55,7 @@ export const list = t.procedure
     const names = worktrees.map(worktreeName);
     const nameWidth = Math.max(...names.map((n) => n.length), 4);
     const statusWidth = 10;
+    const prWidth = 12;
     const repoWidth = Math.max(repo.repoName.length, 4);
 
     if (input.pick) {
@@ -56,11 +77,15 @@ export const list = t.procedure
               ? pc.yellow(statusPadded)
               : pc.dim(statusPadded);
 
-        const label = `${repo.repoName.padEnd(repoWidth)}  ${name.padEnd(nameWidth)}  ${statusColored}  ${wt.path}`;
+        const branch = branchShortName(wt);
+        const pr = branch ? prsByBranch.get(branch) : undefined;
+        const prCell = formatPr(pr);
+
+        const label = `${repo.repoName.padEnd(repoWidth)}  ${name.padEnd(nameWidth)}  ${statusColored}  ${prCell}  ${wt.path}`;
         items.push({ label, value: wt.path });
       }
 
-      const header = `${pc.bold("REPO".padEnd(repoWidth))}  ${pc.bold("WORKTREE".padEnd(nameWidth))}  ${pc.bold("SESSION".padEnd(statusWidth))}  ${pc.bold("PATH")}`;
+      const header = `${pc.bold("REPO".padEnd(repoWidth))}  ${pc.bold("WORKTREE".padEnd(nameWidth))}  ${pc.bold("SESSION".padEnd(statusWidth))}  ${pc.bold("PR".padEnd(prWidth))}  ${pc.bold("PATH")}`;
       const selected = await fzfSelect(items, "Select worktree: ", header);
 
       if (!selected) process.exit(0);
@@ -86,10 +111,10 @@ export const list = t.procedure
 
     // Default: plain table output
     console.log(
-      `${"REPO".padEnd(repoWidth)}  ${"WORKTREE".padEnd(nameWidth)}  ${"SESSION".padEnd(statusWidth)}  PATH`,
+      `${"REPO".padEnd(repoWidth)}  ${"WORKTREE".padEnd(nameWidth)}  ${"SESSION".padEnd(statusWidth)}  ${"PR".padEnd(prWidth)}  PATH`,
     );
     console.log(
-      `${"─".repeat(repoWidth)}  ${"─".repeat(nameWidth)}  ${"─".repeat(statusWidth)}  ${"─".repeat(30)}`,
+      `${"─".repeat(repoWidth)}  ${"─".repeat(nameWidth)}  ${"─".repeat(statusWidth)}  ${"─".repeat(prWidth)}  ${"─".repeat(30)}`,
     );
 
     for (const wt of worktrees) {
@@ -108,6 +133,10 @@ export const list = t.procedure
             ? pc.yellow(padded)
             : pc.dim(padded);
 
-      console.log(`${repo.repoName.padEnd(repoWidth)}  ${name.padEnd(nameWidth)}  ${colored}  ${wt.path}`);
+      const branch = branchShortName(wt);
+      const pr = branch ? prsByBranch.get(branch) : undefined;
+      const prCell = formatPr(pr);
+
+      console.log(`${repo.repoName.padEnd(repoWidth)}  ${name.padEnd(nameWidth)}  ${colored}  ${prCell}  ${wt.path}`);
     }
   });
