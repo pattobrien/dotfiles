@@ -1,0 +1,16 @@
+{
+  "tsgo": {
+    "command": "tsgo",
+    "args": ["--lsp", "--stdio"],
+    "extensionToLanguage": {
+      ".ts": "typescript",
+      ".tsx": "typescriptreact",
+      ".js": "javascript",
+      ".jsx": "javascriptreact"
+    },
+    "transport": "stdio",
+    "initializationOptions": {},
+    "settings": {},
+    "maxRestarts": 3
+  }
+}

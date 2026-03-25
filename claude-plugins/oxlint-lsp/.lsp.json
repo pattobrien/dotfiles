@@ -1,0 +1,21 @@
+{
+  "oxlint": {
+    "command": "oxlint",
+    "args": ["--lsp"],
+    "extensionToLanguage": {
+      ".ts": "typescript",
+      ".tsx": "typescriptreact",
+      ".js": "javascript",
+      ".jsx": "javascriptreact",
+      ".mts": "typescript",
+      ".cts": "typescript",
+      ".mjs": "javascript",
+      ".cjs": "javascript"
+    },
+    "transport": "stdio",
+    "initializationOptions": {},
+    "settings": {},
+    "restartOnCrash": true,
+    "maxRestarts": 3
+  }
+}

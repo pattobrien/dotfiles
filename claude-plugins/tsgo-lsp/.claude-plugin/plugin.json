@@ -1,0 +1,9 @@
+{
+  "name": "tsgo-lsp",
+  "description": "TypeScript Go (tsgo) language server for fast type checking",
+  "version": "1.0.1",
+  "author": {
+    "name": "meagain"
+  },
+  "keywords": ["tsgo", "typescript", "type-checking", "lsp"]
+}

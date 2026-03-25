@@ -89,6 +89,18 @@
       "source": "./github",
       "description": "Official GitHub MCP server. Create issues, manage pull requests, review code, search repositories, and interact with GitHub's full API. Requires GITHUB_PERSONAL_ACCESS_TOKEN.",
       "keywords": ["github", "git", "issues", "pull-requests"]
+    },
+    {
+      "name": "oxlint-lsp",
+      "source": "./oxlint-lsp",
+      "description": "Oxlint language server for real-time lint diagnostics",
+      "keywords": ["oxlint", "linting", "diagnostics", "lsp"]
+    },
+    {
+      "name": "tsgo-lsp",
+      "source": "./tsgo-lsp",
+      "description": "TypeScript Go (tsgo) language server for fast type checking",
+      "keywords": ["tsgo", "typescript", "type-checking", "lsp"]
     }
   ]
 }

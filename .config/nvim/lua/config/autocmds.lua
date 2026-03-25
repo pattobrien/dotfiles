@@ -1,6 +1,9 @@
 -- Autocmds are automatically loaded on the VeryLazy event
 -- Default autocmds that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/autocmds.lua
 
+-- Disable LazyVim's spell check autocmd (fires on markdown, gitcommit, etc.)
+vim.api.nvim_create_augroup("lazyvim_wrap_spell", { clear = true })
+
 -- Shorten the :w save message (hide the full file path)
 vim.api.nvim_create_autocmd("BufWritePost", {
   callback = function()

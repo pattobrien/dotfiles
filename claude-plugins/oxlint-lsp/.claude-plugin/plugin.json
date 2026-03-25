@@ -1,0 +1,9 @@
+{
+  "name": "oxlint-lsp",
+  "description": "Oxlint language server for real-time lint diagnostics",
+  "version": "1.0.1",
+  "author": {
+    "name": "meagain"
+  },
+  "keywords": ["oxlint", "linting", "diagnostics", "lsp"]
+}
