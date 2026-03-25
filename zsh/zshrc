@@ -120,12 +120,8 @@ source ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/fzf-git.sh/fzf-git.sh
 
 # export MANPATH="/usr/local/man:$MANPATH"
 
-# Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
-# else
-#   export EDITOR='mvim'
-# fi
+# Use nvim as default editor in terminal (kitty/tmux)
+export EDITOR='nvim'
 
 # Set personal aliases, overriding those provided by oh-my-zsh
 # For a full list of active aliases, run `alias`.

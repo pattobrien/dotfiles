@@ -58,6 +58,8 @@ alias reload="source ~/.zshrc"
 alias resource="source ~/.zshrc"
 
 alias cl="claude"
+
+alias linear-edit="$HOME/.dotfiles/scripts/linear-edit"
 alias clr="claude --resume"
 alias claude="claude --dangerously-skip-permissions"
 alias wm="workmux"

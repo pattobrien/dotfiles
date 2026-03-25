@@ -24,4 +24,5 @@ vim.opt.fillchars = { vert = "|", fold = " ", eob = " " }
 
 -- Disable smooth scrolling — <C-d>/<C-u> are instant (with zz centering in keymaps)
 vim.opt.smoothscroll = false
+vim.opt.spell = false
 -- vim.opt.iskeyword:append("-")
