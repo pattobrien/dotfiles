@@ -30,7 +30,11 @@ const before = md5(await readFile(tmpfile));
 
 // Open in editor
 const editor = process.env.EDITOR ?? "vim";
-const proc = Bun.spawn([editor, tmpfile], { stdin: "inherit", stdout: "inherit", stderr: "inherit" });
+const proc = Bun.spawn([editor, tmpfile], {
+  stdin: "inherit",
+  stdout: "inherit",
+  stderr: "inherit",
+});
 await proc.exited;
 
 const after = md5(await readFile(tmpfile));

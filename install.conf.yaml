@@ -48,6 +48,7 @@
     ~/.config/macos-defaults: .config/macos-defaults
     ~/.config/workmux: .config/workmux
     ~/.local/bin/wt: tools/wt-cli/dist/wt
+    ~/.local/bin/linear-edit: tools/scripts/src/linear-edit.ts
 
 - create:
     - ~/dev

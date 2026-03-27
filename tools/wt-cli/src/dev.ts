@@ -46,8 +46,14 @@ const devList = t.procedure
       return;
     }
 
-    const nameWidth = Math.max(...devWindows.map((w) => w.sessionName.length), 7);
-    const cmdWidth = Math.max(...devWindows.map((w) => w.paneCurrentCommand.length), 7);
+    const nameWidth = Math.max(
+      ...devWindows.map((w) => w.sessionName.length),
+      7,
+    );
+    const cmdWidth = Math.max(
+      ...devWindows.map((w) => w.paneCurrentCommand.length),
+      7,
+    );
     const statusWidth = 10;
 
     if (input.pick) {
@@ -103,7 +109,10 @@ const devKill = t.procedure
       return;
     }
 
-    const nameWidth = Math.max(...devWindows.map((w) => w.sessionName.length), 7);
+    const nameWidth = Math.max(
+      ...devWindows.map((w) => w.sessionName.length),
+      7,
+    );
 
     const items = devWindows.map((w) => ({
       label: `${w.sessionName.padEnd(nameWidth)}  ${pc.green(w.paneCurrentCommand)}  ${pc.dim(w.session?.path ?? "-")}`,
@@ -148,7 +157,9 @@ const devStart = t.procedure
     if (devWindow) {
       // Check if already running
       if (!SHELL_COMMANDS.has(devWindow.paneCurrentCommand)) {
-        console.log(`Dev process already running in ${currentSession}:${DEV_WINDOW_NAME}`);
+        console.log(
+          `Dev process already running in ${currentSession}:${DEV_WINDOW_NAME}`,
+        );
         return;
       }
       // Send pnpm dev to existing window
@@ -160,7 +171,11 @@ const devStart = t.procedure
       // Create the window and start dev
       const sessions = tmux.listSessions();
       const session = sessions.find((s) => s.name === currentSession);
-      tmux.newWindow({ target: currentSession, name: DEV_WINDOW_NAME, cwd: session?.path });
+      tmux.newWindow({
+        target: currentSession,
+        name: DEV_WINDOW_NAME,
+        cwd: session?.path,
+      });
       tmux.sendKeys({
         target: `${currentSession}:${DEV_WINDOW_NAME}`,
         keys: ["pnpm dev", "Enter"],

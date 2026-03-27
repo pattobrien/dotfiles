@@ -61,5 +61,6 @@ alias cl="claude"
 
 alias linear-edit="$HOME/.dotfiles/scripts/linear-edit"
 alias clr="claude --resume"
-alias claude="claude --dangerously-skip-permissions"
+alias claude="claude --enable-auto-mode"
+alias c="claude"
 alias wm="workmux"

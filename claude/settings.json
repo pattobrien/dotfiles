@@ -5,7 +5,8 @@
     "DISABLE_AUTOUPDATER": "1",
     "EDITOR": "cursor",
     "ENABLE_LSP_TOOL": "1",
-    "CLAUDE_CODE_NEW_INIT": "1"
+    "CLAUDE_CODE_NEW_INIT": "1",
+    "cleanupPeriodDays": "365"
   },
   "includeCoAuthoredBy": false,
   "permissions": {
@@ -83,16 +84,9 @@
       "WebFetch(domain:raw.githubusercontent.com)",
       "WebFetch(domain:unpkg.com)"
     ],
-    "deny": [
-      "Bash(npm *)",
-      "Bash(npx *)",
-      "mcp__ide__getDiagnostics"
-    ],
-    "ask": [
-      "Bash(pnpm* add *)",
-      "Bash(brew install *)"
-    ],
-    "defaultMode": "acceptEdits"
+    "deny": ["Bash(npm *)", "Bash(npx *)", "mcp__ide__getDiagnostics"],
+    "ask": ["Bash(pnpm* add *)", "Bash(brew install *)"],
+    "defaultMode": "bypassPermissions"
   },
   "model": "opus[1m]",
   "enableAllProjectMcpServers": true,
@@ -150,7 +144,7 @@
     "code-simplifier@claude-plugins-official": true,
     "commit-commands@claude-plugins-official": true,
     "expo-app-design@expo-plugins": true,
-    "figma@claude-plugins-official": false,
+    "figma@claude-plugins-official": true,
     "gopls-lsp@claude-plugins-official": false,
     "lua-lsp@claude-plugins-official": false,
     "plugin-dev@claude-plugins-official": false,
