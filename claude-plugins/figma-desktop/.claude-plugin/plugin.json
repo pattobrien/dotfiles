@@ -1,0 +1,9 @@
+{
+  "name": "figma-desktop",
+  "description": "Figma desktop MCP server for local design interaction via Dev Mode.",
+  "version": "1.0.0",
+  "author": {
+    "name": "Figma"
+  },
+  "keywords": ["figma", "design", "mcp", "ui"]
+}
