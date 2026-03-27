@@ -1,8 +1,9 @@
+import type { StopHookInput } from "@anthropic-ai/claude-agent-sdk";
 import { existsSync, readFileSync } from "fs";
 import { join } from "path";
 
-const input = await Bun.stdin.json();
-const cwd: string = input.cwd ?? process.cwd();
+const input: StopHookInput = await Bun.stdin.json();
+const cwd = input.cwd ?? process.cwd();
 const pkgPath = join(cwd, "package.json");
 
 if (!existsSync(pkgPath)) process.exit(0);
