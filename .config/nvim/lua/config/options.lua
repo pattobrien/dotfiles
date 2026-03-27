@@ -22,6 +22,9 @@ vim.opt.scrolloff = 8
 vim.opt.colorcolumn = "80"
 vim.opt.fillchars = { vert = "|", fold = " ", eob = " " }
 
+-- Disable LazyVim's list=true — shows trailing spaces as hyphens via listchars.
+vim.opt.list = false
+
 -- Disable smooth scrolling — <C-d>/<C-u> are instant (with zz centering in keymaps)
 vim.opt.smoothscroll = false
 -- vim.opt.iskeyword:append("-")
