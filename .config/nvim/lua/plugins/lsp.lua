@@ -8,31 +8,17 @@ return {
     opts = {
       inlay_hints = { enabled = false },
       servers = {
-        -- vtsls — TypeScript LSP (LazyVim default for the typescript extra).
-        -- Setting names match VS Code's typescript.* and vtsls.* namespaces.
-        -- See: https://github.com/yioneko/vtsls/blob/main/packages/service/configuration.schema.json
-        vtsls = {
-          settings = {
-            typescript = {
-              -- tsdk = "", -- override path to TypeScript lib if needed
-            },
-            vtsls = {
-              autoUseWorkspaceTsdk = true,
-            },
-          },
-        },
+        -- tsgo — Microsoft's Go-based TS type checker (much faster than vtsls).
+        -- Selected via vim.g.lazyvim_ts_lsp = "tsgo" in options.lua.
+        -- Install: npm install -g @typescript/native-preview
       },
     },
   },
-
-  -- TODO: Bridge .vscode/settings.json into Neovim LSP settings so that
-  -- project-level TS config (e.g. experimentalTsGo, tsdk overrides) is
-  -- shared between Cursor/VS Code and Neovim.
 
   -- Format on save is handled by LazyVim via conform.nvim.
   -- Toggle with <leader>uf. Manual format with <leader>cf.
   -- LazyVim auto-configures:
   --   lua_ls (via lazydev.nvim — knows about vim global, nvim API)
-  --   vtsls (via the typescript extra, configured above)
+  --   tsgo (via the typescript extra + vim.g.lazyvim_ts_lsp in options.lua)
   --   Dart LSP (via flutter-tools in lang-flutter.lua)
 }

@@ -10,7 +10,7 @@
 -- TypeScript LSP: "vtsls" (default), "ts_ls", or "tsgo"
 -- tsgo is Microsoft's Go-based TS type checker — much faster, but still preview.
 -- Install: npm install -g @typescript/native-preview
--- vim.g.lazyvim_ts_lsp = "tsgo"
+vim.g.lazyvim_ts_lsp = "tsgo"
 
 -- Use git root (then cwd) instead of LSP root for <leader>ff, neo-tree, etc.
 -- Prevents monorepo packages from hijacking the root dir.
