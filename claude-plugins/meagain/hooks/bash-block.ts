@@ -1,14 +1,18 @@
+import { checkCommand, BLOCKED } from "./bash-block-lib.ts";
+
 const input = await Bun.stdin.json();
 const command: string = input.tool_input?.command ?? "";
+if (!command) process.exit(0);
 
-if (/(?:^|[;&|]\s*)tsc\b/.test(command)) {
+const match = checkCommand(command, BLOCKED);
+
+if (match) {
   console.log(
     JSON.stringify({
       hookSpecificOutput: {
         hookEventName: "PreToolUse",
         permissionDecision: "deny",
-        permissionDecisionReason:
-          "\x1b[33muse oxlint's built-in tsgo type-check via `pnpm lint` instead of `tsc`\x1b[0m",
+        permissionDecisionReason: `\x1b[33m${match}\x1b[0m`,
       },
     })
   );
