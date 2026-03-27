@@ -2,6 +2,7 @@
   "name": "meagain-hooks",
   "private": true,
   "dependencies": {
+    "picocolors": "^1.1.1",
     "shell-quote": "^1.8.3"
   }
 }

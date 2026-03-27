@@ -5,11 +5,14 @@
     "": {
       "name": "meagain-hooks",
       "dependencies": {
+        "picocolors": "^1.1.1",
         "shell-quote": "^1.8.3",
       },
     },
   },
   "packages": {
+    "picocolors": ["picocolors@1.1.1", "", {}, "sha512-xceH2snhtb5M9liqDsmEw56le376mTZkEX/jEb/RxNFyegNul7eNslCXP9FDj/Lcu0X8KEyMceP2ntpaHrDEVA=="],
+
     "shell-quote": ["shell-quote@1.8.3", "", {}, "sha512-ObmnIF4hXNg1BqhnHmgbDETF8dLPCggZWBjkQfhZpbszZnYur5DUljTcCHii5LC3J5E0yeO/1LIMyH+UvHQgyw=="],
   }
 }
