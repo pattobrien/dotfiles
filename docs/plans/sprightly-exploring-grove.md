@@ -2,7 +2,10 @@
 
 ## Context
 
-Create a standalone Claude Code marketplace called "meagain" that bundles MCP server configurations for observability, billing, and analytics services. Prefer OAuth where supported for seamless auth without managing API keys. Langfuse is deferred for now.
+Create a standalone Claude Code marketplace called "meagain" that bundles MCP
+server configurations for observability, billing, and analytics services. Prefer
+OAuth where supported for seamless auth without managing API keys. Langfuse is
+deferred for now.
 
 ## File Structure
 
@@ -19,16 +22,17 @@ Create a standalone Claude Code marketplace called "meagain" that bundles MCP se
 
 ## MCP Server Configurations
 
-All 6 active servers use **remote HTTP transport** with OAuth or token auth. No local stdio/pnpx needed.
+All 6 active servers use **remote HTTP transport** with OAuth or token auth. No
+local stdio/pnpx needed.
 
-| Server | URL | Auth | Read-Only | Notes |
-|---|---|---|---|---|
-| **neondb** | `https://mcp.neon.tech/mcp` | OAuth | Uncheck "Full access" during OAuth | Official remote endpoint |
-| **posthog** | `https://mcp.posthog.com/sse` | API key (Bearer) | Use "MCP Server" API key preset | No OAuth yet (PostHog/mcp#39) |
-| **sentry** | `https://mcp.sentry.dev/mcp` | OAuth | Omit write scopes during auth | Official remote endpoint |
-| **revenuecat** | `https://mcp.revenuecat.ai/mcp` | OAuth (try) | Read-only v2 key as fallback | Test if OAuth works with Claude Code HTTP transport |
-| **stripe** | `https://mcp.stripe.com` | OAuth | Configure in Stripe Dashboard MCP settings | Official remote endpoint |
-| **vercel** | `https://mcp.vercel.com` | OAuth | Read-only by default (initial launch) | Supports team/project pinning via URL path |
+| Server         | URL                             | Auth             | Read-Only                                  | Notes                                               |
+| -------------- | ------------------------------- | ---------------- | ------------------------------------------ | --------------------------------------------------- |
+| **neondb**     | `https://mcp.neon.tech/mcp`     | OAuth            | Uncheck "Full access" during OAuth         | Official remote endpoint                            |
+| **posthog**    | `https://mcp.posthog.com/sse`   | API key (Bearer) | Use "MCP Server" API key preset            | No OAuth yet (PostHog/mcp#39)                       |
+| **sentry**     | `https://mcp.sentry.dev/mcp`    | OAuth            | Omit write scopes during auth              | Official remote endpoint                            |
+| **revenuecat** | `https://mcp.revenuecat.ai/mcp` | OAuth (try)      | Read-only v2 key as fallback               | Test if OAuth works with Claude Code HTTP transport |
+| **stripe**     | `https://mcp.stripe.com`        | OAuth            | Configure in Stripe Dashboard MCP settings | Official remote endpoint                            |
+| **vercel**     | `https://mcp.vercel.com`        | OAuth            | Read-only by default (initial launch)      | Supports team/project pinning via URL path          |
 
 **Langfuse** — deferred (TODO). Requires base64 Basic auth, no OAuth support.
 
@@ -73,9 +77,11 @@ Plugin metadata: name, description, version, keywords.
 }
 ```
 
-All servers rely on OAuth — no API keys or headers in the config. Claude Code handles the OAuth flow interactively when each server is first used.
+All servers rely on OAuth — no API keys or headers in the config. Claude Code
+handles the OAuth flow interactively when each server is first used.
 
 **RevenueCat fallback** — if OAuth doesn't work with Claude Code, switch to:
+
 ```json
 "revenuecat": {
   "type": "http",
@@ -89,6 +95,7 @@ All servers rely on OAuth — no API keys or headers in the config. Claude Code 
 ### 4. `README.md`
 
 Document:
+
 - What each server provides
 - OAuth setup instructions (first-use flow)
 - RevenueCat fallback if OAuth doesn't work

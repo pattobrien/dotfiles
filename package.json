@@ -8,7 +8,7 @@
     "dev:raycast": "vp run wt-raycast#dev",
     "ready": "vp fmt && vp lint && vp run test -r && vp run build -r",
     "lint": "vp lint",
-    "lint:fix": "vp lint --write",
+    "lint:fix": "vp lint --fix",
     "format": "vp fmt --check",
     "format:fix": "vp fmt --write",
     "check": "vp check"

@@ -1,6 +1,8 @@
 import { describe, expect, it } from "bun:test";
-import { checkCommand, extractCommands, BLOCKED } from "./bash-block-lib.ts";
+
 import { parse } from "shell-quote";
+
+import { checkCommand, extractCommands, BLOCKED } from "./bash-block-lib.ts";
 
 describe("extractCommands", () => {
   it("extracts a single command", () => {
@@ -26,9 +28,9 @@ describe("extractCommands", () => {
   });
 
   it("does not extract quoted content as commands", () => {
-    expect(
-      extractCommands(parse('git commit -m "use npx and tsc"'))
-    ).toEqual(["git"]);
+    expect(extractCommands(parse('git commit -m "use npx and tsc"'))).toEqual([
+      "git",
+    ]);
   });
 });
 
@@ -43,20 +45,16 @@ describe("checkCommand", () => {
 
   it("blocks tsc after &&", () => {
     expect(checkCommand("echo hello && tsc --noEmit", BLOCKED)).toBe(
-      BLOCKED.tsc
+      BLOCKED.tsc,
     );
   });
 
   it("blocks npx after pipe", () => {
-    expect(checkCommand("cat file | npx prettier", BLOCKED)).toBe(
-      BLOCKED.npx
-    );
+    expect(checkCommand("cat file | npx prettier", BLOCKED)).toBe(BLOCKED.npx);
   });
 
   it("allows npx/tsc inside quoted args", () => {
-    expect(
-      checkCommand('git commit -m "use npx and tsc"', BLOCKED)
-    ).toBeNull();
+    expect(checkCommand('git commit -m "use npx and tsc"', BLOCKED)).toBeNull();
   });
 
   it("allows unrelated commands", () => {
@@ -72,8 +70,6 @@ describe("checkCommand", () => {
   });
 
   it("blocks first matching command in chain", () => {
-    expect(checkCommand("npx foo && tsc --noEmit", BLOCKED)).toBe(
-      BLOCKED.npx
-    );
+    expect(checkCommand("npx foo && tsc --noEmit", BLOCKED)).toBe(BLOCKED.npx);
   });
 });

@@ -45,8 +45,17 @@ function listTmuxSessions(): Map<string, SessionStatus> {
   try {
     const output = execFileSync(
       TMUX_BIN,
-      ["list-sessions", "-F", `#{session_name}${SESSION_DELIM}#{session_attached}`],
-      { cwd: "/", encoding: "utf-8", timeout: 10_000, env: { ...process.env, TMUX_TMPDIR } },
+      [
+        "list-sessions",
+        "-F",
+        `#{session_name}${SESSION_DELIM}#{session_attached}`,
+      ],
+      {
+        cwd: "/",
+        encoding: "utf-8",
+        timeout: 10_000,
+        env: { ...process.env, TMUX_TMPDIR },
+      },
     ).trim();
     for (const line of output.split("\n").filter(Boolean)) {
       const idx = line.lastIndexOf(SESSION_DELIM);
@@ -55,7 +64,10 @@ function listTmuxSessions(): Map<string, SessionStatus> {
         name: line.slice(0, idx),
         attached: line.slice(idx + SESSION_DELIM.length) === "1",
       });
-      map.set(session.name, session.attached ? SessionStatus.Active : SessionStatus.Detached);
+      map.set(
+        session.name,
+        session.attached ? SessionStatus.Active : SessionStatus.Detached,
+      );
     }
   } catch {
     // tmux server not running — not an error for us
@@ -149,7 +161,8 @@ function fetchWorktreeItems(cwd: string): WorktreeItem[] {
       });
     })
     .sort((a, b) => {
-      const statusDiff = statusOrder[a.sessionStatus] - statusOrder[b.sessionStatus];
+      const statusDiff =
+        statusOrder[a.sessionStatus] - statusOrder[b.sessionStatus];
       if (statusDiff !== 0) return statusDiff;
       return a.name.localeCompare(b.name);
     });

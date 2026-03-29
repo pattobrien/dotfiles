@@ -2,7 +2,8 @@
 
 ## Extract a Service SDK
 
-Create an SDK wrapper for a 3rd party service in `src/services/<service-name>/*`.
+Create an SDK wrapper for a 3rd party service in
+`src/services/<service-name>/*`.
 
 ### Steps
 
@@ -12,9 +13,8 @@ Create an SDK wrapper for a 3rd party service in `src/services/<service-name>/*`
      parse env vars, supply baseUrls, or handle other init/config.
    - Re-export from the old location so this is not a breaking change.
 
-2. **Define and export narrowed types/schemas** from
-   `<service-name>/models/*` and resources/endpoints from
-   `<service-name>/resources/*`.
+2. **Define and export narrowed types/schemas** from `<service-name>/models/*`
+   and resources/endpoints from `<service-name>/resources/*`.
    - Goal: narrow input and output types to only what you need to provide and
      return.
    - Example: for the Stripe SDK, a wrapper can abstract away `expand`able
@@ -37,8 +37,8 @@ Create an SDK wrapper for a 3rd party service in `src/services/<service-name>/*`
    - RN styles (components that don't yet support NativeWind) → `.ts` files.
    - (optional) Identify colors that are similar/identical enough to combine
      into one token.
-   - (optional) Choose a unified color definition format (rgb, rgba, hsl,
-     oklch, etc.).
+   - (optional) Choose a unified color definition format (rgb, rgba, hsl, oklch,
+     etc.).
 
 2. **Import new tokens repo-wide** — replace all hardcoded color references with
    imports from the new token source.
@@ -53,7 +53,7 @@ Create an SDK wrapper for a 3rd party service in `src/services/<service-name>/*`
     `<button>`, `<a>`, `<dialog>` — must use shadcn equivalents).
 
 - **Refactor component names to use domain prefixes and common-component
-  suffixes** — e.g. `TelehealthScreen`, `PortalProfileForm`,
-  `WaterIntakeCard`. Establishes a naming convention where the prefix indicates
-  the feature domain and the suffix indicates the component type (Screen, Form,
-  Card, List, Dialog, etc.).
+  suffixes** — e.g. `TelehealthScreen`, `PortalProfileForm`, `WaterIntakeCard`.
+  Establishes a naming convention where the prefix indicates the feature domain
+  and the suffix indicates the component type (Screen, Form, Card, List, Dialog,
+  etc.).

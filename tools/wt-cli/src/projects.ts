@@ -6,7 +6,12 @@ import pc from "picocolors";
 import { SessionStatus, TmuxClient } from "tmux";
 import { z } from "zod";
 
-import { deriveSessionName, fzfSelect, runWorktreeSetup, worktreeName } from "./lib";
+import {
+  deriveSessionName,
+  fzfSelect,
+  runWorktreeSetup,
+  worktreeName,
+} from "./lib";
 import { t } from "./trpc";
 
 const listOutput = z.void();
@@ -88,10 +93,14 @@ const projectsList = t.procedure
 /** List worktrees for a repo directory using git directly (no process.exit). */
 function listWorktreesRaw(repoDir: string): Worktree[] {
   try {
-    const output = execFileSync("git", ["-C", repoDir, "worktree", "list", "--porcelain"], {
-      encoding: "utf-8",
-      timeout: 5_000,
-    });
+    const output = execFileSync(
+      "git",
+      ["-C", repoDir, "worktree", "list", "--porcelain"],
+      {
+        encoding: "utf-8",
+        timeout: 5_000,
+      },
+    );
 
     const worktrees: Worktree[] = [];
     let current: Record<string, string | boolean> = {};
@@ -144,7 +153,11 @@ const projectsSwitch = t.procedure
     const sessions = tmux.listSessions();
     const sessionByPath = new Map(sessions.map((s) => [s.path, s]));
 
-    const withSessions: Array<{ label: string; value: string; lastActivity: number }> = [];
+    const withSessions: Array<{
+      label: string;
+      value: string;
+      lastActivity: number;
+    }> = [];
     const withoutSessions: Array<{ label: string; value: string }> = [];
 
     for (const project of allProjects) {
@@ -156,7 +169,9 @@ const projectsSwitch = t.procedure
         const label = `${project.repoName}/${wtName}`;
 
         if (session) {
-          const status = session.attached ? SessionStatus.Active : SessionStatus.Detached;
+          const status = session.attached
+            ? SessionStatus.Active
+            : SessionStatus.Detached;
           const statusColored =
             status === SessionStatus.Active
               ? pc.green(status)

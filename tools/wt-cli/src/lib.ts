@@ -8,9 +8,21 @@ export interface PrInfo {
   state: "OPEN" | "CLOSED" | "MERGED";
 }
 
-export async function fetchPrsByBranch(repoDir: string): Promise<Map<string, PrInfo>> {
+export async function fetchPrsByBranch(
+  repoDir: string,
+): Promise<Map<string, PrInfo>> {
   const proc = Bun.spawn(
-    ["gh", "pr", "list", "--state", "all", "--json", "number,state,headRefName", "--limit", "200"],
+    [
+      "gh",
+      "pr",
+      "list",
+      "--state",
+      "all",
+      "--json",
+      "number,state,headRefName",
+      "--limit",
+      "200",
+    ],
     { cwd: repoDir, stdout: "pipe", stderr: "pipe" },
   );
 
@@ -19,13 +31,21 @@ export async function fetchPrsByBranch(repoDir: string): Promise<Map<string, PrI
 
   if (exitCode !== 0) return new Map();
 
-  const prs: Array<{ number: number; state: PrInfo["state"]; headRefName: string }> = JSON.parse(output);
+  const prs: Array<{
+    number: number;
+    state: PrInfo["state"];
+    headRefName: string;
+  }> = JSON.parse(output);
 
   const map = new Map<string, PrInfo>();
   for (const pr of prs) {
     const existing = map.get(pr.headRefName);
     // Prefer OPEN > MERGED > CLOSED if multiple PRs exist for the same branch
-    if (!existing || pr.state === "OPEN" || (pr.state === "MERGED" && existing.state === "CLOSED")) {
+    if (
+      !existing ||
+      pr.state === "OPEN" ||
+      (pr.state === "MERGED" && existing.state === "CLOSED")
+    ) {
       map.set(pr.headRefName, { number: pr.number, state: pr.state });
     }
   }
@@ -91,7 +111,12 @@ export async function runWorktreeSetup(
   });
 
   // Window 2: claude
-  tmux.newWindow({ target: sessionName, name: "claude", cwd: worktreePath, cmd: "claude" });
+  tmux.newWindow({
+    target: sessionName,
+    name: "claude",
+    cwd: worktreePath,
+    cmd: "claude",
+  });
 
   // Window 3: general shell
   tmux.newWindow({ target: sessionName, cwd: worktreePath });

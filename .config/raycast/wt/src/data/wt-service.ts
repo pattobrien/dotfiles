@@ -2,7 +2,14 @@ import { execFileSync, execSync } from "node:child_process";
 import { existsSync, readdirSync, statSync } from "node:fs";
 import { join } from "node:path";
 
-import { DEFAULT_CWD, TMUX_BIN, TMUX_TMPDIR, WT_BIN, WT_PATH, resolvePath } from "./paths";
+import {
+  DEFAULT_CWD,
+  TMUX_BIN,
+  TMUX_TMPDIR,
+  WT_BIN,
+  WT_PATH,
+  resolvePath,
+} from "./paths";
 
 function resolveGitCwd(dir: string): string {
   if (existsSync(join(dir, ".git"))) return dir;
@@ -53,7 +60,9 @@ export function switchWorktree(sessionName: string): void {
   });
 
   // Bring kitty to the foreground without opening a new window
-  execSync(`osascript -e 'tell application "kitty" to activate'`, { timeout: 5_000 });
+  execSync(`osascript -e 'tell application "kitty" to activate'`, {
+    timeout: 5_000,
+  });
 }
 
 export function removeWorktree(name: string, cwd?: string): void {

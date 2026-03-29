@@ -52,10 +52,7 @@ export default function Command() {
   }
 
   return (
-    <List
-      isLoading={isLoading}
-      searchBarPlaceholder="Search projects..."
-    >
+    <List isLoading={isLoading} searchBarPlaceholder="Search projects...">
       <List.EmptyView
         title="No Projects Found"
         description="Press ⌘R to scan for repos."
@@ -77,7 +74,9 @@ export default function Command() {
           icon={projectIcon(project)}
           title={project.repoName}
           subtitle={tildePath(project.repoDir)}
-          keywords={project.repoDir.split("/").concat(project.repoOrg, project.isBare ? "bare" : "git")}
+          keywords={project.repoDir
+            .split("/")
+            .concat(project.repoOrg, project.isBare ? "bare" : "git")}
           accessories={[{ tag: project.isBare ? "bare" : "git" }]}
           actions={
             <ActionPanel>

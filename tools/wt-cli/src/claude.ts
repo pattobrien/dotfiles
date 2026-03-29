@@ -24,5 +24,10 @@ export const claude = t.procedure
     const sessions = tmux.listSessions();
     const session = sessions.find((s) => s.name === currentSession);
 
-    tmux.newWindow({ target: currentSession, name: "claude", cwd: session?.path, cmd: "claude" });
+    tmux.newWindow({
+      target: currentSession,
+      name: "claude",
+      cwd: session?.path,
+      cmd: "claude",
+    });
   });

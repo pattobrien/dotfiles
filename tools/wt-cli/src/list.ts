@@ -4,7 +4,14 @@ import { SessionStatus } from "tmux";
 import { TmuxClient } from "tmux";
 import { z } from "zod";
 
-import { deriveSessionName, fetchPrsByBranch, fzfSelect, runWorktreeSetup, worktreeName, type PrInfo } from "./lib";
+import {
+  deriveSessionName,
+  fetchPrsByBranch,
+  fzfSelect,
+  runWorktreeSetup,
+  worktreeName,
+  type PrInfo,
+} from "./lib";
 import { t } from "./trpc";
 
 function branchShortName(wt: { branch?: string }): string | undefined {
@@ -137,6 +144,8 @@ export const list = t.procedure
       const pr = branch ? prsByBranch.get(branch) : undefined;
       const prCell = formatPr(pr);
 
-      console.log(`${repo.repoName.padEnd(repoWidth)}  ${name.padEnd(nameWidth)}  ${colored}  ${prCell}  ${wt.path}`);
+      console.log(
+        `${repo.repoName.padEnd(repoWidth)}  ${name.padEnd(nameWidth)}  ${colored}  ${prCell}  ${wt.path}`,
+      );
     }
   });

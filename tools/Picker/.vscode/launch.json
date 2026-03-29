@@ -8,7 +8,7 @@
       "name": "Debug picker",
       "target": "picker",
       "configuration": "debug",
-      "preLaunchTask": "swift: Build Debug picker",
+      "preLaunchTask": "swift: Build Debug picker"
     },
     {
       "type": "swift",
@@ -18,7 +18,7 @@
       "name": "Release picker",
       "target": "picker",
       "configuration": "release",
-      "preLaunchTask": "swift: Build Release picker",
-    },
-  ],
+      "preLaunchTask": "swift: Build Release picker"
+    }
+  ]
 }

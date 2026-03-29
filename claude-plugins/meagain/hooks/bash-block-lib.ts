@@ -31,7 +31,7 @@ export function extractCommands(tokens: ReturnType<typeof parse>): string[] {
  */
 export function checkCommand(
   command: string,
-  blocked: Record<string, string>
+  blocked: Record<string, string>,
 ): string | null {
   const tokens = parse(command);
   const invoked = extractCommands(tokens);

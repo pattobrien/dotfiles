@@ -3,8 +3,9 @@ import type {
   SyncHookJSONOutput,
   PreToolUseHookSpecificOutput,
 } from "@anthropic-ai/claude-agent-sdk";
-import { checkCommand, BLOCKED } from "./bash-block-lib.ts";
 import { createColors } from "picocolors";
+
+import { checkCommand, BLOCKED } from "./bash-block-lib.ts";
 const pc = createColors(true);
 
 const input: PreToolUseHookInput = await Bun.stdin.json();

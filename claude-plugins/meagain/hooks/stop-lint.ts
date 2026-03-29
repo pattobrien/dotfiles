@@ -1,6 +1,7 @@
-import type { StopHookInput } from "@anthropic-ai/claude-agent-sdk";
 import { existsSync, readFileSync } from "fs";
 import { join } from "path";
+
+import type { StopHookInput } from "@anthropic-ai/claude-agent-sdk";
 
 const input: StopHookInput = await Bun.stdin.json();
 const cwd = input.cwd ?? process.cwd();
@@ -14,7 +15,11 @@ const scripts: Record<string, string> = pkg.scripts ?? {};
 const cmd = scripts["lint:fix"] ? "lint:fix" : scripts["lint"] ? "lint" : null;
 if (!cmd) process.exit(0);
 
-const result = Bun.spawnSync(["pnpm", "run", cmd], { cwd, stderr: "pipe", stdout: "pipe" });
+const result = Bun.spawnSync(["pnpm", "run", cmd], {
+  cwd,
+  stderr: "pipe",
+  stdout: "pipe",
+});
 const output = result.stdout.toString() + result.stderr.toString();
 
 if (result.exitCode !== 0) {

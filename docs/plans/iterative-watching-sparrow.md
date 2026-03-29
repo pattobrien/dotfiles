@@ -2,7 +2,9 @@
 
 ## Overview
 
-Add mise alongside asdf for version management. Mise is backwards-compatible with `.tool-versions` files. asdf remains fully functional as a fallback while you validate mise in real-world use.
+Add mise alongside asdf for version management. Mise is backwards-compatible
+with `.tool-versions` files. asdf remains fully functional as a fallback while
+you validate mise in real-world use.
 
 ## Files to Modify
 
@@ -21,7 +23,8 @@ brew install mise
 
 ### Step 2: Add mise activation ALONGSIDE asdf
 
-In `zsh/zshrc`, ADD mise activation after the existing asdf setup (lines 147-148). Don't remove asdf:
+In `zsh/zshrc`, ADD mise activation after the existing asdf setup (lines
+147-148). Don't remove asdf:
 
 ```bash
 # Existing asdf setup stays:
@@ -40,7 +43,8 @@ eval "$(mise activate zsh)"
 mise install
 ```
 
-**Test:** Run `mise list` to see installed tools. Verify versions match what asdf had.
+**Test:** Run `mise list` to see installed tools. Verify versions match what
+asdf had.
 
 ### Step 4: Verify mise works
 
@@ -51,11 +55,13 @@ go version
 deno --version
 ```
 
-**Test:** All tools should resolve correctly. If anything fails, asdf is still there as fallback.
+**Test:** All tools should resolve correctly. If anything fails, asdf is still
+there as fallback.
 
 ### Step 5: Create global mise config with tasks
 
-Create `~/.config/mise/config.toml` (will be symlinked from `.config/mise/config.toml`):
+Create `~/.config/mise/config.toml` (will be symlinked from
+`.config/mise/config.toml`):
 
 ```toml
 [tools]
@@ -68,7 +74,8 @@ run = "cd ~/.dotfiles && exec $SHELL"
 
 ```
 
-**Test:** From any directory, run `mise run test` or `mise tasks` to see available tasks.
+**Test:** From any directory, run `mise run test` or `mise tasks` to see
+available tasks.
 
 ### Step 6: Update dotbot install.conf.yaml
 
@@ -92,7 +99,8 @@ Add symlink for mise config:
 
 ## Rollback
 
-If mise causes issues, simply remove the `eval "$(mise activate zsh)"` line from zshrc. asdf remains fully functional.
+If mise causes issues, simply remove the `eval "$(mise activate zsh)"` line from
+zshrc. asdf remains fully functional.
 
 ---
 

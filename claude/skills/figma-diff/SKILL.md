@@ -1,10 +1,11 @@
 ---
 name: figma-diff
-description: Compare Figma designs to iOS Simulator screenshots using ImageMagick.
-  Produces layout diffs, color heatmaps, and directional diffs that show which image
-  is the source of each difference. Use when the user wants to compare a Figma design
-  to a running app, diff mockups against simulator output, do visual QA, or check
-  design fidelity.
+description:
+  Compare Figma designs to iOS Simulator screenshots using ImageMagick. Produces
+  layout diffs, color heatmaps, and directional diffs that show which image is
+  the source of each difference. Use when the user wants to compare a Figma
+  design to a running app, diff mockups against simulator output, do visual QA,
+  or check design fidelity.
 ---
 
 # Figma-to-Simulator Visual Diff
@@ -12,7 +13,8 @@ description: Compare Figma designs to iOS Simulator screenshots using ImageMagic
 ## Requirements
 
 - **Figma desktop app** — open with the target file as the active tab
-- **Figma MCP server** — enable Dev Mode in Figma, which starts the MCP server on `127.0.0.1:3845`
+- **Figma MCP server** — enable Dev Mode in Figma, which starts the MCP server
+  on `127.0.0.1:3845`
 - **iOS Simulator** — running with the target app/screen visible
 - **ImageMagick 7+** — `brew install imagemagick`
 - **Python 3** — for JSONL image extraction
@@ -21,11 +23,15 @@ description: Compare Figma designs to iOS Simulator screenshots using ImageMagic
 
 ### 1. Get Figma page metadata
 
-Call `get_metadata` with the page node ID to get the full frame tree as XML. Page IDs are stable — save them for reuse.
+Using the Figma MCP server, call `get_metadata` with the page node ID to get the
+full frame tree as XML. Page IDs are stable — save them for reuse.
 
 ```
 get_metadata(nodeId: "1427:405")
 ```
+
+> NOTE: Figma MeAgain page URL is:
+> https://www.figma.com/design/dg923cOGRf23ZQuCopqLUl/Dots--Latest-?node-id=1427-405
 
 ### 2. Search for target frames
 
@@ -45,7 +51,8 @@ for fid, name, w, h in frames:
 
 ### 3. Screenshot Figma frames
 
-Call `get_screenshot` for each target node ID. Images are returned inline (base64). Batch up to 5 per turn.
+Call `get_screenshot` for each target node ID. Images are returned inline
+(base64). Batch up to 5 per turn.
 
 ```
 get_screenshot(nodeId: "9545:18601")
@@ -54,7 +61,8 @@ get_screenshot(nodeId: "9545:18693")
 
 ### 4. Extract images to disk
 
-Use `scripts/extract-figma-screenshots.py` to parse the session JSONL, decode base64 images, and save as named PNGs.
+Use `scripts/extract-figma-screenshots.py` to parse the session JSONL, decode
+base64 images, and save as named PNGs.
 
 ```bash
 python3 scripts/extract-figma-screenshots.py \
@@ -64,7 +72,8 @@ python3 scripts/extract-figma-screenshots.py \
   '{"9545:18601": "Intake received", "9545:18693": "More info required"}'
 ```
 
-Note the current JSONL line count (`wc -l`) before taking screenshots so you can pass it as `<start_line>`.
+Note the current JSONL line count (`wc -l`) before taking screenshots so you can
+pass it as `<start_line>`.
 
 ### 5. Screenshot iOS Simulator
 
@@ -74,7 +83,8 @@ xcrun simctl io booted screenshot ~/Downloads/simulator.png
 
 ### 6. Resize to match
 
-Figma exports at 1x (e.g. 393x852). Simulator captures at 3x retina (e.g. 1206x2622). Resize simulator down:
+Figma exports at 1x (e.g. 393x852). Simulator captures at 3x retina (e.g.
+1206x2622). Resize simulator down:
 
 ```bash
 magick ~/Downloads/simulator.png -resize 393x852! /tmp/simulator-resized.png
@@ -82,7 +92,8 @@ magick ~/Downloads/simulator.png -resize 393x852! /tmp/simulator-resized.png
 
 ### 7. Layout diff (structural)
 
-Filters gradient/anti-aliasing noise with `-fuzz 10%`. Highlights content and layout differences in red:
+Filters gradient/anti-aliasing noise with `-fuzz 10%`. Highlights content and
+layout differences in red:
 
 ```bash
 magick compare -metric AE -fuzz 10% \
@@ -94,7 +105,8 @@ magick compare -metric AE -fuzz 10% \
 
 ### 8. Color diff (heatmap)
 
-Shows the magnitude of every color delta as a thermal heatmap (black = identical, blue = subtle, red = major):
+Shows the magnitude of every color delta as a thermal heatmap (black =
+identical, blue = subtle, red = major):
 
 ```bash
 magick composite figma.png simulator-resized.png \
@@ -108,7 +120,8 @@ magick /tmp/diff-raw.png -colorspace Gray -evaluate multiply 5 \
 
 ### 9. Directional diff
 
-Green = pixels only in Figma (expected). Blue = pixels only in simulator (actual). Tells the agent which image is the source of each difference.
+Green = pixels only in Figma (expected). Blue = pixels only in simulator
+(actual). Tells the agent which image is the source of each difference.
 
 ```bash
 magick \
@@ -128,7 +141,8 @@ magick \
 
 ### 10. Triptych composite
 
-Stitch Figma | Directional Diff | Simulator side by side so the agent sees everything in one image:
+Stitch Figma | Directional Diff | Simulator side by side so the agent sees
+everything in one image:
 
 ```bash
 magick \

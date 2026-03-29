@@ -17,10 +17,7 @@ export default function Command(props: { arguments: { cwd?: string } }) {
   const { data, isLoading, revalidate } = useWorktrees(cwd);
 
   return (
-    <List
-      isLoading={isLoading}
-      searchBarPlaceholder="Search worktrees..."
-    >
+    <List isLoading={isLoading} searchBarPlaceholder="Search worktrees...">
       <List.EmptyView
         title="No Worktrees Found"
         description="No git worktrees were found in the current directory."

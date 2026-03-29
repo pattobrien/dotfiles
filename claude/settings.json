@@ -159,7 +159,7 @@
     "revenuecat@meagain": true,
     "sentry@meagain": true,
     "stripe@meagain": true,
-    "vercel@meagain": true,
+    "vercel@meagain": false,
     "github@meagain": true,
     "skill-creator@claude-plugins-official": true,
     "oxlint-lsp@meagain": false,

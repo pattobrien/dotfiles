@@ -14,9 +14,10 @@ description: |
 # Refactor Driven Design (RDD)
 
 RDD is a methodology for sculpting a codebase by defining systematic
-transformations and constraints, rather than applying individual changes by hand.
+transformations and constraints, rather than applying individual changes by
+hand.
 
-The core idea: describe the *shape* you want the code to take, then use
+The core idea: describe the _shape_ you want the code to take, then use
 automation to get there and keep it there.
 
 ## Choosing the Right Tool
@@ -26,10 +27,11 @@ permanent constraint?
 
 ### One-time transformation → ts-morph codemod
 
-Use when there are many files to change and the transformation is mechanical.
-PR reviewers review the *codemod script*, not every individual file change.
+Use when there are many files to change and the transformation is mechanical. PR
+reviewers review the _codemod script_, not every individual file change.
 
 Examples:
+
 - Rename all `getFoo` to `fetchFoo` across a package
 - Add explicit Input/Output schemas to all tRPC procedures
 - Move types from a barrel file into colocated files
@@ -41,6 +43,7 @@ Use when the convention must hold going forward, not just today. Default to
 finding an existing rule before writing a custom one.
 
 Examples:
+
 - Prevent non-service folders from importing `sentry` directly
 - Prevent raw HTML elements in React components (must use shadcn)
 - Enforce import boundaries between packages
@@ -51,14 +54,14 @@ Examples:
 max-lines, restricted globals, etc.).
 
 **Custom oxlint JS plugin** — when existing rules don't cover the pattern, or
-when you need domain-specific error messages that explain *why* the convention
+when you need domain-specific error messages that explain _why_ the convention
 exists.
 
 ### Hybrid approach
 
 Sometimes both are needed: a codemod to fix all existing violations, plus a lint
-rule to prevent regressions. Start with the lint rule (to define the constraint),
-then write the codemod (to satisfy it).
+rule to prevent regressions. Start with the lint rule (to define the
+constraint), then write the codemod (to satisfy it).
 
 ---
 
@@ -100,7 +103,8 @@ for (const dir of TARGET_DIRS) {
 }
 ```
 
-**Type-aware transforms in a monorepo (need correct type resolution per package):**
+**Type-aware transforms in a monorepo (need correct type resolution per
+package):**
 
 Process each package independently with its own tsconfig. This ensures type
 resolution is correct but means you can't resolve types across packages in a
@@ -136,7 +140,11 @@ for (const sourceFile of project.getSourceFiles()) {
   for (const decl of sourceFile.getFunctions()) {
     const returnType = decl.getReturnType().getText();
     if (returnType.startsWith("Promise<")) {
-      targets.push({ file: sourceFile, node: decl, newName: `${decl.getName()}Async` });
+      targets.push({
+        file: sourceFile,
+        node: decl,
+        newName: `${decl.getName()}Async`,
+      });
     }
   }
 }
@@ -150,15 +158,17 @@ project.saveSync();
 ```
 
 Other performance tips:
+
 - Use batch APIs: `addClasses([...])` instead of looping `addClass()`
-- Call `sourceFile.forgetDescendants()` after processing large files to free memory
+- Call `sourceFile.forgetDescendants()` after processing large files to free
+  memory
 - Use `skipFileDependencyResolution: true` in Project options for faster init
 
 ### 4. Make it resettable
 
 The iteration loop is: edit codemod → run → inspect → reset → repeat.
 
-Reset means restoring only the *target directories* to their last committed
+Reset means restoring only the _target directories_ to their last committed
 state, while preserving the codemod workspace:
 
 ```ts
@@ -195,6 +205,7 @@ and run again. The goal is a clean diff that reviewers can trust by reading the
 codemod script alone.
 
 When the codemod is ready:
+
 1. Commit the codemod script first (so reviewers can read it)
 2. Run it one final time
 3. Commit the resulting changes
@@ -213,11 +224,15 @@ const decl = sourceFile.getFunctionOrThrow("getFoo");
 decl.rename("fetchFoo");
 
 // Add a missing property to all objects matching a pattern
-sourceFile.getDescendantsOfKind(SyntaxKind.ObjectLiteralExpression)
-  .filter(obj => obj.getProperty("input") && !obj.getProperty("output"))
-  .forEach(obj => obj.addPropertyAssignment({
-    name: "output", initializer: "z.void()",
-  }));
+sourceFile
+  .getDescendantsOfKind(SyntaxKind.ObjectLiteralExpression)
+  .filter((obj) => obj.getProperty("input") && !obj.getProperty("output"))
+  .forEach((obj) =>
+    obj.addPropertyAssignment({
+      name: "output",
+      initializer: "z.void()",
+    }),
+  );
 
 // Move declarations between files
 const typeDef = sourceFile.getTypeAliasOrThrow("UserInput");
@@ -226,9 +241,10 @@ targetFile.addTypeAlias(typeDef.getStructure());
 typeDef.remove();
 
 // Rewrite imports
-sourceFile.getImportDeclarations()
-  .filter(imp => imp.getModuleSpecifierValue() === "@sentry/node")
-  .forEach(imp => imp.setModuleSpecifier("@/services/analytics"));
+sourceFile
+  .getImportDeclarations()
+  .filter((imp) => imp.getModuleSpecifierValue() === "@sentry/node")
+  .forEach((imp) => imp.setModuleSpecifier("@/services/analytics"));
 
 // Add type-only import
 sourceFile.addImportDeclaration({
@@ -238,7 +254,8 @@ sourceFile.addImportDeclaration({
 });
 ```
 
-Use https://ts-ast-viewer.com to explore AST structure before writing transforms.
+Use https://ts-ast-viewer.com to explore AST structure before writing
+transforms.
 
 ---
 
@@ -253,6 +270,7 @@ The high-level RDD workflow is:
    - `max-lines-per-function`, `max-depth`, `max-params` — complexity limits
 
 2. **Enable it repo-wide** and run the linter to see all violations:
+
    ```sh
    oxlint .   # or: vp lint
    ```
@@ -268,9 +286,9 @@ The high-level RDD workflow is:
 
 ## Workflow: Custom Oxlint JS Plugin
 
-Oxlint supports custom rules via its JS plugin system (alpha, ESLint v9-compatible
-API). Use when no existing rule covers your pattern and you need enforcement with
-domain-specific error messages.
+Oxlint supports custom rules via its JS plugin system (alpha, ESLint
+v9-compatible API). Use when no existing rule covers your pattern and you need
+enforcement with domain-specific error messages.
 
 Limitations to be aware of: JS plugins are alpha (API may change), no type-aware
 linting (TypeScript type info not exposed to JS plugin rules), no custom parser
@@ -278,8 +296,8 @@ support (Vue/Svelte SFCs).
 
 ### 1. Create the plugin
 
-Oxlint JS plugins use ESLint v9+ plugin structure. Create the plugin as a
-`.ts` or `.js` file:
+Oxlint JS plugins use ESLint v9+ plugin structure. Create the plugin as a `.ts`
+or `.js` file:
 
 ```ts
 // lint-rules/no-raw-html-elements.ts
@@ -329,14 +347,22 @@ const rule = {
   createOnce(context: any) {
     return {
       // before() runs at the start of each file; return false to skip
-      before() { return true; },
+      before() {
+        return true;
+      },
       JSXOpeningElement(node: any) {
         const name = node.name.name;
         if (typeof name === "string" && /^[a-z]/.test(name)) {
-          context.report({ node, messageId: "noRawHtml", data: { element: name } });
+          context.report({
+            node,
+            messageId: "noRawHtml",
+            data: { element: name },
+          });
         }
       },
-      after() { /* optional cleanup */ },
+      after() {
+        /* optional cleanup */
+      },
     };
   },
 };
@@ -413,11 +439,13 @@ Enable → run → assess violations → fix (codemod if needed) → verify.
 When the user describes a refactor, walk through this:
 
 1. **What's the change?** Understand the before/after shape.
-2. **How many files?** If <5, manual edits may be fine. If 5+, consider a codemod.
+2. **How many files?** If <5, manual edits may be fine. If 5+, consider a
+   codemod.
 3. **Should it be enforced going forward?**
    - No → codemod only
    - Yes → lint rule (+ codemod for existing violations if needed)
 4. **Does an existing rule cover it?** Check oxlint/eslint rule catalogs and the
    `lints` skill first.
 5. **Is a custom error message important?** If the "why" behind the rule is
-   non-obvious, a custom rule with a descriptive message helps future developers.
+   non-obvious, a custom rule with a descriptive message helps future
+   developers.

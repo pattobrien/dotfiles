@@ -5,7 +5,9 @@
   "description": "Manage git worktrees with tmux sessions",
   "icon": "icon.png",
   "author": "pattobrien",
-  "categories": ["Developer Tools"],
+  "categories": [
+    "Developer Tools"
+  ],
   "license": "MIT",
   "commands": [
     {

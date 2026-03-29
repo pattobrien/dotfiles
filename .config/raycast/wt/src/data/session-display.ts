@@ -2,9 +2,15 @@ import { Color, Icon } from "@raycast/api";
 
 import { SessionStatus } from "../models";
 
-const SESSION_ICONS: Record<SessionStatus, { source: string; tintColor: Color }> = {
+const SESSION_ICONS: Record<
+  SessionStatus,
+  { source: string; tintColor: Color }
+> = {
   [SessionStatus.Active]: { source: Icon.CircleFilled, tintColor: Color.Green },
-  [SessionStatus.Detached]: { source: Icon.CircleFilled, tintColor: Color.Yellow },
+  [SessionStatus.Detached]: {
+    source: Icon.CircleFilled,
+    tintColor: Color.Yellow,
+  },
   [SessionStatus.None]: { source: Icon.Circle, tintColor: Color.SecondaryText },
 };
 

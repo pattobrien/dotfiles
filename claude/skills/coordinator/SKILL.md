@@ -1,6 +1,7 @@
 ---
 name: coordinator
-description: Orchestrate multiple worktree agents. Spawn, monitor, communicate, and merge.
+description:
+  Orchestrate multiple worktree agents. Spawn, monitor, communicate, and merge.
 allowed-tools: Bash, Write, Read, Task
 disable-model-invocation: true
 ---
@@ -150,7 +151,8 @@ workmux run agent-a --timeout 300 -- make test
 workmux run agent-a --keep -- ./scripts/deploy.sh
 ```
 
-The command runs in a new split pane. Exit code is propagated (exits 124 on timeout).
+The command runs in a new split pane. Exit code is propagated (exits 124 on
+timeout).
 
 ### Merge & Cleanup
 

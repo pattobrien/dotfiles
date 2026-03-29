@@ -50,7 +50,8 @@ data:
     raycast-preferences-restorableData: 7b2270657273697374656e636544617465223a3738373831393730332e3533303735322c22747970654e616d65223a22457874656e73696f6e73507265666572656e6365735461624974656d227d
     raycast-updates-lastAppUpdateCheckDate: 1769458055.689626
     raycast-updates-lastTargetCommitishInstalled: abfa3ad4e7edf8929d201f5eb3b533bd2d639972
-    raycast-wrapped-2023-dataSummary: "days: 324 opened: 2217 topAppsRaw: 81 topApps: 10 actions: 19"
+    raycast-wrapped-2023-dataSummary:
+      "days: 324 opened: 2217 topAppsRaw: 81 topApps: 10 actions: 19"
     raycastAnonymousId: 8BC64DF7-2F79-4090-958D-45769F05F935
     raycastFirstKnownAppVersion: 22312e34372e3322
     raycastGlobalHotkey: Command-49

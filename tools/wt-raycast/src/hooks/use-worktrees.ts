@@ -1,9 +1,9 @@
 import { existsSync, readdirSync, statSync } from "node:fs";
 import { basename, join } from "node:path";
 
+import { useCachedPromise } from "@raycast/utils";
 import { GitClient } from "git";
 import { TmuxClient } from "tmux";
-import { useCachedPromise } from "@raycast/utils";
 
 import {
   DEFAULT_CWD,
@@ -69,7 +69,10 @@ async function fetchWorktreeItems(cwd: string): Promise<WorktreeItem[]> {
   const sessions = tmuxClient.listSessions();
   const sessionMap = new Map<string, SessionStatus>();
   for (const s of sessions) {
-    sessionMap.set(s.name, s.attached ? SessionStatus.Active : SessionStatus.Detached);
+    sessionMap.set(
+      s.name,
+      s.attached ? SessionStatus.Active : SessionStatus.Detached,
+    );
   }
 
   const statusOrder = {
@@ -93,7 +96,8 @@ async function fetchWorktreeItems(cwd: string): Promise<WorktreeItem[]> {
       });
     })
     .sort((a, b) => {
-      const statusDiff = statusOrder[a.sessionStatus] - statusOrder[b.sessionStatus];
+      const statusDiff =
+        statusOrder[a.sessionStatus] - statusOrder[b.sessionStatus];
       if (statusDiff !== 0) return statusDiff;
       return a.name.localeCompare(b.name);
     });

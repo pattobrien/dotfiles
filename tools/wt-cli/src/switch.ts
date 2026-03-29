@@ -25,7 +25,11 @@ export const switchWorktree = t.procedure
     const sessions = tmux.listSessions();
     const sessionByPath = new Map(sessions.map((s) => [s.path, s]));
 
-    const withSessions: Array<{ label: string; value: string; lastActivity: number }> = [];
+    const withSessions: Array<{
+      label: string;
+      value: string;
+      lastActivity: number;
+    }> = [];
     const withoutSessions: Array<{ label: string; value: string }> = [];
 
     for (const wt of worktrees) {
@@ -33,7 +37,11 @@ export const switchWorktree = t.procedure
       const session = sessionByPath.get(wt.path);
 
       if (session) {
-        withSessions.push({ label: name, value: session.name, lastActivity: session.lastActivity });
+        withSessions.push({
+          label: name,
+          value: session.name,
+          lastActivity: session.lastActivity,
+        });
       } else {
         withoutSessions.push({ label: name, value: wt.path });
       }

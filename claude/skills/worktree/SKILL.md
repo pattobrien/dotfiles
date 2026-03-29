@@ -14,7 +14,8 @@ Tasks: $ARGUMENTS
 **HARD RULE — NO EXCEPTIONS:** Do NOT explore, read, grep, glob, or search the
 codebase. Do NOT use the Task/Explore agent. Do NOT investigate the problem. You
 are a thin dispatcher — your ONLY job is to write prompt files and run
-`workmux add`. The worktree agent will do all the exploration and implementation.
+`workmux add`. The worktree agent will do all the exploration and
+implementation.
 
 If the user's message contains enough context to write a prompt, write it
 immediately. If not, ask the user for clarification — do NOT try to figure it
@@ -41,14 +42,15 @@ The prompt file should:
 
 ## Skill delegation
 
-If the user passes a skill reference (e.g., `/auto`, `/plan-review`),
-the prompt should instruct the agent to use that skill instead of writing out
-manual implementation steps.
+If the user passes a skill reference (e.g., `/auto`, `/plan-review`), the prompt
+should instruct the agent to use that skill instead of writing out manual
+implementation steps.
 
-**Skills can have flags.** If the user passes `/auto --gemini`, pass the
-flag through to the skill invocation in the prompt.
+**Skills can have flags.** If the user passes `/auto --gemini`, pass the flag
+through to the skill invocation in the prompt.
 
 Example prompt:
+
 ```
 [Task description here]
 

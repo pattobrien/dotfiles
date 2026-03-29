@@ -709,7 +709,8 @@ data:
       - /Users/pattobrien/.sidecar/projects/my_analyzed_codebase/sidecar_analyzer_plugin/sidecar_analyzer_plugin
       - /private/var/folders/4g/ypl4dsnn1tzg1z6c6wrc2w4c0000gn/T/plugin/sidecar_analyzer_plugin
       - /private/var/folders/4g/ypl4dsnn1tzg1z6c6wrc2w4c0000gn/T/plugin/sidecar_analyzer_plugin/tools/analyzer_plugin
-      - /Users/pattobrien/Library/Developer/Xcode/iOS DeviceSupport/15.4.1 (19E258) arm64e/Symbols
+      - /Users/pattobrien/Library/Developer/Xcode/iOS DeviceSupport/15.4.1
+        (19E258) arm64e/Symbols
     ICloudViewSettings:
       ListViewSettings:
         iconSize: 16.0
@@ -858,8 +859,10 @@ data:
       TB Icon Size Mode: 1
       TB Size Mode: 1
       TB Display Mode: 2
-    NSWindow Frame NSNavPanelAutosaveName: "-1365 191 800 363 -1920 0 1920 1055 "
-    NSWindow Frame NSSpellCheckerSubstitutionsPanel2: "-1228 407 425 137 -1920 0 1920 1055 "
+    NSWindow Frame NSNavPanelAutosaveName:
+      "-1365 191 800 363 -1920 0 1920 1055 "
+    NSWindow Frame NSSpellCheckerSubstitutionsPanel2:
+      "-1228 407 425 137 -1920 0 1920 1055 "
     NetworkViewSettings:
       CustomViewStyleVersion: 1
       WindowState:

@@ -1,21 +1,22 @@
 ---
 name: workmux
-description: Reference for the workmux CLI that manages git worktrees and
-  tmux windows as isolated development environments. Use when the user
-  mentions workmux, worktrees, or parallel agent workflows.
+description:
+  Reference for the workmux CLI that manages git worktrees and tmux windows as
+  isolated development environments. Use when the user mentions workmux,
+  worktrees, or parallel agent workflows.
 disable-model-invocation: true
 ---
 
 # workmux
 
-workmux manages git worktrees paired with tmux windows for parallel
-development. Each worktree is an isolated workspace with its own branch,
-terminal state, and AI agent.
+workmux manages git worktrees paired with tmux windows for parallel development.
+Each worktree is an isolated workspace with its own branch, terminal state, and
+AI agent.
 
-**If the user asks you to create worktrees or dispatch tasks (e.g.,
-"/workmux add ..."), you are a dispatcher.** Write prompt files and run
-commands. Do NOT explore, read, or research the codebase first. Use
-context you already have. The worktree agent does all the work.
+**If the user asks you to create worktrees or dispatch tasks (e.g., "/workmux
+add ..."), you are a dispatcher.** Write prompt files and run commands. Do NOT
+explore, read, or research the codebase first. Use context you already have. The
+worktree agent does all the work.
 
 ## Key Concepts
 
@@ -36,10 +37,11 @@ context you already have. The worktree agent does all the work.
 workmux add <branch-name>
 ```
 
-Creates a git worktree, runs file operations and hooks, creates a tmux
-window with configured pane layout, and switches to it.
+Creates a git worktree, runs file operations and hooks, creates a tmux window
+with configured pane layout, and switches to it.
 
 Key flags:
+
 - `-b, --background`: create without switching to it
 - `-p <text>`: inline prompt for AI agent panes
 - `-P <file>`: prompt from file
@@ -77,9 +79,9 @@ workmux merge --keep          # merge but keep worktree/window/branch
 workmux merge --notification  # show system notification on success
 ```
 
-Merges the branch, deletes the tmux window, removes the worktree, and
-deletes the local branch. Use the `/merge` skill for the full workflow
-(commit, rebase, then merge).
+Merges the branch, deletes the tmux window, removes the worktree, and deletes
+the local branch. Use the `/merge` skill for the full workflow (commit, rebase,
+then merge).
 
 ### Remove worktrees
 
@@ -103,9 +105,9 @@ workmux close <name>          # close tmux window, keep worktree
 
 ### Interact with other agents
 
-These commands target agents by their worktree handle. If the handle is
-not found in the current repo, workmux searches all active agents globally.
-Use `project:handle` syntax to disambiguate when names collide.
+These commands target agents by their worktree handle. If the handle is not
+found in the current repo, workmux searches all active agents globally. Use
+`project:handle` syntax to disambiguate when names collide.
 
 ```bash
 # Check agent statuses
@@ -151,27 +153,27 @@ Two levels: global (`~/.config/workmux/config.yaml`) and project
 ### Key options
 
 ```yaml
-agent: claude                    # default agent for <agent> placeholder
-merge_strategy: rebase           # merge, rebase, or squash
-mode: window                     # window or session
+agent: claude # default agent for <agent> placeholder
+merge_strategy: rebase # merge, rebase, or squash
+mode: window # window or session
 
 panes:
-  - command: <agent>             # <agent> resolves to configured agent
+  - command: <agent> # <agent> resolves to configured agent
     focus: true
-  - split: horizontal            # second pane with shell
+  - split: horizontal # second pane with shell
 
 files:
   copy:
-    - .env                       # copy from main worktree
+    - .env # copy from main worktree
   symlink:
-    - node_modules               # symlink from main worktree
+    - node_modules # symlink from main worktree
 
 post_create:
-  - '<global>'                   # include global hooks
-  - npm install                  # project-specific setup
+  - "<global>" # include global hooks
+  - npm install # project-specific setup
 
-base_branch: develop             # default base for new worktrees
-window_prefix: wm-               # tmux window name prefix
+base_branch: develop # default base for new worktrees
+window_prefix: wm- # tmux window name prefix
 ```
 
 Use `'<global>'` in project config arrays to include global values.
@@ -181,16 +183,16 @@ For the full configuration reference with all options documented, run
 
 ### Agent detection
 
-Built-in agents (`claude`, `gemini`, `codex`, `opencode`, `kiro-cli`,
-`vibe`) are auto-detected in pane commands and receive prompt injection
-automatically. The `<agent>` placeholder resolves to the configured agent.
+Built-in agents (`claude`, `gemini`, `codex`, `opencode`, `kiro-cli`, `vibe`)
+are auto-detected in pane commands and receive prompt injection automatically.
+The `<agent>` placeholder resolves to the configured agent.
 
 ## Common Workflows
 
 ### Finishing work: direct merge
 
-Use `/merge` to commit, rebase onto the base branch, and merge in one
-step. This cleans up the worktree, tmux window, and branch.
+Use `/merge` to commit, rebase onto the base branch, and merge in one step. This
+cleans up the worktree, tmux window, and branch.
 
 ### Finishing work: PR-based
 
@@ -201,17 +203,16 @@ step. This cleans up the worktree, tmux window, and branch.
 
 ### Delegating tasks
 
-Use `/worktree` to spin off tasks into parallel worktree agents. The
-agent writes a prompt file and runs `workmux add -b -P <file>`.
+Use `/worktree` to spin off tasks into parallel worktree agents. The agent
+writes a prompt file and runs `workmux add -b -P <file>`.
 
-For full lifecycle orchestration (spawn, monitor, merge), use
-`/coordinator`.
+For full lifecycle orchestration (spawn, monitor, merge), use `/coordinator`.
 
 ### Cross-project worktree creation
 
-`workmux add` creates worktrees in the current git repo and adds the
-window to the current tmux session. To create a worktree in a different
-project, run `workmux add` inside that project's tmux session.
+`workmux add` creates worktrees in the current git repo and adds the window to
+the current tmux session. To create a worktree in a different project, run
+`workmux add` inside that project's tmux session.
 
 Discover project paths from existing sessions:
 
@@ -232,13 +233,13 @@ tmux new-window -t <session> -c <project-path> \
   "workmux add <branch> -b -P <prompt-file>; exit"
 ```
 
-The temporary window closes when `workmux add` finishes; the worktree
-window that workmux creates stays in the session.
+The temporary window closes when `workmux add` finishes; the worktree window
+that workmux creates stays in the session.
 
-Do NOT research before dispatching. Use context you already have, but
-do not explore or read code just to write the prompt. Worktree agents
-can read files from other projects via absolute paths, so reference
-other projects by path and let the agent explore on its own.
+Do NOT research before dispatching. Use context you already have, but do not
+explore or read code just to write the prompt. Worktree agents can read files
+from other projects via absolute paths, so reference other projects by path and
+let the agent explore on its own.
 
 ## Related Skills
 

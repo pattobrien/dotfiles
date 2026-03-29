@@ -1,13 +1,16 @@
 #!/usr/bin/env bun
 
-import { $ } from "bun";
 import { createHash } from "crypto";
 import { mkdtemp, readFile, rm, writeFile } from "fs/promises";
 import { tmpdir } from "os";
 import { join } from "path";
 
+import { $ } from "bun";
+
 const issueId = process.argv[2];
-const args = issueId ? ["issue", "view", issueId, "--json"] : ["issue", "view", "--json"];
+const args = issueId
+  ? ["issue", "view", issueId, "--json"]
+  : ["issue", "view", "--json"];
 
 // Fetch current issue
 const result = await $`linear ${args}`.quiet().nothrow();

@@ -1,7 +1,7 @@
 import { readFileSync, existsSync } from "node:fs";
 
-import { CACHE_PATH } from "git";
 import { useCachedPromise } from "@raycast/utils";
+import { CACHE_PATH } from "git";
 
 import { ProjectCacheSchema, type Project } from "../models";
 

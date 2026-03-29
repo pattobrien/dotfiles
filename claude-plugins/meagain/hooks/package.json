@@ -1,9 +1,13 @@
 {
   "name": "meagain-hooks",
   "private": true,
+  "type": "module",
   "dependencies": {
     "@anthropic-ai/claude-agent-sdk": "^0.2.85",
     "picocolors": "^1.1.1",
     "shell-quote": "^1.8.3"
+  },
+  "devDependencies": {
+    "@types/shell-quote": "^1.7.5"
   }
 }

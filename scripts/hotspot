@@ -1,0 +1,59 @@
+#!/usr/bin/env bun
+// Connect to iPhone hotspot, triggering BLE discovery first.
+// Usage: hotspot
+
+const SSID = "Patts iPhone";
+const IFACE = "en0";
+const AIRPORT =
+  "/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport";
+const MAX_RETRIES = 5;
+const SCAN_WAIT_MS = 5000;
+const RETRY_DELAY_MS = 3000;
+
+function getCurrentSSID(): string | null {
+  const result = Bun.spawnSync(["networksetup", "-getairportnetwork", IFACE]);
+  const output = result.stdout.toString().trim();
+  const match = output.match(/^Current Wi-Fi Network:\s*(.+)$/);
+  return match ? match[1] : null;
+}
+
+function triggerScan() {
+  // airport -s triggers a Wi-Fi scan which also wakes iPhone hotspot via BLE
+  Bun.spawnSync([AIRPORT, "-s"], { stdout: "ignore", stderr: "ignore" });
+}
+
+const current = getCurrentSSID();
+if (current === SSID) {
+  console.log(`Already connected to '${SSID}'.`);
+  process.exit(0);
+}
+
+if (current) {
+  console.log(`Currently on '${current}', switching to '${SSID}'...`);
+} else {
+  console.log(`Connecting to '${SSID}'...`);
+}
+
+for (let i = 1; i <= MAX_RETRIES; i++) {
+  console.log(`Attempt ${i}/${MAX_RETRIES} — scanning for hotspot...`);
+  triggerScan();
+  await Bun.sleep(SCAN_WAIT_MS);
+
+  Bun.spawnSync(["networksetup", "-setairportnetwork", IFACE, SSID]);
+  await Bun.sleep(1000);
+
+  if (getCurrentSSID() === SSID) {
+    console.log(`Connected to '${SSID}'.`);
+    process.exit(0);
+  }
+
+  if (i < MAX_RETRIES) {
+    console.log(`Not connected yet, retrying in ${RETRY_DELAY_MS / 1000}s...`);
+    await Bun.sleep(RETRY_DELAY_MS);
+  }
+}
+
+console.log(
+  `Failed after ${MAX_RETRIES} attempts. Try opening Settings > Personal Hotspot on your iPhone first.`
+);
+process.exit(1);

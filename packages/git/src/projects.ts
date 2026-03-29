@@ -1,18 +1,27 @@
-import { basename, dirname, join } from "node:path";
-import { homedir } from "node:os";
 import { execFileSync } from "node:child_process";
 import { existsSync } from "node:fs";
+import { homedir } from "node:os";
+import { basename, dirname, join } from "node:path";
 
 import type { Project } from "./models";
 
 const DEFAULT_DIRS = [join(homedir(), "dev"), join(homedir(), ".dotfiles")];
 
-function fdFind(pattern: string, type: "d" | "f", baseDirs: string[], maxDepth = 4): string[] {
+function fdFind(
+  pattern: string,
+  type: "d" | "f",
+  baseDirs: string[],
+  maxDepth = 4,
+): string[] {
   try {
-    const output = execFileSync("fd", ["-H", "-t", type, pattern, ...baseDirs, "--max-depth", String(maxDepth)], {
-      encoding: "utf-8",
-      timeout: 30_000,
-    }).trim();
+    const output = execFileSync(
+      "fd",
+      ["-H", "-t", type, pattern, ...baseDirs, "--max-depth", String(maxDepth)],
+      {
+        encoding: "utf-8",
+        timeout: 30_000,
+      },
+    ).trim();
     return output ? output.split("\n") : [];
   } catch {
     return [];
@@ -46,7 +55,9 @@ export function discoverProjects(baseDirs = DEFAULT_DIRS): Project[] {
 
     // Skip if a bare variant already registered
     const repoName = basename(repoDir).replace(/-bare$/, "");
-    const alreadyBare = [...projects.values()].some((p) => p.repoName === repoName && p.isBare);
+    const alreadyBare = [...projects.values()].some(
+      (p) => p.repoName === repoName && p.isBare,
+    );
     if (alreadyBare) continue;
 
     const repoOrg = basename(dirname(repoDir));

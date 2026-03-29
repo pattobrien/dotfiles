@@ -1,6 +1,8 @@
 ---
 name: open-pr
-description: Write a PR description using conversation context and open PR creation in browser.
+description:
+  Write a PR description using conversation context and open PR creation in
+  browser.
 disable-model-invocation: true
 allowed-tools: Read, Bash, Glob, Grep
 ---
@@ -52,6 +54,7 @@ Guidelines:
 1. Write a short PR title (max 72 characters)
 
 2. Ensure the branch is pushed:
+
    ```bash
    git push -u origin HEAD
    ```

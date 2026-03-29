@@ -88,8 +88,14 @@ i = "input:https://google.com/search?q={input}" # capture input and insert it in
 
 [w]
 label = "[worktrees]"
-a = ["cmd:open -na Ghostty --args -e /Users/pattobrien/.local/bin/wt-attach", "attach"]
-c = ["cmd:open -na Ghostty --args -e /Users/pattobrien/.local/bin/wt-create", "create"]
+a = [
+  "cmd:open -na Ghostty --args -e /Users/pattobrien/.local/bin/wt-attach",
+  "attach",
+]
+c = [
+  "cmd:open -na Ghostty --args -e /Users/pattobrien/.local/bin/wt-create",
+  "create",
+]
 
 # this group is handy to copy over
 # for quick access to your config
