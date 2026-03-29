@@ -5,7 +5,7 @@ idiomatic_version_file_enable_tools = ["node"]
 
 [tools]
 lua-language-server = "latest"
-neovim = "nightly"
+neovim = "0.12.0"
 node = "24"
 "npm:@ecrindigital/facet-cli" = "0.2"
 "npm:@open-pencil/cli" = "latest"
