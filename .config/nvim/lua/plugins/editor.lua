@@ -16,6 +16,17 @@ return {
     },
   },
 
+  -- flash.nvim — label each `/` search match so you can jump directly
+  {
+    "folke/flash.nvim",
+    opts = {
+      modes = {
+        search = { enabled = true },
+        char = { jump_labels = true },
+      },
+    },
+  },
+
   -- vim-tmux-navigator — seamless <C-h/j/k/l> between nvim and tmux panes
   -- Disabled during LazyVim migration — uncomment if using tmux regularly.
   -- {
