@@ -66,7 +66,7 @@ vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, { desc = "Rename (alias)" 
 -- VSCode-neovim keymaps
 -----------------------------------------------------------------------------
 if vim.g.vscode then
-  local vscode = require("vscode-neovim")
+  local vscode = require("vscode")
 
   -- debugger
   vim.keymap.set("n", "<leader>db", function()
@@ -94,14 +94,48 @@ if vim.g.vscode then
     vscode.action("workbench.action.debug.stepOut")
   end)
 
-  -- LSP
-  vim.keymap.set("n", "<leader>gd", function()
-    vscode.action("editor.action.goToDeclaration")
-  end)
+  -- LSP — override LazyVim's gd/gr and Neovim 0.11 gr* defaults
+  -- to route through VSCode (also eliminates timeoutlen delay on `gr`)
+  vim.keymap.set("n", "gd", function()
+    vscode.action("editor.action.revealDefinition")
+  end, { desc = "Go to Definition (VSCode)" })
+  vim.keymap.set("n", "gr", function()
+    vscode.action("editor.action.goToReferences")
+  end, { desc = "Go to References (VSCode)" })
+  vim.keymap.set("n", "grr", function()
+    vscode.action("editor.action.goToReferences")
+  end, { desc = "References (VSCode)" })
+  vim.keymap.set("n", "gra", function()
+    vscode.action("editor.action.quickFix")
+  end, { desc = "Code Action (VSCode)" })
+  vim.keymap.set("n", "grn", function()
+    vscode.action("editor.action.rename")
+  end, { desc = "Rename (VSCode)" })
+  vim.keymap.set("n", "gri", function()
+    vscode.action("editor.action.goToImplementation")
+  end, { desc = "Go to Implementation (VSCode)" })
   vim.keymap.set("n", "<leader>rn", function()
     vscode.action("editor.action.rename")
-  end)
+  end, { desc = "Rename (VSCode)" })
   vim.keymap.set("v", "<leader>rn", function()
     vscode.action("editor.action.rename")
-  end)
+  end, { desc = "Rename (VSCode)" })
+
+  -- find/search — route to VSCode pickers
+  vim.keymap.set("n", "<leader>ff", function()
+    vscode.action("workbench.action.quickOpen")
+  end, { desc = "Find Files (VSCode)" })
+  vim.keymap.set("n", "<leader>sg", function()
+    vscode.action("workbench.action.findInFiles")
+  end, { desc = "Grep (VSCode)" })
+  -- buffers — route to VSCode tab commands
+  vim.keymap.set("n", "<leader>bd", function()
+    vscode.action("workbench.action.closeActiveEditor")
+  end, { desc = "Close Buffer (VSCode)" })
+  vim.keymap.set("n", "<leader>bo", function()
+    vscode.action("workbench.action.closeOtherEditors")
+  end, { desc = "Close Other Buffers (VSCode)" })
+  vim.keymap.set("n", "<leader>bD", function()
+    vscode.action("workbench.action.closeActiveEditor")
+  end, { desc = "Close Buffer + Window (VSCode)" })
 end
