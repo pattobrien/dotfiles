@@ -16,5 +16,11 @@
     "stripe",
     "vercel",
     "mcp"
-  ]
+  ],
+  "mcpServers": {
+    "telegra": {
+      "type": "http",
+      "url": "https://telegra-vfmh.readme.io/mcp"
+    }
+  }
 }
