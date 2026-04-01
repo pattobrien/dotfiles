@@ -30,8 +30,10 @@ require("lazy").setup({
     { "LazyVim/LazyVim", import = "lazyvim.plugins" },
 
     -- 2. LazyVim extras (must come before custom plugins)
+    { import = "lazyvim.plugins.extras.vscode" },
     { import = "lazyvim.plugins.extras.ai.copilot-native" },
     { import = "lazyvim.plugins.extras.lang.typescript" }, -- tsgo config in options.lua
+    { import = "lazyvim.plugins.extras.lang.json" },
 
     -- 3. personal plugins (lua/plugins/*.lua)
     { import = "plugins" },
