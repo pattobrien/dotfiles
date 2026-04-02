@@ -1,9 +1,10 @@
 import { execaCommand, execa } from "execa";
 
+const TMUX_SOCKET = "e2e-test";
+const TMUX_SESSION = "e2e";
+
 export interface TmuxSession {
-  /** The tmux server socket name (shared per file). */
   socket: string;
-  /** The tmux session name (unique per test). */
   session: string;
 
   /**
@@ -22,37 +23,7 @@ export interface TmuxSession {
   listKeys: (table?: string) => Promise<string>;
 }
 
-/** Start a tmux server with ~/.tmux.conf and return a handle to kill it. */
-export async function createTmuxServer(socket: string) {
-  const tmuxConf = `${process.env.HOME}/.tmux.conf`;
-  // Start the server by creating an initial session, then immediately kill it.
-  // This loads ~/.tmux.conf once. Subsequent new-session calls are ~5ms.
-  await execa("tmux", [
-    "-L", socket, "-f", tmuxConf,
-    "new-session", "-d", "-s", "_init", "-x", "200", "-y", "50",
-    "--", "sh",
-  ]);
-  await execa("tmux", ["-L", socket, "kill-session", "-t", "_init"]);
-  return {
-    socket,
-    async kill() {
-      await execaCommand(`tmux -L ${socket} kill-server`).catch(() => { });
-    },
-  };
-}
-
-/** Create a new tmux session on the given server socket. */
-export async function createTmuxSession(
-  socket: string,
-  session: string,
-): Promise<TmuxSession> {
-  // Server is already running (started by createTmuxServer) — no -f needed.
-  // Default shell is used so nvim plugins can find their tools (node, python, etc.).
-  await execa("tmux", [
-    "-L", socket,
-    "new-session", "-d", "-s", session, "-x", "200", "-y", "50",
-  ]);
-
+function buildSession(socket: string, session: string): TmuxSession {
   return {
     socket,
     session,
@@ -85,11 +56,7 @@ export async function createTmuxSession(
 
     async runCommand(...args: string[]) {
       const { stdout } = await execa("tmux", [
-        "-L",
-        socket,
-        ...args,
-        "-t",
-        session,
+        "-L", socket, ...args, "-t", session,
       ]);
       return stdout;
     },
@@ -103,9 +70,38 @@ export async function createTmuxSession(
   };
 }
 
-/** Kill a tmux session. */
+/** Check if the persistent tmux server + session already exist. */
+async function tmuxSessionExists(): Promise<boolean> {
+  try {
+    await execa("tmux", ["-L", TMUX_SOCKET, "has-session", "-t", TMUX_SESSION]);
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+/**
+ * Get or create the persistent tmux session.
+ * On first run: starts server + session (~400ms). On subsequent runs: instant.
+ * The session is intentionally left alive after tests finish.
+ */
+export async function getOrCreateTmuxSession(): Promise<TmuxSession> {
+  if (await tmuxSessionExists()) {
+    return buildSession(TMUX_SOCKET, TMUX_SESSION);
+  }
+
+  const tmuxConf = `${process.env.HOME}/.tmux.conf`;
+  await execa("tmux", [
+    "-L", TMUX_SOCKET, "-f", tmuxConf,
+    "new-session", "-d", "-s", TMUX_SESSION, "-x", "200", "-y", "50",
+  ]);
+
+  return buildSession(TMUX_SOCKET, TMUX_SESSION);
+}
+
+/** Kill a tmux session (for test cleanup when isolation is needed). */
 export async function killTmuxSession(socket: string, session: string) {
   await execaCommand(`tmux -L ${socket} kill-session -t ${session}`).catch(
-    () => { },
+    () => {},
   );
 }

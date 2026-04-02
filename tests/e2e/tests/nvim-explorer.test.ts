@@ -3,7 +3,7 @@ import { test } from "./fixtures.ts";
 import fs from "node:fs/promises";
 import path from "node:path";
 
-test("file explorer shows hidden dotfiles", { timeout: 20_000 }, async ({ nvim }) => {
+test("file explorer shows hidden dotfiles", async ({ nvim }) => {
   await nvim.resetBuffer();
   const dir = `/tmp/nvim-e2e-explorer-${Date.now()}`;
   await fs.mkdir(dir, { recursive: true });
@@ -14,17 +14,17 @@ test("file explorer shows hidden dotfiles", { timeout: 20_000 }, async ({ nvim }
   await nvim.command(`cd ${dir}`);
   await nvim.client.call("feedkeys", [" e", "x"]); // <leader>e opens explorer
 
-  // Wait for explorer to render (generous timeout for parallel execution)
-  await nvim.tmux.waitForText("hidden-file", 10);
+  await nvim.tmux.waitForText("hidden-file", 3);
 
   const pane = await nvim.tmux.capture();
   expect(pane).toContain(".hidden-file");
   expect(pane).toContain("visible-file");
 
-  await fs.rm(dir, { recursive: true });
+  // Temp dirs in /tmp are cleaned up by the OS — don't delete while nvim
+  // still has buffers referencing files in this dir (causes lualine errors).
 });
 
-test("file picker shows hidden files", { timeout: 20_000 }, async ({ nvim }) => {
+test("file picker shows hidden files", async ({ nvim }) => {
   await nvim.resetBuffer();
   const dir = `/tmp/nvim-e2e-picker-${Date.now()}`;
   await fs.mkdir(dir, { recursive: true });
@@ -41,12 +41,12 @@ test("file picker shows hidden files", { timeout: 20_000 }, async ({ nvim }) => 
   await nvim.command(`cd ${dir}`);
   await nvim.client.call("feedkeys", [" ff", "x"]); // <leader>ff opens file finder
 
-  // Wait for picker to show the hidden file (generous timeout for parallel execution)
-  await nvim.tmux.waitForText("\\.dotrc", 10);
+  await nvim.tmux.waitForText("\\.dotrc", 3);
 
   const pane = await nvim.tmux.capture();
   expect(pane).toContain(".dotrc");
 
   await nvim.input("<Esc>");
-  await fs.rm(dir, { recursive: true });
+  // Temp dirs in /tmp are cleaned up by the OS — don't delete while nvim
+  // still has buffers referencing files in this dir (causes lualine errors).
 });

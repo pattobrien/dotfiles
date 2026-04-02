@@ -3,6 +3,8 @@ import { attach } from "neovim";
 import fs from "node:fs/promises";
 import { type TmuxSession } from "./tmux.ts";
 
+const NVIM_SOCKET = "/tmp/nvim-e2e.sock";
+
 export interface NvimInstance {
   /** The neovim RPC client. */
   client: NeovimClient;
@@ -27,7 +29,7 @@ export interface NvimInstance {
  * Wait for LazyVim's VeryLazy event to fire.
  * keymaps.lua loads on VeryLazy — once <C-d> is remapped, setup is complete.
  */
-async function waitForLazyVim(client: NeovimClient, timeoutMs = 10_000) {
+async function waitForLazyVim(client: NeovimClient, timeoutMs = 15_000) {
   const deadline = Date.now() + timeoutMs;
   while (Date.now() < deadline) {
     try {
@@ -42,7 +44,7 @@ async function waitForLazyVim(client: NeovimClient, timeoutMs = 10_000) {
 }
 
 /** Wait for a file to exist on disk. */
-async function waitForFile(path: string, timeoutMs = 3000) {
+async function waitForFile(path: string, timeoutMs = 10_000) {
   const deadline = Date.now() + timeoutMs;
   while (Date.now() < deadline) {
     try {
@@ -55,47 +57,27 @@ async function waitForFile(path: string, timeoutMs = 3000) {
   throw new Error(`Timed out waiting for file: ${path}`);
 }
 
-/**
- * Launch nvim inside a tmux session and connect via RPC.
- * Uses the real user config (~/.config/nvim).
- */
-export async function createNvimInstance(
-  tmux: TmuxSession,
-  opts: { file?: string } = {},
-): Promise<NvimInstance> {
-  // Include tmux socket name (has PID) to avoid collisions across parallel workers
-  const sockPath = `/tmp/nvim-e2e-${tmux.socket}-${tmux.session}.sock`;
-  const file = opts.file ?? `/tmp/nvim-e2e-${tmux.socket}-${tmux.session}.txt`;
+/** Check if the persistent nvim socket exists and is connectable. */
+async function nvimIsRunning(): Promise<boolean> {
+  try {
+    await fs.access(NVIM_SOCKET);
+    // Socket file exists — try a quick RPC ping to verify nvim is alive.
+    // We connect, check the mode, then destroy the socket (NOT client.quit()
+    // which sends a quit command to nvim itself).
+    const client = attach({ socket: NVIM_SOCKET });
+    await client._isReady;
+    await client.mode;
+    // Close the socket without killing nvim
+    const transport = (client as any).transport;
+    transport?.reader?.destroy?.();
+    transport?.writer?.destroy?.();
+    return true;
+  } catch {
+    return false;
+  }
+}
 
-  // Clean up any stale socket and swap file from previous crashed runs
-  await fs.rm(sockPath, { force: true });
-  // nvim swap files live in ~/.local/state/nvim/swap/ with path-encoded names
-  const swapName = file.replace(/\//g, "%") + ".swp";
-  const swapPath = `${process.env.HOME}/.local/state/nvim/swap/${swapName}`;
-  await fs.rm(swapPath, { force: true });
-
-  // Create an empty test file
-  await fs.writeFile(file, "");
-
-  // Launch nvim with RPC socket inside the tmux session
-  await tmux.sendKeys(`nvim --listen ${sockPath} ${file}`, "Enter");
-
-  // Wait for the socket file to appear (nvim is ready for RPC).
-  // With file-scoped fixtures this only happens once per test file.
-  // Parallel workers each launch nvim + LazyVim simultaneously which can
-  // take longer under load.
-  await waitForFile(sockPath, 10_000);
-
-  // Connect via msgpack RPC
-  const client = attach({ socket: sockPath });
-
-  // Wait for the initial API handshake to complete
-  await client._isReady;
-
-  // Wait for LazyVim plugins to finish loading. _isReady resolves early (before
-  // VimEnter), so keymaps/plugins registered by LazyVim won't exist yet.
-  await waitForLazyVim(client);
-
+function buildNvimInstance(client: NeovimClient, tmux: TmuxSession): NvimInstance {
   return {
     client,
     tmux,
@@ -126,19 +108,51 @@ export async function createNvimInstance(
     },
 
     async resetBuffer() {
-      // Escape any mode, open a fresh empty buffer, and go to the top
+      // Return to normal mode, close any popups/floats, then open a fresh buffer.
+      // Avoid %bwipeout — it destroys LSP config state in a persistent nvim.
       await client.input("<Esc>");
+      await client.command("silent! pclose | cclose | lclose");
+      await client.lua("for _, w in ipairs(vim.api.nvim_list_wins()) do if vim.api.nvim_win_get_config(w).relative ~= '' then vim.api.nvim_win_close(w, true) end end");
       await client.command("enew!");
       await client.command("normal! gg");
     },
   };
 }
 
-/** Gracefully quit nvim and close the socket connection. */
-export async function destroyNvimInstance(nvim: NvimInstance) {
-  // Send qa! via tmux sendKeys rather than RPC — avoids hanging if nvim is
-  // already unresponsive or the socket is closed.
-  await nvim.tmux.sendKeys("Escape", ":qa!", "Enter");
-  // Close the RPC socket so the event loop is released.
-  nvim.client.quit();
+/**
+ * Get or create a persistent nvim instance inside the tmux session.
+ * On first run: launches nvim + waits for LazyVim (~2s). On subsequent runs: instant.
+ * The nvim instance is intentionally left alive after tests finish.
+ */
+export async function getOrCreateNvimInstance(
+  tmux: TmuxSession,
+): Promise<NvimInstance> {
+  // Try connecting to existing nvim
+  if (await nvimIsRunning()) {
+    const client = attach({ socket: NVIM_SOCKET });
+    await client._isReady;
+    return buildNvimInstance(client, tmux);
+  }
+
+  // Clean up stale socket
+  await fs.rm(NVIM_SOCKET, { force: true });
+
+  // Launch nvim in the tmux session
+  await tmux.sendKeys(`nvim --listen ${NVIM_SOCKET}`, "Enter");
+
+  // Wait for socket + RPC handshake + LazyVim
+  await waitForFile(NVIM_SOCKET);
+  const client = attach({ socket: NVIM_SOCKET });
+  await client._isReady;
+  await waitForLazyVim(client);
+
+  return buildNvimInstance(client, tmux);
+}
+
+/** Disconnect the RPC client (does NOT kill nvim — it stays alive for next run). */
+export function disconnectNvim(_nvim: NvimInstance) {
+  // Intentionally a no-op. The socket connection gets cleaned up when the
+  // vitest worker process exits. Calling client.quit() kills nvim, and
+  // transport.close() causes "Premature close" unhandled rejections.
+  // The persistent nvim instance survives for the next test run.
 }

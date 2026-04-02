@@ -13,11 +13,16 @@ test("prefix - is bound to split-window -v", async ({ tmux }) => {
 });
 
 test("split-window -h creates a horizontal split", async ({ tmux }) => {
+  // Use a temporary window to avoid leaving panes in the persistent session
+  await execa("tmux", ["-L", tmux.socket, "new-window", "-t", tmux.session]);
   await tmux.runCommand("split-window", "-h");
 
   const panes = await tmux.runCommand("list-panes");
   const paneCount = panes.trim().split("\n").length;
   expect(paneCount).toBe(2);
+
+  // Clean up: kill the temporary window, returning to the original
+  await execa("tmux", ["-L", tmux.socket, "kill-window", "-t", tmux.session]);
 });
 
 test("F12 is bound to clear screen and history", async ({ tmux }) => {
@@ -48,7 +53,8 @@ test("F-key popup bindings are registered", async ({ tmux }) => {
 });
 
 test("prefix m toggles pane zoom", async ({ tmux }) => {
-  // Create a split so zoom is meaningful
+  // Use a temporary window to avoid leaving state in the persistent session
+  await execa("tmux", ["-L", tmux.socket, "new-window", "-t", tmux.session]);
   await tmux.runCommand("split-window", "-h");
   await tmux.runCommand("resize-pane", "-Z");
 
@@ -58,4 +64,6 @@ test("prefix m toggles pane zoom", async ({ tmux }) => {
     "-p", "#{window_zoomed_flag}",
   ]);
   expect(stdout.trim()).toBe("1");
+
+  await execa("tmux", ["-L", tmux.socket, "kill-window", "-t", tmux.session]);
 });

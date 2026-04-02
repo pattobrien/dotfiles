@@ -9,6 +9,9 @@ export default defineConfig({
   },
   fmt: {},
   test: {
+    // All test files share one persistent nvim instance — serialize to avoid
+    // concurrent buffer operations on the same nvim.
+    fileParallelism: false,
     tags: [
       {
         name: "kitty",
@@ -19,8 +22,8 @@ export default defineConfig({
     ],
     // @ts-expect-error tagsFilter exists at runtime but is missing from bundled types
     tagsFilter: ["!kitty"],
-    testTimeout: 15_000,
-    hookTimeout: 15_000,
+    testTimeout: 5_000,
+    hookTimeout: 15_000, // first-run nvim startup can take a few seconds
     server: {
       deps: {
         // The neovim package uses msgpack async generators over raw Node

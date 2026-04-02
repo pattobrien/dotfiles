@@ -1,68 +1,59 @@
 import { expect } from "vite-plus/test";
 import { test } from "./fixtures.ts";
+import path from "node:path";
 
-test("diagnostics are visible in insert mode", { timeout: 45_000 }, async ({ nvim }) => {
+const FIXTURE_DIR = path.resolve(import.meta.dirname, "../fixtures/ts-project");
+
+test("diagnostics are visible in insert mode", async ({ nvim }) => {
   await nvim.resetBuffer();
-  // Write a TypeScript file with an error
-  const file = `/tmp/nvim-e2e-lsp-${Date.now()}.ts`;
-  const { writeFile } = await import("node:fs/promises");
-  await writeFile(file, 'const x: number = "not a number";\n');
+  await nvim.command(`cd ${FIXTURE_DIR}`);
+  await nvim.command(`edit ${FIXTURE_DIR}/error.ts`);
 
-  await nvim.command(`edit ${file}`);
-
-  // Wait for an LSP client to attach via RPC (instead of checking tmux pane text)
-  const lspDeadline = Date.now() + 30_000;
+  // Wait for tsgo (not copilot) to attach
+  const lspDeadline = Date.now() + 3_000;
   while (Date.now() < lspDeadline) {
-    const count = await nvim.client.lua(
-      "return #vim.lsp.get_clients({ bufnr = 0 })",
-    ) as number;
-    if (count > 0) break;
-    await new Promise((r) => setTimeout(r, 500));
+    const hasTs = await nvim.client.lua(
+      'return #vim.tbl_filter(function(c) return c.name ~= "copilot" end, vim.lsp.get_clients({ bufnr = 0 })) > 0',
+    );
+    if (hasTs) break;
+    await new Promise((r) => setTimeout(r, 100));
   }
 
-  // Enter insert mode via tmux (real keystroke, not queued like feedkeys)
+  // Enter insert mode
   await nvim.tmux.sendKeys("i");
-  // Wait for mode change to propagate
   await new Promise((r) => setTimeout(r, 200));
 
-  // Poll for diagnostics via Lua (vim.diagnostic.get is a Lua function, not vimscript)
-  const diagDeadline = Date.now() + 15_000;
+  // Poll for diagnostics
+  const diagDeadline = Date.now() + 3_000;
   let diagCount = 0;
   while (Date.now() < diagDeadline) {
-    diagCount = await nvim.client.lua(
-      "return #vim.diagnostic.get(0)",
-    ) as number;
+    diagCount = (await nvim.client.lua("return #vim.diagnostic.get(0)")) as number;
     if (diagCount > 0) break;
-    await new Promise((r) => setTimeout(r, 500));
+    await new Promise((r) => setTimeout(r, 100));
   }
   expect(diagCount).toBeGreaterThan(0);
 });
 
-test("hover shows type info", { timeout: 30_000 }, async ({ nvim }) => {
+test("hover shows type info", async ({ nvim }) => {
   await nvim.resetBuffer();
-  const file = `/tmp/nvim-e2e-hover-${Date.now()}.ts`;
-  const { writeFile } = await import("node:fs/promises");
-  await writeFile(file, "const greeting: string = 'hello';\nconsole.log(greeting);\n");
+  await nvim.command(`cd ${FIXTURE_DIR}`);
+  await nvim.command(`edit ${FIXTURE_DIR}/hover.ts`);
 
-  await nvim.command(`edit ${file}`);
-
-  // Wait for an LSP client to attach via RPC
-  const lspDeadline = Date.now() + 20_000;
+  // Wait for tsgo to attach
+  const lspDeadline = Date.now() + 3_000;
   while (Date.now() < lspDeadline) {
-    const count = await nvim.client.lua(
-      "return #vim.lsp.get_clients({ bufnr = 0 })",
-    ) as number;
-    if (count > 0) break;
-    await new Promise((r) => setTimeout(r, 500));
+    const hasTs = await nvim.client.lua(
+      'return #vim.tbl_filter(function(c) return c.name ~= "copilot" end, vim.lsp.get_clients({ bufnr = 0 })) > 0',
+    );
+    if (hasTs) break;
+    await new Promise((r) => setTimeout(r, 100));
   }
 
   // Move cursor to "greeting" on line 2 and trigger hover
   await nvim.command("normal! 2Gw");
   await nvim.input("K");
 
-  // Wait for hover popup to render
-  await nvim.tmux.waitForText("string", 5);
-
+  await nvim.tmux.waitForText("string", 3);
   const pane = await nvim.tmux.capture();
   expect(pane).toContain("string");
 });
