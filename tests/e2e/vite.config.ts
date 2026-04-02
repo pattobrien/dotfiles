@@ -1,4 +1,7 @@
 import { defineConfig } from "vite-plus";
+import path from "node:path";
+
+const dotfiles = path.resolve(import.meta.dirname, "../..");
 
 export default defineConfig({
   lint: {
@@ -24,6 +27,15 @@ export default defineConfig({
     tagsFilter: ["!kitty"],
     testTimeout: 5_000,
     hookTimeout: 15_000, // first-run nvim startup can take a few seconds
+    // Re-run tests when the config files they test change.
+    // vitest doesn't support per-file triggers, so we list all config paths
+    // and the test names in the glob patterns make it clear which is which.
+    forceRerunTriggers: [
+      `${dotfiles}/.config/kitty/**`,
+      `${dotfiles}/.config/tmux/**`,
+      `${dotfiles}/.config/nvim/**`,
+      `${dotfiles}/zsh/**`,
+    ],
     server: {
       deps: {
         // The neovim package uses msgpack async generators over raw Node

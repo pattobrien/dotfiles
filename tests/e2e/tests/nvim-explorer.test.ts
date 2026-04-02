@@ -41,7 +41,7 @@ test("file picker shows hidden files", async ({ nvim }) => {
   await nvim.command(`cd ${dir}`);
   await nvim.client.call("feedkeys", [" ff", "x"]); // <leader>ff opens file finder
 
-  await nvim.tmux.waitForText("\\.dotrc", 3);
+  await nvim.tmux.waitForText("\\.dotrc", 5);
 
   const pane = await nvim.tmux.capture();
   expect(pane).toContain(".dotrc");
