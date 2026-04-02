@@ -16,6 +16,10 @@ vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
 -- cursor stays in center of view when moving up/down page
 vim.keymap.set("n", "<C-d>", "<C-d>zz")
 vim.keymap.set("n", "<C-u>", "<C-u>zz")
+vim.keymap.set("n", "<C-f>", "<C-f>zz")
+vim.keymap.set("n", "<C-b>", "<C-b>zz")
+vim.keymap.set("n", "<PageDown>", "<C-f>zz")
+vim.keymap.set("n", "<PageUp>", "<C-b>zz")
 
 -- centered search navigation — disabled, trying LazyVim defaults
 -- vim.keymap.set("n", "n", "nzzzv")
