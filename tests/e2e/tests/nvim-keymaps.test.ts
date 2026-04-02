@@ -3,7 +3,7 @@ import { expect } from "vite-plus/test";
 import { test } from "./fixtures.ts";
 
 test("Ctrl-d scrolls half page down and centers cursor", async ({ nvim }) => {
-  await nvim.resetBuffer();
+  await nvim.resetBuffer("ctrl-d");
 
   const lines = Array.from({ length: 60 }, (_, i) => `line ${i + 1}`);
   await nvim.client.buffer.then((b) => b.replace(lines, 0));
@@ -16,7 +16,7 @@ test("Ctrl-d scrolls half page down and centers cursor", async ({ nvim }) => {
 });
 
 test("J/K in visual mode moves selected lines", async ({ nvim }) => {
-  await nvim.resetBuffer();
+  await nvim.resetBuffer("visual-jk");
 
   await nvim.client.buffer.then((b) =>
     b.replace(["alpha", "beta", "gamma", "delta"], 0),
@@ -35,7 +35,7 @@ test("J/K in visual mode moves selected lines", async ({ nvim }) => {
 test("leader-p pastes over selection without yanking replaced text", async ({
   nvim,
 }) => {
-  await nvim.resetBuffer();
+  await nvim.resetBuffer("leader-p");
 
   await nvim.client.buffer.then((b) => b.replace(["hello", "world"], 0));
   await nvim.command("normal! gg");

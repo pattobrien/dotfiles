@@ -9,26 +9,33 @@ test("vi copy mode bindings are registered", async ({ tmux }) => {
 });
 
 test("copy mode can be entered and exited", async ({ tmux }) => {
-  await tmux.sendKeys("echo 'copy-mode-test'", "Enter");
-  await tmux.waitForText("copy-mode-test");
+  // Use a temporary window with a shell (the main pane has nvim running)
+  await execa("tmux", ["-L", tmux.socket, "new-window", "-t", tmux.session]);
 
-  await tmux.runCommand("copy-mode");
+  try {
+    await tmux.sendKeys("echo 'copy-mode-test'", "Enter");
+    await tmux.waitForText("copy-mode-test");
 
-  const { stdout: mode } = await execa("tmux", [
-    "-L", tmux.socket,
-    "display-message", "-t", tmux.session,
-    "-p", "#{pane_mode}",
-  ]);
-  expect(mode.trim()).toBe("copy-mode");
+    await tmux.runCommand("copy-mode");
 
-  await tmux.sendKeys("q");
+    const { stdout: mode } = await execa("tmux", [
+      "-L", tmux.socket,
+      "display-message", "-t", tmux.session,
+      "-p", "#{pane_mode}",
+    ]);
+    expect(mode.trim()).toBe("copy-mode");
 
-  const { stdout: modeAfter } = await execa("tmux", [
-    "-L", tmux.socket,
-    "display-message", "-t", tmux.session,
-    "-p", "#{pane_mode}",
-  ]);
-  expect(modeAfter.trim()).toBe("");
+    await tmux.sendKeys("q");
+
+    const { stdout: modeAfter } = await execa("tmux", [
+      "-L", tmux.socket,
+      "display-message", "-t", tmux.session,
+      "-p", "#{pane_mode}",
+    ]);
+    expect(modeAfter.trim()).toBe("");
+  } finally {
+    await execa("tmux", ["-L", tmux.socket, "kill-window", "-t", tmux.session]);
+  }
 });
 
 test("mode-keys is set to vi", async ({ tmux }) => {

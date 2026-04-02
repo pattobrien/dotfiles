@@ -5,7 +5,7 @@ import path from "node:path";
 const FIXTURE_DIR = path.resolve(import.meta.dirname, "../fixtures/ts-project");
 
 test("diagnostics are visible in insert mode", async ({ nvim }) => {
-  await nvim.resetBuffer();
+  await nvim.resetBuffer("lsp");
   await nvim.command(`cd ${FIXTURE_DIR}`);
   await nvim.command(`edit ${FIXTURE_DIR}/error.ts`);
 
@@ -35,7 +35,7 @@ test("diagnostics are visible in insert mode", async ({ nvim }) => {
 });
 
 test("hover shows type info", async ({ nvim }) => {
-  await nvim.resetBuffer();
+  await nvim.resetBuffer("lsp");
   await nvim.command(`cd ${FIXTURE_DIR}`);
   await nvim.command(`edit ${FIXTURE_DIR}/hover.ts`);
 

@@ -107,13 +107,21 @@ function buildNvimInstance(client: NeovimClient, tmux: TmuxSession): NvimInstanc
       await client.input(keys);
     },
 
-    async resetBuffer() {
-      // Return to normal mode, close any popups/floats, then open a fresh buffer.
-      // Avoid %bwipeout — it destroys LSP config state in a persistent nvim.
+    async resetBuffer(testName?: string) {
+      // Return to normal mode, close popups/floats, wipe current buffer, start fresh.
       await client.input("<Esc>");
       await client.command("silent! pclose | cclose | lclose");
       await client.lua("for _, w in ipairs(vim.api.nvim_list_wins()) do if vim.api.nvim_win_get_config(w).relative ~= '' then vim.api.nvim_win_close(w, true) end end");
+      // Create new scratch buffer first, THEN wipe the old one.
+      // bwipeout on the last buffer would exit nvim.
+      const oldBuf = await client.call("bufnr", ["%"]) as number;
+      const bufName = testName ? `test-${testName}` : `test-${Date.now()}`;
       await client.command("enew!");
+      await client.command(`file ${bufName}`);
+      await client.command("setlocal buftype=nofile bufhidden=wipe");
+      if (oldBuf > 0) {
+        await client.command(`silent! ${oldBuf}bwipeout!`);
+      }
       await client.command("normal! gg");
     },
   };
