@@ -3,7 +3,7 @@ import { test } from "./fixtures.ts";
 import fs from "node:fs/promises";
 import path from "node:path";
 
-test("file explorer shows hidden dotfiles", async ({ nvim }) => {
+test("file explorer shows hidden dotfiles", { timeout: 20_000 }, async ({ nvim }) => {
   // Create a temp directory with a dotfile
   const dir = `/tmp/nvim-e2e-explorer-${Date.now()}`;
   await fs.mkdir(dir, { recursive: true });
@@ -12,10 +12,10 @@ test("file explorer shows hidden dotfiles", async ({ nvim }) => {
 
   // Open the explorer in the temp directory
   await nvim.command(`cd ${dir}`);
-  await nvim.input(" e"); // <leader>e opens explorer
+  await nvim.client.call("feedkeys", [" e", "x"]); // <leader>e opens explorer
 
-  // Wait for explorer to render
-  await nvim.tmux.waitForText("hidden-file", 3);
+  // Wait for explorer to render (generous timeout for parallel execution)
+  await nvim.tmux.waitForText("hidden-file", 10);
 
   const pane = await nvim.tmux.capture();
   expect(pane).toContain(".hidden-file");
@@ -24,10 +24,12 @@ test("file explorer shows hidden dotfiles", async ({ nvim }) => {
   await fs.rm(dir, { recursive: true });
 });
 
-test("file picker shows hidden files", async ({ nvim }) => {
+test("file picker shows hidden files", { timeout: 20_000 }, async ({ nvim }) => {
   const dir = `/tmp/nvim-e2e-picker-${Date.now()}`;
   await fs.mkdir(dir, { recursive: true });
-  await fs.writeFile(path.join(dir, ".env"), "SECRET=1");
+  // Use .dotrc instead of .env — .env is in the global gitignore (~/.config/git/ignore)
+  // and the snacks picker respects gitignore, so .env would never appear.
+  await fs.writeFile(path.join(dir, ".dotrc"), "KEY=1");
   await fs.writeFile(path.join(dir, "index.ts"), "export {}");
 
   // Initialize as a git repo so the picker works
@@ -36,13 +38,13 @@ test("file picker shows hidden files", async ({ nvim }) => {
   await execaCommand("git add .", { cwd: dir });
 
   await nvim.command(`cd ${dir}`);
-  await nvim.input(" ff"); // <leader>ff opens file finder
+  await nvim.client.call("feedkeys", [" ff", "x"]); // <leader>ff opens file finder
 
-  // Wait for picker to show the hidden file
-  await nvim.tmux.waitForText("\\.env", 3);
+  // Wait for picker to show the hidden file (generous timeout for parallel execution)
+  await nvim.tmux.waitForText("\\.dotrc", 10);
 
   const pane = await nvim.tmux.capture();
-  expect(pane).toContain(".env");
+  expect(pane).toContain(".dotrc");
 
   await nvim.input("<Esc>");
   await fs.rm(dir, { recursive: true });
