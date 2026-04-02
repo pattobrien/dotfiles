@@ -3,16 +3,16 @@ import { test } from "./fixtures.ts";
 import fs from "node:fs/promises";
 import path from "node:path";
 
-test.only("file explorer shows hidden dotfiles", async ({ nvim }) => {
+test("file explorer shows hidden dotfiles", async ({ nvim }) => {
   await nvim.resetBuffer("explorer");
   const dir = `/tmp/nvim-e2e-explorer-${Date.now()}`;
   await fs.mkdir(dir, { recursive: true });
   await fs.writeFile(path.join(dir, ".hidden-file"), "secret");
   await fs.writeFile(path.join(dir, "visible-file"), "public");
 
-  // Open the explorer in the temp directory
-  await nvim.command(`cd ${dir}`);
-  await nvim.client.call("feedkeys", [" e", "x"]); // <leader>e opens explorer
+  // Open explorer explicitly in the temp dir (feedkeys " e" uses root_spec which
+  // falls back to the git project root, not cwd)
+  await nvim.client.lua(`Snacks.explorer.open({ cwd = "${dir}" })`);
 
   await nvim.tmux.waitForText("hidden-file", 3);
 

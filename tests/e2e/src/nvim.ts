@@ -98,11 +98,15 @@ function buildNvimInstance(client: NeovimClient, tmux: TmuxSession): NvimInstanc
     },
 
     async resetBuffer(testName?: string) {
-      // Return to normal mode, close popups/floats, open a fresh scratch buffer.
-      // Previous buffers auto-clean via bufhidden=wipe when they become hidden.
+      // Return to normal mode, close everything: popups, floats, explorer, pickers.
       await client.input("<Esc>");
       await client.command("silent! pclose | cclose | lclose");
-      await client.lua("for _, w in ipairs(vim.api.nvim_list_wins()) do if vim.api.nvim_win_get_config(w).relative ~= '' then vim.api.nvim_win_close(w, true) end end");
+      // Close snacks explorer/picker if open
+      await client.lua("pcall(function() Snacks.explorer.close() end)");
+      // Close any floating windows
+      await client.lua("for _, w in ipairs(vim.api.nvim_list_wins()) do if vim.api.nvim_win_get_config(w).relative ~= '' then pcall(vim.api.nvim_win_close, w, true) end end");
+      // Close all splits back to one window
+      await client.command("silent! only!");
       const bufName = testName ? `test-${testName}` : `test-${Date.now()}`;
       await client.command("enew!");
       await client.command(`file ${bufName}`);
