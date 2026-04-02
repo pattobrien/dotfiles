@@ -108,23 +108,39 @@ function buildNvimInstance(client: NeovimClient, tmux: TmuxSession): NvimInstanc
     },
 
     async resetBuffer(testName?: string) {
-      // Return to normal mode, close popups/floats, wipe current buffer, start fresh.
+      // Return to normal mode, close popups/floats, open a fresh scratch buffer.
+      // Previous buffers auto-clean via bufhidden=wipe when they become hidden.
       await client.input("<Esc>");
       await client.command("silent! pclose | cclose | lclose");
       await client.lua("for _, w in ipairs(vim.api.nvim_list_wins()) do if vim.api.nvim_win_get_config(w).relative ~= '' then vim.api.nvim_win_close(w, true) end end");
-      // Create new scratch buffer first, THEN wipe the old one.
-      // bwipeout on the last buffer would exit nvim.
-      const oldBuf = await client.call("bufnr", ["%"]) as number;
       const bufName = testName ? `test-${testName}` : `test-${Date.now()}`;
       await client.command("enew!");
       await client.command(`file ${bufName}`);
       await client.command("setlocal buftype=nofile bufhidden=wipe");
-      if (oldBuf > 0) {
-        await client.command(`silent! ${oldBuf}bwipeout!`);
-      }
       await client.command("normal! gg");
     },
   };
+}
+
+/**
+ * Get or create a persistent nvim instance inside the tmux session.
+ * On first run: launches nvim + waits for LazyVim (~2s). On subsequent runs: instant.
+ * The nvim instance is intentionally left alive after tests finish.
+ */
+/**
+ * Create a permanent unlisted buffer that is never closed.
+ * This ensures bwipeout! in resetBuffer can never kill the last buffer.
+ */
+async function ensureHomeBuffer(client: NeovimClient) {
+  await client.lua(`
+    if not vim.g._e2e_home_buf then
+      local buf = vim.api.nvim_create_buf(false, true)
+      vim.api.nvim_buf_set_name(buf, "e2e-home")
+      vim.bo[buf].buftype = "nofile"
+      vim.bo[buf].bufhidden = "hide"
+      vim.g._e2e_home_buf = buf
+    end
+  `);
 }
 
 /**
@@ -139,6 +155,7 @@ export async function getOrCreateNvimInstance(
   if (await nvimIsRunning()) {
     const client = attach({ socket: NVIM_SOCKET });
     await client._isReady;
+    await ensureHomeBuffer(client);
     return buildNvimInstance(client, tmux);
   }
 
@@ -153,6 +170,7 @@ export async function getOrCreateNvimInstance(
   const client = attach({ socket: NVIM_SOCKET });
   await client._isReady;
   await waitForLazyVim(client);
+  await ensureHomeBuffer(client);
 
   return buildNvimInstance(client, tmux);
 }
