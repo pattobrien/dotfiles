@@ -1,0 +1,35 @@
+    󰛦 hover.ts     ▕▎   󰈔 e2e-home    
+  1
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ NORMAL   refactor/neovim-0.12  e2e-home                                                        1:1

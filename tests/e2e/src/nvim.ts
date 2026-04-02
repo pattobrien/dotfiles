@@ -22,7 +22,9 @@ export interface NvimInstance {
   /** Send keys as if typed (uses nvim_input). */
   input: (keys: string) => Promise<void>;
   /** Reset to a fresh empty buffer in normal mode. */
-  resetBuffer: () => Promise<void>;
+  resetBuffer: (testName?: string) => Promise<void>;
+  /** Check nvim is in expected start state. Returns list of violations. */
+  checkStartState: () => Promise<string[]>;
 }
 
 /**
@@ -112,6 +114,42 @@ function buildNvimInstance(client: NeovimClient, tmux: TmuxSession): NvimInstanc
       await client.command(`file ${bufName}`);
       await client.command("setlocal buftype=nofile bufhidden=wipe");
       await client.command("normal! gg");
+    },
+
+    async checkStartState() {
+      const violations: string[] = [];
+      const state = (await client.lua(`
+        local wins = vim.api.nvim_list_wins()
+        local floats = 0
+        for _, w in ipairs(wins) do
+          if vim.api.nvim_win_get_config(w).relative ~= "" then floats = floats + 1 end
+        end
+        return {
+          mode = vim.api.nvim_get_mode().mode,
+          win_count = #wins - floats,
+          float_count = floats,
+          cursor = vim.api.nvim_win_get_cursor(0),
+          bufname = vim.api.nvim_buf_get_name(0),
+          line_count = vim.api.nvim_buf_line_count(0),
+          first_line = vim.api.nvim_buf_get_lines(0, 0, 1, false)[1] or "",
+        }
+      `)) as {
+        mode: string;
+        win_count: number;
+        float_count: number;
+        cursor: [number, number];
+        bufname: string;
+        line_count: number;
+        first_line: string;
+      };
+
+      if (state.mode !== "n") violations.push(`mode: expected 'n', got '${state.mode}'`);
+      if (state.win_count !== 1) violations.push(`windows: expected 1, got ${state.win_count}`);
+      if (state.float_count > 0) violations.push(`floats: expected 0, got ${state.float_count}`);
+      if (state.line_count > 1) violations.push(`lines: expected 1, got ${state.line_count}`);
+      if (state.first_line !== "") violations.push(`buffer not empty: '${state.first_line}'`);
+
+      return violations;
     },
   };
 }

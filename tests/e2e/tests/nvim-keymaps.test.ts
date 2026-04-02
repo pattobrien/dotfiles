@@ -1,15 +1,13 @@
 import { expect } from "vite-plus/test";
+import { test, useNvimStateGuard } from "./fixtures.ts";
 
-import { test } from "./fixtures.ts";
+useNvimStateGuard();
 
 test("Ctrl-d scrolls half page down and centers cursor", async ({ nvim }) => {
-  await nvim.resetBuffer("ctrl-d");
-
   const lines = Array.from({ length: 60 }, (_, i) => `line ${i + 1}`);
   await nvim.client.buffer.then((b) => b.replace(lines, 0));
   await nvim.command("normal! gg");
 
-  // Execute <C-d> and read cursor in one atomic Lua call
   const line = await nvim.client.lua(`
     vim.cmd("normal! \\x04")
     return vim.api.nvim_win_get_cursor(0)[1]
@@ -18,14 +16,11 @@ test("Ctrl-d scrolls half page down and centers cursor", async ({ nvim }) => {
 });
 
 test("J/K in visual mode moves selected lines", async ({ nvim }) => {
-  await nvim.resetBuffer("visual-jk");
-
   await nvim.client.buffer.then((b) =>
     b.replace(["alpha", "beta", "gamma", "delta"], 0),
   );
   await nvim.command("normal! gg");
 
-  // feedkeys (not normal!) so the v-mode J remap fires, not vim's join
   await nvim.client.call("feedkeys", ["VJ", "x"]);
 
   const content = await nvim.getBufferContent();
@@ -37,8 +32,6 @@ test("J/K in visual mode moves selected lines", async ({ nvim }) => {
 test("leader-p pastes over selection without yanking replaced text", async ({
   nvim,
 }) => {
-  await nvim.resetBuffer("leader-p");
-
   await nvim.client.buffer.then((b) => b.replace(["hello", "world"], 0));
   await nvim.command("normal! gg");
 
