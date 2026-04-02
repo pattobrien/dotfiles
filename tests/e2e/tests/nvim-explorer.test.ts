@@ -4,7 +4,7 @@ import fs from "node:fs/promises";
 import path from "node:path";
 
 test("file explorer shows hidden dotfiles", { timeout: 20_000 }, async ({ nvim }) => {
-  // Create a temp directory with a dotfile
+  await nvim.resetBuffer();
   const dir = `/tmp/nvim-e2e-explorer-${Date.now()}`;
   await fs.mkdir(dir, { recursive: true });
   await fs.writeFile(path.join(dir, ".hidden-file"), "secret");
@@ -25,6 +25,7 @@ test("file explorer shows hidden dotfiles", { timeout: 20_000 }, async ({ nvim }
 });
 
 test("file picker shows hidden files", { timeout: 20_000 }, async ({ nvim }) => {
+  await nvim.resetBuffer();
   const dir = `/tmp/nvim-e2e-picker-${Date.now()}`;
   await fs.mkdir(dir, { recursive: true });
   // Use .dotrc instead of .env — .env is in the global gitignore (~/.config/git/ignore)

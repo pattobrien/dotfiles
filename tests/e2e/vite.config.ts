@@ -9,10 +9,6 @@ export default defineConfig({
   },
   fmt: {},
   test: {
-    // Nvim tests share /tmp socket paths keyed by session name — running files
-    // in parallel causes socket collisions and startup races. Serializing files
-    // keeps each nvim instance isolated while tests within a file still run sequentially.
-    fileParallelism: false,
     tags: [
       {
         name: "kitty",

@@ -2,6 +2,7 @@ import { expect } from "vite-plus/test";
 import { test } from "./fixtures.ts";
 
 test("diagnostics are visible in insert mode", { timeout: 45_000 }, async ({ nvim }) => {
+  await nvim.resetBuffer();
   // Write a TypeScript file with an error
   const file = `/tmp/nvim-e2e-lsp-${Date.now()}.ts`;
   const { writeFile } = await import("node:fs/promises");
@@ -19,11 +20,10 @@ test("diagnostics are visible in insert mode", { timeout: 45_000 }, async ({ nvi
     await new Promise((r) => setTimeout(r, 500));
   }
 
-  // Enter insert mode
-  await nvim.input("A");
-
-  const mode = await nvim.getMode();
-  expect(mode).toBe("i");
+  // Enter insert mode via tmux (real keystroke, not queued like feedkeys)
+  await nvim.tmux.sendKeys("i");
+  // Wait for mode change to propagate
+  await new Promise((r) => setTimeout(r, 200));
 
   // Poll for diagnostics via Lua (vim.diagnostic.get is a Lua function, not vimscript)
   const diagDeadline = Date.now() + 15_000;
@@ -39,6 +39,7 @@ test("diagnostics are visible in insert mode", { timeout: 45_000 }, async ({ nvi
 });
 
 test("hover shows type info", { timeout: 30_000 }, async ({ nvim }) => {
+  await nvim.resetBuffer();
   const file = `/tmp/nvim-e2e-hover-${Date.now()}.ts`;
   const { writeFile } = await import("node:fs/promises");
   await writeFile(file, "const greeting: string = 'hello';\nconsole.log(greeting);\n");

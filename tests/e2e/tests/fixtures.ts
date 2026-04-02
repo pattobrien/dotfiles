@@ -16,14 +16,15 @@ let sessionCounter = 0;
 /**
  * Extended test context with terminal fixtures.
  *
- * - `tmux` (test scope): fresh tmux session per test, auto-cleaned
- * - `nvim` (test scope, lazy): nvim inside tmux, only starts if destructured
- * - `kitty` (test scope, lazy): real kitty window, only starts if destructured
+ * Scoping strategy (matches how you actually use the tools):
+ * - tmuxServer (worker): one tmux server per worker — 400ms config load once
+ * - tmux (file): one session per test file — shell starts once, reused across tests
+ * - nvim (file): one nvim per test file — LazyVim + plugins load once
+ * - Each test gets a fresh empty buffer via resetNvim (test-scoped)
+ * - kitty (test): real kitty window, only for tagged tests
  */
 export const test = base
   // Worker-scoped: one tmux server per worker process.
-  // Loading ~/.tmux.conf (TPM plugins) takes ~400ms — worker scope means
-  // this only happens once per worker, not once per test file.
   .extend("tmuxServer", { scope: "worker" }, async ({}, { onCleanup }) => {
     const socket = `e2e-${process.pid}`;
     const server = await createTmuxServer(socket);
@@ -31,24 +32,21 @@ export const test = base
     return socket;
   })
 
-  // Test-scoped: fresh session per test
-  .extend("tmux", async ({ tmuxServer, task }, { onCleanup }) => {
+  // File-scoped: one tmux session per test file (shell starts once).
+  .extend("tmux", { scope: "file" }, async ({ tmuxServer }, { onCleanup }) => {
     const session = `t-${++sessionCounter}`;
     const tmux = await createTmuxSession(tmuxServer, session);
 
     onCleanup(async () => {
-      // Only save screenshot on failure — freeze takes ~500ms per call.
-      if (task.result?.state === "fail") {
-        await saveFailureScreenshot(tmux, session).catch(() => {});
-      }
+      await saveFailureScreenshot(tmux, session).catch(() => {});
       await killTmuxSession(tmuxServer, session);
     });
 
     return tmux;
   })
 
-  // Test-scoped, lazy: only initializes when destructured
-  .extend("nvim", async ({ tmux }, { onCleanup }) => {
+  // File-scoped: one nvim instance per test file. LazyVim + plugins load once.
+  .extend("nvim", { scope: "file" }, async ({ tmux }, { onCleanup }) => {
     const nvim = await createNvimInstance(tmux);
     onCleanup(() => destroyNvimInstance(nvim));
     return nvim;

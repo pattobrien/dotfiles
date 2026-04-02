@@ -19,6 +19,8 @@ export interface NvimInstance {
   command: (cmd: string) => Promise<void>;
   /** Send keys as if typed (uses nvim_input). */
   input: (keys: string) => Promise<void>;
+  /** Reset to a fresh empty buffer in normal mode. */
+  resetBuffer: () => Promise<void>;
 }
 
 /**
@@ -61,8 +63,9 @@ export async function createNvimInstance(
   tmux: TmuxSession,
   opts: { file?: string } = {},
 ): Promise<NvimInstance> {
-  const sockPath = `/tmp/nvim-e2e-${tmux.session}.sock`;
-  const file = opts.file ?? `/tmp/nvim-e2e-${tmux.session}.txt`;
+  // Include tmux socket name (has PID) to avoid collisions across parallel workers
+  const sockPath = `/tmp/nvim-e2e-${tmux.socket}-${tmux.session}.sock`;
+  const file = opts.file ?? `/tmp/nvim-e2e-${tmux.socket}-${tmux.session}.txt`;
 
   // Clean up any stale socket and swap file from previous crashed runs
   await fs.rm(sockPath, { force: true });
@@ -77,8 +80,11 @@ export async function createNvimInstance(
   // Launch nvim with RPC socket inside the tmux session
   await tmux.sendKeys(`nvim --listen ${sockPath} ${file}`, "Enter");
 
-  // Wait for the socket file to appear (nvim is ready for RPC)
-  await waitForFile(sockPath);
+  // Wait for the socket file to appear (nvim is ready for RPC).
+  // With file-scoped fixtures this only happens once per test file.
+  // Parallel workers each launch nvim + LazyVim simultaneously which can
+  // take longer under load.
+  await waitForFile(sockPath, 10_000);
 
   // Connect via msgpack RPC
   const client = attach({ socket: sockPath });
@@ -117,6 +123,13 @@ export async function createNvimInstance(
 
     async input(keys: string) {
       await client.input(keys);
+    },
+
+    async resetBuffer() {
+      // Escape any mode, open a fresh empty buffer, and go to the top
+      await client.input("<Esc>");
+      await client.command("enew!");
+      await client.command("normal! gg");
     },
   };
 }
