@@ -1,4 +1,4 @@
-import { test as base, beforeEach, afterEach, onTestFailed } from "vite-plus/test";
+import { test as base, beforeEach, afterEach } from "vite-plus/test";
 import { getOrCreateTmuxSession } from "../src/tmux.ts";
 import { getOrCreateNvimInstance, disconnectNvim } from "../src/nvim.ts";
 import { capturePane } from "../src/screenshot.ts";
@@ -60,19 +60,27 @@ export function useNvimStateGuard() {
     if (!nvimRef) return;
 
     // On failure: capture pane text + freeze screenshot for debugging
-    onTestFailed(async () => {
-      const name = task?.name?.replace(/[^a-zA-Z0-9-_]/g, "_") ?? "unknown";
+    if (task?.result?.state === "fail") {
+      const name = task.name?.replace(/[^a-zA-Z0-9-_]/g, "_") ?? "unknown";
       try {
-        const paneText = await nvimRef!.tmux.capture();
-        const { writeFile } = await import("node:fs/promises");
+        const paneText = await nvimRef.tmux.capture();
+        const { writeFile, mkdir } = await import("node:fs/promises");
+        const { writeSync } = await import("node:fs");
         const textPath = `/tmp/e2e-fail-${name}.txt`;
         await writeFile(textPath, paneText);
-        const imgPath = await capturePane(nvimRef!.tmux, `fail-${name}`);
-        console.error(`\n  Failure artifacts:\n    text: ${textPath}\n    screenshot: ${imgPath}`);
+        // freeze screenshot
+        const { execaCommand } = await import("execa");
+        const imgPath = `/tmp/e2e-fail-${name}.png`;
+        await mkdir("/tmp", { recursive: true });
+        await execaCommand(
+          `tmux -L ${nvimRef.tmux.socket} capture-pane -t ${nvimRef.tmux.session} -pe | freeze -o ${imgPath}`,
+          { shell: true },
+        );
+        writeSync(2, `\n  Failure artifacts:\n    text: ${textPath}\n    screenshot: ${imgPath}\n`);
       } catch {
         // best effort
       }
-    });
+    }
 
     await nvimRef.resetBuffer();
     const violations = await nvimRef.checkStartState();
