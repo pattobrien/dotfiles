@@ -22,8 +22,17 @@ export interface TmuxSession {
   listKeys: (table?: string) => Promise<string>;
 }
 
-/** Create a new tmux server socket. Call `kill()` to tear it down. */
+/** Start a tmux server with ~/.tmux.conf and return a handle to kill it. */
 export async function createTmuxServer(socket: string) {
+  const tmuxConf = `${process.env.HOME}/.tmux.conf`;
+  // Start the server by creating an initial session, then immediately kill it.
+  // This loads ~/.tmux.conf once. Subsequent new-session calls are ~5ms.
+  await execa("tmux", [
+    "-L", socket, "-f", tmuxConf,
+    "new-session", "-d", "-s", "_init", "-x", "200", "-y", "50",
+    "--", "sh",
+  ]);
+  await execa("tmux", ["-L", socket, "kill-session", "-t", "_init"]);
   return {
     socket,
     async kill() {
@@ -37,10 +46,12 @@ export async function createTmuxSession(
   socket: string,
   session: string,
 ): Promise<TmuxSession> {
-  const tmuxConf = `${process.env.HOME}/.tmux.conf`;
-  await execaCommand(
-    `tmux -L ${socket} -f ${tmuxConf} new-session -d -s ${session} -x 200 -y 50`,
-  );
+  // Server is already running (started by createTmuxServer) — no -f needed.
+  // Default shell is used so nvim plugins can find their tools (node, python, etc.).
+  await execa("tmux", [
+    "-L", socket,
+    "new-session", "-d", "-s", session, "-x", "200", "-y", "50",
+  ]);
 
   return {
     socket,

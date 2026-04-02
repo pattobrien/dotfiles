@@ -21,21 +21,26 @@ let sessionCounter = 0;
  * - `kitty` (test scope, lazy): real kitty window, only starts if destructured
  */
 export const test = base
-  // File-scoped: one tmux server per test file (lightweight)
-  .extend("tmuxServer", { scope: "file" }, async ({}, { onCleanup }) => {
-    const socket = `e2e-${process.pid}-${Date.now()}`;
+  // Worker-scoped: one tmux server per worker process.
+  // Loading ~/.tmux.conf (TPM plugins) takes ~400ms — worker scope means
+  // this only happens once per worker, not once per test file.
+  .extend("tmuxServer", { scope: "worker" }, async ({}, { onCleanup }) => {
+    const socket = `e2e-${process.pid}`;
     const server = await createTmuxServer(socket);
     onCleanup(() => server.kill());
     return socket;
   })
 
   // Test-scoped: fresh session per test
-  .extend("tmux", async ({ tmuxServer }, { onCleanup }) => {
+  .extend("tmux", async ({ tmuxServer, task }, { onCleanup }) => {
     const session = `t-${++sessionCounter}`;
     const tmux = await createTmuxSession(tmuxServer, session);
 
     onCleanup(async () => {
-      await saveFailureScreenshot(tmux, session).catch(() => {});
+      // Only save screenshot on failure — freeze takes ~500ms per call.
+      if (task.result?.state === "fail") {
+        await saveFailureScreenshot(tmux, session).catch(() => {});
+      }
       await killTmuxSession(tmuxServer, session);
     });
 

@@ -21,6 +21,24 @@ export interface NvimInstance {
   input: (keys: string) => Promise<void>;
 }
 
+/**
+ * Wait for LazyVim's VeryLazy event to fire.
+ * keymaps.lua loads on VeryLazy — once <C-d> is remapped, setup is complete.
+ */
+async function waitForLazyVim(client: NeovimClient, timeoutMs = 10_000) {
+  const deadline = Date.now() + timeoutMs;
+  while (Date.now() < deadline) {
+    try {
+      const remap = await client.call("maparg", ["<C-d>", "n"]);
+      if (remap) return;
+    } catch {
+      // not ready yet
+    }
+    await new Promise((r) => setTimeout(r, 100));
+  }
+  throw new Error("Timed out waiting for LazyVim (keymaps not loaded after VeryLazy)");
+}
+
 /** Wait for a file to exist on disk. */
 async function waitForFile(path: string, timeoutMs = 3000) {
   const deadline = Date.now() + timeoutMs;
@@ -46,8 +64,12 @@ export async function createNvimInstance(
   const sockPath = `/tmp/nvim-e2e-${tmux.session}.sock`;
   const file = opts.file ?? `/tmp/nvim-e2e-${tmux.session}.txt`;
 
-  // Clean up any stale socket
+  // Clean up any stale socket and swap file from previous crashed runs
   await fs.rm(sockPath, { force: true });
+  // nvim swap files live in ~/.local/state/nvim/swap/ with path-encoded names
+  const swapName = file.replace(/\//g, "%") + ".swp";
+  const swapPath = `${process.env.HOME}/.local/state/nvim/swap/${swapName}`;
+  await fs.rm(swapPath, { force: true });
 
   // Create an empty test file
   await fs.writeFile(file, "");
@@ -63,6 +85,10 @@ export async function createNvimInstance(
 
   // Wait for the initial API handshake to complete
   await client._isReady;
+
+  // Wait for LazyVim plugins to finish loading. _isReady resolves early (before
+  // VimEnter), so keymaps/plugins registered by LazyVim won't exist yet.
+  await waitForLazyVim(client);
 
   return {
     client,
