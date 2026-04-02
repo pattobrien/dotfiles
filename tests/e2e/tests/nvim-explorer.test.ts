@@ -3,7 +3,7 @@ import { test } from "./fixtures.ts";
 import fs from "node:fs/promises";
 import path from "node:path";
 
-test("file explorer shows hidden dotfiles", async ({ nvim }) => {
+test.only("file explorer shows hidden dotfiles", async ({ nvim }) => {
   await nvim.resetBuffer("explorer");
   const dir = `/tmp/nvim-e2e-explorer-${Date.now()}`;
   await fs.mkdir(dir, { recursive: true });

@@ -57,20 +57,10 @@ async function waitForFile(path: string, timeoutMs = 10_000) {
   throw new Error(`Timed out waiting for file: ${path}`);
 }
 
-/** Check if the persistent nvim socket exists and is connectable. */
-async function nvimIsRunning(): Promise<boolean> {
+/** Check if the persistent nvim socket file exists. */
+async function nvimSocketExists(): Promise<boolean> {
   try {
     await fs.access(NVIM_SOCKET);
-    // Socket file exists — try a quick RPC ping to verify nvim is alive.
-    // We connect, check the mode, then destroy the socket (NOT client.quit()
-    // which sends a quit command to nvim itself).
-    const client = attach({ socket: NVIM_SOCKET });
-    await client._isReady;
-    await client.mode;
-    // Close the socket without killing nvim
-    const transport = (client as any).transport;
-    transport?.reader?.destroy?.();
-    transport?.writer?.destroy?.();
     return true;
   } catch {
     return false;
@@ -151,16 +141,18 @@ async function ensureHomeBuffer(client: NeovimClient) {
 export async function getOrCreateNvimInstance(
   tmux: TmuxSession,
 ): Promise<NvimInstance> {
-  // Try connecting to existing nvim
-  if (await nvimIsRunning()) {
-    const client = attach({ socket: NVIM_SOCKET });
-    await client._isReady;
-    await ensureHomeBuffer(client);
-    return buildNvimInstance(client, tmux);
+  // Try connecting to existing nvim socket
+  if (await nvimSocketExists()) {
+    try {
+      const client = attach({ socket: NVIM_SOCKET });
+      await client._isReady;
+      await ensureHomeBuffer(client);
+      return buildNvimInstance(client, tmux);
+    } catch {
+      // Socket exists but nvim is dead — clean up and launch fresh
+      await fs.rm(NVIM_SOCKET, { force: true });
+    }
   }
-
-  // Clean up stale socket
-  await fs.rm(NVIM_SOCKET, { force: true });
 
   // Launch nvim in the tmux session
   await tmux.sendKeys(`nvim --listen ${NVIM_SOCKET}`, "Enter");

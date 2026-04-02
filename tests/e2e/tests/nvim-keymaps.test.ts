@@ -9,9 +9,11 @@ test("Ctrl-d scrolls half page down and centers cursor", async ({ nvim }) => {
   await nvim.client.buffer.then((b) => b.replace(lines, 0));
   await nvim.command("normal! gg");
 
-  await nvim.command("normal! \x04"); // <C-d>
-
-  const [line] = await nvim.getCursorPosition();
+  // Execute <C-d> and read cursor in one atomic Lua call
+  const line = await nvim.client.lua(`
+    vim.cmd("normal! \\x04")
+    return vim.api.nvim_win_get_cursor(0)[1]
+  `) as number;
   expect(line).toBeGreaterThan(10);
 });
 
