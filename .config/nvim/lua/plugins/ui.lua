@@ -1,4 +1,28 @@
 return {
+  -- Style LSP hover/signature popups (noice replaces the built-in handler)
+  {
+    "folke/noice.nvim",
+    opts = {
+      presets = {
+        lsp_doc_border = true,
+      },
+      views = {
+        hover = {
+          border = {
+            style = "rounded",
+            padding = { 0, 1 },
+          },
+          size = {
+            max_width = 80,
+          },
+          win_options = {
+            winhighlight = { Normal = "NormalFloat", FloatBorder = "FloatBorder" },
+          },
+        },
+      },
+    },
+  },
+
   -- Customize lualine — declutter the statusline
   {
     "nvim-lualine/lualine.nvim",

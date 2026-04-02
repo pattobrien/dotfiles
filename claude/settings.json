@@ -2,7 +2,7 @@
   "$schema": "https://json.schemastore.org/claude-code-settings.json",
   "env": {
     "CLAUDE_CODE_ENABLE_TASKS": "true",
-    "DISABLE_AUTOUPDATER": "1",
+    "DISABLE_AUTOUPDATER": "0",
     "EDITOR": "cursor",
     "ENABLE_LSP_TOOL": "1",
     "CLAUDE_CODE_NEW_INIT": "1",
@@ -84,11 +84,18 @@
       "WebFetch(domain:raw.githubusercontent.com)",
       "WebFetch(domain:unpkg.com)"
     ],
-    "deny": ["Bash(npm *)", "Bash(npx *)", "mcp__ide__getDiagnostics"],
-    "ask": ["Bash(pnpm* add *)", "Bash(brew install *)"],
+    "deny": [
+      "Bash(npm *)",
+      "Bash(npx *)",
+      "mcp__ide__getDiagnostics"
+    ],
+    "ask": [
+      "Bash(pnpm* add *)",
+      "Bash(brew install *)"
+    ],
     "defaultMode": "bypassPermissions"
   },
-  "model": "opus[1m]",
+  "model": "sonnet[1m]",
   "enableAllProjectMcpServers": true,
   "hooks": {
     "Notification": [
@@ -174,7 +181,8 @@
     }
   },
   "alwaysThinkingEnabled": true,
-  "minimumVersion": "2.1.19",
+  "effortLevel": "high",
+  "autoUpdatesChannel": "stable",
   "plansDirectory": "./docs/plans",
   "voiceEnabled": false,
   "skipDangerousModePermissionPrompt": true

@@ -1,9 +1,3 @@
--- Better hover: add border and limit width
-vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
-  border = "rounded",
-  max_width = 80,
-})
-
 return {
   -- TypeScript and Copilot extras are imported in lua/config/lazy.lua
   -- (required load order: base -> extras -> custom plugins).

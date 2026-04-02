@@ -5,6 +5,12 @@ return {
     name = "catppuccin",
     opts = {
       flavour = "mocha",
+      custom_highlights = function(colors)
+        return {
+          FloatBorder = { fg = colors.overlay2 },
+          NoicePopupBorder = { fg = colors.overlay2 },
+        }
+      end,
     },
   },
 
