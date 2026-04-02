@@ -11,6 +11,7 @@ defaults write com.apple.screencapture location ~/Documents/Screenshots
 defaults write com.apple.screencapture style window
 defaults write com.apple.screencapture target file
 defaults write com.apple.screencaptureui NSNavLastRootDirectory ~/Documents/Screenshots
+defaults write com.apple.iphonesimulator ScreenShotSaveLocation ~/Documents/Screenshots
 
 killall SystemUIServer
 killall screencaptureui 2>/dev/null
