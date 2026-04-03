@@ -2,6 +2,7 @@ packages:
   - packages/*
   - tools/*
   - tests/*
+  - claude-plugins/meagain/hooks
   - "!tools/picker"
 
 catalog:
@@ -12,6 +13,7 @@ catalog:
   vite: npm:@voidzero-dev/vite-plus-core@latest
   vite-plus: latest
   vitest: npm:@voidzero-dev/vite-plus-test@^0.1.15
+  zod: ^4
 
 catalogMode: strict
 
