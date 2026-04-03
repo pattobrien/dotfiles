@@ -7,6 +7,30 @@ import {
 } from "../src/nvim.ts";
 import { getOrCreateKittyInstance } from "../src/kitty.ts";
 
+/** Capture pane text + freeze screenshot for debugging. */
+async function captureFailureArtifacts(nvim: NvimInstance, name: string) {
+  try {
+    const paneText = await nvim.tmux.capture();
+    const { writeFile, mkdir } = await import("node:fs/promises");
+    const { writeSync } = await import("node:fs");
+    const textPath = `/tmp/e2e-fail-${name}.txt`;
+    await writeFile(textPath, paneText);
+    const { execaCommand } = await import("execa");
+    const imgPath = `/tmp/e2e-fail-${name}.png`;
+    await mkdir("/tmp", { recursive: true });
+    await execaCommand(
+      `tmux -L ${nvim.tmux.socket} capture-pane -t ${nvim.tmux.session} -pe | freeze -o ${imgPath}`,
+      { shell: true },
+    );
+    writeSync(
+      2,
+      `\n  Failure artifacts:\n    text: ${textPath}\n    screenshot: ${imgPath}\n`,
+    );
+  } catch {
+    // best effort
+  }
+}
+
 /**
  * Reset buffer and assert clean state, retrying once if transient plugin
  * floats (which-key, noice) haven't settled yet.
@@ -24,6 +48,8 @@ async function resetAndAssert(
     await nvim.resetBuffer(testName);
     violations = await nvim.checkStartState();
     if (violations.length > 0) {
+      const safeName = (testName ?? "unknown").replace(/[^a-zA-Z0-9-_]/g, "_");
+      await captureFailureArtifacts(nvim, `${label}-${safeName}`);
       throw new Error(
         `nvim not in start state ${label} test:\n  ${violations.join("\n  ")}`,
       );
@@ -61,32 +87,9 @@ export const test = base
     await resetAndAssert(rawNvim, "BEFORE", safeName);
 
     onCleanup(async () => {
-      // On failure: capture pane text + freeze screenshot for debugging
       if (task?.result?.state === "fail") {
-        const name =
-          task.name?.replace(/[^a-zA-Z0-9-_]/g, "_") ?? "unknown";
-        try {
-          const paneText = await rawNvim.tmux.capture();
-          const { writeFile, mkdir } = await import("node:fs/promises");
-          const { writeSync } = await import("node:fs");
-          const textPath = `/tmp/e2e-fail-${name}.txt`;
-          await writeFile(textPath, paneText);
-          const { execaCommand } = await import("execa");
-          const imgPath = `/tmp/e2e-fail-${name}.png`;
-          await mkdir("/tmp", { recursive: true });
-          await execaCommand(
-            `tmux -L ${rawNvim.tmux.socket} capture-pane -t ${rawNvim.tmux.session} -pe | freeze -o ${imgPath}`,
-            { shell: true },
-          );
-          writeSync(
-            2,
-            `\n  Failure artifacts:\n    text: ${textPath}\n    screenshot: ${imgPath}\n`,
-          );
-        } catch {
-          // best effort
-        }
+        await captureFailureArtifacts(rawNvim, safeName);
       }
-
       await resetAndAssert(rawNvim, "AFTER");
     });
 

@@ -11,13 +11,17 @@ test("file explorer shows hidden dotfiles", async ({ nvim }) => {
   await fs.writeFile(path.join(dir, ".hidden-file"), "secret");
   await fs.writeFile(path.join(dir, "visible-file"), "public");
 
-  await nvim.client.lua(`Snacks.explorer.open({ cwd = "${dir}" })`);
+  try {
+    await nvim.client.lua(`Snacks.explorer.open({ cwd = "${dir}" })`);
 
-  await nvim.tmux.waitForText("hidden-file", 3);
+    await nvim.tmux.waitForText("hidden-file", 3);
 
-  const pane = await nvim.tmux.capture();
-  expect(pane).toContain(".hidden-file");
-  expect(pane).toContain("visible-file");
+    const pane = await nvim.tmux.capture();
+    expect(pane).toContain(".hidden-file");
+    expect(pane).toContain("visible-file");
+  } finally {
+    await fs.rm(dir, { recursive: true, force: true });
+  }
 });
 
 test("file picker shows hidden files", async ({ nvim }) => {

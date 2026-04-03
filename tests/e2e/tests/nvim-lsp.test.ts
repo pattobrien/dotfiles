@@ -49,10 +49,41 @@ test("hover shows type info", { timeout: LSP_TIMEOUT }, async ({ nvim }) => {
 
   await waitForLspClient(nvim);
 
-  await nvim.command("normal! 2Gw");
-  await nvim.input("K");
+  // Move cursor to "Promise" — deterministic regardless of line/column changes
+  await nvim.client.lua('vim.fn.search("Promise")');
 
-  await nvim.tmux.waitForText("string", 3);
-  const pane = await nvim.tmux.capture();
-  expect(pane).toContain("string");
+  // Retry hover until tsgo returns real type info (it may initially show
+  // "No information available" while still indexing the file).
+  const deadline = Date.now() + 5_000;
+  let hoverContent = "";
+  while (Date.now() < deadline) {
+    // Close any existing hover floats, then trigger hover
+    await nvim.client.lua(`
+      for _, w in ipairs(vim.api.nvim_list_wins()) do
+        pcall(function()
+          if vim.api.nvim_win_get_config(w).relative ~= "" then
+            vim.api.nvim_win_close(w, true)
+          end
+        end)
+      end
+    `);
+    await nvim.input("K");
+    await new Promise((r) => setTimeout(r, 300));
+
+    // Read content from the first floating window
+    hoverContent = (await nvim.client.lua(`
+      for _, w in ipairs(vim.api.nvim_list_wins()) do
+        local ok, cfg = pcall(vim.api.nvim_win_get_config, w)
+        if ok and cfg.relative ~= "" then
+          local buf = vim.api.nvim_win_get_buf(w)
+          local lines = vim.api.nvim_buf_get_lines(buf, 0, -1, false)
+          return table.concat(lines, "\\n")
+        end
+      end
+      return ""
+    `)) as string;
+    if (hoverContent.includes("interface Promise")) break;
+    await new Promise((r) => setTimeout(r, 200));
+  }
+  expect(hoverContent, `hover popup content: "${hoverContent}"`).toContain("interface Promise");
 });
