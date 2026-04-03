@@ -8,7 +8,11 @@ test("Ctrl-d scrolls half page down and centers cursor", async ({ nvim }) => {
   await nvim.client.buffer.then((b) => b.replace(lines, 0));
   await nvim.command("normal! gg");
 
-  const ScrollResult = z.object({ cursor: z.number(), win_top: z.number(), win_bot: z.number() });
+  const ScrollResult = z.object({
+    cursor: z.number(),
+    win_top: z.number(),
+    win_bot: z.number(),
+  });
   const result = ScrollResult.parse(
     await nvim.client.lua(`
       vim.cmd("normal! \\x04")

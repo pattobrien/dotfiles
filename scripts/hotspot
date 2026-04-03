@@ -54,6 +54,6 @@ for (let i = 1; i <= MAX_RETRIES; i++) {
 }
 
 console.log(
-  `Failed after ${MAX_RETRIES} attempts. Try opening Settings > Personal Hotspot on your iPhone first.`
+  `Failed after ${MAX_RETRIES} attempts. Try opening Settings > Personal Hotspot on your iPhone first.`,
 );
 process.exit(1);
