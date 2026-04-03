@@ -5,14 +5,14 @@ import type {
 } from "@anthropic-ai/claude-agent-sdk";
 import { createColors } from "picocolors";
 
-import { checkCommand, BLOCKED } from "./bash-block-lib.ts";
+import { checkCommand, BLOCKED, BLOCKED_ANYWHERE } from "./bash-block-lib.ts";
 const pc = createColors(true);
 
 const input: PreToolUseHookInput = await Bun.stdin.json();
 const command = (input.tool_input as { command?: string })?.command ?? "";
 if (!command) process.exit(0);
 
-const match = checkCommand(command, BLOCKED);
+const match = checkCommand(command, BLOCKED, BLOCKED_ANYWHERE);
 
 if (match) {
   const output: SyncHookJSONOutput = {
