@@ -1,5 +1,4 @@
-// @ts-expect-error -- oxlint types are provided by vite-plus at runtime
-import { defineConfig } from "oxlint";
+import { defineConfig } from "vite-plus/lint";
 
 export default defineConfig({
   categories: {
@@ -17,6 +16,10 @@ export default defineConfig({
     "no-unused-imports": "off",
     "no-console": "off",
     "typescript/no-explicit-any": "warn",
+    "typescript/consistent-type-assertions": [
+      "error",
+      { assertionStyle: "never" },
+    ],
     "unicorn/no-null": "off",
     "unicorn/prefer-node-protocol": "warn",
   },
