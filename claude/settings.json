@@ -95,7 +95,6 @@
     ],
     "defaultMode": "bypassPermissions"
   },
-  "model": "sonnet[1m]",
   "enableAllProjectMcpServers": true,
   "hooks": {
     "Notification": [

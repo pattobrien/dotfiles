@@ -2,6 +2,17 @@ return {
   -- Style LSP hover/signature popups (noice replaces the built-in handler)
   {
     "folke/noice.nvim",
+    init = function()
+      -- NoicePopupBorder defaults to a link to FloatBorder (dark/invisible).
+      -- Override it after every colorscheme load so the hover border stays visible.
+      vim.api.nvim_create_autocmd("ColorScheme", {
+        callback = function()
+          vim.api.nvim_set_hl(0, "NoicePopupBorder", { fg = "#585b70" }) -- catppuccin surface2
+        end,
+      })
+      -- Also apply immediately for the initial load
+      vim.api.nvim_set_hl(0, "NoicePopupBorder", { fg = "#585b70" })
+    end,
     opts = {
       presets = {
         lsp_doc_border = true,
@@ -10,13 +21,12 @@ return {
         hover = {
           border = {
             style = "rounded",
-            padding = { 0, 1 },
           },
           size = {
             max_width = 80,
           },
           win_options = {
-            winhighlight = { Normal = "NormalFloat", FloatBorder = "FloatBorder" },
+            winhighlight = { Normal = "NormalFloat", FloatBorder = "NoicePopupBorder" },
           },
         },
       },
