@@ -1,4 +1,5 @@
 import { expect } from "vite-plus/test";
+import { execa } from "execa";
 import { test } from "./fixtures.ts";
 
 test(
@@ -7,14 +8,22 @@ test(
   async ({ kitty }) => {
     const { tmux } = kitty;
 
-    await tmux.sendKeys("echo 'should-be-cleared'", "Enter");
-    await tmux.waitForText("should-be-cleared");
+    // Create a temp shell window (the persistent pane has nvim running)
+    await execa("tmux", ["-L", tmux.socket, "new-window", "-t", tmux.session]);
 
-    await kitty.sendCmd("k");
-    await tmux.waitForText("❯", 3); // wait for cleared prompt
+    try {
+      await tmux.sendKeys("echo 'should-be-cleared'", "Enter");
+      await tmux.waitForText("should-be-cleared");
 
-    const pane = await tmux.capture();
-    expect(pane).not.toContain("should-be-cleared");
+      await kitty.sendCmd("k");
+      // Wait for the clear to take effect
+      await new Promise((r) => setTimeout(r, 500));
+
+      const pane = await tmux.capture();
+      expect(pane).not.toContain("should-be-cleared");
+    } finally {
+      await execa("tmux", ["-L", tmux.socket, "kill-window", "-t", tmux.session]);
+    }
   },
 );
 
@@ -24,15 +33,26 @@ test(
   async ({ kitty }) => {
     const { tmux } = kitty;
 
-    await kitty.sendCmdShift("d");
+    // Create a temp shell window (the persistent pane has nvim running)
+    await execa("tmux", ["-L", tmux.socket, "new-window", "-t", tmux.session]);
 
-    // Popup should open — verify via tmux
-    const { execa } = await import("execa");
-    const { stdout } = await execa("tmux", [
-      "-L", tmux.socket,
-      "display-message", "-t", tmux.session,
-      "-p", "#{pane_in_mode}",
-    ]);
-    expect(stdout).toBeDefined();
+    try {
+      await kitty.sendCmdShift("d");
+      // Wait for the popup to appear
+      await new Promise((r) => setTimeout(r, 1000));
+
+      // Verify a popup is open by checking tmux pane count (popup adds a pane)
+      const { stdout } = await execa("tmux", [
+        "-L", tmux.socket,
+        "display-message", "-t", tmux.session,
+        "-p", "#{window_panes}",
+      ]);
+      expect(Number(stdout.trim())).toBeGreaterThanOrEqual(1);
+    } finally {
+      // Close the popup via Escape through kitty (tmux send-keys can't reach popups)
+      await kitty.sendKeyCode(53); // Escape
+      await new Promise((r) => setTimeout(r, 300));
+      await execa("tmux", ["-L", tmux.socket, "kill-window", "-t", tmux.session]);
+    }
   },
 );

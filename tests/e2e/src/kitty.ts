@@ -1,9 +1,10 @@
-import { execaCommand } from "execa";
+import { execa, execaCommand } from "execa";
+import fs from "node:fs/promises";
 import { type TmuxSession } from "./tmux.ts";
 
+const E2E_WINDOW_TITLE = "e2e-test";
+
 export interface KittyInstance {
-  /** The kitty window title. */
-  title: string;
   /** The tmux session this kitty window is attached to. */
   tmux: TmuxSession;
 
@@ -22,37 +23,81 @@ export interface KittyInstance {
    * Send a raw keystroke (no modifiers) to the kitty window via AppleScript.
    */
   sendKey: (key: string) => Promise<void>;
+
+  /**
+   * Send a key code to the kitty window via AppleScript.
+   * Use for special keys like Escape (53), Return (36), etc.
+   */
+  sendKeyCode: (code: number) => Promise<void>;
+}
+
+/** Find the kitty remote control socket at /tmp/kitty-<PID>. */
+async function findKittySocket(): Promise<string> {
+  const entries = await fs.readdir("/tmp");
+  const socket = entries.find((e) => /^kitty-\d+$/.test(e));
+  if (!socket) {
+    throw new Error(
+      "No kitty socket found at /tmp/kitty-*. Is kitty running with allow_remote_control?",
+    );
+  }
+  return `unix:/tmp/${socket}`;
+}
+
+/** Check if the e2e-test kitty window already exists. */
+async function kittyWindowExists(): Promise<boolean> {
+  try {
+    const { stdout } = await execaCommand(
+      `osascript -e 'tell application "System Events" to tell process "kitty" to get title of every window'`,
+      { shell: true },
+    );
+    return stdout.includes(E2E_WINDOW_TITLE);
+  } catch {
+    return false;
+  }
 }
 
 /**
- * Launch a kitty window attached to a tmux session.
- * Requires kitty to be installed and `allow_remote_control yes` in kitty.conf.
+ * Get or create a persistent kitty OS window for e2e tests.
+ *
+ * Uses `kitty @` remote control to create a window within the existing kitty
+ * process (shares the same dock icon). On subsequent runs, reuses the existing
+ * window if it's still open.
  */
-export async function createKittyInstance(
+export async function getOrCreateKittyInstance(
   tmux: TmuxSession,
 ): Promise<KittyInstance> {
-  const title = `e2e-${tmux.session}`;
+  if (!(await kittyWindowExists())) {
+    const socket = await findKittySocket();
+    await execa("kitty", [
+      "@", "--to", socket,
+      "launch", "--type=os-window",
+      "--title", E2E_WINDOW_TITLE,
+      "tmux", "-L", tmux.socket, "attach-session", "-t", tmux.session,
+    ]);
+    await new Promise((r) => setTimeout(r, 500));
+  }
 
-  // Launch kitty with a specific title, attached to the tmux session
+  return buildKittyInstance(tmux);
+}
+
+/** Raise the e2e-test kitty window to frontmost before sending keystrokes. */
+async function focusKittyWindow() {
   await execaCommand(
-    `kitty --title "${title}" -e tmux -L ${tmux.socket} attach-session -t ${tmux.session} &`,
+    `osascript -e 'tell application "System Events" to tell process "kitty"
+      perform action "AXRaise" of (first window whose title contains "${E2E_WINDOW_TITLE}")
+      set frontmost to true
+    end tell'`,
     { shell: true },
   );
+  await new Promise((r) => setTimeout(r, 200));
+}
 
-  // Wait for the kitty window to appear
-  await new Promise((r) => setTimeout(r, 1000));
-
-  // Focus the kitty window
-  await runAppleScript(`
-    tell application "kitty" to activate
-    delay 0.3
-  `);
-
+function buildKittyInstance(tmux: TmuxSession): KittyInstance {
   return {
-    title,
     tmux,
 
     async sendCmd(key: string) {
+      await focusKittyWindow();
       await runAppleScript(`
         tell application "System Events"
           tell process "kitty"
@@ -64,6 +109,7 @@ export async function createKittyInstance(
     },
 
     async sendCmdShift(key: string) {
+      await focusKittyWindow();
       await runAppleScript(`
         tell application "System Events"
           tell process "kitty"
@@ -75,6 +121,7 @@ export async function createKittyInstance(
     },
 
     async sendKey(key: string) {
+      await focusKittyWindow();
       await runAppleScript(`
         tell application "System Events"
           tell process "kitty"
@@ -84,22 +131,19 @@ export async function createKittyInstance(
       `);
       await new Promise((r) => setTimeout(r, 200));
     },
-  };
-}
 
-/** Close the kitty window by title. */
-export async function destroyKittyInstance(kitty: KittyInstance) {
-  // Close just the test window, not all of kitty
-  await runAppleScript(`
-    tell application "kitty"
-      set windowList to every window
-      repeat with w in windowList
-        if name of w contains "${kitty.title}" then
-          close w
-        end if
-      end repeat
-    end tell
-  `).catch(() => {});
+    async sendKeyCode(code: number) {
+      await focusKittyWindow();
+      await runAppleScript(`
+        tell application "System Events"
+          tell process "kitty"
+            key code ${code}
+          end tell
+        end tell
+      `);
+      await new Promise((r) => setTimeout(r, 200));
+    },
+  };
 }
 
 async function runAppleScript(script: string) {

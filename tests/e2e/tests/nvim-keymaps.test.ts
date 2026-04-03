@@ -1,7 +1,5 @@
 import { expect } from "vite-plus/test";
-import { test, useNvimStateGuard } from "./fixtures.ts";
-
-useNvimStateGuard();
+import { test } from "./fixtures.ts";
 
 test("Ctrl-d scrolls half page down and centers cursor", async ({ nvim }) => {
   const lines = Array.from({ length: 60 }, (_, i) => `line ${i + 1}`);

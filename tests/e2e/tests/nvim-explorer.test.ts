@@ -1,11 +1,9 @@
 import { expect } from "vite-plus/test";
-import { test, useNvimStateGuard } from "./fixtures.ts";
+import { test } from "./fixtures.ts";
 import fs from "node:fs/promises";
 import path from "node:path";
 
 const FIXTURE_DIR = path.resolve(import.meta.dirname, "../fixtures/ts-project");
-
-useNvimStateGuard();
 
 test("file explorer shows hidden dotfiles", async ({ nvim }) => {
   const dir = `/tmp/nvim-e2e-explorer-${Date.now()}`;

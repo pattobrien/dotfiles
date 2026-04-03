@@ -1,28 +1,36 @@
 import { expect } from "vite-plus/test";
-import { test, useNvimStateGuard } from "./fixtures.ts";
+import { test } from "./fixtures.ts";
 import path from "node:path";
+import type { NvimInstance } from "../src/nvim.ts";
 
 const FIXTURE_DIR = path.resolve(import.meta.dirname, "../fixtures/ts-project");
 
-useNvimStateGuard();
-
-test("diagnostics are visible in insert mode", async ({ nvim }) => {
-  await nvim.command(`cd ${FIXTURE_DIR}`);
-  await nvim.command(`edit ${FIXTURE_DIR}/error.ts`);
-
-  // Wait for tsgo (not copilot) to attach
-  const lspDeadline = Date.now() + 3_000;
-  while (Date.now() < lspDeadline) {
+/** Wait for a non-copilot LSP client to attach to the current buffer. */
+async function waitForLspClient(nvim: NvimInstance, timeoutMs = 3_000) {
+  const deadline = Date.now() + timeoutMs;
+  while (Date.now() < deadline) {
     const hasTs = await nvim.client.lua(
       'return #vim.tbl_filter(function(c) return c.name ~= "copilot" end, vim.lsp.get_clients({ bufnr = 0 })) > 0',
     );
     if (hasTs) break;
     await new Promise((r) => setTimeout(r, 100));
   }
+}
 
-  // Enter insert mode
-  await nvim.tmux.sendKeys("i");
-  await new Promise((r) => setTimeout(r, 200));
+// Combined worst-case polling (3s client + 3s diagnostics) can exceed the
+// default 5s testTimeout, so give LSP tests a bit more headroom.
+const LSP_TIMEOUT = 8_000;
+
+test("diagnostics are visible in insert mode", { timeout: LSP_TIMEOUT }, async ({ nvim }) => {
+  await nvim.command(`cd ${FIXTURE_DIR}`);
+  await nvim.command(`edit ${FIXTURE_DIR}/error.ts`);
+
+  await waitForLspClient(nvim);
+
+  // Enter insert mode via RPC (deterministic, no fixed sleep)
+  await nvim.input("i");
+  const mode = await nvim.getMode();
+  expect(mode).toBe("i");
 
   // Poll for diagnostics
   const diagDeadline = Date.now() + 3_000;
@@ -35,19 +43,11 @@ test("diagnostics are visible in insert mode", async ({ nvim }) => {
   expect(diagCount).toBeGreaterThan(0);
 });
 
-test("hover shows type info", async ({ nvim }) => {
+test("hover shows type info", { timeout: LSP_TIMEOUT }, async ({ nvim }) => {
   await nvim.command(`cd ${FIXTURE_DIR}`);
   await nvim.command(`edit ${FIXTURE_DIR}/hover.ts`);
 
-  // Wait for tsgo to attach
-  const lspDeadline = Date.now() + 3_000;
-  while (Date.now() < lspDeadline) {
-    const hasTs = await nvim.client.lua(
-      'return #vim.tbl_filter(function(c) return c.name ~= "copilot" end, vim.lsp.get_clients({ bufnr = 0 })) > 0',
-    );
-    if (hasTs) break;
-    await new Promise((r) => setTimeout(r, 100));
-  }
+  await waitForLspClient(nvim);
 
   await nvim.command("normal! 2Gw");
   await nvim.input("K");
