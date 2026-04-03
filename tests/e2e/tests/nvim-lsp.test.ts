@@ -1,7 +1,10 @@
-import { expect } from "vite-plus/test";
-import { test } from "./fixtures.ts";
 import path from "node:path";
+
+import { expect } from "vite-plus/test";
+
 import type { NvimInstance } from "../src/nvim.ts";
+
+import { test } from "./fixtures.ts";
 
 const FIXTURE_DIR = path.resolve(import.meta.dirname, "../fixtures/ts-project");
 
@@ -36,7 +39,7 @@ test("diagnostics are visible in insert mode", { timeout: LSP_TIMEOUT }, async (
   const diagDeadline = Date.now() + 3_000;
   let diagCount = 0;
   while (Date.now() < diagDeadline) {
-    diagCount = (await nvim.client.lua("return #vim.diagnostic.get(0)")) as number;
+    diagCount = await nvim.client.lua("return #vim.diagnostic.get(0)");
     if (diagCount > 0) break;
     await new Promise((r) => setTimeout(r, 100));
   }
@@ -71,7 +74,7 @@ test("hover shows type info", { timeout: LSP_TIMEOUT }, async ({ nvim }) => {
     await new Promise((r) => setTimeout(r, 300));
 
     // Read content from the first floating window
-    hoverContent = (await nvim.client.lua(`
+    hoverContent = await nvim.client.lua(`
       for _, w in ipairs(vim.api.nvim_list_wins()) do
         local ok, cfg = pcall(vim.api.nvim_win_get_config, w)
         if ok and cfg.relative ~= "" then
@@ -81,7 +84,7 @@ test("hover shows type info", { timeout: LSP_TIMEOUT }, async ({ nvim }) => {
         end
       end
       return ""
-    `)) as string;
+    `);
     if (hoverContent.includes("interface Promise")) break;
     await new Promise((r) => setTimeout(r, 200));
   }

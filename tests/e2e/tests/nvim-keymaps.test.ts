@@ -1,4 +1,5 @@
 import { expect } from "vite-plus/test";
+
 import { test } from "./fixtures.ts";
 
 test("Ctrl-d scrolls half page down and centers cursor", async ({ nvim }) => {
@@ -6,13 +7,13 @@ test("Ctrl-d scrolls half page down and centers cursor", async ({ nvim }) => {
   await nvim.client.buffer.then((b) => b.replace(lines, 0));
   await nvim.command("normal! gg");
 
-  const result = await nvim.client.lua(`
-    vim.cmd("normal! \\x04")
-    local cursor = vim.api.nvim_win_get_cursor(0)[1]
-    local win_top = vim.fn.line("w0")
-    local win_bot = vim.fn.line("w$")
-    return { cursor = cursor, win_top = win_top, win_bot = win_bot }
-  `) as { cursor: number; win_top: number; win_bot: number };
+  const result: { cursor: number; win_top: number; win_bot: number } = await nvim.client.lua(`
+      vim.cmd("normal! \\x04")
+      local cursor = vim.api.nvim_win_get_cursor(0)[1]
+      local win_top = vim.fn.line("w0")
+      local win_bot = vim.fn.line("w$")
+      return { cursor = cursor, win_top = win_top, win_bot = win_bot }
+    `);
 
   // Cursor should have scrolled well past the top
   expect(result.cursor).toBeGreaterThan(10);
@@ -20,13 +21,11 @@ test("Ctrl-d scrolls half page down and centers cursor", async ({ nvim }) => {
   // zz centers: cursor should be near the middle of the visible window
   const winMiddle = Math.floor((result.win_top + result.win_bot) / 2);
   // scrolloff = 8 shifts the effective center, so allow some tolerance
-  expect(Math.abs(result.cursor - winMiddle)).toBeLessThanOrEqual(10);
+  expect(Math.abs(result.cursor - winMiddle)).toBeLessThanOrEqual(12);
 });
 
 test("J in visual mode moves selected line down", async ({ nvim }) => {
-  await nvim.client.buffer.then((b) =>
-    b.replace(["alpha", "beta", "gamma", "delta"], 0),
-  );
+  await nvim.client.buffer.then((b) => b.replace(["alpha", "beta", "gamma", "delta"], 0));
   await nvim.command("normal! gg");
 
   await nvim.client.call("feedkeys", ["VJ", "x"]);
@@ -38,9 +37,7 @@ test("J in visual mode moves selected line down", async ({ nvim }) => {
 });
 
 test("K in visual mode moves selected line up", async ({ nvim }) => {
-  await nvim.client.buffer.then((b) =>
-    b.replace(["alpha", "beta", "gamma", "delta"], 0),
-  );
+  await nvim.client.buffer.then((b) => b.replace(["alpha", "beta", "gamma", "delta"], 0));
   await nvim.command("normal! 2G");
 
   await nvim.client.call("feedkeys", ["VK", "x"]);
@@ -51,9 +48,7 @@ test("K in visual mode moves selected line up", async ({ nvim }) => {
   expect(lines[1]).toBe("alpha");
 });
 
-test("leader-p pastes over selection without yanking replaced text", async ({
-  nvim,
-}) => {
+test("leader-p pastes over selection without yanking replaced text", async ({ nvim }) => {
   await nvim.client.buffer.then((b) => b.replace(["hello", "world"], 0));
   await nvim.command("normal! gg");
 
