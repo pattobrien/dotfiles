@@ -13,7 +13,6 @@ export default defineConfig({
   plugins: ["typescript", "unicorn", "oxc"],
   rules: {
     "no-unused-vars": "off",
-    "no-unused-imports": "off",
     "no-console": "off",
     "typescript/no-explicit-any": "warn",
     "typescript/consistent-type-assertions": [
