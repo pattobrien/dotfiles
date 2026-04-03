@@ -1,4 +1,5 @@
 import { expect } from "vite-plus/test";
+import { z } from "zod";
 
 import { test } from "./fixtures.ts";
 
@@ -7,14 +8,16 @@ test("Ctrl-d scrolls half page down and centers cursor", async ({ nvim }) => {
   await nvim.client.buffer.then((b) => b.replace(lines, 0));
   await nvim.command("normal! gg");
 
-  const result: { cursor: number; win_top: number; win_bot: number } =
+  const ScrollResult = z.object({ cursor: z.number(), win_top: z.number(), win_bot: z.number() });
+  const result = ScrollResult.parse(
     await nvim.client.lua(`
       vim.cmd("normal! \\x04")
       local cursor = vim.api.nvim_win_get_cursor(0)[1]
       local win_top = vim.fn.line("w0")
       local win_bot = vim.fn.line("w$")
       return { cursor = cursor, win_top = win_top, win_bot = win_bot }
-    `);
+    `),
+  );
 
   // Cursor should have scrolled well past the top
   expect(result.cursor).toBeGreaterThan(10);

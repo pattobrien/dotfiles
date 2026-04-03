@@ -42,7 +42,8 @@ test(
     const diagDeadline = Date.now() + 3_000;
     let diagCount = 0;
     while (Date.now() < diagDeadline) {
-      diagCount = await nvim.client.lua("return #vim.diagnostic.get(0)");
+      const raw = await nvim.client.lua("return #vim.diagnostic.get(0)");
+      diagCount = typeof raw === "number" ? raw : 0;
       if (diagCount > 0) break;
       await new Promise((r) => setTimeout(r, 100));
     }
@@ -78,7 +79,7 @@ test("hover shows type info", { timeout: LSP_TIMEOUT }, async ({ nvim }) => {
     await new Promise((r) => setTimeout(r, 300));
 
     // Read content from the first floating window
-    hoverContent = await nvim.client.lua(`
+    const raw = await nvim.client.lua(`
       for _, w in ipairs(vim.api.nvim_list_wins()) do
         local ok, cfg = pcall(vim.api.nvim_win_get_config, w)
         if ok and cfg.relative ~= "" then
@@ -89,6 +90,7 @@ test("hover shows type info", { timeout: LSP_TIMEOUT }, async ({ nvim }) => {
       end
       return ""
     `);
+    hoverContent = typeof raw === "string" ? raw : "";
     if (hoverContent.includes("interface Promise")) break;
     await new Promise((r) => setTimeout(r, 200));
   }
