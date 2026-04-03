@@ -6,7 +6,8 @@
     "EDITOR": "cursor",
     "ENABLE_LSP_TOOL": "1",
     "CLAUDE_CODE_NEW_INIT": "1",
-    "cleanupPeriodDays": "365"
+    "cleanupPeriodDays": "365",
+    "CLAUDE_CODE_NO_FLICKER": "0"
   },
   "includeCoAuthoredBy": false,
   "permissions": {
