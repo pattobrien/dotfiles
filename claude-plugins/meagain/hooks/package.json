@@ -3,7 +3,7 @@
   "private": true,
   "type": "module",
   "dependencies": {
-    "@anthropic-ai/claude-agent-sdk": "^0.2.85",
+    "@anthropic-ai/claude-agent-sdk": "^0.2.91",
     "picocolors": "^1.1.1",
     "shell-quote": "^1.8.3"
   },

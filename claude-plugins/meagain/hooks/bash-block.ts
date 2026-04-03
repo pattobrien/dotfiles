@@ -22,5 +22,5 @@ if (match) {
       permissionDecisionReason: pc.yellow(match),
     } satisfies PreToolUseHookSpecificOutput,
   };
-  console.log(JSON.stringify(output));
+  process.stdout.write(JSON.stringify(output));
 }

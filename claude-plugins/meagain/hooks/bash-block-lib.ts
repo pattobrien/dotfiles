@@ -9,8 +9,7 @@ export const BLOCKED: Record<string, string> = {
 /** Blocked anywhere in the command (as a command name or argument). */
 export const BLOCKED_ANYWHERE: Record<string, string> = {
   tsc: "use `vp lint` (oxlint + tsgo type-check) instead of `tsc`",
-  prettier:
-    "use `vp fmt` (oxfmt) instead of `prettier`",
+  prettier: "use `vp fmt` (oxfmt) instead of `prettier`",
 };
 // ─────────────────────────────────────────────────────────────────
 
