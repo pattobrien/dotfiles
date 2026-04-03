@@ -1,5 +1,7 @@
-import { execa, execaCommand } from "execa";
 import fs from "node:fs/promises";
+
+import { execa, execaCommand } from "execa";
+
 import { type TmuxSession } from "./tmux.ts";
 
 const E2E_WINDOW_TITLE = "e2e-test";
@@ -69,10 +71,19 @@ export async function getOrCreateKittyInstance(
   if (!(await kittyWindowExists())) {
     const socket = await findKittySocket();
     await execa("kitty", [
-      "@", "--to", socket,
-      "launch", "--type=os-window",
-      "--title", E2E_WINDOW_TITLE,
-      "tmux", "-L", tmux.socket, "attach-session", "-t", tmux.session,
+      "@",
+      "--to",
+      socket,
+      "launch",
+      "--type=os-window",
+      "--title",
+      E2E_WINDOW_TITLE,
+      "tmux",
+      "-L",
+      tmux.socket,
+      "attach-session",
+      "-t",
+      tmux.session,
     ]);
     await new Promise((r) => setTimeout(r, 500));
   }

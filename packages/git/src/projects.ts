@@ -65,7 +65,7 @@ export function discoverProjects(baseDirs = DEFAULT_DIRS): Project[] {
     projects.set(repoDir, { repoDir, repoName, repoOrg, isBare: false });
   }
 
-  return [...projects.values()].sort((a, b) => {
+  return [...projects.values()].toSorted((a, b) => {
     const orgCmp = a.repoOrg.localeCompare(b.repoOrg);
     if (orgCmp !== 0) return orgCmp;
     return a.repoName.localeCompare(b.repoName);

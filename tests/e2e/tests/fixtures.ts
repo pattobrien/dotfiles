@@ -1,11 +1,12 @@
 import { test as base } from "vite-plus/test";
-import { getOrCreateTmuxSession } from "../src/tmux.ts";
+
+import { getOrCreateKittyInstance } from "../src/kitty.ts";
 import {
   getOrCreateNvimInstance,
   disconnectNvim,
   type NvimInstance,
 } from "../src/nvim.ts";
-import { getOrCreateKittyInstance } from "../src/kitty.ts";
+import { getOrCreateTmuxSession } from "../src/tmux.ts";
 
 /** Capture pane text + freeze screenshot for debugging. */
 async function captureFailureArtifacts(nvim: NvimInstance, name: string) {
@@ -70,8 +71,14 @@ async function resetAndAssert(
  */
 export const test = base
   // Worker-scoped: connects to (or creates) the persistent tmux session.
+  // Also opens a kitty viewer window so you can watch tests run.
   .extend("tmux", { scope: "worker" }, async ({}) => {
-    return getOrCreateTmuxSession();
+    const tmux = await getOrCreateTmuxSession();
+    // Best-effort: open a kitty window to observe tests (no-op if kitty isn't running)
+    getOrCreateKittyInstance(tmux).catch((e) => {
+      console.warn(`[e2e] Could not open kitty viewer: ${e.message}`);
+    });
+    return tmux;
   })
 
   // Worker-scoped: connects to (or creates) the persistent nvim instance.

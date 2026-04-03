@@ -1,6 +1,8 @@
+import fs from "node:fs/promises";
+
 import type { NeovimClient } from "neovim";
 import { attach } from "neovim";
-import fs from "node:fs/promises";
+
 import { type TmuxSession } from "./tmux.ts";
 
 const NVIM_SOCKET = "/tmp/nvim-e2e.sock";
@@ -42,7 +44,9 @@ async function waitForLazyVim(client: NeovimClient, timeoutMs = 15_000) {
     }
     await new Promise((r) => setTimeout(r, 100));
   }
-  throw new Error("Timed out waiting for LazyVim (keymaps not loaded after VeryLazy)");
+  throw new Error(
+    "Timed out waiting for LazyVim (keymaps not loaded after VeryLazy)",
+  );
 }
 
 /** Wait for a file to exist on disk. */
@@ -69,7 +73,10 @@ async function nvimSocketExists(): Promise<boolean> {
   }
 }
 
-function buildNvimInstance(client: NeovimClient, tmux: TmuxSession): NvimInstance {
+function buildNvimInstance(
+  client: NeovimClient,
+  tmux: TmuxSession,
+): NvimInstance {
   return {
     client,
     tmux,
@@ -77,7 +84,7 @@ function buildNvimInstance(client: NeovimClient, tmux: TmuxSession): NvimInstanc
     async getBufferContent() {
       const buf = await client.buffer;
       const lines = await buf.lines;
-      return (lines as string[]).join("\n");
+      return lines.join("\n");
     },
 
     async getCursorPosition() {
@@ -105,7 +112,9 @@ function buildNvimInstance(client: NeovimClient, tmux: TmuxSession): NvimInstanc
       // Close everything: popups, floats, explorer, pickers, splits
       await client.command("silent! pclose | cclose | lclose");
       await client.lua("pcall(function() Snacks.explorer.close() end)");
-      await client.lua("for _, w in ipairs(vim.api.nvim_list_wins()) do pcall(function() if vim.api.nvim_win_get_config(w).relative ~= '' then vim.api.nvim_win_close(w, true) end end) end");
+      await client.lua(
+        "for _, w in ipairs(vim.api.nvim_list_wins()) do pcall(function() if vim.api.nvim_win_get_config(w).relative ~= '' then vim.api.nvim_win_close(w, true) end end) end",
+      );
       await client.command("silent! only!");
       // Create new scratch buffer
       const bufName = testName ? `test-${testName}` : `test-${Date.now()}`;
@@ -182,11 +191,18 @@ function buildNvimInstance(client: NeovimClient, tmux: TmuxSession): NvimInstanc
         listed_bufs: string[];
       };
 
-      if (state.mode !== "n") violations.push(`mode: expected 'n', got '${state.mode}'`);
-      if (state.win_count !== 1) violations.push(`windows: expected 1, got ${state.win_count}`);
-      if (state.float_count > 0) violations.push(`floats: expected 0, got ${state.float_count}`);
-      if (state.line_count > 1) violations.push(`lines: expected 1 empty line, got ${state.line_count}`);
-      if (state.first_line !== "") violations.push(`buffer not empty: '${state.first_line}'`);
+      if (state.mode !== "n")
+        violations.push(`mode: expected 'n', got '${state.mode}'`);
+      if (state.win_count !== 1)
+        violations.push(`windows: expected 1, got ${state.win_count}`);
+      if (state.float_count > 0)
+        violations.push(`floats: expected 0, got ${state.float_count}`);
+      if (state.line_count > 1)
+        violations.push(
+          `lines: expected 1 empty line, got ${state.line_count}`,
+        );
+      if (state.first_line !== "")
+        violations.push(`buffer not empty: '${state.first_line}'`);
 
       // Only e2e-home and hover.ts should be listed
       const allowed = new Set(["e2e-home", "hover.ts"]);
@@ -194,7 +210,8 @@ function buildNvimInstance(client: NeovimClient, tmux: TmuxSession): NvimInstanc
       const stale = state.listed_bufs.filter(
         (b) => !allowed.has(b) && !b.startsWith("test-"),
       );
-      if (stale.length > 0) violations.push(`stale buffers: ${stale.join(", ")}`);
+      if (stale.length > 0)
+        violations.push(`stale buffers: ${stale.join(", ")}`);
 
       // cwd should be the dotfiles root
       if (!state.cwd.endsWith(".dotfiles")) {

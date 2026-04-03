@@ -27,7 +27,8 @@
     "dist",
     "build",
     "coverage",
-    "**/Spoons/**"
+    "**/Spoons/**",
+    ".agents/skills"
   ],
   "overrides": [
     {

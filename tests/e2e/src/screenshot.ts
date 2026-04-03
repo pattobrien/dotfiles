@@ -1,8 +1,10 @@
 import fs from "node:fs/promises";
 import path from "node:path";
+
 import { execaCommand } from "execa";
-import { PNG } from "pngjs";
 import pixelmatch from "pixelmatch";
+import { PNG } from "pngjs";
+
 import { type TmuxSession } from "./tmux.ts";
 
 const SNAPSHOTS_DIR = path.resolve(import.meta.dirname, "../__snapshots__");

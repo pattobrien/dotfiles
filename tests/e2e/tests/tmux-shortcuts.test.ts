@@ -1,5 +1,6 @@
-import { expect } from "vite-plus/test";
 import { execa } from "execa";
+import { expect } from "vite-plus/test";
+
 import { test } from "./fixtures.ts";
 
 test("prefix | is bound to split-window -h", async ({ tmux }) => {
@@ -63,9 +64,13 @@ test("prefix m toggles pane zoom", async ({ tmux }) => {
     await tmux.runCommand("resize-pane", "-Z");
 
     const { stdout } = await execa("tmux", [
-      "-L", tmux.socket,
-      "display-message", "-t", tmux.session,
-      "-p", "#{window_zoomed_flag}",
+      "-L",
+      tmux.socket,
+      "display-message",
+      "-t",
+      tmux.session,
+      "-p",
+      "#{window_zoomed_flag}",
     ]);
     expect(stdout.trim()).toBe("1");
   } finally {

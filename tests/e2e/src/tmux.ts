@@ -56,7 +56,11 @@ function buildSession(socket: string, session: string): TmuxSession {
 
     async runCommand(...args: string[]) {
       const { stdout } = await execa("tmux", [
-        "-L", socket, ...args, "-t", session,
+        "-L",
+        socket,
+        ...args,
+        "-t",
+        session,
       ]);
       return stdout;
     },
@@ -92,8 +96,18 @@ export async function getOrCreateTmuxSession(): Promise<TmuxSession> {
 
   const tmuxConf = `${process.env.HOME}/.tmux.conf`;
   await execa("tmux", [
-    "-L", TMUX_SOCKET, "-f", tmuxConf,
-    "new-session", "-d", "-s", TMUX_SESSION, "-x", "200", "-y", "50",
+    "-L",
+    TMUX_SOCKET,
+    "-f",
+    tmuxConf,
+    "new-session",
+    "-d",
+    "-s",
+    TMUX_SESSION,
+    "-x",
+    "200",
+    "-y",
+    "50",
   ]);
 
   return buildSession(TMUX_SOCKET, TMUX_SESSION);

@@ -7,7 +7,8 @@ test("Ctrl-d scrolls half page down and centers cursor", async ({ nvim }) => {
   await nvim.client.buffer.then((b) => b.replace(lines, 0));
   await nvim.command("normal! gg");
 
-  const result: { cursor: number; win_top: number; win_bot: number } = await nvim.client.lua(`
+  const result: { cursor: number; win_top: number; win_bot: number } =
+    await nvim.client.lua(`
       vim.cmd("normal! \\x04")
       local cursor = vim.api.nvim_win_get_cursor(0)[1]
       local win_top = vim.fn.line("w0")
@@ -25,7 +26,9 @@ test("Ctrl-d scrolls half page down and centers cursor", async ({ nvim }) => {
 });
 
 test("J in visual mode moves selected line down", async ({ nvim }) => {
-  await nvim.client.buffer.then((b) => b.replace(["alpha", "beta", "gamma", "delta"], 0));
+  await nvim.client.buffer.then((b) =>
+    b.replace(["alpha", "beta", "gamma", "delta"], 0),
+  );
   await nvim.command("normal! gg");
 
   await nvim.client.call("feedkeys", ["VJ", "x"]);
@@ -37,7 +40,9 @@ test("J in visual mode moves selected line down", async ({ nvim }) => {
 });
 
 test("K in visual mode moves selected line up", async ({ nvim }) => {
-  await nvim.client.buffer.then((b) => b.replace(["alpha", "beta", "gamma", "delta"], 0));
+  await nvim.client.buffer.then((b) =>
+    b.replace(["alpha", "beta", "gamma", "delta"], 0),
+  );
   await nvim.command("normal! 2G");
 
   await nvim.client.call("feedkeys", ["VK", "x"]);
@@ -48,7 +53,9 @@ test("K in visual mode moves selected line up", async ({ nvim }) => {
   expect(lines[1]).toBe("alpha");
 });
 
-test("leader-p pastes over selection without yanking replaced text", async ({ nvim }) => {
+test("leader-p pastes over selection without yanking replaced text", async ({
+  nvim,
+}) => {
   await nvim.client.buffer.then((b) => b.replace(["hello", "world"], 0));
   await nvim.command("normal! gg");
 

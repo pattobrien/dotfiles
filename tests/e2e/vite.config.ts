@@ -1,5 +1,6 @@
-import { defineConfig } from "vite-plus";
 import path from "node:path";
+
+import { defineConfig } from "vite-plus";
 
 const dotfiles = path.resolve(import.meta.dirname, "../..");
 

@@ -1,5 +1,6 @@
-import { expect } from "vite-plus/test";
 import { execa } from "execa";
+import { expect } from "vite-plus/test";
+
 import { test } from "./fixtures.ts";
 
 test("vi copy mode bindings are registered", async ({ tmux }) => {
@@ -19,18 +20,26 @@ test("copy mode can be entered and exited", async ({ tmux }) => {
     await tmux.runCommand("copy-mode");
 
     const { stdout: mode } = await execa("tmux", [
-      "-L", tmux.socket,
-      "display-message", "-t", tmux.session,
-      "-p", "#{pane_mode}",
+      "-L",
+      tmux.socket,
+      "display-message",
+      "-t",
+      tmux.session,
+      "-p",
+      "#{pane_mode}",
     ]);
     expect(mode.trim()).toBe("copy-mode");
 
     await tmux.sendKeys("q");
 
     const { stdout: modeAfter } = await execa("tmux", [
-      "-L", tmux.socket,
-      "display-message", "-t", tmux.session,
-      "-p", "#{pane_mode}",
+      "-L",
+      tmux.socket,
+      "display-message",
+      "-t",
+      tmux.session,
+      "-p",
+      "#{pane_mode}",
     ]);
     expect(modeAfter.trim()).toBe("");
   } finally {
@@ -40,8 +49,11 @@ test("copy mode can be entered and exited", async ({ tmux }) => {
 
 test("mode-keys is set to vi", async ({ tmux }) => {
   const { stdout } = await execa("tmux", [
-    "-L", tmux.socket,
-    "show-window-options", "-g", "mode-keys",
+    "-L",
+    tmux.socket,
+    "show-window-options",
+    "-g",
+    "mode-keys",
   ]);
   expect(stdout).toContain("vi");
 });

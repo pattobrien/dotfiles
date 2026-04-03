@@ -160,7 +160,7 @@ function fetchWorktreeItems(cwd: string): WorktreeItem[] {
         sessionStatus: sessionMap.get(sessionName) ?? SessionStatus.None,
       });
     })
-    .sort((a, b) => {
+    .toSorted((a, b) => {
       const statusDiff =
         statusOrder[a.sessionStatus] - statusOrder[b.sessionStatus];
       if (statusDiff !== 0) return statusDiff;

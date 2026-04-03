@@ -21,7 +21,7 @@ export function ProjectDropdown({
     grouped.set(p.repoOrg, list);
   }
 
-  const sortedOrgs = [...grouped.keys()].sort();
+  const sortedOrgs = [...grouped.keys()].toSorted();
 
   return (
     <List.Dropdown

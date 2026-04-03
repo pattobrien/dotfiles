@@ -1,5 +1,6 @@
-import { expect } from "vite-plus/test";
 import { execa } from "execa";
+import { expect } from "vite-plus/test";
+
 import { test } from "./fixtures.ts";
 
 test(
@@ -22,7 +23,13 @@ test(
       const pane = await tmux.capture();
       expect(pane).not.toContain("should-be-cleared");
     } finally {
-      await execa("tmux", ["-L", tmux.socket, "kill-window", "-t", tmux.session]);
+      await execa("tmux", [
+        "-L",
+        tmux.socket,
+        "kill-window",
+        "-t",
+        tmux.session,
+      ]);
     }
   },
 );
@@ -43,16 +50,26 @@ test(
 
       // Verify a popup is open by checking tmux pane count (popup adds a pane)
       const { stdout } = await execa("tmux", [
-        "-L", tmux.socket,
-        "display-message", "-t", tmux.session,
-        "-p", "#{window_panes}",
+        "-L",
+        tmux.socket,
+        "display-message",
+        "-t",
+        tmux.session,
+        "-p",
+        "#{window_panes}",
       ]);
       expect(Number(stdout.trim())).toBeGreaterThanOrEqual(1);
     } finally {
       // Close the popup via Escape through kitty (tmux send-keys can't reach popups)
       await kitty.sendKeyCode(53); // Escape
       await new Promise((r) => setTimeout(r, 300));
-      await execa("tmux", ["-L", tmux.socket, "kill-window", "-t", tmux.session]);
+      await execa("tmux", [
+        "-L",
+        tmux.socket,
+        "kill-window",
+        "-t",
+        tmux.session,
+      ]);
     }
   },
 );

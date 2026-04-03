@@ -24,27 +24,31 @@ async function waitForLspClient(nvim: NvimInstance, timeoutMs = 3_000) {
 // default 5s testTimeout, so give LSP tests a bit more headroom.
 const LSP_TIMEOUT = 8_000;
 
-test("diagnostics are visible in insert mode", { timeout: LSP_TIMEOUT }, async ({ nvim }) => {
-  await nvim.command(`cd ${FIXTURE_DIR}`);
-  await nvim.command(`edit ${FIXTURE_DIR}/error.ts`);
+test(
+  "diagnostics are visible in insert mode",
+  { timeout: LSP_TIMEOUT },
+  async ({ nvim }) => {
+    await nvim.command(`cd ${FIXTURE_DIR}`);
+    await nvim.command(`edit ${FIXTURE_DIR}/error.ts`);
 
-  await waitForLspClient(nvim);
+    await waitForLspClient(nvim);
 
-  // Enter insert mode via RPC (deterministic, no fixed sleep)
-  await nvim.input("i");
-  const mode = await nvim.getMode();
-  expect(mode).toBe("i");
+    // Enter insert mode via RPC (deterministic, no fixed sleep)
+    await nvim.input("i");
+    const mode = await nvim.getMode();
+    expect(mode).toBe("i");
 
-  // Poll for diagnostics
-  const diagDeadline = Date.now() + 3_000;
-  let diagCount = 0;
-  while (Date.now() < diagDeadline) {
-    diagCount = await nvim.client.lua("return #vim.diagnostic.get(0)");
-    if (diagCount > 0) break;
-    await new Promise((r) => setTimeout(r, 100));
-  }
-  expect(diagCount).toBeGreaterThan(0);
-});
+    // Poll for diagnostics
+    const diagDeadline = Date.now() + 3_000;
+    let diagCount = 0;
+    while (Date.now() < diagDeadline) {
+      diagCount = await nvim.client.lua("return #vim.diagnostic.get(0)");
+      if (diagCount > 0) break;
+      await new Promise((r) => setTimeout(r, 100));
+    }
+    expect(diagCount).toBeGreaterThan(0);
+  },
+);
 
 test("hover shows type info", { timeout: LSP_TIMEOUT }, async ({ nvim }) => {
   await nvim.command(`cd ${FIXTURE_DIR}`);
@@ -88,5 +92,7 @@ test("hover shows type info", { timeout: LSP_TIMEOUT }, async ({ nvim }) => {
     if (hoverContent.includes("interface Promise")) break;
     await new Promise((r) => setTimeout(r, 200));
   }
-  expect(hoverContent, `hover popup content: "${hoverContent}"`).toContain("interface Promise");
+  expect(hoverContent, `hover popup content: "${hoverContent}"`).toContain(
+    "interface Promise",
+  );
 });
