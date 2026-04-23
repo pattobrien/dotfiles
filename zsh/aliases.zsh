@@ -52,6 +52,8 @@ alias ...="cd ../.."
 alias ....="cd ../../.."
 alias .....="cd ../../../.."
 
+alias maestro="maestro-runner --platform ios"
+
 
 alias reload="source ~/.zshrc"
 alias resource="source ~/.zshrc"

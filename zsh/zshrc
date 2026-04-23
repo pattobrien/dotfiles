@@ -252,5 +252,6 @@ export LINEAR_VCS="git"
 export LINEAR_TEAM_ID="ENG"
 export LINEAR_WORKSPACE="getdots"
 
-# github token (via 1password gh integration)
-export GH_TOKEN="$(gh auth token 2>/dev/null)"
+
+# maestro-runner
+export PATH="$HOME/.maestro-runner/bin:$PATH"
