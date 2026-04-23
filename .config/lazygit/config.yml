@@ -1,3 +1,5 @@
+os:
+  open: 'test -n "$NVIM" && nvim --server "$NVIM" --remote "{{filename}}" || open "{{filename}}"'
 git:
   pagers:
     - colorArg: always
