@@ -85,8 +85,15 @@
       "WebFetch(domain:raw.githubusercontent.com)",
       "WebFetch(domain:unpkg.com)"
     ],
-    "deny": ["Bash(npm *)", "Bash(npx *)", "mcp__ide__getDiagnostics"],
-    "ask": ["Bash(pnpm* add *)", "Bash(brew install *)"],
+    "deny": [
+      "Bash(npm *)",
+      "Bash(npx *)",
+      "mcp__ide__getDiagnostics"
+    ],
+    "ask": [
+      "Bash(pnpm* add *)",
+      "Bash(brew install *)"
+    ],
     "defaultMode": "bypassPermissions"
   },
   "enableAllProjectMcpServers": true,
@@ -163,7 +170,8 @@
     "github@meagain": true,
     "skill-creator@claude-plugins-official": true,
     "oxlint-lsp@meagain": false,
-    "tsgo-lsp@meagain": true
+    "tsgo-lsp@meagain": true,
+    "figma-desktop@meagain": true
   },
   "extraKnownMarketplaces": {
     "expo-plugins": {
@@ -174,9 +182,9 @@
     }
   },
   "alwaysThinkingEnabled": true,
-  "effortLevel": "high",
+  "effortLevel": "xhigh",
   "autoUpdatesChannel": "stable",
   "plansDirectory": "./docs/plans",
-  "voiceEnabled": false,
-  "skipDangerousModePermissionPrompt": true
+  "skipDangerousModePermissionPrompt": true,
+  "voiceEnabled": false
 }
