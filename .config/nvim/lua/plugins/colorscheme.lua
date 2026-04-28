@@ -6,6 +6,25 @@ return {
     opts = {
       flavour = "mocha",
     },
+    config = function(_, opts)
+      require("catppuccin").setup(opts)
+
+      local function apply_diagnostic_underlines()
+        local C = require("catppuccin.palettes").get_palette("mocha")
+        vim.api.nvim_set_hl(0, "DiagnosticUnderlineError", { sp = C.red, undercurl = true })
+        vim.api.nvim_set_hl(0, "DiagnosticUnderlineWarn", { sp = C.yellow, undercurl = true })
+        vim.api.nvim_set_hl(0, "DiagnosticUnderlineInfo", { sp = C.sky, undercurl = true })
+        vim.api.nvim_set_hl(0, "DiagnosticUnderlineHint", { sp = C.teal, undercurl = true })
+        vim.api.nvim_set_hl(0, "DiagnosticUnderlineOk", { sp = C.green, undercurl = true })
+      end
+
+      vim.api.nvim_create_autocmd("ColorScheme", {
+        pattern = "catppuccin*",
+        callback = apply_diagnostic_underlines,
+      })
+
+      apply_diagnostic_underlines()
+    end,
   },
 
   -- Tell LazyVim to use catppuccin
