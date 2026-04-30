@@ -1,6 +1,8 @@
 #!/bin/sh
-# Jump to a tmux window with the given name in the current session; if none
-# exists, create it (running the given command, or just a shell).
+# Jump to the first tmux window with the given name in the current session;
+# if none exists, create one (running the given command, or just a shell).
+# Picks the first match when multiple windows share a name (since `:=NAME`
+# alone errors with "more than one window found" on duplicates).
 # Usage: tmux-jump-or-create <window-name> [command...]
 TMUX_BIN=/opt/homebrew/bin/tmux
 
@@ -12,8 +14,11 @@ if [ -z "$name" ]; then
   exit 1
 fi
 
-if $TMUX_BIN list-windows -F '#{window_name}' | grep -qx "$name"; then
-  $TMUX_BIN select-window -t ":=$name"
+target=$($TMUX_BIN list-windows -F '#{window_id}|#{window_name}' \
+  | awk -F'|' -v n="$name" '$2 == n {print $1; exit}')
+
+if [ -n "$target" ]; then
+  $TMUX_BIN select-window -t "$target"
 elif [ "$#" -gt 0 ]; then
   $TMUX_BIN new-window -n "$name" "$*"
 else

@@ -28,6 +28,8 @@ brew "autoconf"
 brew "awscli"
 # Clone of cat(1) with syntax highlighting and Git integration
 brew "bat"
+# Get/set bluetooth power and discoverable state
+brew "blueutil"
 # Emacs dependency management
 brew "cask"
 # Formatting tools for C, C++, Obj-C, Java, JavaScript, TypeScript
@@ -40,6 +42,8 @@ brew "curl"
 brew "docker-compose"
 # Command-line tool for DigitalOcean
 brew "doctl"
+# Run arbitrary commands when files change (used by tmux-autoreload)
+brew "entr"
 # Modern, maintained replacement for ls
 brew "eza"
 # Simple, fast and user-friendly alternative to find
