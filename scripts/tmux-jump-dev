@@ -1,0 +1,13 @@
+#!/bin/sh
+# Jump to a tmux window whose name starts with "pnpm dev"; if none exists in
+# the current session, create a new shell window. Used by tmux Cmd+L mapping.
+TMUX_BIN=/opt/homebrew/bin/tmux
+
+target=$($TMUX_BIN list-windows -F '#{window_id}|#{window_name}' \
+  | awk -F'|' '$2 ~ /^pnpm dev/ {print $1; exit}')
+
+if [ -n "$target" ]; then
+  $TMUX_BIN select-window -t "$target"
+else
+  $TMUX_BIN new-window
+fi

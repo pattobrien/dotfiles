@@ -18,20 +18,39 @@ window-padding-y = 8
 keybind = super+k=text:\x1b[24~
 # Cmd+E  → F11 → workmux dashboard
 keybind = super+e=text:\x1b[23~
-# Cmd+L  → F10 → wt list (current project)
+# Cmd+L  → F10 → logger window
 keybind = super+l=text:\x1b[21~
+# (was: wt list — moved to Hammerflow Hyper+W+L)
 # Cmd+J  → F9  → wt switch (all projects)
 keybind = super+j=text:\x1b[20~
-# Cmd+;  → F8  → new Claude session
+# Cmd+;  → F8  → toggle last tmux window
 keybind = super+semicolon=text:\x1b[19~
-# Cmd+Shift+D → F7 → cleanup worktrees
-keybind = super+shift+d=text:\x1b[18~
-# Cmd+Shift+K → F6 → kill dev processes
-keybind = super+shift+k=text:\x1b[17~
+# Cmd+/  → F7  → scratch popup shell
+keybind = super+slash=text:\x1b[18~
+# Cmd+R  → F6  → reload tmux config
+keybind = super+r=text:\x1b[17~
+# Cmd+T  → F2  → new tmux window
+keybind = super+t=text:\x1b[12~
+# Cmd+W      → F3       → kill tmux pane
+keybind = super+w=text:\x1b[13~
+# Cmd+Enter  → F4       → toggle pane zoom
+keybind = super+enter=text:\x1b[14~
+# Cmd+A      → F5       → ai window
+keybind = super+a=text:\x1b[15~
+# Cmd+N      → User0    → nvim window  (extended F-key range, bound via tmux user-keys)
+keybind = super+n=text:\x1b[25~
+# Cmd+S      → User1    → shell window
+keybind = super+s=text:\x1b[26~
+
+# Disabled (custom workflow shortcuts; rebind in Hammerflow if you still want them):
+# Cmd+Shift+D → F7 → cleanup worktrees   (now Cmd+/ scratch popup)
+# Cmd+Shift+K → F6 → kill dev processes  (now Cmd+R reload tmux config)
 # Cmd+Shift+P → F5 → list dev processes
-keybind = super+shift+p=text:\x1b[15~
 # Cmd+Shift+R → F4 → start dev in session
-keybind = super+shift+r=text:\x1b[14~
+# keybind = super+shift+d=text:\x1b[18~
+# keybind = super+shift+k=text:\x1b[17~
+# keybind = super+shift+p=text:\x1b[15~
+# keybind = super+shift+r=text:\x1b[14~
 
 # macOS-specific
 macos-option-as-alt = true
