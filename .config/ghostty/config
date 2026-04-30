@@ -41,6 +41,16 @@ keybind = super+a=text:\x1b[15~
 keybind = super+n=text:\x1b[25~
 # Cmd+S      → User1    → shell window
 keybind = super+s=text:\x1b[26~
+# Cmd+1..9   → User2..User10 → jump to tmux window N
+keybind = super+1=text:\x1b[28~
+keybind = super+2=text:\x1b[29~
+keybind = super+3=text:\x1b[31~
+keybind = super+4=text:\x1b[32~
+keybind = super+5=text:\x1b[33~
+keybind = super+6=text:\x1b[34~
+keybind = super+7=text:\x1b[36~
+keybind = super+8=text:\x1b[37~
+keybind = super+9=text:\x1b[38~
 
 # Disabled (custom workflow shortcuts; rebind in Hammerflow if you still want them):
 # Cmd+Shift+D → F7 → cleanup worktrees   (now Cmd+/ scratch popup)

@@ -1,0 +1,21 @@
+#!/bin/sh
+# Jump to a tmux window with the given name in the current session; if none
+# exists, create it (running the given command, or just a shell).
+# Usage: tmux-jump-or-create <window-name> [command...]
+TMUX_BIN=/opt/homebrew/bin/tmux
+
+name="$1"
+shift
+
+if [ -z "$name" ]; then
+  echo "Usage: tmux-jump-or-create <window-name> [command...]" >&2
+  exit 1
+fi
+
+if $TMUX_BIN list-windows -F '#{window_name}' | grep -qx "$name"; then
+  $TMUX_BIN select-window -t ":=$name"
+elif [ "$#" -gt 0 ]; then
+  $TMUX_BIN new-window -n "$name" "$*"
+else
+  $TMUX_BIN new-window -n "$name"
+fi
