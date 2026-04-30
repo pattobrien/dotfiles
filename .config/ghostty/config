@@ -21,14 +21,13 @@ keybind = super+e=text:\x1b[23~
 # Cmd+L  → F10 → logger window
 keybind = super+l=text:\x1b[21~
 # (was: wt list — moved to Hammerflow Hyper+W+L)
-# Cmd+J  → F9  → wt switch (all projects)
-keybind = super+j=text:\x1b[20~
+# (Cmd+J was wt switch — moved to Cmd+Shift+R below as session picker)
 # Cmd+;  → F8  → toggle last tmux window
 keybind = super+semicolon=text:\x1b[19~
 # Cmd+/  → F7  → scratch popup shell
 keybind = super+slash=text:\x1b[18~
-# Cmd+R  → F6  → reload tmux config
-keybind = super+r=text:\x1b[17~
+# Cmd+R  → reload ghostty config (tmux config auto-reloads via tmux-autoreload on save)
+keybind = super+r=action:reload_config
 # Cmd+T  → F2  → new tmux window
 keybind = super+t=text:\x1b[12~
 # Cmd+W      → F3       → kill tmux pane
@@ -41,6 +40,17 @@ keybind = super+a=text:\x1b[15~
 keybind = super+n=text:\x1b[25~
 # Cmd+S      → User1    → shell window
 keybind = super+s=text:\x1b[26~
+# --- Cmd+Shift+* → tmux session navigation (across-session namespace) ---
+# Cmd+Shift+;  → User11 → toggle last session
+# Cmd+Shift+R  → F9     → fzf session picker (reuses F9 slot)
+# Cmd+Shift+D  → User12 → dotfiles session
+# Cmd+Shift+N  → User13 → notes session
+keybind = super+shift+semicolon=text:\x1b[39~
+keybind = super+shift+r=text:\x1b[20~
+keybind = super+shift+d=text:\x1b[40~
+keybind = super+shift+n=text:\x1b[41~
+keybind = super+shift+m=text:\x1b[42~
+
 # Cmd+1..9   → User2..User10 → jump to tmux window N
 keybind = super+1=text:\x1b[28~
 keybind = super+2=text:\x1b[29~

@@ -1,0 +1,13 @@
+#!/bin/sh
+# fzf picker over tmux sessions; switches the current client to the choice.
+# Excludes the current session from the list. Used by tmux Cmd+Shift+R mapping.
+TMUX_BIN=/opt/homebrew/bin/tmux
+
+current=$($TMUX_BIN display-message -p '#S')
+choice=$($TMUX_BIN list-sessions -F '#S' \
+  | grep -vxF "$current" \
+  | fzf --reverse --prompt='session> ')
+
+if [ -n "$choice" ]; then
+  $TMUX_BIN switch-client -t "$choice"
+fi
