@@ -50,6 +50,8 @@ keybind = super+shift+r=text:\x1b[20~
 keybind = super+shift+d=text:\x1b[40~
 keybind = super+shift+n=text:\x1b[41~
 keybind = super+shift+m=text:\x1b[42~
+# Cmd+?  (Cmd+Shift+/) → User15 → shortcut cheatsheet menu
+keybind = super+shift+slash=text:\x1b[43~
 
 # Cmd+1..9   → User2..User10 → jump to tmux window N
 keybind = super+1=text:\x1b[28~

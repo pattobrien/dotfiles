@@ -1,0 +1,15 @@
+#!/bin/sh
+# Append a frecency log entry whenever the tmux client switches sessions.
+# Wired via `set-hook -g client-session-changed` in .tmux.conf.
+# Format: <unix_ts>\t<session_name>
+[ -z "$1" ] && exit 0
+
+log="$HOME/.cache/tmux-frecency.tsv"
+mkdir -p "$(dirname "$log")"
+printf '%s\t%s\n' "$(date +%s)" "$1" >> "$log"
+
+# Trim to ~1000 lines so the file doesn't grow unbounded.
+lines=$(wc -l < "$log" 2>/dev/null || echo 0)
+if [ "$lines" -gt 1500 ]; then
+  tail -n 1000 "$log" > "$log.tmp" && mv "$log.tmp" "$log"
+fi

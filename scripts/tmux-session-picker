@@ -1,12 +1,44 @@
 #!/bin/sh
-# fzf picker over tmux sessions; switches the current client to the choice.
-# Excludes the current session from the list. Used by tmux Cmd+Shift+R mapping.
+# fzf picker over tmux sessions for the MeAgain repo worktrees (excludes main —
+# main has a dedicated Cmd+Shift+M binding so it doesn't need to be in the picker).
+# Sessions are sorted by frecency from ~/.cache/tmux-frecency.tsv (zoxide-style
+# decay: recent visits score higher, frequency accumulates). Excludes the
+# current session. Used by tmux Cmd+Shift+R mapping.
+
 TMUX_BIN=/opt/homebrew/bin/tmux
+log="$HOME/.cache/tmux-frecency.tsv"
+prefix="/Users/pattobrien/dev/gd/meagain__worktrees/"
 
 current=$($TMUX_BIN display-message -p '#S')
-choice=$($TMUX_BIN list-sessions -F '#S' \
-  | grep -vxF "$current" \
-  | fzf --reverse --prompt='session> ')
+
+# Sessions whose path is under the meagain repo (main + worktrees), minus current.
+candidates=$($TMUX_BIN list-sessions -F '#{session_name}|#{session_path}' \
+  | awk -F'|' -v p="$prefix" -v cur="$current" '
+      index($2, p) == 1 && $1 != cur { print $1 }
+  ')
+
+[ -z "$candidates" ] && { $TMUX_BIN display-message "no other meagain sessions"; exit 0; }
+[ ! -f "$log" ] && touch "$log"
+
+now=$(date +%s)
+ordered=$(printf '%s\n' "$candidates" | awk -v now="$now" -v logfile="$log" '
+  BEGIN {
+    while ((getline line < logfile) > 0) {
+      n = split(line, f, "\t")
+      if (n < 2) continue
+      age = now - f[1]
+      if      (age < 3600)    w = 4
+      else if (age < 86400)   w = 2
+      else if (age < 604800)  w = 0.5
+      else                    w = 0.25
+      score[f[2]] += w
+    }
+    close(logfile)
+  }
+  { printf "%.3f\t%s\n", (($0 in score) ? score[$0] : 0), $0 }
+' | sort -t"$(printf '\t')" -k1,1rn -s | cut -f2-)
+
+choice=$(printf '%s\n' "$ordered" | fzf --reverse --no-sort --prompt='session> ')
 
 if [ -n "$choice" ]; then
   $TMUX_BIN switch-client -t "$choice"
