@@ -247,6 +247,13 @@ if [[ ! -f "$_zsh_cache_dir/linear_completions.zsh" ]]; then
   linear completions zsh >| "$_zsh_cache_dir/linear_completions.zsh" 2>/dev/null
 fi
 source "$_zsh_cache_dir/linear_completions.zsh"
+
+# jj completions
+if [[ ! -f "$_zsh_cache_dir/jj_completions.zsh" ]] && command -v jj &>/dev/null; then
+  mkdir -p "$_zsh_cache_dir"
+  jj util completion zsh >| "$_zsh_cache_dir/jj_completions.zsh" 2>/dev/null
+fi
+[[ -f "$_zsh_cache_dir/jj_completions.zsh" ]] && source "$_zsh_cache_dir/jj_completions.zsh"
 export LINEAR_ISSUE_SORT="priority"
 export LINEAR_VCS="git"
 export LINEAR_TEAM_ID="ENG"
