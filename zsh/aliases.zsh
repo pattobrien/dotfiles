@@ -61,8 +61,6 @@ alias rss="source ~/.zshrc"
 
 alias linear-edit="$HOME/.dotfiles/scripts/linear-edit"
 
-alias claude="claude --dangerously-skip-permissions"
-# alias c="claude"
 alias cc="claude"
 alias ccr="claude --resume"
 
