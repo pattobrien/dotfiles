@@ -31,6 +31,12 @@ export interface KittyInstance {
    * Use for special keys like Escape (53), Return (36), etc.
    */
   sendKeyCode: (code: number) => Promise<void>;
+
+  /**
+   * Get the terminal text from kitty's perspective, optionally with ANSI
+   * escape sequences preserved (useful for verifying OSC 8 hyperlinks, etc.).
+   */
+  getText: (opts?: { ansi?: boolean }) => Promise<string>;
 }
 
 /** Find the kitty remote control socket at /tmp/kitty-<PID>. */
@@ -153,6 +159,21 @@ function buildKittyInstance(tmux: TmuxSession): KittyInstance {
         end tell
       `);
       await new Promise((r) => setTimeout(r, 200));
+    },
+
+    async getText(opts?: { ansi?: boolean }) {
+      const socket = await findKittySocket();
+      const args = [
+        "@",
+        "--to",
+        socket,
+        "get-text",
+        "--match",
+        `title:${E2E_WINDOW_TITLE}`,
+      ];
+      if (opts?.ansi) args.push("--ansi");
+      const { stdout } = await execa("kitty", args);
+      return stdout;
     },
   };
 }
