@@ -3,8 +3,8 @@ model_reasoning_effort = "high"
 personality = "pragmatic"
 sandbox_mode = "workspace-write"
 approval_policy = "on-request"
-
-notify = ["/Users/pattobrien/.codex/computer-use/Codex Computer Use.app/Contents/SharedSupport/SkyComputerUseClient.app/Contents/MacOS/SkyComputerUseClient", "turn-ended"]
+suppress_unstable_features_warning = true
+# notify = [ "/Users/pattobrien/.codex/computer-use/Codex Computer Use.app/Contents/SharedSupport/SkyComputerUseClient.app/Contents/MacOS/SkyComputerUseClient", "turn-ended" ]
 
 [projects."/Users/pattobrien/dev/getdots/meagain-bare"]
 trust_level = "trusted"
@@ -25,11 +25,26 @@ trust_level = "trusted"
 "gpt-5.3-codex" = "gpt-5.4"
 
 [features]
+browser_use = true
+computer_use = true
+fast_mode = false
+goals = true
 hooks = true
+image_generation = true
+in_app_browser = true
 multi_agent = true
+plugin_hooks = true
+plugins = true
+prevent_idle_sleep = true
+remote_control = true
+shell_snapshot = true
+skill_mcp_dependency_install = true
+terminal_resize_reflow = true
+tool_search = true
+unified_exec = true
 
 [marketplaces.openai-bundled]
-last_updated = "2026-05-14T02:36:28Z"
+last_updated = "2026-05-14T22:03:50Z"
 source_type = "local"
 source = "/Users/pattobrien/.codex/.tmp/bundled-marketplaces/openai-bundled"
 
@@ -38,13 +53,7 @@ last_updated = "2026-05-14T03:23:12Z"
 source_type = "local"
 source = "/Users/pattobrien/.cache/codex-runtimes/codex-primary-runtime/plugins/openai-primary-runtime"
 
-[plugins."computer-use@openai-bundled"]
-enabled = true
-
 [plugins."github@openai-curated"]
-enabled = true
-
-[plugins."browser-use@openai-bundled"]
 enabled = true
 
 [plugins."documents@openai-primary-runtime"]
@@ -56,8 +65,32 @@ enabled = true
 [plugins."presentations@openai-primary-runtime"]
 enabled = true
 
+[plugins."browser@openai-bundled"]
+enabled = true
+
+[plugins."chrome@openai-bundled"]
+enabled = true
+
+[tui]
+notifications = true
+notification_condition = "always"
+notification_method = "auto"
+status_line = ["model-with-reasoning", "pull-request-number", "run-state", "five-hour-limit", "weekly-limit", "context-window-size", "used-tokens"]
+status_line_use_colors = true
+
 [tui.keymap.editor]
 insert_newline = "shift-enter"
 
 [tui.model_availability_nux]
 "gpt-5.5" = 4
+
+[hooks.state]
+
+[hooks.state."/Users/pattobrien/.codex/hooks.json:post_tool_use:0:0"]
+trusted_hash = "sha256:5986c7e013f70b9f369ca6e559bee8cb423a5ce91cb2ab0131da53262b18cf88"
+
+[hooks.state."/Users/pattobrien/.codex/hooks.json:stop:0:0"]
+trusted_hash = "sha256:29a9cb962d4f0e1def58ecb64a3b7d277a5451ca57e9f3bd7c51baf7febe68f6"
+
+[hooks.state."/Users/pattobrien/.codex/hooks.json:user_prompt_submit:0:0"]
+trusted_hash = "sha256:7ed0c588635367dfa9e7af5d6ea98136e0b7d0a917f9118382371c156083a992"
