@@ -77,6 +77,7 @@ notification_condition = "always"
 notification_method = "auto"
 status_line = ["model-with-reasoning", "pull-request-number", "run-state", "five-hour-limit", "weekly-limit", "context-window-size", "used-tokens"]
 status_line_use_colors = true
+vim_mode_default = true
 
 [tui.keymap.editor]
 insert_newline = "shift-enter"
