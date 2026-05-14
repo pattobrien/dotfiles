@@ -75,13 +75,11 @@ Good e2e tests have the following characteristics:
 - [Using Matchers](https://main.vitest.dev/guide/learn/matchers.md)
 - [Testing Asynchronous Code](https://main.vitest.dev/guide/learn/asynchronous.md)
 
-### Appium Docs
+### WebdriverIO / Appium Docs
 
 Use whenever writing mobile e2e tests.
 
+- Use Context7 for WDIO usage, including best non-deprecated APIs to use today; *MUST USE*
 - [Migrating to Appium 3](https://appium.io/docs/en/3.1/guides/migrating-2-to-3/)
-
-### WebdriverIO Docs
-
-- [Mobile commands](https://webdriver.io/docs/api/mobile/) and [Appium protocol](https://webdriver.io/docs/api/appium/) — prefer `tap` over `click`, use `~accessibilityId` selectors
-- When unsure how to do something with WDIO, ask Context7 (`resolve-library-id` → `query-docs`) before guessing
+- [Mobile commands](https://webdriver.io/docs/api/mobile/)
+- [Appium protocol](https://webdriver.io/docs/api/appium/)
