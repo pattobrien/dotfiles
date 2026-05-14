@@ -63,5 +63,6 @@ alias linear-edit="$HOME/.dotfiles/scripts/linear-edit"
 
 alias cc="claude"
 alias ccr="claude --resume"
+alias cx="codex"
 
 alias wm="workmux"
