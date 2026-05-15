@@ -4,7 +4,9 @@ personality = "pragmatic"
 sandbox_mode = "workspace-write"
 approval_policy = "on-request"
 suppress_unstable_features_warning = true
-# notify = [ "/Users/pattobrien/.codex/computer-use/Codex Computer Use.app/Contents/SharedSupport/SkyComputerUseClient.app/Contents/MacOS/SkyComputerUseClient", "turn-ended" ]
+approvals_reviewer = "user"
+
+notify = ["/Users/pattobrien/.codex/computer-use/Codex Computer Use.app/Contents/SharedSupport/SkyComputerUseClient.app/Contents/MacOS/SkyComputerUseClient", "turn-ended"]
 
 [projects."/Users/pattobrien/dev/getdots/meagain-bare"]
 trust_level = "trusted"
@@ -36,7 +38,6 @@ multi_agent = true
 plugin_hooks = true
 plugins = true
 prevent_idle_sleep = true
-remote_control = true
 shell_snapshot = true
 skill_mcp_dependency_install = true
 terminal_resize_reflow = true
@@ -44,7 +45,7 @@ tool_search = true
 unified_exec = true
 
 [marketplaces.openai-bundled]
-last_updated = "2026-05-14T22:03:50Z"
+last_updated = "2026-05-15T01:51:57Z"
 source_type = "local"
 source = "/Users/pattobrien/.codex/.tmp/bundled-marketplaces/openai-bundled"
 
@@ -59,23 +60,23 @@ enabled = true
 [plugins."documents@openai-primary-runtime"]
 enabled = true
 
-[plugins."spreadsheets@openai-primary-runtime"]
+[plugins."computer-use@openai-bundled"]
 enabled = true
 
-[plugins."presentations@openai-primary-runtime"]
-enabled = true
-
-[plugins."browser@openai-bundled"]
+[plugins."browser-use@openai-bundled"]
 enabled = true
 
 [plugins."chrome@openai-bundled"]
+enabled = true
+
+[plugins."slack@openai-curated"]
 enabled = true
 
 [tui]
 notifications = true
 notification_condition = "always"
 notification_method = "auto"
-status_line = ["model-with-reasoning", "pull-request-number", "run-state", "five-hour-limit", "weekly-limit", "context-window-size", "used-tokens"]
+status_line = ["model-with-reasoning", "pull-request-number", "run-state", "five-hour-limit", "weekly-limit", "context-window-size", "context-used"]
 status_line_use_colors = true
 vim_mode_default = true
 
@@ -84,8 +85,6 @@ insert_newline = "shift-enter"
 
 [tui.model_availability_nux]
 "gpt-5.5" = 4
-
-[hooks.state]
 
 [hooks.state."/Users/pattobrien/.codex/hooks.json:post_tool_use:0:0"]
 trusted_hash = "sha256:5986c7e013f70b9f369ca6e559bee8cb423a5ce91cb2ab0131da53262b18cf88"
