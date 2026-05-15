@@ -1,0 +1,13 @@
+#!/bin/sh
+# Toggle Bluetooth connection for a given device MAC (passed as $1).
+
+set -e
+
+mac="${1:?usage: airpods-toggle <mac-address>}"
+blueutil="/opt/homebrew/bin/blueutil"
+
+if [ "$("$blueutil" --is-connected "$mac")" = "1" ]; then
+  "$blueutil" --disconnect "$mac"
+else
+  "$blueutil" --connect "$mac"
+fi
