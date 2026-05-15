@@ -96,6 +96,7 @@
     ],
     "defaultMode": "bypassPermissions"
   },
+  "model": "claude-opus-4-6[1m]",
   "enableAllProjectMcpServers": true,
   "hooks": {
     "Notification": [
@@ -170,8 +171,9 @@
     "github@meagain": true,
     "skill-creator@claude-plugins-official": true,
     "oxlint-lsp@meagain": false,
-    "tsgo-lsp@meagain": true,
-    "figma-desktop@meagain": true
+    "tsgo-lsp@meagain": false,
+    "figma-desktop@meagain": true,
+    "context7@claude-plugins-official": true
   },
   "extraKnownMarketplaces": {
     "expo-plugins": {
@@ -183,8 +185,12 @@
   },
   "alwaysThinkingEnabled": true,
   "effortLevel": "xhigh",
+  "promptSuggestionEnabled": false,
   "autoUpdatesChannel": "stable",
   "plansDirectory": "./docs/plans",
   "skipDangerousModePermissionPrompt": true,
+  "editorMode": "vim",
+  "agentPushNotifEnabled": true,
+  "skipAutoPermissionPrompt": true,
   "voiceEnabled": false
 }

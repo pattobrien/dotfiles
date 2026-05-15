@@ -468,5 +468,6 @@
   "window.newWindowDimensions": "inherit",
   "git-worktree-manager.treeView.toSCM": true,
   "explorer.confirmPasteNative": false,
-  "security.promptForLocalFileProtocolHandling": false
+  "security.promptForLocalFileProtocolHandling": false,
+  "window.autoDetectColorScheme": false
 }

@@ -18,6 +18,7 @@
     ~/.claude/settings.json: claude/settings.json
     ~/.claude/skills: claude/skills
     ~/.agents: .agents
+    ~/.codex/config.toml: .config/codex/config.toml
     ~/.tmux.conf: .config/tmux/.tmux.conf
     ~/.ssh/config: .config/ssh/config
     ~/.hushlogin: hushlogin
