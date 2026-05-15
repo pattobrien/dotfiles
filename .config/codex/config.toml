@@ -9,6 +9,7 @@ check_for_update_on_startup = false
 approvals_reviewer = "user"
 
 notify = ["/Users/pattobrien/.codex/computer-use/Codex Computer Use.app/Contents/SharedSupport/SkyComputerUseClient.app/Contents/MacOS/SkyComputerUseClient", "turn-ended"]
+service_tier = "fast"
 
 [projects."/Users/pattobrien/dev/getdots/meagain-bare"]
 trust_level = "trusted"
@@ -31,7 +32,8 @@ trust_level = "trusted"
 [features]
 browser_use = true
 computer_use = true
-fast_mode = false
+external_migration = true
+fast_mode = true
 goals = true
 hooks = true
 image_generation = true
@@ -45,9 +47,13 @@ skill_mcp_dependency_install = true
 terminal_resize_reflow = true
 tool_search = true
 unified_exec = true
+memories = true
+
+[mcp_servers.context7]
+url = "https://mcp.context7.com/mcp/oauth"
 
 [marketplaces.openai-bundled]
-last_updated = "2026-05-15T01:51:57Z"
+last_updated = "2026-05-15T04:23:10Z"
 source_type = "local"
 source = "/Users/pattobrien/.codex/.tmp/bundled-marketplaces/openai-bundled"
 
@@ -55,6 +61,24 @@ source = "/Users/pattobrien/.codex/.tmp/bundled-marketplaces/openai-bundled"
 last_updated = "2026-05-14T03:23:12Z"
 source_type = "local"
 source = "/Users/pattobrien/.cache/codex-runtimes/codex-primary-runtime/plugins/openai-primary-runtime"
+
+[marketplaces.RevenueCat]
+last_updated = "2026-05-15T02:34:33Z"
+last_revision = "407e4651ff74dbaf47c457948ab540e620403c2a"
+source_type = "git"
+source = "https://github.com/RevenueCat/ai-toolkit.git"
+
+[marketplaces.railway-skills]
+last_updated = "2026-05-15T02:34:35Z"
+last_revision = "380a2abbb0f9474e9d856add387760f61c886a4e"
+source_type = "git"
+source = "https://github.com/railwayapp/railway-skills.git"
+
+[marketplaces.posthog]
+last_updated = "2026-05-15T02:34:34Z"
+last_revision = "3f0349123d4374ac7dbbd33640ff5b2bb779f026"
+source_type = "git"
+source = "https://github.com/PostHog/ai-plugin.git"
 
 [plugins."github@openai-curated"]
 enabled = true
@@ -65,13 +89,46 @@ enabled = true
 [plugins."computer-use@openai-bundled"]
 enabled = true
 
+[plugins."slack@openai-curated"]
+enabled = true
+
+[plugins."linear@openai-curated"]
+enabled = true
+
+[plugins."vercel@openai-curated"]
+enabled = true
+
+[plugins."expo@openai-curated"]
+enabled = true
+
+[plugins."figma@openai-curated"]
+enabled = true
+
+[plugins."neon-postgres@openai-curated"]
+enabled = true
+
+[plugins."spreadsheets@openai-primary-runtime"]
+enabled = true
+
+[plugins."railway@railway-skills"]
+enabled = true
+
+[plugins."sentry@openai-curated"]
+enabled = true
+
+[plugins."stripe@openai-curated"]
+enabled = true
+
+[plugins."posthog@posthog"]
+enabled = true
+
+[plugins."presentations@openai-primary-runtime"]
+enabled = true
+
 [plugins."browser-use@openai-bundled"]
 enabled = true
 
 [plugins."chrome@openai-bundled"]
-enabled = true
-
-[plugins."slack@openai-curated"]
 enabled = true
 
 [tui]
@@ -88,6 +145,8 @@ insert_newline = "shift-enter"
 [tui.model_availability_nux]
 "gpt-5.5" = 4
 
+[hooks.state]
+
 [hooks.state."/Users/pattobrien/.codex/hooks.json:post_tool_use:0:0"]
 trusted_hash = "sha256:5986c7e013f70b9f369ca6e559bee8cb423a5ce91cb2ab0131da53262b18cf88"
 
@@ -96,3 +155,279 @@ trusted_hash = "sha256:29a9cb962d4f0e1def58ecb64a3b7d277a5451ca57e9f3bd7c51baf7f
 
 [hooks.state."/Users/pattobrien/.codex/hooks.json:user_prompt_submit:0:0"]
 trusted_hash = "sha256:7ed0c588635367dfa9e7af5d6ea98136e0b7d0a917f9118382371c156083a992"
+
+[hooks.state."posthog@posthog:hooks/hooks.json:pre_tool_use:0:0"]
+enabled = false
+trusted_hash = "sha256:70467c0060935ec2d2f1f0a670e70d5a6f49a4ff0e45eaae18229e631f87064b"
+
+[hooks.state."railway@railway-skills:hooks/hooks.json:pre_tool_use:0:0"]
+enabled = false
+trusted_hash = "sha256:e986cf380780a3ff40357a4332ba667f9a7f7322d7aae2adda2217b64a50ba18"
+
+[[skills.config]]
+name = "vercel:cms"
+enabled = false
+
+[[skills.config]]
+name = "vercel:cron-jobs"
+enabled = false
+
+[[skills.config]]
+name = "vercel:geist"
+enabled = false
+
+[[skills.config]]
+name = "vercel:geistdocs"
+enabled = false
+
+[[skills.config]]
+name = "vercel:v0-dev"
+enabled = false
+
+[[skills.config]]
+name = "vercel:swr"
+enabled = false
+
+[[skills.config]]
+name = "vercel:nextjs"
+enabled = false
+
+[[skills.config]]
+name = "vercel:auth"
+enabled = false
+
+[[skills.config]]
+name = "vercel:vercel-queues"
+enabled = false
+
+[[skills.config]]
+name = "vercel:vercel-flags"
+enabled = false
+
+[[skills.config]]
+name = "vercel:turbopack"
+enabled = false
+
+[[skills.config]]
+name = "figma:figma-create-new-file"
+enabled = false
+
+[[skills.config]]
+name = "figma:figma-generate-design"
+enabled = false
+
+[[skills.config]]
+name = "figma:figma-generate-library"
+enabled = false
+
+[[skills.config]]
+name = "posthog:exploring-llm-clusters"
+enabled = false
+
+[[skills.config]]
+name = "posthog:exploring-llm-costs"
+enabled = false
+
+[[skills.config]]
+name = "posthog:exploring-llm-evaluations"
+enabled = false
+
+[[skills.config]]
+name = "posthog:exploring-llm-traces"
+enabled = false
+
+[[skills.config]]
+name = "posthog:instrument-llm-analytics"
+enabled = false
+
+[[skills.config]]
+name = "posthog:skills-store"
+enabled = false
+
+[[skills.config]]
+name = "posthog:analyzing-experiment-session-replays"
+enabled = false
+
+[[skills.config]]
+name = "posthog:auditing-experiments-flags"
+enabled = false
+
+[[skills.config]]
+name = "posthog:configuring-experiment-analytics"
+enabled = false
+
+[[skills.config]]
+name = "posthog:configuring-experiment-rollout"
+enabled = false
+
+[[skills.config]]
+name = "posthog:creating-experiments"
+enabled = false
+
+[[skills.config]]
+name = "posthog:finding-experiments"
+enabled = false
+
+[[skills.config]]
+name = "posthog:managing-experiment-lifecycle"
+enabled = false
+
+[[skills.config]]
+path = "/Users/pattobrien/.codex/plugins/cache/openai-curated/expo/b8edb371/skills/use-dom/SKILL.md"
+enabled = false
+
+[[skills.config]]
+path = "/Users/pattobrien/.codex/plugins/cache/openai-curated/neon-postgres/b8edb371/skills/neon-postgres-egress-optimizer/SKILL.md"
+enabled = false
+
+[[skills.config]]
+path = "/Users/pattobrien/.codex/plugins/cache/posthog/posthog/1.0.20/skills/auditing-warehouse-data-health/SKILL.md"
+enabled = false
+
+[[skills.config]]
+path = "/Users/pattobrien/.codex/plugins/cache/posthog/posthog/1.0.20/skills/authoring-log-alerts/SKILL.md"
+enabled = false
+
+[[skills.config]]
+path = "/Users/pattobrien/.codex/plugins/cache/posthog/posthog/1.0.20/skills/cleaning-up-stale-feature-flags/SKILL.md"
+enabled = false
+
+[[skills.config]]
+path = "/Users/pattobrien/.codex/plugins/cache/posthog/posthog/1.0.20/skills/copying-flags-across-projects/SKILL.md"
+enabled = false
+
+[[skills.config]]
+path = "/Users/pattobrien/.codex/plugins/cache/posthog/posthog/1.0.20/skills/diagnosing-failed-warehouse-syncs/SKILL.md"
+enabled = false
+
+[[skills.config]]
+path = "/Users/pattobrien/.codex/plugins/cache/posthog/posthog/1.0.20/skills/diagnosing-missing-recordings/SKILL.md"
+enabled = false
+
+[[skills.config]]
+path = "/Users/pattobrien/.codex/plugins/cache/posthog/posthog/1.0.20/skills/diagnosing-sdk-health/SKILL.md"
+enabled = false
+
+[[skills.config]]
+path = "/Users/pattobrien/.codex/plugins/cache/posthog/posthog/1.0.20/skills/exploring-live-traffic/SKILL.md"
+enabled = false
+
+[[skills.config]]
+path = "/Users/pattobrien/.codex/plugins/cache/posthog/posthog/1.0.20/skills/exploring-llm-clusters/SKILL.md"
+enabled = false
+
+[[skills.config]]
+path = "/Users/pattobrien/.codex/plugins/cache/posthog/posthog/1.0.20/skills/exploring-llm-costs/SKILL.md"
+enabled = false
+
+[[skills.config]]
+path = "/Users/pattobrien/.codex/plugins/cache/posthog/posthog/1.0.20/skills/feature-usage-feed/SKILL.md"
+enabled = false
+
+[[skills.config]]
+path = "/Users/pattobrien/.codex/plugins/cache/posthog/posthog/1.0.20/skills/finding-replay-for-issue/SKILL.md"
+enabled = false
+
+[[skills.config]]
+path = "/Users/pattobrien/.codex/plugins/cache/posthog/posthog/1.0.20/skills/inbox-exploration/SKILL.md"
+enabled = false
+
+[[skills.config]]
+path = "/Users/pattobrien/.codex/plugins/cache/posthog/posthog/1.0.20/skills/instrument-error-tracking/SKILL.md"
+enabled = false
+
+[[skills.config]]
+path = "/Users/pattobrien/.codex/plugins/cache/posthog/posthog/1.0.20/skills/investigate-metric/SKILL.md"
+enabled = false
+
+[[skills.config]]
+path = "/Users/pattobrien/.codex/plugins/cache/posthog/posthog/1.0.20/skills/investigating-replay/SKILL.md"
+enabled = false
+
+[[skills.config]]
+path = "/Users/pattobrien/.codex/plugins/cache/posthog/posthog/1.0.20/skills/managing-subscriptions/SKILL.md"
+enabled = false
+
+[[skills.config]]
+path = "/Users/pattobrien/.codex/plugins/cache/posthog/posthog/1.0.20/skills/querying-posthog-data/SKILL.md"
+enabled = false
+
+[[skills.config]]
+path = "/Users/pattobrien/.codex/plugins/cache/posthog/posthog/1.0.20/skills/signals/SKILL.md"
+enabled = false
+
+[[skills.config]]
+path = "/Users/pattobrien/.codex/plugins/cache/posthog/posthog/1.0.20/skills/setting-up-a-data-warehouse-source/SKILL.md"
+enabled = false
+
+[[skills.config]]
+path = "/Users/pattobrien/.codex/plugins/cache/posthog/posthog/1.0.20/skills/suggesting-data-imports/SKILL.md"
+enabled = false
+
+[[skills.config]]
+path = "/Users/pattobrien/.codex/plugins/cache/posthog/posthog/1.0.20/skills/triaging-visual-review-runs/SKILL.md"
+enabled = false
+
+[[skills.config]]
+path = "/Users/pattobrien/.codex/plugins/cache/posthog/posthog/1.0.20/skills/tuning-incremental-sync-config/SKILL.md"
+enabled = false
+
+[[skills.config]]
+path = "/Users/pattobrien/.codex/plugins/cache/posthog/posthog/1.0.20/skills/working-with-skills/SKILL.md"
+enabled = false
+
+[[skills.config]]
+path = "/Users/pattobrien/.codex/plugins/cache/openai-primary-runtime/presentations/26.513.11550/skills/presentations/SKILL.md"
+enabled = false
+
+[[skills.config]]
+path = "/Users/pattobrien/.dotfiles/.agents/skills/remotion-best-practices/SKILL.md"
+enabled = false
+
+[[skills.config]]
+path = "/Users/pattobrien/.codex/plugins/cache/openai-curated/slack/b8edb371/skills/slack-daily-digest/SKILL.md"
+enabled = false
+
+[[skills.config]]
+path = "/Users/pattobrien/.codex/plugins/cache/openai-curated/slack/b8edb371/skills/slack-channel-summarization/SKILL.md"
+enabled = false
+
+[[skills.config]]
+path = "/Users/pattobrien/.codex/plugins/cache/openai-curated/slack/b8edb371/skills/slack/SKILL.md"
+enabled = false
+
+[[skills.config]]
+path = "/Users/pattobrien/.codex/plugins/cache/openai-curated/slack/b8edb371/skills/slack-outgoing-message/SKILL.md"
+enabled = false
+
+[[skills.config]]
+path = "/Users/pattobrien/.codex/plugins/cache/openai-primary-runtime/spreadsheets/26.513.11550/skills/spreadsheets/SKILL.md"
+enabled = false
+
+[[skills.config]]
+path = "/Users/pattobrien/.codex/plugins/cache/openai-curated/stripe/b8edb371/skills/upgrade-stripe/SKILL.md"
+enabled = false
+
+[[skills.config]]
+path = "/Users/pattobrien/.codex/plugins/cache/openai-curated/vercel/b8edb371/skills/ai-elements/SKILL.md"
+enabled = false
+
+[[skills.config]]
+path = "/Users/pattobrien/.codex/plugins/cache/openai-curated/vercel/b8edb371/skills/ai-gateway/SKILL.md"
+enabled = false
+
+[[skills.config]]
+path = "/Users/pattobrien/.codex/plugins/cache/openai-curated/vercel/b8edb371/skills/satori/SKILL.md"
+enabled = false
+
+[[skills.config]]
+path = "/Users/pattobrien/.codex/plugins/cache/openai-curated/vercel/b8edb371/skills/sign-in-with-vercel/SKILL.md"
+enabled = false
+
+[[skills.config]]
+path = "/Users/pattobrien/.codex/plugins/cache/openai-curated/vercel/b8edb371/skills/workflow/SKILL.md"
+enabled = false
+
+[memories]
+generate_memories = true
+use_memories = true
