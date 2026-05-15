@@ -8,7 +8,7 @@ suppress_unstable_features_warning = true
 check_for_update_on_startup = false
 approvals_reviewer = "user"
 
-notify = ["/Users/pattobrien/.codex/computer-use/Codex Computer Use.app/Contents/SharedSupport/SkyComputerUseClient.app/Contents/MacOS/SkyComputerUseClient", "turn-ended"]
+notify = ["/Users/pattobrien/.dotfiles/.config/codex/notify.zsh"]
 service_tier = "fast"
 
 [projects."/Users/pattobrien/dev/getdots/meagain-bare"]
@@ -132,7 +132,7 @@ enabled = true
 enabled = true
 
 [tui]
-notifications = true
+notifications = ["agent-turn-complete", "approval-requested"]
 notification_condition = "always"
 notification_method = "auto"
 status_line = ["model-with-reasoning", "pull-request-number", "run-state", "five-hour-limit", "weekly-limit", "context-window-size", "context-used"]
