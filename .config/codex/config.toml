@@ -1,8 +1,8 @@
 model = "gpt-5.5"
 model_reasoning_effort = "high"
 personality = "pragmatic"
-sandbox_mode = "workspace-write"
-approval_policy = "on-request"
+sandbox_mode = "danger-full-access"
+approval_policy = "never"
 suppress_unstable_features_warning = true
 approvals_reviewer = "user"
 
