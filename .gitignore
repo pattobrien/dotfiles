@@ -9,6 +9,7 @@
 .dart_tool/**/*
 !.config
 claude/**/*.local.*
+.claude/worktrees/
 
 # Build artifacts
 node_modules
