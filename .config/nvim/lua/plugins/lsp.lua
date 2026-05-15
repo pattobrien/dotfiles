@@ -14,6 +14,11 @@ return {
         -- tsgo — Microsoft's Go-based TS type checker (much faster than vtsls).
         -- Selected via vim.g.lazyvim_ts_lsp = "tsgo" in options.lua.
         -- Install: npm install -g @typescript/native-preview
+
+        -- eslint — restrict to ts/tsx only (extra defaults include js/jsx/vue/svelte/astro).
+        eslint = {
+          filetypes = { "typescript", "typescriptreact" },
+        },
       },
     },
   },

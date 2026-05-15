@@ -34,6 +34,7 @@ require("lazy").setup({
     { import = "lazyvim.plugins.extras.ai.copilot-native" },
     { import = "lazyvim.plugins.extras.lang.typescript" }, -- tsgo config in options.lua
     { import = "lazyvim.plugins.extras.lang.json" },
+    { import = "lazyvim.plugins.extras.linting.eslint" }, -- eslint LSP, ts/tsx only (see plugins/lsp.lua)
 
     -- 3. personal plugins (lua/plugins/*.lua)
     { import = "plugins" },

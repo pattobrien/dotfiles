@@ -20,6 +20,23 @@ async function waitForLspClient(nvim: NvimInstance, timeoutMs = 3_000) {
   }
 }
 
+/** Wait for a specific LSP client (by name) to attach to the current buffer. */
+async function waitForNamedLspClient(
+  nvim: NvimInstance,
+  name: string,
+  timeoutMs = 5_000,
+) {
+  const deadline = Date.now() + timeoutMs;
+  while (Date.now() < deadline) {
+    const present = await nvim.client.lua(
+      `return #vim.tbl_filter(function(c) return c.name == "${name}" end, vim.lsp.get_clients({ bufnr = 0 })) > 0`,
+    );
+    if (present) return;
+    await new Promise((r) => setTimeout(r, 100));
+  }
+  throw new Error(`Timed out waiting for LSP client "${name}"`);
+}
+
 // Combined worst-case polling (3s client + 3s diagnostics) can exceed the
 // default 5s testTimeout, so give LSP tests a bit more headroom.
 const LSP_TIMEOUT = 8_000;
@@ -98,3 +115,43 @@ test("hover shows type info", { timeout: LSP_TIMEOUT }, async ({ nvim }) => {
     "interface Promise",
   );
 });
+
+test(
+  "gd jumps to definition of an imported type used in a type alias",
+  { timeout: LSP_TIMEOUT },
+  async ({ nvim }) => {
+    await nvim.command(`cd ${FIXTURE_DIR}`);
+    await nvim.command(`edit ${FIXTURE_DIR}/device.ts`);
+
+    // tsgo attaches noticeably later than oxlint — wait for it specifically,
+    // otherwise gd fires before the TS server is ready to answer.
+    await waitForNamedLspClient(nvim, "tsgo");
+
+    // Land on `ZodString` in `export type Schema = ZodString;` — the
+    // `ZodString;` pattern only occurs in the type-alias line, never the import.
+    await nvim.client.lua('vim.fn.cursor(1, 1); vim.fn.search("ZodString;")');
+
+    // Sanity-check cursor placement before triggering gd.
+    const wordUnderCursor = await nvim.client.lua(
+      'return vim.fn.expand("<cword>")',
+    );
+    expect(wordUnderCursor).toBe("ZodString");
+
+    await nvim.input("gd");
+
+    // gd should jump into zod's published type definitions inside node_modules.
+    const deadline = Date.now() + 5_000;
+    let curBuf = "";
+    while (Date.now() < deadline) {
+      const raw = await nvim.client.lua(
+        "return vim.api.nvim_buf_get_name(0)",
+      );
+      curBuf = typeof raw === "string" ? raw : "";
+      if (curBuf.includes("/node_modules/") && curBuf.includes("/zod/")) break;
+      await new Promise((r) => setTimeout(r, 100));
+    }
+    expect(curBuf, `current buffer after gd: "${curBuf}"`).toMatch(
+      /\/node_modules\/.*\/zod\//,
+    );
+  },
+);
