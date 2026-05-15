@@ -4,6 +4,8 @@ personality = "pragmatic"
 sandbox_mode = "danger-full-access"
 approval_policy = "never"
 suppress_unstable_features_warning = true
+# Disable updates until computer-use is fixed after v24.130.XXXX.
+check_for_update_on_startup = false
 approvals_reviewer = "user"
 
 notify = ["/Users/pattobrien/.codex/computer-use/Codex Computer Use.app/Contents/SharedSupport/SkyComputerUseClient.app/Contents/MacOS/SkyComputerUseClient", "turn-ended"]
