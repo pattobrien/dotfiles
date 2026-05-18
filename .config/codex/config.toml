@@ -53,6 +53,10 @@ memories = true
 [mcp_servers.context7]
 url = "https://mcp.context7.com/mcp/oauth"
 
+[mcp_servers.peekaboo]
+command = "pnpm"
+args = ["dlx", "@steipete/peekaboo", "mcp"]
+
 [marketplaces.openai-bundled]
 last_updated = "2026-05-15T04:23:10Z"
 source_type = "local"

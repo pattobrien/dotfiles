@@ -12,6 +12,7 @@ tap "schpet/tap"
 tap "shopify/shopify"
 tap "smithy-lang/tap"
 tap "sst/tap"
+tap "steipete/tap"
 tap "stripe/stripe-cli"
 tap "supabase/tap"
 # Run your GitHub Actions locally
@@ -90,6 +91,8 @@ brew "powerlevel10k"
 brew "railway"
 # Command-line tool for the Amazon S3 service
 brew "s3cmd"
+# Lightning-fast macOS screenshots & AI vision analysis
+brew "steipete/tap/peekaboo"
 # Fast and accurate code counter with complexity and COCOMO estimates
 brew "scc"
 # Organize software neatly under a single directory tree (e.g. /usr/local)
