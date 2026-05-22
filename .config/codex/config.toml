@@ -436,6 +436,439 @@ enabled = false
 path = "/Users/pattobrien/.codex/plugins/cache/openai-curated/vercel/b8edb371/skills/workflow/SKILL.md"
 enabled = false
 
+# Disable currently enabled plugin-provided skills by name.
+[[skills.config]]
+name = "documents:documents"
+enabled = false
+
+[[skills.config]]
+name = "expo:building-native-ui"
+enabled = false
+
+[[skills.config]]
+name = "expo:codex-expo-run-actions"
+enabled = false
+
+[[skills.config]]
+name = "expo:expo-api-routes"
+enabled = false
+
+[[skills.config]]
+name = "expo:expo-cicd-workflows"
+enabled = false
+
+[[skills.config]]
+name = "expo:expo-deployment"
+enabled = false
+
+[[skills.config]]
+name = "expo:expo-dev-client"
+enabled = false
+
+[[skills.config]]
+name = "expo:expo-module"
+enabled = false
+
+[[skills.config]]
+name = "expo:expo-tailwind-setup"
+enabled = false
+
+[[skills.config]]
+name = "expo:expo-ui-jetpack-compose"
+enabled = false
+
+[[skills.config]]
+name = "expo:expo-ui-swift-ui"
+enabled = false
+
+[[skills.config]]
+name = "expo:native-data-fetching"
+enabled = false
+
+[[skills.config]]
+name = "expo:upgrading-expo"
+enabled = false
+
+[[skills.config]]
+name = "expo:use-dom"
+enabled = false
+
+[[skills.config]]
+name = "figma:figma-code-connect"
+enabled = false
+
+[[skills.config]]
+name = "figma:figma-generate-diagram"
+enabled = false
+
+[[skills.config]]
+name = "figma:figma-use"
+enabled = false
+
+[[skills.config]]
+name = "figma:figma-use-figjam"
+enabled = false
+
+[[skills.config]]
+name = "figma:figma-use-slides"
+enabled = false
+
+[[skills.config]]
+name = "github:gh-address-comments"
+enabled = false
+
+[[skills.config]]
+name = "github:gh-fix-ci"
+enabled = false
+
+[[skills.config]]
+name = "github:github"
+enabled = false
+
+[[skills.config]]
+name = "github:yeet"
+enabled = false
+
+[[skills.config]]
+name = "linear:linear"
+enabled = false
+
+[[skills.config]]
+name = "neon-postgres:neon-postgres"
+enabled = false
+
+[[skills.config]]
+name = "neon-postgres:neon-postgres-egress-optimizer"
+enabled = false
+
+[[skills.config]]
+name = "posthog:auditing-warehouse-data-health"
+enabled = false
+
+[[skills.config]]
+name = "posthog:authoring-log-alerts"
+enabled = false
+
+[[skills.config]]
+name = "posthog:cleaning-up-stale-feature-flags"
+enabled = false
+
+[[skills.config]]
+name = "posthog:copying-flags-across-projects"
+enabled = false
+
+[[skills.config]]
+name = "posthog:debugging-local-replay"
+enabled = false
+
+[[skills.config]]
+name = "posthog:diagnosing-experiment-results"
+enabled = false
+
+[[skills.config]]
+name = "posthog:diagnosing-failed-warehouse-syncs"
+enabled = false
+
+[[skills.config]]
+name = "posthog:diagnosing-missing-recordings"
+enabled = false
+
+[[skills.config]]
+name = "posthog:diagnosing-sdk-health"
+enabled = false
+
+[[skills.config]]
+name = "posthog:diagnosing-stacktrace-symbolication"
+enabled = false
+
+[[skills.config]]
+name = "posthog:exploring-apm-traces"
+enabled = false
+
+[[skills.config]]
+name = "posthog:exploring-autocapture-events"
+enabled = false
+
+[[skills.config]]
+name = "posthog:exploring-live-traffic"
+enabled = false
+
+[[skills.config]]
+name = "posthog:feature-usage-feed"
+enabled = false
+
+[[skills.config]]
+name = "posthog:finding-replay-for-issue"
+enabled = false
+
+[[skills.config]]
+name = "posthog:formatting-insight-axes"
+enabled = false
+
+[[skills.config]]
+name = "posthog:inbox-exploration"
+enabled = false
+
+[[skills.config]]
+name = "posthog:instrument-error-tracking"
+enabled = false
+
+[[skills.config]]
+name = "posthog:instrument-feature-flags"
+enabled = false
+
+[[skills.config]]
+name = "posthog:instrument-integration"
+enabled = false
+
+[[skills.config]]
+name = "posthog:instrument-logs"
+enabled = false
+
+[[skills.config]]
+name = "posthog:instrument-product-analytics"
+enabled = false
+
+[[skills.config]]
+name = "posthog:investigate-metric"
+enabled = false
+
+[[skills.config]]
+name = "posthog:investigating-replay"
+enabled = false
+
+[[skills.config]]
+name = "posthog:managing-path-cleaning-rules"
+enabled = false
+
+[[skills.config]]
+name = "posthog:managing-subscriptions"
+enabled = false
+
+[[skills.config]]
+name = "posthog:planning-user-interviews"
+enabled = false
+
+[[skills.config]]
+name = "posthog:querying-posthog-data"
+enabled = false
+
+[[skills.config]]
+name = "posthog:setting-up-a-data-warehouse-source"
+enabled = false
+
+[[skills.config]]
+name = "posthog:signals"
+enabled = false
+
+[[skills.config]]
+name = "posthog:suggesting-data-imports"
+enabled = false
+
+[[skills.config]]
+name = "posthog:triaging-visual-review-runs"
+enabled = false
+
+[[skills.config]]
+name = "posthog:tuning-incremental-sync-config"
+enabled = false
+
+[[skills.config]]
+name = "posthog:working-with-skills"
+enabled = false
+
+[[skills.config]]
+name = "presentations:Presentations"
+enabled = false
+
+[[skills.config]]
+name = "railway:use-railway"
+enabled = false
+
+[[skills.config]]
+name = "sentry:sentry"
+enabled = false
+
+[[skills.config]]
+name = "slack:slack"
+enabled = false
+
+[[skills.config]]
+name = "slack:slack-channel-summarization"
+enabled = false
+
+[[skills.config]]
+name = "slack:slack-daily-digest"
+enabled = false
+
+[[skills.config]]
+name = "slack:slack-notification-triage"
+enabled = false
+
+[[skills.config]]
+name = "slack:slack-outgoing-message"
+enabled = false
+
+[[skills.config]]
+name = "slack:slack-reply-drafting"
+enabled = false
+
+[[skills.config]]
+name = "spreadsheets:Spreadsheets"
+enabled = false
+
+[[skills.config]]
+name = "stripe:stripe-best-practices"
+enabled = false
+
+[[skills.config]]
+name = "stripe:upgrade-stripe"
+enabled = false
+
+[[skills.config]]
+name = "vercel:agent-browser"
+enabled = false
+
+[[skills.config]]
+name = "vercel:agent-browser-verify"
+enabled = false
+
+[[skills.config]]
+name = "vercel:ai-elements"
+enabled = false
+
+[[skills.config]]
+name = "vercel:ai-gateway"
+enabled = false
+
+[[skills.config]]
+name = "vercel:ai-generation-persistence"
+enabled = false
+
+[[skills.config]]
+name = "vercel:ai-sdk"
+enabled = false
+
+[[skills.config]]
+name = "vercel:bootstrap"
+enabled = false
+
+[[skills.config]]
+name = "vercel:chat-sdk"
+enabled = false
+
+[[skills.config]]
+name = "vercel:deployments-cicd"
+enabled = false
+
+[[skills.config]]
+name = "vercel:email"
+enabled = false
+
+[[skills.config]]
+name = "vercel:env-vars"
+enabled = false
+
+[[skills.config]]
+name = "vercel:investigation-mode"
+enabled = false
+
+[[skills.config]]
+name = "vercel:json-render"
+enabled = false
+
+[[skills.config]]
+name = "vercel:marketplace"
+enabled = false
+
+[[skills.config]]
+name = "vercel:micro"
+enabled = false
+
+[[skills.config]]
+name = "vercel:ncc"
+enabled = false
+
+[[skills.config]]
+name = "vercel:next-forge"
+enabled = false
+
+[[skills.config]]
+name = "vercel:observability"
+enabled = false
+
+[[skills.config]]
+name = "vercel:payments"
+enabled = false
+
+[[skills.config]]
+name = "vercel:react-best-practices"
+enabled = false
+
+[[skills.config]]
+name = "vercel:routing-middleware"
+enabled = false
+
+[[skills.config]]
+name = "vercel:runtime-cache"
+enabled = false
+
+[[skills.config]]
+name = "vercel:satori"
+enabled = false
+
+[[skills.config]]
+name = "vercel:shadcn"
+enabled = false
+
+[[skills.config]]
+name = "vercel:sign-in-with-vercel"
+enabled = false
+
+[[skills.config]]
+name = "vercel:turborepo"
+enabled = false
+
+[[skills.config]]
+name = "vercel:vercel-agent"
+enabled = false
+
+[[skills.config]]
+name = "vercel:vercel-api"
+enabled = false
+
+[[skills.config]]
+name = "vercel:vercel-cli"
+enabled = false
+
+[[skills.config]]
+name = "vercel:vercel-firewall"
+enabled = false
+
+[[skills.config]]
+name = "vercel:vercel-functions"
+enabled = false
+
+[[skills.config]]
+name = "vercel:vercel-sandbox"
+enabled = false
+
+[[skills.config]]
+name = "vercel:vercel-services"
+enabled = false
+
+[[skills.config]]
+name = "vercel:vercel-storage"
+enabled = false
+
+[[skills.config]]
+name = "vercel:verification"
+enabled = false
+
+[[skills.config]]
+name = "vercel:workflow"
+enabled = false
+
 [memories]
 generate_memories = true
 use_memories = true
