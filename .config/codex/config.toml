@@ -8,7 +8,7 @@ suppress_unstable_features_warning = true
 check_for_update_on_startup = false
 approvals_reviewer = "user"
 
-notify = ["/Users/pattobrien/.dotfiles/.config/codex/notify.zsh"]
+notify = ["/Users/pattobrien/.codex/computer-use/Codex Computer Use.app/Contents/SharedSupport/SkyComputerUseClient.app/Contents/MacOS/SkyComputerUseClient", "turn-ended", "--previous-notify", "[\"\\/Users\\/pattobrien\\/.dotfiles\\/.config\\/codex\\/notify.zsh\"]"]
 service_tier = "fast"
 
 [projects."/Users/pattobrien/dev/getdots/meagain-bare"]
@@ -25,6 +25,9 @@ trust_level = "trusted"
 
 [projects."/Users/pattobrien/.dotfiles"]
 trust_level = "trusted"
+
+[notice]
+fast_default_opt_out = true
 
 [notice.model_migrations]
 "gpt-5.3-codex" = "gpt-5.4"
@@ -49,21 +52,36 @@ terminal_resize_reflow = true
 tool_search = true
 unified_exec = true
 memories = true
+mentions_v2 = true
 
 [mcp_servers.context7]
 url = "https://mcp.context7.com/mcp/oauth"
 
+[mcp_servers.mobbin]
+url = "https://api.mobbin.com/mcp"
+enabled = false
+
+[mcp_servers.posthog]
+url = "https://mcp.posthog.com/mcp"
+enabled = false
+
 [mcp_servers.peekaboo]
 command = "pnpm"
 args = ["dlx", "@steipete/peekaboo", "mcp"]
+enabled = false
+
+[mcp_servers.railway]
+command = "railway"
+args = ["mcp"]
+enabled = false
 
 [marketplaces.openai-bundled]
-last_updated = "2026-05-15T04:23:10Z"
+last_updated = "2026-05-21T21:09:03Z"
 source_type = "local"
 source = "/Users/pattobrien/.codex/.tmp/bundled-marketplaces/openai-bundled"
 
 [marketplaces.openai-primary-runtime]
-last_updated = "2026-05-14T03:23:12Z"
+last_updated = "2026-05-21T21:23:15Z"
 source_type = "local"
 source = "/Users/pattobrien/.cache/codex-runtimes/codex-primary-runtime/plugins/openai-primary-runtime"
 
@@ -74,14 +92,14 @@ source_type = "git"
 source = "https://github.com/RevenueCat/ai-toolkit.git"
 
 [marketplaces.railway-skills]
-last_updated = "2026-05-15T02:34:35Z"
-last_revision = "380a2abbb0f9474e9d856add387760f61c886a4e"
+last_updated = "2026-05-19T21:56:36Z"
+last_revision = "6ef46dde395e7e6f64179bbaa41bac420adca346"
 source_type = "git"
 source = "https://github.com/railwayapp/railway-skills.git"
 
 [marketplaces.posthog]
-last_updated = "2026-05-15T02:34:34Z"
-last_revision = "3f0349123d4374ac7dbbd33640ff5b2bb779f026"
+last_updated = "2026-05-22T16:48:31Z"
+last_revision = "a004aa2c77890ba328bf0a35d64b56edb854a1b9"
 source_type = "git"
 source = "https://github.com/PostHog/ai-plugin.git"
 
@@ -130,19 +148,20 @@ enabled = true
 [plugins."computer-use@openai-bundled"]
 enabled = false
 
-[plugins."browser@openai-bundled"]
-enabled = false
-
 [plugins."browser-use@openai-bundled"]
 enabled = false
 
 [plugins."chrome@openai-bundled"]
 enabled = false
 
+[plugins."browser@openai-bundled"]
+enabled = false
+
 [tui]
 notifications = ["agent-turn-complete", "approval-requested"]
 notification_condition = "always"
 notification_method = "auto"
+show_tooltips = false
 status_line = ["model-with-reasoning", "pull-request-number", "run-state", "five-hour-limit", "weekly-limit", "context-window-size", "context-used"]
 status_line_use_colors = true
 vim_mode_default = true
@@ -156,6 +175,7 @@ insert_newline = "shift-enter"
 [hooks.state]
 
 [hooks.state."/Users/pattobrien/.codex/hooks.json:post_tool_use:0:0"]
+enabled = true
 trusted_hash = "sha256:5986c7e013f70b9f369ca6e559bee8cb423a5ce91cb2ab0131da53262b18cf88"
 
 [hooks.state."/Users/pattobrien/.codex/hooks.json:stop:0:0"]
