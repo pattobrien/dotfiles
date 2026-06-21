@@ -9,7 +9,7 @@ check_for_update_on_startup = false
 approvals_reviewer = "user"
 
 notify = ["/Users/pattobrien/.codex/computer-use/Codex Computer Use.app/Contents/SharedSupport/SkyComputerUseClient.app/Contents/MacOS/SkyComputerUseClient", "turn-ended", "--previous-notify", "[\"\\/Users\\/pattobrien\\/.dotfiles\\/.config\\/codex\\/notify.zsh\"]"]
-service_tier = "fast"
+service_tier = "default"
 
 [projects."/Users/pattobrien/dev/getdots/meagain-bare"]
 trust_level = "trusted"
@@ -53,6 +53,7 @@ tool_search = true
 unified_exec = true
 memories = true
 mentions_v2 = true
+js_repl = false
 
 [mcp_servers.context7]
 url = "https://mcp.context7.com/mcp/oauth"
@@ -75,31 +76,50 @@ command = "railway"
 args = ["mcp"]
 enabled = false
 
+[mcp_servers.node_repl]
+args = []
+command = "/Applications/Codex.app/Contents/Resources/node_repl"
+startup_timeout_sec = 120
+
+[mcp_servers.node_repl.env]
+NODE_REPL_NATIVE_PIPE_CONNECT_TIMEOUT_MS = "1000"
+NODE_REPL_NODE_MODULE_DIRS = ""
+NODE_REPL_NODE_PATH = "/Applications/Codex.app/Contents/Resources/node"
+NODE_REPL_TRUSTED_CODE_PATHS = "/Users/pattobrien/.codex"
+CODEX_HOME = "/Users/pattobrien/.codex"
+NODE_REPL_TRUSTED_BROWSER_CLIENT_SHA256S = "2de792ebdf729e85542c94275f6654821dddce546d9c7374c915f2297529e313"
+BROWSER_USE_AVAILABLE_BACKENDS = "chrome,iab"
+NODE_REPL_INSTRUCTIONS_USE_CASE_BROWSER = "Control the in-app browser in conjunction with the Browser Plugin."
+NODE_REPL_INSTRUCTIONS_USE_CASE_CHROME = "Control the Chrome browser in conjunction with the Chrome Plugin. Prefer this method of controlling Chrome over alternatives (such as Computer Use) unless the user explicitly mentions an alternative."
+BROWSER_USE_CODEX_APP_BUILD_FLAVOR = "prod"
+BROWSER_USE_CODEX_APP_VERSION = "26.602.40724"
+CODEX_CLI_PATH = "/Applications/Codex.app/Contents/Resources/codex"
+
 [marketplaces.openai-bundled]
-last_updated = "2026-05-21T21:09:03Z"
+last_updated = "2026-06-10T03:40:46Z"
 source_type = "local"
 source = "/Users/pattobrien/.codex/.tmp/bundled-marketplaces/openai-bundled"
 
 [marketplaces.openai-primary-runtime]
-last_updated = "2026-05-21T21:23:15Z"
+last_updated = "2026-06-01T22:23:31Z"
 source_type = "local"
 source = "/Users/pattobrien/.cache/codex-runtimes/codex-primary-runtime/plugins/openai-primary-runtime"
 
 [marketplaces.RevenueCat]
-last_updated = "2026-05-15T02:34:33Z"
-last_revision = "407e4651ff74dbaf47c457948ab540e620403c2a"
+last_updated = "2026-06-08T20:51:51Z"
+last_revision = "473fd504bf13d25e76bf4a0267b42be3794f6266"
 source_type = "git"
 source = "https://github.com/RevenueCat/ai-toolkit.git"
 
 [marketplaces.railway-skills]
-last_updated = "2026-05-19T21:56:36Z"
-last_revision = "6ef46dde395e7e6f64179bbaa41bac420adca346"
+last_updated = "2026-05-27T19:03:24Z"
+last_revision = "7718b39037adb6fb33948ff751be7f7086f2da83"
 source_type = "git"
 source = "https://github.com/railwayapp/railway-skills.git"
 
 [marketplaces.posthog]
-last_updated = "2026-05-22T16:48:31Z"
-last_revision = "a004aa2c77890ba328bf0a35d64b56edb854a1b9"
+last_updated = "2026-06-11T19:50:49Z"
+last_revision = "f674efefafeff7152294642f8559906eed885210"
 source_type = "git"
 source = "https://github.com/PostHog/ai-plugin.git"
 
@@ -152,7 +172,7 @@ enabled = false
 enabled = false
 
 [plugins."chrome@openai-bundled"]
-enabled = false
+enabled = true
 
 [plugins."browser@openai-bundled"]
 enabled = false
@@ -186,7 +206,7 @@ trusted_hash = "sha256:7ed0c588635367dfa9e7af5d6ea98136e0b7d0a917f9118382371c156
 
 [hooks.state."posthog@posthog:hooks/hooks.json:pre_tool_use:0:0"]
 enabled = false
-trusted_hash = "sha256:70467c0060935ec2d2f1f0a670e70d5a6f49a4ff0e45eaae18229e631f87064b"
+trusted_hash = "sha256:3dc55a922b47b9418381076dbfc51fbe2a5bdbe2f86469022c5df91eed9c5c52"
 
 [hooks.state."railway@railway-skills:hooks/hooks.json:pre_tool_use:0:0"]
 enabled = false
@@ -892,3 +912,31 @@ enabled = false
 [memories]
 generate_memories = true
 use_memories = true
+
+[desktop]
+appearanceDarkCodeThemeId = "codex"
+preventSleepWhileRunning = true
+keepRemoteControlAwakeWhilePluggedIn = true
+git-branch-prefix = "patt/"
+git-show-sidebar-pr-icons = true
+notifications-permissions-enabled = true
+conversationDetailMode = "STEPS_COMMANDS"
+
+[desktop.appearanceDarkChromeTheme]
+accent = "#0169cc"
+contrast = 50
+ink = "#fcfcfc"
+opaqueWindows = true
+surface = "#111111"
+
+[desktop.appearanceDarkChromeTheme.fonts]
+code = '"Geist Mono", ui-monospace, "SFMono-Regular"'
+ui = "Geist, Inter"
+
+[desktop.appearanceDarkChromeTheme.semanticColors]
+diffAdded = "#00a240"
+diffRemoved = "#e02e2a"
+skill = "#b06dff"
+
+[desktop.open-in-target-preferences]
+global = "cursor"
