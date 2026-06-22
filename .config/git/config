@@ -13,6 +13,8 @@
 	editor = code --wait
 [http]
 	postBuffer = 100000000
+[url "git@github.com:"]
+	insteadOf = https://github.com/
 [gpg]
 	format = ssh
 [gpg "ssh"]
