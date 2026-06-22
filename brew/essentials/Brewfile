@@ -13,6 +13,7 @@ brew "bat"
 brew "eza"
 brew "tree"
 brew "tmux"
+brew "raine/workmux/workmux"
 brew "wget"
 brew "curl"
 
@@ -33,3 +34,6 @@ cask "ghostty"
 
 cask "google-chrome"
 cask "raycast"
+
+# Keyboard customizer (reads ~/.config/karabiner, symlinked by the base install)
+cask "karabiner-elements"

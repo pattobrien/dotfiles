@@ -7,9 +7,21 @@
 - shell:
     - command: ./scripts/setup_omz.zsh
       description: Installing Oh My Zsh
+    # Trust the third-party taps used across all profiles before any brew bundle.
+    # Recent Homebrew refuses to load formulae from untrusted taps; trust is
+    # global + persistent (trust.json), so doing it once here also covers the
+    # personal/work/server/runner bundles run later.
+    # koekeishiya/formulae (skhd/yabai) now redirects upstream to asmvik/formulae,
+    # so both names are trusted to cover the redirect on fresh installs.
+    - command: brew trust --tap anomalyco/tap asmvik/formulae dsully/tap koekeishiya/formulae leoafarias/fvm raine/workmux
+      description: Trusting third-party Homebrew taps
     - command: brew bundle --file brew/essentials/Brewfile
       description: Installing essential packages
     - command:
-        git clone https://github.com/michakfromparis/zsh-pnpm-completions
+        test -d ~/.oh-my-zsh/custom/plugins/zsh-pnpm-completions || git clone
+        https://github.com/michakfromparis/zsh-pnpm-completions
         ~/.oh-my-zsh/custom/plugins/zsh-pnpm-completions
       description: Installing pnpm completions
+    # tmux is installed by the Brewfile above, so TPM + plugins can be set up now
+    - command: ./scripts/setup_tmux.zsh
+      description: Setting up tmux plugins (TPM)

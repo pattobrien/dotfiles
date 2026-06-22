@@ -20,3 +20,19 @@ else
     echo "Installing pnpm-shell-completion..."
     git clone https://github.com/g-plane/pnpm-shell-completion.git "$ZSH_CUSTOM/plugins/pnpm-shell-completion"
 fi
+
+# fzf-tab (must load before other completion plugins; see plugins=() in zshrc)
+if [ -d "$ZSH_CUSTOM/plugins/fzf-tab" ]; then
+    echo "fzf-tab already installed, skipping..."
+else
+    echo "Installing fzf-tab..."
+    git clone https://github.com/Aloxaf/fzf-tab.git "$ZSH_CUSTOM/plugins/fzf-tab"
+fi
+
+# fzf-git.sh (sourced directly by zshrc for Ctrl-G git pickers)
+if [ -d "$ZSH_CUSTOM/plugins/fzf-git.sh" ]; then
+    echo "fzf-git.sh already installed, skipping..."
+else
+    echo "Installing fzf-git.sh..."
+    git clone https://github.com/junegunn/fzf-git.sh.git "$ZSH_CUSTOM/plugins/fzf-git.sh"
+fi

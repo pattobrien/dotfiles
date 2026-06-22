@@ -1,20 +1,7 @@
 tap "anomalyco/tap"
 tap "dsully/tap"
-tap "desdaemon/repo"
-tap "felangel/mason"
-tap "hashicorp/tap"
-tap "jetbrains/utils"
 tap "koekeishiya/formulae"
 tap "leoafarias/fvm"
-tap "modularml/packages"
-tap "scarvalhojr/tap"
-tap "schpet/tap"
-tap "shopify/shopify"
-tap "smithy-lang/tap"
-tap "sst/tap"
-tap "steipete/tap"
-tap "stripe/stripe-cli"
-tap "supabase/tap"
 # Run your GitHub Actions locally
 brew "act"
 # ANother Tool for Language Recognition
@@ -91,8 +78,6 @@ brew "powerlevel10k"
 brew "railway"
 # Command-line tool for the Amazon S3 service
 brew "s3cmd"
-# Lightning-fast macOS screenshots & AI vision analysis
-brew "steipete/tap/peekaboo"
 # Fast and accurate code counter with complexity and COCOMO estimates
 brew "scc"
 # Organize software neatly under a single directory tree (e.g. /usr/local)
@@ -127,28 +112,14 @@ brew "zsh-autosuggestions"
 brew "zsh-syntax-highlighting"
 # The AI coding agent built for the terminal.
 brew "anomalyco/tap/opencode"
-# Official Language Server Protocol for the Kotlin language
-brew "jetbrains/utils/kotlin-lsp"
 # Simple hotkey-daemon for macOS.
 brew "koekeishiya/formulae/skhd"
 # Simple cli to manage Flutter SDK versions per project
 brew "leoafarias/fvm/fvm"
-# Advent of Code command-line helper tool
-brew "scarvalhojr/tap/aoc-cli"
-# CLI tool for linear.app that uses git branch names and directory names to open issues and team pages
-brew "schpet/tap/linear"
-# Smithy CLI - A CLI for building, validating, querying, and iterating on Smithy models
-brew "smithy-lang/tap/smithy-cli"
-# Stripe CLI utility
-brew "stripe/stripe-cli/stripe"
-# Supabase CLI
-brew "supabase/tap/supabase"
 # Password manager that keeps all passwords secure behind one password
 cask "1password"
 # Command-line interface for 1Password
 cask "1password-cli"
-# Collection of apps and services for photography, design, video, web, and UX
-cask "adobe-creative-cloud"
 # Command-line tools for building and debugging Android apps
 cask "android-commandlinetools"
 # Toolset to implement parts of Android apps in native code
@@ -199,19 +170,13 @@ cask "insomnia"
 # GPU-based terminal emulator
 cask "kitty"
 # App to manage software development and track bugs
-cask "linear-linear"
+cask "linear"
 # Discover, download, and run local LLMs
 cask "lm-studio"
 # Optimise your webcam, headset, and Logi Dock for video meetings
 cask "logitune"
 # Screen and video recording software
 cask "loom"
-# Provides updates to various Microsoft products
-cask "microsoft-auto-update"
-# Office suite
-cask "microsoft-office"
-# Meet, chat, call, and collaborate in just one place
-cask "microsoft-teams"
 # Reverse proxy, secure introspectable tunnels to localhost
 cask "ngrok"
 # Open-source software for live streaming and screen recording
@@ -394,12 +359,9 @@ vscode "rvest.vs-code-prettier-eslint"
 vscode "saber2pr.ts-ast-viewer"
 vscode "sanjulaganepola.github-local-actions"
 vscode "sergelamikhov.lcov-lang"
-vscode "shopify.ruby-lsp"
-vscode "smithy.smithy-vscode-extension"
 vscode "stivo.tailwind-fold"
 vscode "streetsidesoftware.code-spell-checker"
 vscode "sumneko.lua"
-vscode "supabase.postgrestools"
 vscode "supernovaio.pulsar-vsc-extension"
 vscode "swiftlang.swift-vscode"
 vscode "tamasfe.even-better-toml"

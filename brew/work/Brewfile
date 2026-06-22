@@ -1,13 +1,6 @@
 tap "anomalyco/tap"
-tap "desdaemon/repo"
-tap "hashicorp/tap"
 tap "koekeishiya/formulae"
 tap "leoafarias/fvm"
-tap "modularml/packages"
-tap "schpet/tap"
-tap "sst/tap"
-tap "stripe/stripe-cli"
-tap "supabase/tap"
 # Code searching, linting, rewriting
 brew "ast-grep"
 # Automatic configure script builder
@@ -118,18 +111,10 @@ brew "zsh-autosuggestions"
 brew "zsh-syntax-highlighting"
 # The AI coding agent built for the terminal.
 brew "anomalyco/tap/opencode"
-# Official Language Server Protocol for the Kotlin language
-brew "jetbrains/utils/kotlin-lsp"
 # Simple hotkey-daemon for macOS.
 brew "koekeishiya/formulae/skhd"
 # Simple cli to manage Flutter SDK versions per project
 brew "leoafarias/fvm/fvm"
-# CLI tool for linear.app that uses git branch names and directory names to open issues and team pages
-brew "schpet/tap/linear"
-# Smithy CLI - A CLI for building, validating, querying, and iterating on Smithy models
-brew "smithy-lang/tap/smithy-cli"
-brew "stripe/stripe-cli/stripe"
-brew "supabase/tap/supabase"
 
 # ===================
 # TIER 1 - Essential (install first)
@@ -163,7 +148,7 @@ cask "font-hack-nerd-font"
 cask "daisydisk"
 cask "discord"
 cask "eul"
-cask "linear-linear"
+cask "linear"
 cask "lm-studio"
 cask "loom"
 cask "obsidian"
