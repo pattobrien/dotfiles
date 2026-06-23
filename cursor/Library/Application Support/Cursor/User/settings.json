@@ -385,7 +385,13 @@
   "chat.editing.alwaysSaveWithGeneratedChanges": true,
   "lldb.suppressUpdateNotifications": true,
   "tailwind-fold.autoFold": false,
-  "cursor.cpp.disabledLanguages": ["scminput", "mdx"],
+  "cursor.cpp.disabledLanguages": [
+    "markdown",
+    "scminput",
+    "mdx",
+    "yaml",
+    "typescript"
+  ],
   "debug.javascript.autoAttachFilter": "onlyWithFlag",
   "explorer.confirmDragAndDrop": false,
   "window.confirmSaveUntitledWorkspace": false,
