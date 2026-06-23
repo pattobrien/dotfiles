@@ -132,10 +132,18 @@
       "Bash(pnpm ls:*)",
       "WebFetch(domain:tsdown.dev)",
       "Bash(workmux config:*)",
-      "Bash(freeze -o /tmp/nvim-indent-test.png)"
+      "Bash(freeze -o /tmp/nvim-indent-test.png)",
+      "Bash(command -v xcodes)",
+      "Bash(xcodes version *)",
+      "Bash(echo \"xcodes: $\\(command -v xcodes && xcodes version \\)\")",
+      "Bash(command -v aria2c)",
+      "Bash(echo \"aria2c: $\\(command -v aria2c\\)\")"
     ],
     "deny": [],
-    "additionalDirectories": ["~/dev", "~"]
+    "additionalDirectories": [
+      "~/dev",
+      "~"
+    ]
   },
   "outputStyle": "default"
 }
