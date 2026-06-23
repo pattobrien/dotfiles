@@ -54,8 +54,24 @@ sh ~/.dotfiles/install essentials # zsh, 1password, cursor, cli tools
 sh ~/.dotfiles/install 1password  # signs into 1Password CLI, configures SSH agent
 sh ~/.dotfiles/install macos      # applies macOS system preferences
 sh ~/.dotfiles/install mise       # installs dev tools from .tool-versions (node, go, etc.)
+sh ~/.dotfiles/install xcode      # installs the latest Xcode.app via xcodes (needs 1password step)
 
 sh ~/.dotfiles/install personal   # all personal brew packages (or: work, runner, server)
+```
+
+### Installing the full Xcode app
+
+The `xcode` step installs the full **Xcode.app** with
+[`xcodes`](https://github.com/XcodesOrg/xcodes) (for just the Command Line
+Tools, see step 1). It reads the Apple ID from the 1Password "Apple" item and
+exports it as `XCODES_USERNAME` / `XCODES_PASSWORD`, so it depends on the
+`1password` step having run first (an active `op` session). The download is
+several GB, and on a new machine you'll be prompted once for an Apple two-factor
+code and for `sudo`.
+
+```sh
+sh ~/.dotfiles/install xcode                 # latest stable Xcode
+./scripts/setup_xcodes.zsh 16.2              # or a specific version
 ```
 
 ### 4. Set permissions

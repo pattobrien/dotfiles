@@ -1,6 +1,8 @@
 tap "anomalyco/tap"
 tap "koekeishiya/formulae"
 tap "leoafarias/fvm"
+# Download with resuming and segmented downloading
+brew "aria2"
 # Code searching, linting, rewriting
 brew "ast-grep"
 # Automatic configure script builder
@@ -101,6 +103,8 @@ brew "wget"
 brew "xcbeautify"
 # Build server protocol implementation for integrating Xcode with sourcekit-lsp
 brew "xcode-build-server"
+# Best command-line tool to install and switch between multiple versions of Xcode
+brew "xcodes"
 # General-purpose lossless data-compression library
 brew "zlib"
 # UNIX shell (command interpreter)

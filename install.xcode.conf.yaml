@@ -1,0 +1,12 @@
+- defaults:
+    shell:
+      stderr: true
+      stdout: true
+      stdin: true
+
+- shell:
+    # Installs the full Xcode.app via `xcodes`, reading the Apple ID from the
+    # 1Password "Apple" item. Needs the '1password' step done first (active op
+    # session) and prompts once for an Apple 2FA code + sudo.
+    - command: ./scripts/setup_xcodes.zsh
+      description: Installing the latest Xcode via xcodes (Apple ID from 1Password)
