@@ -5,12 +5,6 @@ Host *
     UseKeychain yes
     ServerAliveInterval 60
 
-# GitHub: auto-trust the host key on first connect (then pin it) so a fresh
-# machine doesn't fail host-key verification on the first SSH push/pull.
-Host github.com
-    StrictHostKeyChecking accept-new
-
-
 # Example of development environments (non-sensitive)
 # Host dev
 #     HostName dev.example.com

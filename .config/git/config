@@ -13,8 +13,17 @@
 	editor = code --wait
 [http]
 	postBuffer = 100000000
-[url "git@github.com:"]
-	insteadOf = https://github.com/
+# Route all GitHub traffic over HTTPS, rewriting any ssh-style git@github.com:
+# remotes to https. Public clones (e.g. lazy.nvim) and pushes then work on a
+# fresh machine without an SSH key configured.
+[url "https://github.com/"]
+	insteadOf = git@github.com:
+# Authenticate HTTPS pushes/pulls with the gh CLI's stored token (`gh auth
+# login`); this overrides the system osxkeychain helper for github.com.
+[credential "https://github.com"]
+	helper = !gh auth git-credential
+[credential "https://gist.github.com"]
+	helper = !gh auth git-credential
 [gpg]
 	format = ssh
 [gpg "ssh"]
