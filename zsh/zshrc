@@ -159,15 +159,15 @@ export PATH="$HOME/.local/share/mise/shims:$PATH"
 
 # source <(railway completion zsh)
 
-source ~/.dotfiles/zsh/python.zsh
-source ~/.dotfiles/zsh/credentials.zsh
-source ~/.dotfiles/zsh/flutter.zsh
-source ~/.dotfiles/zsh/aliases.zsh
-source ~/.dotfiles/zsh/go.zsh
-source ~/.dotfiles/zsh/php.zsh
-source ~/.dotfiles/zsh/ruby.zsh
-source ~/.dotfiles/zsh/completion-for-pnpm.zsh
-source ~/.dotfiles/zsh/completion-for-workmux.zsh
+source ~/dev/pattobrien/dotfiles/zsh/python.zsh
+source ~/dev/pattobrien/dotfiles/zsh/credentials.zsh
+source ~/dev/pattobrien/dotfiles/zsh/flutter.zsh
+source ~/dev/pattobrien/dotfiles/zsh/aliases.zsh
+source ~/dev/pattobrien/dotfiles/zsh/go.zsh
+source ~/dev/pattobrien/dotfiles/zsh/php.zsh
+source ~/dev/pattobrien/dotfiles/zsh/ruby.zsh
+source ~/dev/pattobrien/dotfiles/zsh/completion-for-pnpm.zsh
+source ~/dev/pattobrien/dotfiles/zsh/completion-for-workmux.zsh
 _zsh_cache_dir="${XDG_CACHE_HOME:-$HOME/.cache}/zsh"
 if [[ ! -f "$_zsh_cache_dir/wt_completions.zsh" ]] && command -v wt &>/dev/null; then
   mkdir -p "$_zsh_cache_dir"
@@ -175,8 +175,8 @@ if [[ ! -f "$_zsh_cache_dir/wt_completions.zsh" ]] && command -v wt &>/dev/null;
 fi
 [[ -f "$_zsh_cache_dir/wt_completions.zsh" ]] && source "$_zsh_cache_dir/wt_completions.zsh"
 
-if [ -f ~/.dotfiles/zsh/.env.zsh ]; then
-  source ~/.dotfiles/zsh/.env.zsh
+if [ -f ~/dev/pattobrien/dotfiles/zsh/.env.zsh ]; then
+  source ~/dev/pattobrien/dotfiles/zsh/.env.zsh
 fi
 
 bindkey -v # set up vim motions in interactive terminal

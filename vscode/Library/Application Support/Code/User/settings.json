@@ -165,7 +165,7 @@
   "editor.inlineSuggest.suppressInSnippetMode": true,
   // -- neovim --
   "vscode-neovim.neovimExecutablePaths.darwin": "/Users/pattobrien/.local/share/mise/installs/neovim/0.11.4/bin/nvim",
-  "vscode-neovim.neovimInitVimPaths.darwin": "$HOME/.dotfiles/nvim/init.lua",
+  "vscode-neovim.neovimInitVimPaths.darwin": "$HOME/dev/pattobrien/dotfiles/nvim/init.lua",
   "C_Cpp.intelliSenseCacheSize": 0,
   "C_Cpp.default.configurationProvider": "ms-vscode.cpptools",
   "C_Cpp.clang_format_style": "file",

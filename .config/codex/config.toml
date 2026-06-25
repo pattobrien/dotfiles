@@ -8,7 +8,7 @@ suppress_unstable_features_warning = true
 check_for_update_on_startup = false
 approvals_reviewer = "user"
 
-notify = ["/Users/pattobrien/.codex/computer-use/Codex Computer Use.app/Contents/SharedSupport/SkyComputerUseClient.app/Contents/MacOS/SkyComputerUseClient", "turn-ended", "--previous-notify", "[\"\\/Users\\/pattobrien\\/.dotfiles\\/.config\\/codex\\/notify.zsh\"]"]
+notify = ["/Users/pattobrien/.codex/computer-use/Codex Computer Use.app/Contents/SharedSupport/SkyComputerUseClient.app/Contents/MacOS/SkyComputerUseClient", "turn-ended", "--previous-notify", "[\"\\/Users\\/pattobrien\\/dev\\/pattobrien\\/dotfiles\\/.config\\/codex\\/notify.zsh\"]"]
 service_tier = "default"
 
 [projects."/Users/pattobrien/dev/getdots/meagain-bare"]
@@ -23,7 +23,7 @@ trust_level = "trusted"
 [projects."/Users/pattobrien"]
 trust_level = "trusted"
 
-[projects."/Users/pattobrien/.dotfiles"]
+[projects."/Users/pattobrien/dev/pattobrien/dotfiles"]
 trust_level = "trusted"
 
 [notice]
@@ -429,7 +429,7 @@ path = "/Users/pattobrien/.codex/plugins/cache/openai-primary-runtime/presentati
 enabled = false
 
 [[skills.config]]
-path = "/Users/pattobrien/.dotfiles/.agents/skills/remotion-best-practices/SKILL.md"
+path = "/Users/pattobrien/dev/pattobrien/dotfiles/.agents/skills/remotion-best-practices/SKILL.md"
 enabled = false
 
 [[skills.config]]

@@ -59,7 +59,7 @@ alias reload="source ~/.zshrc"
 alias resource="source ~/.zshrc"
 alias rss="source ~/.zshrc"
 
-alias linear-edit="$HOME/.dotfiles/scripts/linear-edit"
+alias linear-edit="$HOME/dev/pattobrien/dotfiles/scripts/linear-edit"
 
 alias cc="claude"
 alias ccr="claude --resume"

@@ -145,7 +145,7 @@ function buildNvimInstance(
         vim.cmd("nohlsearch")
       `);
       // Restore cwd to dotfiles root
-      await client.command("cd ~/.dotfiles");
+      await client.command("cd ~/dev/pattobrien/dotfiles");
       await client.command("normal! gg");
     },
 
@@ -214,8 +214,8 @@ function buildNvimInstance(
         violations.push(`stale buffers: ${stale.join(", ")}`);
 
       // cwd should be the dotfiles root
-      if (!state.cwd.endsWith(".dotfiles")) {
-        violations.push(`cwd: expected *.dotfiles, got '${state.cwd}'`);
+      if (!state.cwd.endsWith("/dotfiles")) {
+        violations.push(`cwd: expected */dotfiles, got '${state.cwd}'`);
       }
 
       return violations;

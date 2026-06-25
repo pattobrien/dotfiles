@@ -1,12 +1,12 @@
 #!/bin/sh
 
 # Script to stow VSCode configuration files.
-# Assumes dotfiles are in ~/.dotfiles and the package is named 'vscode'.
+# Assumes dotfiles are in ~/dev/pattobrien/dotfiles and the package is named 'vscode'.
 
 # Exit on error
 set -e
 
-DOTFILES_DIR="$HOME/.dotfiles"
+DOTFILES_DIR="$HOME/dev/pattobrien/dotfiles"
 PACKAGE="vscode"
 TARGET_DIR="$HOME"
 

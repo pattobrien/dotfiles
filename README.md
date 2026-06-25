@@ -38,7 +38,7 @@ xcode-select --install
 ### 2. Clone repository
 
 ```sh
-git clone https://github.com/pattobrien/dotfiles.git ~/.dotfiles
+git clone https://github.com/pattobrien/dotfiles.git ~/dev/pattobrien/dotfiles
 ```
 
 ### 3. Run dotbot install script
@@ -48,30 +48,19 @@ supports syncing the settings of various applications to dotfiles (e.g. `kitty`,
 `skhd`).
 
 ```sh
-sh ~/.dotfiles/install            # symlinks dotfiles to ~, creates ~/dev
-sh ~/.dotfiles/install homebrew   # installs Homebrew package manager
-sh ~/.dotfiles/install essentials # zsh, 1password, cursor, cli tools
-sh ~/.dotfiles/install 1password  # signs into 1Password CLI, configures SSH agent
-sh ~/.dotfiles/install macos      # applies macOS system preferences
-sh ~/.dotfiles/install mise       # installs dev tools from .tool-versions (node, go, etc.)
-sh ~/.dotfiles/install xcode      # installs the latest Xcode.app via xcodes (needs 1password step)
+# symlink dotfiles into ~ and create ~/dev
+sh ~/dev/pattobrien/dotfiles/install
 
-sh ~/.dotfiles/install personal   # all personal brew packages (or: work, runner, server)
-```
+# essential installs and setups
+sh ~/dev/pattobrien/dotfiles/install homebrew
+sh ~/dev/pattobrien/dotfiles/install essentials
+sh ~/dev/pattobrien/dotfiles/install 1password
+sh ~/dev/pattobrien/dotfiles/install macos
+sh ~/dev/pattobrien/dotfiles/install mise
+sh ~/dev/pattobrien/dotfiles/install xcode
 
-### Installing the full Xcode app
-
-The `xcode` step installs the full **Xcode.app** with
-[`xcodes`](https://github.com/XcodesOrg/xcodes) (for just the Command Line
-Tools, see step 1). It reads the Apple ID from the 1Password "Apple" item and
-exports it as `XCODES_USERNAME` / `XCODES_PASSWORD`, so it depends on the
-`1password` step having run first (an active `op` session). The download is
-several GB, and on a new machine you'll be prompted once for an Apple two-factor
-code and for `sudo`.
-
-```sh
-sh ~/.dotfiles/install xcode                 # latest stable Xcode
-./scripts/setup_xcodes.zsh 16.2              # or a specific version
+# optional installs (personal, work, runner, server)
+sh ~/dev/pattobrien/dotfiles/install personal
 ```
 
 ### 4. Set permissions
@@ -89,7 +78,7 @@ chmod +x ~/.local/scripts/tmux-sessionizer
 Dumps a snapshot of all brew-installed applications.
 
 ```sh
-brew bundle dump --force --describe --file=~/.dotfiles/brew/personal/Brewfile
+brew bundle dump --force --describe --file=~/dev/pattobrien/dotfiles/brew/personal/Brewfile
 ```
 
 ## Keyboard Shortcuts
