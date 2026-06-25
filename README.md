@@ -71,21 +71,6 @@ Sets permissions for required files (only required once on the system)
 chmod +x ~/.local/scripts/tmux-sessionizer
 ```
 
-### 5. Grant Hammerspoon Accessibility permission
-
-The `essentials` step installs Hammerspoon, and the base install symlinks
-`~/.hammerspoon` (config + the vendored `Hammerflow.spoon`). Two one-time manual
-steps remain after the first launch:
-
-1. Launch **Hammerspoon** and grant it **Accessibility** access when prompted
-   (System Settings → Privacy & Security → Accessibility). This is required for
-   the Hammerflow leader-key and the direct hotkeys.
-2. In the Hammerspoon menu-bar icon, enable **"Launch Hammerspoon at login"**.
-
-The Hammerflow leader key is **Right Cmd**, which Karabiner remaps to **F18**
-(see `karabiner/karabiner.json`), so the `karabiner-elements` cask and its
-symlinked config must be active for the leader to work.
-
 ## Maintenance
 
 ### Brew Dump
