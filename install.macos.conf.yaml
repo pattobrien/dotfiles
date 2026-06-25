@@ -5,8 +5,11 @@
       stdin: true
 
 - shell:
-    - command: macos-defaults apply ~/.config/macos-defaults
-      description: Applying macOS defaults
+    - command: ./scripts/setup_macos.zsh
+      description: |
+        Applying macOS defaults: YAML configs (macos-defaults) AND shell-based
+        scripts in ~/.config/macos-defaults/*.sh (e.g. screenshot save location).
+        Note: mouse/trackpad scaling require a logout or restart to take effect.
 
     - description: |
         Key-repeat speed (see: https://mac-key-repeat.zaymon.dev)

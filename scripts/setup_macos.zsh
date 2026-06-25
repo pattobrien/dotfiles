@@ -18,4 +18,4 @@ for script in ~/.config/macos-defaults/*.sh; do
 done
 
 echo "\n<<< macOS Setup Complete. >>>\n"
-echo "Note: Some changes may require a logout or restart to take effect."
+echo "Note: mouse/trackpad scaling (and some other settings) require a logout or restart to take effect."

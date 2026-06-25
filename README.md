@@ -63,6 +63,9 @@ sh ~/dev/pattobrien/dotfiles/install xcode
 sh ~/dev/pattobrien/dotfiles/install personal
 ```
 
+> **Note:** Some macOS settings (e.g. mouse/trackpad scaling, key repeat) only
+> take effect after a logout or restart once the `install macos` step has run.
+
 ### 4. Set permissions
 
 Sets permissions for required files (only required once on the system)
