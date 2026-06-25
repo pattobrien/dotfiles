@@ -13,7 +13,7 @@ key_maps_per_line = 3 # optional, default 5, number of key maps per line in the 
 
 # bluetooth shortcuts
 a = [
-  "cmd:/Users/pattobrien/.dotfiles/scripts/airpods-toggle fc-b2-14-ee-4f-36",
+  "cmd:/Users/pattobrien/dev/pattobrien/dotfiles/scripts/airpods-toggle fc-b2-14-ee-4f-36",
   "AirPods Pro",
 ]
 

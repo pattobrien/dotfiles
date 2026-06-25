@@ -5,7 +5,7 @@ import { basename, dirname, join } from "node:path";
 
 import type { Project } from "./models";
 
-const DEFAULT_DIRS = [join(homedir(), "dev"), join(homedir(), ".dotfiles")];
+const DEFAULT_DIRS = [join(homedir(), "dev")];
 
 function fdFind(
   pattern: string,

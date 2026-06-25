@@ -5,7 +5,7 @@
   "oxc.enable.oxfmt": true,
   // "oxc.requireConfig": false,
   "oxc.path.oxfmt": "/Users/pattobrien/.local/share/mise/shims/oxfmt",
-  "oxc.fmt.configPath": "/Users/pattobrien/.dotfiles/.oxfmtrc.json",
+  "oxc.fmt.configPath": "/Users/pattobrien/dev/pattobrien/dotfiles/.oxfmtrc.json",
   "terminal.integrated.shellIntegration.enabled": true,
   "terminal.integrated.profiles.osx": {
     "zsh": {

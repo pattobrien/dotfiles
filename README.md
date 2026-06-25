@@ -38,7 +38,7 @@ xcode-select --install
 ### 2. Clone repository
 
 ```sh
-git clone https://github.com/pattobrien/dotfiles.git ~/.dotfiles
+git clone https://github.com/pattobrien/dotfiles.git ~/dev/pattobrien/dotfiles
 ```
 
 ### 3. Run dotbot install script
@@ -48,30 +48,19 @@ supports syncing the settings of various applications to dotfiles (e.g. `kitty`,
 `skhd`).
 
 ```sh
-sh ~/.dotfiles/install            # symlinks dotfiles to ~, creates ~/dev
-sh ~/.dotfiles/install homebrew   # installs Homebrew package manager
-sh ~/.dotfiles/install essentials # zsh, 1password, cursor, cli tools
-sh ~/.dotfiles/install 1password  # signs into 1Password CLI, configures SSH agent
-sh ~/.dotfiles/install macos      # applies macOS system preferences
-sh ~/.dotfiles/install mise       # installs dev tools from .tool-versions (node, go, etc.)
-sh ~/.dotfiles/install xcode      # installs the latest Xcode.app via xcodes (needs 1password step)
+# symlink dotfiles into ~ and create ~/dev
+sh ~/dev/pattobrien/dotfiles/install
 
-sh ~/.dotfiles/install personal   # all personal brew packages (or: work, runner, server)
-```
+# essential installs and setups
+sh ~/dev/pattobrien/dotfiles/install homebrew
+sh ~/dev/pattobrien/dotfiles/install essentials
+sh ~/dev/pattobrien/dotfiles/install 1password
+sh ~/dev/pattobrien/dotfiles/install macos
+sh ~/dev/pattobrien/dotfiles/install mise
+sh ~/dev/pattobrien/dotfiles/install xcode
 
-### Installing the full Xcode app
-
-The `xcode` step installs the full **Xcode.app** with
-[`xcodes`](https://github.com/XcodesOrg/xcodes) (for just the Command Line
-Tools, see step 1). It reads the Apple ID from the 1Password "Apple" item and
-exports it as `XCODES_USERNAME` / `XCODES_PASSWORD`, so it depends on the
-`1password` step having run first (an active `op` session). The download is
-several GB, and on a new machine you'll be prompted once for an Apple two-factor
-code and for `sudo`.
-
-```sh
-sh ~/.dotfiles/install xcode                 # latest stable Xcode
-./scripts/setup_xcodes.zsh 16.2              # or a specific version
+# optional installs (personal, work, runner, server)
+sh ~/dev/pattobrien/dotfiles/install personal
 ```
 
 ### 4. Set permissions
@@ -89,7 +78,7 @@ chmod +x ~/.local/scripts/tmux-sessionizer
 Dumps a snapshot of all brew-installed applications.
 
 ```sh
-brew bundle dump --force --describe --file=~/.dotfiles/brew/personal/Brewfile
+brew bundle dump --force --describe --file=~/dev/pattobrien/dotfiles/brew/personal/Brewfile
 ```
 
 ## Keyboard Shortcuts
@@ -161,50 +150,59 @@ macOS to re-create it in the same broken state.
 - [x] BUG: tmux requirement in .zshrc causes terminal crash when tmux is not yet
       installed
 - [x] Add VSCode config
-- [ ] Steps for initializing TMUX plugins
-- [ ] setup 1password in case passwords are needed for app installations
-- [ ] can `xcode-select --install` be run from the install script?
-- [ ] docs: setup navigation when holding down hjkl on mac
-  - see:
-    https://github.com/vscode-neovim/vscode-neovim/issues/2170#issuecomment-2569887113
+- [x] Steps for initializing TMUX plugins
+- [x] setup 1password in case passwords are needed for app installations
+- [x] can `xcode-select --install` be run from the install script?
 - [x] does asdf have a zsh autocomplete plugin?
+- [ ] Raycast settings import script (Cloud Sync is premium; the exported
+      `.config/macos-defaults/exports/raycast.yaml` is currently never applied)
 
-### Notes from Fern setup
+### Notes from previous setup runs
 
-- existing zshrc file not overridden (probably good)'
-- error:
+- [x] existing zshrc file not overridden (probably good)
+- [x] error: zshrc sourced oh-my-zsh.sh before it existed — `setup_omz.zsh` now
+      installs Oh My Zsh first
 
 ```
 /Users/fern/.zshrc:source:97: no such file or directory: /Users/fern/.oh-my-zsh/oh-my-zsh.sh
 ```
 
 - brew: too many apps were installed
-  - should maintain a `work` set of apps
+  - [x] should maintain a `work` set of apps
 - mac settings
-  - mouse/trackpad
-  - window / desktop transition
-  - finder settings
-  - apple account signed in? (should this just be a part of the get started
+  - [x] mouse/trackpad
+  - [ ] window / desktop transition
+  - [x] finder settings
+  - [ ] apple account signed in? (should this just be a part of the get started
     guide?)
-  - accessibility/privacy settings per-app (e.g. Zoom needs screen-share access)
-  - settings for apps that open on startup
+  - [ ] accessibility/privacy settings per-app (e.g. Zoom needs screen-share
+    access)
+  - [ ] settings for apps that open on startup
     - BetterTouchTool
     - RayCast
     - 1Password
-  - auto-hide dock
-  - allow holding down `hjkl` keys (I think this was a keyboard config?)
-  - raycast did not override command+K
-- vscode settings / profile not setup
-  - note: extensions are set up (via brew), but not user settings
-    (`~/Library/Application Support/Code/User/settings.json`)
+    - eul
+  - [x] auto-hide dock
+  - [x] allow holding down `hjkl` keys (I think this was a keyboard config?)
+  - [ ] raycast did not override command+K
+  - [ ] dock apps
+- [ ] apps that require settings sync
+  - [ ] eul
+  - [ ] raycast
+  - [ ] shottr
+  - [ ] Messages (disable notification sounds)
+  - [ ] 
+- [x] vscode settings / profile (synced via `stow_vscode.sh`; extensions via
+      brew)
 - manual app setup steps:
-  - 1password sign-in
-  - github sign-in
-- make `/dev` default directory
+  - [x] 1password sign-in
+  - [ ] github sign-in
+- [ ] make `/dev` default directory
 - chrome settings
-  - 1password extensions (and others)
-  - bookmarks?
-- install default sdks (asdf, fvm)
+  - [ ] 1password extensions (and others)
+  - [ ] bookmarks?
+- [x] install default sdks (migrated asdf → mise; `mise install` bootstraps from
+      config)
   - e.g. `fvm install stable && fvm install beta && fvm install master`
   - sdks to install:
     - flutter (fvm)
@@ -219,9 +217,66 @@ asdf install golang latest && asdf install nodejs latest && asdf plugin install 
 asdf global golang latest && asdf global nodejs latest && asdf global deno latest
 ```
 
-- automatically accept xcode license (`xcodebuild -license accept`)
-- needed to comment out `1password` zsh plugin in `.zshrc`, because `op` doesnt
-  have the proper permissions
+- [ ] automatically accept xcode license (`xcodebuild -license accept`)
+- [x] needed to comment out `1password` zsh plugin in `.zshrc`, because `op`
+      doesnt have the proper permissions (now re-enabled)
 - xcode select tools:
-  - update to latest version (using `softwareupdate` ?)
-  - approve terms (using `softwareupdate` ?)
+  - [ ] update to latest version (using `softwareupdate` ?)
+  - [ ] approve terms (using `softwareupdate` ?)
+
+### TODO: Agentic App Authorization
+
+Using Claude Code + computer_use/browser_use plugins to authorize apps using 
+the credentials stored in 1password (without the agent needing to copy/paste
+credentials into it's session).
+
+- web apps:
+  - chrome profile login
+  - google apps (e.g. gmail)
+  - github
+  - claude
+  - reddit (personal)
+  - vercel
+  - expo
+  - neon DB
+  - cursor
+  - vs-code
+  - youtube (personal account, which has YT red/premium)
+  - figma (personal)
+  - linear (personal)
+  - spotify
+  - raycast
+- desktop apps (most use web-based oauth):
+  - claude desktop
+  - cursor
+  - spotify
+  - linear
+  - vscode
+  - codex app
+  - figma
+  - raycast
+  - chatgpt
+  - slack
+  - discord
+  - zoom
+  - loom
+  - docker-desktop
+  - expo-orbit
+  - brave-browser
+  - android-studio
+  - obsidian
+  - shottr (license setup)
+- desktop apps (no auth needed, just need to be opened to initialize)
+  - karabiner elements
+- cli apps (most use web-based oauth):
+  - claude-code
+  - gh
+  - vercel
+  - expo
+  - linear
+  - neon
+  - doctl
+  - flyctl
+  - railway
+  - mas
+

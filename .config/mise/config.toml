@@ -32,4 +32,4 @@ sentry-cli = "latest"
 
 [tasks.dotfiles]
 description = "Navigate to dotfiles"
-run = "cd ~/.dotfiles && exec $SHELL"
+run = "cd ~/dev/pattobrien/dotfiles && exec $SHELL"

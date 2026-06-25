@@ -9,9 +9,6 @@
 # on the first login from a new machine, and sudo is needed to place the app and
 # run its first launch.
 #
-# This installs the full Xcode.app. For just the Command Line Tools (and license
-# acceptance), see setup_xcode.zsh.
-#
 # Usage: setup_xcodes.zsh [version]   # defaults to the latest stable release
 
 set -euo pipefail
@@ -54,6 +51,18 @@ if [ -n "$VERSION" ]; then
 else
   info "Installing the latest Xcode (downloads several GB; this can take a while)..."
   xcodes install --latest --select
+fi
+
+# Consolidate to a single real /Applications/Xcode.app — symlinks aren't indexed
+# by Spotlight/Raycast, and renaming keeps old versions from piling up.
+selected="$(xcode-select -p)"
+bundle="${selected%/Contents/Developer}"
+[ -L "$bundle" ] && bundle="$(readlink "$bundle")"
+if [ "$bundle" != "/Applications/Xcode.app" ]; then
+  info "Renaming $bundle -> /Applications/Xcode.app..."
+  sudo rm -rf /Applications/Xcode.app
+  sudo mv "$bundle" /Applications/Xcode.app
+  sudo xcode-select -s /Applications/Xcode.app
 fi
 
 info "Done. Active developer dir: $(xcode-select -p)"
