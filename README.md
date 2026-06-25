@@ -150,50 +150,51 @@ macOS to re-create it in the same broken state.
 - [x] BUG: tmux requirement in .zshrc causes terminal crash when tmux is not yet
       installed
 - [x] Add VSCode config
-- [ ] Steps for initializing TMUX plugins
-- [ ] setup 1password in case passwords are needed for app installations
-- [ ] can `xcode-select --install` be run from the install script?
-- [ ] docs: setup navigation when holding down hjkl on mac
-  - see:
-    https://github.com/vscode-neovim/vscode-neovim/issues/2170#issuecomment-2569887113
+- [x] Steps for initializing TMUX plugins
+- [x] setup 1password in case passwords are needed for app installations
+- [x] can `xcode-select --install` be run from the install script?
 - [x] does asdf have a zsh autocomplete plugin?
+- [ ] Raycast settings import script (Cloud Sync is premium; the exported
+      `.config/macos-defaults/exports/raycast.yaml` is currently never applied)
 
 ### Notes from Fern setup
 
-- existing zshrc file not overridden (probably good)'
-- error:
+- [x] existing zshrc file not overridden (probably good)
+- [x] error: zshrc sourced oh-my-zsh.sh before it existed — `setup_omz.zsh` now
+      installs Oh My Zsh first
 
 ```
 /Users/fern/.zshrc:source:97: no such file or directory: /Users/fern/.oh-my-zsh/oh-my-zsh.sh
 ```
 
 - brew: too many apps were installed
-  - should maintain a `work` set of apps
+  - [x] should maintain a `work` set of apps
 - mac settings
-  - mouse/trackpad
-  - window / desktop transition
-  - finder settings
-  - apple account signed in? (should this just be a part of the get started
+  - [x] mouse/trackpad
+  - [ ] window / desktop transition
+  - [x] finder settings
+  - [ ] apple account signed in? (should this just be a part of the get started
     guide?)
-  - accessibility/privacy settings per-app (e.g. Zoom needs screen-share access)
-  - settings for apps that open on startup
+  - [ ] accessibility/privacy settings per-app (e.g. Zoom needs screen-share
+    access)
+  - [ ] settings for apps that open on startup
     - BetterTouchTool
     - RayCast
     - 1Password
-  - auto-hide dock
-  - allow holding down `hjkl` keys (I think this was a keyboard config?)
-  - raycast did not override command+K
-- vscode settings / profile not setup
-  - note: extensions are set up (via brew), but not user settings
-    (`~/Library/Application Support/Code/User/settings.json`)
+  - [x] auto-hide dock
+  - [x] allow holding down `hjkl` keys (I think this was a keyboard config?)
+  - [ ] raycast did not override command+K
+- [x] vscode settings / profile (synced via `stow_vscode.sh`; extensions via
+      brew)
 - manual app setup steps:
-  - 1password sign-in
-  - github sign-in
-- make `/dev` default directory
+  - [x] 1password sign-in
+  - [ ] github sign-in
+- [ ] make `/dev` default directory
 - chrome settings
-  - 1password extensions (and others)
-  - bookmarks?
-- install default sdks (asdf, fvm)
+  - [ ] 1password extensions (and others)
+  - [ ] bookmarks?
+- [x] install default sdks (migrated asdf → mise; `mise install` bootstraps from
+      config)
   - e.g. `fvm install stable && fvm install beta && fvm install master`
   - sdks to install:
     - flutter (fvm)
@@ -208,9 +209,49 @@ asdf install golang latest && asdf install nodejs latest && asdf plugin install 
 asdf global golang latest && asdf global nodejs latest && asdf global deno latest
 ```
 
-- automatically accept xcode license (`xcodebuild -license accept`)
-- needed to comment out `1password` zsh plugin in `.zshrc`, because `op` doesnt
-  have the proper permissions
+- [ ] automatically accept xcode license (`xcodebuild -license accept`)
+- [x] needed to comment out `1password` zsh plugin in `.zshrc`, because `op`
+      doesnt have the proper permissions (now re-enabled)
 - xcode select tools:
-  - update to latest version (using `softwareupdate` ?)
-  - approve terms (using `softwareupdate` ?)
+  - [ ] update to latest version (using `softwareupdate` ?)
+  - [ ] approve terms (using `softwareupdate` ?)
+
+### TODO: Agentic App Authorization
+
+Using Claude Code + computer_use/browser_use plugins to authorize apps using 
+the credentials stored in 1password (without the agent needing to copy/paste
+credentials into it's session).
+
+- web apps:
+  - chrome profile login
+  - google apps (e.g. gmail)
+  - github
+  - claude
+  - reddit (personal)
+  - vercel
+  - expo
+  - neon DB
+  - cursor
+  - vs-code
+  - youtube (personal account, which has YT red/premium)
+  - figma (personal)
+  - linear (personal)
+  - spotify
+  - raycast
+- desktop apps (most use web-based oauth):
+  - claude desktop
+  - cursor
+  - spotify
+  - linear
+  - vscode
+  - codex app
+  - figma
+  - raycast
+- cli apps (most use web-based oauth):
+  - claude-code
+  - gh
+  - vercel
+  - expo
+  - linear
+  - neon
+
