@@ -9,9 +9,6 @@
 # on the first login from a new machine, and sudo is needed to place the app and
 # run its first launch.
 #
-# This installs the full Xcode.app. For just the Command Line Tools (and license
-# acceptance), see setup_xcode.zsh.
-#
 # Usage: setup_xcodes.zsh [version]   # defaults to the latest stable release
 
 set -euo pipefail
@@ -55,5 +52,11 @@ else
   info "Installing the latest Xcode (downloads several GB; this can take a while)..."
   xcodes install --latest --select
 fi
+
+# xcodes installs Xcode-<version>.app; keep a stable /Applications/Xcode.app symlink pointed at it.
+info "Pointing /Applications/Xcode.app at the installed version..."
+selected="$(xcode-select -p)"
+sudo ln -sfn "${selected%/Contents/Developer}" /Applications/Xcode.app
+sudo xcode-select -s /Applications/Xcode.app
 
 info "Done. Active developer dir: $(xcode-select -p)"
