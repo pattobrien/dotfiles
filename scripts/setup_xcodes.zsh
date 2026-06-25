@@ -53,10 +53,16 @@ else
   xcodes install --latest --select
 fi
 
-# xcodes installs Xcode-<version>.app; keep a stable /Applications/Xcode.app symlink pointed at it.
-info "Pointing /Applications/Xcode.app at the installed version..."
+# Consolidate to a single real /Applications/Xcode.app — symlinks aren't indexed
+# by Spotlight/Raycast, and renaming keeps old versions from piling up.
 selected="$(xcode-select -p)"
-sudo ln -sfn "${selected%/Contents/Developer}" /Applications/Xcode.app
-sudo xcode-select -s /Applications/Xcode.app
+bundle="${selected%/Contents/Developer}"
+[ -L "$bundle" ] && bundle="$(readlink "$bundle")"
+if [ "$bundle" != "/Applications/Xcode.app" ]; then
+  info "Renaming $bundle -> /Applications/Xcode.app..."
+  sudo rm -rf /Applications/Xcode.app
+  sudo mv "$bundle" /Applications/Xcode.app
+  sudo xcode-select -s /Applications/Xcode.app
+fi
 
 info "Done. Active developer dir: $(xcode-select -p)"
