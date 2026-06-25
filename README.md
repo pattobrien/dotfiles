@@ -268,7 +268,10 @@ credentials into it's session).
   - shottr (license setup)
 - desktop apps (no auth needed, just need to be opened to initialize)
   - karabiner elements
-  - hammerspoon (grant Accessibility on first launch)
+- macOS permissions (grant via System Settings → Privacy & Security)
+  - [ ] script to check each app's granted permissions (query TCC.db)
+  - hammerspoon (Accessibility)
+  - kitty (Full Disk Access)
 - cli apps (most use web-based oauth):
   - claude-code
   - gh
