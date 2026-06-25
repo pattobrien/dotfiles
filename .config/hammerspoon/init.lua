@@ -7,6 +7,9 @@ hs.loadSpoon("EmmyLua")
 -- Enable IPC for CLI communication (`hs` command)
 require("hs.ipc")
 
+-- Register Hammerspoon as a login item so it starts on boot
+hs.autoLaunch(true)
+
 -- Reload config automatically when this file changes
 hs.loadSpoon("ReloadConfiguration")
 spoon.ReloadConfiguration:start()

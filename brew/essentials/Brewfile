@@ -39,3 +39,7 @@ cask "raycast"
 
 # Keyboard customizer (reads ~/.config/karabiner, symlinked by the base install)
 cask "karabiner-elements"
+
+# Hammerspoon + Hammerflow leader-key bindings (reads ~/.hammerspoon, symlinked
+# by the base install; Karabiner maps Right Cmd -> F18 as the leader)
+cask "hammerspoon"
