@@ -157,7 +157,7 @@ macOS to re-create it in the same broken state.
 - [ ] Raycast settings import script (Cloud Sync is premium; the exported
       `.config/macos-defaults/exports/raycast.yaml` is currently never applied)
 
-### Notes from Fern setup
+### Notes from previous setup runs
 
 - [x] existing zshrc file not overridden (probably good)
 - [x] error: zshrc sourced oh-my-zsh.sh before it existed — `setup_omz.zsh` now
@@ -181,9 +181,17 @@ macOS to re-create it in the same broken state.
     - BetterTouchTool
     - RayCast
     - 1Password
+    - eul
   - [x] auto-hide dock
   - [x] allow holding down `hjkl` keys (I think this was a keyboard config?)
   - [ ] raycast did not override command+K
+  - [ ] dock apps
+- [ ] apps that require settings sync
+  - [ ] eul
+  - [ ] raycast
+  - [ ] shottr
+  - [ ] Messages (disable notification sounds)
+  - [ ] 
 - [x] vscode settings / profile (synced via `stow_vscode.sh`; extensions via
       brew)
 - manual app setup steps:
@@ -257,6 +265,9 @@ credentials into it's session).
   - brave-browser
   - android-studio
   - obsidian
+  - shottr (license setup)
+- desktop apps (no auth needed, just need to be opened to initialize)
+  - karabiner elements
 - cli apps (most use web-based oauth):
   - claude-code
   - gh
