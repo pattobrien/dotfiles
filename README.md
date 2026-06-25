@@ -247,6 +247,16 @@ credentials into it's session).
   - codex app
   - figma
   - raycast
+  - chatgpt
+  - slack
+  - discord
+  - zoom
+  - loom
+  - docker-desktop
+  - expo-orbit
+  - brave-browser
+  - android-studio
+  - obsidian
 - cli apps (most use web-based oauth):
   - claude-code
   - gh
@@ -254,4 +264,8 @@ credentials into it's session).
   - expo
   - linear
   - neon
+  - doctl
+  - flyctl
+  - railway
+  - mas
 

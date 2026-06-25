@@ -140,8 +140,6 @@ cask "appcleaner"
 cask "brave-browser"
 # OpenAI's official ChatGPT desktop app
 cask "chatgpt"
-# OpenAI's official browser with ChatGPT built in
-cask "chatgpt-atlas"
 # Free and open-source web browser
 cask "chromium"
 # Anthropic's official Claude AI desktop app
@@ -169,14 +167,10 @@ cask "focusrite-control-2"
 cask "font-hack-nerd-font"
 # Web browser
 cask "google-chrome"
-# HTTP and GraphQL Client
-cask "insomnia"
 # GPU-based terminal emulator
 cask "kitty"
 # App to manage software development and track bugs
 cask "linear"
-# Discover, download, and run local LLMs
-cask "lm-studio"
 # Optimise your webcam, headset, and Logi Dock for video meetings
 cask "logitune"
 # Screen and video recording software
@@ -193,8 +187,6 @@ cask "parallels-toolbox"
 cask "pearcleaner"
 # Administration and development platform for PostgreSQL
 cask "pgadmin4"
-# Collaboration platform for API development
-cask "postman"
 # Peer to peer Bitorrent client
 cask "qbittorrent"
 # Control your tools with a few keystrokes
