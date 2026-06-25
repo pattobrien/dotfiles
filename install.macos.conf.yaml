@@ -16,4 +16,7 @@
         defaults write -g KeyRepeat -int 5
         defaults write -g ApplePressAndHoldEnabled -bool false
 
+    - command: ./scripts/setup_touchid_sudo.zsh
+      description: Enabling Touch ID for sudo (works in tmux via pam_reattach)
+
     # TODO: "Reduce Motion" in accessibility settings

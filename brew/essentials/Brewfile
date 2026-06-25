@@ -14,6 +14,8 @@ brew "eza"
 brew "tree"
 brew "tmux"
 brew "raine/workmux/workmux"
+# Touch ID for sudo inside tmux (see scripts/setup_touchid_sudo.zsh)
+brew "pam-reattach"
 brew "wget"
 brew "curl"
 
