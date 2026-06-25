@@ -107,6 +107,12 @@ FPATH="$HOMEBREW_PREFIX/share/zsh/site-functions:${FPATH}"
 # Docker CLI completions (must be before oh-my-zsh.sh so compinit picks them up in one pass)
 fpath=(/Users/pattobrien/.docker/completions $fpath)
 
+# Trust per-worktree and per-project mise configs. Must be set BEFORE oh-my-zsh
+# activates the mise plugin (below), since `mise activate` runs an initial hook
+# that reads this var immediately — otherwise new shells opened inside a worktree
+# spam "config files are not trusted" before the export later in this file runs.
+export MISE_TRUSTED_CONFIG_PATHS="$HOME/.dotfiles__worktrees:$HOME/dev/pattobrien"
+
 source $ZSH/oh-my-zsh.sh
 
 # fzf: Catppuccin Mocha theme (matches kitty theme)
@@ -153,8 +159,8 @@ export KUBE_CONFIG_PATH="$HOME/.kube/config"
 
 PATH=$PATH:~/.local/bin
 
-# mise is activated via oh-my-zsh plugin
-export MISE_TRUSTED_CONFIG_PATHS="$HOME/.dotfiles__worktrees:$HOME/dev/pattobrien"
+# mise is activated via oh-my-zsh plugin (MISE_TRUSTED_CONFIG_PATHS set above,
+# before the plugin loads). Add mise shims to PATH for stable executable paths.
 export PATH="$HOME/.local/share/mise/shims:$PATH"
 
 # source <(railway completion zsh)
