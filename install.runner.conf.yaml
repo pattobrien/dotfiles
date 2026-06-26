@@ -8,6 +8,6 @@
       stdin: true
 
 - shell:
-    - command: brew bundle --file brew/runner/Brewfile
+    - command: ./scripts/brew_bundle.zsh brew/runner/Brewfile
     - command: ./scripts/dequarantine.zsh
       description: Removing the quarantine flag from installed apps
