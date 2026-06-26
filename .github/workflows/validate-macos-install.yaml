@@ -1,0 +1,108 @@
+name: Validate macOS Install
+
+# Validates the README "fresh macOS install" flow (Setup steps 2 & 3) one script
+# at a time, on a Namespace macOS runner (profile: `mac`). Each install step is
+# its own named job step, so a red X points straight at the script that broke.
+#
+# Intentionally skipped — these can't run on a headless runner:
+#   - `./install 1password` — gated behind the 1Password *desktop app* GUI toggle;
+#     scripts/1password_cli_signin.sh blocks on `read` and would hang with no TTY.
+#   - `./install xcode` — needs an Apple ID (from 1Password) + an interactive 2FA
+#     code and a multi-GB Xcode.app download.
+# Both could be enabled later: Namespace macOS runners can be graphical over VNC
+# (https://namespace.so/docs/reference/cli/vnc), and the scripts could take a
+# CI path driven by a 1Password service-account token + an Apple ID
+# app-specific-password secret.
+
+on:
+  pull_request:
+    paths:
+      - "install"
+      - "install*.conf.yaml"
+      - "scripts/**"
+      - "brew/**"
+      - ".config/mise/config.toml"
+      - ".config/asdf/.tool-versions"
+      - ".config/macos-defaults/**"
+      - ".github/workflows/validate-macos-install.yaml"
+  workflow_dispatch:
+
+# A new push to the PR cancels the in-flight run (macOS runners are slow + paid).
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate-install:
+    runs-on: namespace-profile-mac
+    # The full sequence (brew bundles + `mise install` of the whole SDK list) is
+    # long; give it plenty of headroom.
+    timeout-minutes: 120
+
+    steps:
+      # --- README Setup step 2: clone the repo --------------------------------
+      # A plain `git clone` does NOT pull submodules — and that's the point: the
+      # base `./install` is what inits the `dotbot` submodule, so we deliberately
+      # do not fetch submodules here, to validate that path.
+      - name: "Step 2 — checkout repo"
+        uses: actions/checkout@v4
+
+      # The README clones into ~/dev/pattobrien/dotfiles. Reproduce that exact
+      # path so anything assuming it (and the base install's `create: ~/dev`) is
+      # exercised the same way a real machine would.
+      - name: "Step 2 — place repo at ~/dev/pattobrien/dotfiles"
+        run: |
+          set -euxo pipefail
+          mkdir -p "$HOME/dev/pattobrien"
+          rsync -a "$GITHUB_WORKSPACE/" "$HOME/dev/pattobrien/dotfiles/"
+          echo "DOTFILES=$HOME/dev/pattobrien/dotfiles" >> "$GITHUB_ENV"
+
+      # --- README Setup step 3: run each install script in order --------------
+      - name: "Step 3 — ./install  (base symlinks, ~/dev, dotbot submodule)"
+        working-directory: ${{ env.DOTFILES }}
+        run: ./install
+
+      - name: "Step 3 — ./install homebrew"
+        working-directory: ${{ env.DOTFILES }}
+        run: ./install homebrew
+
+      # CI `run:` shells are non-login/non-interactive and never source the
+      # dotfiles' zshrc, so Homebrew isn't on PATH for later steps yet. We can't
+      # just `source ~/.zshrc`: it's interactive zsh (p10k, oh-my-zsh, completions)
+      # and it's circular — zshrc itself runs `brew shellenv` + `mise activate`,
+      # which don't exist mid-install. Instead reuse zshrc's actual mechanism,
+      # `brew shellenv`, and persist its result via $GITHUB_PATH/$GITHUB_ENV so it
+      # carries to later steps (sourcing wouldn't — each step is a fresh process).
+      - name: "Put Homebrew on PATH (reuses `brew shellenv`, like zshrc)"
+        run: |
+          set -euxo pipefail
+          # Locate brew at one of its two canonical prefixes (chicken-and-egg:
+          # we must find brew before it can tell us its own prefix), then let
+          # `brew shellenv` compute the environment — the same line zshrc evals.
+          BREW=/opt/homebrew/bin/brew
+          [ -x "$BREW" ] || BREW=/usr/local/bin/brew
+          [ -x "$BREW" ] || { echo "::error::Homebrew not found after './install homebrew'"; exit 1; }
+          eval "$("$BREW" shellenv)"
+          echo "$HOMEBREW_PREFIX/bin" >> "$GITHUB_PATH"
+          echo "$HOMEBREW_PREFIX/sbin" >> "$GITHUB_PATH"
+          echo "HOMEBREW_PREFIX=$HOMEBREW_PREFIX" >> "$GITHUB_ENV"
+
+      - name: "Step 3 — ./install essentials"
+        working-directory: ${{ env.DOTFILES }}
+        run: ./install essentials
+
+      # Skipped: ./install 1password  (GUI/desktop-app gated — see file header)
+
+      - name: "Step 3 — ./install macos"
+        working-directory: ${{ env.DOTFILES }}
+        run: ./install macos
+
+      - name: "Step 3 — ./install mise"
+        working-directory: ${{ env.DOTFILES }}
+        run: ./install mise
+
+      # Skipped: ./install xcode  (Apple ID + 2FA + multi-GB download — see header)
+
+      - name: "Step 3 — ./install personal"
+        working-directory: ${{ env.DOTFILES }}
+        run: ./install personal
