@@ -16,9 +16,24 @@ export default defineConfig({
         description: "Requires a real kitty instance (GUI, steals focus). Excluded by default.",
         timeout: 30_000,
       },
+      {
+        name: "macos-gui",
+        description: "Requires macOS GUI automation and may steal focus. Excluded by default.",
+        timeout: 120_000,
+      },
+      {
+        name: "apps",
+        description: "Requires real app installs and may launch desktop apps. Excluded by default.",
+        timeout: 180_000,
+      },
+      {
+        name: "setup-validation",
+        description: "Opt-in fresh-machine setup validation checks. Excluded by default.",
+        timeout: 180_000,
+      },
     ],
     // @ts-expect-error tagsFilter exists at runtime but is missing from bundled types
-    tagsFilter: ["!kitty"],
+    tagsFilter: ["!kitty", "!macos-gui", "!apps", "!setup-validation"],
     testTimeout: 5_000,
     hookTimeout: 15_000, // first-run nvim startup can take a few seconds
     // Re-run tests when the config files they test change.
