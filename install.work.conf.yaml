@@ -9,3 +9,5 @@
 
 - shell:
     - command: brew bundle --file brew/work/Brewfile
+    - command: ./scripts/dequarantine.zsh
+      description: Removing the quarantine flag from installed apps
