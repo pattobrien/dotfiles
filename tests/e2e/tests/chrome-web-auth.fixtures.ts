@@ -9,6 +9,7 @@ const CHROME_APP = "/Applications/Google Chrome.app";
 const CHROME_USER_DATA_DIR =
   process.env.E2E_CHROME_USER_DATA_DIR ??
   path.join(os.homedir(), "Library/Application Support/dotfiles/e2e/chrome-web-auth");
+const CHROME_PROFILE_DIRECTORY = process.env.E2E_CHROME_PROFILE_DIRECTORY;
 const CHROME_CLOSE_DELAY_MS = Math.max(
   Number.parseInt(process.env.E2E_CHROME_CLOSE_DELAY_MS ?? "0", 10) || 0,
   0,
@@ -32,13 +33,19 @@ async function pathExists(file: string) {
 
 async function launchChromeContext() {
   await fs.mkdir(CHROME_USER_DATA_DIR, { recursive: true });
+  await preventSessionRestore();
 
   try {
     return await chromium.launchPersistentContext(CHROME_USER_DATA_DIR, {
-      args: ["--no-default-browser-check", "--no-first-run"],
+      args: [
+        "--no-default-browser-check",
+        "--no-first-run",
+        ...(CHROME_PROFILE_DIRECTORY ? [`--profile-directory=${CHROME_PROFILE_DIRECTORY}`] : []),
+      ],
       channel: "chrome",
       chromiumSandbox: true,
       headless: false,
+      ignoreDefaultArgs: ["--disable-sync", "--password-store=basic", "--use-mock-keychain"],
       viewport: { height: 900, width: 1440 },
     });
   } catch (error) {
@@ -51,6 +58,38 @@ async function launchChromeContext() {
       ].join("\n"),
     );
   }
+}
+
+function profileDirectoryPath() {
+  return path.join(CHROME_USER_DATA_DIR, CHROME_PROFILE_DIRECTORY ?? "Default");
+}
+
+async function preventSessionRestore() {
+  const profileDir = profileDirectoryPath();
+  const preferencesPath = path.join(profileDir, "Preferences");
+
+  await fs.rm(path.join(profileDir, "Sessions"), { recursive: true, force: true });
+  await fs.rm(path.join(profileDir, "Current Session"), { force: true });
+  await fs.rm(path.join(profileDir, "Current Tabs"), { force: true });
+  await fs.rm(path.join(profileDir, "Last Session"), { force: true });
+  await fs.rm(path.join(profileDir, "Last Tabs"), { force: true });
+
+  const preferencesJson = await fs.readFile(preferencesPath, "utf8").catch(() => undefined);
+  if (!preferencesJson) return;
+
+  const preferences = JSON.parse(preferencesJson) as {
+    profile?: { exited_cleanly?: boolean; exit_type?: string };
+    session?: { restore_on_startup?: number; startup_urls?: string[] };
+  };
+
+  preferences.profile ??= {};
+  preferences.profile.exited_cleanly = true;
+  preferences.profile.exit_type = "Normal";
+  preferences.session ??= {};
+  preferences.session.restore_on_startup = 5;
+  preferences.session.startup_urls = [];
+
+  await fs.writeFile(preferencesPath, JSON.stringify(preferences));
 }
 
 async function delayBeforeClosingChrome() {
@@ -86,7 +125,9 @@ export const test = base.extend("chromePage", async ({ task }, { onCleanup }) =>
   let page: Page | undefined;
 
   context = await launchChromeContext();
-  page = context.pages()[0] ?? (await context.newPage());
+  const startupPages = context.pages();
+  page = await context.newPage();
+  await Promise.all(startupPages.map((startupPage) => startupPage.close().catch(() => {})));
 
   onCleanup(async () => {
     if (task.result?.state === "fail" && page) {
