@@ -6,12 +6,10 @@ sudo: false
 current_host: false
 kill: [ControlCenter]
 data:
-  # TODO(pattobrien): none of the below settings actually do anything??
-  # there might be a newer namespace for clock time
   com.apple.menuextra.clock:
-    # Show AM/PM indicator
+    IsAnalog: false
+    ShowDayOfWeek: true
+    ShowDate: 1 # 1 = always show
     ShowAMPM: true
-    # Show date: 0=never, 1=always, 2=when space allows
-    ShowDate: 0
-    # Show day of week (Mon, Tue, etc.)
-    ShowDayOfWeek: false
+    ShowSeconds: false
+    # Show24Hour is a no-op here; 24-hour lives in NSGlobalDomain AppleICUForce24HourTime
