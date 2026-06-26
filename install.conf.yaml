@@ -12,6 +12,11 @@
     - "~/.oh-my-zsh/custom/"
     - "~/.oh-my-zsh/custom/plugins/"
 
+# Back up pre-existing real dotfiles (e.g. a stock ~/.zshenv) before linking.
+- shell:
+    - command: ./scripts/backup_dotfiles.zsh
+      description: Backing up pre-existing dotfiles before linking
+
 - link:
     ~/.tool-versions: .config/asdf/.tool-versions
     ~/.claude/CLAUDE.md: claude/CLAUDE.md
