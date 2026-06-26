@@ -57,6 +57,22 @@ jobs:
           rsync -a "$GITHUB_WORKSPACE/" "$HOME/dev/pattobrien/dotfiles/"
           echo "DOTFILES=$HOME/dev/pattobrien/dotfiles" >> "$GITHUB_ENV"
 
+      # Namespace/GitHub macOS images ship a few dotfiles a *fresh* Mac wouldn't
+      # have (notably ~/.zshenv), and dotbot refuses to clobber a real file —
+      # so the base install fails on a conflict that wouldn't exist on a clean
+      # machine. Remove the base-managed shell rc files when they're real files
+      # (never symlinks — dotbot relinks those itself) to emulate a fresh HOME.
+      - name: "Emulate a fresh HOME (clear runner-injected dotfiles)"
+        run: |
+          set -euxo pipefail
+          for f in .zshenv .zshrc .p10k.zsh; do
+            target="$HOME/$f"
+            if [ -e "$target" ] && [ ! -L "$target" ]; then
+              echo "Removing pre-existing real $target (not on a fresh Mac)"
+              rm -rf "$target"
+            fi
+          done
+
       # --- README Setup step 3: run each install script in order --------------
       - name: "Step 3 — ./install  (base symlinks, ~/dev, dotbot submodule)"
         working-directory: ${{ env.DOTFILES }}
