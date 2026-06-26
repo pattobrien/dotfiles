@@ -56,8 +56,12 @@ export interface KittyInstance {
   getText: (opts?: { ansi?: boolean }) => Promise<string>;
 }
 
-/** Find the kitty remote control socket at /tmp/kitty-<PID>. */
+/** Find the kitty remote control socket. */
 async function findKittySocket(): Promise<string> {
+  if (process.env.KITTY_LISTEN_ON) {
+    return process.env.KITTY_LISTEN_ON;
+  }
+
   const entries = await fs.readdir("/tmp");
   const socket = entries.find((e) => /^kitty-\d+$/.test(e));
   if (!socket) {

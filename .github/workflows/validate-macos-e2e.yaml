@@ -24,6 +24,12 @@ on:
       - "tests/e2e/**"
       - "zsh/**"
   workflow_dispatch:
+    inputs:
+      debug_breakpoint:
+        description: "Pause before kitty startup for SSH/VNC debugging"
+        required: false
+        type: boolean
+        default: false
 
 # A new push to the PR cancels the in-flight run (macOS runners are slow + paid).
 concurrency:
@@ -102,17 +108,36 @@ jobs:
         working-directory: ${{ env.DOTFILES }}
         run: vp --version
 
+      - name: "Debug breakpoint before kitty startup"
+        if: ${{ github.event_name == 'workflow_dispatch' && inputs.debug_breakpoint }}
+        uses: namespacelabs/breakpoint-action@v0
+        with:
+          duration: 60m
+          authorized-users: pattobrien
+
       - name: "Start kitty for GUI relay tests"
         run: |
           set -euxo pipefail
-          open -na kitty
+          KITTY_LISTEN_ON=unix:/tmp/kitty-e2e.sock
+          echo "KITTY_LISTEN_ON=$KITTY_LISTEN_ON" >> "$GITHUB_ENV"
+          rm -f /tmp/kitty-e2e.sock
+          open -na kitty --args \
+            --listen-on "$KITTY_LISTEN_ON" \
+            -o allow_remote_control=yes
           for _ in $(seq 1 60); do
-            if ls /tmp/kitty-* >/dev/null 2>&1; then
+            if [ -S /tmp/kitty-e2e.sock ] && kitty @ --to "$KITTY_LISTEN_ON" ls >/dev/null 2>&1; then
               exit 0
             fi
             sleep 1
           done
-          echo "::error::kitty remote-control socket did not appear under /tmp"
+          echo "::group::kitty diagnostics"
+          command -v kitty || true
+          ls -la /Applications | grep -i kitty || true
+          ps ax | grep -i '[k]itty' || true
+          ls -la /tmp/kitty* || true
+          ls -la "$HOME/.config/kitty" || true
+          echo "::endgroup::"
+          echo "::error::kitty remote-control socket did not appear at /tmp/kitty-e2e.sock"
           exit 1
 
       - name: "Run E2E suite (non-kitty)"
