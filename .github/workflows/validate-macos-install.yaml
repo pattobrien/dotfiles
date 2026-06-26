@@ -108,16 +108,6 @@ jobs:
 
       # Skipped: ./install xcode  (Apple ID + 2FA + multi-GB download — see header)
 
-      # The personal Brewfile installs VS Code extensions. A fresh Mac has no
-      # VS Code extension state, but the runner's can carry a primed/corrupt
-      # CachedExtensionVSIXs (a truncated VSIX is cached and never re-fetched —
-      # vscode#199675) and stray extension dirs. Reset to a clean state first.
-      - name: "Emulate fresh VS Code state (clear extension cache/dirs)"
-        run: |
-          set -euxo pipefail
-          rm -rf "$HOME/.vscode/extensions"
-          rm -rf "$HOME/Library/Application Support/Code/CachedExtensionVSIXs"
-
       - name: "Step 3 — ./install personal"
         working-directory: ${{ env.DOTFILES }}
         run: ./install personal
