@@ -159,7 +159,9 @@ macOS to re-create it in the same broken state.
 
 ### Notes from previous setup runs
 
-- [x] existing zshrc file not overridden (probably good)
+- [x] existing real dotfiles (e.g. a stock `~/.zshenv`) are backed up to
+      `<file>.bak` before linking, so the first `install` no longer fails on a
+      fresh/migrated Mac — see `scripts/backup_dotfiles.zsh`
 - [x] error: zshrc sourced oh-my-zsh.sh before it existed — `setup_omz.zsh` now
       installs Oh My Zsh first
 
