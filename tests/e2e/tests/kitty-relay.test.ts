@@ -1,5 +1,5 @@
 import { execa } from "execa";
-import { expect } from "vite-plus/test";
+import { expect } from "vitest";
 
 import { test } from "./fixtures.ts";
 
@@ -23,53 +23,67 @@ test(
       const pane = await tmux.capture();
       expect(pane).not.toContain("should-be-cleared");
     } finally {
-      await execa("tmux", [
-        "-L",
-        tmux.socket,
-        "kill-window",
-        "-t",
-        tmux.session,
-      ]);
+      await execa("tmux", ["-L", tmux.socket, "kill-window", "-t", tmux.session]);
     }
   },
 );
 
 test(
-  "Cmd+Shift+D triggers wt cleanup popup via kitty → F7 → tmux relay",
+  "Cmd+Shift+D switches to dotfiles session via kitty → User12 → tmux relay",
   { tags: ["kitty"], timeout: 10_000 },
   async ({ kitty }) => {
     const { tmux } = kitty;
+    const originalSession = tmux.session;
 
-    // Create a temp shell window (the persistent pane has nvim running)
-    await execa("tmux", ["-L", tmux.socket, "new-window", "-t", tmux.session]);
+    const { stdout: clientTtys } = await execa("tmux", [
+      "-L",
+      tmux.socket,
+      "list-clients",
+      "-t",
+      originalSession,
+      "-F",
+      "#{client_tty}",
+    ]);
+    const clientTty = clientTtys.trim().split("\n").find(Boolean);
+    expect(clientTty).toBeTruthy();
+
+    await execa("tmux", ["-L", tmux.socket, "new-session", "-d", "-A", "-s", "dotfiles"]);
 
     try {
-      await kitty.sendCmdShift("d");
-      // Wait for the popup to appear
-      await new Promise((r) => setTimeout(r, 1000));
+      await execa("tmux", [
+        "-L",
+        tmux.socket,
+        "switch-client",
+        "-c",
+        clientTty!,
+        "-t",
+        originalSession,
+      ]);
 
-      // Verify a popup is open by checking tmux pane count (popup adds a pane)
+      await kitty.sendCmdShift("d");
+      await new Promise((r) => setTimeout(r, 500));
+
       const { stdout } = await execa("tmux", [
         "-L",
         tmux.socket,
         "display-message",
-        "-t",
-        tmux.session,
+        "-c",
+        clientTty!,
         "-p",
-        "#{window_panes}",
+        "#{client_session}",
       ]);
-      expect(Number(stdout.trim())).toBeGreaterThanOrEqual(1);
+      expect(stdout.trim()).toBe("dotfiles");
     } finally {
-      // Close the popup via Escape through kitty (tmux send-keys can't reach popups)
-      await kitty.sendKeyCode(53); // Escape
-      await new Promise((r) => setTimeout(r, 300));
       await execa("tmux", [
         "-L",
         tmux.socket,
-        "kill-window",
+        "switch-client",
+        "-c",
+        clientTty!,
         "-t",
-        tmux.session,
-      ]);
+        originalSession,
+      ]).catch(() => {});
+      await execa("tmux", ["-L", tmux.socket, "kill-session", "-t", "dotfiles"]).catch(() => {});
     }
   },
 );

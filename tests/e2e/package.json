@@ -6,6 +6,8 @@
   "scripts": {
     "test": "vp test",
     "test:kitty": "vp test --tags-filter='kitty'",
+    "test:setup-terminal": "vp test setup-terminal tmux-shortcuts",
+    "test:setup-kitty": "vp test --tags-filter='kitty' kitty-relay",
     "check": "vp check"
   },
   "devDependencies": {
