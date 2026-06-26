@@ -1,7 +1,9 @@
 tap "anomalyco/tap", trusted: true
+tap "asmvik/formulae", "https://github.com/asmvik/homebrew-formulae.git", trusted: true
 tap "dsully/tap", trusted: true
-tap "koekeishiya/formulae", trusted: true
+tap "koekeishiya/formulae", "https://github.com/asmvik/homebrew-formulae.git", trusted: true
 tap "leoafarias/fvm", trusted: true
+tap "raine/workmux", trusted: true
 # Run your GitHub Actions locally
 brew "act"
 # ANother Tool for Language Recognition
@@ -46,32 +48,38 @@ brew "gcc"
 brew "gh"
 # Installer for the general purpose language Haskell
 brew "ghcup"
+# Syntax-highlighting pager for git and diff output
+brew "git-delta"
 # GNU Privacy Guard (OpenPGP)
 brew "gnupg"
 # Tool for managing apps on iOS devices
 brew "ideviceinstaller"
-# Tools and libraries to manipulate images in many formats
+# Tools and libraries to manipulate images in select formats
 brew "imagemagick"
 # FAST Kubernetes manifests validator, with support for Custom Resources!
 brew "kubeconform"
 # Command-line interface for deploying apps to the LangGraph platform
 brew "langgraph-cli"
+# Simple terminal UI for git commands
+brew "lazygit"
 # Graphical front-end for GCC's coverage testing tool (gcov)
 brew "lcov"
 # Pager program similar to more
 brew "less"
 # Postgres C API library
 brew "libpq"
-# Manage macOS defaults declaratively via YAML
-brew "dsully/tap/macos-defaults"
 # Mac App Store command-line interface
 brew "mas"
+# Polyglot runtime manager (asdf rust clone)
+brew "mise"
 # Development kit for the Java programming language
 brew "openjdk@11"
 # OpenShift command-line interface tools
 brew "openshift-cli"
 # ISO-C API and CLI for generating UUIDs
 brew "ossp-uuid"
+# PAM module for reattaching to the user's GUI (Aqua) session
+brew "pam-reattach"
 # Package compiler and linker metadata toolkit
 brew "pkgconf"
 # Theme for zsh
@@ -84,6 +92,8 @@ brew "s3cmd"
 brew "scc"
 # Organize software neatly under a single directory tree (e.g. /usr/local)
 brew "stow"
+# High-performance system programming language
+brew "swift"
 # User interface to the TELNET protocol
 brew "telnet"
 # Terminal multiplexer
@@ -92,6 +102,8 @@ brew "tmux"
 brew "tree"
 # Find and verify credentials
 brew "trufflehog"
+# Vi 'workalike' with many additional features
+brew "vim"
 # Universal WebAssembly Runtime
 brew "wasmer"
 # Execute commands when watched files change
@@ -115,11 +127,15 @@ brew "zsh-autosuggestions"
 # Fish shell like syntax highlighting for zsh
 brew "zsh-syntax-highlighting"
 # The AI coding agent built for the terminal.
-brew "anomalyco/tap/opencode"
+brew "anomalyco/tap/opencode", trusted: true
+# Defaults setting for macOS
+brew "dsully/tap/macos-defaults"
 # Simple hotkey-daemon for macOS.
 brew "koekeishiya/formulae/skhd"
 # Simple cli to manage Flutter SDK versions per project
-brew "leoafarias/fvm/fvm"
+brew "leoafarias/fvm/fvm", trusted: true
+# Opinionated workflow tool that orchestrates git worktrees and tmux
+brew "raine/workmux/workmux", trusted: true
 # Password manager that keeps all passwords secure behind one password
 cask "1password"
 # Command-line interface for 1Password
@@ -144,6 +160,8 @@ cask "chatgpt"
 cask "chromium"
 # Anthropic's official Claude AI desktop app
 cask "claude"
+# Terminal-based AI coding assistant
+cask "claude-code"
 # OpenAI's coding agent that runs in your terminal
 cask "codex"
 # Write, edit, and chat about your code with AI
@@ -162,11 +180,23 @@ cask "elgato-stream-deck"
 cask "eul"
 # Launch builds and start simulators from your menu bar
 cask "expo-orbit"
+# Web browser
+cask "firefox"
+# Offline voice-to-text dictation app with AI enhancement
+cask "fluidvoice"
 # Focusrite interface controller for devices of the 4th generation and newer
 cask "focusrite-control-2"
 cask "font-hack-nerd-font"
+# Terminal emulator that uses platform-native UI and GPU acceleration
+cask "ghostty"
 # Web browser
 cask "google-chrome"
+# Desktop automation application
+cask "hammerspoon"
+# Keyboard shortcuts for every button on your screen
+cask "homerow"
+# Keyboard customiser
+cask "karabiner-elements"
 # GPU-based terminal emulator
 cask "kitty"
 # App to manage software development and track bugs
@@ -191,6 +221,8 @@ cask "pgadmin4"
 cask "qbittorrent"
 # Control your tools with a few keystrokes
 cask "raycast"
+# Tool that provides consistent, highly configurable symbols for apps
+cask "sf-symbols"
 # Screenshot measurement and annotation tool
 cask "shottr"
 # Team communication and collaboration software
@@ -211,6 +243,11 @@ cask "visual-studio-code@insiders"
 cask "whatsapp"
 # Video communication and virtual meeting platform
 cask "zoom"
+mas "GarageBand", id: 682658836
+mas "iMovie", id: 408981434
+mas "Keynote", id: 409183694
+mas "Numbers", id: 409203825
+mas "Pages", id: 409201541
 vscode "aaron-bond.better-comments"
 vscode "actboy168.lua-debug"
 vscode "albert.tabout"
@@ -290,6 +327,8 @@ vscode "mattpocock.ts-error-translator"
 vscode "mike-lischke.vscode-antlr4"
 vscode "miquelddg.dart-barrel-file-generator"
 vscode "monokai.theme-monokai-pro-vscode"
+vscode "ms-azuretools.vscode-azure-github-copilot"
+vscode "ms-azuretools.vscode-azure-mcp-server"
 vscode "ms-azuretools.vscode-azureresourcegroups"
 vscode "ms-azuretools.vscode-containers"
 vscode "ms-dotnettools.csdevkit"
@@ -327,6 +366,7 @@ vscode "plibither8.remove-comments"
 vscode "poml-team.poml"
 vscode "prisma.prisma"
 vscode "qcz.text-power-tools"
+vscode "redhat.java"
 vscode "redhat.vscode-commons"
 vscode "redhat.vscode-xml"
 vscode "redhat.vscode-yaml"
@@ -338,9 +378,11 @@ vscode "rvest.vs-code-prettier-eslint"
 vscode "saber2pr.ts-ast-viewer"
 vscode "sanjulaganepola.github-local-actions"
 vscode "sergelamikhov.lcov-lang"
+vscode "shopify.ruby-lsp"
 vscode "stivo.tailwind-fold"
 vscode "streetsidesoftware.code-spell-checker"
 vscode "sumneko.lua"
+vscode "supabase.postgrestools"
 vscode "supernovaio.pulsar-vsc-extension"
 vscode "swiftlang.swift-vscode"
 vscode "tamasfe.even-better-toml"
@@ -352,12 +394,15 @@ vscode "unifiedjs.vscode-mdx"
 vscode "usernamehw.errorlens"
 vscode "vadimcn.vscode-lldb"
 vscode "vercel.turbo-vsc"
+vscode "visualstudioexptteam.intellicode-api-usage-examples"
+vscode "visualstudioexptteam.vscodeintellicode"
 vscode "vitest.explorer"
 vscode "vscjava.migrate-java-to-azure"
 vscode "vscjava.vscode-gradle"
 vscode "vscjava.vscode-java-debug"
 vscode "vscjava.vscode-java-dependency"
 vscode "vscjava.vscode-java-pack"
+vscode "vscjava.vscode-java-test"
 vscode "vscjava.vscode-java-upgrade"
 vscode "vscjava.vscode-maven"
 vscode "vscode-ext.sync-rsync"
@@ -370,3 +415,6 @@ vscode "yzane.markdown-pdf"
 vscode "zardoy.ts-essential-plugins"
 vscode "zarifprogrammer.tailwind-snippets"
 vscode "zhuangtongfa.material-theme"
+go "cmd/go"
+go "cmd/gofmt"
+npm "corepack"

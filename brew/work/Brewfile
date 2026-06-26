@@ -37,6 +37,8 @@ brew "gcc"
 brew "gh"
 # Installer for the general purpose language Haskell
 brew "ghcup"
+# Syntax-highlighting pager for git and diff output
+brew "git-delta"
 # GNU Privacy Guard (OpenPGP)
 brew "gnupg"
 # Tool for managing apps on iOS devices
@@ -49,6 +51,8 @@ brew "kubeconform"
 # kubernetes-cli - migrated to asdf
 # Command-line interface for deploying apps to the LangGraph platform
 brew "langgraph-cli"
+# Simple terminal UI for git commands
+brew "lazygit"
 # Graphical front-end for GCC's coverage testing tool (gcov)
 brew "lcov"
 # Pager program similar to more
