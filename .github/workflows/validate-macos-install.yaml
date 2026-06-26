@@ -45,7 +45,7 @@ jobs:
       # base `./install` is what inits the `dotbot` submodule, so we deliberately
       # do not fetch submodules here, to validate that path.
       - name: "Step 2 — checkout repo"
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       # The README clones into ~/dev/pattobrien/dotfiles. Reproduce that exact
       # path so anything assuming it (and the base install's `create: ~/dev`) is

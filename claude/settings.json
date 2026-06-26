@@ -173,13 +173,27 @@
     "oxlint-lsp@meagain": false,
     "tsgo-lsp@meagain": false,
     "figma-desktop@meagain": true,
-    "context7@claude-plugins-official": false
+    "context7@claude-plugins-official": false,
+    "superwhisper@superwhisper": false,
+    "understand-anything@understand-anything": true
   },
   "extraKnownMarketplaces": {
     "expo-plugins": {
       "source": {
         "source": "github",
         "repo": "expo/skills"
+      }
+    },
+    "superwhisper": {
+      "source": {
+        "source": "github",
+        "repo": "superultrainc/superwhisper-claude-code"
+      }
+    },
+    "understand-anything": {
+      "source": {
+        "source": "github",
+        "repo": "Egonex-AI/Understand-Anything"
       }
     }
   },
@@ -188,13 +202,13 @@
   "promptSuggestionEnabled": false,
   "autoUpdatesChannel": "stable",
   "plansDirectory": "./docs/plans",
+  "voice": {
+    "enabled": true,
+    "mode": "hold"
+  },
   "skipDangerousModePermissionPrompt": true,
   "editorMode": "vim",
   "agentPushNotifEnabled": true,
   "skipAutoPermissionPrompt": true,
-  "voiceEnabled": true,
-  "voice": {
-    "enabled": true,
-    "mode": "hold"
-  }
+  "voiceEnabled": true
 }

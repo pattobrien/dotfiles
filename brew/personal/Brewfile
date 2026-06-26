@@ -1,7 +1,7 @@
-tap "anomalyco/tap"
-tap "dsully/tap"
-tap "koekeishiya/formulae"
-tap "leoafarias/fvm"
+tap "anomalyco/tap", trusted: true
+tap "dsully/tap", trusted: true
+tap "koekeishiya/formulae", trusted: true
+tap "leoafarias/fvm", trusted: true
 # Run your GitHub Actions locally
 brew "act"
 # ANother Tool for Language Recognition
