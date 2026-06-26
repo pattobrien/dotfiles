@@ -80,17 +80,15 @@ documentation, features, and bugs.
 - **Running scripts:** Vite+ commands take precedence over `package.json`
   scripts. If there is a `test` script defined in `scripts` that conflicts with
   the built-in `vp test` command, run it using `vp run test`.
-- **Do not install Vitest, Oxlint, Oxfmt, or tsdown directly:** Vite+ wraps
-  these tools. They must not be installed directly. You cannot upgrade these
-  tools by installing their latest versions. Always use Vite+ commands.
+- **Do not install Oxlint, Oxfmt, or tsdown directly:** Vite+ wraps these tools.
+  They must not be installed directly. You cannot upgrade these tools by
+  installing their latest versions. Always use Vite+ commands.
 - **Use Vite+ wrappers for one-off binaries:** Use `vp dlx` instead of
   package-manager-specific `dlx`/`npx` commands.
-- **Import JavaScript modules from `vite-plus`:** Instead of importing from
-  `vite` or `vitest`, all modules should be imported from the project's
-  `vite-plus` dependency. For example,
-  `import { defineConfig } from 'vite-plus';` or
-  `import { expect, test, vi } from 'vite-plus/test';`. You must not install
-  `vitest` to import test utilities.
+- **Import JavaScript modules from the Vite+ toolchain:** Import Vite APIs from
+  `vite-plus`, for example `import { defineConfig } from 'vite-plus';`. Import
+  test APIs from upstream `vitest`, pinned through the workspace catalog to the
+  version bundled by Vite+.
 - **Type-Aware Linting:** There is no need to install `oxlint-tsgolint`,
   `vp lint --type-aware` works out of the box.
 

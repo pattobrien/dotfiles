@@ -1,5 +1,5 @@
 import { execa } from "execa";
-import { expect } from "vite-plus/test";
+import { expect } from "vitest";
 
 import { test } from "./fixtures.ts";
 

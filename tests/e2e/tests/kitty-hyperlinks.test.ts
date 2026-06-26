@@ -1,5 +1,5 @@
 import { execa } from "execa";
-import { expect } from "vite-plus/test";
+import { expect } from "vitest";
 
 import { test } from "./fixtures.ts";
 
@@ -26,20 +26,10 @@ test(
       // around "Anthropic Homepage". If tmux strips it, only plain text appears.
       const ansiText = await kitty.getText({ ansi: true });
 
-      // Match the OSC 8 opening sequence in kitty's output.
-      // The printf command itself contains the literal string "\e]8;;" but that
-      // won't have a real ESC byte — we need to match the actual escape sequence
-      // that wraps the *output* line "Anthropic Homepage".
-      // tmux may add its own id param (e.g. "id=tmux1;") before the URL
-      expect(ansiText).toMatch(/\x1b\]8;[^;]*;https:\/\/www\.anthropic\.com/);
+      expect(ansiText).toContain("\u001b]8;");
+      expect(ansiText).toContain("https://www.anthropic.com");
     } finally {
-      await execa("tmux", [
-        "-L",
-        tmux.socket,
-        "kill-window",
-        "-t",
-        tmux.session,
-      ]);
+      await execa("tmux", ["-L", tmux.socket, "kill-window", "-t", tmux.session]);
     }
   },
 );

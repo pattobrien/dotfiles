@@ -1,5 +1,5 @@
 import { execa } from "execa";
-import { expect } from "vite-plus/test";
+import { expect } from "vitest";
 
 import { test } from "./fixtures.ts";
 
@@ -34,25 +34,33 @@ test("F12 is bound to clear screen and history", async ({ tmux }) => {
   expect(keys).toMatch(/F12.*clear-history/);
 });
 
-test("F-key popup bindings are registered", async ({ tmux }) => {
+test("Cmd relay F-key bindings are registered", async ({ tmux }) => {
   const keys = await tmux.listKeys("root");
 
-  // Cmd+E → F11: workmux dashboard
   expect(keys).toMatch(/F11.*workmux dashboard/);
-  // Cmd+L → F10: wt list
-  expect(keys).toMatch(/F10.*wt list/);
-  // Cmd+J → F9: wt projects switch
-  expect(keys).toMatch(/F9.*wt projects switch/);
-  // Cmd+; → F8: wt claude
-  expect(keys).toMatch(/F8.*wt claude/);
-  // Cmd+Shift+D → F7: wt cleanup
-  expect(keys).toMatch(/F7.*wt cleanup/);
-  // Cmd+Shift+K → F6: wt dev kill
-  expect(keys).toMatch(/F6.*wt dev kill/);
-  // Cmd+Shift+P → F5: wt dev list
-  expect(keys).toMatch(/F5.*wt dev list/);
-  // Cmd+Shift+R → F4: wt dev start
-  expect(keys).toMatch(/F4.*wt dev start/);
+  expect(keys).toMatch(/F10.*tmux-jump-dev/);
+  expect(keys).toMatch(/F9.*tmux-session-picker/);
+  expect(keys).toMatch(/F8.*last-window/);
+  expect(keys).toMatch(/F7.*display-popup/);
+  expect(keys).toMatch(/F6.*source-file .*\.tmux\.conf/);
+  expect(keys).toMatch(/F5.*tmux-jump-or-create claude/);
+  expect(keys).toMatch(/F4.*resize-pane -Z/);
+  expect(keys).toMatch(/F3.*kill-pane/);
+  expect(keys).toMatch(/F2.*new-window/);
+});
+
+test("Cmd relay user-key session and window bindings are registered", async ({ tmux }) => {
+  const keys = await tmux.listKeys("root");
+
+  expect(keys).toMatch(/User0.*tmux-jump-or-create nvim nvim/);
+  expect(keys).toMatch(/User1.*tmux-jump zsh/);
+  expect(keys).toMatch(/User2.*select-window -t :1/);
+  expect(keys).toMatch(/User10.*select-window -t :9/);
+  expect(keys).toMatch(/User11.*switch-client -l/);
+  expect(keys).toMatch(/User12.*switch-client -t dotfiles/);
+  expect(keys).toMatch(/User13.*switch-client -t notes/);
+  expect(keys).toMatch(/User14.*switch-client -t main/);
+  expect(keys).toMatch(/User15.*display-menu/);
 });
 
 test("prefix m toggles pane zoom", async ({ tmux }) => {

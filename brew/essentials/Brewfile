@@ -1,4 +1,5 @@
-tap "dsully/tap"
+tap "dsully/tap", trusted: true
+tap "raine/workmux", trusted: true
 
 # Shell
 brew "zsh"

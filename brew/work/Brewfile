@@ -1,6 +1,6 @@
-tap "anomalyco/tap"
-tap "koekeishiya/formulae"
-tap "leoafarias/fvm"
+tap "anomalyco/tap", trusted: true
+tap "koekeishiya/formulae", trusted: true
+tap "leoafarias/fvm", trusted: true
 # Download with resuming and segmented downloading
 brew "aria2"
 # Code searching, linting, rewriting

@@ -12,6 +12,11 @@
     - "~/.oh-my-zsh/custom/"
     - "~/.oh-my-zsh/custom/plugins/"
 
+# Back up pre-existing real dotfiles (e.g. a stock ~/.zshenv) before linking.
+- shell:
+    - command: ./scripts/backup_dotfiles.zsh
+      description: Backing up pre-existing dotfiles before linking
+
 - link:
     ~/.tool-versions: .config/asdf/.tool-versions
     ~/.claude/CLAUDE.md: claude/CLAUDE.md
@@ -43,18 +48,12 @@
       path: .config/hammerspoon
       force: true
     ~/.config/op/plugins.sh: .config/op/plugins.sh
-    ~/Library/Application Support/Cursor/User/settings.json:
-      cursor/Library/Application Support/Cursor/User/settings.json
-    ~/Library/Application Support/Cursor/User/keybindings.json:
-      cursor/Library/Application Support/Cursor/User/keybindings.json
-    ~/Library/Application Support/Cursor/User/snippets:
-      cursor/Library/Application Support/Cursor/User/snippets
-    ~/Library/Application Support/Code/User/settings.json:
-      vscode/Library/Application Support/Code/User/settings.json
-    ~/Library/Application Support/Code/User/keybindings.json:
-      vscode/Library/Application Support/Code/User/keybindings.json
-    ~/Library/Application Support/Code/User/tasks.json:
-      vscode/Library/Application Support/Code/User/tasks.json
+    ~/Library/Application Support/Cursor/User/settings.json: cursor/Library/Application Support/Cursor/User/settings.json
+    ~/Library/Application Support/Cursor/User/keybindings.json: cursor/Library/Application Support/Cursor/User/keybindings.json
+    ~/Library/Application Support/Cursor/User/snippets: cursor/Library/Application Support/Cursor/User/snippets
+    ~/Library/Application Support/Code/User/settings.json: vscode/Library/Application Support/Code/User/settings.json
+    ~/Library/Application Support/Code/User/keybindings.json: vscode/Library/Application Support/Code/User/keybindings.json
+    ~/Library/Application Support/Code/User/tasks.json: vscode/Library/Application Support/Code/User/tasks.json
     ~/.config/macos-defaults: .config/macos-defaults
     ~/.config/workmux: .config/workmux
     ~/.local/bin/hotspot: scripts/hotspot
@@ -67,6 +66,8 @@
     # Make scripts executable
     - command: chmod +x scripts/*
       description: Making scripts executable
+    - command: ./scripts/1password_fix_permissions.sh
+      description: Fixing 1Password config directory permissions
     # NOTE: tmux (TPM + plugins) is set up in the `essentials` step via
     # ./scripts/setup_tmux.zsh, because TPM's plugin installer needs the tmux
     # binary, which isn't installed until then.

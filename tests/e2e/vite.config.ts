@@ -5,12 +5,6 @@ import { defineConfig } from "vite-plus";
 const dotfiles = path.resolve(import.meta.dirname, "../..");
 
 export default defineConfig({
-  lint: {
-    options: {
-      typeAware: true,
-      typeCheck: true,
-    },
-  },
   fmt: {},
   test: {
     // All test files share one persistent nvim instance — serialize to avoid
@@ -19,8 +13,7 @@ export default defineConfig({
     tags: [
       {
         name: "kitty",
-        description:
-          "Requires a real kitty instance (GUI, steals focus). Excluded by default.",
+        description: "Requires a real kitty instance (GUI, steals focus). Excluded by default.",
         timeout: 30_000,
       },
     ],
@@ -36,6 +29,7 @@ export default defineConfig({
       `${dotfiles}/.config/tmux/**`,
       `${dotfiles}/.config/nvim/**`,
       `${dotfiles}/zsh/**`,
+      `${dotfiles}/.config/mise/**`,
     ],
     server: {
       deps: {

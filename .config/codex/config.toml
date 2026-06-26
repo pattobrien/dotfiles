@@ -62,10 +62,6 @@ url = "https://mcp.context7.com/mcp/oauth"
 url = "https://api.mobbin.com/mcp"
 enabled = false
 
-[mcp_servers.posthog]
-url = "https://mcp.posthog.com/mcp"
-enabled = false
-
 [mcp_servers.peekaboo]
 command = "pnpm"
 args = ["dlx", "@steipete/peekaboo", "mcp"]
@@ -106,8 +102,8 @@ source_type = "local"
 source = "/Users/pattobrien/.cache/codex-runtimes/codex-primary-runtime/plugins/openai-primary-runtime"
 
 [marketplaces.RevenueCat]
-last_updated = "2026-06-08T20:51:51Z"
-last_revision = "473fd504bf13d25e76bf4a0267b42be3794f6266"
+last_updated = "2026-06-26T00:52:43Z"
+last_revision = "ec1681721bca4e00ad91b0bf5f124a53705b285b"
 source_type = "git"
 source = "https://github.com/RevenueCat/ai-toolkit.git"
 
@@ -117,11 +113,11 @@ last_revision = "7718b39037adb6fb33948ff751be7f7086f2da83"
 source_type = "git"
 source = "https://github.com/railwayapp/railway-skills.git"
 
-[marketplaces.posthog]
-last_updated = "2026-06-11T19:50:49Z"
-last_revision = "f674efefafeff7152294642f8559906eed885210"
+[marketplaces.superwhisper]
+last_updated = "2026-06-26T03:19:02Z"
+last_revision = "1855c89aca93a5bde846947a7d04277149c7a669"
 source_type = "git"
-source = "https://github.com/PostHog/ai-plugin.git"
+source = "https://github.com/superultrainc/superwhisper-codex.git"
 
 [plugins."github@openai-curated"]
 enabled = true
@@ -159,9 +155,6 @@ enabled = true
 [plugins."stripe@openai-curated"]
 enabled = true
 
-[plugins."posthog@posthog"]
-enabled = true
-
 [plugins."presentations@openai-primary-runtime"]
 enabled = true
 
@@ -176,6 +169,9 @@ enabled = true
 
 [plugins."browser@openai-bundled"]
 enabled = false
+
+[plugins."superwhisper@superwhisper"]
+enabled = true
 
 [tui]
 notifications = ["agent-turn-complete", "approval-requested"]
@@ -203,10 +199,6 @@ trusted_hash = "sha256:29a9cb962d4f0e1def58ecb64a3b7d277a5451ca57e9f3bd7c51baf7f
 
 [hooks.state."/Users/pattobrien/.codex/hooks.json:user_prompt_submit:0:0"]
 trusted_hash = "sha256:7ed0c588635367dfa9e7af5d6ea98136e0b7d0a917f9118382371c156083a992"
-
-[hooks.state."posthog@posthog:hooks/hooks.json:pre_tool_use:0:0"]
-enabled = false
-trusted_hash = "sha256:3dc55a922b47b9418381076dbfc51fbe2a5bdbe2f86469022c5df91eed9c5c52"
 
 [hooks.state."railway@railway-skills:hooks/hooks.json:pre_tool_use:0:0"]
 enabled = false
@@ -269,159 +261,11 @@ name = "figma:figma-generate-library"
 enabled = false
 
 [[skills.config]]
-name = "posthog:exploring-llm-clusters"
-enabled = false
-
-[[skills.config]]
-name = "posthog:exploring-llm-costs"
-enabled = false
-
-[[skills.config]]
-name = "posthog:exploring-llm-evaluations"
-enabled = false
-
-[[skills.config]]
-name = "posthog:exploring-llm-traces"
-enabled = false
-
-[[skills.config]]
-name = "posthog:instrument-llm-analytics"
-enabled = false
-
-[[skills.config]]
-name = "posthog:skills-store"
-enabled = false
-
-[[skills.config]]
-name = "posthog:analyzing-experiment-session-replays"
-enabled = false
-
-[[skills.config]]
-name = "posthog:auditing-experiments-flags"
-enabled = false
-
-[[skills.config]]
-name = "posthog:configuring-experiment-analytics"
-enabled = false
-
-[[skills.config]]
-name = "posthog:configuring-experiment-rollout"
-enabled = false
-
-[[skills.config]]
-name = "posthog:creating-experiments"
-enabled = false
-
-[[skills.config]]
-name = "posthog:finding-experiments"
-enabled = false
-
-[[skills.config]]
-name = "posthog:managing-experiment-lifecycle"
-enabled = false
-
-[[skills.config]]
 path = "/Users/pattobrien/.codex/plugins/cache/openai-curated/expo/b8edb371/skills/use-dom/SKILL.md"
 enabled = false
 
 [[skills.config]]
 path = "/Users/pattobrien/.codex/plugins/cache/openai-curated/neon-postgres/b8edb371/skills/neon-postgres-egress-optimizer/SKILL.md"
-enabled = false
-
-[[skills.config]]
-path = "/Users/pattobrien/.codex/plugins/cache/posthog/posthog/1.0.20/skills/auditing-warehouse-data-health/SKILL.md"
-enabled = false
-
-[[skills.config]]
-path = "/Users/pattobrien/.codex/plugins/cache/posthog/posthog/1.0.20/skills/authoring-log-alerts/SKILL.md"
-enabled = false
-
-[[skills.config]]
-path = "/Users/pattobrien/.codex/plugins/cache/posthog/posthog/1.0.20/skills/cleaning-up-stale-feature-flags/SKILL.md"
-enabled = false
-
-[[skills.config]]
-path = "/Users/pattobrien/.codex/plugins/cache/posthog/posthog/1.0.20/skills/copying-flags-across-projects/SKILL.md"
-enabled = false
-
-[[skills.config]]
-path = "/Users/pattobrien/.codex/plugins/cache/posthog/posthog/1.0.20/skills/diagnosing-failed-warehouse-syncs/SKILL.md"
-enabled = false
-
-[[skills.config]]
-path = "/Users/pattobrien/.codex/plugins/cache/posthog/posthog/1.0.20/skills/diagnosing-missing-recordings/SKILL.md"
-enabled = false
-
-[[skills.config]]
-path = "/Users/pattobrien/.codex/plugins/cache/posthog/posthog/1.0.20/skills/diagnosing-sdk-health/SKILL.md"
-enabled = false
-
-[[skills.config]]
-path = "/Users/pattobrien/.codex/plugins/cache/posthog/posthog/1.0.20/skills/exploring-live-traffic/SKILL.md"
-enabled = false
-
-[[skills.config]]
-path = "/Users/pattobrien/.codex/plugins/cache/posthog/posthog/1.0.20/skills/exploring-llm-clusters/SKILL.md"
-enabled = false
-
-[[skills.config]]
-path = "/Users/pattobrien/.codex/plugins/cache/posthog/posthog/1.0.20/skills/exploring-llm-costs/SKILL.md"
-enabled = false
-
-[[skills.config]]
-path = "/Users/pattobrien/.codex/plugins/cache/posthog/posthog/1.0.20/skills/feature-usage-feed/SKILL.md"
-enabled = false
-
-[[skills.config]]
-path = "/Users/pattobrien/.codex/plugins/cache/posthog/posthog/1.0.20/skills/finding-replay-for-issue/SKILL.md"
-enabled = false
-
-[[skills.config]]
-path = "/Users/pattobrien/.codex/plugins/cache/posthog/posthog/1.0.20/skills/inbox-exploration/SKILL.md"
-enabled = false
-
-[[skills.config]]
-path = "/Users/pattobrien/.codex/plugins/cache/posthog/posthog/1.0.20/skills/instrument-error-tracking/SKILL.md"
-enabled = false
-
-[[skills.config]]
-path = "/Users/pattobrien/.codex/plugins/cache/posthog/posthog/1.0.20/skills/investigate-metric/SKILL.md"
-enabled = false
-
-[[skills.config]]
-path = "/Users/pattobrien/.codex/plugins/cache/posthog/posthog/1.0.20/skills/investigating-replay/SKILL.md"
-enabled = false
-
-[[skills.config]]
-path = "/Users/pattobrien/.codex/plugins/cache/posthog/posthog/1.0.20/skills/managing-subscriptions/SKILL.md"
-enabled = false
-
-[[skills.config]]
-path = "/Users/pattobrien/.codex/plugins/cache/posthog/posthog/1.0.20/skills/querying-posthog-data/SKILL.md"
-enabled = false
-
-[[skills.config]]
-path = "/Users/pattobrien/.codex/plugins/cache/posthog/posthog/1.0.20/skills/signals/SKILL.md"
-enabled = false
-
-[[skills.config]]
-path = "/Users/pattobrien/.codex/plugins/cache/posthog/posthog/1.0.20/skills/setting-up-a-data-warehouse-source/SKILL.md"
-enabled = false
-
-[[skills.config]]
-path = "/Users/pattobrien/.codex/plugins/cache/posthog/posthog/1.0.20/skills/suggesting-data-imports/SKILL.md"
-enabled = false
-
-[[skills.config]]
-path = "/Users/pattobrien/.codex/plugins/cache/posthog/posthog/1.0.20/skills/triaging-visual-review-runs/SKILL.md"
-enabled = false
-
-[[skills.config]]
-path = "/Users/pattobrien/.codex/plugins/cache/posthog/posthog/1.0.20/skills/tuning-incremental-sync-config/SKILL.md"
-enabled = false
-
-[[skills.config]]
-path = "/Users/pattobrien/.codex/plugins/cache/posthog/posthog/1.0.20/skills/working-with-skills/SKILL.md"
 enabled = false
 
 [[skills.config]]
@@ -579,142 +423,6 @@ enabled = false
 
 [[skills.config]]
 name = "neon-postgres:neon-postgres-egress-optimizer"
-enabled = false
-
-[[skills.config]]
-name = "posthog:auditing-warehouse-data-health"
-enabled = false
-
-[[skills.config]]
-name = "posthog:authoring-log-alerts"
-enabled = false
-
-[[skills.config]]
-name = "posthog:cleaning-up-stale-feature-flags"
-enabled = false
-
-[[skills.config]]
-name = "posthog:copying-flags-across-projects"
-enabled = false
-
-[[skills.config]]
-name = "posthog:debugging-local-replay"
-enabled = false
-
-[[skills.config]]
-name = "posthog:diagnosing-experiment-results"
-enabled = false
-
-[[skills.config]]
-name = "posthog:diagnosing-failed-warehouse-syncs"
-enabled = false
-
-[[skills.config]]
-name = "posthog:diagnosing-missing-recordings"
-enabled = false
-
-[[skills.config]]
-name = "posthog:diagnosing-sdk-health"
-enabled = false
-
-[[skills.config]]
-name = "posthog:diagnosing-stacktrace-symbolication"
-enabled = false
-
-[[skills.config]]
-name = "posthog:exploring-apm-traces"
-enabled = false
-
-[[skills.config]]
-name = "posthog:exploring-autocapture-events"
-enabled = false
-
-[[skills.config]]
-name = "posthog:exploring-live-traffic"
-enabled = false
-
-[[skills.config]]
-name = "posthog:feature-usage-feed"
-enabled = false
-
-[[skills.config]]
-name = "posthog:finding-replay-for-issue"
-enabled = false
-
-[[skills.config]]
-name = "posthog:formatting-insight-axes"
-enabled = false
-
-[[skills.config]]
-name = "posthog:inbox-exploration"
-enabled = false
-
-[[skills.config]]
-name = "posthog:instrument-error-tracking"
-enabled = false
-
-[[skills.config]]
-name = "posthog:instrument-feature-flags"
-enabled = false
-
-[[skills.config]]
-name = "posthog:instrument-integration"
-enabled = false
-
-[[skills.config]]
-name = "posthog:instrument-logs"
-enabled = false
-
-[[skills.config]]
-name = "posthog:instrument-product-analytics"
-enabled = false
-
-[[skills.config]]
-name = "posthog:investigate-metric"
-enabled = false
-
-[[skills.config]]
-name = "posthog:investigating-replay"
-enabled = false
-
-[[skills.config]]
-name = "posthog:managing-path-cleaning-rules"
-enabled = false
-
-[[skills.config]]
-name = "posthog:managing-subscriptions"
-enabled = false
-
-[[skills.config]]
-name = "posthog:planning-user-interviews"
-enabled = false
-
-[[skills.config]]
-name = "posthog:querying-posthog-data"
-enabled = false
-
-[[skills.config]]
-name = "posthog:setting-up-a-data-warehouse-source"
-enabled = false
-
-[[skills.config]]
-name = "posthog:signals"
-enabled = false
-
-[[skills.config]]
-name = "posthog:suggesting-data-imports"
-enabled = false
-
-[[skills.config]]
-name = "posthog:triaging-visual-review-runs"
-enabled = false
-
-[[skills.config]]
-name = "posthog:tuning-incremental-sync-config"
-enabled = false
-
-[[skills.config]]
-name = "posthog:working-with-skills"
 enabled = false
 
 [[skills.config]]

@@ -1,6 +1,6 @@
 import path from "node:path";
 
-import { expect } from "vite-plus/test";
+import { expect } from "vitest";
 
 import type { NvimInstance } from "../src/nvim.ts";
 
@@ -21,11 +21,7 @@ async function waitForLspClient(nvim: NvimInstance, timeoutMs = 3_000) {
 }
 
 /** Wait for a specific LSP client (by name) to attach to the current buffer. */
-async function waitForNamedLspClient(
-  nvim: NvimInstance,
-  name: string,
-  timeoutMs = 5_000,
-) {
+async function waitForNamedLspClient(nvim: NvimInstance, name: string, timeoutMs = 5_000) {
   const deadline = Date.now() + timeoutMs;
   while (Date.now() < deadline) {
     const present = await nvim.client.lua(
@@ -41,32 +37,28 @@ async function waitForNamedLspClient(
 // default 5s testTimeout, so give LSP tests a bit more headroom.
 const LSP_TIMEOUT = 8_000;
 
-test(
-  "diagnostics are visible in insert mode",
-  { timeout: LSP_TIMEOUT },
-  async ({ nvim }) => {
-    await nvim.command(`cd ${FIXTURE_DIR}`);
-    await nvim.command(`edit ${FIXTURE_DIR}/error.ts`);
+test("diagnostics are visible in insert mode", { timeout: LSP_TIMEOUT }, async ({ nvim }) => {
+  await nvim.command(`cd ${FIXTURE_DIR}`);
+  await nvim.command(`edit ${FIXTURE_DIR}/error.ts`);
 
-    await waitForLspClient(nvim);
+  await waitForLspClient(nvim);
 
-    // Enter insert mode via RPC (deterministic, no fixed sleep)
-    await nvim.input("i");
-    const mode = await nvim.getMode();
-    expect(mode).toBe("i");
+  // Enter insert mode via RPC (deterministic, no fixed sleep)
+  await nvim.input("i");
+  const mode = await nvim.getMode();
+  expect(mode).toBe("i");
 
-    // Poll for diagnostics
-    const diagDeadline = Date.now() + 3_000;
-    let diagCount = 0;
-    while (Date.now() < diagDeadline) {
-      const raw = await nvim.client.lua("return #vim.diagnostic.get(0)");
-      diagCount = typeof raw === "number" ? raw : 0;
-      if (diagCount > 0) break;
-      await new Promise((r) => setTimeout(r, 100));
-    }
-    expect(diagCount).toBeGreaterThan(0);
-  },
-);
+  // Poll for diagnostics
+  const diagDeadline = Date.now() + 3_000;
+  let diagCount = 0;
+  while (Date.now() < diagDeadline) {
+    const raw = await nvim.client.lua("return #vim.diagnostic.get(0)");
+    diagCount = typeof raw === "number" ? raw : 0;
+    if (diagCount > 0) break;
+    await new Promise((r) => setTimeout(r, 100));
+  }
+  expect(diagCount).toBeGreaterThan(0);
+});
 
 test("hover shows type info", { timeout: LSP_TIMEOUT }, async ({ nvim }) => {
   await nvim.command(`cd ${FIXTURE_DIR}`);
@@ -111,13 +103,11 @@ test("hover shows type info", { timeout: LSP_TIMEOUT }, async ({ nvim }) => {
     if (hoverContent.includes("interface Promise")) break;
     await new Promise((r) => setTimeout(r, 200));
   }
-  expect(hoverContent, `hover popup content: "${hoverContent}"`).toContain(
-    "interface Promise",
-  );
+  expect(hoverContent, `hover popup content: "${hoverContent}"`).toContain("interface Promise");
 });
 
 test(
-  "gd jumps to definition of an imported type used in a type alias",
+  "gd jumps to the import declaration for an imported type alias",
   { timeout: LSP_TIMEOUT },
   async ({ nvim }) => {
     await nvim.command(`cd ${FIXTURE_DIR}`);
@@ -132,26 +122,23 @@ test(
     await nvim.client.lua('vim.fn.cursor(1, 1); vim.fn.search("ZodString;")');
 
     // Sanity-check cursor placement before triggering gd.
-    const wordUnderCursor = await nvim.client.lua(
-      'return vim.fn.expand("<cword>")',
-    );
+    const wordUnderCursor = await nvim.client.lua('return vim.fn.expand("<cword>")');
     expect(wordUnderCursor).toBe("ZodString");
 
     await nvim.input("gd");
 
-    // gd should jump into zod's published type definitions inside node_modules.
+    // tsgo currently resolves the first jump to the local import declaration.
     const deadline = Date.now() + 5_000;
     let curBuf = "";
+    let cursor: [number, number] = [0, 0];
     while (Date.now() < deadline) {
-      const raw = await nvim.client.lua(
-        "return vim.api.nvim_buf_get_name(0)",
-      );
+      const raw = await nvim.client.lua("return vim.api.nvim_buf_get_name(0)");
       curBuf = typeof raw === "string" ? raw : "";
-      if (curBuf.includes("/node_modules/") && curBuf.includes("/zod/")) break;
+      cursor = await nvim.getCursorPosition();
+      if (curBuf === `${FIXTURE_DIR}/device.ts` && cursor[0] === 1) break;
       await new Promise((r) => setTimeout(r, 100));
     }
-    expect(curBuf, `current buffer after gd: "${curBuf}"`).toMatch(
-      /\/node_modules\/.*\/zod\//,
-    );
+    expect(curBuf, `current buffer after gd: "${curBuf}"`).toBe(`${FIXTURE_DIR}/device.ts`);
+    expect(cursor[0], `cursor after gd: ${cursor.join(",")}`).toBe(1);
   },
 );

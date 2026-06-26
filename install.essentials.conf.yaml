@@ -17,6 +17,8 @@
       description: Trusting third-party Homebrew taps
     - command: brew bundle --file brew/essentials/Brewfile
       description: Installing essential packages
+    - command: ./scripts/dequarantine.zsh
+      description: Removing the quarantine flag from installed apps
     - command:
         test -d ~/.oh-my-zsh/custom/plugins/zsh-pnpm-completions || git clone
         https://github.com/michakfromparis/zsh-pnpm-completions
