@@ -2,6 +2,12 @@
 
 set -e
 
+# brew bundle installs entries via a parallel thread pool by default
+# (HOMEBREW_BUNDLE_JOBS=auto). Concurrent `code --install-extension` processes
+# race and corrupt VS Code's extensions.json (microsoft/vscode#238639), which
+# cascades into mass VS Code extension install failures. Serialize installs.
+export HOMEBREW_BUNDLE_NO_JOBS=1
+
 PROFILE=$1
 BREWFILE="${PROFILE:+$PROFILE/}Brewfile"
 CONFIG="install${PROFILE:+.$PROFILE}.conf.yaml"
