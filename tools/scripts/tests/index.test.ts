@@ -1,4 +1,4 @@
-import { expect, test } from "vite-plus/test";
+import { expect, test } from "vitest";
 
 test("placeholder", () => {
   expect(true).toBe(true);

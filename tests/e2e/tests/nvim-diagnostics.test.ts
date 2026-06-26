@@ -1,7 +1,7 @@
 import path from "node:path";
 
 import { execaCommand } from "execa";
-import { expect } from "vite-plus/test";
+import { expect } from "vitest";
 
 import type { NvimInstance } from "../src/nvim.ts";
 
@@ -73,10 +73,7 @@ test(
     const UNDERCURL_SGR = "\x1b[4:3m";
     const RED_UNDERLINE_SGR = `\x1b[58;2;${red[0]};${red[1]};${red[2]}m`;
 
-    expect(
-      pane.includes(UNDERCURL_SGR),
-      `pane should contain undercurl SGR (\\e[4:3m)`,
-    ).toBe(true);
+    expect(pane.includes(UNDERCURL_SGR), `pane should contain undercurl SGR (\\e[4:3m)`).toBe(true);
 
     expect(
       pane.includes(RED_UNDERLINE_SGR),

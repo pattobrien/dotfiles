@@ -1,0 +1,134 @@
+name: Validate macOS E2E
+
+# Runs the dotfiles' real terminal E2E suite on a Namespace macOS runner.
+# Keep the default and kitty-tagged suites as separate ordered steps: they share
+# one persistent tmux/nvim/kitty fixture and must not run in parallel.
+
+on:
+  pull_request:
+    paths:
+      - "install"
+      - "install*.conf.yaml"
+      - "scripts/**"
+      - "brew/**"
+      - ".config/kitty/**"
+      - ".config/lazygit/**"
+      - ".config/mise/config.toml"
+      - ".config/nvim/**"
+      - ".config/tmux/**"
+      - ".config/zsh/**"
+      - ".github/workflows/validate-macos-e2e.yaml"
+      - "package.json"
+      - "pnpm-lock.yaml"
+      - "pnpm-workspace.yaml"
+      - "tests/e2e/**"
+      - "zsh/**"
+  workflow_dispatch:
+
+# A new push to the PR cancels the in-flight run (macOS runners are slow + paid).
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate-e2e:
+    runs-on: namespace-profile-mac
+    timeout-minutes: 90
+
+    steps:
+      - name: "Step 2 - checkout repo"
+        uses: actions/checkout@v5
+
+      - name: "Step 2 - place repo at ~/dev/pattobrien/dotfiles"
+        run: |
+          set -euxo pipefail
+          mkdir -p "$HOME/dev/pattobrien"
+          rsync -a "$GITHUB_WORKSPACE/" "$HOME/dev/pattobrien/dotfiles/"
+          echo "DOTFILES=$HOME/dev/pattobrien/dotfiles" >> "$GITHUB_ENV"
+
+      - name: "Step 3 - ./install  (base symlinks, ~/dev, dotbot submodule)"
+        working-directory: ${{ env.DOTFILES }}
+        run: ./install
+
+      - name: "Step 3 - ./install homebrew"
+        working-directory: ${{ env.DOTFILES }}
+        run: ./install homebrew
+
+      - name: "Put Homebrew on PATH (reuses `brew shellenv`, like zshrc)"
+        run: |
+          set -euxo pipefail
+          BREW=/opt/homebrew/bin/brew
+          [ -x "$BREW" ] || BREW=/usr/local/bin/brew
+          [ -x "$BREW" ] || { echo "::error::Homebrew not found after './install homebrew'"; exit 1; }
+          eval "$("$BREW" shellenv)"
+          echo "$HOMEBREW_PREFIX/bin" >> "$GITHUB_PATH"
+          echo "$HOMEBREW_PREFIX/sbin" >> "$GITHUB_PATH"
+          echo "HOMEBREW_PREFIX=$HOMEBREW_PREFIX" >> "$GITHUB_ENV"
+
+      - name: "Step 3 - ./install essentials"
+        working-directory: ${{ env.DOTFILES }}
+        run: ./install essentials
+
+      - name: "Step 3 - ./install macos"
+        working-directory: ${{ env.DOTFILES }}
+        run: ./install macos
+
+      - name: "Step 3 - ./install mise"
+        working-directory: ${{ env.DOTFILES }}
+        run: ./install mise
+
+      - name: "Put mise shims on PATH"
+        run: |
+          set -euxo pipefail
+          echo "$HOME/.local/share/mise/shims" >> "$GITHUB_PATH"
+
+      - name: "Install E2E-only Homebrew dependencies"
+        run: |
+          set -euxo pipefail
+          brew install lazygit
+
+      - name: "Install tmux undercurl terminfo"
+        working-directory: ${{ env.DOTFILES }}
+        run: |
+          set -euxo pipefail
+          tic -x -o "$HOME/.terminfo" .config/tmux/tmux-256color-undercurl.terminfo
+          infocmp -x tmux-256color | grep -E 'Smulx|Setulc|Su[, ]'
+
+      - name: "Install workspace dependencies"
+        working-directory: ${{ env.DOTFILES }}
+        run: vp install
+
+      - name: "Show Vite+ toolchain"
+        working-directory: ${{ env.DOTFILES }}
+        run: vp --version
+
+      - name: "Start kitty for GUI relay tests"
+        run: |
+          set -euxo pipefail
+          open -na kitty
+          for _ in $(seq 1 60); do
+            if ls /tmp/kitty-* >/dev/null 2>&1; then
+              exit 0
+            fi
+            sleep 1
+          done
+          echo "::error::kitty remote-control socket did not appear under /tmp"
+          exit 1
+
+      - name: "Run E2E suite (non-kitty)"
+        working-directory: ${{ env.DOTFILES }}/tests/e2e
+        run: vp test
+
+      - name: "Run E2E suite (kitty tag)"
+        working-directory: ${{ env.DOTFILES }}/tests/e2e
+        run: vp test --tags-filter='kitty'
+
+      - name: "Upload E2E failure artifacts"
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: macos-e2e-failures
+          path: |
+            /tmp/e2e-fail-*.txt
+            /tmp/e2e-fail-*.png
+          if-no-files-found: ignore

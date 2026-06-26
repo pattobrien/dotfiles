@@ -19,7 +19,7 @@
     "pixelmatch": "^7.1.0",
     "pngjs": "^7.0.0",
     "typescript": "^6.0.2",
-    "vite-plus": "^0.1.14",
+    "vite-plus": "catalog:",
     "vitest": "catalog:",
     "zod": "catalog:"
   }

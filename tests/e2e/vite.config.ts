@@ -5,12 +5,6 @@ import { defineConfig } from "vite-plus";
 const dotfiles = path.resolve(import.meta.dirname, "../..");
 
 export default defineConfig({
-  lint: {
-    options: {
-      typeAware: true,
-      typeCheck: true,
-    },
-  },
   fmt: {},
   test: {
     // All test files share one persistent nvim instance — serialize to avoid
