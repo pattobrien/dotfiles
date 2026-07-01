@@ -1,0 +1,12 @@
+- defaults:
+    shell:
+      stderr: true
+      stdout: true
+      stdin: true
+
+- shell:
+    # Installs the VS Code extensions in brew/vscode/Brewfile. Run after the
+    # `code` CLI exists (installed by `essentials`/`personal`). The two-pass
+    # wrapper absorbs concurrent-install races against extensions.json.
+    - command: ./scripts/brew_bundle.zsh brew/vscode/Brewfile
+      description: Installing VS Code extensions

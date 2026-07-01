@@ -18,7 +18,6 @@
       description: Backing up pre-existing dotfiles before linking
 
 - link:
-    ~/.tool-versions: .config/asdf/.tool-versions
     ~/.claude/CLAUDE.md: claude/CLAUDE.md
     ~/.claude/settings.json: claude/settings.json
     ~/.claude/skills: claude/skills

@@ -22,7 +22,6 @@ on:
       - "scripts/**"
       - "brew/**"
       - ".config/mise/config.toml"
-      - ".config/asdf/.tool-versions"
       - ".config/macos-defaults/**"
       - ".github/workflows/validate-macos-install.yaml"
   workflow_dispatch:
@@ -111,3 +110,9 @@ jobs:
       - name: "Step 3 — ./install personal"
         working-directory: ${{ env.DOTFILES }}
         run: ./install personal
+
+      # VS Code extensions are their own install step now (brew/vscode/Brewfile).
+      # `code` exists by here (VS Code is installed by essentials/personal).
+      - name: "Step 3 — ./install vscode"
+        working-directory: ${{ env.DOTFILES }}
+        run: ./install vscode

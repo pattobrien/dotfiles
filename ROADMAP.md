@@ -3,7 +3,7 @@
 ## Work
 
 - [x] refactor: remove Dart from workspace root
-- replace asdf with mise
+- [x] replace asdf with mise
 - [x] refactor: move all individual app config dirs to `.config` directory
 - configs to add:
   - [x] p10k (~/.p10k.zsh)

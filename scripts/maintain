@@ -1,11 +1,23 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-echo "Updating asdf plugins..."
-asdf plugin update --all
+echo "Upgrading mise-managed tools..."
+mise upgrade
 
 echo "Dumping Brewfile..."
+# brew-dump-leaves dumps the personal profile without VS Code extensions; those
+# are snapshotted separately into brew/vscode/Brewfile below.
 ~/dev/pattobrien/dotfiles/scripts/brew-dump-leaves ~/dev/pattobrien/dotfiles/brew/personal/Brewfile
+
+echo "Dumping VS Code extensions..."
+vscode_brewfile=~/dev/pattobrien/dotfiles/brew/vscode/Brewfile
+header=$(mktemp)
+extensions=$(mktemp)
+trap 'rm -f "$header" "$extensions"' EXIT
+# Preserve the file's leading comment header (everything before the first entry).
+sed -n '/^vscode /q; p' "$vscode_brewfile" > "$header"
+brew bundle dump --vscode --force --file="$extensions"
+cat "$header" "$extensions" > "$vscode_brewfile"
 
 echo "Cleaning up..."
 brew cleanup --prune=30 -s

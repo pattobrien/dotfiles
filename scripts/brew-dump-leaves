@@ -18,15 +18,17 @@ cleanup() {
 trap cleanup EXIT
 
 echo "Dumping all packages..."
-brew bundle dump --force --describe --file="$TEMP_BREWFILE"
+# --no-vscode: VS Code extensions are maintained separately in brew/vscode/Brewfile.
+brew bundle dump --force --describe --no-vscode --file="$TEMP_BREWFILE"
 
 echo "Getting leaf packages..."
 brew leaves > "$TEMP_LEAVES"
 
 echo "Filtering to leaves only..."
 
-# Process the Brewfile:
-# - Keep all tap, cask, mas, vscode lines
+# Process the Brewfile (VS Code extensions are dumped separately, so the source
+# already has none — see scripts/maintain and brew/vscode/Brewfile):
+# - Keep all tap, cask, mas lines
 # - Keep brew lines only if the package is in leaves
 # - Keep comment lines that precede kept brew lines
 awk -v leaves_file="$TEMP_LEAVES" '
@@ -74,8 +76,8 @@ BEGIN {
   next
 }
 
-# Cask, mas, vscode lines - always keep (with any pending comment)
-/^cask / || /^mas / || /^vscode / {
+# Cask, mas lines - always keep (with any pending comment)
+/^cask / || /^mas / {
   if (pending_comment != "") {
     print pending_comment
   }

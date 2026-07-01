@@ -26,8 +26,48 @@ pnpm = "10.26.2"
 swift = "6.2.4"
 sentry-cli = "latest"
 # yarn = "latest"
-# Global tools are managed in .tool-versions, so leave this empty
-# or add any tools you want available globally but not in .tool-versions
+
+# Language runtimes & SDKs (migrated from asdf .tool-versions)
+bun = "1.3.7"
+deno = "2.2.12"
+python = "3.13.11"
+ruby = "3.4.8"
+go = "1.25.6"
+rust = "1.93.0"
+zig = "0.15.1"
+dart = "3.10.8"
+java = "24.0.1"
+kotlin = "2.2.21"
+scala = "3.7.2"
+dotnet = "10.0.102"
+
+# Build, packaging & language tooling
+uv = "0.6.1"
+gradle = "8.14.3"
+maven = "3.9.12"
+cmake = "4.2.1"
+ninja = "1.13.2"
+just = "1.46.0"
+cocoapods = "1.16.2"
+
+# Infra, Kubernetes & cloud
+terraform = "1.14.3"
+tflint = "0.60.0"
+helm = "4.0.4"
+kubectl = "1.35.0"
+kustomize = "5.8.0"
+kubectx = "0.9.5"
+argocd = "3.2.3"
+minikube = "1.37.0"
+kind = "0.31.0"
+kubebuilder = "4.10.1"
+skaffold = "2.17.1"
+
+# Docs & misc CLIs
+pandoc = "3.8.3"
+typst = "0.14.2"
+jq = "1.8.1"
+protoc = "33.3"
 
 [tasks.dotfiles]
 description = "Navigate to dotfiles"

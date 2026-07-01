@@ -12,7 +12,6 @@ managed=(
   .tmux.conf
   .hushlogin
   .actrc
-  .tool-versions
 )
 
 for name in "${managed[@]}"; do

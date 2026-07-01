@@ -61,6 +61,9 @@ sh ~/dev/pattobrien/dotfiles/install xcode
 
 # optional installs (personal, work, runner, server)
 sh ~/dev/pattobrien/dotfiles/install personal
+
+# VS Code extensions (run after essentials/personal so the `code` CLI exists)
+sh ~/dev/pattobrien/dotfiles/install vscode
 ```
 
 > **Note:** Some macOS settings (e.g. mouse/trackpad scaling, key repeat) only
@@ -78,11 +81,19 @@ chmod +x ~/.local/scripts/tmux-sessionizer
 
 ### Brew Dump
 
-Dumps a snapshot of all brew-installed applications.
+Dumps a snapshot of all brew-installed applications. VS Code extensions live in
+their own Brewfile (`brew/vscode/Brewfile`), so they are dumped separately.
 
 ```sh
-brew bundle dump --force --describe --file=~/dev/pattobrien/dotfiles/brew/personal/Brewfile
+# personal profile (formulae/casks/mas — excludes VS Code extensions)
+brew bundle dump --force --describe --no-vscode --file=~/dev/pattobrien/dotfiles/brew/personal/Brewfile
+
+# VS Code extensions
+brew bundle dump --force --vscode --file=~/dev/pattobrien/dotfiles/brew/vscode/Brewfile
 ```
+
+> `scripts/maintain` runs both dumps for you (and preserves the vscode Brewfile
+> comment header).
 
 ## Keyboard Shortcuts
 
