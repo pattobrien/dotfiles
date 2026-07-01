@@ -27,7 +27,7 @@ keybind = super+semicolon=text:\x1b[19~
 # Cmd+/  → F7  → scratch popup shell
 keybind = super+slash=text:\x1b[18~
 # Cmd+R  → reload ghostty config (tmux config auto-reloads via tmux-autoreload on save)
-keybind = super+r=action:reload_config
+keybind = super+r=reload_config
 # Cmd+T  → F2  → new tmux window
 keybind = super+t=text:\x1b[12~
 # Cmd+W      → F3       → kill tmux pane
