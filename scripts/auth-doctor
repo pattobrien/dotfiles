@@ -1,0 +1,268 @@
+#!/usr/bin/env zsh
+#
+# auth-doctor — check whether an existing Chrome profile is still logged in to a
+# set of web apps, without touching your live browser.
+#
+# Drives agent-browser (https://github.com/vercel-labs/agent-browser), which
+# launches a READ-ONLY snapshot of a real Chrome profile (`--profile`), so your
+# actual Chrome, its cookies, and open tabs are never modified. Each URL is
+# visited (headless by default) and classified with a generic heuristic:
+#
+#   • final URL is a login/auth route         -> logged out
+#   • page shows logged-out UI ("Sign in"…)   -> logged out
+#   • bot/security interstitial (Cloudflare)  -> inconclusive
+#   • blank / still-loading / nav failed      -> inconclusive
+#   • otherwise                               -> logged in
+#
+# URLs are checked in parallel and every browser op is hard-capped, so a slow or
+# hanging site can never stall the whole run. Cloudflare-protected apps (Claude,
+# ChatGPT) usually show a "Just a moment…" interstitial in headless mode; re-run
+# those with --headed.
+#
+# Usage:
+#   auth-doctor [options] <url[,url2,…]> [more-urls…]
+#
+# Examples:
+#   auth-doctor github.com
+#   auth-doctor -p "Profile 1" github.com,vercel.com,linear.app
+#   auth-doctor --headed claude.ai chatgpt.com
+#   auth-doctor --json github.com,figma.com | jq .
+#
+# Options:
+#   -p, --profile <name|path>  Chrome profile to check. A name shown by
+#                              `agent-browser profiles` (e.g. "Default",
+#                              "Profile 2") or a profile directory path.
+#                              (default: "Profile 2")
+#       --headed               Show the browser window (more reliable against
+#                              Cloudflare/bot checks; slower, pops a window).
+#   -j, --jobs <n>             Max sites to check in parallel (default: 4).
+#       --timeout <ms>         Per-operation timeout (default: 6000).
+#       --settle <ms>          Wait after load for client-side redirects
+#                              (default: 1500). Raise it if SPA apps like Linear
+#                              come back "inconclusive: still loading".
+#       --json                 Emit JSON results instead of the table.
+#   -h, --help                 Show this help and exit.
+#
+# Exit: 0 all logged in · 1 some logged out · 2 none out but some inconclusive.
+
+set -uo pipefail
+
+SELF=${0:A}  # absolute path to this script ($0 is the function name inside funcs)
+
+PROFILE="Profile 2"
+HEADED=false
+JSON=false
+JOBS=4
+TIMEOUT_MS=6000
+SETTLE_MS=1500
+
+die() { print -u2 -- "auth-doctor: $*"; exit 64 }
+
+usage() {
+  # Print the leading comment block (minus the shebang) as help text.
+  local line
+  while IFS= read -r line; do
+    case $line in
+      '#!'*) continue ;;
+      '# '*) print -r -- "${line#\# }" ;;
+      '#')   print -- "" ;;
+      *)     break ;;
+    esac
+  done < "$SELF"
+}
+
+# --- parse args ---------------------------------------------------------------
+
+positional=()
+while (( $# )); do
+  case $1 in
+    -p|--profile) shift; (( $# )) || die "--profile needs a value"; PROFILE=$1 ;;
+    -j|--jobs)    shift; (( $# )) || die "--jobs needs a value";    JOBS=$1 ;;
+    --timeout)    shift; (( $# )) || die "--timeout needs a value"; TIMEOUT_MS=$1 ;;
+    --settle)     shift; (( $# )) || die "--settle needs a value";  SETTLE_MS=$1 ;;
+    --headed)     HEADED=true ;;
+    --json)       JSON=true ;;
+    -h|--help)    usage; exit 0 ;;
+    --)           shift; positional+=("$@"); break ;;
+    -*)           die "unknown option: $1 (try --help)" ;;
+    *)            positional+=("$1") ;;
+  esac
+  shift
+done
+
+[[ $JOBS == <-> && $JOBS -ge 1 ]] || die "--jobs must be a positive integer"
+[[ $TIMEOUT_MS == <-> ]] || die "--timeout must be an integer (ms)"
+[[ $SETTLE_MS == <-> ]] || die "--settle must be an integer (ms)"
+
+# Expand comma/space separated URL args into a flat list, adding https:// where
+# no scheme is present.
+urls=()
+for arg in "${positional[@]}"; do
+  arg=${arg//,/ }
+  for part in ${=arg}; do
+    [[ -z $part ]] && continue
+    [[ $part == *"://"* ]] || part="https://$part"
+    urls+=("$part")
+  done
+done
+(( ${#urls[@]} )) || { usage; exit 64 }
+
+command -v agent-browser >/dev/null 2>&1 || \
+  die "agent-browser not found — install from https://github.com/vercel-labs/agent-browser"
+
+# --- runtime config -----------------------------------------------------------
+
+export AGENT_BROWSER_DEFAULT_TIMEOUT=$TIMEOUT_MS
+
+# Hard wall-clock cap for any single browser op, in case agent-browser itself
+# ignores its timeout. Leave headroom above the internal timeout for the
+# one-time profile-snapshot copy on the launching `open`.
+OP_CAP=$(( TIMEOUT_MS / 1000 + 8 ))
+TIMEOUT_BIN=
+if command -v timeout >/dev/null 2>&1; then TIMEOUT_BIN=timeout
+elif command -v gtimeout >/dev/null 2>&1; then TIMEOUT_BIN=gtimeout
+fi
+cap() { if [[ -n $TIMEOUT_BIN ]]; then "$TIMEOUT_BIN" "${OP_CAP}s" "$@"; else "$@"; fi }
+
+WORKDIR=$(mktemp -d "${TMPDIR:-/tmp}/auth-doctor.XXXXXX") || die "could not create temp dir"
+
+cleanup() {
+  local k
+  for (( k = 0; k < ${#urls[@]}; k++ )); do
+    agent-browser --session "auth-doctor-$$-$k" close >/dev/null 2>&1 || true
+  done
+  [[ -n ${WORKDIR:-} ]] && rm -rf "$WORKDIR" 2>/dev/null || true
+}
+trap cleanup EXIT INT TERM
+
+if [[ -t 1 && $JSON == false ]]; then
+  C_RESET=$'\033[0m' C_DIM=$'\033[2m' C_BOLD=$'\033[1m'
+  C_GREEN=$'\033[0;32m' C_RED=$'\033[0;31m' C_YELLOW=$'\033[0;33m'
+else
+  C_RESET= C_DIM= C_BOLD= C_GREEN= C_RED= C_YELLOW=
+fi
+
+# Signals (BSD-grep safe: no \b word boundaries).
+BLOCK_RE='just a moment|performing security verification|verify you are human|checking your browser|attention required|cf-browser-verification|enable javascript and cookies|needs to review the security of your connection|ddos protection by'
+AUTH_URL_RE='/(login|log-in|signin|sign-in|sign_in|sso|authenticate|authorize|oauth)([/?#]|$)|/users/sign_in|/session/new|/account/login|/u/login|/auth([/?]|$)|openid-connect/auth|://(accounts|login|signin|auth|authenticator|sso)\.'
+LOADING_RE='^(loading|loading…|loading\.\.\.|please wait|redirecting)…?\.?\.?\.?$'
+# Login CTAs and logged-in affordances are matched against the accessibility
+# snapshot's interactive elements (buttons/links) — quoted labels only — so a
+# login *verb* buried in body prose (e.g. Neon's "…each time you log in") can't
+# trigger a false "logged out".
+LOGIN_CTA_RE='"[^"]*(sign in|log in|login|sign up|continue with (google|github|apple|email|sso|passkey|microsoft|facebook)|send magic link|create your account|create a free account)[^"]*"'
+LOGGEDIN_RE='"[^"]*(sign out|log out|logout|account menu|your profile|my account)[^"]*"'
+
+# --- classify one already-loaded page -----------------------------------------
+# Sets R_STATUS + R_REASON from (final url, title, body, interactive snapshot).
+classify() {
+  local final=$1 title=$2 body=$3 snap=$4
+  local tb="$title
+$body"
+  local trimmed=${body//[[:space:]]/}
+
+  if grep -Eiq "$BLOCK_RE" <<<"$tb"; then
+    R_STATUS=inconclusive; R_REASON="bot/security interstitial (${title:-no title})"
+  elif grep -Eiq "$AUTH_URL_RE" <<<"$final"; then
+    R_STATUS=logged_out;   R_REASON="redirected to auth route: $final"
+  elif grep -Eiq "$LOGGEDIN_RE" <<<"$snap"; then
+    R_STATUS=logged_in;    R_REASON="signed in (account controls present)"
+  elif grep -Eiq "$LOGIN_CTA_RE" <<<"$snap"; then
+    R_STATUS=logged_out;   R_REASON="login UI present (sign-in / continue-with buttons)"
+  elif [[ -z $trimmed ]] && ! grep -Eq 'ref=e' <<<"$snap"; then
+    R_STATUS=inconclusive; R_REASON="no readable content / navigation failed"
+  elif grep -Eiq "$LOADING_RE" <<<"${body//[[:space:]]/ }"; then
+    R_STATUS=inconclusive; R_REASON="still loading (raise --settle)"
+  else
+    R_STATUS=logged_in;    R_REASON="signed in"
+  fi
+}
+
+# --- visit + classify one URL in its own browser session ----------------------
+run_one() {
+  local idx=$1 url=$2
+  local sess="auth-doctor-$$-$idx"
+  local launch=(--session "$sess" --profile "$PROFILE")
+  [[ $HEADED == true ]] && launch+=(--headed)
+
+  # `open` with --profile both launches (copying the profile snapshot) and
+  # navigates; subsequent ops only need --session.
+  cap agent-browser "${launch[@]}" open "$url" >/dev/null 2>&1
+  (( SETTLE_MS > 0 )) && cap agent-browser --session "$sess" wait "$SETTLE_MS" >/dev/null 2>&1
+
+  local final title body snap
+  final=$(cap agent-browser --session "$sess" get url 2>/dev/null); final=${final//$'\n'/}
+  title=$(cap agent-browser --session "$sess" get title 2>/dev/null)
+  body=$(cap agent-browser --session "$sess" get text body 2>/dev/null)
+  snap=$(cap agent-browser --session "$sess" snapshot -i 2>/dev/null)
+  agent-browser --session "$sess" close >/dev/null 2>&1 || true
+
+  [[ -n $final ]] || final=$url
+  classify "$final" "$title" "$body" "$snap"
+
+  # tab-separated record; strip tabs/newlines from the reason for a clean row.
+  R_REASON=${R_REASON//$'\t'/ }; R_REASON=${R_REASON//$'\n'/ }
+  printf '%s\t%s\t%s\t%s\t%s\n' "$idx" "$R_STATUS" "$url" "$final" "$R_REASON" > "$WORKDIR/$idx.res"
+}
+
+# --- run, throttled to JOBS at a time -----------------------------------------
+[[ $JSON == false ]] && {
+  local mode=headless; [[ $HEADED == true ]] && mode=headed
+  print -- "${C_BOLD}Auth Doctor${C_RESET} ${C_DIM}· profile \"$PROFILE\" · $mode · ${#urls[@]} site(s)${C_RESET}"
+  print --
+}
+
+running=0 idx=0
+for url in "${urls[@]}"; do
+  run_one "$idx" "$url" &
+  (( idx++, running++ ))
+  (( running >= JOBS )) && { wait; running=0 }
+done
+wait
+
+# --- collect + report ---------------------------------------------------------
+n_in=0 n_out=0 n_incon=0 json_items=() saw_interstitial=false
+
+jesc() {
+  local s=$1
+  s=${s//\\/\\\\}; s=${s//\"/\\\"}
+  s=${s//$'\n'/ }; s=${s//$'\r'/ }; s=${s//$'\t'/ }
+  print -rn -- "$s"
+}
+
+for (( k = 0; k < ${#urls[@]}; k++ )); do
+  line=$(<"$WORKDIR/$k.res" 2>/dev/null) || line=""
+  if [[ -z $line ]]; then
+    st=inconclusive url=${urls[k+1]} final=${urls[k+1]} reason="worker timed out"
+  else
+    IFS=$'\t' read -r _ st url final reason <<<"$line"
+  fi
+  [[ $reason == *interstitial* ]] && saw_interstitial=true
+
+  case $st in
+    logged_in)    (( n_in++ ));    sym="${C_GREEN}✓${C_RESET}" label="logged in " ;;
+    logged_out)   (( n_out++ ));   sym="${C_RED}✗${C_RESET}"   label="logged out" ;;
+    *)            (( n_incon++ )); sym="${C_YELLOW}⚠${C_RESET}" label="unknown   "; st=inconclusive ;;
+  esac
+
+  if [[ $JSON == true ]]; then
+    json_items+=("{\"url\":\"$(jesc "$url")\",\"finalUrl\":\"$(jesc "$final")\",\"status\":\"$st\",\"reason\":\"$(jesc "$reason")\"}")
+  else
+    extra=""
+    [[ $st != logged_in ]] && extra=" ${C_DIM}(${reason})${C_RESET}"
+    printf '  %s  %-42s %s%s\n' "$sym" "${url#*://}" "$label" "$extra"
+  fi
+done
+
+if [[ $JSON == true ]]; then
+  print -r -- "[${(j:,:)json_items}]"
+else
+  print --
+  print -- "  ${#urls[@]} checked — ${C_GREEN}${n_in} logged in${C_RESET} · ${C_RED}${n_out} logged out${C_RESET} · ${C_YELLOW}${n_incon} unknown${C_RESET}"
+  [[ $saw_interstitial == true && $HEADED == false ]] && \
+    print -- "  ${C_DIM}Tip: some sites showed a bot check in headless mode — re-run those with --headed.${C_RESET}"
+fi
+
+(( n_out > 0 ))   && exit 1
+(( n_incon > 0 )) && exit 2
+exit 0
