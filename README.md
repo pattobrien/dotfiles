@@ -134,6 +134,12 @@ On macOS Sequoia, apps can get stuck in a limbo permission state
 (`auth_value=5`) in the TCC database, causing the "would like to access data
 from other apps" dialog to reappear on every restart.
 
+> **Before running the fix:** quit the affected apps and dismiss any pending
+> "access data from other apps" dialog first. While a prompt is on screen (or the
+> app is running), macOS keeps re-writing the entry back to the `5` limbo state,
+> which clobbers the `UPDATE` below. If an entry reverts to `5` right after you
+> fix it, a live prompt/app is the cause — close it and re-run.
+
 **Check for stuck entries:**
 
 ```sh
