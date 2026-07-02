@@ -21,6 +21,7 @@ return {
         },
 
         oxfmt = {},
+        oxlint = {},
 
         -- oxfmt formats these filetypes; disable competing LSP formatters
         tsgo = {

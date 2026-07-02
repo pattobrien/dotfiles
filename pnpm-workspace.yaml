@@ -13,6 +13,7 @@ catalog:
   '@types/node': ^24
   '@typescript/native-preview': ^7.0.0-dev.20260403.1
   oxfmt: ^0.57.0
+  oxlint: ^1.72.0
   typescript: ^5
   vite: npm:@voidzero-dev/vite-plus-core@latest
   vite-plus: latest
