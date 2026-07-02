@@ -7,6 +7,11 @@ mode: session
 worktree_naming: basename # full | basename
 # worktree_dir: "{project}-wt"
 
+sidebar:
+  position: left # left | top
+  width: "20%" # absolute columns or percentage of terminal width
+  layout: tiles # compact | tiles (toggle at runtime with 'v')
+
 # panes:
 #   - command: <agent>
 #     focus: true
