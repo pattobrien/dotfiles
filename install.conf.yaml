@@ -42,6 +42,7 @@
     ~/.config/aerospace: .config/aerospace
     ~/.config/karabiner: .config/karabiner
     ~/.config/ghostty: .config/ghostty
+    ~/.config/cmux: .config/cmux
     ~/.config/lazygit: .config/lazygit
     ~/.hammerspoon:
       path: .config/hammerspoon
