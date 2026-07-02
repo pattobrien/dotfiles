@@ -6,9 +6,13 @@ import { chromium, type BrowserContext, type Page } from "playwright";
 import { expect, test as base } from "vitest";
 
 const CHROME_APP = "/Applications/Google Chrome.app";
-const CHROME_USER_DATA_DIR =
-  process.env.E2E_CHROME_USER_DATA_DIR ??
-  path.join(os.homedir(), "Library/Application Support/dotfiles/e2e/chrome-web-auth");
+// Always an isolated, setup-managed profile — preventSessionRestore() deletes
+// session state in this directory, so it must never point at the real
+// ~/Library/Application Support/Google/Chrome.
+const CHROME_USER_DATA_DIR = path.join(
+  os.homedir(),
+  "Library/Application Support/dotfiles/e2e/chrome-web-auth",
+);
 const CHROME_PROFILE_DIRECTORY = process.env.E2E_CHROME_PROFILE_DIRECTORY;
 const CHROME_CLOSE_DELAY_MS = Math.max(
   Number.parseInt(process.env.E2E_CHROME_CLOSE_DELAY_MS ?? "0", 10) || 0,
@@ -53,7 +57,7 @@ async function launchChromeContext() {
       [
         "Failed to launch Google Chrome through Playwright.",
         `Profile directory: ${CHROME_USER_DATA_DIR}`,
-        "Close any Chrome process using that profile, or set E2E_CHROME_USER_DATA_DIR to a setup-managed profile.",
+        "Close any Chrome process using that profile.",
         error instanceof Error ? error.message : String(error),
       ].join("\n"),
     );
