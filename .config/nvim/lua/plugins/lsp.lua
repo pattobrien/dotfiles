@@ -19,6 +19,19 @@ return {
         eslint = {
           filetypes = { "typescript", "typescriptreact" },
         },
+
+        oxfmt = {},
+
+        -- oxfmt formats these filetypes; disable competing LSP formatters
+        tsgo = {
+          on_attach = function(client)
+            client.server_capabilities.documentFormattingProvider = false
+            client.server_capabilities.documentRangeFormattingProvider = false
+          end,
+        },
+        jsonls = {
+          init_options = { provideFormatter = false },
+        },
       },
     },
   },

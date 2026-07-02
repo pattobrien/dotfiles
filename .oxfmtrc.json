@@ -1,7 +1,7 @@
 {
   "printWidth": 80,
   "trailingComma": "all",
-  "experimentalSortImports": {
+  "sortImports": {
     "newlinesBetween": true,
     "groups": [
       "builtin",
@@ -12,8 +12,8 @@
       ["type-index", "value-index"]
     ]
   },
-  "experimentalSortPackageJson": false,
-  "experimentalTailwindcss": {
+  "sortPackageJson": false,
+  "sortTailwindcss": {
     "functions": ["cn", "cva"]
   },
   "proseWrap": "always",

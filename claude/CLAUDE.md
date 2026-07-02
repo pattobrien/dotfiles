@@ -1,5 +1,16 @@
 # Claude Instructions
 
+## User Directories
+
+Common directories/repositories to be aware of:
+
+- `~/dev/*`: where all git repositories live
+- `~/dev/pattobrien/<repo-name>`: place to clone my personal repos
+- `~/dev/pattobrien/dotfiles`: personal dotfiles (symlinked to their respective
+  applications' directories); use this repo to declare any global/userland tools
+- `~/dev/exploring/<repo-name>`: place to clone any external repo that needs to
+  be explored
+
 ## Tools
 
 ### Typical Commands in a Monorepo
@@ -16,12 +27,6 @@ pnpm format:check
 pnpm typecheck # or `pnpm typecheck:watch`
 pnpm validate # combines `lint`, `typecheck`, and `test`
 ```
-
-### Searching for Files
-
-`fd` is a faster alternative to `find`.
-
-`rg` is a faster alternative to `grep`.
 
 ### API Keys
 

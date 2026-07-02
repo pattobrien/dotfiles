@@ -18,6 +18,7 @@
   },
   "devDependencies": {
     "@typescript/native-preview": "catalog:",
+    "oxfmt": "catalog:",
     "typescript": "catalog:",
     "vite-plus": "catalog:"
   },
