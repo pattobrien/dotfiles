@@ -10,14 +10,14 @@
   },
   "devDependencies": {
     "@msgpack/msgpack": "catalog:",
-    "@types/node": "^25.5.0",
+    "@types/node": "catalog:",
     "@types/pngjs": "^6.0.5",
     "execa": "^9.6.1",
     "neovim": "^5.4.0",
     "pixelmatch": "^7.1.0",
     "pngjs": "^7.0.0",
-    "typescript": "^6.0.2",
-    "vite-plus": "^0.1.14",
+    "typescript": "catalog:",
+    "vite-plus": "catalog:",
     "vitest": "catalog:",
     "zod": "catalog:"
   }
