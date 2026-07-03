@@ -1,5 +1,7 @@
 [settings]
 npm.package_manager = "pnpm"
+# native-preview only publishes daily dev builds, all younger than the default min release age
+minimum_release_age_excludes = ["npm:@typescript/native-preview"]
 experimental = true
 idiomatic_version_file_enable_tools = ["node"]
 
@@ -14,6 +16,7 @@ node = "24"
 "npm:@open-pencil/cli" = "latest"
 "npm:@posthog/cli" = "latest"
 "npm:@railway/cli" = "latest"
+"npm:@typescript/native-preview" = "latest"
 "npm:codemod" = "latest"
 "npm:eas-cli" = "latest"
 "npm:neonctl" = "latest"
