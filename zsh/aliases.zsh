@@ -20,15 +20,15 @@ alias pnpx="pnpm dlx"
 # alias jq="jq -C"  # always colorize
 
 alias ls="eza --git-ignore"
-alias l="ls -la"
-alias ll="ls -lah"
+# alias l="ls -la"
+# alias ll="ls -lah"
 
 # alias cat="bat"
 # alias grep="rg"
 # alias find="fd"
 
 alias preview="fzf --preview 'bat --color=always {}'" # preview files in fzf
-alias gbr="git branch | fzf | xargs git switch" # switch to a branch in fzf (also: Ctrl-G Ctrl-B via fzf-git.sh)
+alias gbr="git branch | fzf | xargs git switch"       # switch to a branch in fzf (also: Ctrl-G Ctrl-B via fzf-git.sh)
 
 function gws() { # git worktree switch via fzf
   local selected dir
@@ -44,16 +44,7 @@ function gwc() { # git worktree checkout existing remote branch via fzf
 # worktree + tmux session management (via `wt` CLI)
 # old aliases (wtc, wta, wtl, wtr, wts) replaced by: wt create, wt attach, wt list, wt remove, wt switch
 
-
-
-# cd shortcuts
-alias ..="cd .."
-alias ...="cd ../.."
-alias ....="cd ../../.."
-alias .....="cd ../../../.."
-
 alias maestro="maestro-runner --platform ios"
-
 
 alias reload="source ~/.zshrc"
 alias resource="source ~/.zshrc"
@@ -65,5 +56,6 @@ alias cc="claude"
 alias ccr="claude --resume"
 alias cx="codex"
 alias cxr="codex resume"
+alias cco="claude --model opus"
 
 alias wm="workmux"
