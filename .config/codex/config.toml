@@ -74,36 +74,36 @@ enabled = false
 
 [mcp_servers.node_repl]
 args = []
-command = "/Applications/Codex.app/Contents/Resources/node_repl"
+command = "/Applications/Codex.app/Contents/Resources/cua_node/bin/node_repl"
 startup_timeout_sec = 120
 
 [mcp_servers.node_repl.env]
 NODE_REPL_NATIVE_PIPE_CONNECT_TIMEOUT_MS = "1000"
-NODE_REPL_NODE_MODULE_DIRS = ""
-NODE_REPL_NODE_PATH = "/Applications/Codex.app/Contents/Resources/node"
+NODE_REPL_NODE_MODULE_DIRS = "/Applications/Codex.app/Contents/Resources/cua_node/lib/node_modules"
+NODE_REPL_NODE_PATH = "/Applications/Codex.app/Contents/Resources/cua_node/bin/node"
 NODE_REPL_TRUSTED_CODE_PATHS = "/Users/pattobrien/.codex"
 CODEX_HOME = "/Users/pattobrien/.codex"
-NODE_REPL_TRUSTED_BROWSER_CLIENT_SHA256S = "2de792ebdf729e85542c94275f6654821dddce546d9c7374c915f2297529e313"
+NODE_REPL_TRUSTED_BROWSER_CLIENT_SHA256S = "cb79053fda6deb0f3b5d6f0d90d4257305ebdbd1e378a12e8fbc5bde782eb59b"
 BROWSER_USE_AVAILABLE_BACKENDS = "chrome,iab"
 NODE_REPL_INSTRUCTIONS_USE_CASE_BROWSER = "Control the in-app browser in conjunction with the Browser Plugin."
 NODE_REPL_INSTRUCTIONS_USE_CASE_CHROME = "Control the Chrome browser in conjunction with the Chrome Plugin. Prefer this method of controlling Chrome over alternatives (such as Computer Use) unless the user explicitly mentions an alternative."
 BROWSER_USE_CODEX_APP_BUILD_FLAVOR = "prod"
-BROWSER_USE_CODEX_APP_VERSION = "26.602.40724"
+BROWSER_USE_CODEX_APP_VERSION = "26.623.81905"
 CODEX_CLI_PATH = "/Applications/Codex.app/Contents/Resources/codex"
 
 [marketplaces.openai-bundled]
-last_updated = "2026-06-10T03:40:46Z"
+last_updated = "2026-07-02T10:37:06Z"
 source_type = "local"
 source = "/Users/pattobrien/.codex/.tmp/bundled-marketplaces/openai-bundled"
 
 [marketplaces.openai-primary-runtime]
-last_updated = "2026-06-01T22:23:31Z"
+last_updated = "2026-07-02T10:38:51Z"
 source_type = "local"
 source = "/Users/pattobrien/.cache/codex-runtimes/codex-primary-runtime/plugins/openai-primary-runtime"
 
 [marketplaces.RevenueCat]
-last_updated = "2026-06-26T00:52:43Z"
-last_revision = "ec1681721bca4e00ad91b0bf5f124a53705b285b"
+last_updated = "2026-07-02T10:37:02Z"
+last_revision = "5cb348c4b83e99f6b4b4fceb4d4cd17028a4615e"
 source_type = "git"
 source = "https://github.com/RevenueCat/ai-toolkit.git"
 
@@ -114,8 +114,8 @@ source_type = "git"
 source = "https://github.com/railwayapp/railway-skills.git"
 
 [marketplaces.superwhisper]
-last_updated = "2026-06-26T03:19:02Z"
-last_revision = "1855c89aca93a5bde846947a7d04277149c7a669"
+last_updated = "2026-07-02T10:37:05Z"
+last_revision = "e2a9a6d5165ac162990b9491eb6b483947736072"
 source_type = "git"
 source = "https://github.com/superultrainc/superwhisper-codex.git"
 
@@ -168,9 +168,12 @@ enabled = false
 enabled = true
 
 [plugins."browser@openai-bundled"]
-enabled = false
+enabled = true
 
-[plugins."superwhisper@superwhisper"]
+[plugins."pdf@openai-primary-runtime"]
+enabled = true
+
+[plugins."template-creator@openai-primary-runtime"]
 enabled = true
 
 [tui]
@@ -628,7 +631,10 @@ keepRemoteControlAwakeWhilePluggedIn = true
 git-branch-prefix = "patt/"
 git-show-sidebar-pr-icons = true
 notifications-permissions-enabled = true
-conversationDetailMode = "STEPS_COMMANDS"
+conversationDetailMode = "STEPS_PROSE"
+sansFontSize = 14
+codeFontSize = 13
+ambient-suggestions-enabled = false
 
 [desktop.appearanceDarkChromeTheme]
 accent = "#0169cc"
