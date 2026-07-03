@@ -4,6 +4,14 @@ agent: claude
 merge_strategy: rebase
 mode: session
 
+# branch new worktrees off the remote-tracking ref, not the checked-out branch;
+# pre_create fetches first so it's always fresh
+base_branch: origin/main
+pre_create:
+  - git fetch origin --prune
+  # ff-only can never rewrite or lose anything; fails harmlessly if main diverged
+  - 'git merge --ff-only origin/main || echo "note: local main not fast-forwarded"'
+
 worktree_naming: basename # full | basename
 # worktree_dir: "{project}-wt"
 
@@ -21,7 +29,7 @@ windows:
       - command: <agent>
         focus: true
   - panes:
-      - command: pnpm install && pnpm run env:pull
+      - command: pnpm install
         focus: false
 
 # post_create:

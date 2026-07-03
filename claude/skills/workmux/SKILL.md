@@ -168,6 +168,9 @@ files:
   symlink:
     - node_modules # symlink from main worktree
 
+pre_create:
+  - git fetch origin --prune # runs in main worktree BEFORE worktree creation; failure aborts add
+
 post_create:
   - "<global>" # include global hooks
   - npm install # project-specific setup
