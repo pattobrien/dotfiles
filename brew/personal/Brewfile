@@ -231,6 +231,8 @@ cask "slack"
 cask "spotify"
 # Dictation tool including LLM reformatting
 cask "superwhisper"
+# Mesh VPN based on WireGuard
+cask "tailscale-app"
 # JDK from the Eclipse Foundation (Adoptium)
 cask "temurin"
 # To-do list
