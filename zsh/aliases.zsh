@@ -19,7 +19,7 @@ alias pnpx="pnpm dlx"
 
 # alias jq="jq -C"  # always colorize
 
-alias ls="eza --git-ignore"
+# alias ls="eza --git-ignore"
 # alias l="ls -la"
 # alias ll="ls -lah"
 
