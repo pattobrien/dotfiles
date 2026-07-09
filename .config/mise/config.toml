@@ -25,7 +25,8 @@ node = "24"
 "npm:oxlint" = "latest"
 "npm:turbo" = "latest"
 "npm:vercel" = "latest"
-"npm:vite-plus" = "latest"
+# vite-plus (`vp`) is installed via Homebrew, not mise: the npm backend ships a
+# broken CLI (missing `vp add` etc). See brew/personal/Brewfile.
 pnpm = "11.9.0"
 swift = "6.2.4"
 sentry-cli = "latest"
