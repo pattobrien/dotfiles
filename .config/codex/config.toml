@@ -26,6 +26,9 @@ trust_level = "trusted"
 [projects."/Users/pattobrien/dev/pattobrien/dotfiles"]
 trust_level = "trusted"
 
+[projects."/Users/pattobrien/Documents/Codex/2026-07-06/where-can-i"]
+trust_level = "trusted"
+
 [notice]
 fast_default_opt_out = true
 
@@ -83,16 +86,16 @@ NODE_REPL_NODE_MODULE_DIRS = "/Applications/Codex.app/Contents/Resources/cua_nod
 NODE_REPL_NODE_PATH = "/Applications/Codex.app/Contents/Resources/cua_node/bin/node"
 NODE_REPL_TRUSTED_CODE_PATHS = "/Users/pattobrien/.codex"
 CODEX_HOME = "/Users/pattobrien/.codex"
-NODE_REPL_TRUSTED_BROWSER_CLIENT_SHA256S = "cb79053fda6deb0f3b5d6f0d90d4257305ebdbd1e378a12e8fbc5bde782eb59b"
+NODE_REPL_TRUSTED_BROWSER_CLIENT_SHA256S = "60e4902788f207f88fd09344dfeafe07769488bdb2924bbb12b322c3b9d2b999"
 BROWSER_USE_AVAILABLE_BACKENDS = "chrome,iab"
 NODE_REPL_INSTRUCTIONS_USE_CASE_BROWSER = "Control the in-app browser in conjunction with the Browser Plugin."
 NODE_REPL_INSTRUCTIONS_USE_CASE_CHROME = "Control the Chrome browser in conjunction with the Chrome Plugin. Prefer this method of controlling Chrome over alternatives (such as Computer Use) unless the user explicitly mentions an alternative."
 BROWSER_USE_CODEX_APP_BUILD_FLAVOR = "prod"
-BROWSER_USE_CODEX_APP_VERSION = "26.623.81905"
+BROWSER_USE_CODEX_APP_VERSION = "26.623.101652"
 CODEX_CLI_PATH = "/Applications/Codex.app/Contents/Resources/codex"
 
 [marketplaces.openai-bundled]
-last_updated = "2026-07-02T10:37:06Z"
+last_updated = "2026-07-06T19:36:19Z"
 source_type = "local"
 source = "/Users/pattobrien/.codex/.tmp/bundled-marketplaces/openai-bundled"
 
@@ -102,8 +105,8 @@ source_type = "local"
 source = "/Users/pattobrien/.cache/codex-runtimes/codex-primary-runtime/plugins/openai-primary-runtime"
 
 [marketplaces.RevenueCat]
-last_updated = "2026-07-02T10:37:02Z"
-last_revision = "5cb348c4b83e99f6b4b4fceb4d4cd17028a4615e"
+last_updated = "2026-07-09T21:57:27Z"
+last_revision = "c7e5d469ab70805f6563070e970c6f8b67d51c00"
 source_type = "git"
 source = "https://github.com/RevenueCat/ai-toolkit.git"
 
@@ -635,6 +638,7 @@ conversationDetailMode = "STEPS_PROSE"
 sansFontSize = 14
 codeFontSize = 13
 ambient-suggestions-enabled = false
+followUpQueueMode = "queue"
 
 [desktop.appearanceDarkChromeTheme]
 accent = "#0169cc"
