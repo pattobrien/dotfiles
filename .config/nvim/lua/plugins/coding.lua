@@ -12,6 +12,11 @@ return {
       keymap = {
         ["<C-@>"] = { "show", "show_documentation", "hide_documentation" },
       },
+      completion = {
+        -- copilot owns ghost text; LazyVim's `enabled = vim.g.ai_cmp` is
+        -- evaluated before copilot-native sets the flag, so disable explicitly
+        ghost_text = { enabled = false },
+      },
     },
   },
 

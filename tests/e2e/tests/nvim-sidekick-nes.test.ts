@@ -79,6 +79,46 @@ test(
 );
 
 test(
+  "blink ghost text stays disabled (copilot owns ghost text)",
+  { timeout: 12_000 },
+  async ({ nvim }) => {
+    await nvim.command(`cd ${FIXTURE_DIR}`);
+    await nvim.command(`edit ${FIXTURE_DIR}/nes.ts`);
+    await waitForCopilot(nvim);
+
+    // Type a prefix that opens the blink menu (getUserName is in scope).
+    // With blink ghost text enabled, the selected item's remainder renders
+    // in front of copilot's inline completion — two ghost texts stacked.
+    await nvim.input("GogetUser");
+
+    const deadline = Date.now() + 3_000;
+    let menuVisible = false;
+    while (Date.now() < deadline) {
+      menuVisible =
+        (await nvim.client.lua(
+          'return require("blink.cmp").is_menu_visible()',
+        )) === true;
+      if (menuVisible) break;
+      await new Promise((r) => setTimeout(r, 100));
+    }
+    expect(menuVisible, "blink completion menu never opened").toBe(true);
+
+    const blinkGhostMarks = await nvim.client.lua(`
+      local ns = vim.api.nvim_get_namespaces()["blink_cmp_ghost_text"]
+      if not ns then return 0 end
+      return #vim.api.nvim_buf_get_extmarks(0, ns, 0, -1, {})
+    `);
+    expect(
+      blinkGhostMarks,
+      "blink is rendering its own ghost text on top of copilot's",
+    ).toBe(0);
+
+    await nvim.input("<Esc>");
+    await nvim.command("silent! edit!");
+  },
+);
+
+test(
   "sidekick.nvim loads when editing a file (no keypress required)",
   { timeout: 12_000 },
   async ({ nvim }) => {

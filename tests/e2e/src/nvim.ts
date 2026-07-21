@@ -265,8 +265,12 @@ export async function getOrCreateNvimInstance(
     }
   }
 
-  // Launch nvim in the tmux session
-  await tmux.sendKeys(`nvim --listen ${NVIM_SOCKET}`, "Enter");
+  // Launch nvim in the tmux session. noswapfile: the fixture is disposable,
+  // and a stale swap from a killed fixture blocks startup on a recovery dialog.
+  await tmux.sendKeys(
+    `nvim --cmd 'set noswapfile' --listen ${NVIM_SOCKET}`,
+    "Enter",
+  );
 
   // Wait for socket + RPC handshake + LazyVim
   await waitForFile(NVIM_SOCKET);
