@@ -267,9 +267,9 @@ credentials into it's session).
   - brave-browser
   - android-studio
   - obsidian
-  - shottr (license setup)
 - desktop apps (no auth needed, just need to be opened to initialize)
   - karabiner elements
+  - shottr (license setup)
 - macOS permissions (grant via System Settings → Privacy & Security)
   - [ ] script to check each app's granted permissions (query TCC.db)
   - hammerspoon (Accessibility)
