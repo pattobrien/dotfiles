@@ -24,12 +24,8 @@
           "     2. A table. Then pressing the key bring to another layer of keybindings.",
           "     And the table have the same format of top table: keys to keys, value to table or function"
         ],
-        "parameters": [
-          " * keymap - A table that specifies the mapping."
-        ],
-        "returns": [
-          " * A function to start. Bind it to a initial key binding."
-        ],
+        "parameters": [" * keymap - A table that specifies the mapping."],
+        "returns": [" * A function to start. Bind it to a initial key binding."],
         "signature": "RecursiveBinder.recursiveBind(keymap)",
         "stripped_doc": "",
         "type": "Method"
@@ -227,12 +223,8 @@
           "     2. A table. Then pressing the key bring to another layer of keybindings.",
           "     And the table have the same format of top table: keys to keys, value to table or function"
         ],
-        "parameters": [
-          " * keymap - A table that specifies the mapping."
-        ],
-        "returns": [
-          " * A function to start. Bind it to a initial key binding."
-        ],
+        "parameters": [" * keymap - A table that specifies the mapping."],
+        "returns": [" * A function to start. Bind it to a initial key binding."],
         "signature": "RecursiveBinder.recursiveBind(keymap)",
         "stripped_doc": "",
         "type": "Method"

@@ -70,10 +70,7 @@
     "editor.formatOnSave": true,
     "editor.wordSeparators": "`~!@#$%^&*()=+[{]}\\|;:'\",.<>/?"
   },
-  "files.watcherInclude": [
-    ".dart_tool/sidecar_logs/",
-    ".dart_tool/sidecar_logs/latest.log"
-  ],
+  "files.watcherInclude": [".dart_tool/sidecar_logs/", ".dart_tool/sidecar_logs/latest.log"],
   "files.exclude": {
     "**/.git": true,
     "**/.svn": true,
@@ -350,12 +347,7 @@
   "supernova.designSystemVersionName": "Shared draft",
   "supernova.designSystemBrandName": "Default",
 
-  "gitlens.graph.minimap.additionalTypes": [
-    "localBranches",
-    "stashes",
-    "remoteBranches",
-    "tags"
-  ],
+  "gitlens.graph.minimap.additionalTypes": ["localBranches", "stashes", "remoteBranches", "tags"],
 
   "vs-kubernetes": {
     "vs-kubernetes.minikube-show-information-expiration": "2026-01-20T09:07:34.496Z"

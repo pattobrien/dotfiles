@@ -29,10 +29,7 @@ console.log(output.stdout());
 Create a detached sandbox by setting the builder flag before calling `create()`:
 
 ```typescript
-const sb = await Sandbox.builder("worker")
-  .image("python:3.12")
-  .detached(true)
-  .create();
+const sb = await Sandbox.builder("worker").image("python:3.12").detached(true).create();
 ```
 
 Static methods:
@@ -50,7 +47,7 @@ Builder methods:
 
 ```typescript
 await using sb = await Sandbox.builder("worker")
-  .image("python")                 // OCI image, local rootfs, or disk path
+  .image("python") // OCI image, local rootfs, or disk path
   // .fromSnapshot("after-setup")  // Use instead of image()
   .memory(1024)
   .cpus(2)
@@ -85,11 +82,7 @@ console.log(output.code);
 console.log(output.success);
 
 const output2 = await sb.execWith("python", (e) =>
-  e.args(["compute.py"])
-    .cwd("/app")
-    .env("PYTHONPATH", "/app/lib")
-    .timeout(30_000)
-    .user("nobody"),
+  e.args(["compute.py"]).cwd("/app").env("PYTHONPATH", "/app/lib").timeout(30_000).user("nobody"),
 );
 
 const shellOut = await sb.shell("ls -la /app && echo done");
@@ -165,10 +158,7 @@ for (const entry of logs) console.log(entry.text());
 ```typescript
 import { Volume } from "microsandbox";
 
-const vol = await Volume.builder("my-data")
-  .quota(5120)
-  .label("env", "dev")
-  .create();
+const vol = await Volume.builder("my-data").quota(5120).label("env", "dev").create();
 
 const handle = await Volume.get("my-data");
 const allVolumes = await Volume.list();
@@ -209,7 +199,8 @@ const policy = {
 await using sb = await Sandbox.builder("agent")
   .image("python")
   .network((n) =>
-    n.policy(policy)
+    n
+      .policy(policy)
       .denyDomain("ads.example.com")
       .denyDomainSuffix(".tracking.com")
       .maxConnections(50)
@@ -217,7 +208,8 @@ await using sb = await Sandbox.builder("agent")
   )
   .secretEnv("OPENAI_API_KEY", process.env.OPENAI_API_KEY!, "api.openai.com")
   .secret((s) =>
-    s.env("STRIPE_KEY")
+    s
+      .env("STRIPE_KEY")
       .value(process.env.STRIPE_KEY!)
       .allowHost("api.stripe.com")
       .allowHostPattern("*.stripe.com")
@@ -235,7 +227,8 @@ Rootfs patches are applied before boot:
 await using sb = await Sandbox.builder("patched")
   .image("alpine")
   .patch((p) =>
-    p.text("/etc/app/config.json", '{"debug":true}', { mode: 0o644, replace: true })
+    p
+      .text("/etc/app/config.json", '{"debug":true}', { mode: 0o644, replace: true })
       .mkdir("/var/log/app", { mode: 0o755 })
       .append("/etc/profile", "\nexport APP_ENV=dev\n")
       .copyFile("./cert.pem", "/etc/ssl/cert.pem", { replace: true })
@@ -255,9 +248,7 @@ const handle = await Sandbox.get("baseline");
 const snap = await handle.snapshot("after-setup");
 const snap2 = await handle.snapshotTo("/tmp/snaps/after-setup");
 
-await using worker = await Sandbox.builder("worker")
-  .fromSnapshot("after-setup")
-  .create();
+await using worker = await Sandbox.builder("worker").fromSnapshot("after-setup").create();
 
 const allSnaps = await Snapshot.list();
 const snapHandle = await Snapshot.get("after-setup");

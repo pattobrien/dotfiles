@@ -1,11 +1,7 @@
 import { test as base } from "vite-plus/test";
 
 import { getOrCreateKittyInstance } from "../src/kitty.ts";
-import {
-  getOrCreateNvimInstance,
-  disconnectNvim,
-  type NvimInstance,
-} from "../src/nvim.ts";
+import { getOrCreateNvimInstance, disconnectNvim, type NvimInstance } from "../src/nvim.ts";
 import { getOrCreateTmuxSession } from "../src/tmux.ts";
 
 /** Capture pane text + freeze screenshot for debugging. */
@@ -23,10 +19,7 @@ async function captureFailureArtifacts(nvim: NvimInstance, name: string) {
       `tmux -L ${nvim.tmux.socket} capture-pane -t ${nvim.tmux.session} -pe | freeze -o ${imgPath}`,
       { shell: true },
     );
-    writeSync(
-      2,
-      `\n  Failure artifacts:\n    text: ${textPath}\n    screenshot: ${imgPath}\n`,
-    );
+    writeSync(2, `\n  Failure artifacts:\n    text: ${textPath}\n    screenshot: ${imgPath}\n`);
   } catch {
     // best effort
   }
@@ -36,11 +29,7 @@ async function captureFailureArtifacts(nvim: NvimInstance, name: string) {
  * Reset buffer and assert clean state, retrying once if transient plugin
  * floats (which-key, noice) haven't settled yet.
  */
-async function resetAndAssert(
-  nvim: NvimInstance,
-  label: string,
-  testName?: string,
-) {
+async function resetAndAssert(nvim: NvimInstance, label: string, testName?: string) {
   await nvim.resetBuffer(testName);
   let violations = await nvim.checkStartState();
   if (violations.length > 0) {
@@ -51,9 +40,7 @@ async function resetAndAssert(
     if (violations.length > 0) {
       const safeName = (testName ?? "unknown").replace(/[^a-zA-Z0-9-_]/g, "_");
       await captureFailureArtifacts(nvim, `${label}-${safeName}`);
-      throw new Error(
-        `nvim not in start state ${label} test:\n  ${violations.join("\n  ")}`,
-      );
+      throw new Error(`nvim not in start state ${label} test:\n  ${violations.join("\n  ")}`);
     }
   }
 }

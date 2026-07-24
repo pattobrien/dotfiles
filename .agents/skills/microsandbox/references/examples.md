@@ -219,9 +219,7 @@ msb run --net-rule "deny@*.tracking.com" python -- python script.py
 ```typescript
 await using sb = await Sandbox.builder("scraper")
   .image("python")
-  .network((n) =>
-    n.policy(NetworkPolicy.publicOnly()).denyDomainSuffix(".tracking.com"),
-  )
+  .network((n) => n.policy(NetworkPolicy.publicOnly()).denyDomainSuffix(".tracking.com"))
   .create();
 ```
 
@@ -243,7 +241,8 @@ Customize the filesystem before the VM boots.
 await using sb = await Sandbox.builder("patched")
   .image("alpine")
   .patch((p) =>
-    p.text("/etc/app/config.yaml", "debug: true\n", { replace: true })
+    p
+      .text("/etc/app/config.yaml", "debug: true\n", { replace: true })
       .mkdir("/var/log/app")
       .copyFile("./cert.pem", "/etc/ssl/cert.pem", { replace: true }),
   )
@@ -282,9 +281,7 @@ msb run --name worker --snapshot after-pip-install \
 const baseline = await Sandbox.get("baseline");
 const snap = await baseline.snapshot("after-pip-install");
 
-await using worker = await Sandbox.builder("worker")
-  .fromSnapshot("after-pip-install")
-  .create();
+await using worker = await Sandbox.builder("worker").fromSnapshot("after-pip-install").create();
 ```
 
 ```python

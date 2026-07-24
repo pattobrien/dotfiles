@@ -6,33 +6,26 @@ import pc from "picocolors";
 import { SessionStatus, TmuxClient } from "tmux";
 import { z } from "zod";
 
-import {
-  deriveSessionName,
-  fzfSelect,
-  runWorktreeSetup,
-  worktreeName,
-} from "./lib";
+import { deriveSessionName, fzfSelect, runWorktreeSetup, worktreeName } from "./lib";
 import { t } from "./trpc";
 
 const listOutput = z.void();
 
 function getGitRepoRoot(sessionPath: string): string | null {
   try {
-    const commonDir = execFileSync(
-      "git",
-      ["-C", sessionPath, "rev-parse", "--git-common-dir"],
-      { encoding: "utf-8", timeout: 5_000 },
-    ).trim();
+    const commonDir = execFileSync("git", ["-C", sessionPath, "rev-parse", "--git-common-dir"], {
+      encoding: "utf-8",
+      timeout: 5_000,
+    }).trim();
 
     if (commonDir.endsWith("/.bare")) {
       return dirname(commonDir);
     }
 
-    return execFileSync(
-      "git",
-      ["-C", sessionPath, "rev-parse", "--show-toplevel"],
-      { encoding: "utf-8", timeout: 5_000 },
-    ).trim();
+    return execFileSync("git", ["-C", sessionPath, "rev-parse", "--show-toplevel"], {
+      encoding: "utf-8",
+      timeout: 5_000,
+    }).trim();
   } catch {
     return null;
   }
@@ -80,9 +73,7 @@ const projectsList = t.procedure
           ? pc.green(r.status.padEnd(statusWidth))
           : pc.yellow(r.status.padEnd(statusWidth));
       const repoColored =
-        r.repo === "-"
-          ? pc.dim(r.repo.padEnd(repoWidth))
-          : r.repo.padEnd(repoWidth);
+        r.repo === "-" ? pc.dim(r.repo.padEnd(repoWidth)) : r.repo.padEnd(repoWidth);
 
       console.log(
         `${r.session.padEnd(sessionWidth)}  ${repoColored}  ${statusColored}  ${pc.dim(r.path)}`,
@@ -93,14 +84,10 @@ const projectsList = t.procedure
 /** List worktrees for a repo directory using git directly (no process.exit). */
 function listWorktreesRaw(repoDir: string): Worktree[] {
   try {
-    const output = execFileSync(
-      "git",
-      ["-C", repoDir, "worktree", "list", "--porcelain"],
-      {
-        encoding: "utf-8",
-        timeout: 5_000,
-      },
-    );
+    const output = execFileSync("git", ["-C", repoDir, "worktree", "list", "--porcelain"], {
+      encoding: "utf-8",
+      timeout: 5_000,
+    });
 
     const worktrees: Worktree[] = [];
     let current: Record<string, string | boolean> = {};
@@ -169,13 +156,9 @@ const projectsSwitch = t.procedure
         const label = `${project.repoName}/${wtName}`;
 
         if (session) {
-          const status = session.attached
-            ? SessionStatus.Active
-            : SessionStatus.Detached;
+          const status = session.attached ? SessionStatus.Active : SessionStatus.Detached;
           const statusColored =
-            status === SessionStatus.Active
-              ? pc.green(status)
-              : pc.yellow(status);
+            status === SessionStatus.Active ? pc.green(status) : pc.yellow(status);
           withSessions.push({
             label: `${label}  ${statusColored}`,
             value: `${project.repoDir}\t${wt.path}`,

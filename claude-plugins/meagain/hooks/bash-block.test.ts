@@ -2,12 +2,7 @@ import { describe, expect, it } from "bun:test";
 
 import { parse } from "shell-quote";
 
-import {
-  checkCommand,
-  extractCommands,
-  BLOCKED,
-  BLOCKED_ANYWHERE,
-} from "./bash-block-lib.ts";
+import { checkCommand, extractCommands, BLOCKED, BLOCKED_ANYWHERE } from "./bash-block-lib.ts";
 
 describe("extractCommands", () => {
   it("extracts a single command", () => {
@@ -15,17 +10,11 @@ describe("extractCommands", () => {
   });
 
   it("extracts commands after operators", () => {
-    expect(extractCommands(parse("echo hello && tsc --noEmit"))).toEqual([
-      "echo",
-      "tsc",
-    ]);
+    expect(extractCommands(parse("echo hello && tsc --noEmit"))).toEqual(["echo", "tsc"]);
   });
 
   it("extracts command after pipe", () => {
-    expect(extractCommands(parse("cat file | npx prettier"))).toEqual([
-      "cat",
-      "npx",
-    ]);
+    expect(extractCommands(parse("cat file | npx prettier"))).toEqual(["cat", "npx"]);
   });
 
   it("does not extract args as commands", () => {
@@ -33,9 +22,7 @@ describe("extractCommands", () => {
   });
 
   it("does not extract quoted content as commands", () => {
-    expect(extractCommands(parse('git commit -m "use npx and tsc"'))).toEqual([
-      "git",
-    ]);
+    expect(extractCommands(parse('git commit -m "use npx and tsc"'))).toEqual(["git"]);
   });
 });
 
@@ -92,21 +79,15 @@ describe("checkCommand", () => {
   });
 
   it("blocks prettier via pnpm exec with --filter", () => {
-    expect(check("pnpm --filter foo/bar exec prettier")).toBe(
-      BLOCKED_ANYWHERE.prettier,
-    );
+    expect(check("pnpm --filter foo/bar exec prettier")).toBe(BLOCKED_ANYWHERE.prettier);
   });
 
   it("blocks prettier after cd &&", () => {
-    expect(check("cd foo/bar && pnpx prettier")).toBe(
-      BLOCKED_ANYWHERE.prettier,
-    );
+    expect(check("cd foo/bar && pnpx prettier")).toBe(BLOCKED_ANYWHERE.prettier);
   });
 
   it("blocks tsc via pnpm exec with --filter", () => {
-    expect(check("pnpm --filter foo/bar exec tsc --noEmit")).toBe(
-      BLOCKED_ANYWHERE.tsc,
-    );
+    expect(check("pnpm --filter foo/bar exec tsc --noEmit")).toBe(BLOCKED_ANYWHERE.tsc);
   });
 
   it("blocks tsc after cd &&", () => {

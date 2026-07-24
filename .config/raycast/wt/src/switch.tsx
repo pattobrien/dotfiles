@@ -2,11 +2,7 @@ import { Action, Icon, List } from "@raycast/api";
 
 import { WorktreeListItem } from "./components/worktree-list-item";
 import { DEFAULT_CWD } from "./data/paths";
-import {
-  showAnimatedToast,
-  updateToastFailure,
-  updateToastSuccess,
-} from "./data/toasts";
+import { showAnimatedToast, updateToastFailure, updateToastSuccess } from "./data/toasts";
 import { switchWorktree } from "./data/wt-service";
 import { useWorktrees } from "./hooks/use-worktrees";
 import { CommandArgsSchema, SessionStatus } from "./models";
@@ -16,16 +12,10 @@ export default function Command(props: { arguments: { cwd?: string } }) {
   const cwd = args.cwd || DEFAULT_CWD;
   const { data, isLoading } = useWorktrees(cwd);
 
-  const sessions = data?.filter(
-    (wt) => wt.sessionStatus !== SessionStatus.None,
-  );
+  const sessions = data?.filter((wt) => wt.sessionStatus !== SessionStatus.None);
 
   return (
-    <List
-      filtering={true}
-      isLoading={isLoading}
-      searchBarPlaceholder="Search sessions..."
-    >
+    <List filtering={true} isLoading={isLoading} searchBarPlaceholder="Search sessions...">
       <List.EmptyView
         title="No Sessions Found"
         description="No active or detached tmux sessions were found."

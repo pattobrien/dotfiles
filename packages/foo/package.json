@@ -1,26 +1,26 @@
 {
   "name": "foo",
-  "type": "module",
   "version": "0.0.0",
   "description": "A starter for creating a TypeScript package.",
-  "author": "Author Name <author.name@mail.com>",
-  "license": "MIT",
   "homepage": "https://github.com/author/library#readme",
+  "bugs": {
+    "url": "https://github.com/author/library/issues"
+  },
+  "license": "MIT",
+  "author": "Author Name <author.name@mail.com>",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/author/library.git"
   },
-  "bugs": {
-    "url": "https://github.com/author/library/issues"
-  },
+  "files": [
+    "dist"
+  ],
+  "type": "module",
+  "types": "./dist/index.d.mts",
   "exports": {
     ".": "./dist/index.mjs",
     "./package.json": "./package.json"
   },
-  "types": "./dist/index.d.mts",
-  "files": [
-    "dist"
-  ],
   "scripts": {
     "build": "vp pack",
     "dev": "vp pack --watch",
@@ -32,7 +32,7 @@
     "@types/node": "catalog:",
     "bumpp": "^10.4.1",
     "typescript": "catalog:",
-    "vitest": "catalog:",
-    "vite-plus": "catalog:"
+    "vite-plus": "catalog:",
+    "vitest": "catalog:"
   }
 }

@@ -33,16 +33,16 @@ ls node_modules/@mastra/
 
 ### References
 
-| User Question                       | First Check                                                      | How To                                         |
-| ----------------------------------- | ---------------------------------------------------------------- | ---------------------------------------------- |
-| Create/install Mastra project     | [`references/create-mastra.md`](references/create-mastra.md)     | Setup guide with CLI and manual steps          |
-| Choose Agent/Workflow/Tool/Memory/Storage | [`references/core-concepts.md`](references/core-concepts.md) | Core concepts and when to use each primitive |
-| How do I use Agent/Workflow/Tool? | [`references/embedded-docs.md`](references/embedded-docs.md)     | Look up in `node_modules/@mastra/*/dist/docs/` |
-| How do I use X? (no packages)     | [`references/remote-docs.md`](references/remote-docs.md)         | Fetch from `https://mastra.ai/llms.txt`        |
-| Choose or validate a model        | [`references/model-selection.md`](references/model-selection.md) | Model format and provider registry lookup      |
-| I'm getting an error...           | [`references/common-errors.md`](references/common-errors.md)     | Common errors and solutions                    |
-| Upgrade from v0.x to v1.x         | [`references/migration-guide.md`](references/migration-guide.md) | Version upgrade workflows                      |
-| Inspect/call server resources via CLI | [`references/mastra-api.md`](references/mastra-api.md)       | `mastra api` CLI for local, Mastra platform, or remote servers |
+| User Question                             | First Check                                                      | How To                                                         |
+| ----------------------------------------- | ---------------------------------------------------------------- | -------------------------------------------------------------- |
+| Create/install Mastra project             | [`references/create-mastra.md`](references/create-mastra.md)     | Setup guide with CLI and manual steps                          |
+| Choose Agent/Workflow/Tool/Memory/Storage | [`references/core-concepts.md`](references/core-concepts.md)     | Core concepts and when to use each primitive                   |
+| How do I use Agent/Workflow/Tool?         | [`references/embedded-docs.md`](references/embedded-docs.md)     | Look up in `node_modules/@mastra/*/dist/docs/`                 |
+| How do I use X? (no packages)             | [`references/remote-docs.md`](references/remote-docs.md)         | Fetch from `https://mastra.ai/llms.txt`                        |
+| Choose or validate a model                | [`references/model-selection.md`](references/model-selection.md) | Model format and provider registry lookup                      |
+| I'm getting an error...                   | [`references/common-errors.md`](references/common-errors.md)     | Common errors and solutions                                    |
+| Upgrade from v0.x to v1.x                 | [`references/migration-guide.md`](references/migration-guide.md) | Version upgrade workflows                                      |
+| Inspect/call server resources via CLI     | [`references/mastra-api.md`](references/mastra-api.md)           | `mastra api` CLI for local, Mastra platform, or remote servers |
 
 ### Scripts
 

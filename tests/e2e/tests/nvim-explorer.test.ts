@@ -28,9 +28,7 @@ test("file explorer shows hidden dotfiles", async ({ nvim }) => {
 
 test("file picker shows hidden files", async ({ nvim }) => {
   // Open picker scoped to the fixture dir (feedkeys " ff" uses git root)
-  await nvim.client.lua(
-    `Snacks.picker.files({ cwd = "${FIXTURE_DIR}", hidden = true })`,
-  );
+  await nvim.client.lua(`Snacks.picker.files({ cwd = "${FIXTURE_DIR}", hidden = true })`);
 
   await nvim.tmux.waitForText("\\.dotrc", 3);
 

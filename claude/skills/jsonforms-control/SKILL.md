@@ -49,27 +49,28 @@ a proper ranked tester and (optionally) a dedicated input component.
 
 Import from `@jsonforms/core`:
 
-| Function | Use when |
-|---|---|
-| `formatIs("date")` | JSON Schema has `format: "date"` |
-| `schemaTypeIs("string")` | JSON Schema has `type: "string"` |
-| `schemaMatches(predicate)` | Custom predicate on resolved schema |
-| `optionIs("format", "X")` | UI schema control has `options.format === "X"` |
-| `hasOption("name")` | UI schema control has a named option |
-| `scopeEndsWith("/field")` | Control scope ends with a field name |
-| `scopeEndIs("field")` | Last scope segment matches exactly |
-| `isEnumControl` | Schema has `enum` |
-| `isOneOfEnumControl` | Schema has `oneOf` with `const` entries |
-| `isStringControl` | Schema type is string |
-| `isNumberControl` | Schema type is number |
-| `isDateControl` | Control with `format: "date"` |
-| `isBooleanControl` | Schema type is boolean |
-| `and(...testers)` | Logical AND |
-| `or(...testers)` | Logical OR |
-| `not(tester)` | Negate |
-| `rankWith(rank, tester)` | Associate a rank with a tester |
+| Function                   | Use when                                       |
+| -------------------------- | ---------------------------------------------- |
+| `formatIs("date")`         | JSON Schema has `format: "date"`               |
+| `schemaTypeIs("string")`   | JSON Schema has `type: "string"`               |
+| `schemaMatches(predicate)` | Custom predicate on resolved schema            |
+| `optionIs("format", "X")`  | UI schema control has `options.format === "X"` |
+| `hasOption("name")`        | UI schema control has a named option           |
+| `scopeEndsWith("/field")`  | Control scope ends with a field name           |
+| `scopeEndIs("field")`      | Last scope segment matches exactly             |
+| `isEnumControl`            | Schema has `enum`                              |
+| `isOneOfEnumControl`       | Schema has `oneOf` with `const` entries        |
+| `isStringControl`          | Schema type is string                          |
+| `isNumberControl`          | Schema type is number                          |
+| `isDateControl`            | Control with `format: "date"`                  |
+| `isBooleanControl`         | Schema type is boolean                         |
+| `and(...testers)`          | Logical AND                                    |
+| `or(...testers)`           | Logical OR                                     |
+| `not(tester)`              | Negate                                         |
+| `rankWith(rank, tester)`   | Associate a rank with a tester                 |
 
 ### Rank conventions
+
 - **1**: Fallback (e.g. `isStringControl` for generic text)
 - **2**: Scope-based (e.g. `scopeEndsWith("/firstName")`)
 - **3**: Format/type-based (e.g. `optionIs("format", "select")`, `formatIs("date")`)
@@ -80,6 +81,7 @@ Import from `@jsonforms/core`:
 ### 1. Decide: new input component or reuse existing?
 
 Check if an existing component can be used directly:
+
 - Shared UI: `apps/expo/src/shared/components/ui/` (DatePicker, RulerPicker)
 - Feature components: `apps/expo/src/features/weight/components/` (HeightWeight)
 - Existing inputs: `apps/expo/src/features/telehealth/intake/components/inputs/`
@@ -97,7 +99,7 @@ export function MyInput({ placeholder = "Label", className, ...props }: MyInputP
   return (
     <MutedInput
       autoCapitalize="words"
-      autoComplete="given-name"  // use appropriate autocomplete
+      autoComplete="given-name" // use appropriate autocomplete
       autoCorrect={false}
       placeholder={placeholder}
       className={className}
@@ -114,6 +116,7 @@ export function MyInput({ placeholder = "Label", className, ...props }: MyInputP
 Create a file in `apps/expo/src/features/telehealth/intake/components/renderers/controls/`.
 
 Choose the right tester based on how the field should be detected:
+
 - **By JSON Schema format**: `formatIs("email")` or pre-built like `isDateControl`
 - **By JSON Schema type**: `isEnumControl`, `isOneOfEnumControl`, `isNumberControl`
 - **By UI schema option**: `optionIs("format", "my-format")`
@@ -124,7 +127,7 @@ Pattern:
 
 ```tsx
 import type { ControlProps, RankedTester } from "@jsonforms/core";
-import { rankWith, /* tester */ } from "@jsonforms/core";
+import { rankWith /* tester */ } from "@jsonforms/core";
 import { withJsonFormsControlProps } from "@jsonforms/react";
 
 import { MyInput } from "../../inputs/my-input";
@@ -143,11 +146,12 @@ function MyControl(props: ControlProps) {
   );
 }
 
-export const myControlTester: RankedTester = rankWith(3, /* tester */);
+export const myControlTester: RankedTester = rankWith(3 /* tester */);
 export const MyControlRenderer = withJsonFormsControlProps(MyControl);
 ```
 
 **Rules**:
+
 - Hook calls (`useJsonForms()`, etc.) MUST come before any early returns (`if (!props.visible)`) — React Compiler requires consistent hook ordering.
 - For controls managing multiple fields, use `useJsonForms()` to access sibling data.
 - Export naming: `{name}ControlTester` and `{Name}ControlRenderer`.

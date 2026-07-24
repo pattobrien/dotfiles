@@ -1,11 +1,11 @@
 {
   "name": "wt-cli",
-  "type": "module",
   "version": "0.0.0",
   "private": true,
   "bin": {
     "wt": "./dist/cli.mjs"
   },
+  "type": "module",
   "scripts": {
     "build": "vp pack",
     "compile": "bun build --compile dist/cli.mjs --outfile dist/wt",
@@ -13,12 +13,12 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "git": "workspace:*",
-    "tmux": "workspace:*",
     "@trpc/server": "^11.12.0",
     "commander": "^14.0.3",
+    "git": "workspace:*",
     "omelette": "^0.4.17",
     "picocolors": "^1.1.1",
+    "tmux": "workspace:*",
     "trpc-cli": "^0.12.4",
     "zod": "^4.3.6"
   },

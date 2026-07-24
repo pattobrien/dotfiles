@@ -5,25 +5,13 @@ import { useCachedPromise } from "@raycast/utils";
 import { GitClient } from "git";
 import { TmuxClient } from "tmux";
 
-import {
-  DEFAULT_CWD,
-  GIT_BIN,
-  TMUX_BIN,
-  TMUX_TMPDIR,
-  resolvePath,
-} from "../data/paths";
-import {
-  SessionStatus,
-  WorktreeItemSchema,
-  type WorktreeItem,
-} from "../models";
+import { DEFAULT_CWD, GIT_BIN, TMUX_BIN, TMUX_TMPDIR, resolvePath } from "../data/paths";
+import { SessionStatus, WorktreeItemSchema, type WorktreeItem } from "../models";
 
 const BRANCH_REF_PREFIX = "refs/heads/";
 
 function stripBranchRef(branch: string): string {
-  return branch.startsWith(BRANCH_REF_PREFIX)
-    ? branch.slice(BRANCH_REF_PREFIX.length)
-    : branch;
+  return branch.startsWith(BRANCH_REF_PREFIX) ? branch.slice(BRANCH_REF_PREFIX.length) : branch;
 }
 
 function deriveSessionName(repoName: string, wtName: string): string {
@@ -69,10 +57,7 @@ async function fetchWorktreeItems(cwd: string): Promise<WorktreeItem[]> {
   const sessions = tmuxClient.listSessions();
   const sessionMap = new Map<string, SessionStatus>();
   for (const s of sessions) {
-    sessionMap.set(
-      s.name,
-      s.attached ? SessionStatus.Active : SessionStatus.Detached,
-    );
+    sessionMap.set(s.name, s.attached ? SessionStatus.Active : SessionStatus.Detached);
   }
 
   const statusOrder = {
@@ -96,8 +81,7 @@ async function fetchWorktreeItems(cwd: string): Promise<WorktreeItem[]> {
       });
     })
     .toSorted((a, b) => {
-      const statusDiff =
-        statusOrder[a.sessionStatus] - statusOrder[b.sessionStatus];
+      const statusDiff = statusOrder[a.sessionStatus] - statusOrder[b.sessionStatus];
       if (statusDiff !== 0) return statusDiff;
       return a.name.localeCompare(b.name);
     });
@@ -105,8 +89,5 @@ async function fetchWorktreeItems(cwd: string): Promise<WorktreeItem[]> {
 
 export function useWorktrees(cwd?: string) {
   const resolvedCwd = resolveGitCwd(resolvePath(cwd || DEFAULT_CWD));
-  return useCachedPromise(
-    (dir: string) => fetchWorktreeItems(dir),
-    [resolvedCwd],
-  );
+  return useCachedPromise((dir: string) => fetchWorktreeItems(dir), [resolvedCwd]);
 }

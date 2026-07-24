@@ -7,12 +7,7 @@ import type { Project } from "./models";
 
 const DEFAULT_DIRS = [join(homedir(), "dev")];
 
-function fdFind(
-  pattern: string,
-  type: "d" | "f",
-  baseDirs: string[],
-  maxDepth = 4,
-): string[] {
+function fdFind(pattern: string, type: "d" | "f", baseDirs: string[], maxDepth = 4): string[] {
   try {
     const output = execFileSync(
       "fd",
@@ -55,9 +50,7 @@ export function discoverProjects(baseDirs = DEFAULT_DIRS): Project[] {
 
     // Skip if a bare variant already registered
     const repoName = basename(repoDir).replace(/-bare$/, "");
-    const alreadyBare = [...projects.values()].some(
-      (p) => p.repoName === repoName && p.isBare,
-    );
+    const alreadyBare = [...projects.values()].some((p) => p.repoName === repoName && p.isBare);
     if (alreadyBare) continue;
 
     const repoOrg = basename(dirname(repoDir));

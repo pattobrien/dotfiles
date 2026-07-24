@@ -3,9 +3,7 @@ import { cpus } from "node:os";
 const isAppleSilicon = cpus()[0].model.includes("Apple");
 
 export const GIT_BIN = "/usr/bin/git";
-export const TMUX_BIN = isAppleSilicon
-  ? "/opt/homebrew/bin/tmux"
-  : "/usr/local/bin/tmux";
+export const TMUX_BIN = isAppleSilicon ? "/opt/homebrew/bin/tmux" : "/usr/local/bin/tmux";
 export const WT_BIN = "/Users/pattobrien/.local/bin/wt";
 
 // PATH for wt subprocesses — wt uses #!/usr/bin/env bun (needs mise shims)

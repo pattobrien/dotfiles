@@ -1,4 +1,4 @@
-model = "gpt-5.5"
+model = "gpt-5.6-sol"
 model_reasoning_effort = "high"
 personality = "pragmatic"
 sandbox_mode = "danger-full-access"
@@ -8,7 +8,12 @@ suppress_unstable_features_warning = true
 check_for_update_on_startup = false
 approvals_reviewer = "user"
 
-notify = ["/Users/pattobrien/.codex/computer-use/Codex Computer Use.app/Contents/SharedSupport/SkyComputerUseClient.app/Contents/MacOS/SkyComputerUseClient", "turn-ended", "--previous-notify", "[\"\\/Users\\/pattobrien\\/dev\\/pattobrien\\/dotfiles\\/.config\\/codex\\/notify.zsh\"]"]
+notify = [
+  "/Users/pattobrien/.codex/computer-use/Codex Computer Use.app/Contents/SharedSupport/SkyComputerUseClient.app/Contents/MacOS/SkyComputerUseClient",
+  "turn-ended",
+  "--previous-notify",
+  "[\"\\/Users\\/pattobrien\\/dev\\/pattobrien\\/dotfiles\\/.config\\/codex\\/notify.zsh\"]",
+]
 service_tier = "default"
 
 [projects."/Users/pattobrien/dev/getdots/meagain-bare"]
@@ -27,6 +32,18 @@ trust_level = "trusted"
 trust_level = "trusted"
 
 [projects."/Users/pattobrien/Documents/Codex/2026-07-06/where-can-i"]
+trust_level = "trusted"
+
+[projects."/Users/pattobrien/dev/pattobrien/shed"]
+trust_level = "trusted"
+
+[projects."/Users/pattobrien/Documents/Codex/2026-07-21/can"]
+trust_level = "trusted"
+
+[projects."/Users/pattobrien/Documents/Codex/2026-07-21/can-y"]
+trust_level = "trusted"
+
+[projects."/Users/pattobrien/.codex/.chatgpt-projects/g-p-6a5f95bbe7c881919deb4746c6fd18f5"]
 trust_level = "trusted"
 
 [notice]
@@ -77,36 +94,43 @@ enabled = false
 
 [mcp_servers.node_repl]
 args = []
-command = "/Applications/Codex.app/Contents/Resources/cua_node/bin/node_repl"
+command = "/Applications/ChatGPT.app/Contents/Resources/cua_node/bin/node_repl"
 startup_timeout_sec = 120
 
 [mcp_servers.node_repl.env]
 NODE_REPL_NATIVE_PIPE_CONNECT_TIMEOUT_MS = "1000"
-NODE_REPL_NODE_MODULE_DIRS = "/Applications/Codex.app/Contents/Resources/cua_node/lib/node_modules"
-NODE_REPL_NODE_PATH = "/Applications/Codex.app/Contents/Resources/cua_node/bin/node"
+NODE_REPL_NODE_MODULE_DIRS = "/Applications/ChatGPT.app/Contents/Resources/cua_node/lib/node_modules"
+NODE_REPL_NODE_PATH = "/Applications/ChatGPT.app/Contents/Resources/cua_node/bin/node"
 NODE_REPL_TRUSTED_CODE_PATHS = "/Users/pattobrien/.codex"
 CODEX_HOME = "/Users/pattobrien/.codex"
-NODE_REPL_TRUSTED_BROWSER_CLIENT_SHA256S = "60e4902788f207f88fd09344dfeafe07769488bdb2924bbb12b322c3b9d2b999"
+NODE_REPL_TRUSTED_BROWSER_CLIENT_SHA256S = "6d25aa7656feac858f3a3bdaea5bcbab0dbfd426c9de8e6931ce90c399ee8e4f,7182a69deb1cf34d457c66e124d0df74d480677b1136fc255b1a52074a5b4b6d"
 BROWSER_USE_AVAILABLE_BACKENDS = "chrome,iab"
 NODE_REPL_INSTRUCTIONS_USE_CASE_BROWSER = "Control the in-app browser in conjunction with the Browser Plugin."
 NODE_REPL_INSTRUCTIONS_USE_CASE_CHROME = "Control the Chrome browser in conjunction with the Chrome Plugin. Prefer this method of controlling Chrome over alternatives (such as Computer Use) unless the user explicitly mentions an alternative."
+NODE_REPL_INSTRUCTIONS_USE_CASE_COMPUTER_USE = "Control desktop apps on macOS through Computer Use."
 BROWSER_USE_CODEX_APP_BUILD_FLAVOR = "prod"
-BROWSER_USE_CODEX_APP_VERSION = "26.623.101652"
-CODEX_CLI_PATH = "/Applications/Codex.app/Contents/Resources/codex"
+BROWSER_USE_CODEX_APP_VERSION = "26.715.70719"
+CODEX_CLI_PATH = "/Applications/ChatGPT.app/Contents/Resources/codex"
+
+[mcp_servers.computer-use]
+command = "./Codex Computer Use.app/Contents/SharedSupport/SkyComputerUseClient.app/Contents/MacOS/SkyComputerUseClient"
+args = ["mcp"]
+cwd = "."
+enabled = false
 
 [marketplaces.openai-bundled]
-last_updated = "2026-07-06T19:36:19Z"
+last_updated = "2026-07-22T06:58:14Z"
 source_type = "local"
 source = "/Users/pattobrien/.codex/.tmp/bundled-marketplaces/openai-bundled"
 
 [marketplaces.openai-primary-runtime]
-last_updated = "2026-07-02T10:38:51Z"
+last_updated = "2026-07-24T07:23:08Z"
 source_type = "local"
 source = "/Users/pattobrien/.cache/codex-runtimes/codex-primary-runtime/plugins/openai-primary-runtime"
 
 [marketplaces.RevenueCat]
-last_updated = "2026-07-09T21:57:27Z"
-last_revision = "c7e5d469ab70805f6563070e970c6f8b67d51c00"
+last_updated = "2026-07-21T13:40:46Z"
+last_revision = "05054b7820ff9abe66d0aea86762b4f9ec05b87d"
 source_type = "git"
 source = "https://github.com/RevenueCat/ai-toolkit.git"
 
@@ -170,13 +194,19 @@ enabled = false
 [plugins."chrome@openai-bundled"]
 enabled = true
 
-[plugins."browser@openai-bundled"]
-enabled = true
-
 [plugins."pdf@openai-primary-runtime"]
 enabled = true
 
 [plugins."template-creator@openai-primary-runtime"]
+enabled = true
+
+[plugins."sites@openai-bundled"]
+enabled = true
+
+[plugins."visualize@openai-bundled"]
+enabled = true
+
+[plugins."browser@openai-bundled"]
 enabled = true
 
 [tui]
@@ -184,7 +214,15 @@ notifications = ["agent-turn-complete", "approval-requested"]
 notification_condition = "always"
 notification_method = "auto"
 show_tooltips = false
-status_line = ["model-with-reasoning", "pull-request-number", "run-state", "five-hour-limit", "weekly-limit", "context-window-size", "context-used"]
+status_line = [
+  "model-with-reasoning",
+  "pull-request-number",
+  "run-state",
+  "five-hour-limit",
+  "weekly-limit",
+  "context-window-size",
+  "context-used",
+]
 status_line_use_colors = true
 vim_mode_default = true
 
@@ -639,6 +677,7 @@ sansFontSize = 14
 codeFontSize = 13
 ambient-suggestions-enabled = false
 followUpQueueMode = "queue"
+dock-icon-preference = "codex-system"
 
 [desktop.appearanceDarkChromeTheme]
 accent = "#0169cc"
@@ -658,3 +697,8 @@ skill = "#b06dff"
 
 [desktop.open-in-target-preferences]
 global = "cursor"
+
+[shell_environment_policy.set]
+BROWSER_USE_AVAILABLE_BACKENDS = "chrome,iab"
+NODE_REPL_TRUSTED_BROWSER_CLIENT_SHA256S = "6d25aa7656feac858f3a3bdaea5bcbab0dbfd426c9de8e6931ce90c399ee8e4f,7182a69deb1cf34d457c66e124d0df74d480677b1136fc255b1a52074a5b4b6d"
+NODE_REPL_TRUSTED_CODE_PATHS = "/Users/pattobrien/.codex"

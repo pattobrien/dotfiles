@@ -2,11 +2,7 @@ import { Action, Color, Icon, List } from "@raycast/api";
 
 import { WorktreeListItem } from "./components/worktree-list-item";
 import { DEFAULT_CWD } from "./data/paths";
-import {
-  showAnimatedToast,
-  updateToastFailure,
-  updateToastSuccess,
-} from "./data/toasts";
+import { showAnimatedToast, updateToastFailure, updateToastSuccess } from "./data/toasts";
 import { removeWorktree } from "./data/wt-service";
 import { useWorktrees } from "./hooks/use-worktrees";
 import { CommandArgsSchema } from "./models";
@@ -17,10 +13,7 @@ export default function Command(props: { arguments: { cwd?: string } }) {
   const { data, isLoading, revalidate } = useWorktrees(cwd);
 
   return (
-    <List
-      isLoading={isLoading}
-      searchBarPlaceholder="Search worktrees to remove..."
-    >
+    <List isLoading={isLoading} searchBarPlaceholder="Search worktrees to remove...">
       <List.EmptyView
         title="No Worktrees Found"
         description="No git worktrees were found in the current directory."

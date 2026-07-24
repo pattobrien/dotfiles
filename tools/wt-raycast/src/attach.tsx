@@ -2,11 +2,7 @@ import { Action, Icon, List } from "@raycast/api";
 
 import { WorktreeListItem } from "./components/worktree-list-item";
 import { DEFAULT_CWD } from "./data/paths";
-import {
-  showAnimatedToast,
-  updateToastFailure,
-  updateToastSuccess,
-} from "./data/toasts";
+import { showAnimatedToast, updateToastFailure, updateToastSuccess } from "./data/toasts";
 import { attachWorktree } from "./data/wt-service";
 import { useWorktrees } from "./hooks/use-worktrees";
 import { CommandArgsSchema } from "./models";

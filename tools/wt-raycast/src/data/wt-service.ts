@@ -4,14 +4,7 @@ import { join } from "node:path";
 
 import { TmuxClient } from "tmux";
 
-import {
-  DEFAULT_CWD,
-  TMUX_BIN,
-  TMUX_TMPDIR,
-  WT_BIN,
-  WT_PATH,
-  resolvePath,
-} from "./paths";
+import { DEFAULT_CWD, TMUX_BIN, TMUX_TMPDIR, WT_BIN, WT_PATH, resolvePath } from "./paths";
 
 function resolveGitCwd(dir: string): string {
   if (existsSync(join(dir, ".git"))) return dir;

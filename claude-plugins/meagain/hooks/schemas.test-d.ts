@@ -1,7 +1,4 @@
-import type {
-  PreToolUseHookInput,
-  StopHookInput,
-} from "@anthropic-ai/claude-agent-sdk";
+import type { PreToolUseHookInput, StopHookInput } from "@anthropic-ai/claude-agent-sdk";
 /* eslint-disable typescript-eslint/consistent-type-assertions, typescript-eslint/no-unsafe-type-assertion */
 import { describe, it, expectTypeOf } from "vite-plus/test";
 import type { z } from "zod";
@@ -19,11 +16,7 @@ describe("schemas match SDK types", () => {
   });
 
   it("StopHookInputSchema", () => {
-    expectTypeOf({} as z.infer<typeof StopHookInputSchema>).toMatchTypeOf(
-      {} as StopHookInput,
-    );
-    expectTypeOf({} as StopHookInput).toMatchTypeOf(
-      {} as z.infer<typeof StopHookInputSchema>,
-    );
+    expectTypeOf({} as z.infer<typeof StopHookInputSchema>).toMatchTypeOf({} as StopHookInput);
+    expectTypeOf({} as StopHookInput).toMatchTypeOf({} as z.infer<typeof StopHookInputSchema>);
   });
 });

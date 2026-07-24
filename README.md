@@ -196,9 +196,9 @@ macOS to re-create it in the same broken state.
   - [ ] window / desktop transition
   - [x] finder settings
   - [ ] apple account signed in? (should this just be a part of the get started
-    guide?)
+        guide?)
   - [ ] accessibility/privacy settings per-app (e.g. Zoom needs screen-share
-    access)
+        access)
   - [ ] settings for apps that open on startup
     - BetterTouchTool
     - RayCast
@@ -213,7 +213,7 @@ macOS to re-create it in the same broken state.
   - [ ] raycast
   - [ ] shottr
   - [ ] Messages (disable notification sounds)
-  - [ ] 
+  - [ ]
 - [x] vscode settings / profile (synced via `stow_vscode.sh`; extensions via
       brew)
 - manual app setup steps:
@@ -248,7 +248,7 @@ asdf global golang latest && asdf global nodejs latest && asdf global deno lates
 
 ### TODO: Agentic App Authorization
 
-Using Claude Code + computer_use/browser_use plugins to authorize apps using 
+Using Claude Code + computer_use/browser_use plugins to authorize apps using
 the credentials stored in 1password (without the agent needing to copy/paste
 credentials into it's session).
 
@@ -305,4 +305,3 @@ credentials into it's session).
   - flyctl
   - railway
   - mas
-

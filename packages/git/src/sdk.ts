@@ -2,12 +2,7 @@ import { basename, dirname, join } from "node:path";
 
 import simpleGit, { type SimpleGit } from "simple-git";
 
-import {
-  RepoInfoSchema,
-  WorktreeSchema,
-  type RepoInfo,
-  type Worktree,
-} from "./models";
+import { RepoInfoSchema, WorktreeSchema, type RepoInfo, type Worktree } from "./models";
 
 export class GitClient {
   private git: SimpleGit;
@@ -27,9 +22,7 @@ export class GitClient {
     return join(this.repoRoot, ".worktrees");
   }
 
-  static async create(
-    opts: { cwd?: string; binary?: string } = {},
-  ): Promise<GitClient> {
+  static async create(opts: { cwd?: string; binary?: string } = {}): Promise<GitClient> {
     const git = simpleGit(undefined, {
       baseDir: opts.cwd,
       binary: opts.binary,
@@ -37,9 +30,7 @@ export class GitClient {
 
     const isRepo = await git.checkIsRepo();
     if (!isRepo) {
-      throw new Error(
-        `Not in a git repository${opts.cwd ? `: ${opts.cwd}` : ""}`,
-      );
+      throw new Error(`Not in a git repository${opts.cwd ? `: ${opts.cwd}` : ""}`);
     }
 
     const commonDir = (await git.revparse(["--git-common-dir"])).trim();

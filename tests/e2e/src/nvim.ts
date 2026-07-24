@@ -44,9 +44,7 @@ async function waitForLazyVim(client: NeovimClient, timeoutMs = 15_000) {
     }
     await new Promise((r) => setTimeout(r, 100));
   }
-  throw new Error(
-    "Timed out waiting for LazyVim (keymaps not loaded after VeryLazy)",
-  );
+  throw new Error("Timed out waiting for LazyVim (keymaps not loaded after VeryLazy)");
 }
 
 /** Wait for a file to exist on disk. */
@@ -73,10 +71,7 @@ async function nvimSocketExists(): Promise<boolean> {
   }
 }
 
-function buildNvimInstance(
-  client: NeovimClient,
-  tmux: TmuxSession,
-): NvimInstance {
+function buildNvimInstance(client: NeovimClient, tmux: TmuxSession): NvimInstance {
   return {
     client,
     tmux,
@@ -191,27 +186,18 @@ function buildNvimInstance(
         listed_bufs: string[];
       };
 
-      if (state.mode !== "n")
-        violations.push(`mode: expected 'n', got '${state.mode}'`);
-      if (state.win_count !== 1)
-        violations.push(`windows: expected 1, got ${state.win_count}`);
-      if (state.float_count > 0)
-        violations.push(`floats: expected 0, got ${state.float_count}`);
+      if (state.mode !== "n") violations.push(`mode: expected 'n', got '${state.mode}'`);
+      if (state.win_count !== 1) violations.push(`windows: expected 1, got ${state.win_count}`);
+      if (state.float_count > 0) violations.push(`floats: expected 0, got ${state.float_count}`);
       if (state.line_count > 1)
-        violations.push(
-          `lines: expected 1 empty line, got ${state.line_count}`,
-        );
-      if (state.first_line !== "")
-        violations.push(`buffer not empty: '${state.first_line}'`);
+        violations.push(`lines: expected 1 empty line, got ${state.line_count}`);
+      if (state.first_line !== "") violations.push(`buffer not empty: '${state.first_line}'`);
 
       // Only e2e-home and hover.ts should be listed
       const allowed = new Set(["e2e-home", "hover.ts"]);
       // Current scratch buffer is also fine (test-* names get wiped via bufhidden)
-      const stale = state.listed_bufs.filter(
-        (b) => !allowed.has(b) && !b.startsWith("test-"),
-      );
-      if (stale.length > 0)
-        violations.push(`stale buffers: ${stale.join(", ")}`);
+      const stale = state.listed_bufs.filter((b) => !allowed.has(b) && !b.startsWith("test-"));
+      if (stale.length > 0) violations.push(`stale buffers: ${stale.join(", ")}`);
 
       // cwd should be the dotfiles root
       if (!state.cwd.endsWith("/dotfiles")) {
@@ -249,9 +235,7 @@ async function ensureHomeBuffer(client: NeovimClient) {
  * On first run: launches nvim + waits for LazyVim (~2s). On subsequent runs: instant.
  * The nvim instance is intentionally left alive after tests finish.
  */
-export async function getOrCreateNvimInstance(
-  tmux: TmuxSession,
-): Promise<NvimInstance> {
+export async function getOrCreateNvimInstance(tmux: TmuxSession): Promise<NvimInstance> {
   // Try connecting to existing nvim socket
   if (await nvimSocketExists()) {
     try {

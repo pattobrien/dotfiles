@@ -247,18 +247,12 @@
   },
   "Ref Watch": {
     "prefix": "frWatch",
-    "body": [
-      "final ${3:variableName} = ref.watch(${1:someProvider}${2:.notifier});",
-      "${0}"
-    ],
+    "body": ["final ${3:variableName} = ref.watch(${1:someProvider}${2:.notifier});", "${0}"],
     "description": "Ref Watch"
   },
   "Ref Read": {
     "prefix": "frRead",
-    "body": [
-      "final ${3:variableName} = ref.read(${1:someProvider}${2:.notifier});",
-      "${0}"
-    ],
+    "body": ["final ${3:variableName} = ref.read(${1:someProvider}${2:.notifier});", "${0}"],
     "description": "Ref Read"
   },
   "Create Domain Class": {

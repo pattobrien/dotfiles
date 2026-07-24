@@ -6,11 +6,7 @@ import { WORKTREE_NAMES_COMPLETION, selectWorktree, worktreeName } from "./lib";
 import { t } from "./trpc";
 
 const removeInput = z.object({
-  name: z
-    .string()
-    .optional()
-    .meta({ positional: true })
-    .describe("worktree name"),
+  name: z.string().optional().meta({ positional: true }).describe("worktree name"),
 });
 
 const removeOutput = z.void();
@@ -30,11 +26,7 @@ export const remove = t.procedure
     const tmux = new TmuxClient();
     const worktrees = await repo.listWorktrees();
 
-    const selected = await selectWorktree(
-      worktrees,
-      input.name,
-      "Remove worktree: ",
-    );
+    const selected = await selectWorktree(worktrees, input.name, "Remove worktree: ");
     if (!selected) process.exit(0);
 
     const wtName = worktreeName(selected);

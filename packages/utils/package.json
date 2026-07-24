@@ -1,16 +1,16 @@
 {
   "name": "utils",
-  "type": "module",
   "version": "0.0.0",
   "private": true,
+  "files": [
+    "dist"
+  ],
+  "type": "module",
+  "types": "./dist/index.d.mts",
   "exports": {
     ".": "./dist/index.mjs",
     "./package.json": "./package.json"
   },
-  "types": "./dist/index.d.mts",
-  "files": [
-    "dist"
-  ],
   "scripts": {
     "build": "vp pack",
     "dev": "vp pack --watch",
@@ -21,7 +21,7 @@
   "devDependencies": {
     "@types/node": "catalog:",
     "typescript": "catalog:",
-    "vitest": "catalog:",
-    "vite-plus": "catalog:"
+    "vite-plus": "catalog:",
+    "vitest": "catalog:"
   }
 }

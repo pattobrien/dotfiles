@@ -859,10 +859,8 @@ data:
       TB Icon Size Mode: 1
       TB Size Mode: 1
       TB Display Mode: 2
-    NSWindow Frame NSNavPanelAutosaveName:
-      "-1365 191 800 363 -1920 0 1920 1055 "
-    NSWindow Frame NSSpellCheckerSubstitutionsPanel2:
-      "-1228 407 425 137 -1920 0 1920 1055 "
+    NSWindow Frame NSNavPanelAutosaveName: "-1365 191 800 363 -1920 0 1920 1055 "
+    NSWindow Frame NSSpellCheckerSubstitutionsPanel2: "-1228 407 425 137 -1920 0 1920 1055 "
     NetworkViewSettings:
       CustomViewStyleVersion: 1
       WindowState:

@@ -83,10 +83,7 @@
     "editor.formatOnSave": true,
     "editor.wordSeparators": "`~!@#$%^&*()=+[{]}\\|;:'\",.<>/?"
   },
-  "files.watcherInclude": [
-    ".dart_tool/sidecar_logs/",
-    ".dart_tool/sidecar_logs/latest.log"
-  ],
+  "files.watcherInclude": [".dart_tool/sidecar_logs/", ".dart_tool/sidecar_logs/latest.log"],
   "files.exclude": {
     "**/.git": true,
     "**/.svn": true,
@@ -338,12 +335,7 @@
   "supernova.designSystemName": "My Design System",
   "supernova.designSystemVersionName": "Shared draft",
   "supernova.designSystemBrandName": "Default",
-  "gitlens.graph.minimap.additionalTypes": [
-    "localBranches",
-    "stashes",
-    "remoteBranches",
-    "tags"
-  ],
+  "gitlens.graph.minimap.additionalTypes": ["localBranches", "stashes", "remoteBranches", "tags"],
   "vs-kubernetes": {
     "vs-kubernetes.minikube-show-information-expiration": "2026-01-20T06:44:27.026Z"
   },
@@ -385,12 +377,7 @@
   "chat.editing.alwaysSaveWithGeneratedChanges": true,
   "lldb.suppressUpdateNotifications": true,
   "tailwind-fold.autoFold": false,
-  "cursor.cpp.disabledLanguages": [
-    "scminput",
-    "mdx",
-    "yaml",
-    "typescript"
-  ],
+  "cursor.cpp.disabledLanguages": ["scminput", "mdx", "yaml", "typescript"],
   "debug.javascript.autoAttachFilter": "onlyWithFlag",
   "explorer.confirmDragAndDrop": false,
   "window.confirmSaveUntitledWorkspace": false,
@@ -474,5 +461,8 @@
   "git-worktree-manager.treeView.toSCM": true,
   "explorer.confirmPasteNative": false,
   "security.promptForLocalFileProtocolHandling": false,
-  "window.autoDetectColorScheme": false
+  "window.autoDetectColorScheme": false,
+  "extensions.experimental.affinity": {
+    "asvetliakov.vscode-neovim": 1
+  }
 }

@@ -1,7 +1,6 @@
 ---
 name: workmux
-description:
-  Reference for the workmux CLI that manages git worktrees and tmux windows as
+description: Reference for the workmux CLI that manages git worktrees and tmux windows as
   isolated development environments. Use when the user mentions workmux,
   worktrees, or parallel agent workflows.
 disable-model-invocation: true

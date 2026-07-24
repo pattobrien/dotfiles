@@ -15,10 +15,7 @@ export default defineConfig({
     "no-unused-vars": "off",
     "no-console": "off",
     "typescript/no-explicit-any": "warn",
-    "typescript/consistent-type-assertions": [
-      "error",
-      { assertionStyle: "never" },
-    ],
+    "typescript/consistent-type-assertions": ["error", { assertionStyle: "never" }],
     "unicorn/no-null": "off",
     "unicorn/prefer-node-protocol": "warn",
   },

@@ -308,8 +308,7 @@ const plugin = {
       meta: {
         type: "problem" as const,
         docs: {
-          description:
-            "Disallow raw HTML elements in React components; use shadcn/ui instead",
+          description: "Disallow raw HTML elements in React components; use shadcn/ui instead",
         },
         messages: {
           noRawHtml:

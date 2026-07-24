@@ -1,7 +1,6 @@
 ---
 name: e2e-tdd
-description:
-  Add new use cases and features to a codebase by first creating (failing) e2e
+description: Add new use cases and features to a codebase by first creating (failing) e2e
   tests. Use when the user mentions a new use case or feature, or
   "e2e"/"end-to-end" testing.
 # license: TODO_LICENSE # e.g. Apache-2.0, MIT, or path to LICENSE file
@@ -79,7 +78,7 @@ Good e2e tests have the following characteristics:
 
 Use whenever writing mobile e2e tests.
 
-- Use Context7 for WDIO usage, including best non-deprecated APIs to use today; *MUST USE*
+- Use Context7 for WDIO usage, including best non-deprecated APIs to use today; _MUST USE_
 - [Migrating to Appium 3](https://appium.io/docs/en/3.1/guides/migrating-2-to-3/)
 - [Mobile commands](https://webdriver.io/docs/api/mobile/)
 - [Appium protocol](https://webdriver.io/docs/api/appium/)

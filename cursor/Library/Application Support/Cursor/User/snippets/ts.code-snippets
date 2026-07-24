@@ -111,13 +111,7 @@
   "React Table Rows Map": {
     "prefix": "rtrows",
     "scope": "typescriptreact",
-    "body": [
-      "{${1:rows}.map((item) => (",
-      "  <tr key={item.${2:id}}>",
-      "    $0",
-      "  </tr>",
-      "))}",
-    ],
+    "body": ["{${1:rows}.map((item) => (", "  <tr key={item.${2:id}}>", "    $0", "  </tr>", "))}"],
   },
   "React Component": {
     "prefix": "rc",

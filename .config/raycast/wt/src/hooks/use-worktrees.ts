@@ -4,13 +4,7 @@ import { basename, dirname, join } from "node:path";
 
 import { useCachedPromise } from "@raycast/utils";
 
-import {
-  DEFAULT_CWD,
-  GIT_BIN,
-  TMUX_BIN,
-  TMUX_TMPDIR,
-  resolvePath,
-} from "../data/paths";
+import { DEFAULT_CWD, GIT_BIN, TMUX_BIN, TMUX_TMPDIR, resolvePath } from "../data/paths";
 import {
   SessionStatus,
   TmuxSessionSchema,
@@ -23,9 +17,7 @@ const BRANCH_REF_PREFIX = "refs/heads/";
 const SESSION_DELIM = ":::";
 
 function stripBranchRef(branch: string): string {
-  return branch.startsWith(BRANCH_REF_PREFIX)
-    ? branch.slice(BRANCH_REF_PREFIX.length)
-    : branch;
+  return branch.startsWith(BRANCH_REF_PREFIX) ? branch.slice(BRANCH_REF_PREFIX.length) : branch;
 }
 
 function deriveSessionName(repoName: string, wtName: string): string {
@@ -45,11 +37,7 @@ function listTmuxSessions(): Map<string, SessionStatus> {
   try {
     const output = execFileSync(
       TMUX_BIN,
-      [
-        "list-sessions",
-        "-F",
-        `#{session_name}${SESSION_DELIM}#{session_attached}`,
-      ],
+      ["list-sessions", "-F", `#{session_name}${SESSION_DELIM}#{session_attached}`],
       {
         cwd: "/",
         encoding: "utf-8",
@@ -64,10 +52,7 @@ function listTmuxSessions(): Map<string, SessionStatus> {
         name: line.slice(0, idx),
         attached: line.slice(idx + SESSION_DELIM.length) === "1",
       });
-      map.set(
-        session.name,
-        session.attached ? SessionStatus.Active : SessionStatus.Detached,
-      );
+      map.set(session.name, session.attached ? SessionStatus.Active : SessionStatus.Detached);
     }
   } catch {
     // tmux server not running — not an error for us
@@ -108,9 +93,7 @@ function resolveGitCwd(dir: string): string {
 function fetchWorktreeItems(cwd: string): WorktreeItem[] {
   const commonDir = git(["rev-parse", "--git-common-dir"], cwd);
   const isBare = commonDir.endsWith("/.bare");
-  const repoRoot = isBare
-    ? dirname(commonDir)
-    : git(["rev-parse", "--show-toplevel"], cwd);
+  const repoRoot = isBare ? dirname(commonDir) : git(["rev-parse", "--show-toplevel"], cwd);
   const repoName = basename(repoRoot).replace(/-bare$/, "");
 
   const raw = git(["worktree", "list", "--porcelain"], cwd);
@@ -161,8 +144,7 @@ function fetchWorktreeItems(cwd: string): WorktreeItem[] {
       });
     })
     .toSorted((a, b) => {
-      const statusDiff =
-        statusOrder[a.sessionStatus] - statusOrder[b.sessionStatus];
+      const statusDiff = statusOrder[a.sessionStatus] - statusOrder[b.sessionStatus];
       if (statusDiff !== 0) return statusDiff;
       return a.name.localeCompare(b.name);
     });
@@ -170,8 +152,5 @@ function fetchWorktreeItems(cwd: string): WorktreeItem[] {
 
 export function useWorktrees(cwd?: string) {
   const resolvedCwd = resolveGitCwd(resolvePath(cwd || DEFAULT_CWD));
-  return useCachedPromise(
-    (dir: string) => Promise.resolve(fetchWorktreeItems(dir)),
-    [resolvedCwd],
-  );
+  return useCachedPromise((dir: string) => Promise.resolve(fetchWorktreeItems(dir)), [resolvedCwd]);
 }

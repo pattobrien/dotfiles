@@ -1,11 +1,6 @@
 import { spawnSync } from "node:child_process";
 
-import {
-  SessionSchema,
-  WindowSchema,
-  type TmuxSession,
-  type TmuxWindow,
-} from "./models";
+import { SessionSchema, WindowSchema, type TmuxSession, type TmuxWindow } from "./models";
 
 // Literal delimiter for tmux -F format strings. Avoids \t which tmux only
 // interprets as a tab when TERM is set (not the case in sandboxed environments
@@ -111,12 +106,7 @@ export class TmuxClient {
     this.run(["send-keys", "-t", opts.target, ...opts.keys]);
   }
 
-  newWindow(opts: {
-    target: string;
-    name?: string;
-    cwd?: string;
-    cmd?: string;
-  }): void {
+  newWindow(opts: { target: string; name?: string; cwd?: string; cmd?: string }): void {
     const args = ["new-window", "-t", opts.target];
     if (opts.name) args.push("-n", opts.name);
     if (opts.cwd) args.push("-c", opts.cwd);
@@ -147,13 +137,7 @@ export class TmuxClient {
       .split("\n")
       .filter(Boolean)
       .map((line) => {
-        const [
-          sessionName,
-          windowIndex,
-          windowName,
-          paneCurrentCommand,
-          panePid,
-        ] = line.split(SEP);
+        const [sessionName, windowIndex, windowName, paneCurrentCommand, panePid] = line.split(SEP);
         return WindowSchema.parse({
           sessionName,
           windowIndex,

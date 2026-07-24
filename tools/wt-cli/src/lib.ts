@@ -8,21 +8,9 @@ export interface PrInfo {
   state: "OPEN" | "CLOSED" | "MERGED";
 }
 
-export async function fetchPrsByBranch(
-  repoDir: string,
-): Promise<Map<string, PrInfo>> {
+export async function fetchPrsByBranch(repoDir: string): Promise<Map<string, PrInfo>> {
   const proc = Bun.spawn(
-    [
-      "gh",
-      "pr",
-      "list",
-      "--state",
-      "all",
-      "--json",
-      "number,state,headRefName",
-      "--limit",
-      "200",
-    ],
+    ["gh", "pr", "list", "--state", "all", "--json", "number,state,headRefName", "--limit", "200"],
     { cwd: repoDir, stdout: "pipe", stderr: "pipe" },
   );
 

@@ -3,14 +3,14 @@ packages:
   - tools/*
   - tests/*
   - claude-plugins/meagain/hooks
-  - '!tools/picker'
+  - "!tools/picker"
 
 allowBuilds:
   esbuild: true
 
 catalog:
-  '@msgpack/msgpack': ^3.1.3
-  '@types/node': ^26
+  "@msgpack/msgpack": ^3.1.3
+  "@types/node": ^26
   oxfmt: ^0.57.0
   oxlint: ^1.72.0
   typescript: ^7.0.2
@@ -22,13 +22,13 @@ catalog:
 catalogMode: strict
 
 overrides:
-  vite: 'catalog:'
-  vitest: 'catalog:'
+  vite: "catalog:"
+  vitest: "catalog:"
 
 peerDependencyRules:
   allowAny:
     - vite
     - vitest
   allowedVersions:
-    vite: '*'
-    vitest: '*'
+    vite: "*"
+    vitest: "*"

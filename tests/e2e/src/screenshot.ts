@@ -14,10 +14,7 @@ const RESULTS_DIR = path.resolve(import.meta.dirname, "../test-results");
  * Capture a tmux pane as a PNG image using `freeze`.
  * Returns the path to the screenshot.
  */
-export async function capturePane(
-  tmux: TmuxSession,
-  name: string,
-): Promise<string> {
+export async function capturePane(tmux: TmuxSession, name: string): Promise<string> {
   await fs.mkdir(RESULTS_DIR, { recursive: true });
   const outPath = path.join(RESULTS_DIR, `${name}.png`);
 
@@ -83,10 +80,7 @@ export async function compareScreenshot(
  * Save a freeze screenshot on test failure for debugging.
  * Call this in an `afterEach` or in a catch block.
  */
-export async function saveFailureScreenshot(
-  tmux: TmuxSession,
-  testName: string,
-): Promise<string> {
+export async function saveFailureScreenshot(tmux: TmuxSession, testName: string): Promise<string> {
   const safeName = testName.replace(/[^a-zA-Z0-9-_]/g, "_");
   return capturePane(tmux, `failure-${safeName}-${Date.now()}`);
 }

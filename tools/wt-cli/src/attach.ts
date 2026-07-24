@@ -39,11 +39,7 @@ export const attach = t.procedure
     const tmux = new TmuxClient();
     const worktrees = await repo.listWorktrees();
 
-    const selected = await selectWorktree(
-      worktrees,
-      input.name,
-      "Select worktree: ",
-    );
+    const selected = await selectWorktree(worktrees, input.name, "Select worktree: ");
     if (!selected) process.exit(0);
 
     if (!existsSync(selected.path)) {

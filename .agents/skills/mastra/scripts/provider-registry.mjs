@@ -7,7 +7,7 @@ import { fileURLToPath } from "node:url";
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 function findRegistryPath() {
-  const rel = join('node_modules', '@mastra', 'core', 'dist', 'provider-registry.json');
+  const rel = join("node_modules", "@mastra", "core", "dist", "provider-registry.json");
   // Walk up from script location to find project root with node_modules
   let dir = __dirname;
   for (let i = 0; i < 10; i++) {
@@ -71,11 +71,14 @@ function extractVersion(name) {
     // Skip trailing date-like patterns (MM-DD) in the latter half of the name
     if (
       parts.length === 2 &&
-      parts[0] >= 1 && parts[0] <= 12 &&
-      parts[1] >= 1 && parts[1] <= 31 &&
+      parts[0] >= 1 &&
+      parts[0] <= 12 &&
+      parts[1] >= 1 &&
+      parts[1] <= 31 &&
       c.index > name.length / 2 &&
       candidates.length > 1
-    ) continue;
+    )
+      continue;
     processed.push(parts);
   }
 

@@ -18,10 +18,7 @@ export const cleanup = t.procedure
     const sessions = tmux.listSessions();
     const sessionByPath = new Map(sessions.map((s) => [s.path, s]));
 
-    const nameWidth = Math.max(
-      ...worktrees.map((wt) => worktreeName(wt).length),
-      4,
-    );
+    const nameWidth = Math.max(...worktrees.map((wt) => worktreeName(wt).length), 4);
     const statusWidth = 10;
 
     const items = worktrees
@@ -51,11 +48,7 @@ export const cleanup = t.procedure
     }
 
     const header = `${pc.bold("WORKTREE".padEnd(nameWidth))}  ${pc.bold("SESSION".padEnd(statusWidth))}  ${pc.bold("PATH")}`;
-    const selected = await fzfMultiSelect(
-      items,
-      "Select worktrees to remove: ",
-      header,
-    );
+    const selected = await fzfMultiSelect(items, "Select worktrees to remove: ", header);
 
     if (selected.length === 0) return;
 

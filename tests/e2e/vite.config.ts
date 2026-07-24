@@ -13,8 +13,7 @@ export default defineConfig({
     tags: [
       {
         name: "kitty",
-        description:
-          "Requires a real kitty instance (GUI, steals focus). Excluded by default.",
+        description: "Requires a real kitty instance (GUI, steals focus). Excluded by default.",
         timeout: 30_000,
       },
     ],

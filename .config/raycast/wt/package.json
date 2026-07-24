@@ -1,14 +1,33 @@
 {
   "$schema": "https://www.raycast.com/schemas/extension.json",
   "name": "wt-manager",
-  "title": "Worktree Manager",
   "description": "Manage git worktrees with tmux sessions",
-  "icon": "icon.png",
-  "author": "pattobrien",
   "categories": [
     "Developer Tools"
   ],
   "license": "MIT",
+  "author": "pattobrien",
+  "scripts": {
+    "build": "ray build -e dist",
+    "dev": "ray develop",
+    "fix-lint": "ray lint --fix",
+    "lint": "ray lint",
+    "publish": "ray publish"
+  },
+  "dependencies": {
+    "@raycast/api": "^1.40.0",
+    "@raycast/utils": "^1.4.8",
+    "zod": "^3.23.0"
+  },
+  "devDependencies": {
+    "@raycast/eslint-config": "^1.0.6",
+    "@types/node": "18.18.4",
+    "@types/react": "18.2.27",
+    "eslint": "^8.51.0",
+    "prettier": "^3.0.3",
+    "typescript": "^5.2.2"
+  },
+  "icon": "icon.png",
   "commands": [
     {
       "name": "attach",
@@ -59,24 +78,5 @@
       "mode": "view"
     }
   ],
-  "dependencies": {
-    "@raycast/api": "^1.40.0",
-    "@raycast/utils": "^1.4.8",
-    "zod": "^3.23.0"
-  },
-  "devDependencies": {
-    "@raycast/eslint-config": "^1.0.6",
-    "@types/node": "18.18.4",
-    "@types/react": "18.2.27",
-    "eslint": "^8.51.0",
-    "prettier": "^3.0.3",
-    "typescript": "^5.2.2"
-  },
-  "scripts": {
-    "build": "ray build -e dist",
-    "dev": "ray develop",
-    "fix-lint": "ray lint --fix",
-    "lint": "ray lint",
-    "publish": "ray publish"
-  }
+  "title": "Worktree Manager"
 }

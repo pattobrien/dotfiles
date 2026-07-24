@@ -8,10 +8,7 @@ interface ProjectDropdownProps {
   defaultCwd?: string;
 }
 
-export function ProjectDropdown({
-  onProjectChange,
-  defaultCwd,
-}: ProjectDropdownProps) {
+export function ProjectDropdown({ onProjectChange, defaultCwd }: ProjectDropdownProps) {
   const { data: projects } = useProjects();
 
   const grouped = new Map<string, Project[]>();

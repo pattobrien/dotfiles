@@ -15,6 +15,22 @@ import { switchWorktree } from "./switch";
 import { test } from "./test";
 import { t } from "./trpc";
 
+const fooRouter = t.router({
+  a: t.procedure.query(() => "a"),
+  b: t.procedure.query(() => "b"),
+});
+
+const barRouter = t.router({
+  cc: t.procedure.query(() => "c"),
+  dd: t.procedure.query(() => "d"),
+  e: t.procedure.query(() => "e"),
+  f: t.procedure.query(() => "f"),
+  g: t.procedure.query(() => "g"),
+  h: t.procedure.query(() => "h"),
+  i: t.procedure.query(() => "i"),
+  j: t.procedure.query(() => "j"),
+});
+
 const router = t.router({
   attach,
   claude,

@@ -5,11 +5,7 @@ import { Action, ActionPanel, Color, Icon, List } from "@raycast/api";
 import { useFrecencySorting } from "@raycast/utils";
 
 import { WT_BIN, WT_PATH } from "./data/paths";
-import {
-  showAnimatedToast,
-  updateToastFailure,
-  updateToastSuccess,
-} from "./data/toasts";
+import { showAnimatedToast, updateToastFailure, updateToastSuccess } from "./data/toasts";
 import { useProjects } from "./hooks/use-projects";
 import type { Project } from "./models";
 

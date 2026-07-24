@@ -63,10 +63,7 @@ export function generateZshCompletions(
 ): string {
   const json = cli.toJSON();
   const commands = json.commands ?? [];
-  const procedures = router._def.procedures as Record<
-    string,
-    { _def: { meta?: WtMeta } }
-  >;
+  const procedures = router._def.procedures as Record<string, { _def: { meta?: WtMeta } }>;
 
   const entries = commands.map((cmd) => {
     const desc = escapeZsh(cmd.description ?? "");
@@ -83,9 +80,7 @@ export function generateZshCompletions(
   const cases = results.map((r) => r.caseBlock).join("\n");
   const helpers = results.flatMap((r) => r.helpers);
 
-  const helperFns = helpers
-    .map((h) => `${h.fnName}() {\n  compadd $(${h.shell})\n}`)
-    .join("\n\n");
+  const helperFns = helpers.map((h) => `${h.fnName}() {\n  compadd $(${h.shell})\n}`).join("\n\n");
 
   return `${helperFns}
 
