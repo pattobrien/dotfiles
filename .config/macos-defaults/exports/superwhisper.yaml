@@ -1,0 +1,38 @@
+---
+description: com.superduper.superwhisper
+sudo: false
+current_host: false
+data:
+  com.superduper.superwhisper:
+    NSStatusItem Preferred Position Item-0: 408.0
+    NSWindow Frame NSSpellCheckerSpellingPanel: "814 645 431 289 0 0 2560 1410 "
+    NSWindow Frame NSSpellCheckerSubstitutionsPanel2: "692 399 360 150 0 0 2560 1410 "
+    NSWindow Frame SUUpdateAlert: "446 410 620 402 0 0 1512 949 "
+    SUHasLaunchedBefore: true
+    SULastCheckTime: "2026-07-24T00:44:36.723500013Z"
+    SUUpdateGroupIdentifier: 2751360361
+    activeModeKey: custom
+    alwaysShowMiniRecorder: true
+    completedOnboarding: true
+    defaultPlaybackBehavior: duck
+    deviceSelectionCounts:
+      58193D9C-1ABE-43B4-862F-717D00000003: 1
+      "FC-B2-14-EE-4F-36:input": 1
+    dismissedOnboardingToasts: "modes.activation,modes.create,vocabulary.firstItem,vocabulary.firstReplacement"
+    hasLaunchedBefore: true
+    homerowPromoDismissedAt: 1782444034.27636
+    isMinimized: false
+    lastSelectedModeKey: custom
+    launchOnLogin: true
+    licenseValid: false
+    onboardingFirstLaunchDate: 1782413087.273463
+    onboardingProgress: 5
+    pushToTalkMigrated: true
+    recordingViewCoordinateX: 541
+    recordingViewCoordinateY: 438
+    recordingViewEnabled: true
+    remoteCloudLanguageModels: "{\"models\":[{\"id\":\"gemini-3-flash-preview\",\"name\":\"Gemini 3.0 Flash\",\"description\":\"Latest Fast and efficient Gemini model\",\"type\":\"language\",\"engine\":\"cloud\",\"language\":\"all\",\"translation\":false,\"maxTokens\":8192,\"contextWindow\":1000000,\"speed\":9,\"accuracy\":9,\"provider\":\"superwhisper\",\"format\":\"gemini\",\"completionPath\":\"/gemini/v1/messages\",\"licenseType\":\"pro\",\"isNew\":false,\"legacy\":true,\"deprecated\":false},{\"id\":\"gemini-3.1-flash-lite-preview\",\"name\":\"Gemini 3.1 Flash Lite\",\"description\":\"Most cost-efficient Gemini model, fastest performance for lightweight tasks\",\"type\":\"language\",\"engine\":\"cloud\",\"language\":\"all\",\"translation\":false,\"maxTokens\":8192,\"contextWindow\":1000000,\"speed\":10,\"accuracy\":8,\"provider\":\"superwhisper\",\"format\":\"gemini\",\"completionPath\":\"/gemini/v1/messages\",\"licenseType\":\"pro\",\"isNew\":false,\"legacy\":false,\"deprecated\":false},{\"id\":\"grok-4-1-fast-non-reasoning\",\"name\":\"Grok 4.1 Fast\",\"description\":\"xAI frontier multimodal model optimized for high-performance agentic tool calling.\",\"type\":\"language\",\"engine\":\"cloud\",\"language\":\"all\",\"translation\":false,\"maxTokens\":8192,\"contextWindow\":2000000,\"speed\":8,\"accuracy\":9,\"provider\":\"superwhisper\",\"format\":\"grok\",\"completionPath\":\"/grok/v1/messages\",\"licenseType\":\"pro\",\"isNew\":false,\"legacy\":false,\"deprecated\":true},{\"id\":\"gpt-5.2\",\"name\":\"GPT-5.2\",\"description\":\"OpenAI latest model with improved performance and efficiency.\",\"type\":\"language\",\"engine\":\"cloud\",\"language\":\"all\",\"translation\":false,\"maxTokens\":8192,\"contextWindow\":400000,\"speed\":9,\"accuracy\":10,\"provider\":\"superwhisper\",\"format\":\"openai\",\"completionPath\":\"/v1/chat/completions\",\"licenseType\":\"pro\",\"isNew\":false,\"legacy\":true,\"deprecated\":false},{\"id\":\"claude-sonnet-5\",\"name\":\"Sonnet 5\",\"description\":\"Anthropic latest model with improved performance and efficiency.\",\"type\":\"language\",\"engine\":\"cloud\",\"language\":\"all\",\"translation\":false,\"maxTokens\":8192,\"contextWindow\":1000000,\"speed\":9,\"accuracy\":10,\"provider\":\"superwhisper\",\"format\":\"anthropic\",\"completionPath\":\"/anthropic/v1/messages\",\"licenseType\":\"pro\",\"isNew\":true,\"legacy\":false,\"deprecated\":false},{\"id\":\"claude-sonnet-4-6\",\"name\":\"Sonnet 4.6\",\"description\":\"Previous-generation Anthropic model, balanced performance and efficiency.\",\"type\":\"language\",\"engine\":\"cloud\",\"language\":\"all\",\"translation\":false,\"maxTokens\":8192,\"contextWindow\":1000000,\"speed\":9,\"accuracy\":10,\"provider\":\"superwhisper\",\"format\":\"anthropic\",\"completionPath\":\"/anthropic/v1/messages\",\"licenseType\":\"pro\",\"isNew\":false,\"legacy\":false,\"deprecated\":false},{\"id\":\"gpt-5.3-chat-latest\",\"name\":\"GPT-5.3 Instant\",\"description\":\"OpenAI GPT-5.3 instant model used in ChatGPT\",\"type\":\"language\",\"engine\":\"cloud\",\"language\":\"all\",\"translation\":false,\"maxTokens\":8192,\"contextWindow\":128000,\"speed\":10,\"accuracy\":9,\"provider\":\"superwhisper\",\"format\":\"openai\",\"completionPath\":\"/v1/chat/completions\",\"licenseType\":\"pro\",\"isNew\":false,\"legacy\":true,\"deprecated\":false},{\"id\":\"gpt-5.4-mini\",\"name\":\"GPT-5.4 mini\",\"description\":\"OpenAI most capable small model, optimized for fast high-throughput pipelines.\",\"type\":\"language\",\"engine\":\"cloud\",\"language\":\"all\",\"translation\":false,\"maxTokens\":8192,\"contextWindow\":400000,\"speed\":10,\"accuracy\":9,\"provider\":\"superwhisper\",\"format\":\"openai\",\"completionPath\":\"/v1/chat/completions\",\"licenseType\":\"pro\",\"isNew\":false,\"legacy\":false,\"deprecated\":false},{\"id\":\"gpt-5.4-nano\",\"name\":\"GPT-5.4 nano\",\"description\":\"OpenAI fastest and most efficient model, ideal for classification, extraction, and simple tasks.\",\"type\":\"language\",\"engine\":\"cloud\",\"language\":\"all\",\"translation\":false,\"maxTokens\":8192,\"contextWindow\":400000,\"speed\":10,\"accuracy\":8,\"provider\":\"superwhisper\",\"format\":\"openai\",\"completionPath\":\"/v1/chat/completions\",\"licenseType\":\"pro\",\"isNew\":false,\"legacy\":false,\"deprecated\":false}]}"
+    selectedDeviceID: ""
+    snapPointID: 10
+    soundEffectTheme: classic
+    useDefaultAudioDevice: true
