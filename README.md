@@ -77,6 +77,52 @@ Sets permissions for required files (only required once on the system)
 chmod +x ~/.local/scripts/tmux-sessionizer
 ```
 
+### 5. Restore app settings (from 2026-07 machine migration)
+
+Settings snapshots from the previous MacBook live in two places:
+
+**In this repo** — `.config/macos-defaults/exports/` has `macos-defaults` YAML
+dumps for Raycast, Shottr, superwhisper, FluidVoice, and eul. Apply each with:
+
+```sh
+macos-defaults apply ~/.config/macos-defaults/exports/<app>.yaml
+```
+
+Then restart the app (or log out/in). Also copy the FluidVoice custom
+vocabulary into place:
+
+```sh
+mkdir -p ~/Library/Application\ Support/FluidVoice
+cp ~/dev/pattobrien/dotfiles/.config/fluidvoice/parakeet_custom_vocabulary.json \
+  ~/Library/Application\ Support/FluidVoice/
+```
+
+A full snapshot of everything that was installed on the old machine (beyond
+the curated `personal`/`work` profiles) is in `brew/all/Brewfile`:
+
+```sh
+brew bundle --file=~/dev/pattobrien/dotfiles/brew/all/Brewfile
+```
+
+**In the private repo** —
+[`pattobrien/machine-backup`](https://github.com/pattobrien/machine-backup)
+holds anything too sensitive or personal for this public repo:
+
+- `raycast/*.rayconfig` — the official Raycast export (extensions, snippets,
+  quicklinks, hotkeys, extension tokens). Import via Raycast Settings →
+  Advanced → Import. Prefer this over the raycast.yaml defaults dump.
+- `shottr/shottr-full.yaml` — unredacted Shottr defaults **including the
+  license key** (`kc-license`), which is stripped from the public export.
+  Apply this one instead of `exports/shottr.yaml` on a trusted machine.
+- `chrome/` — Bookmarks, Preferences, and extension ID lists for all three
+  profiles, in case Chrome profile sign-in sync misses anything.
+- `superwhisper/` — defaults plist plus agent/database dirs (models
+  re-download on first launch).
+- `zsh_history` — shell history from the old machine.
+
+> SSH keys are intentionally absent: auth goes through the 1Password SSH
+> agent, so signing into 1Password (step 3) restores SSH access.
+
 ## Maintenance
 
 ### Brew Dump
@@ -209,9 +255,9 @@ macOS to re-create it in the same broken state.
   - [ ] raycast did not override command+K
   - [ ] dock apps
 - [ ] apps that require settings sync
-  - [ ] eul
-  - [ ] raycast
-  - [ ] shottr
+  - [x] eul (`exports/eul.yaml`)
+  - [x] raycast (`exports/raycast.yaml` + `.rayconfig` in machine-backup)
+  - [x] shottr (`exports/shottr.yaml`; license in machine-backup)
   - [ ] Messages (disable notification sounds)
   - [ ] 
 - [x] vscode settings / profile (synced via `stow_vscode.sh`; extensions via
