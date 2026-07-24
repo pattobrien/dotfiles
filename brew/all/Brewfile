@@ -1,0 +1,459 @@
+tap "anomalyco/tap", trusted: true
+tap "asmvik/formulae", "https://github.com/asmvik/homebrew-formulae.git", trusted: true
+tap "dsully/tap", trusted: true
+tap "koekeishiya/formulae", "https://github.com/asmvik/homebrew-formulae.git", trusted: true
+tap "leoafarias/fvm", trusted: true
+tap "manaflow-ai/cmux"
+tap "namespacelabs/namespace"
+tap "raine/workmux", trusted: true
+tap "steipete/tap"
+tap "superradcompany/tap"
+# Run your GitHub Actions locally
+brew "act"
+# ANother Tool for Language Recognition
+brew "antlr"
+# Download with resuming and segmented downloading
+brew "aria2"
+# Extendable version manager with support for Ruby, Node.js, Erlang & more
+brew "asdf"
+# Code searching, linting, rewriting
+brew "ast-grep"
+# Automatic configure script builder
+brew "autoconf"
+# Official Amazon AWS command-line interface
+brew "awscli"
+# Clone of cat(1) with syntax highlighting and Git integration
+brew "bat"
+# Get/set bluetooth power and discoverable state
+brew "blueutil"
+# Emacs dependency management
+brew "cask"
+# Formatting tools for C, C++, Obj-C, Java, JavaScript, TypeScript
+brew "clang-format"
+# Statistics utility to count lines of code
+brew "cloc"
+# Create and run Linux containers using lightweight virtual machines
+brew "container"
+# Get a file from an HTTP, HTTPS or FTP server
+brew "curl"
+# Isolated development environments using Docker
+brew "docker-compose"
+# Command-line tool for DigitalOcean
+brew "doctl"
+# Modern, maintained replacement for ls
+brew "eza"
+# Simple, fast and user-friendly alternative to find
+brew "fd"
+# Command-line tools for fly.io services
+brew "flyctl"
+# Command-line fuzzy finder written in Go
+brew "fzf"
+# GNU compiler collection
+brew "gcc"
+# GitHub command-line tool
+brew "gh"
+# Installer for the general purpose language Haskell
+brew "ghcup"
+# Syntax-highlighting pager for git and diff output
+brew "git-delta"
+# GNU Privacy Guard (OpenPGP)
+brew "gnupg"
+# Tool for managing apps on iOS devices
+brew "ideviceinstaller"
+# Tools and libraries to manipulate images in select formats
+brew "imagemagick"
+# FAST Kubernetes manifests validator, with support for Custom Resources!
+brew "kubeconform"
+# Command-line interface for deploying apps to the LangGraph platform
+brew "langgraph-cli"
+# Simple terminal UI for git commands
+brew "lazygit"
+# Graphical front-end for GCC's coverage testing tool (gcov)
+brew "lcov"
+# Pager program similar to more
+brew "less"
+# Postgres C API library
+brew "libpq"
+# Mac App Store command-line interface
+brew "mas"
+# Polyglot runtime manager (asdf rust clone)
+brew "mise"
+# Development kit for the Java programming language
+brew "openjdk@11"
+# OpenShift command-line interface tools
+brew "openshift-cli"
+# ISO-C API and CLI for generating UUIDs
+brew "ossp-uuid"
+# PAM module for reattaching to the user's GUI (Aqua) session
+brew "pam-reattach"
+# Package compiler and linker metadata toolkit
+brew "pkgconf"
+# Theme for zsh
+brew "powerlevel10k"
+# Cloud native development platform
+brew "pulumi"
+# Develop and deploy code with zero configuration
+brew "railway"
+# Command-line tool for the Amazon S3 service
+brew "s3cmd"
+# Fast and accurate code counter with complexity and COCOMO estimates
+brew "scc"
+# Organize software neatly under a single directory tree (e.g. /usr/local)
+brew "stow"
+# High-performance system programming language
+brew "swift"
+# User interface to the TELNET protocol
+brew "telnet"
+# Terminal multiplexer
+brew "tmux"
+# Display directories as trees (with optional color/HTML output)
+brew "tree"
+# Find and verify credentials
+brew "trufflehog"
+# Vi 'workalike' with many additional features
+brew "vim"
+# Unified toolchain and entry point for web development
+brew "vite-plus"
+# Universal WebAssembly Runtime
+brew "wasmer"
+# Execute commands when watched files change
+brew "watchexec"
+# Command-line client for WebSockets
+brew "websocat"
+# Internet file retriever
+brew "wget"
+# Little beautifier tool for xcodebuild
+brew "xcbeautify"
+# Build server protocol implementation for integrating Xcode with sourcekit-lsp
+brew "xcode-build-server"
+# Command-line tool to install and switch between multiple versions of Xcode
+brew "xcodes"
+# General-purpose lossless data-compression library
+brew "zlib"
+# UNIX shell (command interpreter)
+brew "zsh"
+# Fish-like fast/unobtrusive autosuggestions for zsh
+brew "zsh-autosuggestions"
+# Fish shell like syntax highlighting for zsh
+brew "zsh-syntax-highlighting"
+# The AI coding agent built for the terminal.
+brew "anomalyco/tap/opencode", trusted: true
+# Defaults setting for macOS
+brew "dsully/tap/macos-defaults"
+# Simple hotkey-daemon for macOS.
+brew "koekeishiya/formulae/skhd"
+# Simple cli to manage Flutter SDK versions per project
+brew "leoafarias/fvm/fvm", trusted: true
+# Container-optimized cloud infrastructure that just works.
+brew "namespacelabs/namespace/nsc", trusted: true
+# Opinionated workflow tool that orchestrates git worktrees and tmux
+brew "raine/workmux/workmux", link: false, trusted: true
+# Lightning-fast macOS screenshots & AI vision analysis
+brew "steipete/tap/peekaboo", trusted: true
+# Spins up lightweight VMs in milliseconds from SDKs
+brew "superradcompany/tap/microsandbox", trusted: true
+# Password manager that keeps all passwords secure behind one password
+cask "1password"
+# Command-line interface for 1Password
+cask "1password-cli"
+# Command-line tools for building and debugging Android apps
+cask "android-commandlinetools"
+# Toolset to implement parts of Android apps in native code
+cask "android-ndk"
+# Android SDK component
+cask "android-platform-tools"
+# Tools for building Android applications
+cask "android-studio"
+# Redis desktop manager
+cask "another-redis-desktop-manager"
+# Application uninstaller
+cask "appcleaner"
+# Web browser focusing on privacy
+cask "brave-browser"
+# OpenAI's official ChatGPT desktop app
+cask "chatgpt"
+# Free and open-source web browser
+cask "chromium"
+# Anthropic's official Claude AI desktop app
+cask "claude"
+# Terminal-based AI coding assistant
+cask "claude-code"
+# Ghostty-based terminal with vertical tabs and notifications for AI coding agents
+cask "cmux"
+# OpenAI's coding agent that runs in your terminal
+cask "codex"
+# OpenAI's Codex desktop app for managing coding agents
+cask "codex-app"
+# Write, edit, and chat about your code with AI
+cask "cursor"
+# Disk space visualiser
+cask "daisydisk"
+# Run Stable Diffusion locally
+cask "diffusionbee"
+# Voice and text chat software
+cask "discord"
+# App to build and share containerised applications and microservices
+cask "docker-desktop"
+# Assign keys, and then decorate and label them
+cask "elgato-stream-deck"
+# Status monitoring
+cask "eul"
+# Launch builds and start simulators from your menu bar
+cask "expo-orbit"
+# Web browser
+cask "firefox"
+# Offline voice-to-text dictation app with AI enhancement
+cask "fluidvoice"
+# Focusrite interface controller for devices of the 4th generation and newer
+cask "focusrite-control-2"
+cask "font-hack-nerd-font"
+# Terminal emulator that uses platform-native UI and GPU acceleration
+cask "ghostty"
+# Web browser
+cask "google-chrome"
+# Desktop automation application
+cask "hammerspoon"
+# Keyboard shortcuts for every button on your screen
+cask "homerow"
+# Keyboard customiser
+cask "karabiner-elements"
+# GPU-based terminal emulator
+cask "kitty"
+# App to manage software development and track bugs
+cask "linear"
+# Optimise your webcam, headset, and Logi Dock for video meetings
+cask "logitune"
+# Screen and video recording software
+cask "loom"
+# Reverse proxy, secure introspectable tunnels to localhost
+cask "ngrok"
+# Open-source software for live streaming and screen recording
+cask "obs"
+# Knowledge base that works on top of a local folder of plain text Markdown files
+cask "obsidian"
+# Bundle with over 30 tools
+cask "parallels-toolbox"
+# Utility to uninstall apps and remove leftover files from old/uninstalled apps
+cask "pearcleaner"
+# Administration and development platform for PostgreSQL
+cask "pgadmin4"
+# Peer to peer Bitorrent client
+cask "qbittorrent"
+# Control your tools with a few keystrokes
+cask "raycast"
+# Tool that provides consistent, highly configurable symbols for apps
+cask "sf-symbols"
+# Screenshot measurement and annotation tool
+cask "shottr"
+# Team communication and collaboration software
+cask "slack"
+# Music streaming service
+cask "spotify"
+# Dictation tool including LLM reformatting
+cask "superwhisper"
+# Mesh VPN based on WireGuard
+cask "tailscale-app"
+# JDK from the Eclipse Foundation (Adoptium)
+cask "temurin"
+# To-do list
+cask "todoist-app"
+# Open-source code editor
+cask "visual-studio-code"
+# Open-source code editor
+cask "visual-studio-code@insiders"
+# Native desktop client for WhatsApp
+cask "whatsapp"
+# Video communication and virtual meeting platform
+cask "zoom"
+mas "GarageBand", id: 682658836
+mas "iMovie", id: 408981434
+mas "Keynote", id: 409183694
+mas "Numbers", id: 409203825
+mas "Pages", id: 409201541
+vscode "aaron-bond.better-comments"
+vscode "actboy168.lua-debug"
+vscode "albert.tabout"
+vscode "alexkrechik.cucumberautocomplete"
+vscode "alexpasmantier.television"
+vscode "amodio.tsl-problem-matcher"
+vscode "andys8.jest-snippets"
+vscode "antfu.slidev"
+vscode "anthropic.claude-code"
+vscode "appulate.filewatcher"
+vscode "arcanis.vscode-zipfs"
+vscode "astro-build.astro-vscode"
+vscode "asvetliakov.vscode-neovim"
+vscode "austenc.tailwind-docs"
+vscode "batisteo.vscode-django"
+vscode "be5invis.vscode-custom-css"
+vscode "berublan.vscode-log-viewer"
+vscode "bierner.markdown-checkbox"
+vscode "bierner.markdown-mermaid"
+vscode "bierner.markdown-preview-github-styles"
+vscode "blaugold.melos-code"
+vscode "bmewburn.vscode-intelephense-client"
+vscode "bpruitt-goddard.mermaid-markdown-syntax-highlighting"
+vscode "bradlc.vscode-tailwindcss"
+vscode "catppuccin.catppuccin-vsc"
+vscode "connor4312.esbuild-problem-matchers"
+vscode "cs50.vscode-presentation-mode"
+vscode "csstools.postcss"
+vscode "dart-code.dart-code"
+vscode "dart-code.flutter"
+vscode "databricks.neon-local-connect"
+vscode "dbaeumer.vscode-eslint"
+vscode "dberezin.lox-language"
+vscode "denoland.vscode-deno"
+vscode "dnicolson.binary-plist"
+vscode "docker.docker"
+vscode "donjayamanne.python-environment-manager"
+vscode "donjayamanne.python-extension-pack"
+vscode "dracula-theme.theme-dracula"
+vscode "dsznajder.es7-react-js-snippets"
+vscode "eamodio.gitlens"
+vscode "ecmel.vscode-html-css"
+vscode "edonet.vscode-command-runner"
+vscode "emilast.logfilehighlighter"
+vscode "enkia.tokyo-night"
+vscode "esbenp.prettier-vscode"
+vscode "exceedsystem.vscode-macros"
+vscode "flutterando.flutter-coverage"
+vscode "gabrielgrinberg.auto-run-command"
+vscode "giancarlocode.built-value-snippets"
+vscode "github.codespaces"
+vscode "github.vscode-github-actions"
+vscode "github.vscode-pull-request-github"
+vscode "gluestack.gluestack-vscode"
+vscode "golang.go"
+vscode "google.arb-editor"
+vscode "grapecity.gc-excelviewer"
+vscode "gruntfuggly.todo-tree"
+vscode "gruntfuggly.triggertaskonsave"
+vscode "hashicorp.terraform"
+vscode "hbenl.vscode-test-explorer"
+vscode "humao.rest-client"
+vscode "jeff-hykin.better-cpp-syntax"
+vscode "johnstew.gif"
+vscode "jspolancor.presentationmode"
+vscode "kaiqun.build-runner"
+vscode "kakumei.ts-debug"
+vscode "kevinrose.vsc-python-indent"
+vscode "llvm-vs-code-extensions.lldb-dap"
+vscode "llvm-vs-code-extensions.vscode-clangd"
+vscode "localizely.flutter-intl"
+vscode "luanpotter.dart-import"
+vscode "lukepighetti.build-runner"
+vscode "lunuan.kubernetes-templates"
+vscode "mathematic.vscode-pdf"
+vscode "mattpocock.ts-error-translator"
+vscode "mike-lischke.vscode-antlr4"
+vscode "miquelddg.dart-barrel-file-generator"
+vscode "monokai.theme-monokai-pro-vscode"
+vscode "ms-azuretools.vscode-azure-github-copilot"
+vscode "ms-azuretools.vscode-azure-mcp-server"
+vscode "ms-azuretools.vscode-azureresourcegroups"
+vscode "ms-azuretools.vscode-containers"
+vscode "ms-dotnettools.csdevkit"
+vscode "ms-dotnettools.csharp"
+vscode "ms-dotnettools.vscode-dotnet-runtime"
+vscode "ms-kubernetes-tools.vscode-kubernetes-tools"
+vscode "ms-python.black-formatter"
+vscode "ms-python.debugpy"
+vscode "ms-python.isort"
+vscode "ms-python.python"
+vscode "ms-python.vscode-pylance"
+vscode "ms-python.vscode-python-envs"
+vscode "ms-toolsai.jupyter"
+vscode "ms-toolsai.jupyter-keymap"
+vscode "ms-toolsai.jupyter-renderers"
+vscode "ms-toolsai.vscode-jupyter-cell-tags"
+vscode "ms-toolsai.vscode-jupyter-slideshow"
+vscode "ms-vscode-remote.remote-containers"
+vscode "ms-vscode-remote.remote-ssh"
+vscode "ms-vscode-remote.remote-ssh-edit"
+vscode "ms-vscode-remote.remote-wsl"
+vscode "ms-vscode-remote.vscode-remote-extensionpack"
+vscode "ms-vscode.cmake-tools"
+vscode "ms-vscode.cpp-devtools"
+vscode "ms-vscode.cpptools"
+vscode "ms-vscode.cpptools-extension-pack"
+vscode "ms-vscode.cpptools-themes"
+vscode "ms-vscode.extension-test-runner"
+vscode "ms-vscode.js-debug-nightly"
+vscode "ms-vscode.makefile-tools"
+vscode "ms-vscode.remote-explorer"
+vscode "ms-vscode.remote-server"
+vscode "ms-vscode.test-adapter-converter"
+vscode "ms-vscode.vscode-speech"
+vscode "ms-vsliveshare.vsliveshare"
+vscode "ms-windows-ai-studio.windows-ai-studio"
+vscode "mushan.vscode-paste-image"
+vscode "mutantdino.resourcemonitor"
+vscode "nash.awesome-flutter-snippets"
+vscode "nicollasr.vscode-streamdeck"
+vscode "njpwerner.autodocstring"
+vscode "orestesgaolin.dart-export-index"
+vscode "oven.bun-vscode"
+vscode "patbenatar.advanced-new-file"
+vscode "paulshen.paul-typescript-toolkit"
+vscode "peterschmalfeldt.explorer-exclude"
+vscode "pflannery.vscode-versionlens"
+vscode "philstainer.git-worktree"
+vscode "plibither8.remove-comments"
+vscode "poml-team.poml"
+vscode "prisma.prisma"
+vscode "qcz.text-power-tools"
+vscode "redhat.java"
+vscode "redhat.vscode-commons"
+vscode "redhat.vscode-xml"
+vscode "redhat.vscode-yaml"
+vscode "robbowen.synthwave-vscode"
+vscode "robert-brunhage.flutter-riverpod-snippets"
+vscode "rodydavis.signals-dart"
+vscode "rust-lang.rust-analyzer"
+vscode "rvest.vs-code-prettier-eslint"
+vscode "saber2pr.ts-ast-viewer"
+vscode "sanjulaganepola.github-local-actions"
+vscode "sergelamikhov.lcov-lang"
+vscode "shopify.ruby-lsp"
+vscode "stivo.tailwind-fold"
+vscode "streetsidesoftware.code-spell-checker"
+vscode "sumneko.lua"
+vscode "supabase.postgrestools"
+vscode "supernovaio.pulsar-vsc-extension"
+vscode "swiftlang.swift-vscode"
+vscode "tamasfe.even-better-toml"
+vscode "teamsdevapp.vscode-ai-foundry"
+vscode "tumido.crd-snippets"
+vscode "twxs.cmake"
+vscode "typescriptteam.native-preview"
+vscode "unifiedjs.vscode-mdx"
+vscode "usernamehw.errorlens"
+vscode "vadimcn.vscode-lldb"
+vscode "vercel.turbo-vsc"
+vscode "visualstudioexptteam.intellicode-api-usage-examples"
+vscode "visualstudioexptteam.vscodeintellicode"
+vscode "vitest.explorer"
+vscode "vscjava.migrate-java-to-azure"
+vscode "vscjava.vscode-gradle"
+vscode "vscjava.vscode-java-debug"
+vscode "vscjava.vscode-java-dependency"
+vscode "vscjava.vscode-java-pack"
+vscode "vscjava.vscode-java-test"
+vscode "vscjava.vscode-java-upgrade"
+vscode "vscjava.vscode-maven"
+vscode "vscode-ext.sync-rsync"
+vscode "vscode-icons-team.vscode-icons"
+vscode "wholroyd.jinja"
+vscode "wscats.cors-browser"
+vscode "xaver.clang-format"
+vscode "xdebug.php-debug"
+vscode "xdebug.php-pack"
+vscode "yzane.markdown-pdf"
+vscode "zardoy.ts-essential-plugins"
+vscode "zarifprogrammer.tailwind-snippets"
+vscode "zhuangtongfa.material-theme"
+vscode "zobo.php-intellisense"
+go "cmd/go"
+go "cmd/gofmt"
+npm "corepack"
