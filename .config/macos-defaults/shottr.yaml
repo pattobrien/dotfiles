@@ -1,0 +1,84 @@
+# Shottr settings (curated from exports/shottr.yaml, 2026-07 machine migration)
+# Apply with: macos-defaults apply ~/.config/macos-defaults/shottr.yaml
+#
+# Not included here:
+# - license key (kc-license): an obfuscated value, NOT the raw key stored in
+#   1Password ("Shottr License"). Install it with Shottr quit:
+#     defaults write cc.ffitch.shottr kc-license "$(gh api repos/pattobrien/machine-backup/contents/shottr/shottr-full.yaml --jq .content | base64 -d | awk '/kc-license:/ {print $2}' | tr -d '"')"
+#   (or paste the raw key from 1Password into Shottr's license field)
+# - screenshot folder sandbox bookmark: re-pick the folder in Shottr Preferences
+#   after first launch so the sandboxed app regains write access
+---
+description: Shottr settings
+sudo: false
+current_host: false
+kill: [Shottr]
+data:
+  cc.ffitch.shottr:
+    # --- Hotkeys (carbon key codes; 768 = Cmd+Shift, 6400 = Ctrl+Opt+Cmd) ---
+    # Area capture: Cmd+Shift+4
+    KeyboardShortcuts_area: "{\"carbonKeyCode\":21,\"carbonModifiers\":768}"
+    # Fullscreen capture: Cmd+Shift+3
+    KeyboardShortcuts_fullscreen: "{\"carbonKeyCode\":20,\"carbonModifiers\":768}"
+    # OCR capture: Ctrl+Opt+Cmd+O
+    KeyboardShortcuts_ocr: "{\"carbonKeyCode\":31,\"carbonModifiers\":6400}"
+    KeyboardShortcuts_anyWindow: false
+    # --- After capture ---
+    afterGrabCopy: true
+    afterGrabSave: true
+    afterGrabShow: true
+    copyOnEsc: true
+    saveOnEsc: false
+    thumbnailClosing: auto
+    notificationType: custom
+    # --- Saving ---
+    defaultFolder: /Users/patt/Documents/Screenshots
+    fileNameTemplate: SCR-%Y%m%d-%t
+    saveFormat: Auto
+    autosaveOverwrite: false
+    downscaleOnSave: false
+    # --- Capture behavior ---
+    areaCaptureMode: preview
+    areaCustomGrabber: false
+    captureCursor: auto
+    realPixels: false
+    snappingMode: 2
+    # Scrolling capture
+    scrollingManualEnabled: false
+    scrollingMax: 20000
+    scrollingReverseAutoscroll: false
+    scrollingSpeed: 2
+    # --- Editor / annotation ---
+    defaultColor: "#FF0C01"
+    colorFormat: HEX
+    expandableCanvas: true
+    preferLargeWindow: true
+    growingToolbar: false
+    alwaysOnTop: false
+    altZoomDirection: false
+    # Window export backdrop
+    customBackdropColor: "#6080A0"
+    customGradFrom: "#221448"
+    customGradTo: "#919BD2"
+    windowShadow: transparent
+    windowSolidColor: "#404448"
+    # Export buttons shown in toolbar
+    showExportCopy: true
+    showExportPin: true
+    showExportSave: true
+    showExportUpload: true
+    # --- OCR ---
+    primaryOCRLang: en-US
+    ocrRemoveBreaks: false
+    # --- App UI ---
+    showDockIcon: 1
+    showMenubarIcon: 0
+    libEnabled: false
+    # Suppress first-run intro/hints
+    showIntro: 0
+    everHidMainWindow: true
+    everVisitedHotkeys: true
+    # --- Upload ---
+    uploadMode: none
+    # --- Misc ---
+    allowTelemetry: true

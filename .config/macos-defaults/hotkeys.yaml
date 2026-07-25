@@ -49,3 +49,41 @@ data:
             - 49
             - 786432
         enabled: false
+      # Built-in screenshot shortcuts (disabled so Shottr owns Cmd+Shift+3/4).
+      # Cmd+Shift+5 (id 184) stays enabled as the built-in fallback.
+      "28":
+        # Save picture of screen as file (Cmd+Shift+3) - disabled for Shottr
+        enabled: false
+        value:
+          type: standard
+          parameters:
+            - 51
+            - 20
+            - 1179648
+      "29":
+        # Copy picture of screen to clipboard (Ctrl+Cmd+Shift+3) - disabled
+        enabled: false
+        value:
+          type: standard
+          parameters:
+            - 51
+            - 20
+            - 1441792
+      "30":
+        # Save picture of selected area (Cmd+Shift+4) - disabled for Shottr
+        enabled: false
+        value:
+          type: standard
+          parameters:
+            - 52
+            - 21
+            - 1179648
+      "31":
+        # Copy selected area to clipboard (Ctrl+Cmd+Shift+4) - disabled
+        enabled: false
+        value:
+          type: standard
+          parameters:
+            - 52
+            - 21
+            - 1441792
