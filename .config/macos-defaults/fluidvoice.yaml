@@ -1,0 +1,58 @@
+# FluidVoice settings (curated from exports/fluidvoice.yaml, 2026-07 machine migration)
+# Apply with: macos-defaults apply ~/.config/macos-defaults/fluidvoice.yaml
+#
+# Not included here:
+# - transcription history, command-mode chat sessions: personal history, not settings
+# - analytics IDs, update-check state, window frames, provider fingerprints: machine state
+# - custom vocabulary: copy .config/fluidvoice/parakeet_custom_vocabulary.json to
+#   ~/Library/Application Support/FluidVoice/ (see README)
+# - HotkeyShortcutKey: plist *data* type, which macos-defaults apply writes back
+#   as a string. Set it manually instead (hex is JSON:
+#   {"modifierKeyCodes":[61],"keyCode":61,"modifierFlagsRawValue":0} = hold Right Option):
+#     defaults write com.FluidApp.app HotkeyShortcutKey -data 7b226d6f6469666965724b6579436f646573223a5b36315d2c226b6579436f6465223a36312c226d6f646966696572466c61677352617756616c7565223a307d
+---
+description: FluidVoice settings
+sudo: false
+current_host: false
+kill: [FluidVoice]
+data:
+  com.FluidApp.app:
+    # --- Hotkey (key itself is set manually as plist data — see header) ---
+    HotkeyMode: hold
+    PressAndHoldMode: true
+    PromptModeShortcutEnabled: false
+    # --- Speech / AI models ---
+    SelectedSpeechModel: parakeet-tdt-v2
+    SelectedProviderID: apple-intelligence
+    SelectedModelByProvider:
+      fluid-1: fluid-1
+      "custom:fluid-1": fluid-1
+      apple-intelligence: System Model
+    FluidIntelligenceSelectedModelID: fluid-1
+    # --- Dictation prompts ---
+    SelectedDictationPromptID: __FLUID_1__
+    DictationPromptOff: false
+    DictationPromptRoutingScope: selectedAppsOnly
+    SecondaryDictationPromptOff: true
+    SecondaryPromptShortcutRemoved: true
+    # --- Audio devices (AirPods travel between machines) ---
+    PreferredInputDeviceUID: "FC-B2-14-EE-4F-36:input"
+    PreferredOutputDeviceUID: "FC-B2-14-EE-4F-36:output"
+    # --- App behavior ---
+    LaunchAtStartup: true
+    ShowInDock: false
+    IntendedDockVisibility: false
+    AutoUpdateCheckEnabled: false
+    EnableDebugLogs: true
+    # --- Overlay position ---
+    OverlayBottomOffset: 50.0
+    OverlayBottomOffsetMigratedTo50: true
+    # --- Suppress onboarding / first-run flow ---
+    OnboardingCompleted: true
+    OnboardingCurrentStep: 5
+    OnboardingGeneration: 2
+    OnboardingAISkipped: false
+    OnboardingPlaygroundSkipped: false
+    OnboardingPlaygroundValidated: true
+    OnboardingSelectedLanguageID: en
+    PlaygroundUsed: true

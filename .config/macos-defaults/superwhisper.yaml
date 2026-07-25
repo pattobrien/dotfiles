@@ -1,0 +1,38 @@
+# superwhisper settings (curated from exports/superwhisper.yaml, 2026-07 machine migration)
+# Apply with: macos-defaults apply ~/.config/macos-defaults/superwhisper.yaml
+#
+# Not included here:
+# - modes/vocabulary: stored in superwhisper's data folder (~/Documents/superwhisper
+#   by default), not in defaults; recreate in-app or restore from a backup
+# - license: activate in-app (export had licenseValid: false)
+# - Sparkle updater state, window frames, cached model catalog: machine state
+---
+description: superwhisper settings
+sudo: false
+current_host: false
+kill: [superwhisper]
+data:
+  com.superduper.superwhisper:
+    # --- Modes ---
+    activeModeKey: custom
+    lastSelectedModeKey: custom
+    # --- Recorder UI ---
+    alwaysShowMiniRecorder: true
+    recordingViewEnabled: true
+    recordingViewCoordinateX: 541
+    recordingViewCoordinateY: 438
+    snapPointID: 10
+    soundEffectTheme: classic
+    # --- Audio ---
+    useDefaultAudioDevice: true
+    selectedDeviceID: ""
+    # Duck (lower) other audio while recording
+    defaultPlaybackBehavior: duck
+    # --- App behavior ---
+    launchOnLogin: true
+    # --- Suppress onboarding / first-run hints ---
+    completedOnboarding: true
+    hasLaunchedBefore: true
+    onboardingProgress: 5
+    dismissedOnboardingToasts: "modes.activation,modes.create,vocabulary.firstItem,vocabulary.firstReplacement"
+    pushToTalkMigrated: true
