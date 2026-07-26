@@ -199,6 +199,12 @@
         "source": "github",
         "repo": "Egonex-AI/Understand-Anything"
       }
+    },
+    "claude-notifications-go": {
+      "source": {
+        "source": "github",
+        "repo": "777genius/claude-notifications-go"
+      }
     }
   },
   "alwaysThinkingEnabled": true,
@@ -211,8 +217,9 @@
     "mode": "hold"
   },
   "skipDangerousModePermissionPrompt": true,
+  "theme": "dark",
   "editorMode": "vim",
+  "preferredNotifChannel": "notifications_disabled",
   "agentPushNotifEnabled": true,
-  "skipAutoPermissionPrompt": true,
   "voiceEnabled": true
 }

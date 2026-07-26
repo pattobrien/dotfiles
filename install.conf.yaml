@@ -21,6 +21,7 @@
     ~/.claude/CLAUDE.md: claude/CLAUDE.md
     ~/.claude/settings.json: claude/settings.json
     ~/.claude/skills: claude/skills
+    ~/.claude/claude-notifications-go/config.json: claude/claude-notifications-go/config.json
     ~/.agents: .agents
     ~/.codex/config.toml: .config/codex/config.toml
     ~/.codex/AGENTS.md:
