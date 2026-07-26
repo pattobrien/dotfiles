@@ -23,7 +23,8 @@
   },
   "statuses": {
     "task_complete": {
-      "title": "✅ Completed",
+      "enabled": false,
+      "title": "Completed",
       "sound": "${CLAUDE_PLUGIN_ROOT}/sounds/task-complete.mp3"
     },
     "review_complete": {
@@ -31,7 +32,7 @@
       "sound": "${CLAUDE_PLUGIN_ROOT}/sounds/review-complete.mp3"
     },
     "question": {
-      "title": "❓ Question",
+      "title": "Question",
       "sound": "${CLAUDE_PLUGIN_ROOT}/sounds/question.mp3"
     },
     "plan_ready": {
