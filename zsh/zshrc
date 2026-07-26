@@ -187,6 +187,10 @@ fi
 
 bindkey -v # set up vim motions in interactive terminal
 
+# Ctrl+Space (VSCode's trigger-suggest shortcut) opens fzf-tab completion,
+# same as Tab. Must come after `bindkey -v` (switching keymaps resets bindings).
+bindkey '^ ' fzf-tab-complete
+
 # Cmd+K (via Ghostty F12 escape sequence): clear screen + scrollback when not in tmux
 # Inside tmux this is handled by tmux's F12 binding in .tmux.conf
 if [[ -z "$TMUX" ]]; then
