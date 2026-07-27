@@ -1,5 +1,7 @@
 # Claude Instructions
 
+name: Patt O'Brien.
+
 ## User Directories
 
 Common directories/repositories to be aware of:
