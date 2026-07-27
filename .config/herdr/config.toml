@@ -133,6 +133,15 @@ key = "prefix+shift+w"
 type = "plugin_action"
 command = "worktrunk.open"
 description = "worktree: switch/create"
+
+# Cmd+K clear screen. Kitty/Ghostty send Cmd+K as an F12 escape sequence (the
+# same relay the tmux bindings use); clears the visible screen only — herdr has
+# no clear-scrollback equivalent of tmux's clear-history.
+[[keys.command]]
+key = "f12"
+type = "shell"
+command = "herdr pane send-keys \"$HERDR_ACTIVE_PANE_ID\" ctrl+l"
+description = "clear screen"
 # Legacy indexed shortcut config is still parsed for compatibility.
 # Prefer switch_tab, switch_workspace, and focus_agent for new configs.
 # [keys.indexed]
