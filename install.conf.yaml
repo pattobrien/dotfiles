@@ -38,6 +38,7 @@
     ~/.config/gh: .config/gh
     ~/.config/yabai: .config/yabai
     ~/.config/skhd: .config/skhd
+    ~/.config/herdr/config.toml: .config/herdr/config.toml
     ~/.config/mise/config.toml: .config/mise/config.toml
     ~/.config/nvim: .config/nvim
     ~/.config/aerospace: .config/aerospace
