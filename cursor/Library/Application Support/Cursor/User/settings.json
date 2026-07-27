@@ -386,6 +386,7 @@
   "lldb.suppressUpdateNotifications": true,
   "tailwind-fold.autoFold": false,
   "cursor.cpp.disabledLanguages": [
+    "markdown",
     "scminput",
     "mdx",
     "yaml",
