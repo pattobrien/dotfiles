@@ -1,0 +1,7 @@
+# herdr plugins, managed declaratively by herdr-lazy (sync/update/restore).
+# plugins.lock next to this file records resolved commits — keep both in git.
+natori-hrj/herdr-lazy
+devashish2203/herdr-worktrunk
+razajamil/herdr-plugin-workspace-manager
+wyattjoh/herdr-plugin-gh-pr
+yankewei/herdr-focus-notify

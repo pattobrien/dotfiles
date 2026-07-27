@@ -1,0 +1,7 @@
+# worktrunk (wt) — git worktree manager, driven from Herdr via the worktrunk plugin.
+# Docs: https://worktrunk.dev/config/
+
+# Match Herdr's [worktrees] directory so wt-created and sidebar-created
+# checkouts land in the same tree (the workspace-manager plugin's catch-all
+# layout matches worktrees by this path prefix).
+worktree-path = "~/.herdr/worktrees/{{ repo }}/{{ branch | sanitize }}"

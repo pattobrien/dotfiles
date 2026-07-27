@@ -5,6 +5,8 @@
 # **/Brewfile.lock.json
 .archive/**/*
 .env*
+# herdr-focus-notify's .env is behavior config (no secrets), keep it synced
+!.config/herdr/plugins/config/herdr-focus-notify/.env
 .vscode/**/*
 .dart_tool/**/*
 !.config

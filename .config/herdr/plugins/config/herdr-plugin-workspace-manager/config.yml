@@ -1,0 +1,23 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/razajamil/herdr-plugin-workspace-manager/main/schema.json
+# herdr-plugin-workspace-manager — applied automatically when a worktree is
+# created. Mirrors the old workmux windows template: a focused claude agent
+# plus a background `pnpm install` tab.
+
+layouts:
+  - id: default
+    tabs:
+      - title: agent
+        panes:
+          - title: claude
+            agent: claude
+      - title: install
+        panes:
+          - title: install
+            command: pnpm install
+
+# Catch-all: every Herdr/worktrunk worktree lives under ~/.herdr/worktrees,
+# so a path prefix match applies the default layout to all of them.
+# Add `repo:` entries above this one for per-project layouts.
+workspaces:
+  - path: ~/.herdr/worktrees
+    defaultLayout: default

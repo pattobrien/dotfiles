@@ -4,6 +4,7 @@ tap "dsully/tap", trusted: true
 tap "koekeishiya/formulae", "https://github.com/asmvik/homebrew-formulae.git", trusted: true
 tap "leoafarias/fvm", trusted: true
 tap "raine/workmux", trusted: true
+tap "vjeantet/tap", trusted: true
 # Run your GitHub Actions locally
 brew "act"
 # ANother Tool for Language Recognition
@@ -52,6 +53,8 @@ brew "ghcup"
 brew "git-delta"
 # GNU Privacy Guard (OpenPGP)
 brew "gnupg"
+# Agent multiplexer that lives in your terminal
+brew "herdr"
 # Tool for managing apps on iOS devices
 brew "ideviceinstaller"
 # Tools and libraries to manipulate images in select formats
@@ -114,6 +117,8 @@ brew "watchexec"
 brew "websocat"
 # Internet file retriever
 brew "wget"
+# CLI for Git worktree management, designed for parallel AI agent workflows
+brew "worktrunk"
 # Little beautifier tool for xcodebuild
 brew "xcbeautify"
 # Build server protocol implementation for integrating Xcode with sourcekit-lsp
@@ -138,6 +143,8 @@ brew "koekeishiya/formulae/skhd"
 brew "leoafarias/fvm/fvm", trusted: true
 # Opinionated workflow tool that orchestrates git worktrees and tmux
 brew "raine/workmux/workmux", trusted: true
+# Send macOS User Notifications from the command line (used by herdr-focus-notify)
+brew "vjeantet/tap/alerter"
 # Password manager that keeps all passwords secure behind one password
 cask "1password"
 # Command-line interface for 1Password
