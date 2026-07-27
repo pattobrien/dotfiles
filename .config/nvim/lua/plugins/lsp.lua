@@ -15,9 +15,10 @@ return {
         -- Selected via vim.g.lazyvim_ts_lsp = "tsgo" in options.lua.
         -- Install: npm install -g @typescript/native-preview
 
-        -- eslint — restrict to ts/tsx only (extra defaults include js/jsx/vue/svelte/astro).
+        -- eslint — restrict to ts/tsx only (extra defaults include js/jsx/vue/svelte/astro),
+        -- plus markdown for frontmatter schema validation via @eslint/markdown.
         eslint = {
-          filetypes = { "typescript", "typescriptreact" },
+          filetypes = { "typescript", "typescriptreact", "markdown" },
         },
 
         oxfmt = {},
