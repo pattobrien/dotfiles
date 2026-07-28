@@ -1,0 +1,6 @@
+# herdr-plus global settings (see README "Configuration").
+
+[worktree]
+# Bare branch names typed at the worktree prompt become patt/<name>;
+# names already containing "/" are used as-is.
+branch_prefix = "patt/"

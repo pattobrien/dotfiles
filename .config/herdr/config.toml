@@ -71,10 +71,8 @@ prefix = "ctrl+a"
 new_tab = "f2"                  # Cmd+T
 close_pane = "f3"               # Cmd+W
 zoom = "f4"                     # Cmd+Enter
-open_notification_target = "f5" # Cmd+A — jump to agent needing attention
 last_pane = "f8"                # Cmd+;
 workspace_picker = "f9"         # Cmd+Shift+R
-toggle_sidebar = "f10"          # Cmd+L
 
 # Modified F-key relays (CSI <code>;<mod>~ encoding — bare F13+ sequences are
 # not recognized by herdr's input parser, but modified F5-F12 chords are).
@@ -82,8 +80,13 @@ previous_agent = "shift+f5"     # Cmd+[
 next_agent = "shift+f6"         # Cmd+]
 previous_tab = "shift+f7"       # Cmd+Shift+[
 next_tab = "shift+f8"           # Cmd+Shift+]
-new_workspace = "shift+f9"      # Cmd+N
 switch_tab = "ctrl+1..9"        # Cmd+1..9 (terminals send CSI-u ctrl+digit)
+
+# Displaced by the tmux-era jump-or-create bindings below (Cmd+A/N/L now match
+# the old tmux roles); these actions stay reachable in prefix mode.
+open_notification_target = "prefix+o" # was Cmd+A (f5) — jump to agent needing attention
+new_workspace = "prefix+shift+n"      # was Cmd+N (shift+f9)
+toggle_sidebar = "prefix+b"           # was Cmd+L (f10)
 
 # Pane focus movement, bound directly (no terminal relay involved).
 focus_pane_left = "ctrl+alt+h"
@@ -188,6 +191,28 @@ type = "shell"
 command = "\"$HOME/.local/bin/herdr-quick-actions-popup\""
 description = "herdr-plus: quick actions (popup)"
 
+# Jump-or-create bindings ported from the old tmux setup (tmux-jump-or-create /
+# tmux-jump-dev): focus the workspace's matching pane, or open a new tab at the
+# space's cwd running the command. Same slots, same muscle memory. Also exposed
+# as herdr-plus quick actions (Open Neovim / Open Agent / Dev Server).
+[[keys.command]]
+key = "f5"
+type = "shell"
+command = "\"$HOME/.local/bin/herdr-jump-or-create\" claude claude"
+description = "claude: jump or create"     # Cmd+A
+
+[[keys.command]]
+key = "shift+f9"
+type = "shell"
+command = "\"$HOME/.local/bin/herdr-jump-or-create\" nvim nvim"
+description = "nvim: jump or create"       # Cmd+N
+
+[[keys.command]]
+key = "f10"
+type = "shell"
+command = "\"$HOME/.local/bin/herdr-jump-or-create\" --label dev pnpm 'pnpm dev'"
+description = "pnpm dev: jump or create"   # Cmd+L
+
 # Cmd+K clear screen. Kitty/Ghostty send Cmd+K as an F12 escape sequence (the
 # same relay the tmux bindings use); clears the visible screen only — herdr has
 # no clear-scrollback equivalent of tmux's clear-history.
@@ -217,6 +242,14 @@ key = "prefix+u"
 type = "plugin_action"
 command = "termscope.open-links"
 description = "termscope: visible link picker"
+
+# Browser plugin: live Chromium pane with CDP control (ogulcancelik/herdr-browser).
+# Placement defaults (right split) are set in plugins/config/official.browser/browser.json.
+[[keys.command]]
+key = "prefix+shift+b"
+type = "shell"
+command = '"${HERDR_BIN_PATH}" plugin pane open --plugin official.browser --entrypoint browser --placement split --direction right --focus'
+description = "browser: open in right split"
 
 # Cmd+/ → F7 → scratch popup shell (mirrors the old tmux scratch popup)
 [[keys.command]]
@@ -303,7 +336,8 @@ prompt_new_tab_name = false
 # pane_gaps = true
 
 # Show detected/reported agent labels in split pane borders when no manual pane name is set.
-# show_agent_labels_on_pane_borders = false
+# Manual pane names (prefix+shift+p) always show; this fills in agent labels otherwise.
+show_agent_labels_on_pane_borders = true
 
 # Hide the tab row when a workspace has exactly one tab.
 # New tabs can still be created with the configured keybinding.

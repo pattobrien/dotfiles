@@ -1,0 +1,81 @@
+#!/usr/bin/env bash
+# Herdr port of tmux-jump-or-create / tmux-jump-dev: focus the first pane in
+# the caller's workspace whose detected agent or foreground process matches
+# <match>; if none exists, open a new tab at the workspace root running the
+# given command. Callable from herdr [[keys.command]] shell bindings
+# (HERDR_ACTIVE_PANE_ID) and herdr-plus quick actions (--pane {{.PaneId}}).
+# Usage: herdr-jump-or-create [--pane ID] [--label LABEL] <match> [command...]
+set -euo pipefail
+# Runs inside herdr's shell-command environment, so PATH may lack homebrew.
+export PATH="/opt/homebrew/bin:$HOME/.local/bin:$HOME/.local/share/mise/shims:$PATH"
+
+herdr="${HERDR_BIN_PATH:-herdr}"
+
+pane_id="" label=""
+while [ $# -gt 0 ]; do
+  case "$1" in
+    --pane) pane_id="$2"; shift 2 ;;
+    --label) label="$2"; shift 2 ;;
+    *) break ;;
+  esac
+done
+
+match="${1:-}"
+shift || true
+if [ -z "$match" ]; then
+  echo "usage: herdr-jump-or-create [--pane ID] [--label LABEL] <match> [command...]" >&2
+  exit 2
+fi
+label="${label:-$match}"
+
+pane_id="${pane_id:-${HERDR_ACTIVE_PANE_ID:-${HERDR_PLUS_PANE_ID:-${HERDR_PANE_ID:-}}}}"
+if [ -z "$pane_id" ]; then
+  echo "herdr-jump-or-create: no caller pane id in environment or --pane" >&2
+  exit 1
+fi
+workspace_id="${pane_id%%:*}"
+
+panes="$("$herdr" pane list --workspace "$workspace_id")"
+
+# Pass 1: herdr-detected agent (covers claude even when wrapped, e.g. caffeinate).
+target_tab="$(jq -r --arg m "$match" \
+  '[.result.panes[] | select(.agent == $m) | .tab_id][0] // empty' <<<"$panes")"
+
+# Pass 2: foreground process name / argv0 (covers nvim, pnpm, ...).
+if [ -z "$target_tab" ]; then
+  while IFS=$'\t' read -r pid tab; do
+    hit="$("$herdr" pane process-info --pane "$pid" 2>/dev/null \
+      | jq -r --arg m "$match" '[.result.process_info.foreground_processes[]?
+          | select(.name == $m or ((.argv0 // "") | split("/") | last) == $m)]
+          | length')" || continue
+    if [ "${hit:-0}" -gt 0 ]; then
+      target_tab="$tab"
+      break
+    fi
+  done < <(jq -r '.result.panes[] | [.pane_id, .tab_id] | @tsv' <<<"$panes")
+fi
+
+if [ -n "$target_tab" ]; then
+  exec "$herdr" tab focus "$target_tab"
+fi
+
+# No match: new tab at the workspace root (fall back to the caller pane's cwd
+# for non-repo workspaces), running the command if one was given.
+cwd="$("$herdr" workspace get "$workspace_id" \
+  | jq -r '.result.workspace.worktree.checkout_path // empty')"
+if [ -z "$cwd" ]; then
+  cwd="$("$herdr" pane get "$pane_id" \
+    | jq -r '.result.pane.foreground_cwd // .result.pane.cwd // empty')"
+fi
+
+created="$("$herdr" tab create --workspace "$workspace_id" \
+  ${cwd:+--cwd "$cwd"} --label "$label" --focus)"
+new_pane="$(jq -r '.result.root_pane.pane_id' <<<"$created")"
+
+if [ $# -gt 0 ]; then
+  # Wait for the shell prompt to paint so the command text isn't dropped.
+  # --source visible is load-bearing: the default snapshot source doesn't see a
+  # fresh pane's viewport, so without it this burns the full timeout.
+  "$herdr" pane wait-output "$new_pane" --regex '\S' --source visible --timeout 5000 >/dev/null 2>&1 || true
+  "$herdr" pane run "$new_pane" "$*"
+fi

@@ -1,0 +1,15 @@
+# Wildcard worktree auto-layout: when herdr creates or opens a worktree,
+# herdr-plus lays these tabs into the new workspace. Applies to every repo
+# without a more specific layout file (repo = "<name>" beats "*").
+repo = "*"
+
+[[tabs]]
+name = "agent"
+command = "claude"
+
+[[tabs]]
+name = "git"
+command = "lazygit"
+
+[[tabs]]
+name = "shell"

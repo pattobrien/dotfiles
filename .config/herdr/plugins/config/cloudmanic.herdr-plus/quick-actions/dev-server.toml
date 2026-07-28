@@ -1,0 +1,9 @@
+# Jump-or-create port of the old tmux Cmd+L binding (tmux-jump-dev): focus the
+# workspace's pane running pnpm, or start `pnpm dev` in a new tab at the
+# space's cwd. (The tmux version only jumped; this one also creates on miss.)
+# Also bound directly to Cmd+L (f10 relay) in ~/.config/herdr/config.toml.
+
+name = "Dev Server"
+description = "Focus the workspace's pnpm dev pane, or start one at the space cwd"
+type = "command"
+command = "\"{{.Home}}/.local/bin/herdr-jump-or-create\" --pane {{.PaneId}} --label dev pnpm 'pnpm dev'"

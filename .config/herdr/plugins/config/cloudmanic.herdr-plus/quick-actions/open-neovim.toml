@@ -1,0 +1,8 @@
+# Jump-or-create port of the old tmux Cmd+N binding (tmux-jump-or-create nvim):
+# focus the workspace's nvim tab, or open a new one at the space's cwd.
+# Also bound directly to Cmd+N (shift+f9 relay) in ~/.config/herdr/config.toml.
+
+name = "Open Neovim"
+description = "Focus the workspace's nvim tab, or open one at the space cwd"
+type = "command"
+command = "\"{{.Home}}/.local/bin/herdr-jump-or-create\" --pane {{.PaneId}} nvim nvim"

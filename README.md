@@ -154,10 +154,15 @@ Shortcuts are split across layers, each scoped to a specific context.
     action. Herdr only recognizes F1–F12 plus modified F-keys
     (`CSI <code>;<mod>~`) and CSI-u chords — bare F13+ sequences (`CSI 25~`+)
     are invisible to it, so overflow slots use `shift+F5`-style encodings.
-  - Herdr highlights: `Cmd+A` jump to agent needing attention, `Cmd+[`/`Cmd+]`
-    cycle agents, `Cmd+Shift+[`/`]` cycle tabs, `Cmd+1..9` tab N, `Cmd+T`/`W`
-    new/close, `Cmd+;` last pane, `Cmd+N` new workspace, `Cmd+E` worktrees,
-    `Ctrl+Alt+H/J/K/L` pane focus (direct, no relay)
+  - Herdr highlights: `Cmd+A`/`Cmd+N`/`Cmd+L` jump-or-create claude / nvim /
+    `pnpm dev` (same roles as the old tmux bindings, via
+    `scripts/herdr-jump-or-create`; also in the herdr-plus quick-actions
+    picker as Open Agent / Open Neovim / Dev Server), `Cmd+[`/`Cmd+]` cycle
+    agents, `Cmd+Shift+[`/`]` cycle tabs, `Cmd+1..9` tab N, `Cmd+T`/`W`
+    new/close, `Cmd+;` last pane, `Cmd+E` worktrees, `Ctrl+Alt+H/J/K/L` pane
+    focus (direct, no relay). Displaced to prefix mode: `prefix+o` jump to
+    agent needing attention, `prefix+shift+n` new workspace, `prefix+b`
+    toggle sidebar
   - Avoid overriding:
     - Cmd+Q/H/M/W/N (macOS window mgmt)
     - Cmd+C/V/X/Z (clipboard)
