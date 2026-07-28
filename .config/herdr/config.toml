@@ -68,25 +68,25 @@ prefix = "ctrl+a"
 # Cmd+key chords relay through Kitty/Ghostty as F-key escape sequences (see
 # README § Keyboard Shortcuts). Same slots the tmux bindings use, same
 # meanings, so muscle memory carries over.
-new_tab = "f2"                  # Cmd+T
-close_pane = "f3"               # Cmd+W
-zoom = "f4"                     # Cmd+Enter
-last_pane = "f8"                # Cmd+;
-workspace_picker = "f9"         # Cmd+Shift+R
+new_tab = "f2" # Cmd+T
+close_pane = "f3" # Cmd+W
+zoom = "f4" # Cmd+Enter
+last_pane = "f8" # Cmd+;
+workspace_picker = "f9" # Cmd+Shift+R
 
 # Modified F-key relays (CSI <code>;<mod>~ encoding — bare F13+ sequences are
 # not recognized by herdr's input parser, but modified F5-F12 chords are).
-previous_agent = "shift+f5"     # Cmd+[
-next_agent = "shift+f6"         # Cmd+]
-previous_tab = "shift+f7"       # Cmd+Shift+[
-next_tab = "shift+f8"           # Cmd+Shift+]
-switch_tab = "ctrl+1..9"        # Cmd+1..9 (terminals send CSI-u ctrl+digit)
+previous_agent = "shift+f5" # Cmd+[
+next_agent = "shift+f6" # Cmd+]
+previous_tab = "shift+f7" # Cmd+Shift+[
+next_tab = "shift+f8" # Cmd+Shift+]
+switch_tab = "ctrl+1..9" # Cmd+1..9 (terminals send CSI-u ctrl+digit)
 
 # Displaced by the tmux-era jump-or-create bindings below (Cmd+A/N/L now match
 # the old tmux roles); these actions stay reachable in prefix mode.
 open_notification_target = "prefix+o" # was Cmd+A (f5) — jump to agent needing attention
-new_workspace = "prefix+shift+n"      # was Cmd+N (shift+f9)
-toggle_sidebar = "prefix+b"           # was Cmd+L (f10)
+new_workspace = "prefix+shift+n" # was Cmd+N (shift+f9)
+toggle_sidebar = "prefix+b" # was Cmd+L (f10)
 
 # Pane focus movement, bound directly (no terminal relay involved).
 focus_pane_left = "ctrl+alt+h"
@@ -199,19 +199,19 @@ description = "herdr-plus: quick actions (popup)"
 key = "f5"
 type = "shell"
 command = "\"$HOME/.local/bin/herdr-jump-or-create\" claude claude"
-description = "claude: jump or create"     # Cmd+A
+description = "claude: jump or create" # Cmd+A
 
 [[keys.command]]
 key = "shift+f9"
 type = "shell"
 command = "\"$HOME/.local/bin/herdr-jump-or-create\" nvim nvim"
-description = "nvim: jump or create"       # Cmd+N
+description = "nvim: jump or create" # Cmd+N
 
 [[keys.command]]
 key = "f10"
 type = "shell"
 command = "\"$HOME/.local/bin/herdr-jump-or-create\" --label dev pnpm 'pnpm dev'"
-description = "pnpm dev: jump or create"   # Cmd+L
+description = "pnpm dev: jump or create" # Cmd+L
 
 # Cmd+K clear screen. Kitty/Ghostty send Cmd+K as an F12 escape sequence (the
 # same relay the tmux bindings use); clears the visible screen only — herdr has
@@ -382,7 +382,7 @@ delivery = "herdr"
 # delay_seconds = 1
 
 [ui.toast.herdr]
-position = "bottom-left"
+position = "top-right"
 
 [ui.toast.clipboard]
 # enabled = true
