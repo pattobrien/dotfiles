@@ -1,0 +1,27 @@
+[metadata]
+name = "linear-issues"
+description = "List Linear issues across all teams (schpet/linear-cli)"
+requirements = ["linear", "jq", "bat"]
+
+[source]
+command = '''E=$(printf '\033'); linear issue query --all-teams --state triage --state backlog --state unstarted --state started --limit 200 --json --no-pager | jq -r --arg E "$E" '.nodes[] | "\($E)[32m\(.identifier)\($E)[39m  \(.title)  \($E)[33m[\(.state.name)]\($E)[39m" + (if .assignee then " \($E)[36m@\(.assignee.displayName // .assignee.name)\($E)[39m" else "" end) + (if (.labels.nodes | length) > 0 then " " + ([.labels.nodes[] | "\($E)[35m\(.name)\($E)[39m"] | join(" ")) else "" end)'
+'''
+ansi = true
+output = "{strip_ansi|split: :0}"
+
+[ui]
+layout = "portrait"
+preview_panel = { header = "{strip_ansi|split: :0}" }
+
+[preview]
+command = "linear issue view '{strip_ansi|split: :0}' --no-pager --no-comments | bat --language markdown --color always --style plain"
+
+[actions.open]
+description = "Open the issue in the browser"
+command = "linear issue view '{strip_ansi|split: :0}' --web"
+mode = "fork"
+
+[actions.start]
+description = "Start working on the issue (assign + git branch)"
+command = "linear issue start '{strip_ansi|split: :0}'"
+mode = "execute"

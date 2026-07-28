@@ -243,6 +243,7 @@ fallback_channel = "files"
   "git push",
 ]
 "git-log" = ["git log", "git show"]
+"linear-issues" = ["linear issue view", "linear issue start", "linear issue url"]
 "docker-images" = ["docker run"]
 "git-repos" = ["nvim", "code", "hx", "git clone"]
 
