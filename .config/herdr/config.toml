@@ -204,6 +204,20 @@ type = "plugin_action"
 command = "worktrunk.open"
 description = "worktree: switch/create"
 
+# Termscope plugin: Television popup listing file paths / URLs visible in the
+# focused pane (iurysza/termscope). Enter opens in nvim / default browser.
+[[keys.command]]
+key = "prefix+f"
+type = "plugin_action"
+command = "termscope.open"
+description = "termscope: visible file picker"
+
+[[keys.command]]
+key = "prefix+u"
+type = "plugin_action"
+command = "termscope.open-links"
+description = "termscope: visible link picker"
+
 # Cmd+/ → F7 → scratch popup shell (mirrors the old tmux scratch popup)
 [[keys.command]]
 key = "f7"
