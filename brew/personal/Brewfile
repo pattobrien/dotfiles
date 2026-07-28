@@ -97,6 +97,8 @@ brew "scc"
 brew "stow"
 # High-performance system programming language
 brew "swift"
+# General purpose fuzzy finder TUI
+brew "television"
 # User interface to the TELNET protocol
 brew "telnet"
 # Terminal multiplexer

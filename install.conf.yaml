@@ -49,6 +49,8 @@
     ~/.config/cmux: .config/cmux
     ~/.config/lazygit: .config/lazygit
     ~/.config/bat: .config/bat
+    # config file only — tv's cable/ channel dir is mutable (update-channels)
+    ~/.config/television/config.toml: .config/television/config.toml
     ~/.hammerspoon:
       path: .config/hammerspoon
       force: true
