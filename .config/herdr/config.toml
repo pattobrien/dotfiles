@@ -182,14 +182,23 @@ type = "plugin_action"
 command = "cloudmanic.herdr-plus.projects"
 description = "herdr-plus: projects"
 
-# Popup variant: the stock quick-actions action hardcodes a full overlay
-# (quickactions.go --placement overlay), so this shell binding rebuilds the
-# launch context and opens the picker entrypoint as an 80%x70% popup.
+# Palette plugin (ramarivera/herdr-palette): Raycast-style overlay over
+# keybindings, plugin actions, custom commands, and workspaces/tabs/agents.
+# Displaced the herdr-plus quick-actions popup from this slot; quick actions
+# remain reachable inside the palettes themselves.
 [[keys.command]]
 key = "shift+f11"
-type = "shell"
-command = "\"$HOME/.local/bin/herdr-quick-actions-popup\""
-description = "herdr-plus: quick actions (popup)"
+type = "plugin_action"
+command = "ramarivera.palette.open"
+description = "palette: all actions" # Cmd+Shift+P
+
+# Command palette (JanTvrdik/herdr-command-palette): fzf popup over every
+# plugin action.
+[[keys.command]]
+key = "prefix+space"
+type = "plugin_action"
+command = "jt.command-palette.open"
+description = "palette: plugin actions (fzf)"
 
 # Jump-or-create bindings ported from the old tmux setup (tmux-jump-or-create /
 # tmux-jump-dev): focus the workspace's matching pane, or open a new tab at the
