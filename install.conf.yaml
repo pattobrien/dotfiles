@@ -43,6 +43,7 @@
     ~/.config/worktrunk/config.toml: .config/worktrunk/config.toml
     ~/.config/hunk/config.toml: .config/hunk/config.toml
     ~/.config/tuicr/config.toml: .config/tuicr/config.toml
+    ~/.config/slk/config.toml: .config/slk/config.toml
     ~/.config/mise/config.toml: .config/mise/config.toml
     ~/.config/nvim: .config/nvim
     ~/.config/aerospace: .config/aerospace
