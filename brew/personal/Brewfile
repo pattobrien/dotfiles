@@ -55,8 +55,6 @@ brew "git-delta"
 brew "gnupg"
 # Agent multiplexer that lives in your terminal
 brew "herdr"
-# Review-first terminal diff viewer for agent-authored changesets
-brew "hunk"
 # Tool for managing apps on iOS devices
 brew "ideviceinstaller"
 # Tools and libraries to manipulate images in select formats
