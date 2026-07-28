@@ -7,6 +7,8 @@
 .env*
 # herdr-focus-notify's .env is behavior config (no secrets), keep it synced
 !.config/herdr/plugins/config/herdr-focus-notify/.env
+# herdr-navigator runtime state (update-check timestamp), not config
+.config/herdr/plugins/config/herdr-navigator/update-check
 .vscode/**/*
 .dart_tool/**/*
 !.config

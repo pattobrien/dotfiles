@@ -1,0 +1,77 @@
+#!/usr/bin/env bash
+# GitHub repos as a herdr-navigator integration (docs/plugin-integrations.md).
+#   list — print remote repos (not yet cloned under ~/dev) as collect JSON
+#   open — clone {{id}} into ~/dev/<owner>/<repo> and focus/create its workspace
+# Runs inside herdr's plugin environment, so PATH may lack homebrew.
+set -euo pipefail
+export PATH="/opt/homebrew/bin:$HOME/.local/bin:$PATH"
+
+DEV_DIR="$HOME/dev"
+CACHE="$HOME/.cache/herdr-gh-repos.json"
+CACHE_TTL_SECS=900
+
+fetch_repos() {
+  # Everything the authenticated user owns or can push to in their orgs.
+  gh api --paginate 'user/repos?affiliation=owner,organization_member&per_page=100' \
+    --jq '[.[] | {id: .full_name, description: (.description // ""), pushed: .pushed_at}]' |
+    jq -s 'add | sort_by(.pushed) | reverse'
+}
+
+refresh_cache() {
+  mkdir -p "$(dirname "$CACHE")"
+  fetch_repos >"$CACHE.tmp" && mv "$CACHE.tmp" "$CACHE"
+}
+
+cache_age() {
+  [[ -f "$CACHE" ]] || { echo $((CACHE_TTL_SECS + 1)); return; }
+  echo $(($(date +%s) - $(stat -f %m "$CACHE")))
+}
+
+cmd_list() {
+  if [[ ! -f "$CACHE" ]]; then
+    refresh_cache
+  elif (($(cache_age) > CACHE_TTL_SECS)); then
+    # Serve the stale cache instantly; refresh for next time.
+    (refresh_cache >/dev/null 2>&1 &)
+  fi
+  # Emit only repos that are not already cloned locally — cloned ones are
+  # covered by navigator's roots source.
+  jq -r '.[].id' "$CACHE" | while IFS= read -r id; do
+    [[ -d "$DEV_DIR/$id" ]] && continue
+    printf '%s\n' "$id"
+  done | jq -R . | jq -s --slurpfile all "$CACHE" '
+    map(. as $id | ($all[0][] | select(.id == $id)) |
+      {id, title: (.id | split("/")[1]),
+       subtitle: ((.id | split("/")[0]) + (if .description == "" then "" else " · " + .description end)),
+       path: (env.DEV_DIR + "/" + .id), kind: "github"})'
+}
+
+cmd_open() {
+  local id="$1" dest
+  dest="$DEV_DIR/$id"
+  if [[ ! -d "$dest" ]]; then
+    mkdir -p "$(dirname "$dest")"
+    gh repo clone "$id" "$dest" -- --quiet
+  fi
+  # Focus the workspace if one is already open for this path, else create it.
+  local ws_id
+  ws_id=$(herdr workspace list |
+    jq -r --arg cwd "$dest" '.result.workspaces[]? | select(.worktree.checkout_path == $cwd) | .workspace_id' |
+    head -1)
+  if [[ -n "$ws_id" ]]; then
+    herdr workspace focus "$ws_id"
+  else
+    herdr workspace create --cwd "$dest" --label "$(basename "$dest")" --focus
+  fi
+}
+
+export DEV_DIR
+case "${1:-}" in
+list) cmd_list ;;
+open) cmd_open "${2:?usage: herdr-gh-repos open <owner/repo>}" ;;
+refresh) refresh_cache ;;
+*)
+  echo "usage: herdr-gh-repos {list|open <owner/repo>|refresh}" >&2
+  exit 2
+  ;;
+esac

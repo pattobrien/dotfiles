@@ -2,6 +2,8 @@
 # plugins.lock next to this file records resolved commits — keep both in git.
 natori-hrj/herdr-lazy
 devashish2203/herdr-worktrunk
+thanhdat77/herdr-navigator
+cloudmanic/herdr-plus
 razajamil/herdr-plugin-workspace-manager
 wyattjoh/herdr-plugin-gh-pr
 yankewei/herdr-focus-notify

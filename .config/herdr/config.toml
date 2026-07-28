@@ -9,7 +9,9 @@
 # Built-in themes: catppuccin, terminal, tokyo-night, dracula, nord,
 #                  gruvbox, one-dark, solarized, kanagawa, rose-pine,
 #                  vesper
-# name = "catppuccin"
+# Explicit (matches herdr's default) so plugins that inherit the theme by
+# reading this file — e.g. herdr-navigator — don't fall back to their own.
+name = "catppuccin"
 
 # Follow host terminal light/dark appearance and switch Herdr UI themes.
 # Existing manual behavior is unchanged unless this is true.
@@ -133,6 +135,13 @@ key = "prefix+shift+w"
 type = "plugin_action"
 command = "worktrunk.open"
 description = "worktree: switch/create"
+
+# Navigator plugin: one fuzzy picker for workspaces/agents/projects/dirs (trial)
+[[keys.command]]
+key = "prefix+t"
+type = "plugin_action"
+command = "herdr-navigator.open"
+description = "navigator: jump to anything"
 
 # Cmd+K clear screen. Kitty/Ghostty send Cmd+K as an F12 escape sequence (the
 # same relay the tmux bindings use); clears the visible screen only — herdr has

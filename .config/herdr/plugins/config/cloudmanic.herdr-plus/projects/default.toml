@@ -1,0 +1,15 @@
+# Default workspace template, referenced by herdr-navigator's
+# picker.directory_template — Alt-Enter on any ~/dev repo applies these tabs
+# to that repo's directory (working_dir is ignored for template use).
+# Mirrors the workspace-manager worktree layout: focused claude + install.
+name = "default"
+description = "Generic repo workspace: claude agent + install shell"
+working_dir = "~/dev"
+
+[[tabs]]
+name = "agent"
+command = "claude"
+
+[[tabs]]
+name = "install"
+command = "pnpm install"
