@@ -10,6 +10,8 @@
 # herdr-navigator runtime state (update-check timestamp, jump-back target), not config
 .config/herdr/plugins/config/herdr-navigator/update-check
 .config/herdr/plugins/config/herdr-navigator/jump-back-workspace
+# herdr-lazy runtime state (bootstrap marker), not config
+.config/herdr/plugins/config/herdr-lazy/bootstrapped
 .vscode/**/*
 .dart_tool/**/*
 !.config
