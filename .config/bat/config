@@ -1,0 +1,4 @@
+# bat configuration
+# Match the kitty/herdr Catppuccin theme (also used by termscope previews,
+# which shell out to bat without a --theme flag).
+--theme="Catppuccin Mocha"

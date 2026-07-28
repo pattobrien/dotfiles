@@ -48,6 +48,7 @@
     ~/.config/ghostty: .config/ghostty
     ~/.config/cmux: .config/cmux
     ~/.config/lazygit: .config/lazygit
+    ~/.config/bat: .config/bat
     ~/.hammerspoon:
       path: .config/hammerspoon
       force: true
