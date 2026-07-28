@@ -1,5 +1,10 @@
 {
-  "extras": ["lazyvim.plugins.extras.vscode"],
+  "extras": [
+    "lazyvim.plugins.extras.ai.claudecode",
+    "lazyvim.plugins.extras.util.gh",
+    "lazyvim.plugins.extras.util.mini-hipatterns",
+    "lazyvim.plugins.extras.vscode"
+  ],
   "install_version": 8,
   "news": {
     "NEWS.md": "11866"
