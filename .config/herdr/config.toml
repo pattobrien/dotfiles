@@ -64,6 +64,33 @@ name = "catppuccin"
 # alt+..., cmd/super, and punctuation-with-modifiers may depend on your terminal/tmux setup.
 prefix = "ctrl+a"
 
+# --- Direct (non-prefix) bindings ---
+# Cmd+key chords relay through Kitty/Ghostty as F-key escape sequences (see
+# README § Keyboard Shortcuts). Same slots the tmux bindings use, same
+# meanings, so muscle memory carries over.
+new_tab = "f2"                  # Cmd+T
+close_pane = "f3"               # Cmd+W
+zoom = "f4"                     # Cmd+Enter
+open_notification_target = "f5" # Cmd+A — jump to agent needing attention
+last_pane = "f8"                # Cmd+;
+workspace_picker = "f9"         # Cmd+Shift+R
+toggle_sidebar = "f10"          # Cmd+L
+
+# Modified F-key relays (CSI <code>;<mod>~ encoding — bare F13+ sequences are
+# not recognized by herdr's input parser, but modified F5-F12 chords are).
+previous_agent = "shift+f5"     # Cmd+[
+next_agent = "shift+f6"         # Cmd+]
+previous_tab = "shift+f7"       # Cmd+Shift+[
+next_tab = "shift+f8"           # Cmd+Shift+]
+new_workspace = "shift+f9"      # Cmd+N
+switch_tab = "ctrl+1..9"        # Cmd+1..9 (terminals send CSI-u ctrl+digit)
+
+# Pane focus movement, bound directly (no terminal relay involved).
+focus_pane_left = "ctrl+alt+h"
+focus_pane_down = "ctrl+alt+j"
+focus_pane_up = "ctrl+alt+k"
+focus_pane_right = "ctrl+alt+l"
+
 # Prefix-mode actions
 # help = "prefix+?"
 # settings = "prefix+s"
@@ -151,6 +178,23 @@ key = "f12"
 type = "shell"
 command = "herdr pane send-keys \"$HERDR_ACTIVE_PANE_ID\" ctrl+l"
 description = "clear screen"
+# Cmd+E → F11 → worktree picker (the old workmux-dashboard slot; worktrunk is
+# its successor). Also still on prefix+shift+w above.
+[[keys.command]]
+key = "f11"
+type = "plugin_action"
+command = "worktrunk.open"
+description = "worktree: switch/create"
+
+# Cmd+/ → F7 → scratch popup shell (mirrors the old tmux scratch popup)
+[[keys.command]]
+key = "f7"
+type = "popup"
+command = "zsh -l"
+width = "80%"
+height = "80%"
+description = "scratch popup shell"
+
 # Legacy indexed shortcut config is still parsed for compatibility.
 # Prefer switch_tab, switch_workspace, and focus_agent for new configs.
 # [keys.indexed]

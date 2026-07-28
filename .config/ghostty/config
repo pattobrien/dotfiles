@@ -36,8 +36,8 @@ keybind = super+w=text:\x1b[13~
 keybind = super+enter=text:\x1b[14~
 # Cmd+A      → F5       → ai window
 keybind = super+a=text:\x1b[15~
-# Cmd+N      → User0    → nvim window  (extended F-key range, bound via tmux user-keys)
-keybind = super+n=text:\x1b[25~
+# Cmd+N      → shift+F9 → herdr new workspace / tmux nvim window
+keybind = super+n=text:\x1b[20;2~
 # Cmd+S      → User1    → shell window
 keybind = super+s=text:\x1b[26~
 # --- Cmd+Shift+* → tmux session navigation (across-session namespace) ---
@@ -53,16 +53,26 @@ keybind = super+shift+m=text:\x1b[42~
 # Cmd+?  (Cmd+Shift+/) → User15 → shortcut cheatsheet menu
 keybind = super+shift+slash=text:\x1b[43~
 
-# Cmd+1..9   → User2..User10 → jump to tmux window N
-keybind = super+1=text:\x1b[28~
-keybind = super+2=text:\x1b[29~
-keybind = super+3=text:\x1b[31~
-keybind = super+4=text:\x1b[32~
-keybind = super+5=text:\x1b[33~
-keybind = super+6=text:\x1b[34~
-keybind = super+7=text:\x1b[36~
-keybind = super+8=text:\x1b[37~
-keybind = super+9=text:\x1b[38~
+# --- herdr agent/tab cycling (herdr-only, no tmux bindings) ---
+# Cmd+[        → shift+F5 → previous agent
+# Cmd+]        → shift+F6 → next agent
+# Cmd+Shift+[  → shift+F7 → previous tab
+# Cmd+Shift+]  → shift+F8 → next tab
+keybind = super+left_bracket=text:\x1b[15;2~
+keybind = super+right_bracket=text:\x1b[17;2~
+keybind = super+shift+left_bracket=text:\x1b[18;2~
+keybind = super+shift+right_bracket=text:\x1b[19;2~
+
+# Cmd+1..9 → ctrl+1..9 (CSI-u) → herdr tab N / tmux window N
+keybind = super+1=text:\x1b[49;5u
+keybind = super+2=text:\x1b[50;5u
+keybind = super+3=text:\x1b[51;5u
+keybind = super+4=text:\x1b[52;5u
+keybind = super+5=text:\x1b[53;5u
+keybind = super+6=text:\x1b[54;5u
+keybind = super+7=text:\x1b[55;5u
+keybind = super+8=text:\x1b[56;5u
+keybind = super+9=text:\x1b[57;5u
 
 # Disabled (custom workflow shortcuts; rebind in Hammerflow if you still want them):
 # Cmd+Shift+D → F7 → cleanup worktrees   (now Cmd+/ scratch popup)

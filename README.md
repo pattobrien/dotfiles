@@ -145,12 +145,19 @@ brew bundle dump --force --vscode --file=~/dev/pattobrien/dotfiles/brew/vscode/B
 
 Shortcuts are split across layers, each scoped to a specific context.
 
-- **Terminal Cmd+key** — high-frequency tmux actions (popups, session switching,
-  clear)
-  - Defined in: Kitty (`kitty.conf`), Ghostty (`config`), tmux (`.tmux.conf`),
-    zsh (`zshrc`)
-  - Flow: terminal sends F-key escape sequence → tmux `bind-key -n` intercepts →
-    runs command
+- **Terminal Cmd+key** — high-frequency multiplexer actions (tabs, panes,
+  agents, popups, clear)
+  - Defined in: Kitty (`kitty.conf`), Ghostty (`config`), Herdr
+    (`.config/herdr/config.toml`), tmux (`.tmux.conf`), zsh (`zshrc`)
+  - Flow: terminal sends an F-key escape sequence → whichever multiplexer is
+    running (Herdr day-to-day, or tmux) intercepts it → runs the equivalent
+    action. Herdr only recognizes F1–F12 plus modified F-keys
+    (`CSI <code>;<mod>~`) and CSI-u chords — bare F13+ sequences (`CSI 25~`+)
+    are invisible to it, so overflow slots use `shift+F5`-style encodings.
+  - Herdr highlights: `Cmd+A` jump to agent needing attention, `Cmd+[`/`Cmd+]`
+    cycle agents, `Cmd+Shift+[`/`]` cycle tabs, `Cmd+1..9` tab N, `Cmd+T`/`W`
+    new/close, `Cmd+;` last pane, `Cmd+N` new workspace, `Cmd+E` worktrees,
+    `Ctrl+Alt+H/J/K/L` pane focus (direct, no relay)
   - Avoid overriding:
     - Cmd+Q/H/M/W/N (macOS window mgmt)
     - Cmd+C/V/X/Z (clipboard)
