@@ -159,7 +159,9 @@ Shortcuts are split across layers, each scoped to a specific context.
     `scripts/herdr-jump-or-create`; also in the herdr-plus quick-actions
     picker as Open Agent / Open Neovim / Dev Server), `Cmd+[`/`Cmd+]` cycle
     agents, `Cmd+Shift+[`/`]` cycle tabs, `Cmd+1..9` tab N, `Cmd+T`/`W`
-    new/close, `Cmd+;` last pane, `Cmd+E` worktrees, `Ctrl+Alt+H/J/K/L` pane
+    new/close, `Cmd+;` last pane, `Cmd+E` worktrees, `Cmd+D` hunk diff of the
+    working tree in a split (herdr-plugin-hunk; staged/branch variants in the
+    palettes, also on `prefix+d`), `Ctrl+Alt+H/J/K/L` pane
     focus (direct, no relay). Displaced to prefix mode: `prefix+o` jump to
     agent needing attention, `prefix+shift+n` new workspace, `prefix+b`
     toggle sidebar

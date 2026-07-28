@@ -238,6 +238,20 @@ type = "plugin_action"
 command = "worktrunk.open"
 description = "worktree: switch/create"
 
+# Hunk diff plugin (edmundmiller/herdr-plugin-hunk): review working-tree
+# changes in a hunk TUI split. Staged/branch variants are in the palettes.
+[[keys.command]]
+key = "shift+f12"
+type = "plugin_action"
+command = "hunk.diff.worktree-split"
+description = "hunk: diff worktree" # Cmd+D
+
+[[keys.command]]
+key = "prefix+d"
+type = "plugin_action"
+command = "hunk.diff.worktree-split"
+description = "hunk: diff worktree"
+
 # Termscope plugin: Television popup listing file paths / URLs visible in the
 # focused pane (iurysza/termscope). Enter opens in nvim / default browser.
 [[keys.command]]

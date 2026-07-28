@@ -40,6 +40,8 @@ keybind = super+a=text:\x1b[15~
 keybind = super+n=text:\x1b[20;2~
 # Cmd+S      → User1    → shell window
 keybind = super+s=text:\x1b[26~
+# Cmd+D      → shift+F12 → hunk diff (herdr-only)
+keybind = super+d=text:\x1b[24;2~
 # --- Cmd+Shift+* → tmux session navigation (across-session namespace) ---
 # Cmd+Shift+;  → User11 → toggle last session
 # Cmd+Shift+R  → F9     → fzf session picker (reuses F9 slot)
