@@ -1,0 +1,46 @@
+#!/usr/bin/env bash
+# Quick Actions picker in a centered popup (with margins) instead of the stock
+# full overlay. The herdr-plus `quick-actions` action hardcodes `--placement
+# overlay` (quickactions.go), so this rebuilds the HERDR_PLUS_CTX launch
+# context from the active pane and opens the picker entrypoint as a popup.
+# `--placement popup` and `--width`/`--height` are accepted by the CLI but
+# missing from its --help (verified against the socket API schema, protocol 17).
+# Runs inside herdr's shell-command environment, so PATH may lack homebrew.
+set -euo pipefail
+export PATH="/opt/homebrew/bin:$HOME/.local/bin:$HOME/.local/share/mise/shims:$PATH"
+
+herdr="${HERDR_BIN_PATH:-herdr}"
+
+pane_id="${HERDR_ACTIVE_PANE_ID:-${HERDR_PANE_ID:-}}"
+if [ -z "$pane_id" ]; then
+  echo "herdr-quick-actions-side: no active pane id in environment" >&2
+  exit 1
+fi
+
+pane_json="$("$herdr" pane get "$pane_id")"
+
+# Mirror herdr-plus's RunContext (context.go). A partial context is fine by the
+# plugin's own rules; work_dir is the field that makes the chosen action run in
+# the directory you launched from. Labels aren't in `pane get`, so they stay
+# empty ({{.TabLabel}}/{{.SessionTitle}} templates would render blank here).
+ctx="$(jq -c '.result.pane | {
+  value: "",
+  work_dir: (.foreground_cwd // .cwd // ""),
+  pane_id: (.pane_id // ""),
+  tab_id: (.tab_id // ""),
+  tab_label: "",
+  workspace_id: (.workspace_id // ""),
+  workspace_label: "",
+  terminal_id: (.terminal_id // ""),
+  agent: (.agent // ""),
+  agent_session_id: (if .agent_session.kind == "id" then .agent_session.value else "" end)
+}' <<<"$pane_json")"
+
+enc="$(printf '%s' "$ctx" | base64 | tr -d '\n')"
+
+exec "$herdr" plugin pane open \
+  --plugin cloudmanic.herdr-plus \
+  --entrypoint quick-actions-picker \
+  --placement popup --width 80% --height 70% \
+  --focus \
+  --env "HERDR_PLUS_CTX=$enc"

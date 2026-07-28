@@ -170,6 +170,24 @@ type = "plugin_action"
 command = "herdr-navigator.open"
 description = "navigator: jump to anything"
 
+# herdr-plus pickers on the Cmd relay (Cmd+O → shift+F10, Cmd+Shift+P →
+# shift+F11 — sent by kitty/ghostty; herdr only sees modified F-keys past
+# F12, hence the shift+F slots)
+[[keys.command]]
+key = "shift+f10"
+type = "plugin_action"
+command = "cloudmanic.herdr-plus.projects"
+description = "herdr-plus: projects"
+
+# Popup variant: the stock quick-actions action hardcodes a full overlay
+# (quickactions.go --placement overlay), so this shell binding rebuilds the
+# launch context and opens the picker entrypoint as an 80%x70% popup.
+[[keys.command]]
+key = "shift+f11"
+type = "shell"
+command = "\"$HOME/.local/bin/herdr-quick-actions-popup\""
+description = "herdr-plus: quick actions (popup)"
+
 # Cmd+K clear screen. Kitty/Ghostty send Cmd+K as an F12 escape sequence (the
 # same relay the tmux bindings use); clears the visible screen only — herdr has
 # no clear-scrollback equivalent of tmux's clear-history.

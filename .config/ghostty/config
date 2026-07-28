@@ -53,6 +53,12 @@ keybind = super+shift+m=text:\x1b[42~
 # Cmd+?  (Cmd+Shift+/) → User15 → shortcut cheatsheet menu
 keybind = super+shift+slash=text:\x1b[43~
 
+# --- herdr-plus pickers (herdr-only, no tmux bindings) ---
+# Cmd+O        → shift+F10 → projects picker
+# Cmd+Shift+P  → shift+F11 → quick actions
+keybind = super+o=text:\x1b[21;2~
+keybind = super+shift+p=text:\x1b[23;2~
+
 # --- herdr agent/tab cycling (herdr-only, no tmux bindings) ---
 # Cmd+[        → shift+F5 → previous agent
 # Cmd+]        → shift+F6 → next agent
