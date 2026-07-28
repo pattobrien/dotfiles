@@ -154,10 +154,12 @@ Shortcuts are split across layers, each scoped to a specific context.
     action. Herdr only recognizes F1–F12 plus modified F-keys
     (`CSI <code>;<mod>~`) and CSI-u chords — bare F13+ sequences (`CSI 25~`+)
     are invisible to it, so overflow slots use `shift+F5`-style encodings.
-  - Herdr highlights: `Cmd+A`/`Cmd+N`/`Cmd+L` jump-or-create claude / nvim /
-    `pnpm dev` (same roles as the old tmux bindings, via
-    `scripts/herdr-jump-or-create`; also in the herdr-plus quick-actions
-    picker as Open Agent / Open Neovim / Dev Server), `Cmd+[`/`Cmd+]` cycle
+  - Herdr highlights: `Cmd+A`/`Cmd+N`/`Cmd+L` open-or-create claude / nvim /
+    `pnpm dev` tab layouts (same roles as the old tmux bindings, via the
+    [herdr-ensure-tab](https://github.com/pattobrien/herdr-ensure-tab) plugin;
+    layouts in `.config/herdr/plugins/config/herdr-ensure-tab/layouts.toml`,
+    also in the herdr-plus quick-actions picker as Open Agent / Open Neovim /
+    Dev Server), `Cmd+[`/`Cmd+]` cycle
     agents, `Cmd+Shift+[`/`]` cycle tabs, `Cmd+1..9` tab N, `Cmd+T`/`W`
     new/close, `Cmd+;` last pane, `Cmd+E` worktrees, `Cmd+D` hunk diff of the
     working tree in a split (herdr-plugin-hunk; staged/branch variants in the

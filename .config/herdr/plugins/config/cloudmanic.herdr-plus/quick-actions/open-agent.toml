@@ -1,9 +1,4 @@
-# Jump-or-create port of the old tmux Cmd+A binding (tmux-jump-or-create
-# claude): focus the workspace's first claude pane (herdr agent detection), or
-# start claude in a new tab at the space's cwd.
-# Also bound directly to Cmd+A (f5 relay) in ~/.config/herdr/config.toml.
-
 name = "Open Agent"
 description = "Focus the workspace's claude pane, or start one at the space cwd"
 type = "command"
-command = "\"{{.Home}}/.local/bin/herdr-jump-or-create\" --pane {{.PaneId}} claude claude"
+command = "\"{{.Home}}/.local/share/mise/shims/bun\" \"{{.Home}}/dev/pattobrien/herdr-ensure-tab/bin/ensure-tab.ts\" claude --workspace {{.WorkspaceId}}"

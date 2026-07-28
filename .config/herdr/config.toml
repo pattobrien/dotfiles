@@ -200,27 +200,27 @@ type = "plugin_action"
 command = "jt.command-palette.open"
 description = "palette: plugin actions (fzf)"
 
-# Jump-or-create bindings ported from the old tmux setup (tmux-jump-or-create /
-# tmux-jump-dev): focus the workspace's matching pane, or open a new tab at the
-# space's cwd running the command. Same slots, same muscle memory. Also exposed
-# as herdr-plus quick actions (Open Neovim / Open Agent / Dev Server).
+# Open-or-create tab layouts (herdr-ensure-tab plugin; layouts declared in
+# plugins/config/herdr-ensure-tab/layouts.toml). Ported from the old tmux
+# jump-or-create bindings — same slots, same muscle memory. Also exposed as
+# herdr-plus quick actions (Open Neovim / Open Agent / Dev Server).
 [[keys.command]]
 key = "f5"
 type = "shell"
-command = "\"$HOME/.local/bin/herdr-jump-or-create\" claude claude"
-description = "claude: jump or create" # Cmd+A
+command = "\"$HOME/.local/share/mise/shims/bun\" \"$HOME/dev/pattobrien/herdr-ensure-tab/bin/ensure-tab.ts\" claude"
+description = "claude: open or create" # Cmd+A
 
 [[keys.command]]
 key = "shift+f9"
 type = "shell"
-command = "\"$HOME/.local/bin/herdr-jump-or-create\" nvim nvim"
-description = "nvim: jump or create" # Cmd+N
+command = "\"$HOME/.local/share/mise/shims/bun\" \"$HOME/dev/pattobrien/herdr-ensure-tab/bin/ensure-tab.ts\" nvim"
+description = "nvim: open or create" # Cmd+N
 
 [[keys.command]]
 key = "f10"
 type = "shell"
-command = "\"$HOME/.local/bin/herdr-jump-or-create\" --label dev pnpm 'pnpm dev'"
-description = "pnpm dev: jump or create" # Cmd+L
+command = "\"$HOME/.local/share/mise/shims/bun\" \"$HOME/dev/pattobrien/herdr-ensure-tab/bin/ensure-tab.ts\" dev"
+description = "pnpm dev: open or create" # Cmd+L
 
 # Cmd+K clear screen. Kitty/Ghostty send Cmd+K as an F12 escape sequence (the
 # same relay the tmux bindings use); clears the visible screen only — herdr has
