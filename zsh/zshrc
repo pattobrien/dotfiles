@@ -44,6 +44,9 @@ source $HOMEBREW_PREFIX/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zs
 # ENABLE_CORRECTION="true" # command auto-correction.
 # DISABLE_UNTRACKED_FILES_DIRTY="true"
 
+# skip zsh-pnpm-completions aliases (keep completions only)
+export ZSH_PNPM_NO_ALIASES=1
+
 # ZSH plugins
 plugins=(
   fzf-tab # must be before other completion plugins
