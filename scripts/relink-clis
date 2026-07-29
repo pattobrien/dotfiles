@@ -1,0 +1,23 @@
+#!/usr/bin/env bun
+// Discover ~/dev/pattobrien repos that declare a package.json `bin` and
+// register their CLIs globally via `bun link`.
+
+import { spawnSync } from "node:child_process";
+import { existsSync, readFileSync, readdirSync } from "node:fs";
+import { homedir } from "node:os";
+import { join } from "node:path";
+
+const reposDir = join(homedir(), "dev", "pattobrien");
+
+for (const entry of readdirSync(reposDir)) {
+  const repo = join(reposDir, entry);
+  const pkgPath = join(repo, "package.json");
+  if (!existsSync(pkgPath)) continue;
+
+  const pkg = JSON.parse(readFileSync(pkgPath, "utf8"));
+  if (!pkg.bin) continue;
+
+  console.log(`linking ${entry} (${Object.keys(pkg.bin).join(", ")})`);
+  const result = spawnSync("bun", ["link"], { cwd: repo, stdio: "inherit" });
+  if (result.status !== 0) process.exit(result.status ?? 1);
+}

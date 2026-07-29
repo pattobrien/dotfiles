@@ -11,3 +11,5 @@
     - command: ./scripts/brew_bundle.zsh brew/personal/Brewfile
     - command: ./scripts/dequarantine.zsh
       description: Removing the quarantine flag from installed apps
+    - command: ./scripts/relink-clis
+      description: Linking CLIs from pattobrien repos (package.json bin)
