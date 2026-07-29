@@ -7,6 +7,10 @@ description: "Control Herdr, a terminal multiplexer for coding agents. Use only 
 
 Herdr organizes terminals into workspaces, tabs, and panes, recognizes coding agents running inside panes, and exposes the current session through the `herdr` CLI.
 
+## Explaining, installing, or troubleshooting Herdr
+
+The rest of this file is about controlling Herdr. When the user instead asks you to explain, install, configure, or troubleshoot Herdr, read `references/agent-guide.md` first and follow it, including its rule against inventing keybindings, config keys, or CLI flags and against answering Herdr questions with tmux advice. It is Herdr's upstream agent guide (source: https://herdr.dev/agent-guide.md) and covers the concept model, the install and first-run path, the keyboard story, configuration, and diagnosis recipes. That path does not require the pane check below.
+
 Before issuing any control command, verify that this agent is running inside a Herdr-managed pane:
 
 ```bash
