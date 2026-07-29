@@ -10,7 +10,6 @@
     "claude-notifications-go@claude-notifications-go": true,
     "code-simplifier@claude-plugins-official": true,
     "commit-commands@claude-plugins-official": true,
-    "context7@claude-plugins-official": false,
     "expo-app-design@expo-plugins": true,
     "figma-desktop@meagain": true,
     "figma@claude-plugins-official": true,

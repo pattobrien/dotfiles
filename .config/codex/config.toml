@@ -71,9 +71,6 @@ memories = true
 mentions_v2 = true
 js_repl = false
 
-[mcp_servers.context7]
-url = "https://mcp.context7.com/mcp/oauth"
-
 [mcp_servers.mobbin]
 url = "https://api.mobbin.com/mcp"
 enabled = false
