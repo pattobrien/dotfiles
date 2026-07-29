@@ -26,6 +26,7 @@
     ~/.codex/config.toml: .config/codex/config.toml
     ~/.codex/AGENTS.md:
       path: .config/codex/AGENTS.md
+    ~/.pi/agent/AGENTS.md: claude/CLAUDE.md
     ~/.tmux.conf: .config/tmux/.tmux.conf
     ~/.ssh/config: .config/ssh/config
     ~/.hushlogin: hushlogin
