@@ -1,6 +1,6 @@
 #!/usr/bin/env bun
 // Discover ~/dev/pattobrien repos that declare a package.json `bin` and
-// register their CLIs globally via `bun link`.
+// install their CLIs globally via `pnpm add -g .` (a live symlink, not a copy).
 
 import { spawnSync } from "node:child_process";
 import { existsSync, readFileSync, readdirSync } from "node:fs";
@@ -18,6 +18,9 @@ for (const entry of readdirSync(reposDir)) {
   if (!pkg.bin) continue;
 
   console.log(`linking ${entry} (${Object.keys(pkg.bin).join(", ")})`);
-  const result = spawnSync("bun", ["link"], { cwd: repo, stdio: "inherit" });
+  const result = spawnSync("pnpm", ["add", "-g", "."], {
+    cwd: repo,
+    stdio: "inherit",
+  });
   if (result.status !== 0) process.exit(result.status ?? 1);
 }
