@@ -1,9 +1,6 @@
 packages:
-  - packages/*
   - tools/*
   - tests/*
-  - claude-plugins/meagain/hooks
-  - '!tools/picker'
 
 allowBuilds:
   esbuild: true

@@ -7,9 +7,6 @@
     "test": "vp test",
     "check": "vp check"
   },
-  "dependencies": {
-    "utils": "workspace:*"
-  },
   "devDependencies": {
     "@types/bun": "latest",
     "@types/node": "catalog:",

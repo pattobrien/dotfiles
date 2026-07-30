@@ -4,8 +4,6 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev:wt": "vp run wt-cli#dev",
-    "dev:raycast": "vp run wt-raycast#dev",
     "ready": "vp fmt && vp lint && vp run test -r && vp run build -r",
     "lint": "vp lint",
     "lint:fix": "vp lint --fix",

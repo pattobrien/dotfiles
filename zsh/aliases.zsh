@@ -41,9 +41,6 @@ function gwc() { # git worktree checkout existing remote branch via fzf
   git worktree add --track -b "$branch" .worktrees/"$branch" origin/"$branch"
 }
 
-# worktree + tmux session management (via `wt` CLI)
-# old aliases (wtc, wta, wtl, wtr, wts) replaced by: wt create, wt attach, wt list, wt remove, wt switch
-
 alias maestro="maestro-runner --platform ios"
 
 alias reload="source ~/.zshrc"

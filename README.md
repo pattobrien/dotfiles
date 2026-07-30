@@ -10,12 +10,8 @@ monorepo for TypeScript tools.
 ### Workspace structure
 
 ```
-packages/git      # Git client library (worktrees, branches, project discovery)
-packages/tmux     # Tmux client library (sessions, windows, keys)
-packages/utils    # Shared utilities
-tools/wt-cli      # Worktree manager CLI (trpc-cli)
-tools/wt-raycast  # Worktree manager Raycast extension
-tools/picker      # macOS picker (Swift, not in pnpm workspace)
+tools/scripts     # Standalone TS scripts (linear-edit)
+tests/e2e         # Terminal e2e tests (kitty, nvim)
 ```
 
 ### Development
