@@ -18,12 +18,23 @@ return {
         vim.api.nvim_set_hl(0, "DiagnosticUnderlineOk", { sp = C.green, undercurl = true })
       end
 
+      local function apply_git_status_highlights()
+        local C = require("catppuccin.palettes").get_palette("mocha")
+        vim.api.nvim_set_hl(0, "SnacksPickerGitStatusUntracked", { fg = C.green })
+        vim.api.nvim_set_hl(0, "SnacksPickerGitStatusStaged", { fg = C.teal })
+      end
+
+      local function apply_highlight_overrides()
+        apply_diagnostic_underlines()
+        apply_git_status_highlights()
+      end
+
       vim.api.nvim_create_autocmd("ColorScheme", {
         pattern = "catppuccin*",
-        callback = apply_diagnostic_underlines,
+        callback = apply_highlight_overrides,
       })
 
-      apply_diagnostic_underlines()
+      apply_highlight_overrides()
     end,
   },
 
