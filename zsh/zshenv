@@ -17,3 +17,8 @@ function exists() {
 
 # Outputs all path variables, with each on a new line
 alias trail='<<<${(F)path}'
+
+# CLI tool dirs, so non-interactive shells (scripts, Hammerspoon, launchd
+# agents) resolve the same tools a terminal does. Interactive PATH ordering
+# is still owned by zshrc, which rebuilds PATH from scratch.
+export PATH="$HOME/Library/pnpm/bin:$HOME/.local/share/mise/shims:$HOME/.local/bin:/opt/homebrew/bin:$PATH"

@@ -16,13 +16,14 @@ spoon.ReloadConfiguration:start()
 
 hs.alert.show("Hammerspoon loaded")
 
--- Hammerflow's `cmd:` bindings dispatch through os.execute, which uses /bin/sh and
--- so inherits launchd's minimal PATH rather than the shell environment. Route every
--- os.execute through an interactive login zsh so bindings see the same PATH, env
--- vars, aliases and functions a terminal does. Backgrounded so it never blocks.
+-- Hammerflow's `cmd:` bindings dispatch through os.execute, which uses /bin/sh and so
+-- inherits launchd's minimal PATH rather than the shell environment. Route commands
+-- through zsh instead: zshenv exports the CLI tool dirs, so a plain (non-login,
+-- non-interactive) zsh resolves tools by bare name in ~10ms. Backgrounded so it
+-- never blocks the Hammerspoon main thread.
 local shellExecute = os.execute
 os.execute = function(command)
-    return shellExecute("/bin/zsh -lic '" .. command:gsub("'", [['\'']]) .. "' &")
+    return shellExecute("/bin/zsh -c '" .. command:gsub("'", [['\'']]) .. "' &")
 end
 
 -- Load Hammerflow for declarative Leader-key bindings (optional)
