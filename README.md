@@ -168,6 +168,15 @@ Shortcuts are split across layers, each scoped to a specific context.
     - Cmd+C/V/X/Z (clipboard)
     - Cmd+Space/Tab (Raycast, app switcher)
     - Cmd+, (preferences)
+- **Clicked `file://` URLs** — open in the Neovim of the workspace that owns the
+  file, at its line and column, instead of in Cursor
+  - Defined in: `shed/tools/herdr-open-file` (Herdr `[[link_handlers]]`, linked
+    with `herdr plugin link`), and `.config/kitty/open-actions.conf` pointing at
+    the same script
+  - `Ctrl+click` is the Herdr gesture (captured mouse reports can't tell
+    Cmd-click from a plain click); `Ctrl+Shift+click` is the one kitty keeps for
+    itself even while Herdr has the mouse. Herdr only sees `file://` through OSC
+    8 metadata; kitty also detects it as plain text
 - **Terminal Cmd+Shift+key** — less frequent or destructive terminal actions
   - Defined in: same as above (Kitty, Ghostty, tmux)
   - Same F-key relay pattern as Cmd+key
