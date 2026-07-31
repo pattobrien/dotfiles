@@ -45,6 +45,7 @@
     ~/.config/hunk/config.toml: .config/hunk/config.toml
     ~/.config/tuicr/config.toml: .config/tuicr/config.toml
     ~/.config/slk/config.toml: .config/slk/config.toml
+    ~/.config/chat-tui/config.json: .config/chat-tui/config.json
     ~/.config/mise/config.toml: .config/mise/config.toml
     ~/.config/nvim: .config/nvim
     ~/.config/aerospace: .config/aerospace

@@ -1,0 +1,29 @@
+{
+  "accounts": [
+    {
+      "platform": "slack",
+      "id": "pattobrien",
+      "workspace": "pattobrien",
+      "auth": { "source": "keychain" },
+      "channels": [
+        { "id": "C0BL6M6KNTF", "name": "#all-pattobrien" },
+        { "id": "C0BLA02P9H8", "name": "#social" },
+        { "id": "C0BLDMD0YA0", "name": "#new-channel" }
+      ]
+    },
+    {
+      "platform": "imessage",
+      "id": "imessage",
+      "workspace": "iMessage",
+      "channels": [{ "id": "any;-;test@finedesigns.dev", "name": "Test" }]
+    },
+    {
+      "platform": "local",
+      "id": "claude-dev",
+      "workspace": "Claude",
+      "bot": "/Users/patt/dev/pattobrien/shed/apps/chat-tui/src/bots/claude-code.ts",
+      "channels": [{ "id": "claude", "name": "Claude Code" }]
+    }
+  ],
+  "user": { "name": "pattobrien" }
+}
