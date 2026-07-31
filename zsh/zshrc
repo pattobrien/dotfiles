@@ -283,3 +283,7 @@ export LINEAR_WORKSPACE="getdots"
 export PATH="$HOME/.maestro-runner/bin:$PATH"
 
 if command -v wt >/dev/null 2>&1; then eval "$(command wt config shell init zsh)"; fi
+
+# begin shed completion
+. <(shed --completion)
+# end shed completion
