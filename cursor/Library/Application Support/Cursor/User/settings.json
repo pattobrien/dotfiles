@@ -1,4 +1,5 @@
 {
+  "terminal.integrated.enableImages": true,
   "workbench.panel.defaultLocation": "right",
   "beads.autoStartDaemon": false,
   "oxc.enable.oxlint": true,
