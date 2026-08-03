@@ -15,6 +15,7 @@ node = "24"
 "npm:@kitlangton/stack" = "latest"
 "npm:@nubjs/nub" = "latest"
 "npm:@open-pencil/cli" = "latest"
+"npm:@earendil-works/pi-coding-agent" = "latest"
 "npm:@posthog/cli" = "latest"
 "npm:@railway/cli" = "latest"
 "npm:@typescript/native-preview" = "latest"
@@ -71,6 +72,7 @@ kubebuilder = "4.10.1"
 skaffold = "2.17.1"
 
 # Docs & misc CLIs
+"github:herdrdev/herdr" = "0.8.0"
 "github:schpet/linear-cli" = { version = "latest", exe = "linear" }
 "github:modem-dev/hunk" = "latest"
 "github:agavra/tuicr" = "latest"
