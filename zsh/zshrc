@@ -58,18 +58,17 @@ plugins=(
   # untested plugins below:
   1password
   gh
-  keychain
-  kubectl
-  minikube
-  kind
-  helm
-  kubectx
-  skaffold # autocompletion
-  terraform # aliases and autocompletion
+  # kubectl
+  # minikube
+  # kind
+  # helm
+  # kubectx
+  # skaffold # autocompletion
+  # terraform # aliases and autocompletion
   fzf
-  github
-  vscode
-  xcode
+  # github
+  # vscode
+  # xcode
   tmux
   # dotenv # - source .env variables when you cd into a directory
   gitignore
@@ -94,7 +93,6 @@ plugins=(
   # mongocli
   # operator-sdk
   pod # cocoaPods completion
-  redis-cli
   # salt
   # ssh-agent # configure ssh-agent settings
   # web-search
@@ -102,6 +100,10 @@ plugins=(
 
 # Disable oh-my-zsh auto-update prompts (run `omz update` manually instead)
 DISABLE_AUTO_UPDATE=true
+
+# Skip compaudit (insecure-directory check) in oh-my-zsh's compinit; saves
+# ~30-50ms and this is a single-user machine
+ZSH_DISABLE_COMPFIX=true
 
 # enable zsh completions from homebrew (note: must be done before oh-my-zsh.sh is sourced)
 PATH="$HOMEBREW_PREFIX/share/zsh/site-functions:${PATH}"
@@ -204,7 +206,11 @@ bindkey '^ ' fzf-tab-complete
 # smart autocomplete) and Ctrl+R (history) away from the omz fzf plugin — fzf
 # stays for fzf-tab, fzf-git (Ctrl-G chords), and Alt+C cd. Must also come after
 # `bindkey -v` or the keymap switch drops these bindings.
-eval "$(tv init zsh)"
+if [[ ! -s "$_zsh_cache_dir/tv_init.zsh" ]] && command -v tv &>/dev/null; then
+  mkdir -p "$_zsh_cache_dir"
+  tv init zsh >| "$_zsh_cache_dir/tv_init.zsh" 2>/dev/null
+fi
+[[ -s "$_zsh_cache_dir/tv_init.zsh" ]] && source "$_zsh_cache_dir/tv_init.zsh"
 
 # Cmd+K (via Ghostty F12 escape sequence): clear screen + scrollback when not in tmux
 # Inside tmux this is handled by tmux's F12 binding in .tmux.conf
@@ -288,8 +294,16 @@ export LINEAR_WORKSPACE="getdots"
 # maestro-runner
 export PATH="$HOME/.maestro-runner/bin:$PATH"
 
-if command -v wt >/dev/null 2>&1; then eval "$(command wt config shell init zsh)"; fi
+if [[ ! -s "$_zsh_cache_dir/wt_init.zsh" ]] && command -v wt &>/dev/null; then
+  mkdir -p "$_zsh_cache_dir"
+  command wt config shell init zsh >| "$_zsh_cache_dir/wt_init.zsh" 2>/dev/null
+fi
+[[ -s "$_zsh_cache_dir/wt_init.zsh" ]] && source "$_zsh_cache_dir/wt_init.zsh"
 
-# begin shed completion
-. <(shed --completion)
-# end shed completion
+# shed completions (cached: `shed --completion` costs ~140ms per startup;
+# delete the cache file after a shed update to regenerate)
+if [[ ! -s "$_zsh_cache_dir/shed_completions.zsh" ]] && command -v shed &>/dev/null; then
+  mkdir -p "$_zsh_cache_dir"
+  shed --completion >| "$_zsh_cache_dir/shed_completions.zsh" 2>/dev/null
+fi
+[[ -s "$_zsh_cache_dir/shed_completions.zsh" ]] && source "$_zsh_cache_dir/shed_completions.zsh"
