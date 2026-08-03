@@ -283,6 +283,14 @@ width = "80%"
 height = "80%"
 description = "scratch popup shell"
 
+# Notes plugin (~/dev/pattobrien/notes): popup running nvim on today's journal
+# note. Sizing lives in the plugin's action, so this stays a plain invoke.
+[[keys.command]]
+key = "prefix+j"
+type = "plugin_action"
+command = "notes.jot"
+description = "journal: jot today"
+
 # Legacy indexed shortcut config is still parsed for compatibility.
 # Prefer switch_tab, switch_workspace, and focus_agent for new configs.
 # [keys.indexed]
