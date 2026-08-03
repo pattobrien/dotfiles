@@ -25,7 +25,10 @@ t = ["Kitty", "Terminal"]
 g = ["Ghostty", "Ghostty"]
 # i = ["Simulator", "iOS Simulator"]
 s = ["Slack", "Slack"]
-n = ["cmd:notes open --today", "Daily Note"]
+n = [
+  "cmd:open -a kitty && herdr plugin pane open --plugin notes --entrypoint jot --placement popup --width 80% --height 80% --focus",
+  "Daily Note",
+]
 # f = "Finder"
 # m = "Spotify"
 1 = "1Password"
