@@ -72,7 +72,7 @@ kubebuilder = "4.10.1"
 skaffold = "2.17.1"
 
 # Docs & misc CLIs
-"github:herdrdev/herdr" = "0.8.0"
+"github:pattobrien/herdr" = "0.8.0-graphics.1"
 "github:schpet/linear-cli" = { version = "latest", exe = "linear" }
 "github:modem-dev/hunk" = "latest"
 "github:agavra/tuicr" = "latest"
