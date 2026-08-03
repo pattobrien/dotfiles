@@ -1,0 +1,60 @@
+#!/usr/bin/env bash
+# Herdr port of the tmux Cmd+Shift session bindings: focus the workspace
+# labeled <target>. `recent` toggles to the last project workspace (anything
+# that isn't dotfiles/notes). Herdr exposes no focus history, so this script
+# records the project workspace it jumps away from in ~/.cache and falls back
+# to the first project workspace when that record is missing or stale.
+# Usage: herdr-workspace-jump <dotfiles|notes|recent>
+set -euo pipefail
+# Runs inside herdr's shell-command environment, so PATH may lack homebrew.
+export PATH="/opt/homebrew/bin:$HOME/.local/bin:$HOME/.local/share/mise/shims:$PATH"
+
+herdr="${HERDR_BIN_PATH:-herdr}"
+state="$HOME/.cache/herdr-last-project"
+
+target="${1:-}"
+if [ -z "$target" ]; then
+  echo "usage: herdr-workspace-jump <dotfiles|notes|recent>" >&2
+  exit 2
+fi
+
+list="$("$herdr" workspace list)"
+focused="$(jq -r '[.result.workspaces[] | select(.focused).label][0] // empty' <<<"$list")"
+
+prev=""
+[ -f "$state" ] && prev="$(cat "$state")"
+case "$focused" in
+  "" | dotfiles | notes) ;;
+  *)
+    mkdir -p "$(dirname "$state")"
+    printf '%s\n' "$focused" >"$state"
+    ;;
+esac
+
+if [ "$target" = recent ]; then
+  label=""
+  if [ -n "$prev" ] && [ "$prev" != "$focused" ]; then
+    exists="$(jq -r --arg l "$prev" \
+      '[.result.workspaces[] | select(.label == $l)] | length' <<<"$list")"
+    [ "$exists" -gt 0 ] && label="$prev"
+  fi
+  if [ -z "$label" ]; then
+    label="$(jq -r --arg f "$focused" '[.result.workspaces[]
+      | select(.label != "dotfiles" and .label != "notes" and .label != $f)
+      | .label][0] // empty' <<<"$list")"
+  fi
+  if [ -z "$label" ]; then
+    echo "herdr-workspace-jump: no project workspace to jump to" >&2
+    exit 1
+  fi
+else
+  label="$target"
+fi
+
+ws_id="$(jq -r --arg l "$label" \
+  '[.result.workspaces[] | select(.label == $l).workspace_id][0] // empty' <<<"$list")"
+if [ -z "$ws_id" ]; then
+  echo "herdr-workspace-jump: no workspace labeled '$label'" >&2
+  exit 1
+fi
+exec "$herdr" workspace focus "$ws_id"

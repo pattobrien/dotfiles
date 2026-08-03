@@ -1,3 +1,4 @@
+onboarding = false
 # herdr configuration
 # Place this file at ~/.config/herdr/config.toml
 
@@ -68,7 +69,7 @@ prefix = "ctrl+a"
 # Cmd+key chords relay through Kitty/Ghostty as F-key escape sequences (see
 # README § Keyboard Shortcuts). Same slots the tmux bindings use, same
 # meanings, so muscle memory carries over.
-new_tab = "f2" # Cmd+T
+new_tab = ["f2"] # Cmd+T
 close_pane = "f3" # Cmd+W
 zoom = "f4" # Cmd+Enter
 last_pane = "f8" # Cmd+;
@@ -76,7 +77,7 @@ workspace_picker = "f9" # Cmd+Shift+R
 
 # Modified F-key relays (CSI <code>;<mod>~ encoding — bare F13+ sequences are
 # not recognized by herdr's input parser, but modified F5-F12 chords are).
-previous_agent = "shift+f5" # Cmd+[
+previous_agent = ["shift+f5", "Cmd+["] # Cmd+[
 next_agent = "shift+f6" # Cmd+]
 previous_tab = "shift+f7" # Cmd+Shift+[
 next_tab = "shift+f8" # Cmd+Shift+]
@@ -221,6 +222,28 @@ key = "f10"
 type = "shell"
 command = "\"$HOME/.local/share/mise/shims/bun\" \"$HOME/dev/pattobrien/herdr-ensure-tab/bin/ensure-tab.ts\" dev"
 description = "pnpm dev: open or create" # Cmd+L
+
+# Workspace jumps on the Cmd+Shift relay (Cmd+Shift+; / D / N → ctrl+F5/F6/F7;
+# same roles as the old tmux switch-client bindings). `recent` toggles to the
+# last non-dotfiles/notes workspace, tracked by the script itself since herdr
+# has no focus history.
+[[keys.command]]
+key = "ctrl+f5"
+type = "shell"
+command = "\"$HOME/dev/pattobrien/dotfiles/scripts/herdr-workspace-jump\" recent"
+description = "workspace: last project" # Cmd+Shift+;
+
+[[keys.command]]
+key = "ctrl+f6"
+type = "shell"
+command = "\"$HOME/dev/pattobrien/dotfiles/scripts/herdr-workspace-jump\" dotfiles"
+description = "workspace: dotfiles" # Cmd+Shift+D
+
+[[keys.command]]
+key = "ctrl+f7"
+type = "shell"
+command = "\"$HOME/dev/pattobrien/dotfiles/scripts/herdr-workspace-jump\" notes"
+description = "workspace: notes" # Cmd+Shift+N
 
 # Cmd+K clear screen. Kitty/Ghostty send Cmd+K as an F12 escape sequence (the
 # same relay the tmux bindings use); clears the visible screen only — herdr has
