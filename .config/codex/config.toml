@@ -1,4 +1,4 @@
-model = "gpt-5.5"
+model = "gpt-5.6-terra"
 model_reasoning_effort = "high"
 personality = "pragmatic"
 sandbox_mode = "danger-full-access"
@@ -40,6 +40,12 @@ trust_level = "trusted"
 trust_level = "trusted"
 
 [projects."/Users/patt/dev/pattobrien/dotfiles"]
+trust_level = "trusted"
+
+[projects."/Users/patt/dev/pattobrien/notes"]
+trust_level = "trusted"
+
+[projects."/Users/patt/dev/pattobrien/shed"]
 trust_level = "trusted"
 
 [notice]
@@ -139,6 +145,12 @@ last_revision = "e2a9a6d5165ac162990b9491eb6b483947736072"
 source_type = "git"
 source = "https://github.com/superultrainc/superwhisper-codex.git"
 
+[marketplaces.worktrunk]
+last_updated = "2026-07-31T19:18:51Z"
+last_revision = "6387923b0f0b6a375c8f4ad379a0ffbdc6ce68e9"
+source_type = "git"
+source = "https://github.com/max-sixty/worktrunk.git"
+
 [plugins."github@openai-curated"]
 enabled = true
 
@@ -232,6 +244,9 @@ trusted_hash = "sha256:7ed0c588635367dfa9e7af5d6ea98136e0b7d0a917f9118382371c156
 [hooks.state."railway@railway-skills:hooks/hooks.json:pre_tool_use:0:0"]
 enabled = false
 trusted_hash = "sha256:e986cf380780a3ff40357a4332ba667f9a7f7322d7aae2adda2217b64a50ba18"
+
+[hooks.state."/Users/patt/.codex/hooks.json:session_start:0:0"]
+trusted_hash = "sha256:8a71ac0004e4999a492d7f42789e6d25ae396141984b9e0f8659abdb9b2a05b3"
 
 [[skills.config]]
 name = "vercel:cms"

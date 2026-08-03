@@ -27,6 +27,8 @@
     ~/.codex/AGENTS.md:
       path: .config/codex/AGENTS.md
     ~/.pi/agent/AGENTS.md: claude/CLAUDE.md
+    ~/.pi/agent/settings.json: .config/pi/settings.json
+    ~/.config/opencode/opencode.jsonc: .config/opencode/opencode.jsonc
     ~/.tmux.conf: .config/tmux/.tmux.conf
     ~/.ssh/config: .config/ssh/config
     ~/.hushlogin: hushlogin

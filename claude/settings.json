@@ -178,7 +178,8 @@
     "swift-lsp@claude-plugins-official": false,
     "typescript-lsp@claude-plugins-official": false,
     "understand-anything@understand-anything": true,
-    "patt@pattobrien": true
+    "patt@pattobrien": true,
+    "worktrunk@worktrunk": true
   },
   "extraKnownMarketplaces": {
     "claude-notifications-go": {
@@ -209,6 +210,12 @@
       "source": {
         "source": "directory",
         "path": "/Users/patt/dev/pattobrien/shed"
+      }
+    },
+    "worktrunk": {
+      "source": {
+        "source": "github",
+        "repo": "max-sixty/worktrunk"
       }
     }
   },

@@ -1,0 +1,31 @@
+{
+  "npmCommand": [
+    "mise",
+    "exec",
+    "node@24",
+    "--",
+    "npm"
+  ],
+  "lastChangelogVersion": "0.82.1",
+  "defaultProvider": "openai-codex",
+  "defaultModel": "gpt-5.5",
+  "defaultThinkingLevel": "medium",
+  "theme": "dark",
+  "enableSkillCommands": true,
+  "packages": [
+    "npm:pi-vim",
+    "npm:pi-claude-code-ui",
+    "npm:@zigai/pi-ui-tweaks",
+    "npm:@zichuanlan/pi-image-placeholder"
+  ],
+  "toolBackground": "border",
+  "readOutputMode": "summary",
+  "searchOutputMode": "count",
+  "mcpOutputMode": "summary",
+  "bashOutputMode": "summary",
+  "previewLines": 1,
+  "bashCollapsedLines": 1,
+  "liveToolPreviewLines": 1,
+  "groupToolCalls": true,
+  "quietStartup": true
+}
