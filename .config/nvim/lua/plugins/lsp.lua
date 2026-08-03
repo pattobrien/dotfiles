@@ -24,6 +24,16 @@ return {
         oxfmt = {},
         oxlint = {},
 
+        -- copilot — everywhere except markdown (native LSP configs have no
+        -- filetype denylist, so gate attach via root_dir)
+        copilot = {
+          root_dir = function(bufnr, on_dir)
+            if vim.bo[bufnr].filetype ~= "markdown" then
+              on_dir(vim.fs.root(bufnr, ".git") or vim.uv.cwd())
+            end
+          end,
+        },
+
         -- oxfmt formats these filetypes; disable competing LSP formatters
         tsgo = {
           on_attach = function(client)
