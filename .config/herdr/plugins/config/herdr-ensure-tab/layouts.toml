@@ -8,10 +8,6 @@ match = ["nvim"]
 [[tabs.nvim.panes]]
 command = "nvim"
 
-[[tabs.nvim.panes]]
-split = "down"
-ratio = 0.25
-
 [tabs.dev]
 match = ["pnpm"]
 label = "dev"
