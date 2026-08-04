@@ -11,11 +11,13 @@
     "postinstall": "chmod +x node_modules/node-pty/prebuilds/darwin-arm64/spawn-helper"
   },
   "devDependencies": {
+    "@opentelemetry/api": "catalog:",
+    "@opentelemetry/exporter-trace-otlp-proto": "catalog:",
+    "@opentelemetry/sdk-node": "catalog:",
     "@termless/core": "catalog:",
     "@termless/ghostty": "catalog:",
     "@termless/kitty": "catalog:",
     "@termless/test": "catalog:",
-    "@termless/web-player": "catalog:",
     "@termless/xtermjs": "catalog:",
     "@types/node": "catalog:",
     "@vitest/ui": "catalog:",
