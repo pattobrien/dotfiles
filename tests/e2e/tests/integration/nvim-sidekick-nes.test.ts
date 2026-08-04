@@ -64,7 +64,7 @@ test(
       const status = await nvim.client.lua(
         'local ok, s = pcall(function() return require("sidekick.status").get() end); return ok and vim.inspect(s) or "unavailable"',
       );
-      const messages = await nvim.client.lua('return vim.fn.execute("messages")');
+      const messages = await nvim.client.call("execute", ["messages"]);
       throw new Error(
         `No inline completion ghost text within 3s.\n  copilot status: ${String(status)}\n  :messages tail: ${String(messages).slice(-500)}`,
       );
@@ -149,7 +149,8 @@ test(
     // Rename the function at its declaration; NES should propose updating
     // the call sites below. Leaving insert mode ("ModeChanged i:n") is one
     // of NES's trigger events.
-    await nvim.client.lua('vim.fn.cursor(1, 1); vim.fn.search("getUserName")');
+    await nvim.client.call("cursor", [1, 1]);
+    await nvim.client.call("search", ["getUserName"]);
     await nvim.input("ciwgetUserLabel<Esc>");
 
     // Poll for a pending suggestion. Requires sidekick to already be loaded
@@ -167,7 +168,7 @@ test(
       const status = await nvim.client.lua(
         'local ok, s = pcall(function() return require("sidekick.status").get() end); return ok and vim.inspect(s) or "unavailable"',
       );
-      const messages = await nvim.client.lua('return vim.fn.execute("messages")');
+      const messages = await nvim.client.call("execute", ["messages"]);
       throw new Error(
         `No NES suggestion within 3s.\n  copilot status: ${String(status)}\n  :messages tail: ${String(messages).slice(-500)}`,
       );

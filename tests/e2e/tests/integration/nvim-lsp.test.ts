@@ -67,7 +67,7 @@ test("hover shows type info", { timeout: LSP_TIMEOUT }, async ({ nvim }) => {
   await waitForLspClient(nvim);
 
   // Move cursor to "Promise" — deterministic regardless of line/column changes
-  await nvim.client.lua('vim.fn.search("Promise")');
+  await nvim.client.call("search", ["Promise"]);
 
   // Retry hover until tsgo returns real type info (it may initially show
   // "No information available" while still indexing the file).
@@ -152,10 +152,11 @@ test(
 
     // Land on `ZodString` in `export type Schema = ZodString;` — the
     // `ZodString;` pattern only occurs in the type-alias line, never the import.
-    await nvim.client.lua('vim.fn.cursor(1, 1); vim.fn.search("ZodString;")');
+    await nvim.client.call("cursor", [1, 1]);
+    await nvim.client.call("search", ["ZodString;"]);
 
     // Sanity-check cursor placement before triggering gd.
-    const wordUnderCursor = await nvim.client.lua('return vim.fn.expand("<cword>")');
+    const wordUnderCursor = await nvim.client.call("expand", ["<cword>"]);
     expect(wordUnderCursor).toBe("ZodString");
 
     await waitForDefinitionResolution(nvim);
@@ -167,6 +168,8 @@ test(
     const mapDeadline = Date.now() + 5_000;
     let gdMapped = false;
     while (Date.now() < mapDeadline) {
+      // Stays Lua: the maparg dict holds a Lua callback, which msgpack-rpc
+      // can't serialize — only the boolean crosses the wire.
       gdMapped = (await nvim.client.lua(
         'return not vim.tbl_isempty(vim.fn.maparg("gd", "n", false, true))',
       )) as boolean;
@@ -185,8 +188,7 @@ test(
     let curBuf = "";
     let lastConfirm = 0;
     while (Date.now() < deadline) {
-      const raw = await nvim.client.lua("return vim.api.nvim_buf_get_name(0)");
-      curBuf = typeof raw === "string" ? raw : "";
+      curBuf = await nvim.client.buffer.then((b) => b.name);
       if (curBuf.includes("/node_modules/") && curBuf.includes("/zod/")) break;
       // Re-send while the picker stays visible: a <CR> that races the
       // picker's input mount is silently dropped.

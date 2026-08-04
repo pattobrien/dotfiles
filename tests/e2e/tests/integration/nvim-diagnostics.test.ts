@@ -92,7 +92,7 @@ test(
       await waitForDiagnostic(client);
 
       // Force a redraw so the diagnostic decoration is in the pane buffer.
-      await client.lua("vim.cmd('redraw!')");
+      await client.command("redraw!");
 
       const pane = await tmux.captureRaw();
 

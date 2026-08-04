@@ -52,7 +52,7 @@ test("lazygit 'o' opens file in nvim buffer, not external editor", async ({ nvim
     // The file's content on screen proves the buffer opened in this nvim
     // (the near-fullscreen lazygit float would cover it otherwise).
     await expect(t.screen).toContainText("hello lazygit", { timeout: 5_000 });
-    const bufName = (await nvim.client.lua("return vim.api.nvim_buf_get_name(0)")) as string;
+    const bufName = await nvim.client.buffer.then((b) => b.name);
     expect(bufName).toMatch(/\/notes\.txt$/);
   } finally {
     await fs.rm(repo, { recursive: true, force: true });
