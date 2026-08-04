@@ -15,12 +15,15 @@ catalog:
   '@termless/web-player': 0.8.4
   '@termless/xtermjs': 0.8.4
   '@types/node': ^26
+  '@types/pngjs': ^6.0.5
   '@vitest/ui': ^4.1.10
   '@xterm/headless': ^6.0.0
   '@xterm/xterm': ^6.0.0
   node-pty: ^1.1.0
   oxfmt: ^0.57.0
   oxlint: ^1.72.0
+  playwright-core: ^1.62.1
+  pngjs: ^7.0.0
   typescript: ^7.0.2
   vite: npm:@voidzero-dev/vite-plus-core@^0.2.5
   vite-plus: ^0.2.5

@@ -27,6 +27,9 @@ catalogs:
     '@types/node':
       specifier: ^26
       version: 26.0.1
+    '@types/pngjs':
+      specifier: ^6.0.5
+      version: 6.0.5
     '@vitest/ui':
       specifier: ^4.1.10
       version: 4.1.10
@@ -45,6 +48,12 @@ catalogs:
     oxlint:
       specifier: ^1.72.0
       version: 1.73.0
+    playwright-core:
+      specifier: ^1.62.1
+      version: 1.62.1
+    pngjs:
+      specifier: ^7.0.0
+      version: 7.0.0
     typescript:
       specifier: ^7.0.2
       version: 7.0.2
@@ -99,6 +108,9 @@ importers:
       '@types/node':
         specifier: 'catalog:'
         version: 26.0.1
+      '@types/pngjs':
+        specifier: 'catalog:'
+        version: 6.0.5
       '@vitest/ui':
         specifier: 'catalog:'
         version: 4.1.10(vitest@4.1.10)
@@ -120,6 +132,12 @@ importers:
       node-pty:
         specifier: 'catalog:'
         version: 1.1.0
+      playwright-core:
+        specifier: 'catalog:'
+        version: 1.62.1
+      pngjs:
+        specifier: 'catalog:'
+        version: 7.0.0
       typescript:
         specifier: 'catalog:'
         version: 7.0.2
@@ -1106,6 +1124,9 @@ packages:
 
   '@types/node@26.0.1':
     resolution: {integrity: sha512-fc3KiUoBt6kie0N9bIW3E47vZsuaMf0PM2AaUpLCLT0s/LvX1nxAim6Fc049cNxODPpGm6qRAuUOB86SkRuPQw==}
+
+  '@types/pngjs@6.0.5':
+    resolution: {integrity: sha512-0k5eKfrA83JOZPppLtS2C7OUtyNAl2wKNxfyYl9Q5g9lPkgBl/9hNyAu6HuEH2J4XmIv2znEpkDd0SaZVxW6iQ==}
 
   '@types/triple-beam@1.3.5':
     resolution: {integrity: sha512-6WaYesThRMCl19iryMYP7/x2OVgCtbIVflDGFpWnb9irXI3UjYE4AzmYuiUKY1AJstGijoY+MgUszMgRxIYTYw==}
@@ -2712,6 +2733,10 @@ snapshots:
     dependencies:
       undici-types: 8.3.0
 
+  '@types/pngjs@6.0.5':
+    dependencies:
+      '@types/node': 26.0.1
+
   '@types/triple-beam@1.3.5': {}
 
   '@typescript/typescript-aix-ppc64@7.0.2':
@@ -3314,8 +3339,7 @@ snapshots:
 
   picomatch@4.0.4: {}
 
-  playwright-core@1.62.1:
-    optional: true
+  playwright-core@1.62.1: {}
 
   playwright@1.62.1:
     dependencies:

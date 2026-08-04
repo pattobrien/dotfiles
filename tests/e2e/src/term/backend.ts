@@ -21,6 +21,8 @@ export interface TermLaunchOptions {
    */
   env?: Record<string, string>;
   cwd?: string;
+  /** Tap on the raw output stream — fires for every chunk the PTY emits. */
+  onOutput?: (data: Uint8Array) => void;
 }
 
 export interface TermSession {

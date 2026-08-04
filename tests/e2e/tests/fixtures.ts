@@ -7,6 +7,7 @@ import { createHerdrSession, type HerdrTestSession } from "../src/herdr.ts";
 import { viewerLink } from "../src/recording.ts";
 import { createKittyInstance } from "../src/kitty.ts";
 import { launchNvimInstance, type NvimInstance } from "../src/nvim.ts";
+import { createTermlessBackend } from "../src/term/termless.ts";
 import { createTmuxSession } from "../src/tmux.ts";
 
 /** Write screen text + SVG screenshot from the emulator for debugging. */
@@ -93,15 +94,25 @@ export const test = base
     return rawNvim;
   })
 
+  // Test-scoped: emulator backend for the herdr fixture — override per file
+  // (test.override) for backend-variant suites (e.g. Termless's kitty parser).
+  .extend("herdrBackend", () => createTermlessBackend())
+
   // Test-scoped: isolated herdr server + SDK client + attached emulator.
-  .extend("herdr", async ({ task, annotate }, { onCleanup }): Promise<HerdrTestSession> => {
-    const session = await createHerdrSession({ label: `herdr ${task.name}` });
-    // Annotate with the session's actual label — a retry in the same worker
-    // gets a uniquified recording ("-2"), and the link must follow it.
-    await annotate(`terminal recording: ${viewerLink(session.term.label)}`);
-    onCleanup(() => session.dispose());
-    return session;
-  })
+  .extend(
+    "herdr",
+    async ({ herdrBackend, task, annotate }, { onCleanup }): Promise<HerdrTestSession> => {
+      const session = await createHerdrSession({
+        backend: herdrBackend,
+        label: `herdr ${task.name}`,
+      });
+      // Annotate with the session's actual label — a retry in the same worker
+      // gets a uniquified recording ("-2"), and the link must follow it.
+      await annotate(`terminal recording: ${viewerLink(session.term.label)}`);
+      onCleanup(() => session.dispose());
+      return session;
+    },
+  )
 
   // Worker-scoped: real kitty OS window attached to the tmux fixture.
   .extend("kitty", { scope: "worker" }, async ({ tmux }) => {
