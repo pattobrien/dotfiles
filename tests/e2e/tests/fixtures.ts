@@ -1,25 +1,48 @@
-import { writeSync } from "node:fs";
-import { writeFile } from "node:fs/promises";
+import { mkdirSync, writeFileSync } from "node:fs";
+import path from "node:path";
 
-import { test as base } from "vite-plus/test";
+import {
+  recordArtifact,
+  test as base,
+  type FailureScreenshotArtifact,
+  type TestArtifactBase,
+  type TestAttachment,
+} from "vite-plus/test";
 
 import { createHerdrSession, type HerdrTestSession } from "../src/herdr.ts";
-import { viewerLink } from "../src/recording.ts";
 import { createKittyInstance } from "../src/kitty.ts";
 import { launchNvimInstance, type NvimInstance } from "../src/nvim.ts";
 import { createTmuxSession } from "../src/tmux.ts";
 
-/** Write screen text + SVG screenshot from the emulator for debugging. */
-async function captureFailureArtifacts(nvim: NvimInstance, name: string) {
-  try {
-    const textPath = `/tmp/e2e-fail-${name}.txt`;
-    const svgPath = `/tmp/e2e-fail-${name}.svg`;
-    await writeFile(textPath, nvim.term.text());
-    await writeFile(svgPath, nvim.term.term.screenshotSvg());
-    writeSync(2, `\n  Failure artifacts:\n    text: ${textPath}\n    screenshot: ${svgPath}\n`);
-  } catch {
-    // best effort
+/**
+ * Terminal-session recording artifact. A custom registered type (the
+ * `package:name` pattern; `internal:` is reserved) because no annotation
+ * can carry the recording: `annotate()` requires the "run" state, which is
+ * already over at every point where the .cast exists (fixture cleanup,
+ * onTestFailed, aroundEach teardown), and worker-side `recordArtifact`
+ * silently drops `internal:annotation` artifacts. The server still resolves
+ * attachments for custom artifacts — the .cast is copied into
+ * .vitest/attachments and lands in the report data.
+ */
+interface RecordingArtifact extends TestArtifactBase {
+  type: "e2e:recording";
+  attachments: [TestAttachment];
+}
+
+const recordingArtifactKey = Symbol("e2e-recording");
+
+declare module "vitest" {
+  interface TestArtifactRegistry {
+    [recordingArtifactKey]: RecordingArtifact;
   }
+}
+
+async function attachRecording(task: Parameters<typeof recordArtifact>[0], cast: string | null) {
+  if (cast === null) return;
+  await recordArtifact(task, {
+    type: "e2e:recording",
+    attachments: [{ contentType: "application/x-asciicast", path: cast }],
+  } satisfies RecordingArtifact);
 }
 
 /**
@@ -35,8 +58,6 @@ async function resetAndAssert(nvim: NvimInstance, label: string, testName?: stri
     await nvim.resetBuffer(testName);
     violations = await nvim.checkStartState();
     if (violations.length > 0) {
-      const safeName = (testName ?? "unknown").replace(/[^a-zA-Z0-9-_]/g, "_");
-      await captureFailureArtifacts(nvim, `${label}-${safeName}`);
       throw new Error(`nvim not in start state ${label} test:\n  ${violations.join("\n  ")}`);
     }
   }
@@ -70,7 +91,7 @@ export const test = base
   })
 
   // Test-scoped: automatic reset + state guard around each test.
-  .extend("nvim", async ({ rawNvim, task, annotate }, { onCleanup }) => {
+  .extend("nvim", async ({ rawNvim, task }, { onCleanup }) => {
     const safeName = task.name.replace(/[^a-zA-Z0-9-_]/g, "_");
     // Each test file runs in its own isolated worker (one nvim per file) —
     // name the recording after the file so runs don't overwrite each other.
@@ -79,14 +100,27 @@ export const test = base
       .pop()
       ?.replace(/\.test\.ts$/, "");
     if (fileName) rawNvim.term.relabel(fileName);
-    rawNvim.term.mark(task.name);
-    await annotate(`terminal recording: ${viewerLink(fileName ?? "nvim")}`);
     await resetAndAssert(rawNvim, "BEFORE", safeName);
 
     onCleanup(async () => {
-      if (task?.result?.state === "fail") {
-        await captureFailureArtifacts(rawNvim, safeName);
+      // Capture before the AFTER reset wipes the screen — cleanup runs ahead
+      // of onTestFailed here, so this is the only ordering-safe spot.
+      // Path-based attachment with originalPath, matching vitest's own
+      // browser-mode producer — the terminal reporter prints
+      // attachments[0].originalPath under the failure.
+      if (task.result?.state === "fail") {
+        const dir = path.resolve(import.meta.dirname, "../test-results/failures");
+        mkdirSync(dir, { recursive: true });
+        const file = path.join(dir, `${safeName}.svg`);
+        writeFileSync(file, rawNvim.term.term.screenshotSvg());
+        await recordArtifact(task, {
+          type: "internal:failureScreenshot",
+          attachments: [{ contentType: "image/svg+xml", path: file, originalPath: file }],
+        } satisfies FailureScreenshotArtifact);
       }
+      // The worker's recording grows across the file's tests; each test
+      // re-saves and attaches the same per-file .cast.
+      await attachRecording(task, rawNvim.term.save());
       await resetAndAssert(rawNvim, "AFTER");
     });
 
@@ -94,12 +128,12 @@ export const test = base
   })
 
   // Test-scoped: isolated herdr server + SDK client + attached emulator.
-  .extend("herdr", async ({ task, annotate }, { onCleanup }): Promise<HerdrTestSession> => {
+  .extend("herdr", async ({ task }, { onCleanup }): Promise<HerdrTestSession> => {
     const session = await createHerdrSession({ label: `herdr ${task.name}` });
-    // Annotate with the session's actual label — a retry in the same worker
-    // gets a uniquified recording ("-2"), and the link must follow it.
-    await annotate(`terminal recording: ${viewerLink(session.term.label)}`);
-    onCleanup(() => session.dispose());
+    onCleanup(async () => {
+      await attachRecording(task, session.term.save());
+      await session.dispose();
+    });
     return session;
   })
 

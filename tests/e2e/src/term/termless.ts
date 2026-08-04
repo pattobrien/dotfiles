@@ -1,18 +1,29 @@
-import { createTerminal } from "@termless/core";
-import type { TerminalBackend, TestTerminal } from "@termless/core";
+import { mkdirSync, writeFileSync } from "node:fs";
+import path from "node:path";
+
+import { createRecording, createTerminal, encodeAsciicast, millisToMicros } from "@termless/core";
+import type { IoEvent, TerminalBackend, TestTerminal } from "@termless/core";
 import { resolve as resolveGhostty } from "@termless/ghostty";
 import { resolve as resolveKitty } from "@termless/kitty";
 
-import { SessionRecorder } from "../recording.ts";
 import { pollFor, type TermBackend, type TermLaunchOptions, type TermSession } from "./backend.ts";
+
+const RECORDINGS_DIR = path.resolve(import.meta.dirname, "../../test-results/recordings");
+
+function sanitize(label: string): string {
+  return label.replace(/[^a-zA-Z0-9-_.]/g, "_");
+}
 
 export interface TermlessSession extends TermSession {
   /** The underlying Termless terminal, for matchers and region selectors. */
   readonly term: TestTerminal;
   /** The recording label actually in use (uniquified on collision). */
   readonly label: string;
-  /** Drop a named marker into this session's recording. */
-  mark(label: string): void;
+  /**
+   * Write the session's .cast to disk (also happens on dispose) and return
+   * its path, or null when the session produced no output.
+   */
+  save(): string | null;
   /**
    * Rename the session's recording (worker-scoped sessions only learn
    * which test file they serve once the first test runs).
@@ -39,7 +50,8 @@ function uniqueLabel(label: string): string {
 /**
  * Termless-backed sessions (default). The VT parser is Termless's ghostty
  * backend (WASM); the spawned process runs under a real node-pty PTY.
- * Every session is recorded as an asciicast under test-results/recordings/.
+ * Every session is captured as a Termless Recording (io track) and saved
+ * as an asciicast under test-results/recordings/ via encodeAsciicast.
  */
 export function createTermlessBackend(
   backendName = process.env.E2E_TERM_BACKEND ?? "ghostty",
@@ -55,17 +67,38 @@ export function createTermlessBackend(
       const b = await factory();
       const cols = options.cols ?? 200;
       const rows = options.rows ?? 50;
-      const recorder = new SessionRecorder(
-        uniqueLabel(options.label ?? command[0] ?? backendName),
-        cols,
-        rows,
-      );
+      let label = uniqueLabel(options.label ?? command[0] ?? backendName);
+      const start = Date.now();
+      const io: IoEvent[] = [];
+      const decoder = new TextDecoder("utf-8");
       const term = createTerminal({
         backend: b,
         cols,
         rows,
-        onAfterWrite: (data) => recorder.onOutput(data),
+        onAfterWrite: (data) => {
+          io.push({
+            at: millisToMicros(Date.now() - start),
+            direction: "out",
+            data: decoder.decode(data, { stream: true }),
+          });
+        },
       });
+      const save = (): string | null => {
+        if (io.length === 0) return null;
+        mkdirSync(RECORDINGS_DIR, { recursive: true });
+        const recording = createRecording({
+          cols,
+          rows,
+          durationMicros: io[io.length - 1]!.at,
+          io,
+        });
+        const file = path.join(RECORDINGS_DIR, `${sanitize(label)}.cast`);
+        writeFileSync(
+          file,
+          encodeAsciicast(recording, { title: label, timestamp: Math.floor(start / 1000) }),
+        );
+        return file;
+      };
       // Termless merges process.env under this internally, so env vars can
       // only be overridden, never removed here — vars that must not reach
       // spawned processes are deleted from process.env in tests/setup.ts.
@@ -77,15 +110,15 @@ export function createTermlessBackend(
       return {
         term,
         get label() {
-          return recorder.label;
+          return label;
         },
-        mark: (label) => recorder.mark(label),
         // Exact assignment, no uniquifying: relabel targets are already
         // unique (one worker per test file), and watch-mode reruns should
         // overwrite the previous run's recording, not accumulate suffixes.
-        relabel: (label) => {
-          recorder.label = label;
+        relabel: (next) => {
+          label = next;
         },
+        save,
         text: () => term.screen.getText(),
         raw: () => term.output.getText(),
         type: (text) => term.type(text),
@@ -103,14 +136,13 @@ export function createTermlessBackend(
           );
         },
         resize: (cols2, rows2) => {
-          recorder.onResize(cols2, rows2);
           term.resize(cols2, rows2);
         },
         get alive() {
           return term.alive;
         },
         async dispose() {
-          recorder.save();
+          save();
           await term.close();
         },
       };
