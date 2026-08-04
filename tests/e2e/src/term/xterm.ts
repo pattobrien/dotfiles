@@ -44,9 +44,11 @@ export function createXtermBackend(): TermBackend {
         env: { ...(process.env as Record<string, string>), ...options.env },
         cwd: options.cwd ?? process.cwd(),
       });
+      const outputEncoder = new TextEncoder();
       pty.onData((data) => {
         rawOutput += data;
         term.write(data);
+        options.onOutput?.(outputEncoder.encode(data));
       });
       pty.onExit(() => {
         exited = true;
