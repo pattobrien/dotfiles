@@ -16,39 +16,29 @@ const serverDeps = {
 export default defineConfig({
   fmt: {},
   test: {
-    projects: [
+    include: ["tests/integration/**/*.test.ts", "tests/e2e/**/*.test.ts"],
+    setupFiles: ["./tests/setup.ts"],
+    // Worker-scoped fixtures (nvim, tmux) serialize within a worker, and the
+    // real-kitty tests steal focus — everything stays strictly serial.
+    fileParallelism: false,
+    testTimeout: 5_000,
+    hookTimeout: 5_000,
+    tags: [
       {
-        test: {
-          name: "integration",
-          include: ["tests/integration/**/*.test.ts"],
-          setupFiles: ["./tests/setup.ts"],
-          // Worker-scoped fixtures (nvim, tmux) serialize within a worker;
-          // file parallelism stays off until parallel workers are proven out.
-          fileParallelism: false,
-          testTimeout: 10_000,
-          hookTimeout: 30_000, // per-run nvim/herdr cold starts
-          forceRerunTriggers: [
-            `${dotfiles}/.config/herdr/**`,
-            `${dotfiles}/.config/tmux/**`,
-            `${dotfiles}/.config/nvim/**`,
-            `${dotfiles}/zsh/**`,
-          ],
-          server: serverDeps,
-        },
-      },
-      {
-        test: {
-          name: "e2e",
-          include: ["tests/e2e/**/*.test.ts"],
-          setupFiles: ["./tests/setup.ts"],
-          // Real kitty: GUI windows, focus stealing — strictly serial.
-          fileParallelism: false,
-          testTimeout: 30_000,
-          hookTimeout: 30_000,
-          forceRerunTriggers: [`${dotfiles}/.config/kitty/**`],
-          server: serverDeps,
-        },
+        name: "e2e-kitty",
+        description: "Opens real kitty OS windows (graphics/pixel assertions).",
       },
     ],
+    // Real-kitty tests are opt-in: excluded by default so a bare `vp test`
+    // never opens windows; `vp test --tagsFilter=e2e-kitty` runs them.
+    tagsFilter: ["!e2e-kitty"],
+    forceRerunTriggers: [
+      `${dotfiles}/.config/herdr/**`,
+      `${dotfiles}/.config/tmux/**`,
+      `${dotfiles}/.config/nvim/**`,
+      `${dotfiles}/.config/kitty/**`,
+      `${dotfiles}/zsh/**`,
+    ],
+    server: serverDeps,
   },
 });

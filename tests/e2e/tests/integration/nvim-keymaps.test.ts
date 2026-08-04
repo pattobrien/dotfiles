@@ -60,10 +60,10 @@ test("leader-p pastes over selection without yanking replaced text", async ({ nv
   await nvim.client.buffer.then((b) => b.replace(["hello", "world"], 0));
   await nvim.command("normal! gg");
 
-  await nvim.command("normal! yy");
-  await nvim.command("normal! j");
-  await nvim.command("normal! V");
-  await nvim.client.call("feedkeys", [" p", "x"]);
+  // One atomic typeahead run: yank line 1, select line 2, <leader>p. Split
+  // across separate RPC calls, the Visual state from `:normal! V` can drop
+  // before the feedkeys arrives, degrading the paste to a plain `p` below.
+  await nvim.client.call("feedkeys", ["yyjV p", "x"]);
 
   // Verify the paste replaced "world" with "hello"
   const content = await nvim.getBufferContent();

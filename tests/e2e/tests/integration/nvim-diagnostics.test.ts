@@ -40,7 +40,7 @@ async function launchNvimInTmux(
   await fs.rm(socket, { force: true });
   await sendKeys(`nvim --cmd 'set noswapfile' --listen ${socket}`, "Enter");
 
-  const deadline = Date.now() + 10_000;
+  const deadline = Date.now() + 5_000;
   for (;;) {
     try {
       await fs.access(socket);
@@ -55,7 +55,7 @@ async function launchNvimInTmux(
   await client.apiInfo;
 
   // LazyVim setup is complete once keymaps.lua (VeryLazy) has remapped <C-d>.
-  const lazyDeadline = Date.now() + 20_000;
+  const lazyDeadline = Date.now() + 5_000;
   while (Date.now() < lazyDeadline) {
     try {
       if (await client.call("maparg", ["<C-d>", "n"])) break;
@@ -79,44 +79,38 @@ async function launchNvimInTmux(
  *     palette's red channel — catppuccin mocha red lands at rgb(243, 139, 169)
  *     after the palette's hex parse.
  */
-test(
-  "diagnostic underline renders as red squiggle through tmux",
-  { timeout: 60_000 },
-  async ({ tmux }) => {
-    const client = await launchNvimInTmux(tmux.sendKeys);
+test("diagnostic underline renders as red squiggle through tmux", async ({ tmux }) => {
+  const client = await launchNvimInTmux(tmux.sendKeys);
 
-    try {
-      await client.command(`cd ${FIXTURE_DIR}`);
-      await client.command(`edit ${FIXTURE_DIR}/error.ts`);
-      await waitForLspClient(client);
-      await waitForDiagnostic(client);
+  try {
+    await client.command(`cd ${FIXTURE_DIR}`);
+    await client.command(`edit ${FIXTURE_DIR}/error.ts`);
+    await waitForLspClient(client);
+    await waitForDiagnostic(client);
 
-      // Force a redraw so the diagnostic decoration is in the pane buffer.
-      await client.command("redraw!");
+    // Force a redraw so the diagnostic decoration is in the pane buffer.
+    await client.command("redraw!");
 
-      const pane = await tmux.captureRaw();
+    const pane = await tmux.captureRaw();
 
-      const red = (await client.lua(`
+    const red = (await client.lua(`
         local C = require("catppuccin.palettes").get_palette("mocha")
         local n = tonumber((C.red:gsub("#", "")), 16)
         return { math.floor(n / 65536) % 256, math.floor(n / 256) % 256, n % 256 }
       `)) as [number, number, number];
 
-      const UNDERCURL_SGR = "\x1b[4:3m";
-      const RED_UNDERLINE_SGR = `\x1b[58;2;${red[0]};${red[1]};${red[2]}m`;
+    const UNDERCURL_SGR = "\x1b[4:3m";
+    const RED_UNDERLINE_SGR = `\x1b[58;2;${red[0]};${red[1]};${red[2]}m`;
 
-      expect(pane.includes(UNDERCURL_SGR), `pane should contain undercurl SGR (\\e[4:3m)`).toBe(
-        true,
-      );
+    expect(pane.includes(UNDERCURL_SGR), `pane should contain undercurl SGR (\\e[4:3m)`).toBe(true);
 
-      expect(
-        pane.includes(RED_UNDERLINE_SGR),
-        `pane should contain catppuccin-red underline-color SGR (\\e[58;2;${red.join(";")}m)`,
-      ).toBe(true);
-    } finally {
-      // The worker-scoped tmux fixture kills the server (and this nvim
-      // inside it) on teardown; no RPC quit needed.
-      client.quit();
-    }
-  },
-);
+    expect(
+      pane.includes(RED_UNDERLINE_SGR),
+      `pane should contain catppuccin-red underline-color SGR (\\e[58;2;${red.join(";")}m)`,
+    ).toBe(true);
+  } finally {
+    // The worker-scoped tmux fixture kills the server (and this nvim
+    // inside it) on teardown; no RPC quit needed.
+    client.quit();
+  }
+});

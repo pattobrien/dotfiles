@@ -1,23 +1,23 @@
 # e2e
 
-Terminal tests for the dotfiles' nvim, tmux, herdr, and kitty configs, split
-into two Vitest projects:
-
-- **integration** (default) — headless terminal emulator ([Termless]'s ghostty
-  backend) drives real nvim / tmux / herdr processes under a node-pty PTY.
-  Fast (~20s for 33 tests), no windows, no focus stealing.
-- **e2e** — real kitty OS windows, for what an emulator can't verify:
-  kitty-graphics rendering and pixel-level output.
+Terminal tests for the dotfiles' nvim, tmux, herdr, and kitty configs. Each
+test declares what it needs: most run against a headless terminal emulator
+([Termless]'s ghostty backend) driving real nvim / tmux / herdr processes
+under a node-pty PTY — fast (~20s for 33 tests), no windows, no focus
+stealing. Tests that need a real kitty OS window (graphics/pixel assertions
+an emulator can't verify) carry the `e2e-kitty` tag, which the config
+excludes by default (`tagsFilter: ["!e2e-kitty"]`) — a bare `vp test` can
+never open windows.
 
 [Termless]: https://www.npmjs.com/package/@termless/core
 
 ## Run
 
 ```bash
-vp test                  # integration project (default)
-pnpm test:ui             # same, in the Vitest UI (watch mode)
-pnpm test:kitty          # e2e project (opens real kitty windows)
-vp test <file>           # single file — prefer paths over name filters
+vp test                        # everything except e2e-kitty (default)
+vp run test:ui                 # same, in the Vitest UI (watch mode)
+vp run test:kitty              # e2e-kitty tag (opens real kitty windows)
+vp test <file>                 # single file — prefer paths over name filters
 ```
 
 Run from this directory (`tests/e2e/`), not the repo root.
@@ -35,8 +35,8 @@ manage anymore (the old `-L e2e-test` tmux server model is retired).
 - `herdr` (test) — isolated named herdr server/session loading the real
   `~/.config/herdr/config.toml`, controlled through `herdr-ts-sdk`, asserted
   through the emulator screen
-- `kitty` (worker, e2e project only) — real kitty window attached to the tmux
-  fixture
+- `kitty` (worker, `e2e-kitty`-tagged tests only) — real kitty window attached
+  to the tmux fixture
 
 ## Recordings
 
@@ -65,7 +65,7 @@ emulator with `E2E_TERM_BACKEND`:
   (`@termless/kitty`). Passes the herdr behavior tests unchanged; ~35ms per
   mutation (full replay per query), so keep sessions short. Exposes
   `kittyGraphics` only as a capability flag — no placed-image state — which is
-  why graphics assertions stay on real kitty in the e2e project.
+  why graphics assertions stay on real kitty in the `e2e-kitty` tests.
 - xterm.js (`src/term/xterm.ts`, exercised by the conformance file) — kept as
   an evaluation fallback. Ergonomics are notably worse than Termless: CJS-only
   headless build, no click support, no built-in waitFor/recording, and screen
@@ -79,7 +79,10 @@ restores it.
 
 ## Host requirements
 
-- kitty installed (`brew install --cask kitty`) — for the e2e project and the
+- a shed checkout at `~/dev/pattobrien/shed` — `herdr-ts-sdk` is consumed via
+  a pnpm `link:` to it (shed is private, so there's no registry/git install
+  path); run `vp run build` there after pulling SDK changes
+- kitty installed (`brew install --cask kitty`) — for the `e2e-kitty` tests and the
   optional kitty emulator backend
 - herdr on `PATH` for the herdr behavior tests
 - the diagnostic-rendering test needs a `tmux-256color` terminfo entry with

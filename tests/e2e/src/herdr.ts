@@ -53,7 +53,7 @@ export async function createHerdrSession(
     label: options.label ?? `herdr-${name}`,
   })) as TermlessSession;
 
-  const deadline = Date.now() + 10_000;
+  const deadline = Date.now() + 5_000;
   let socketReady = false;
   while (Date.now() < deadline) {
     try {

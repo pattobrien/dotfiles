@@ -33,11 +33,7 @@ async function waitForNamedLspClient(nvim: NvimInstance, name: string, timeoutMs
   throw new Error(`Timed out waiting for LSP client "${name}"`);
 }
 
-// Combined worst-case polling (3s client + 3s diagnostics) can exceed the
-// default 5s testTimeout, so give LSP tests a bit more headroom.
-const LSP_TIMEOUT = 8_000;
-
-test("diagnostics are visible in insert mode", { timeout: LSP_TIMEOUT }, async ({ nvim }) => {
+test("diagnostics are visible in insert mode", async ({ nvim }) => {
   await nvim.command(`cd ${FIXTURE_DIR}`);
   await nvim.command(`edit ${FIXTURE_DIR}/error.ts`);
 
@@ -60,7 +56,7 @@ test("diagnostics are visible in insert mode", { timeout: LSP_TIMEOUT }, async (
   expect(diagCount).toBeGreaterThan(0);
 });
 
-test("hover shows type info", { timeout: LSP_TIMEOUT }, async ({ nvim }) => {
+test("hover shows type info", async ({ nvim }) => {
   await nvim.command(`cd ${FIXTURE_DIR}`);
   await nvim.command(`edit ${FIXTURE_DIR}/hover.ts`);
 
@@ -113,7 +109,7 @@ test("hover shows type info", { timeout: LSP_TIMEOUT }, async ({ nvim }) => {
  * server resolves ZodString into zod's node_modules types, so the test
  * below exercises a single gd press against a ready server.
  */
-async function waitForDefinitionResolution(nvim: NvimInstance, timeoutMs = 15_000) {
+async function waitForDefinitionResolution(nvim: NvimInstance, timeoutMs = 5_000) {
   const deadline = Date.now() + timeoutMs;
   while (Date.now() < deadline) {
     const resolved = await nvim.client.lua(`
@@ -139,65 +135,61 @@ async function waitForDefinitionResolution(nvim: NvimInstance, timeoutMs = 15_00
   throw new Error("tsgo never resolved ZodString into node_modules/zod");
 }
 
-test(
-  "gd jumps to definition of an imported type used in a type alias",
-  { timeout: 30_000 },
-  async ({ nvim }) => {
-    await nvim.command(`cd ${FIXTURE_DIR}`);
-    await nvim.command(`edit ${FIXTURE_DIR}/device.ts`);
+test("gd jumps to definition of an imported type used in a type alias", async ({ nvim }) => {
+  await nvim.command(`cd ${FIXTURE_DIR}`);
+  await nvim.command(`edit ${FIXTURE_DIR}/device.ts`);
 
-    // tsgo attaches noticeably later than oxlint — wait for it specifically,
-    // otherwise gd fires before the TS server is ready to answer.
-    await waitForNamedLspClient(nvim, "tsgo");
+  // tsgo attaches noticeably later than oxlint — wait for it specifically,
+  // otherwise gd fires before the TS server is ready to answer.
+  await waitForNamedLspClient(nvim, "tsgo");
 
-    // Land on `ZodString` in `export type Schema = ZodString;` — the
-    // `ZodString;` pattern only occurs in the type-alias line, never the import.
-    await nvim.client.call("cursor", [1, 1]);
-    await nvim.client.call("search", ["ZodString;"]);
+  // Land on `ZodString` in `export type Schema = ZodString;` — the
+  // `ZodString;` pattern only occurs in the type-alias line, never the import.
+  await nvim.client.call("cursor", [1, 1]);
+  await nvim.client.call("search", ["ZodString;"]);
 
-    // Sanity-check cursor placement before triggering gd.
-    const wordUnderCursor = await nvim.client.call("expand", ["<cword>"]);
-    expect(wordUnderCursor).toBe("ZodString");
+  // Sanity-check cursor placement before triggering gd.
+  const wordUnderCursor = await nvim.client.call("expand", ["<cword>"]);
+  expect(wordUnderCursor).toBe("ZodString");
 
-    await waitForDefinitionResolution(nvim);
+  await waitForDefinitionResolution(nvim);
 
-    // LazyVim's LSP `gd` is a buffer-local mapping applied on LspAttach —
-    // it can lag behind the client becoming visible to get_clients. Until
-    // it lands, `gd` falls through to the built-in goto-local-declaration
-    // (which just jumps to the import binding), so wait for the mapping.
-    const mapDeadline = Date.now() + 5_000;
-    let gdMapped = false;
-    while (Date.now() < mapDeadline) {
-      // Stays Lua: the maparg dict holds a Lua callback, which msgpack-rpc
-      // can't serialize — only the boolean crosses the wire.
-      gdMapped = (await nvim.client.lua(
-        'return not vim.tbl_isempty(vim.fn.maparg("gd", "n", false, true))',
-      )) as boolean;
-      if (gdMapped) break;
-      await new Promise((r) => setTimeout(r, 100));
+  // LazyVim's LSP `gd` is a buffer-local mapping applied on LspAttach —
+  // it can lag behind the client becoming visible to get_clients. Until
+  // it lands, `gd` falls through to the built-in goto-local-declaration
+  // (which just jumps to the import binding), so wait for the mapping.
+  const mapDeadline = Date.now() + 5_000;
+  let gdMapped = false;
+  while (Date.now() < mapDeadline) {
+    // Stays Lua: the maparg dict holds a Lua callback, which msgpack-rpc
+    // can't serialize — only the boolean crosses the wire.
+    gdMapped = (await nvim.client.lua(
+      'return not vim.tbl_isempty(vim.fn.maparg("gd", "n", false, true))',
+    )) as boolean;
+    if (gdMapped) break;
+    await new Promise((r) => setTimeout(r, 100));
+  }
+  expect(gdMapped, "LSP gd mapping never attached to the buffer").toBe(true);
+
+  await nvim.input("gd");
+
+  // gd must land in zod's published types inside node_modules. Depending
+  // on how many definitions tsgo reports (interface + const vs a deduped
+  // single result), Snacks either jumps directly or opens the
+  // "Lsp Definitions" picker — confirm the first entry when it appears.
+  const deadline = Date.now() + 5_000;
+  let curBuf = "";
+  let lastConfirm = 0;
+  while (Date.now() < deadline) {
+    curBuf = await nvim.client.buffer.then((b) => b.name);
+    if (curBuf.includes("/node_modules/") && curBuf.includes("/zod/")) break;
+    // Re-send while the picker stays visible: a <CR> that races the
+    // picker's input mount is silently dropped.
+    if (nvim.term.text().includes("Lsp Definitions") && Date.now() - lastConfirm > 500) {
+      lastConfirm = Date.now();
+      await nvim.input("<CR>");
     }
-    expect(gdMapped, "LSP gd mapping never attached to the buffer").toBe(true);
-
-    await nvim.input("gd");
-
-    // gd must land in zod's published types inside node_modules. Depending
-    // on how many definitions tsgo reports (interface + const vs a deduped
-    // single result), Snacks either jumps directly or opens the
-    // "Lsp Definitions" picker — confirm the first entry when it appears.
-    const deadline = Date.now() + 5_000;
-    let curBuf = "";
-    let lastConfirm = 0;
-    while (Date.now() < deadline) {
-      curBuf = await nvim.client.buffer.then((b) => b.name);
-      if (curBuf.includes("/node_modules/") && curBuf.includes("/zod/")) break;
-      // Re-send while the picker stays visible: a <CR> that races the
-      // picker's input mount is silently dropped.
-      if (nvim.term.text().includes("Lsp Definitions") && Date.now() - lastConfirm > 500) {
-        lastConfirm = Date.now();
-        await nvim.input("<CR>");
-      }
-      await new Promise((r) => setTimeout(r, 100));
-    }
-    expect(curBuf, `current buffer after gd: "${curBuf}"`).toMatch(/\/node_modules\/.*\/zod\//);
-  },
-);
+    await new Promise((r) => setTimeout(r, 100));
+  }
+  expect(curBuf, `current buffer after gd: "${curBuf}"`).toMatch(/\/node_modules\/.*\/zod\//);
+});

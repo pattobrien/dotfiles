@@ -27,7 +27,8 @@ export function createXtermBackend(): TermBackend {
 
     async launch(command, options: TermLaunchOptions = {}) {
       const cols = options.cols ?? 200;
-      const rows = options.rows ?? 50;
+      // Mutable: resize() updates it so screen reads cover newly exposed rows.
+      let rows = options.rows ?? 50;
       const [file, ...args] = command;
       if (!file) throw new Error("launch: empty command");
 
@@ -83,6 +84,7 @@ export function createXtermBackend(): TermBackend {
         resize: (newCols, newRows) => {
           pty.resize(newCols, newRows);
           term.resize(newCols, newRows);
+          rows = newRows;
         },
         get alive() {
           return !exited;

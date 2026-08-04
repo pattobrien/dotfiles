@@ -43,7 +43,7 @@ export interface NvimInstance {
  * Wait for LazyVim's VeryLazy event to fire.
  * keymaps.lua loads on VeryLazy — once <C-d> is remapped, setup is complete.
  */
-async function waitForLazyVim(client: NeovimClient, timeoutMs = 20_000) {
+async function waitForLazyVim(client: NeovimClient, timeoutMs = 5_000) {
   const deadline = Date.now() + timeoutMs;
   while (Date.now() < deadline) {
     try {
@@ -58,7 +58,7 @@ async function waitForLazyVim(client: NeovimClient, timeoutMs = 20_000) {
 }
 
 /** Wait for a file to exist on disk. */
-async function waitForFile(filePath: string, timeoutMs = 10_000) {
+async function waitForFile(filePath: string, timeoutMs = 5_000) {
   const deadline = Date.now() + timeoutMs;
   while (Date.now() < deadline) {
     try {
@@ -139,8 +139,8 @@ function buildNvimInstance(client: NeovimClient, term: TermlessSession): NvimIns
         vim.cmd("let @/ = ''")
         vim.cmd("nohlsearch")
       `);
-      // Restore cwd to the checkout root
-      await client.command(`cd ${REPO_ROOT}`);
+      // Restore cwd to the checkout root (structured call — no Ex escaping)
+      await client.request("nvim_set_current_dir", [REPO_ROOT]);
       await client.command("normal! gg");
     },
 

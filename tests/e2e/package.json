@@ -4,9 +4,9 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "test": "vp test --project=integration",
-    "test:ui": "vp test --project=integration --ui --watch",
-    "test:kitty": "vp test --project=e2e",
+    "test": "vp test",
+    "test:ui": "vp test --ui --watch",
+    "test:kitty": "vp test --tagsFilter=e2e-kitty",
     "check": "vp check",
     "postinstall": "chmod +x node_modules/node-pty/prebuilds/darwin-arm64/spawn-helper"
   },
