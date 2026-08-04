@@ -10,7 +10,12 @@ approvals_reviewer = "user"
 
 service_tier = "default"
 
-notify = ["/Users/patt/.codex/computer-use/Codex Computer Use.app/Contents/SharedSupport/SkyComputerUseClient.app/Contents/MacOS/SkyComputerUseClient", "turn-ended", "--previous-notify", "[\"\\/Users\\/pattobrien\\/dev\\/pattobrien\\/dotfiles\\/.config\\/codex\\/notify.zsh\"]"]
+notify = [
+  "/Users/patt/.codex/computer-use/Codex Computer Use.app/Contents/SharedSupport/SkyComputerUseClient.app/Contents/MacOS/SkyComputerUseClient",
+  "turn-ended",
+  "--previous-notify",
+  "[\"\\/Users\\/pattobrien\\/dev\\/pattobrien\\/dotfiles\\/.config\\/codex\\/notify.zsh\"]",
+]
 
 [projects."/Users/pattobrien/dev/getdots/meagain-bare"]
 trust_level = "trusted"
@@ -219,7 +224,15 @@ notifications = ["agent-turn-complete", "approval-requested"]
 notification_condition = "always"
 notification_method = "auto"
 show_tooltips = false
-status_line = ["model-with-reasoning", "pull-request-number", "run-state", "five-hour-limit", "weekly-limit", "context-window-size", "context-used"]
+status_line = [
+  "model-with-reasoning",
+  "pull-request-number",
+  "run-state",
+  "five-hour-limit",
+  "weekly-limit",
+  "context-window-size",
+  "context-used",
+]
 status_line_use_colors = true
 vim_mode_default = true
 

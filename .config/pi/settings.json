@@ -1,11 +1,5 @@
 {
-  "npmCommand": [
-    "mise",
-    "exec",
-    "node@24",
-    "--",
-    "npm"
-  ],
+  "npmCommand": ["mise", "exec", "node@24", "--", "npm"],
   "lastChangelogVersion": "0.82.1",
   "defaultProvider": "openai-codex",
   "defaultModel": "gpt-5.5",

@@ -17,11 +17,11 @@ data:
   cc.ffitch.shottr:
     # --- Hotkeys (carbon key codes; 768 = Cmd+Shift, 6400 = Ctrl+Opt+Cmd) ---
     # Area capture: Cmd+Shift+4
-    KeyboardShortcuts_area: "{\"carbonKeyCode\":21,\"carbonModifiers\":768}"
+    KeyboardShortcuts_area: '{"carbonKeyCode":21,"carbonModifiers":768}'
     # Fullscreen capture: Cmd+Shift+3
-    KeyboardShortcuts_fullscreen: "{\"carbonKeyCode\":20,\"carbonModifiers\":768}"
+    KeyboardShortcuts_fullscreen: '{"carbonKeyCode":20,"carbonModifiers":768}'
     # OCR capture: Ctrl+Opt+Cmd+O
-    KeyboardShortcuts_ocr: "{\"carbonKeyCode\":31,\"carbonModifiers\":6400}"
+    KeyboardShortcuts_ocr: '{"carbonKeyCode":31,"carbonModifiers":6400}'
     KeyboardShortcuts_anyWindow: false
     # --- After capture ---
     afterGrabCopy: true

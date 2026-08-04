@@ -244,12 +244,7 @@ fallback_channel = "files"
   "git push",
 ]
 "git-log" = ["git log", "git show", "git cherry-pick", "git revert", "git reset"]
-"git-stash" = [
-  "git stash pop",
-  "git stash apply",
-  "git stash drop",
-  "git stash show",
-]
+"git-stash" = ["git stash pop", "git stash apply", "git stash drop", "git stash show"]
 "git-worktrees" = ["git worktree remove", "git worktree lock", "git worktree unlock"]
 "linear-issues" = ["linear issue view", "linear issue start", "linear issue url"]
 "gh-prs" = ["gh pr checkout", "gh pr view", "gh pr diff", "gh pr merge"]

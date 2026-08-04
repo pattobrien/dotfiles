@@ -8,8 +8,8 @@
   "snapshot": true,
   "agent": {
     "build": {
-      "variant": "xhigh"
-    }
+      "variant": "xhigh",
+    },
   },
   "permission": {
     "read": "allow",
@@ -22,7 +22,7 @@
       "npm *": "deny",
       "npx *": "deny",
       "pnpm* add *": "ask",
-      "brew install *": "ask"
+      "brew install *": "ask",
     },
     "task": "allow",
     "external_directory": "allow",
@@ -32,9 +32,9 @@
     "websearch": "allow",
     "lsp": "allow",
     "doom_loop": "allow",
-    "skill": "allow"
+    "skill": "allow",
   },
   "compaction": {
-    "auto": true
-  }
+    "auto": true,
+  },
 }

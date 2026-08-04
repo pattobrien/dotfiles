@@ -38,7 +38,7 @@
       "Blue": "#89b4fa",
       "Lavender": "#b4befe"
     }
-  },
+  }
 
   //   "app" : {
   //     "minimalMode" : false,
@@ -87,7 +87,7 @@
   //       "maxWarmRenderers" : 12
   //     },
   //     "resumeCommands" : [
-  // 
+  //
   //     ],
   //     "textBoxMaxLines" : 10,
   //     "scrollSpeed" : 1
@@ -99,7 +99,7 @@
   //     "unreadPaneRing" : true,
   //     "sound" : "default",
   //     "hooks" : [
-  // 
+  //
   //     ],
   //     "paneFlash" : true,
   //     "customSoundFilePath" : "",
@@ -188,7 +188,7 @@
   //     "showSearchSuggestions" : true,
   //     "openTerminalLinksInCmuxBrowser" : true,
   //     "urlsToAlwaysOpenExternally" : [
-  // 
+  //
   //     ],
   //     "showImportHintOnBlankTabs" : true,
   //     "theme" : "system",
@@ -197,7 +197,7 @@
   //     "defaultSearchEngine" : "google",
   //     "discardHiddenWebViews" : true,
   //     "hostsToOpenInEmbeddedBrowser" : [
-  // 
+  //
   //     ],
   //     "customSearchEngineName" : "",
   //     "hiddenWebViewDiscardDelaySeconds" : 300,
