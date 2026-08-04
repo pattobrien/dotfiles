@@ -6,11 +6,11 @@ import path from "node:path";
 import { execa } from "execa";
 import Herdr, { HerdrError } from "herdr-ts-sdk";
 
-import type { TermBackend } from "./term/backend.ts";
+import type { TermBackend, TermSession } from "./term/backend.ts";
 import type { TermlessSession } from "./term/termless.ts";
 import { createTermlessBackend } from "./term/termless.ts";
 
-export interface HerdrTestSession {
+export interface HerdrTestSession<S extends TermSession = TermlessSession> {
   /** Unique session name (e2e-<uuid>). */
   name: string;
   /** Socket path of the isolated server. */
@@ -18,7 +18,7 @@ export interface HerdrTestSession {
   /** SDK client — control plane (setup, sync, semantic asserts). */
   client: Herdr;
   /** Emulator running the attached herdr client — data plane (rendering asserts). */
-  term: TermlessSession;
+  term: S;
   dispose(): Promise<void>;
 }
 
@@ -39,9 +39,9 @@ export interface HerdrSessionOptions {
  * PTY. Loads the real ~/.config/herdr/config.toml — tests assert this
  * dotfiles config, isolation is per-session, not per-config.
  */
-export async function createHerdrSession(
+export async function createHerdrSession<S extends TermSession = TermlessSession>(
   options: HerdrSessionOptions = {},
-): Promise<HerdrTestSession> {
+): Promise<HerdrTestSession<S>> {
   const name = `e2e-${randomUUID().slice(0, 8)}`;
   const socketPath = path.join(homedir(), ".config", "herdr", "sessions", name, "herdr.sock");
   const backend = options.backend ?? createTermlessBackend();
@@ -51,7 +51,7 @@ export async function createHerdrSession(
     rows: options.rows ?? 45,
     cwd: options.cwd ?? process.cwd(),
     label: options.label ?? `herdr-${name}`,
-  })) as TermlessSession;
+  })) as S;
 
   const deadline = Date.now() + 5_000;
   let socketReady = false;
