@@ -1,0 +1,9 @@
+{
+	tailscale {
+		auth_key {$TS_AUTHKEY}
+		ephemeral true
+		state_dir /data/tailscale
+	}
+}
+
+import conf.d/*.caddy

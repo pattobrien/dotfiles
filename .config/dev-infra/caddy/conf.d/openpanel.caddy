@@ -1,0 +1,15 @@
+https://openpanel.tailc7bb96.ts.net {
+	encode gzip
+
+	handle_path /api* {
+		reverse_proxy openpanel-api:3000
+	}
+
+	reverse_proxy openpanel-dashboard:3000
+
+	bind tailscale/openpanel
+}
+
+http://openpanel.localhost:8080 {
+	redir https://openpanel.tailc7bb96.ts.net{uri} permanent
+}
