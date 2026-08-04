@@ -180,6 +180,7 @@
     "understand-anything@understand-anything": true,
     "patt@pattobrien": true,
     "worktrunk@worktrunk": true,
+    "rust-analyzer-lsp@claude-plugins-official": true,
     "plannotator-effective-html@effective-html": true
   },
   "extraKnownMarketplaces": {
