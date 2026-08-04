@@ -109,8 +109,6 @@ brew "tree"
 brew "trufflehog"
 # Vi 'workalike' with many additional features
 brew "vim"
-# Unified toolchain and entry point for web development
-brew "vite-plus"
 # Universal WebAssembly Runtime
 brew "wasmer"
 # Execute commands when watched files change
