@@ -1,0 +1,14 @@
+POSTGRES_PASSWORD={{ op://Infra/dev-infra/postgres-password }}
+CLICKHOUSE_PASSWORD={{ op://Infra/dev-infra/clickhouse-password }}
+REDIS_PASSWORD={{ op://Infra/dev-infra/redis-password }}
+MINIO_ROOT_USER={{ op://Infra/dev-infra/minio-root-user }}
+MINIO_ROOT_PASSWORD={{ op://Infra/dev-infra/minio-root-password }}
+LANGFUSE_SALT={{ op://Infra/dev-infra/langfuse-salt }}
+LANGFUSE_ENCRYPTION_KEY={{ op://Infra/dev-infra/langfuse-encryption-key }}
+LANGFUSE_NEXTAUTH_SECRET={{ op://Infra/dev-infra/langfuse-nextauth-secret }}
+LANGFUSE_PUBLIC_KEY={{ op://Infra/dev-infra/langfuse-public-key }}
+LANGFUSE_SECRET_KEY={{ op://Infra/dev-infra/langfuse-secret-key }}
+LANGFUSE_USER_EMAIL={{ op://Infra/dev-infra/langfuse-user-email }}
+LANGFUSE_USER_PASSWORD={{ op://Infra/dev-infra/langfuse-user-password }}
+OP_CONNECT_TOKEN={{ op://Infra/dev-infra/connect-token }}
+BAO_UNSEAL_KEY={{ op://Infra/dev-infra/openbao-unseal-key }}

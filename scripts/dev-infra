@@ -1,0 +1,57 @@
+#!/bin/zsh
+set -euo pipefail
+
+CONFIG_DIR="$HOME/.config/dev-infra"
+ENV_FILE="$CONFIG_DIR/.env"
+
+machine_running() {
+  [[ "$(podman machine inspect --format '{{.State}}' 2>/dev/null)" == "running" ]]
+}
+
+ensure_machine() {
+  machine_running || podman machine start
+  export DOCKER_HOST="unix://$(podman machine inspect --format '{{.ConnectionInfo.PodmanSocket.Path}}')"
+}
+
+compose() {
+  docker compose --project-directory "$CONFIG_DIR" --env-file "$ENV_FILE" "$@"
+}
+
+unseal_bao() {
+  local key
+  key=$(grep '^BAO_UNSEAL_KEY=' "$ENV_FILE" | cut -d= -f2-)
+  until curl -s http://localhost:8200/v1/sys/health >/dev/null; do sleep 1; done
+  curl -sf -X PUT http://localhost:8200/v1/sys/unseal -d "{\"key\":\"$key\"}" >/dev/null
+}
+
+case "${1:-}" in
+  up)
+    ensure_machine
+    compose up -d --remove-orphans
+    unseal_bao
+    ;;
+  unseal)
+    unseal_bao
+    ;;
+  down)
+    ensure_machine
+    compose down
+    ;;
+  status)
+    ensure_machine
+    compose ps
+    ;;
+  logs)
+    ensure_machine
+    shift
+    compose logs "$@"
+    ;;
+  secrets)
+    op inject -f -i "$CONFIG_DIR/env.tpl" -o "$ENV_FILE"
+    chmod 600 "$ENV_FILE"
+    ;;
+  *)
+    echo "usage: dev-infra {up|down|status|logs [svc]|unseal|secrets}" >&2
+    exit 1
+    ;;
+esac
