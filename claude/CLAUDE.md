@@ -19,6 +19,18 @@ name: Patt O'Brien.
 - Say it once — never restate the same point in different words, and never
   re-explain something from earlier in the conversation.
 
+## Visual Artifacts
+
+- Always prefer dark mode for anything visual I'll look at — HTML
+  artifacts/wireframes/mockups, generated UIs, charts, screenshots of themed
+  tools. Default to a dark palette.
+- Always render HTML artifacts in a true herdr pane next to the conversation
+  so we can view them together:
+  1. `herdr pane split --current --direction right --cwd "$PWD" --no-focus`
+  2. `herdr pane run <new-pane-id> "terminal-browser open <file>"`
+  Never use `terminal-browser --split` — it bypasses herdr and splits via
+  kitty remote control, leaving the pane unmanaged.
+
 ## User Directories
 
 Common directories/repositories to be aware of:
