@@ -61,23 +61,20 @@
       path: .config/hammerspoon
       force: true
     ~/.config/op/plugins.sh: .config/op/plugins.sh
-    ~/Library/Application Support/Cursor/User/settings.json:
-      cursor/Library/Application Support/Cursor/User/settings.json
-    ~/Library/Application Support/Cursor/User/keybindings.json:
-      cursor/Library/Application Support/Cursor/User/keybindings.json
-    ~/Library/Application Support/Cursor/User/snippets:
-      cursor/Library/Application Support/Cursor/User/snippets
-    ~/Library/Application Support/Code/User/settings.json:
-      vscode/Library/Application Support/Code/User/settings.json
-    ~/Library/Application Support/Code/User/keybindings.json:
-      vscode/Library/Application Support/Code/User/keybindings.json
-    ~/Library/Application Support/Code/User/tasks.json:
-      vscode/Library/Application Support/Code/User/tasks.json
+    ~/Library/Application Support/Cursor/User/settings.json: cursor/Library/Application Support/Cursor/User/settings.json
+    ~/Library/Application Support/Cursor/User/keybindings.json: cursor/Library/Application Support/Cursor/User/keybindings.json
+    ~/Library/Application Support/Cursor/User/snippets: cursor/Library/Application Support/Cursor/User/snippets
+    ~/Library/Application Support/Code/User/settings.json: vscode/Library/Application Support/Code/User/settings.json
+    ~/Library/Application Support/Code/User/keybindings.json: vscode/Library/Application Support/Code/User/keybindings.json
+    ~/Library/Application Support/Code/User/tasks.json: vscode/Library/Application Support/Code/User/tasks.json
     ~/.config/macos-defaults: .config/macos-defaults
     ~/.config/workmux: .config/workmux
+    ~/.config/dev-infra: .config/dev-infra
+    ~/Library/LaunchAgents/com.pattobrien.dev-infra.plist: .config/dev-infra/com.pattobrien.dev-infra.plist
     ~/.config/terminal-browser/extensions/vimium:
       path: ~/dev/pattobrien/vimium
       ignore-missing: true
+    ~/.local/bin/dev-infra: scripts/dev-infra
     ~/.local/bin/herdr-gh-repos: scripts/herdr-gh-repos
     ~/.local/bin/herdr-jump-or-create: scripts/herdr-jump-or-create
     ~/.local/bin/herdr-quick-actions-popup: scripts/herdr-quick-actions-popup
