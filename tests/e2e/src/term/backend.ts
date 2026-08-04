@@ -48,14 +48,14 @@ export interface TermBackend {
 }
 
 export async function pollFor(
-  predicate: () => boolean,
+  predicate: () => boolean | Promise<boolean>,
   what: string,
   timeoutMs = 5_000,
   intervalMs = 50,
 ): Promise<void> {
   const deadline = Date.now() + timeoutMs;
   while (Date.now() < deadline) {
-    if (predicate()) return;
+    if (await predicate()) return;
     await new Promise((r) => setTimeout(r, intervalMs));
   }
   throw new Error(`Timed out after ${timeoutMs}ms waiting for ${what}`);

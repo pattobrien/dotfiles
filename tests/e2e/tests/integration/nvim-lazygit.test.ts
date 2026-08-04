@@ -5,6 +5,7 @@ import path from "node:path";
 import { execa } from "execa";
 import { expect } from "vite-plus/test";
 
+import { pollFor } from "../../src/term/backend.ts";
 import { test } from "../fixtures.ts";
 
 test("lazygit 'o' opens file in nvim buffer, not external editor", async ({ nvim }) => {
@@ -16,40 +17,41 @@ test("lazygit 'o' opens file in nvim buffer, not external editor", async ({ nvim
   await fs.writeFile(path.join(repo, "notes.txt"), "hello lazygit\n");
   await nvim.command(`cd ${repo}`);
 
+  const t = nvim.term.term;
   try {
-    // Open lazygit via Snacks (LazyVim's integration)
+    // Open lazygit via Snacks (LazyVim's integration) and wait for its UI —
+    // panel titles are a stable marker.
     await nvim.client.lua("Snacks.lazygit()");
-
-    // Wait for lazygit to render — its panel titles are a stable marker
-    await nvim.term.waitFor(/Commits/, 5_000);
+    await expect(t.screen).toContainText("Commits", { timeout: 5_000 });
 
     // An RPC-opened terminal float can land in terminal-normal mode, where
     // typed keys edit the (non-modifiable) buffer instead of reaching
-    // lazygit — make sure we're in terminal-insert mode first.
+    // lazygit. Mode isn't screen-observable, so this one waits on RPC.
     if ((await nvim.getMode()) !== "t") {
       await nvim.command("startinsert");
-      await new Promise((r) => setTimeout(r, 200));
+      await pollFor(async () => (await nvim.getMode()) === "t", "terminal-insert mode");
     }
 
     // Files panel is focused by default, in tree view — toggle to the flat
-    // list so the highlighted entry is a file, never a directory node.
+    // list so the highlighted entry is a file, never a directory node, and
+    // let the redraw settle before targeting it.
     nvim.term.type("`");
-    await new Promise((r) => setTimeout(r, 300));
+    await expect(t.screen).toContainText("notes.txt", { timeout: 3_000 });
+    await t.waitForStable();
 
-    // Press 'o' to open the highlighted file.
+    // 'o' opens the highlighted file in the parent nvim and Snacks closes
+    // the float; quit lazygit explicitly if focus stayed in it ('q' in a
+    // normal-mode buffer would start recording a macro instead).
     nvim.term.type("o");
-    await new Promise((r) => setTimeout(r, 1500));
+    await t.waitForStable();
+    if ((await nvim.getMode()) === "t") {
+      nvim.term.type("q");
+      await nvim.input("<Esc>");
+    }
 
-    // Close lazygit so we can inspect neovim state
-    nvim.term.type("q");
-    await new Promise((r) => setTimeout(r, 500));
-
-    // If lazygit float is still up (e.g. 'q' was eaten), force-close via Escape
-    await nvim.input("<Esc>");
-    await new Promise((r) => setTimeout(r, 300));
-
-    // The repo's only file must now be the current buffer — proving 'o'
-    // opened it in nvim rather than an external editor.
+    // The file's content on screen proves the buffer opened in this nvim
+    // (the near-fullscreen lazygit float would cover it otherwise).
+    await expect(t.screen).toContainText("hello lazygit", { timeout: 5_000 });
     const bufName = (await nvim.client.lua("return vim.api.nvim_buf_get_name(0)")) as string;
     expect(bufName).toMatch(/\/notes\.txt$/);
   } finally {
