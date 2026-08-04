@@ -1,32 +1,22 @@
+import { writeSync } from "node:fs";
+import { writeFile } from "node:fs/promises";
+
 import { test as base } from "vite-plus/test";
 
+import { createHerdrSession, type HerdrTestSession } from "../src/herdr.ts";
+import { viewerLink } from "../src/recording.ts";
 import { getOrCreateKittyInstance } from "../src/kitty.ts";
-import {
-  getOrCreateNvimInstance,
-  disconnectNvim,
-  type NvimInstance,
-} from "../src/nvim.ts";
-import { getOrCreateTmuxSession } from "../src/tmux.ts";
+import { launchNvimInstance, type NvimInstance } from "../src/nvim.ts";
+import { createTmuxSession } from "../src/tmux.ts";
 
-/** Capture pane text + freeze screenshot for debugging. */
+/** Write screen text + SVG screenshot from the emulator for debugging. */
 async function captureFailureArtifacts(nvim: NvimInstance, name: string) {
   try {
-    const paneText = await nvim.tmux.capture();
-    const { writeFile, mkdir } = await import("node:fs/promises");
-    const { writeSync } = await import("node:fs");
     const textPath = `/tmp/e2e-fail-${name}.txt`;
-    await writeFile(textPath, paneText);
-    const { execaCommand } = await import("execa");
-    const imgPath = `/tmp/e2e-fail-${name}.png`;
-    await mkdir("/tmp", { recursive: true });
-    await execaCommand(
-      `tmux -L ${nvim.tmux.socket} capture-pane -t ${nvim.tmux.session} -pe | freeze -o ${imgPath}`,
-      { shell: true },
-    );
-    writeSync(
-      2,
-      `\n  Failure artifacts:\n    text: ${textPath}\n    screenshot: ${imgPath}\n`,
-    );
+    const svgPath = `/tmp/e2e-fail-${name}.svg`;
+    await writeFile(textPath, nvim.term.text());
+    await writeFile(svgPath, nvim.term.term.screenshotSvg());
+    writeSync(2, `\n  Failure artifacts:\n    text: ${textPath}\n    screenshot: ${svgPath}\n`);
   } catch {
     // best effort
   }
@@ -36,11 +26,7 @@ async function captureFailureArtifacts(nvim: NvimInstance, name: string) {
  * Reset buffer and assert clean state, retrying once if transient plugin
  * floats (which-key, noice) haven't settled yet.
  */
-async function resetAndAssert(
-  nvim: NvimInstance,
-  label: string,
-  testName?: string,
-) {
+async function resetAndAssert(nvim: NvimInstance, label: string, testName?: string) {
   await nvim.resetBuffer(testName);
   let violations = await nvim.checkStartState();
   if (violations.length > 0) {
@@ -51,9 +37,7 @@ async function resetAndAssert(
     if (violations.length > 0) {
       const safeName = (testName ?? "unknown").replace(/[^a-zA-Z0-9-_]/g, "_");
       await captureFailureArtifacts(nvim, `${label}-${safeName}`);
-      throw new Error(
-        `nvim not in start state ${label} test:\n  ${violations.join("\n  ")}`,
-      );
+      throw new Error(`nvim not in start state ${label} test:\n  ${violations.join("\n  ")}`);
     }
   }
 }
@@ -61,36 +45,39 @@ async function resetAndAssert(
 /**
  * Extended test context with terminal fixtures.
  *
- * Persistent model: tmux + nvim are started on first run and left alive.
- * Subsequent test runs reuse the existing instances (near-instant startup).
+ * Lifecycle model: fixtures are created fresh per worker (nvim, tmux) or per
+ * test (herdr) and torn down on cleanup — nothing persists between runs.
  *
- * - tmux (worker): persistent tmux session, reused across runs
- * - rawNvim (worker): persistent nvim with LazyVim, reused across runs
+ * - tmux (worker): fresh scoped tmux server, killed on worker exit
+ * - rawNvim (worker): fresh nvim under an emulator PTY, disposed on exit
  * - nvim (test): wraps rawNvim with automatic resetBuffer + state guard
- * - kitty (test): real kitty window, only for tagged tests
+ * - herdr (test): isolated herdr server/session + SDK client + emulator
+ * - kitty (worker): real kitty window attached to the tmux fixture (e2e tier)
  */
 export const test = base
-  // Worker-scoped: connects to (or creates) the persistent tmux session.
-  // Also opens a kitty viewer window so you can watch tests run.
-  .extend("tmux", { scope: "worker" }, async ({}) => {
-    const tmux = await getOrCreateTmuxSession();
-    // Best-effort: open a kitty window to observe tests (no-op if kitty isn't running)
-    getOrCreateKittyInstance(tmux).catch((e) => {
-      console.warn(`[e2e] Could not open kitty viewer: ${e.message}`);
-    });
+  // Worker-scoped: fresh tmux server on a unique socket.
+  .extend("tmux", { scope: "worker" }, async ({}, { onCleanup }) => {
+    const tmux = await createTmuxSession();
+    onCleanup(() => tmux.dispose());
     return tmux;
   })
 
-  // Worker-scoped: connects to (or creates) the persistent nvim instance.
-  .extend("rawNvim", { scope: "worker" }, async ({ tmux }, { onCleanup }) => {
-    const nvim = await getOrCreateNvimInstance(tmux);
-    onCleanup(() => disconnectNvim(nvim));
+  // Worker-scoped: fresh nvim with LazyVim under an emulator PTY.
+  .extend("rawNvim", { scope: "worker" }, async ({}, { onCleanup }) => {
+    const nvim = await launchNvimInstance();
+    onCleanup(() => nvim.dispose());
     return nvim;
   })
 
   // Test-scoped: automatic reset + state guard around each test.
-  .extend("nvim", async ({ rawNvim, task }, { onCleanup }) => {
+  .extend("nvim", async ({ rawNvim, task, annotate }, { onCleanup }) => {
     const safeName = task.name.replace(/[^a-zA-Z0-9-_]/g, "_");
+    // Each test file runs in its own isolated worker (one nvim per file) —
+    // name the recording after the file so runs don't overwrite each other.
+    const fileName = task.file.name.split("/").pop()?.replace(/\.test\.ts$/, "");
+    if (fileName) rawNvim.term.relabel(fileName);
+    rawNvim.term.mark(task.name);
+    await annotate(`terminal recording: ${viewerLink(fileName ?? "nvim")}`);
     await resetAndAssert(rawNvim, "BEFORE", safeName);
 
     onCleanup(async () => {
@@ -103,7 +90,16 @@ export const test = base
     return rawNvim;
   })
 
-  // Worker-scoped: persistent kitty OS window within the existing kitty app.
+  // Test-scoped: isolated herdr server + SDK client + attached emulator.
+  .extend("herdr", async ({ task, annotate }, { onCleanup }): Promise<HerdrTestSession> => {
+    const label = `herdr ${task.name}`;
+    const session = await createHerdrSession({ label });
+    await annotate(`terminal recording: ${viewerLink(label)}`);
+    onCleanup(() => session.dispose());
+    return session;
+  })
+
+  // Worker-scoped: real kitty OS window attached to the tmux fixture.
   .extend("kitty", { scope: "worker" }, async ({ tmux }) => {
     return getOrCreateKittyInstance(tmux);
   });

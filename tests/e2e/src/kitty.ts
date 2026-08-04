@@ -71,9 +71,7 @@ async function kittyWindowExists(): Promise<boolean> {
  * process (shares the same dock icon). On subsequent runs, reuses the existing
  * window if it's still open.
  */
-export async function getOrCreateKittyInstance(
-  tmux: TmuxSession,
-): Promise<KittyInstance> {
+export async function getOrCreateKittyInstance(tmux: TmuxSession): Promise<KittyInstance> {
   if (!(await kittyWindowExists())) {
     const socket = await findKittySocket();
     await execa("kitty", [
@@ -163,14 +161,7 @@ function buildKittyInstance(tmux: TmuxSession): KittyInstance {
 
     async getText(opts?: { ansi?: boolean }) {
       const socket = await findKittySocket();
-      const args = [
-        "@",
-        "--to",
-        socket,
-        "get-text",
-        "--match",
-        `title:${E2E_WINDOW_TITLE}`,
-      ];
+      const args = ["@", "--to", socket, "get-text", "--match", `title:${E2E_WINDOW_TITLE}`];
       if (opts?.ansi) args.push("--ansi");
       const { stdout } = await execa("kitty", args);
       return stdout;

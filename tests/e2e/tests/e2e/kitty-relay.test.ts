@@ -1,11 +1,11 @@
 import { execa } from "execa";
 import { expect } from "vite-plus/test";
 
-import { test } from "./fixtures.ts";
+import { test } from "../fixtures.ts";
 
 test(
   "Cmd+K clears terminal via kitty → F12 → tmux relay",
-  { tags: ["kitty"], timeout: 10_000 },
+  { timeout: 10_000 },
   async ({ kitty }) => {
     const { tmux } = kitty;
 
@@ -23,20 +23,14 @@ test(
       const pane = await tmux.capture();
       expect(pane).not.toContain("should-be-cleared");
     } finally {
-      await execa("tmux", [
-        "-L",
-        tmux.socket,
-        "kill-window",
-        "-t",
-        tmux.session,
-      ]);
+      await execa("tmux", ["-L", tmux.socket, "kill-window", "-t", tmux.session]);
     }
   },
 );
 
 test(
   "Cmd+Shift+D triggers wt cleanup popup via kitty → F7 → tmux relay",
-  { tags: ["kitty"], timeout: 10_000 },
+  { timeout: 10_000 },
   async ({ kitty }) => {
     const { tmux } = kitty;
 
@@ -63,13 +57,7 @@ test(
       // Close the popup via Escape through kitty (tmux send-keys can't reach popups)
       await kitty.sendKeyCode(53); // Escape
       await new Promise((r) => setTimeout(r, 300));
-      await execa("tmux", [
-        "-L",
-        tmux.socket,
-        "kill-window",
-        "-t",
-        tmux.session,
-      ]);
+      await execa("tmux", ["-L", tmux.socket, "kill-window", "-t", tmux.session]);
     }
   },
 );

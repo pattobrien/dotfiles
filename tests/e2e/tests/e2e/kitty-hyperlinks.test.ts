@@ -1,11 +1,11 @@
 import { execa } from "execa";
 import { expect } from "vite-plus/test";
 
-import { test } from "./fixtures.ts";
+import { test } from "../fixtures.ts";
 
 test(
   "OSC 8 hyperlinks with custom text are clickable in kitty + tmux",
-  { tags: ["kitty"], timeout: 15_000 },
+  { timeout: 15_000 },
   async ({ kitty }) => {
     const { tmux } = kitty;
 
@@ -33,13 +33,7 @@ test(
       // tmux may add its own id param (e.g. "id=tmux1;") before the URL
       expect(ansiText).toMatch(/\x1b\]8;[^;]*;https:\/\/www\.anthropic\.com/);
     } finally {
-      await execa("tmux", [
-        "-L",
-        tmux.socket,
-        "kill-window",
-        "-t",
-        tmux.session,
-      ]);
+      await execa("tmux", ["-L", tmux.socket, "kill-window", "-t", tmux.session]);
     }
   },
 );

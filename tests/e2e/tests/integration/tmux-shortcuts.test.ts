@@ -1,7 +1,7 @@
 import { execa } from "execa";
 import { expect } from "vite-plus/test";
 
-import { test } from "./fixtures.ts";
+import { test } from "../fixtures.ts";
 
 test("prefix | is bound to split-window -h", async ({ tmux }) => {
   const keys = await tmux.listKeys("prefix");
@@ -34,25 +34,29 @@ test("F12 is bound to clear screen and history", async ({ tmux }) => {
   expect(keys).toMatch(/F12.*clear-history/);
 });
 
-test("F-key popup bindings are registered", async ({ tmux }) => {
+test("F-key bindings match the current Cmd-relay map", async ({ tmux }) => {
   const keys = await tmux.listKeys("root");
 
-  // Cmd+E → F11: workmux dashboard
+  // Cmd+E → F11: workmux dashboard popup
   expect(keys).toMatch(/F11.*workmux dashboard/);
-  // Cmd+L → F10: wt list
-  expect(keys).toMatch(/F10.*wt list/);
-  // Cmd+J → F9: wt projects switch
-  expect(keys).toMatch(/F9.*wt projects switch/);
-  // Cmd+; → F8: wt claude
-  expect(keys).toMatch(/F8.*wt claude/);
-  // Cmd+Shift+D → F7: wt cleanup
-  expect(keys).toMatch(/F7.*wt cleanup/);
-  // Cmd+Shift+K → F6: wt dev kill
-  expect(keys).toMatch(/F6.*wt dev kill/);
-  // Cmd+Shift+P → F5: wt dev list
-  expect(keys).toMatch(/F5.*wt dev list/);
-  // Cmd+Shift+R → F4: wt dev start
-  expect(keys).toMatch(/F4.*wt dev start/);
+  // Cmd+L → F10: logger role (pnpm dev window jump)
+  expect(keys).toMatch(/F10.*tmux-jump-dev/);
+  // Cmd+Shift+R → F9: fzf session picker popup
+  expect(keys).toMatch(/F9.*tmux-session-picker/);
+  // Cmd+; → F8: toggle last window
+  expect(keys).toMatch(/F8\s+last-window/);
+  // Cmd+/ → F7: scratch popup shell
+  expect(keys).toMatch(/F7\s+display-popup/);
+  // Cmd+R → F6: reload tmux config
+  expect(keys).toMatch(/F6\s+source-file/);
+  // Cmd+A → F5: ai role (claude window jump)
+  expect(keys).toMatch(/F5.*tmux-jump-or-create claude/);
+  // Cmd+T/W/Enter → F2/F3/F4: window and pane management
+  expect(keys).toMatch(/F2\s+new-window/);
+  expect(keys).toMatch(/F3\s+kill-pane/);
+  expect(keys).toMatch(/F4\s+resize-pane -Z/);
+  // Cmd+N → User0 (extended F-key via user-keys): nvim role jump
+  expect(keys).toMatch(/User0.*tmux-jump-or-create nvim/);
 });
 
 test("prefix m toggles pane zoom", async ({ tmux }) => {

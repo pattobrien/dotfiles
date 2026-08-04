@@ -2,11 +2,11 @@ import path from "node:path";
 
 import { expect } from "vite-plus/test";
 
-import type { NvimInstance } from "../src/nvim.ts";
+import type { NvimInstance } from "../../src/nvim.ts";
 
-import { test } from "./fixtures.ts";
+import { test } from "../fixtures.ts";
 
-const FIXTURE_DIR = path.resolve(import.meta.dirname, "../fixtures/ts-project");
+const FIXTURE_DIR = path.resolve(import.meta.dirname, "../../fixtures/ts-project");
 
 /** Wait for the copilot LSP client to attach to the current buffer. */
 async function waitForCopilot(nvim: NvimInstance, timeoutMs = 10_000) {
@@ -64,9 +64,7 @@ test(
       const status = await nvim.client.lua(
         'local ok, s = pcall(function() return require("sidekick.status").get() end); return ok and vim.inspect(s) or "unavailable"',
       );
-      const messages = await nvim.client.lua(
-        'return vim.fn.execute("messages")',
-      );
+      const messages = await nvim.client.lua('return vim.fn.execute("messages")');
       throw new Error(
         `No inline completion ghost text within 3s.\n  copilot status: ${String(status)}\n  :messages tail: ${String(messages).slice(-500)}`,
       );
@@ -95,9 +93,7 @@ test(
     let menuVisible = false;
     while (Date.now() < deadline) {
       menuVisible =
-        (await nvim.client.lua(
-          'return require("blink.cmp").is_menu_visible()',
-        )) === true;
+        (await nvim.client.lua('return require("blink.cmp").is_menu_visible()')) === true;
       if (menuVisible) break;
       await new Promise((r) => setTimeout(r, 100));
     }
@@ -108,10 +104,7 @@ test(
       if not ns then return 0 end
       return #vim.api.nvim_buf_get_extmarks(0, ns, 0, -1, {})
     `);
-    expect(
-      blinkGhostMarks,
-      "blink is rendering its own ghost text on top of copilot's",
-    ).toBe(0);
+    expect(blinkGhostMarks, "blink is rendering its own ghost text on top of copilot's").toBe(0);
 
     await nvim.input("<Esc>");
     await nvim.command("silent! edit!");
@@ -164,9 +157,7 @@ test(
     const deadline = Date.now() + 3_000;
     let have = false;
     while (Date.now() < deadline) {
-      have = (await nvim.client.lua(
-        'return require("sidekick.nes").have()',
-      )) === true;
+      have = (await nvim.client.lua('return require("sidekick.nes").have()')) === true;
       if (have) break;
       await new Promise((r) => setTimeout(r, 250));
     }
@@ -176,9 +167,7 @@ test(
       const status = await nvim.client.lua(
         'local ok, s = pcall(function() return require("sidekick.status").get() end); return ok and vim.inspect(s) or "unavailable"',
       );
-      const messages = await nvim.client.lua(
-        'return vim.fn.execute("messages")',
-      );
+      const messages = await nvim.client.lua('return vim.fn.execute("messages")');
       throw new Error(
         `No NES suggestion within 3s.\n  copilot status: ${String(status)}\n  :messages tail: ${String(messages).slice(-500)}`,
       );
@@ -186,9 +175,7 @@ test(
 
     // A suggestion exists — applying it must succeed and change the buffer.
     const before = await nvim.getBufferContent();
-    const applied = await nvim.client.lua(
-      'return require("sidekick.nes").apply() ~= nil',
-    );
+    const applied = await nvim.client.lua('return require("sidekick.nes").apply() ~= nil');
     expect(applied, "Nes.apply() reported no edits applied").toBe(true);
     const after = await nvim.getBufferContent();
     expect(after).not.toBe(before);
