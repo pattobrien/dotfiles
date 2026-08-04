@@ -8,6 +8,13 @@ import { attach } from "neovim";
 import { createTermlessBackend } from "./term/termless.ts";
 import type { TermlessSession } from "./term/termless.ts";
 
+/**
+ * Root of the checkout this test suite runs from — nvim's cwd. Resolved
+ * relative to this file so worktree checkouts test themselves, not the
+ * main clone.
+ */
+export const REPO_ROOT = path.resolve(import.meta.dirname, "../../..");
+
 export interface NvimInstance {
   /** The neovim RPC client — control plane. */
   client: NeovimClient;
@@ -132,8 +139,8 @@ function buildNvimInstance(client: NeovimClient, term: TermlessSession): NvimIns
         vim.cmd("let @/ = ''")
         vim.cmd("nohlsearch")
       `);
-      // Restore cwd to dotfiles root
-      await client.command("cd ~/dev/pattobrien/dotfiles");
+      // Restore cwd to the checkout root
+      await client.command(`cd ${REPO_ROOT}`);
       await client.command("normal! gg");
     },
 
@@ -192,9 +199,9 @@ function buildNvimInstance(client: NeovimClient, term: TermlessSession): NvimIns
       const stale = state.listed_bufs.filter((b) => !allowed.has(b) && !b.startsWith("test-"));
       if (stale.length > 0) violations.push(`stale buffers: ${stale.join(", ")}`);
 
-      // cwd should be the dotfiles root
-      if (!state.cwd.endsWith("/dotfiles")) {
-        violations.push(`cwd: expected */dotfiles, got '${state.cwd}'`);
+      // cwd should be the checkout root
+      if (state.cwd !== REPO_ROOT) {
+        violations.push(`cwd: expected '${REPO_ROOT}', got '${state.cwd}'`);
       }
 
       return violations;
@@ -241,7 +248,7 @@ export async function launchNvimInstance(): Promise<NvimInstance> {
     {
       cols: 200,
       rows: 50,
-      cwd: path.join(os.homedir(), "dev/pattobrien/dotfiles"),
+      cwd: REPO_ROOT,
       label: "nvim",
     },
   )) as TermlessSession;

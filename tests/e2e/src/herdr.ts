@@ -79,7 +79,7 @@ export async function createHerdrSession(
     term,
     async dispose() {
       await term.dispose();
-      await client.stop().catch((error: unknown) => {
+      await client.server.stop().catch((error: unknown) => {
         // The stopping server may close the socket before its ok response
         // lands (herdr's own CLI tolerates the same race). Only transport
         // drops are expected here — real server error replies propagate.
