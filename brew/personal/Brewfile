@@ -83,6 +83,8 @@ brew "ossp-uuid"
 brew "pam-reattach"
 # Package compiler and linker metadata toolkit
 brew "pkgconf"
+# Tool for managing OCI containers and pods
+brew "podman"
 # Theme for zsh
 brew "powerlevel10k"
 # Develop and deploy code with zero configuration
@@ -226,6 +228,8 @@ cask "parallels-toolbox"
 cask "pearcleaner"
 # Administration and development platform for PostgreSQL
 cask "pgadmin4"
+# Open source desktop tool to build, manage and run containers
+cask "podman-desktop"
 # Peer to peer Bitorrent client
 cask "qbittorrent"
 # Control your tools with a few keystrokes
