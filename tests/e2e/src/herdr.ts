@@ -42,8 +42,8 @@ export interface HerdrSessionOptions {
 export async function createHerdrSession<S extends TermSession = TermlessSession>(
   options: HerdrSessionOptions = {},
 ): Promise<HerdrTestSession<S>> {
-  const name = `e2e-${randomUUID().slice(0, 8)}`;
-  const socketPath = path.join(homedir(), ".config", "herdr", "sessions", name, "herdr.sock");
+  const name = newHerdrSessionName();
+  const socketPath = herdrSocketPath(name);
   const backend = options.backend ?? createTermlessBackend();
 
   const term = (await backend.launch(["herdr", "--session", name], {
@@ -53,18 +53,7 @@ export async function createHerdrSession<S extends TermSession = TermlessSession
     label: options.label ?? `herdr-${name}`,
   })) as S;
 
-  const deadline = Date.now() + 5_000;
-  let socketReady = false;
-  while (Date.now() < deadline) {
-    try {
-      await fs.access(socketPath);
-      socketReady = true;
-      break;
-    } catch {
-      await new Promise((r) => setTimeout(r, 100));
-    }
-  }
-  if (!socketReady) {
+  if (!(await waitForHerdrSocket(socketPath))) {
     await term.dispose();
     throw new Error(`herdr session ${name}: socket never appeared at ${socketPath}`);
   }
@@ -79,24 +68,57 @@ export async function createHerdrSession<S extends TermSession = TermlessSession
     term,
     async dispose() {
       await term.dispose();
-      await client.server.stop().catch((error: unknown) => {
-        // The stopping server may close the socket before its ok response
-        // lands (herdr's own CLI tolerates the same race). Only transport
-        // drops are expected here — real server error replies propagate.
-        if (error instanceof HerdrError) throw error;
-      });
-      // Deletion requires the server fully stopped — wait for its socket
-      // to disappear before cleaning up (no socket API for deletion).
-      const stopDeadline = Date.now() + 5_000;
-      while (Date.now() < stopDeadline) {
-        const gone = await fs.access(socketPath).then(
-          () => false,
-          () => true,
-        );
-        if (gone) break;
-        await new Promise((r) => setTimeout(r, 100));
-      }
-      await execa("herdr", ["session", "delete", name]);
+      await stopHerdrSession(client, socketPath, name);
     },
   };
+}
+
+/** Fresh unique session name in the harness's `e2e-` namespace. */
+export function newHerdrSessionName(): string {
+  return `e2e-${randomUUID().slice(0, 8)}`;
+}
+
+/** Socket path of a named session's dedicated server. */
+export function herdrSocketPath(name: string): string {
+  return path.join(homedir(), ".config", "herdr", "sessions", name, "herdr.sock");
+}
+
+/** Wait for a session's server socket to appear. */
+export async function waitForHerdrSocket(socketPath: string, timeoutMs = 5_000): Promise<boolean> {
+  const deadline = Date.now() + timeoutMs;
+  while (Date.now() < deadline) {
+    try {
+      await fs.access(socketPath);
+      return true;
+    } catch {
+      await new Promise((r) => setTimeout(r, 100));
+    }
+  }
+  return false;
+}
+
+/** Stop a session's server, then delete the session. */
+export async function stopHerdrSession(
+  client: Herdr,
+  socketPath: string,
+  name: string,
+): Promise<void> {
+  await client.server.stop().catch((error: unknown) => {
+    // The stopping server may close the socket before its ok response
+    // lands (herdr's own CLI tolerates the same race). Only transport
+    // drops are expected here — real server error replies propagate.
+    if (error instanceof HerdrError) throw error;
+  });
+  // Deletion requires the server fully stopped — wait for its socket
+  // to disappear before cleaning up (no socket API for deletion).
+  const stopDeadline = Date.now() + 5_000;
+  while (Date.now() < stopDeadline) {
+    const gone = await fs.access(socketPath).then(
+      () => false,
+      () => true,
+    );
+    if (gone) break;
+    await new Promise((r) => setTimeout(r, 100));
+  }
+  await execa("herdr", ["session", "delete", name]);
 }

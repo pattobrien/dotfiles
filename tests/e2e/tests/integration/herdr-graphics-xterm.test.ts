@@ -1,6 +1,11 @@
-import { expect, test } from "vite-plus/test";
+import { mkdtemp, writeFile } from "node:fs/promises";
+import { tmpdir } from "node:os";
+import path from "node:path";
 
-import { createHerdrSession } from "../../src/herdr.ts";
+import { expect, test as base } from "vite-plus/test";
+
+import { kittyTransmitRgba, loadTestImage } from "../../src/graphics.ts";
+import { createHerdrSession, type HerdrTestSession } from "../../src/herdr.ts";
 import { pollFor } from "../../src/term/backend.ts";
 import { createXtermBackend, type XtermSession } from "../../src/term/xterm.ts";
 
@@ -11,58 +16,72 @@ import { createXtermBackend, type XtermSession } from "../../src/term/xterm.ts";
  * (vendor/xterm-master — kitty graphics MVP + APC parser hooks).
  */
 
-test("SGR-pixels click reports raw pixel coordinates when 1016 is active", async () => {
-  const backend = createXtermBackend();
-  const session = (await backend.launch(
-    ["/bin/sh", "-c", 'printf "\\033[?1003h\\033[?1006h\\033[?1016h"; exec cat -v'],
-    { cols: 60, rows: 10, label: "xterm-sgr-pixels" },
-  )) as XtermSession;
-  try {
-    await pollFor(() => session.mouseModes().has(1016), "mode 1016 to be tracked");
-    session.clickPixel(101, 202);
-    // cat -v renders the press/release reports with ESC as ^[.
-    await session.waitFor(/\^\[\[<0;101;202M\^\[\[<0;101;202m/);
-  } finally {
-    await session.dispose();
-  }
+const IMAGE = loadTestImage();
+
+const test = base
+  // SGR-pixels echo probe: a raw backend session (no herdr) that enables
+  // all-motion + SGR + SGR-pixels and echoes its input via cat -v.
+  .extend("sgrEchoTerm", async ({}, { onCleanup }): Promise<XtermSession> => {
+    const session = (await createXtermBackend().launch(
+      ["/bin/sh", "-c", 'printf "\\033[?1003h\\033[?1006h\\033[?1016h"; exec cat -v'],
+      { cols: 60, rows: 10, label: "xterm-sgr-pixels" },
+    )) as XtermSession;
+    onCleanup(() => session.dispose());
+    return session;
+  })
+
+  // Isolated herdr server/session attached through the xterm.js backend.
+  .extend(
+    "xtermHerdr",
+    async ({ task }, { onCleanup }): Promise<HerdrTestSession<XtermSession>> => {
+      const session = await createHerdrSession<XtermSession>({
+        backend: createXtermBackend(),
+        label: `herdr-xterm ${task.name}`,
+      });
+      onCleanup(() => session.dispose());
+      return session;
+    },
+  );
+
+test("SGR-pixels click reports raw pixel coordinates when 1016 is active", async ({
+  sgrEchoTerm,
+}) => {
+  await pollFor(() => sgrEchoTerm.mouseModes().has(1016), "mode 1016 to be tracked");
+  sgrEchoTerm.clickPixel(101, 202);
+  // cat -v renders the press/release reports with ESC as ^[.
+  await sgrEchoTerm.waitFor(/\^\[\[<0;101;202M\^\[\[<0;101;202m/);
 });
 
 test(
   "pane kitty transmit lands in the emulator's kitty image storage",
   { timeout: 15_000 },
-  async () => {
-    const session = await createHerdrSession<XtermSession>({
-      backend: createXtermBackend(),
-      label: "herdr-graphics-xterm",
-    });
-    try {
-      const { term } = session;
-      await term.waitFor(/\+/, 5_000);
+  async ({ xtermHerdr }) => {
+    const { term } = xtermHerdr;
+    await term.waitFor(/\+/, 5_000);
 
-      // 1x1 opaque white RGBA transmit+display, printed by the pane's shell.
-      // herdr decodes it pane-side (embedded ghostty) and re-encodes a host
-      // transmit (a=t,t=d) + placement (a=p) for the attached client.
-      term.type("printf '\\033_Ga=T,t=d,f=32,s=1,v=1,i=777;/////w==\\033\\\\'\n");
+    // The real-image transmit, emitted by the pane's shell from a file (the
+    // chunked payload is far too long to type). herdr decodes it pane-side
+    // (embedded ghostty) and re-encodes a host transmit (a=t,t=d) +
+    // placement (a=p) for the attached client.
+    const dir = await mkdtemp(path.join(tmpdir(), "herdr-gfx-"));
+    const apcFile = path.join(dir, "image.bin");
+    await writeFile(apcFile, Buffer.from(kittyTransmitRgba(IMAGE), "latin1"));
+    term.type(`cat ${apcFile}\n`);
 
-      await pollFor(() => term.graphics().length > 0, "kitty image in emulator storage", 10_000);
-      const [image] = term.graphics();
-      if (!image) throw new Error("expected a kitty image");
-      expect(image.width).toBe(1);
-      expect(image.height).toBe(1);
-      expect(image.data.size).toBeGreaterThan(0);
-    } finally {
-      await session.dispose();
-    }
+    await pollFor(() => term.graphics().length > 0, "kitty image in emulator storage", 10_000);
+    const [image] = term.graphics();
+    if (!image) throw new Error("expected a kitty image");
+    expect(image.width).toBe(IMAGE.width);
+    expect(image.height).toBe(IMAGE.height);
+    expect(image.data.size).toBeGreaterThan(0);
   },
 );
 
-test("pixel-coordinate click on an unfocused pane moves focus", { timeout: 15_000 }, async () => {
-  const session = await createHerdrSession<XtermSession>({
-    backend: createXtermBackend(),
-    label: "herdr-pixel-click-xterm",
-  });
-  try {
-    const { client, term } = session;
+test(
+  "pixel-coordinate click on an unfocused pane moves focus",
+  { timeout: 15_000 },
+  async ({ xtermHerdr }) => {
+    const { client, term } = xtermHerdr;
     await term.waitFor(/\+/, 5_000);
 
     // herdr's client captures host mouse as any-event SGR (1006) — SGR-pixels
@@ -87,7 +106,5 @@ test("pixel-coordinate click on an unfocused pane moves focus", { timeout: 15_00
       "focus to move to the clicked pane",
       3_000,
     );
-  } finally {
-    await session.dispose();
-  }
-});
+  },
+);

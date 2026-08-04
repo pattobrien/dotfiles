@@ -28,6 +28,8 @@ export interface GraphicsCommand {
   action: string;
   /** Control keys as written (`i`, `f`, `s`, `v`, `p`, ...). */
   keys: Record<string, string>;
+  /** Decoded payload chunk. */
+  payload: Buffer;
   /** Decoded byte length of the base64 payload chunk. */
   payloadBytes: number;
 }
@@ -87,10 +89,12 @@ export function createProtocolSeam(): ProtocolSeam {
       const eq = part.indexOf("=");
       if (eq > 0) keys[part.slice(0, eq)] = part.slice(eq + 1);
     }
+    const decoded = payload ? Buffer.from(payload, "base64") : Buffer.alloc(0);
     graphics.push({
       action: keys["a"] ?? "t",
       keys,
-      payloadBytes: payload ? Buffer.from(payload, "base64").length : 0,
+      payload: decoded,
+      payloadBytes: decoded.length,
     });
   }
 

@@ -1,11 +1,23 @@
+import { mkdtemp, writeFile } from "node:fs/promises";
+import { tmpdir } from "node:os";
+import path from "node:path";
+
 import { expect, test as base } from "vite-plus/test";
 
+import {
+  kittyTransmitRgba,
+  loadTestImage,
+  reconstructTransmission,
+  writeGraphicsArtifact,
+} from "../../src/graphics.ts";
 import { createHerdrSession, type HerdrTestSession } from "../../src/herdr.ts";
 import { viewerLink } from "../../src/recording.ts";
 import { pollFor } from "../../src/term/backend.ts";
 import {
   createProtocolSeam,
   pixelCenterOfCell,
+  SYNTH_CELL_HEIGHT_PX,
+  SYNTH_CELL_WIDTH_PX,
   withProtocolSeam,
   type GraphicsCommand,
   type ProtocolSeam,
@@ -42,16 +54,14 @@ const test = base.extend("gfx", async ({ task, annotate }, { onCleanup }): Promi
   return { herdr, seam };
 });
 
-/** 1x1 RGBA transmit+display, the smallest valid kitty graphics command. */
-const PANE_IMAGE_PRINTF = String.raw`printf '\033_Ga=T,f=32,s=1,v=1,t=d,i=31,p=1,q=2;/wAA/w==\033\\'`;
+const IMAGE = loadTestImage();
 
 function isPaneImageTransmit(g: GraphicsCommand): boolean {
   return (
     (g.action === "t" || g.action === "T") &&
     g.keys["f"] === "32" &&
-    g.keys["s"] === "1" &&
-    g.keys["v"] === "1" &&
-    g.payloadBytes === 4
+    g.keys["s"] === String(IMAGE.width) &&
+    g.keys["v"] === String(IMAGE.height)
   );
 }
 
@@ -72,31 +82,42 @@ test("host capability contract: cell-size query answered, SGR mouse in cells", a
 });
 
 test(
-  "pane kitty graphics transmit is re-emitted to the host",
+  "pane kitty graphics transmit is re-emitted to the host and round-trips losslessly",
   { timeout: 15_000 },
-  async ({ gfx }) => {
+  async ({ gfx, task, annotate }) => {
     const { herdr, seam } = gfx;
     const { client } = herdr;
     await herdr.term.waitFor(/\+/, 5_000);
 
+    // The chunked payload is far too long to type — emit it from a file.
+    const dir = await mkdtemp(path.join(tmpdir(), "herdr-gfx-"));
+    const apcFile = path.join(dir, "image.bin");
+    await writeFile(apcFile, Buffer.from(kittyTransmitRgba(IMAGE), "latin1"));
+
     const pane = await client.panes.current();
-    await client.panes.run(pane.id, PANE_IMAGE_PRINTF);
+    await client.panes.run(pane.id, `cat ${apcFile}`);
 
     // Herdr rewrites image/placement ids on the way to the host — match the
-    // transmission semantically (format, geometry, payload size), not by id.
+    // transmission semantically (format and geometry), not by id.
     await pollFor(
       () => seam.graphics.some(isPaneImageTransmit),
-      "herdr to re-emit the pane's 1x1 RGBA transmit to the host",
+      "herdr to re-emit the pane's image transmit to the host",
       10_000,
       100,
     );
 
-    const transmit = seam.graphics.find(isPaneImageTransmit);
+    const transmitIndex = seam.graphics.findIndex(isPaneImageTransmit);
+    const transmit = seam.graphics[transmitIndex];
     if (!transmit) throw new Error("transmit disappeared after pollFor saw it");
     const hostImageId = transmit.keys["i"];
     expect(hostImageId).toBeDefined();
+    // The 16KB RGBA payload crosses herdr's compression threshold, so this
+    // transmission exercises the o=z zlib re-encode path — if this ever
+    // fails, that path has lost its coverage, not just changed shape.
+    expect(transmit.keys["o"]).toBe("z");
 
     // The display placement follows the upload and references the host id.
+    // The image spans ceil(px / synthetic-cell-px) host cells on each axis.
     await pollFor(
       () => seam.graphics.some((g) => g.action === "p" && g.keys["i"] === hostImageId),
       "a display placement for the re-emitted image",
@@ -105,9 +126,30 @@ test(
     );
     const placement = seam.graphics.find((g) => g.action === "p" && g.keys["i"] === hostImageId);
     if (!placement) throw new Error("placement disappeared after pollFor saw it");
-    // 1x1 px image occupies a single cell at any cell size.
-    expect(placement.keys["c"]).toBe("1");
-    expect(placement.keys["r"]).toBe("1");
+    expect(placement.keys["c"]).toBe(String(Math.ceil(IMAGE.width / SYNTH_CELL_WIDTH_PX)));
+    expect(placement.keys["r"]).toBe(String(Math.ceil(IMAGE.height / SYNTH_CELL_HEIGHT_PX)));
+
+    // Reconstruct the image from the captured records (concatenate chunks,
+    // inflate o=z, interpret per f=): herdr's re-encode must round-trip the
+    // pane's pixels losslessly.
+    const reconstructed = reconstructTransmission(seam.graphics, transmitIndex);
+    expect(reconstructed.width).toBe(IMAGE.width);
+    expect(reconstructed.height).toBe(IMAGE.height);
+    expect(reconstructed.rgba.equals(IMAGE.rgba)).toBe(true);
+
+    // Visual artifacts for this tier: the reconstructed image plus the
+    // screen state (the WASM backend can't rasterize the graphic itself).
+    const safeName = task.name.replace(/[^a-zA-Z0-9-_]/g, "_");
+    await writeGraphicsArtifact(`${safeName}-reconstructed.png`, reconstructed.png);
+    await writeGraphicsArtifact(`${safeName}-screen.svg`, herdr.term.term.screenshotSvg());
+    await annotate("reconstructed from herdr transmission", "screenshot", {
+      contentType: "image/png",
+      body: reconstructed.png.toString("base64"),
+    });
+    await annotate("final screen", "screenshot", {
+      contentType: "image/svg+xml",
+      body: Buffer.from(herdr.term.term.screenshotSvg()).toString("base64"),
+    });
   },
 );
 

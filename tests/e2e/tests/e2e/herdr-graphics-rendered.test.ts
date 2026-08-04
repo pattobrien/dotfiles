@@ -1,25 +1,39 @@
 /**
  * @module-tag e2e-kitty
  */
-import { randomUUID } from "node:crypto";
-import { access, mkdtemp, readFile, writeFile } from "node:fs/promises";
-import { homedir, tmpdir } from "node:os";
+import { mkdtemp, readFile, writeFile } from "node:fs/promises";
+import { tmpdir } from "node:os";
 import path from "node:path";
 
 import { execa } from "execa";
-import Herdr, { HerdrError } from "herdr-ts-sdk";
+import Herdr from "herdr-ts-sdk";
 import { PNG } from "pngjs";
 import { expect } from "vite-plus/test";
 
-import { launchKittyPanel } from "../../src/kitty-panel.ts";
+import {
+  colorStats,
+  isChromatic,
+  kittyTransmitPng,
+  loadTestImage,
+  mapPoint,
+  writeGraphicsArtifact,
+  type Bounds,
+} from "../../src/graphics.ts";
+import {
+  herdrSocketPath,
+  newHerdrSessionName,
+  stopHerdrSession,
+  waitForHerdrSocket,
+} from "../../src/herdr.ts";
+import { launchKittyPanel, type KittyPanel } from "../../src/kitty-panel.ts";
 import { pollFor } from "../../src/term/backend.ts";
-import { test } from "../fixtures.ts";
+import { test as base } from "../fixtures.ts";
 
 /**
  * Rendered-pixel verification: herdr running inside a REAL kitty OS window
- * must produce actual red pixels on screen for a pane-emitted kitty-graphics
- * image — the protocol-level tests in herdr-graphics.test.ts cannot see
- * whether the re-emitted escapes rasterize.
+ * must rasterize a pane-emitted kitty-graphics image on screen — the
+ * protocol-level tests in herdr-graphics.test.ts cannot see whether the
+ * re-emitted escapes actually render, or whether alpha survives compositing.
  *
  * The window is a top-layer, focus-policy=not-allowed os-panel and is never
  * focused or raised (occluded kitty windows freeze their screencapture
@@ -27,149 +41,190 @@ import { test } from "../fixtures.ts";
  * control goes through kitty remote control and the herdr SDK socket.
  */
 
-interface RedStats {
-  count: number;
-  minX: number;
-  minY: number;
-  maxX: number;
-  maxY: number;
-  inBox: number;
+const IMAGE = loadTestImage();
+
+interface PanelHerdr {
+  name: string;
+  panel: KittyPanel;
+  client: Herdr;
 }
 
-/** Count red-dominant pixels (channel dominance, tolerant of color management). */
-function redStats(png: PNG): RedStats {
-  let count = 0;
-  let minX = Infinity;
-  let minY = Infinity;
-  let maxX = -1;
-  let maxY = -1;
-  for (let y = 0; y < png.height; y++) {
-    for (let x = 0; x < png.width; x++) {
-      const i = (y * png.width + x) * 4;
-      const r = png.data[i] ?? 0;
-      const g = png.data[i + 1] ?? 0;
-      const b = png.data[i + 2] ?? 0;
-      if (r > 150 && r > 2 * g && r > 2 * b) {
-        count++;
-        if (x < minX) minX = x;
-        if (y < minY) minY = y;
-        if (x > maxX) maxX = x;
-        if (y > maxY) maxY = y;
-      }
-    }
-  }
-  const inBox = count > 0 ? (maxX - minX + 1) * (maxY - minY + 1) : 0;
-  return { count, minX, minY, maxX, maxY, inBox };
-}
+const test = base.extend("panelHerdr", async ({}, { onCleanup }): Promise<PanelHerdr> => {
+  // Single composite cleanup (one onCleanup per fixture), also invoked on
+  // setup failure — cleanups registered mid-setup don't run if setup throws.
+  const acquired: Array<() => Promise<unknown>> = [];
+  let released = false;
+  const releaseAll = async () => {
+    if (released) return;
+    released = true;
+    for (const release of acquired.reverse()) await release();
+  };
+  onCleanup(releaseAll);
 
-function solidRedPngBase64(size: number): string {
-  const img = new PNG({ width: size, height: size });
-  for (let i = 0; i < img.data.length; i += 4) {
-    img.data[i] = 255;
-    img.data[i + 1] = 0;
-    img.data[i + 2] = 0;
-    img.data[i + 3] = 255;
-  }
-  return PNG.sync.write(img).toString("base64");
-}
-
-test(
-  "a pane kitty-graphics image renders as red pixels in a real kitty window",
-  { timeout: 120_000 },
-  async ({ annotate }) => {
-    const name = `e2e-${randomUUID().slice(0, 8)}`;
-    const socketPath = path.join(homedir(), ".config", "herdr", "sessions", name, "herdr.sock");
+  try {
+    const name = newHerdrSessionName();
+    const socketPath = herdrSocketPath(name);
     // kitty spawns the panel with its own PATH (no mise shims) — resolve here.
     const { stdout: herdrBin } = await execa("which", ["herdr"]);
 
     const panel = await launchKittyPanel([herdrBin, "--session", name]);
-    let client: Herdr | undefined;
-    try {
-      await pollFor(
-        () =>
-          access(socketPath).then(
-            () => true,
-            () => false,
-          ),
-        `herdr socket at ${socketPath}`,
-        10_000,
-        100,
-      );
-      client = new Herdr({ socketPath });
-      await client.ping();
-      await pollFor(async () => (await panel.text()).includes("+"), "herdr tab bar", 10_000, 200);
-
-      const dir = await mkdtemp(path.join(tmpdir(), "herdr-rendered-"));
-
-      // Control: before the image is emitted, the panel has no red-dominant
-      // pixels (herdr chrome + empty pane background).
-      const beforePath = path.join(dir, "before.png");
-      await panel.capture(beforePath);
-      const before = redStats(PNG.sync.read(await readFile(beforePath)));
-      expect(before.count).toBeLessThan(50);
-
-      // 64x64 solid red PNG, transmit+display at cursor (a=T, f=100, t=d).
-      const apcFile = path.join(dir, "image.bin");
-      await writeFile(
-        apcFile,
-        Buffer.from(`\x1b_Ga=T,f=100,t=d;${solidRedPngBase64(64)}\x1b\\`, "latin1"),
-      );
-      const pane = await client.panes.current();
-      await client.panes.run(pane.id, `cat ${apcFile} && printf 'GFX_SENT\\n'`);
-      await client.panes.waitForOutput(pane.id, {
-        match: { type: "substring", value: "GFX_SENT" },
-        timeoutMs: 10_000,
-      });
-
-      // Poll captures until the rendered image shows up as a solid red block.
-      const afterPath = path.join(dir, "after.png");
-      let after: RedStats | undefined;
-      await pollFor(
-        async () => {
-          await panel.capture(afterPath);
-          after = redStats(PNG.sync.read(await readFile(afterPath)));
-          return after.count > 2000;
-        },
-        "red pixels in the captured kitty window",
-        15_000,
-        500,
-      );
-      if (!after) throw new Error("unreachable: pollFor guaranteed capture stats");
-
-      // A contiguous block roughly the image's size (kitty scales the
-      // placement to herdr's re-emitted cell rect, so allow a wide range),
-      // dense within its bounding box, with nothing red elsewhere.
-      const bboxW = after.maxX - after.minX + 1;
-      const bboxH = after.maxY - after.minY + 1;
-      expect(bboxW).toBeGreaterThanOrEqual(40);
-      expect(bboxW).toBeLessThanOrEqual(300);
-      expect(bboxH).toBeGreaterThanOrEqual(40);
-      expect(bboxH).toBeLessThanOrEqual(300);
-      expect(after.count / after.inBox).toBeGreaterThan(0.9);
-
-      await annotate("rendered capture", "screenshot", {
-        contentType: "image/png",
-        body: (await readFile(afterPath)).toString("base64"),
-      });
-    } finally {
-      await panel.close();
-      if (client) {
-        await client.server.stop().catch((error: unknown) => {
-          // Transport drops are expected while the server exits (same race
-          // herdr's own CLI tolerates); real error replies propagate.
-          if (error instanceof HerdrError) throw error;
-        });
-      }
-      const stopDeadline = Date.now() + 5_000;
-      while (Date.now() < stopDeadline) {
-        const gone = await access(socketPath).then(
-          () => false,
-          () => true,
-        );
-        if (gone) break;
-        await new Promise((r) => setTimeout(r, 100));
-      }
-      await execa("herdr", ["session", "delete", name]).catch(() => undefined);
+    acquired.push(() => panel.close());
+    if (!(await waitForHerdrSocket(socketPath, 10_000))) {
+      throw new Error(`herdr session ${name}: socket never appeared at ${socketPath}`);
     }
+    const client = new Herdr({ socketPath });
+    acquired.push(() => stopHerdrSession(client, socketPath, name));
+    await client.ping();
+    return { name, panel, client };
+  } catch (error) {
+    await releaseAll();
+    throw error;
+  }
+});
+
+interface CaptureDiff {
+  /** Pixels chromatic in `after` but not in `before`. */
+  newlyColored: number;
+  bounds: Bounds;
+}
+
+/** Diff two same-size captures for newly chromatic (image) pixels. */
+function diffCaptures(before: PNG, after: PNG): CaptureDiff {
+  const bounds = { minX: after.width, minY: after.height, maxX: -1, maxY: -1 };
+  let newlyColored = 0;
+  for (let y = 0; y < after.height; y++) {
+    for (let x = 0; x < after.width; x++) {
+      const i = (y * after.width + x) * 4;
+      const chromaticAt = (png: PNG) =>
+        isChromatic(png.data[i] ?? 0, png.data[i + 1] ?? 0, png.data[i + 2] ?? 0);
+      if (!chromaticAt(after) || chromaticAt(before)) continue;
+      newlyColored++;
+      if (x < bounds.minX) bounds.minX = x;
+      if (y < bounds.minY) bounds.minY = y;
+      if (x > bounds.maxX) bounds.maxX = x;
+      if (y > bounds.maxY) bounds.maxY = y;
+    }
+  }
+  return { newlyColored, bounds };
+}
+
+/** Most common quantized color — the pane background in a mostly-empty capture. */
+function modeColor(png: PNG): [number, number, number] {
+  const counts = new Map<number, number>();
+  for (let i = 0; i < png.data.length; i += 4) {
+    const key =
+      (((png.data[i] ?? 0) >> 2) << 12) |
+      (((png.data[i + 1] ?? 0) >> 2) << 6) |
+      ((png.data[i + 2] ?? 0) >> 2);
+    counts.set(key, (counts.get(key) ?? 0) + 1);
+  }
+  let best = 0;
+  let bestCount = -1;
+  for (const [key, count] of counts) {
+    if (count > bestCount) {
+      best = key;
+      bestCount = count;
+    }
+  }
+  return [((best >> 12) & 0x3f) << 2, ((best >> 6) & 0x3f) << 2, (best & 0x3f) << 2];
+}
+
+/** RGBA sub-region of a capture. */
+function region(png: PNG, bounds: Bounds): Uint8Array {
+  const w = bounds.maxX - bounds.minX + 1;
+  const h = bounds.maxY - bounds.minY + 1;
+  const out = new Uint8Array(w * h * 4);
+  for (let y = 0; y < h; y++) {
+    const src = ((bounds.minY + y) * png.width + bounds.minX) * 4;
+    out.set(png.data.subarray(src, src + w * 4), y * w * 4);
+  }
+  return out;
+}
+
+test(
+  "a pane kitty-graphics image renders with alpha blend-through in a real kitty window",
+  { timeout: 120_000 },
+  async ({ panelHerdr, task, annotate }) => {
+    const { panel, client } = panelHerdr;
+    await pollFor(async () => (await panel.text()).includes("+"), "herdr tab bar", 10_000, 200);
+
+    const dir = await mkdtemp(path.join(tmpdir(), "herdr-rendered-"));
+
+    // Background reference: capture before the image is emitted.
+    const beforePath = path.join(dir, "before.png");
+    await panel.capture(beforePath);
+    const before = PNG.sync.read(await readFile(beforePath));
+
+    // The real-image transmit+display (a=T, f=100, PNG bytes). The leading
+    // clear+home pins the image to the pane origin and removes the prompt
+    // and echoed command, the cursor is hidden (its themed block is
+    // chromatic and would pollute the diff), and the trailing sleep keeps a
+    // fresh prompt from redrawing under the polling captures.
+    const apcFile = path.join(dir, "image.bin");
+    await writeFile(
+      apcFile,
+      Buffer.from(`\x1b[2J\x1b[H\x1b[?25l${kittyTransmitPng(IMAGE)}`, "latin1"),
+    );
+    const pane = await client.panes.current();
+    await client.panes.run(pane.id, `cat ${apcFile} && sleep 600`);
+
+    // Poll captures until the rendered image shows up as newly colored
+    // pixels that were not present before.
+    const afterPath = path.join(dir, "after.png");
+    let after = before;
+    let diff: CaptureDiff = { newlyColored: 0, bounds: { minX: 0, minY: 0, maxX: -1, maxY: -1 } };
+    await pollFor(
+      async () => {
+        await panel.capture(afterPath);
+        after = PNG.sync.read(await readFile(afterPath));
+        diff = diffCaptures(before, after);
+        // ~36% of the asset is chromatic; at the ~48x50px rendered block
+        // that's ~900 pixels — 500 clears noise without assuming a scale.
+        return diff.newlyColored > 500;
+      },
+      "the image's colored pixels in the captured kitty window",
+      15_000,
+      500,
+    );
+
+    // A contiguous block roughly the image's size (kitty scales the
+    // placement to herdr's re-emitted cell rect; captures are Retina 2x —
+    // allow a wide range), dense within its bounding box.
+    const bboxW = diff.bounds.maxX - diff.bounds.minX + 1;
+    const bboxH = diff.bounds.maxY - diff.bounds.minY + 1;
+    expect(bboxW).toBeGreaterThanOrEqual(40);
+    expect(bboxW).toBeLessThanOrEqual(400);
+    expect(bboxH).toBeGreaterThanOrEqual(40);
+    expect(bboxH).toBeLessThanOrEqual(400);
+    expect(diff.newlyColored / (bboxW * bboxH)).toBeGreaterThan(0.2);
+
+    // A real multi-color image, not a stray fill: at least two distinct hue
+    // clusters inside the rendered block.
+    expect(colorStats(region(after, diff.bounds)).hueClusters).toBeGreaterThanOrEqual(2);
+
+    // Blend-through: at the asset's fully transparent points the pane
+    // background must show — the asset stores black under its transparency,
+    // so a dropped alpha channel would rasterize black, not the themed
+    // background. The rendered block corresponds to the asset's chromatic
+    // bounds; map through that correspondence.
+    const bg = modeColor(before);
+    for (const point of IMAGE.transparentPoints) {
+      const [px, py] = mapPoint(IMAGE.coloredBounds, diff.bounds, point);
+      const i = (py * after.width + px) * 4;
+      for (const c of [0, 1, 2]) {
+        expect(
+          Math.abs((after.data[i + c] ?? 0) - (bg[c] ?? 0)),
+          `channel ${c} at (${px},${py}) vs pane background`,
+        ).toBeLessThanOrEqual(15);
+      }
+    }
+
+    const capture = await readFile(afterPath);
+    const safeName = task.name.replace(/[^a-zA-Z0-9-_]/g, "_");
+    await writeGraphicsArtifact(`${safeName}-capture.png`, capture);
+    await annotate("rendered capture", "screenshot", {
+      contentType: "image/png",
+      body: capture.toString("base64"),
+    });
   },
 );
