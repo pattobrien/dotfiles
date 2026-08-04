@@ -138,10 +138,12 @@ export function createXtermBackend(): TermBackend {
         const tail = escIndex === -1 ? "" : s.slice(escIndex);
         carry = /^\x1b(\[[0-9;?]*)?$/.test(tail) ? tail : "";
       };
+      const outputEncoder = new TextEncoder();
       pty.onData((data) => {
         rawOutput += data;
         scanOutput(data);
         term.write(data);
+        options.onOutput?.(outputEncoder.encode(data));
       });
 
       const screenText = () => {

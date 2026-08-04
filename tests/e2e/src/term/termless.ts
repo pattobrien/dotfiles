@@ -64,7 +64,10 @@ export function createTermlessBackend(
         backend: b,
         cols,
         rows,
-        onAfterWrite: (data) => recorder.onOutput(data),
+        onAfterWrite: (data) => {
+          recorder.onOutput(data);
+          options.onOutput?.(data);
+        },
       });
       // Termless merges process.env under this internally, so env vars can
       // only be overridden, never removed here — vars that must not reach
