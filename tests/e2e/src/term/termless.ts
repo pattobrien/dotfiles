@@ -1,6 +1,7 @@
 import { createTerminal } from "@termless/core";
 import type { TerminalBackend, TestTerminal } from "@termless/core";
 import { resolve as resolveGhostty } from "@termless/ghostty";
+import { resolve as resolveKitty } from "@termless/kitty";
 
 import { SessionRecorder } from "../recording.ts";
 import { pollFor, type TermBackend, type TermLaunchOptions, type TermSession } from "./backend.ts";
@@ -22,6 +23,7 @@ export interface TermlessSession extends TermSession {
 // points at the @termless scope dir), so backend("ghostty") throws ENOENT.
 const FACTORIES: Record<string, () => Promise<TerminalBackend>> = {
   ghostty: () => resolveGhostty(),
+  kitty: () => resolveKitty(),
 };
 
 /** Per-process label dedupe so parallel sessions don't overwrite recordings. */
@@ -37,7 +39,9 @@ function uniqueLabel(label: string): string {
  * backend (WASM); the spawned process runs under a real node-pty PTY.
  * Every session is recorded as an asciicast under test-results/recordings/.
  */
-export function createTermlessBackend(backendName = "ghostty"): TermBackend & {
+export function createTermlessBackend(
+  backendName = process.env.E2E_TERM_BACKEND ?? "ghostty",
+): TermBackend & {
   launch(command: string[], options?: TermLaunchOptions): Promise<TermlessSession>;
 } {
   return {

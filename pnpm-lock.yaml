@@ -12,6 +12,9 @@ catalogs:
     '@termless/ghostty':
       specifier: 0.8.4
       version: 0.8.4
+    '@termless/kitty':
+      specifier: 0.8.4
+      version: 0.8.4
     '@termless/test':
       specifier: 0.8.4
       version: 0.8.4
@@ -79,6 +82,9 @@ importers:
         specifier: 'catalog:'
         version: 0.8.4(node-pty@1.1.0)
       '@termless/ghostty':
+        specifier: 'catalog:'
+        version: 0.8.4(@termless/core@0.8.4(node-pty@1.1.0))
+      '@termless/kitty':
         specifier: 'catalog:'
         version: 0.8.4(@termless/core@0.8.4(node-pty@1.1.0))
       '@termless/test':
@@ -1034,6 +1040,12 @@ packages:
 
   '@termless/ghostty@0.8.4':
     resolution: {integrity: sha512-Zg8TMqjmFRfsfQrnUQIovD5+mtoiJxfuGXzd7lGooqLd8tZq+O3KtL8iwllkrZ3SmdZhbEaTNcpsU/J93gxDsw==}
+    engines: {bun: '>=1.0.0', node: '>=23.6.0'}
+    peerDependencies:
+      '@termless/core': ^0.8.1
+
+  '@termless/kitty@0.8.4':
+    resolution: {integrity: sha512-nAnc7LeTUQATRpYLaoODVcGOYX55LmCrp7a5IUOWxVM5LWUojO+/t9GrVpXricVrI6q5CPp3r92N4VWQRzL7Gw==}
     engines: {bun: '>=1.0.0', node: '>=23.6.0'}
     peerDependencies:
       '@termless/core': ^0.8.1
@@ -2637,6 +2649,10 @@ snapshots:
       '@napi-rs/canvas': 1.0.3
       '@termless/core': 0.8.4(node-pty@1.1.0)
       ghostty-web: 0.4.0
+
+  '@termless/kitty@0.8.4(@termless/core@0.8.4(node-pty@1.1.0))':
+    dependencies:
+      '@termless/core': 0.8.4(node-pty@1.1.0)
 
   '@termless/test@0.8.4(@termless/core@0.8.4(node-pty@1.1.0))(vitest@4.1.10)':
     dependencies:

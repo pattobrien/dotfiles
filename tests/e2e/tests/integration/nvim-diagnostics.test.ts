@@ -52,7 +52,7 @@ async function launchNvimInTmux(
   }
 
   const client = attach({ socket });
-  await client._isReady;
+  await client.apiInfo;
 
   // LazyVim setup is complete once keymaps.lua (VeryLazy) has remapped <C-d>.
   const lazyDeadline = Date.now() + 20_000;

@@ -13,6 +13,7 @@
   "devDependencies": {
     "@termless/core": "catalog:",
     "@termless/ghostty": "catalog:",
+    "@termless/kitty": "catalog:",
     "@termless/test": "catalog:",
     "@termless/web-player": "catalog:",
     "@termless/xtermjs": "catalog:",

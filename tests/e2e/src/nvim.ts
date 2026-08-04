@@ -255,7 +255,7 @@ export async function launchNvimInstance(): Promise<NvimInstance> {
 
   await waitForFile(socket);
   const client = attach({ socket });
-  await client._isReady;
+  await client.apiInfo;
   await waitForLazyVim(client);
   await ensureHomeBuffer(client);
 

@@ -74,7 +74,10 @@ export const test = base
     const safeName = task.name.replace(/[^a-zA-Z0-9-_]/g, "_");
     // Each test file runs in its own isolated worker (one nvim per file) —
     // name the recording after the file so runs don't overwrite each other.
-    const fileName = task.file.name.split("/").pop()?.replace(/\.test\.ts$/, "");
+    const fileName = task.file.name
+      .split("/")
+      .pop()
+      ?.replace(/\.test\.ts$/, "");
     if (fileName) rawNvim.term.relabel(fileName);
     rawNvim.term.mark(task.name);
     await annotate(`terminal recording: ${viewerLink(fileName ?? "nvim")}`);
