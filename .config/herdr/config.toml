@@ -397,6 +397,9 @@ show_agent_labels_on_pane_borders = true
 # New tabs can still be created with the configured keybinding.
 # hide_tab_bar_when_single_tab = false
 
+# Place the desktop tab row below the terminal panes instead of above.
+tab_bar_position = "bottom"
+
 # Agent panel ordering: "spaces" (grouped by space) or "priority" (attention queue).
 # "workspaces" is accepted as an alias for "spaces".
 agent_panel_sort = "priority"
