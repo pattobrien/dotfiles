@@ -53,7 +53,7 @@ alias cc="claude"
 alias ccr="claude --resume"
 alias cx="codex"
 alias cxr="codex resume"
-alias cco="claude --model \"claude-opus-5[1m]\""
+alias cco="claude --model \"claude-opus-4-8[1m]\""
 alias oc="opencode"
 
 alias wm="workmux"
