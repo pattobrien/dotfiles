@@ -1,7 +1,7 @@
-import { execaCommand, execa } from "execa";
+import { execa, execaCommand } from "execa";
 
-const TMUX_SOCKET = "e2e-test";
-const TMUX_SESSION = "e2e";
+import { createTermlessBackend } from "./term/termless.ts";
+import type { TermlessSession } from "./term/termless.ts";
 
 export interface TmuxSession {
   socket: string;
@@ -15,15 +15,26 @@ export interface TmuxSession {
   sendKeys: (...keys: string[]) => Promise<void>;
   /** Capture the current pane content as text. */
   capture: () => Promise<string>;
+  /** Capture the current pane content including escape sequences (-e). */
+  captureRaw: () => Promise<string>;
   /** Wait for a regex pattern to appear in the pane. */
   waitForText: (pattern: string, timeoutSecs?: number) => Promise<void>;
   /** Run a tmux command on this session (e.g., "split-window -h"). */
   runCommand: (...args: string[]) => Promise<string>;
   /** List key bindings for a key table (e.g., "prefix", "root", "copy-mode-vi"). */
   listKeys: (table?: string) => Promise<string>;
+  /**
+   * Attach an emulator client to this session (tmux as system under test,
+   * emulator as data plane for rendering asserts).
+   */
+  attachTerm: (opts?: { cols?: number; rows?: number }) => Promise<TermlessSession>;
+  /** Kill the tmux server (and any emulator clients attached to it). */
+  dispose: () => Promise<void>;
 }
 
 function buildSession(socket: string, session: string): TmuxSession {
+  const attached: TermlessSession[] = [];
+
   return {
     socket,
     session,
@@ -33,9 +44,12 @@ function buildSession(socket: string, session: string): TmuxSession {
     },
 
     async capture() {
-      const { stdout } = await execaCommand(
-        `tmux -L ${socket} capture-pane -t ${session} -p`,
-      );
+      const { stdout } = await execaCommand(`tmux -L ${socket} capture-pane -t ${session} -p`);
+      return stdout;
+    },
+
+    async captureRaw() {
+      const { stdout } = await execaCommand(`tmux -L ${socket} capture-pane -t ${session} -pe`);
       return stdout;
     },
 
@@ -43,25 +57,15 @@ function buildSession(socket: string, session: string): TmuxSession {
       const deadline = Date.now() + timeoutSecs * 1000;
       const re = new RegExp(pattern);
       while (Date.now() < deadline) {
-        const { stdout } = await execaCommand(
-          `tmux -L ${socket} capture-pane -t ${session} -p`,
-        );
+        const { stdout } = await execaCommand(`tmux -L ${socket} capture-pane -t ${session} -p`);
         if (re.test(stdout)) return;
         await new Promise((r) => setTimeout(r, 100));
       }
-      throw new Error(
-        `Timed out after ${timeoutSecs}s waiting for: ${pattern}`,
-      );
+      throw new Error(`Timed out after ${timeoutSecs}s waiting for: ${pattern}`);
     },
 
     async runCommand(...args: string[]) {
-      const { stdout } = await execa("tmux", [
-        "-L",
-        socket,
-        ...args,
-        "-t",
-        session,
-      ]);
+      const { stdout } = await execa("tmux", ["-L", socket, ...args, "-t", session]);
       return stdout;
     },
 
@@ -71,51 +75,49 @@ function buildSession(socket: string, session: string): TmuxSession {
       const { stdout } = await execa("tmux", args);
       return stdout;
     },
+
+    async attachTerm(opts = {}) {
+      const term = (await createTermlessBackend().launch(
+        ["tmux", "-L", socket, "attach-session", "-t", session],
+        { cols: opts.cols ?? 200, rows: opts.rows ?? 50 },
+      )) as TermlessSession;
+      attached.push(term);
+      return term;
+    },
+
+    async dispose() {
+      for (const term of attached) {
+        await term.dispose();
+      }
+      await execaCommand(`tmux -L ${socket} kill-server`);
+    },
   };
 }
 
-/** Check if the persistent tmux server + session already exist. */
-async function tmuxSessionExists(): Promise<boolean> {
-  try {
-    await execa("tmux", ["-L", TMUX_SOCKET, "has-session", "-t", TMUX_SESSION]);
-    return true;
-  } catch {
-    return false;
-  }
-}
-
 /**
- * Get or create the persistent tmux session.
- * On first run: starts server + session (~400ms). On subsequent runs: instant.
- * The session is intentionally left alive after tests finish.
+ * Start a fresh scoped tmux server + session for this test run (unique
+ * socket per worker — never touches the user's real tmux server). Loads
+ * the real ~/.tmux.conf: tests assert this dotfiles config.
  */
-export async function getOrCreateTmuxSession(): Promise<TmuxSession> {
-  if (await tmuxSessionExists()) {
-    return buildSession(TMUX_SOCKET, TMUX_SESSION);
-  }
-
+export async function createTmuxSession(): Promise<TmuxSession> {
+  const socket = `e2e-${process.pid}`;
+  const session = "e2e";
   const tmuxConf = `${process.env.HOME}/.tmux.conf`;
+
   await execa("tmux", [
     "-L",
-    TMUX_SOCKET,
+    socket,
     "-f",
     tmuxConf,
     "new-session",
     "-d",
     "-s",
-    TMUX_SESSION,
+    session,
     "-x",
     "200",
     "-y",
     "50",
   ]);
 
-  return buildSession(TMUX_SOCKET, TMUX_SESSION);
-}
-
-/** Kill a tmux session (for test cleanup when isolation is needed). */
-export async function killTmuxSession(socket: string, session: string) {
-  await execaCommand(`tmux -L ${socket} kill-session -t ${session}`).catch(
-    () => {},
-  );
+  return buildSession(socket, session);
 }

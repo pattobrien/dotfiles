@@ -65,34 +65,42 @@ async function kittyWindowExists(): Promise<boolean> {
 }
 
 /**
- * Get or create a persistent kitty OS window for e2e tests.
+ * Create a kitty OS window for e2e tests, attached to this run's tmux server.
  *
  * Uses `kitty @` remote control to create a window within the existing kitty
- * process (shares the same dock icon). On subsequent runs, reuses the existing
- * window if it's still open.
+ * process (shares the same dock icon). A surviving window from an aborted run
+ * is attached to that run's dead PID-scoped tmux socket — keystrokes would
+ * land there while assertions read the fresh server — so it is closed and
+ * recreated, never reused.
  */
-export async function getOrCreateKittyInstance(
-  tmux: TmuxSession,
-): Promise<KittyInstance> {
-  if (!(await kittyWindowExists())) {
-    const socket = await findKittySocket();
+export async function createKittyInstance(tmux: TmuxSession): Promise<KittyInstance> {
+  const socket = await findKittySocket();
+  if (await kittyWindowExists()) {
     await execa("kitty", [
       "@",
       "--to",
       socket,
-      "launch",
-      "--type=os-window",
-      "--title",
-      E2E_WINDOW_TITLE,
-      "tmux",
-      "-L",
-      tmux.socket,
-      "attach-session",
-      "-t",
-      tmux.session,
+      "close-window",
+      "--match",
+      `title:${E2E_WINDOW_TITLE}`,
     ]);
-    await new Promise((r) => setTimeout(r, 500));
   }
+  await execa("kitty", [
+    "@",
+    "--to",
+    socket,
+    "launch",
+    "--type=os-window",
+    "--title",
+    E2E_WINDOW_TITLE,
+    "tmux",
+    "-L",
+    tmux.socket,
+    "attach-session",
+    "-t",
+    tmux.session,
+  ]);
+  await new Promise((r) => setTimeout(r, 500));
 
   return buildKittyInstance(tmux);
 }
@@ -163,14 +171,7 @@ function buildKittyInstance(tmux: TmuxSession): KittyInstance {
 
     async getText(opts?: { ansi?: boolean }) {
       const socket = await findKittySocket();
-      const args = [
-        "@",
-        "--to",
-        socket,
-        "get-text",
-        "--match",
-        `title:${E2E_WINDOW_TITLE}`,
-      ];
+      const args = ["@", "--to", socket, "get-text", "--match", `title:${E2E_WINDOW_TITLE}`];
       if (opts?.ansi) args.push("--ansi");
       const { stdout } = await execa("kitty", args);
       return stdout;

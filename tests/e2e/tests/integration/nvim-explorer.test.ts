@@ -3,9 +3,9 @@ import path from "node:path";
 
 import { expect } from "vite-plus/test";
 
-import { test } from "./fixtures.ts";
+import { test } from "../fixtures.ts";
 
-const FIXTURE_DIR = path.resolve(import.meta.dirname, "../fixtures/ts-project");
+const FIXTURE_DIR = path.resolve(import.meta.dirname, "../../fixtures/ts-project");
 
 test("file explorer shows hidden dotfiles", async ({ nvim }) => {
   const dir = `/tmp/nvim-e2e-explorer-${Date.now()}`;
@@ -16,11 +16,11 @@ test("file explorer shows hidden dotfiles", async ({ nvim }) => {
   try {
     await nvim.client.lua(`Snacks.explorer.open({ cwd = "${dir}" })`);
 
-    await nvim.tmux.waitForText("hidden-file", 3);
+    await nvim.term.waitFor("hidden-file", 3_000);
 
-    const pane = await nvim.tmux.capture();
-    expect(pane).toContain(".hidden-file");
-    expect(pane).toContain("visible-file");
+    const screen = nvim.term.text();
+    expect(screen).toContain(".hidden-file");
+    expect(screen).toContain("visible-file");
   } finally {
     await fs.rm(dir, { recursive: true, force: true });
   }
@@ -28,14 +28,12 @@ test("file explorer shows hidden dotfiles", async ({ nvim }) => {
 
 test("file picker shows hidden files", async ({ nvim }) => {
   // Open picker scoped to the fixture dir (feedkeys " ff" uses git root)
-  await nvim.client.lua(
-    `Snacks.picker.files({ cwd = "${FIXTURE_DIR}", hidden = true })`,
-  );
+  await nvim.client.lua(`Snacks.picker.files({ cwd = "${FIXTURE_DIR}", hidden = true })`);
 
-  await nvim.tmux.waitForText("\\.dotrc", 3);
+  await nvim.term.waitFor(/\.dotrc/, 3_000);
 
-  const pane = await nvim.tmux.capture();
-  expect(pane).toContain(".dotrc");
+  const screen = nvim.term.text();
+  expect(screen).toContain(".dotrc");
 
   await nvim.input("<Esc>");
 });

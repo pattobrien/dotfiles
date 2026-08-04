@@ -1,17 +1,25 @@
 import fs from "node:fs/promises";
+import os from "node:os";
+import path from "node:path";
 
 import type { NeovimClient } from "neovim";
 import { attach } from "neovim";
 
-import { type TmuxSession } from "./tmux.ts";
+import { createTermlessBackend } from "./term/termless.ts";
+import type { TermlessSession } from "./term/termless.ts";
 
-const NVIM_SOCKET = "/tmp/nvim-e2e.sock";
+/**
+ * Root of the checkout this test suite runs from — nvim's cwd. Resolved
+ * relative to this file so worktree checkouts test themselves, not the
+ * main clone.
+ */
+export const REPO_ROOT = path.resolve(import.meta.dirname, "../../..");
 
 export interface NvimInstance {
-  /** The neovim RPC client. */
+  /** The neovim RPC client — control plane. */
   client: NeovimClient;
-  /** The tmux session nvim is running in. */
-  tmux: TmuxSession;
+  /** The emulator session nvim renders into — data plane. */
+  term: TermlessSession;
 
   /** Get the current buffer text as a string. */
   getBufferContent: () => Promise<string>;
@@ -27,13 +35,15 @@ export interface NvimInstance {
   resetBuffer: (testName?: string) => Promise<void>;
   /** Check nvim is in expected start state. Returns list of violations. */
   checkStartState: () => Promise<string[]>;
+  /** Shut down nvim and the emulator session. */
+  dispose: () => Promise<void>;
 }
 
 /**
  * Wait for LazyVim's VeryLazy event to fire.
  * keymaps.lua loads on VeryLazy — once <C-d> is remapped, setup is complete.
  */
-async function waitForLazyVim(client: NeovimClient, timeoutMs = 15_000) {
+async function waitForLazyVim(client: NeovimClient, timeoutMs = 5_000) {
   const deadline = Date.now() + timeoutMs;
   while (Date.now() < deadline) {
     try {
@@ -44,42 +54,27 @@ async function waitForLazyVim(client: NeovimClient, timeoutMs = 15_000) {
     }
     await new Promise((r) => setTimeout(r, 100));
   }
-  throw new Error(
-    "Timed out waiting for LazyVim (keymaps not loaded after VeryLazy)",
-  );
+  throw new Error("Timed out waiting for LazyVim (keymaps not loaded after VeryLazy)");
 }
 
 /** Wait for a file to exist on disk. */
-async function waitForFile(path: string, timeoutMs = 10_000) {
+async function waitForFile(filePath: string, timeoutMs = 5_000) {
   const deadline = Date.now() + timeoutMs;
   while (Date.now() < deadline) {
     try {
-      await fs.access(path);
+      await fs.access(filePath);
       return;
     } catch {
       await new Promise((r) => setTimeout(r, 50));
     }
   }
-  throw new Error(`Timed out waiting for file: ${path}`);
+  throw new Error(`Timed out waiting for file: ${filePath}`);
 }
 
-/** Check if the persistent nvim socket file exists. */
-async function nvimSocketExists(): Promise<boolean> {
-  try {
-    await fs.access(NVIM_SOCKET);
-    return true;
-  } catch {
-    return false;
-  }
-}
-
-function buildNvimInstance(
-  client: NeovimClient,
-  tmux: TmuxSession,
-): NvimInstance {
+function buildNvimInstance(client: NeovimClient, term: TermlessSession): NvimInstance {
   return {
     client,
-    tmux,
+    term,
 
     async getBufferContent() {
       const buf = await client.buffer;
@@ -144,8 +139,8 @@ function buildNvimInstance(
         vim.cmd("let @/ = ''")
         vim.cmd("nohlsearch")
       `);
-      // Restore cwd to dotfiles root
-      await client.command("cd ~/dev/pattobrien/dotfiles");
+      // Restore cwd to the checkout root (structured call — no Ex escaping)
+      await client.request("nvim_set_current_dir", [REPO_ROOT]);
       await client.command("normal! gg");
     },
 
@@ -191,43 +186,36 @@ function buildNvimInstance(
         listed_bufs: string[];
       };
 
-      if (state.mode !== "n")
-        violations.push(`mode: expected 'n', got '${state.mode}'`);
-      if (state.win_count !== 1)
-        violations.push(`windows: expected 1, got ${state.win_count}`);
-      if (state.float_count > 0)
-        violations.push(`floats: expected 0, got ${state.float_count}`);
+      if (state.mode !== "n") violations.push(`mode: expected 'n', got '${state.mode}'`);
+      if (state.win_count !== 1) violations.push(`windows: expected 1, got ${state.win_count}`);
+      if (state.float_count > 0) violations.push(`floats: expected 0, got ${state.float_count}`);
       if (state.line_count > 1)
-        violations.push(
-          `lines: expected 1 empty line, got ${state.line_count}`,
-        );
-      if (state.first_line !== "")
-        violations.push(`buffer not empty: '${state.first_line}'`);
+        violations.push(`lines: expected 1 empty line, got ${state.line_count}`);
+      if (state.first_line !== "") violations.push(`buffer not empty: '${state.first_line}'`);
 
       // Only e2e-home and hover.ts should be listed
       const allowed = new Set(["e2e-home", "hover.ts"]);
       // Current scratch buffer is also fine (test-* names get wiped via bufhidden)
-      const stale = state.listed_bufs.filter(
-        (b) => !allowed.has(b) && !b.startsWith("test-"),
-      );
-      if (stale.length > 0)
-        violations.push(`stale buffers: ${stale.join(", ")}`);
+      const stale = state.listed_bufs.filter((b) => !allowed.has(b) && !b.startsWith("test-"));
+      if (stale.length > 0) violations.push(`stale buffers: ${stale.join(", ")}`);
 
-      // cwd should be the dotfiles root
-      if (!state.cwd.endsWith("/dotfiles")) {
-        violations.push(`cwd: expected */dotfiles, got '${state.cwd}'`);
+      // cwd should be the checkout root
+      if (state.cwd !== REPO_ROOT) {
+        violations.push(`cwd: expected '${REPO_ROOT}', got '${state.cwd}'`);
       }
 
       return violations;
     },
+
+    async dispose() {
+      // No explicit quit: disposing the emulator kills nvim's PTY, and
+      // quitting over RPC only produces teardown noise (the channel dies
+      // mid-request as a *result* of the quit).
+      await term.dispose();
+    },
   };
 }
 
-/**
- * Get or create a persistent nvim instance inside the tmux session.
- * On first run: launches nvim + waits for LazyVim (~2s). On subsequent runs: instant.
- * The nvim instance is intentionally left alive after tests finish.
- */
 /**
  * Create a permanent unlisted buffer that is never closed.
  * This ensures bwipeout! in resetBuffer can never kill the last buffer.
@@ -245,47 +233,31 @@ async function ensureHomeBuffer(client: NeovimClient) {
 }
 
 /**
- * Get or create a persistent nvim instance inside the tmux session.
- * On first run: launches nvim + waits for LazyVim (~2s). On subsequent runs: instant.
- * The nvim instance is intentionally left alive after tests finish.
+ * Launch a fresh nvim under an emulator PTY (worker-scoped: one per test
+ * run, disposed on worker exit). RPC control plane over a unique socket;
+ * screen assertions read the emulator. noswapfile: the instance is
+ * disposable, and a stale swap from a killed run blocks startup on a
+ * recovery dialog.
  */
-export async function getOrCreateNvimInstance(
-  tmux: TmuxSession,
-): Promise<NvimInstance> {
-  // Try connecting to existing nvim socket
-  if (await nvimSocketExists()) {
-    try {
-      const client = attach({ socket: NVIM_SOCKET });
-      await client._isReady;
-      await ensureHomeBuffer(client);
-      return buildNvimInstance(client, tmux);
-    } catch {
-      // Socket exists but nvim is dead — clean up and launch fresh
-      await fs.rm(NVIM_SOCKET, { force: true });
-    }
-  }
+export async function launchNvimInstance(): Promise<NvimInstance> {
+  const socket = path.join(os.tmpdir(), `nvim-e2e-${process.pid}.sock`);
+  await fs.rm(socket, { force: true });
 
-  // Launch nvim in the tmux session. noswapfile: the fixture is disposable,
-  // and a stale swap from a killed fixture blocks startup on a recovery dialog.
-  await tmux.sendKeys(
-    `nvim --cmd 'set noswapfile' --listen ${NVIM_SOCKET}`,
-    "Enter",
-  );
+  const term = (await createTermlessBackend().launch(
+    ["nvim", "--cmd", "set noswapfile", "--listen", socket],
+    {
+      cols: 200,
+      rows: 50,
+      cwd: REPO_ROOT,
+      label: "nvim",
+    },
+  )) as TermlessSession;
 
-  // Wait for socket + RPC handshake + LazyVim
-  await waitForFile(NVIM_SOCKET);
-  const client = attach({ socket: NVIM_SOCKET });
-  await client._isReady;
+  await waitForFile(socket);
+  const client = attach({ socket });
+  await client.apiInfo;
   await waitForLazyVim(client);
   await ensureHomeBuffer(client);
 
-  return buildNvimInstance(client, tmux);
-}
-
-/** Disconnect the RPC client (does NOT kill nvim — it stays alive for next run). */
-export function disconnectNvim(_nvim: NvimInstance) {
-  // Intentionally a no-op. The socket connection gets cleaned up when the
-  // vitest worker process exits. Calling client.quit() kills nvim, and
-  // transport.close() causes "Premature close" unhandled rejections.
-  // The persistent nvim instance survives for the next test run.
+  return buildNvimInstance(client, term);
 }

@@ -4,40 +4,41 @@ import { defineConfig } from "vite-plus";
 
 const dotfiles = path.resolve(import.meta.dirname, "../..");
 
+// The neovim package uses msgpack async generators over raw Node streams.
+// Vite's module runner transforms the module in a way that breaks the
+// streaming decode loop, causing RPC calls to hang.
+const serverDeps = {
+  deps: {
+    external: [/neovim/, /@msgpack/, /msgpack/],
+  },
+};
+
 export default defineConfig({
   fmt: {},
   test: {
-    // All test files share one persistent nvim instance — serialize to avoid
-    // concurrent buffer operations on the same nvim.
+    include: ["tests/integration/**/*.test.ts", "tests/e2e/**/*.test.ts"],
+    setupFiles: ["./tests/setup.ts"],
+    // Worker-scoped fixtures (nvim, tmux) serialize within a worker, and the
+    // real-kitty tests steal focus — everything stays strictly serial.
     fileParallelism: false,
+    testTimeout: 5_000,
+    hookTimeout: 5_000,
     tags: [
       {
-        name: "kitty",
-        description:
-          "Requires a real kitty instance (GUI, steals focus). Excluded by default.",
-        timeout: 30_000,
+        name: "e2e-kitty",
+        description: "Opens real kitty OS windows (graphics/pixel assertions).",
       },
     ],
-    // @ts-expect-error tagsFilter exists at runtime but is missing from bundled types
-    tagsFilter: ["!kitty"],
-    testTimeout: 5_000,
-    hookTimeout: 15_000, // first-run nvim startup can take a few seconds
-    // Re-run tests when the config files they test change.
-    // vitest doesn't support per-file triggers, so we list all config paths
-    // and the test names in the glob patterns make it clear which is which.
+    // Real-kitty tests are opt-in: excluded by default so a bare `vp test`
+    // never opens windows; `vp test --tagsFilter=e2e-kitty` runs them.
+    tagsFilter: ["!e2e-kitty"],
     forceRerunTriggers: [
-      `${dotfiles}/.config/kitty/**`,
+      `${dotfiles}/.config/herdr/**`,
       `${dotfiles}/.config/tmux/**`,
       `${dotfiles}/.config/nvim/**`,
+      `${dotfiles}/.config/kitty/**`,
       `${dotfiles}/zsh/**`,
     ],
-    server: {
-      deps: {
-        // The neovim package uses msgpack async generators over raw Node
-        // streams. Vite's module runner transforms the module in a way that
-        // breaks the streaming decode loop, causing RPC calls to hang.
-        external: [/neovim/, /@msgpack/, /msgpack/],
-      },
-    },
+    server: serverDeps,
   },
 });

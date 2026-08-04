@@ -1,7 +1,7 @@
 import { execa } from "execa";
 import { expect } from "vite-plus/test";
 
-import { test } from "./fixtures.ts";
+import { test } from "../fixtures.ts";
 
 test("vi copy mode bindings are registered", async ({ tmux }) => {
   const keys = await tmux.listKeys("copy-mode-vi");
