@@ -58,7 +58,6 @@ test("pane split renders a divider between panes", async ({ herdr, annotate }) =
   if (!left || !right) throw new Error("expected two panes after split");
   const dividerCol = right.rect.x - 1;
 
-  await term.waitFor(/./, 2_000);
   const t = term.term;
   // Interior rows only — the divider column's first/last rows are border
   // corners (┐/┘) where pane borders meet.
@@ -67,6 +66,13 @@ test("pane split renders a divider between panes", async ({ herdr, annotate }) =
     left.rect.y + Math.floor(left.rect.height / 2),
     left.rect.y + left.rect.height - 2,
   ];
+  // The SDK reports the new layout before the redraw reaches the emulator —
+  // poll the screen until the divider is actually drawn.
+  const drawDeadline = Date.now() + 3_000;
+  while (Date.now() < drawDeadline) {
+    if (sampleRows.every((row) => t.row(row).getText()[dividerCol] === "│")) break;
+    await new Promise((r) => setTimeout(r, 100));
+  }
   for (const row of sampleRows) {
     const line = t.row(row).getText();
     expect(line[dividerCol], `divider at row ${row}, col ${dividerCol}`).toBe("│");

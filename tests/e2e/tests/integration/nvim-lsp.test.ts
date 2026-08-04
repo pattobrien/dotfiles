@@ -160,6 +160,21 @@ test(
 
     await waitForDefinitionResolution(nvim);
 
+    // LazyVim's LSP `gd` is a buffer-local mapping applied on LspAttach —
+    // it can lag behind the client becoming visible to get_clients. Until
+    // it lands, `gd` falls through to the built-in goto-local-declaration
+    // (which just jumps to the import binding), so wait for the mapping.
+    const mapDeadline = Date.now() + 5_000;
+    let gdMapped = false;
+    while (Date.now() < mapDeadline) {
+      gdMapped = (await nvim.client.lua(
+        'return not vim.tbl_isempty(vim.fn.maparg("gd", "n", false, true))',
+      )) as boolean;
+      if (gdMapped) break;
+      await new Promise((r) => setTimeout(r, 100));
+    }
+    expect(gdMapped, "LSP gd mapping never attached to the buffer").toBe(true);
+
     await nvim.input("gd");
 
     // gd must land in zod's published types inside node_modules. Depending
