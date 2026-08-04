@@ -179,7 +179,8 @@
     "typescript-lsp@claude-plugins-official": false,
     "understand-anything@understand-anything": true,
     "patt@pattobrien": true,
-    "worktrunk@worktrunk": true
+    "worktrunk@worktrunk": true,
+    "plannotator-effective-html@effective-html": true
   },
   "extraKnownMarketplaces": {
     "claude-notifications-go": {
@@ -216,6 +217,12 @@
       "source": {
         "source": "github",
         "repo": "max-sixty/worktrunk"
+      }
+    },
+    "effective-html": {
+      "source": {
+        "source": "github",
+        "repo": "plannotator/effective-html"
       }
     }
   },
