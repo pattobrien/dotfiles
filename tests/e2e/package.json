@@ -25,6 +25,7 @@
     "herdr-ts-sdk": "link:/Users/patt/dev/pattobrien/shed/packages/herdr-ts-sdk",
     "neovim": "^5.4.0",
     "node-pty": "catalog:",
+    "playwright-core": "catalog:",
     "typescript": "catalog:",
     "vite-plus": "catalog:",
     "vitest": "catalog:",
