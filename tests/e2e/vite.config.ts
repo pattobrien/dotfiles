@@ -15,6 +15,9 @@ const serverDeps = {
 
 export default defineConfig({
   fmt: {},
+  lint: {
+    ignorePatterns: ["vendor"],
+  },
   test: {
     include: ["tests/integration/**/*.test.ts", "tests/e2e/**/*.test.ts"],
     setupFiles: ["./tests/setup.ts"],
