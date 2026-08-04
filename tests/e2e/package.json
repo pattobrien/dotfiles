@@ -21,7 +21,7 @@
     "@xterm/headless": "catalog:",
     "@xterm/xterm": "catalog:",
     "execa": "^9.6.1",
-    "herdr-ts-sdk": "link:../../../shed/packages/herdr-ts-sdk",
+    "herdr-ts-sdk": "link:/Users/patt/dev/pattobrien/shed/packages/herdr-ts-sdk",
     "neovim": "^5.4.0",
     "node-pty": "catalog:",
     "typescript": "catalog:",

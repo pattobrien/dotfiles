@@ -106,8 +106,8 @@ importers:
         specifier: ^9.6.1
         version: 9.6.1
       herdr-ts-sdk:
-        specifier: link:../../../shed/packages/herdr-ts-sdk
-        version: link:../../../shed/packages/herdr-ts-sdk
+        specifier: link:/Users/patt/dev/pattobrien/shed/packages/herdr-ts-sdk
+        version: link:../../../../../../dev/pattobrien/shed/packages/herdr-ts-sdk
       neovim:
         specifier: ^5.4.0
         version: 5.4.0
@@ -126,18 +126,6 @@ importers:
       zod:
         specifier: 'catalog:'
         version: 4.4.3
-
-  tests/e2e/tests:
-    devDependencies:
-      '@termless/web-player':
-        specifier: 'catalog:'
-        version: 0.8.4(@termless/core@0.8.4(node-pty@1.1.0))
-      '@vitest/ui':
-        specifier: 'catalog:'
-        version: 4.1.10(vitest@4.1.10)
-      '@xterm/xterm':
-        specifier: 'catalog:'
-        version: 6.0.0
 
   tools/scripts:
     devDependencies:
