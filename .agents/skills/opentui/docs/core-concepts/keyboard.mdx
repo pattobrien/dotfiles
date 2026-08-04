@@ -14,20 +14,20 @@ OpenTUI parses terminal input and provides structured key events. The `renderer.
 ## Basic key handling
 
 ```typescript
-import { createCliRenderer, type KeyEvent } from "@opentui/core"
+import { createCliRenderer, type KeyEvent } from "@opentui/core";
 
-const renderer = await createCliRenderer()
-const keyHandler = renderer.keyInput
+const renderer = await createCliRenderer();
+const keyHandler = renderer.keyInput;
 
 keyHandler.on("keypress", (key: KeyEvent) => {
-  console.log("Key name:", key.name)
-  console.log("Input sequence:", key.sequence)
-  console.log("Raw input:", key.raw)
-  console.log("Ctrl pressed:", key.ctrl)
-  console.log("Shift pressed:", key.shift)
-  console.log("Alt pressed:", key.meta)
-  console.log("Option pressed:", key.option)
-})
+  console.log("Key name:", key.name);
+  console.log("Input sequence:", key.sequence);
+  console.log("Raw input:", key.raw);
+  console.log("Ctrl pressed:", key.ctrl);
+  console.log("Shift pressed:", key.shift);
+  console.log("Alt pressed:", key.meta);
+  console.log("Option pressed:", key.option);
+});
 ```
 
 ## KeyEvent properties
@@ -79,7 +79,7 @@ Aliases are one-step mappings from configured binding names to additional lookup
 Editable components that accept a `keyAliasMap` option (`InputRenderable`, `TextareaRenderable`, `SelectRenderable`, etc.) merge these defaults with your own map:
 
 ```typescript
-import { InputRenderable } from "@opentui/core"
+import { InputRenderable } from "@opentui/core";
 
 const input = new InputRenderable(renderer, {
   id: "field",
@@ -87,7 +87,7 @@ const input = new InputRenderable(renderer, {
     // Treat the numpad decimal key as forward-delete
     kpdecimal: "delete",
   },
-})
+});
 ```
 
 ## Common key patterns
@@ -97,17 +97,17 @@ const input = new InputRenderable(renderer, {
 ```typescript
 keyHandler.on("keypress", (key: KeyEvent) => {
   if (key.name === "escape") {
-    console.log("Escape pressed!")
+    console.log("Escape pressed!");
   }
 
   if (key.name === "return") {
-    console.log("Enter pressed!")
+    console.log("Enter pressed!");
   }
 
   if (key.name === "space") {
-    console.log("Space pressed!")
+    console.log("Space pressed!");
   }
-})
+});
 ```
 
 ### Modifier combinations
@@ -116,24 +116,24 @@ keyHandler.on("keypress", (key: KeyEvent) => {
 keyHandler.on("keypress", (key: KeyEvent) => {
   // Ctrl+C
   if (key.ctrl && key.name === "c") {
-    console.log("Ctrl+C pressed!")
+    console.log("Ctrl+C pressed!");
   }
 
   // Ctrl+S
   if (key.ctrl && key.name === "s") {
-    console.log("Save shortcut!")
+    console.log("Save shortcut!");
   }
 
   // Shift+F1
   if (key.shift && key.name === "f1") {
-    console.log("Shift+F1 pressed!")
+    console.log("Shift+F1 pressed!");
   }
 
   // Alt+Enter
   if (key.meta && key.name === "return") {
-    console.log("Alt+Enter pressed!")
+    console.log("Alt+Enter pressed!");
   }
-})
+});
 ```
 
 ### Function keys
@@ -142,13 +142,13 @@ keyHandler.on("keypress", (key: KeyEvent) => {
 keyHandler.on("keypress", (key: KeyEvent) => {
   // F1-F12
   if (key.name === "f1") {
-    showHelp()
+    showHelp();
   }
 
   if (key.name === "f5") {
-    refresh()
+    refresh();
   }
-})
+});
 ```
 
 ### Arrow keys
@@ -157,19 +157,19 @@ keyHandler.on("keypress", (key: KeyEvent) => {
 keyHandler.on("keypress", (key: KeyEvent) => {
   switch (key.name) {
     case "up":
-      moveCursorUp()
-      break
+      moveCursorUp();
+      break;
     case "down":
-      moveCursorDown()
-      break
+      moveCursorDown();
+      break;
     case "left":
-      moveCursorLeft()
-      break
+      moveCursorLeft();
+      break;
     case "right":
-      moveCursorRight()
-      break
+      moveCursorRight();
+      break;
   }
-})
+});
 ```
 
 ## Paste events
@@ -177,15 +177,15 @@ keyHandler.on("keypress", (key: KeyEvent) => {
 Handle pasted bytes separately from individual keypresses. Decode them explicitly when you expect text:
 
 ```typescript
-import { type PasteEvent } from "@opentui/core"
+import { type PasteEvent } from "@opentui/core";
 
-const textDecoder = new TextDecoder()
+const textDecoder = new TextDecoder();
 
 keyHandler.on("paste", (event: PasteEvent) => {
-  console.log("Pasted bytes:", event.bytes)
-  console.log("Decoded text:", textDecoder.decode(event.bytes))
-  console.log("Metadata:", event.metadata)
-})
+  console.log("Pasted bytes:", event.bytes);
+  console.log("Decoded text:", textDecoder.decode(event.bytes));
+  console.log("Metadata:", event.metadata);
+});
 ```
 
 ## Exit on Ctrl+C
@@ -195,20 +195,20 @@ Configure the renderer to automatically exit on Ctrl+C:
 ```typescript
 const renderer = await createCliRenderer({
   exitOnCtrlC: true, // Default behavior
-})
+});
 
 // Or handle it manually
 const renderer = await createCliRenderer({
   exitOnCtrlC: false,
-})
+});
 
 renderer.keyInput.on("keypress", (key: KeyEvent) => {
   if (key.ctrl && key.name === "c") {
     // Custom cleanup before shutdown
-    cleanup()
-    renderer.destroy()
+    cleanup();
+    renderer.destroy();
   }
-})
+});
 ```
 
 ## Kitty keyboard protocol
@@ -224,10 +224,10 @@ const renderer = await createCliRenderer({
     allKeysAsEscapes: false,
     reportText: false,
   },
-})
+});
 
 // Disable entirely:
-await createCliRenderer({ useKittyKeyboard: null })
+await createCliRenderer({ useKittyKeyboard: null });
 ```
 
 | Option             | Default | Flag                              | Description                                                                    |
@@ -249,21 +249,21 @@ Kitty escape sequences still emit the same canonical key names as legacy input w
 Focus components to receive keyboard input. OpenTUI routes events to the focused component:
 
 ```typescript
-import { InputRenderable } from "@opentui/core"
+import { InputRenderable } from "@opentui/core";
 
 const input = new InputRenderable(renderer, {
   id: "my-input",
   placeholder: "Type here...",
-})
+});
 
 // Focus the input to receive key events
-input.focus()
+input.focus();
 
 // Or with constructs
-import { Input } from "@opentui/core"
+import { Input } from "@opentui/core";
 
-const inputNode = Input({ placeholder: "Type here..." })
-inputNode.focus() // Queued for when instantiated
+const inputNode = Input({ placeholder: "Type here..." });
+inputNode.focus(); // Queued for when instantiated
 
-renderer.root.add(inputNode)
+renderer.root.add(inputNode);
 ```

@@ -1,10 +1,8 @@
 ---
 name: skillify
-description:
-  "Capture this session's repeatable process into a reusable skill. Call at end
+description: "Capture this session's repeatable process into a reusable skill. Call at end
   of a process you want to automate."
-when_to_use:
-  "Use when the user wants to capture, save, or turn a session workflow into a
+when_to_use: "Use when the user wants to capture, save, or turn a session workflow into a
   reusable skill. Examples: '/skillify', 'capture this as a skill', 'turn this
   into a skill', 'save this workflow', 'make this repeatable'"
 allowed-tools:

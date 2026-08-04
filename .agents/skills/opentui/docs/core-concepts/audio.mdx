@@ -14,17 +14,17 @@ OpenTUI exposes a native miniaudio-backed `Audio` engine from `@opentui/core`. I
 ## Basic usage
 
 ```typescript
-import { Audio } from "@opentui/core"
+import { Audio } from "@opentui/core";
 
-const audio = Audio.create({ autoStart: false })
+const audio = Audio.create({ autoStart: false });
 
 audio.on("error", (error, context) => {
-  console.error(`${context.action}: ${error.message}`)
-})
+  console.error(`${context.action}: ${error.message}`);
+});
 
-const sound = await audio.loadSoundFile("click.wav")
+const sound = await audio.loadSoundFile("click.wav");
 if (sound != null && audio.start()) {
-  audio.play(sound, { volume: 0.8, pan: 0, loop: false })
+  audio.play(sound, { volume: 0.8, pan: 0, loop: false });
 }
 ```
 
@@ -76,46 +76,50 @@ All three resolve after the native decoder is ready, normally while buffering. S
 ### URL streams
 
 ```typescript
-import { Audio, AudioStreamError, type AudioStream } from "@opentui/core"
+import { Audio, AudioStreamError, type AudioStream } from "@opentui/core";
 
-const audio = Audio.create({ autoStart: false })
-let stream: AudioStream | null = null
-const safeMetadata = (value: string | undefined) => value?.replace(/[\u0000-\u001f\u007f-\u009f]/g, " ")
+const audio = Audio.create({ autoStart: false });
+let stream: AudioStream | null = null;
+const safeMetadata = (value: string | undefined) =>
+  value?.replace(/[\u0000-\u001f\u007f-\u009f]/g, " ");
 
 audio.on("error", (error) => {
-  console.error(error.message)
-})
+  console.error(error.message);
+});
 
 try {
-  if (!audio.start()) throw new Error("No playback device available")
+  if (!audio.start()) throw new Error("No playback device available");
 
   stream = await audio.playStreamUrl("https://anomaly.fm/radio", {
     format: "mp3",
     reconnect: { maxRetries: 5, retryOnEnd: true },
-  })
+  });
 
-  const initialMetadata = stream.getMetadata()
-  console.log(safeMetadata(initialMetadata?.fields.StreamTitle))
+  const initialMetadata = stream.getMetadata();
+  console.log(safeMetadata(initialMetadata?.fields.StreamTitle));
 
   stream.on("metadata", (metadata) => {
-    console.log(safeMetadata(metadata?.headers["icy-name"]), safeMetadata(metadata?.fields.StreamTitle))
-  })
+    console.log(
+      safeMetadata(metadata?.headers["icy-name"]),
+      safeMetadata(metadata?.fields.StreamTitle),
+    );
+  });
 
   stream.on("error", (error) => {
-    console.error(error.message)
-  })
+    console.error(error.message);
+  });
 
   // Run the application until playback should stop.
 } catch (error) {
   if (error instanceof AudioStreamError) {
-    console.error(`${error.context.action}: ${error.message}`)
+    console.error(`${error.context.action}: ${error.message}`);
   } else {
-    throw error
+    throw error;
   }
 } finally {
-  stream?.dispose()
-  await stream?.closed
-  audio.dispose()
+  stream?.dispose();
+  await stream?.closed;
+  audio.dispose();
 }
 ```
 
@@ -142,7 +146,7 @@ Reconnect options default to `initialDelayMs: 1000`, `maxDelayMs: 15000`, `backo
 Pass a demuxer factory when framing or metadata is interleaved with the encoded audio. The built-in ICY demuxer accepts semantic options directly and does not require HTTP headers:
 
 ```typescript
-import { Audio, createIcyStreamDemuxer } from "@opentui/core"
+import { Audio, createIcyStreamDemuxer } from "@opentui/core";
 
 const stream = await audio.playStream(socketBytes, {
   format: "mp3",
@@ -151,12 +155,12 @@ const stream = await audio.playStream(socketBytes, {
       metadataInterval: negotiatedInterval,
       metadataEncoding: "utf-8",
     }),
-})
+});
 
 stream.on("metadata", (metadata) => {
-  const title = metadata?.fields.StreamTitle?.replace(/[\u0000-\u001f\u007f-\u009f]/g, " ")
-  console.log(title)
-})
+  const title = metadata?.fields.StreamTitle?.replace(/[\u0000-\u001f\u007f-\u009f]/g, " ");
+  console.log(title);
+});
 ```
 
 `createIcyStreamDemuxer()` defaults to the same ISO-8859-1/`windows-1252` decoding as URL streams. Optional `headers` are copied, lowercased, and exposed in metadata; non-HTTP transports can omit them.
@@ -166,33 +170,33 @@ stream.on("metadata", (metadata) => {
 A connector creates one transport connection at a time. It receives `{ signal, attempt }` and returns `{ body, info, close? }`. The initial connection uses attempt `0`; every reconnect gets a new connection and demuxer. Consecutive attempt numbering resets after a replacement decoder becomes ready, while `getStats().reconnectAttempts` remains cumulative.
 
 ```typescript
-import { Audio, createIcyStreamDemuxer, type AudioStreamConnector } from "@opentui/core"
+import { Audio, createIcyStreamDemuxer, type AudioStreamConnector } from "@opentui/core";
 
 interface RadioInfo {
-  metadataInterval: number
+  metadataInterval: number;
 }
 
 const connector: AudioStreamConnector<RadioInfo> = {
   async connect({ signal }) {
-    const connection = await openRadioConnection({ signal })
+    const connection = await openRadioConnection({ signal });
     return {
       body: connection.readable,
       info: { metadataInterval: connection.metadataInterval },
       close: () => connection.close(),
-    }
+    };
   },
-}
+};
 
 const stream = await audio.playStreamSource(connector, {
   format: "mp3",
   reconnect: {
     maxRetries: 5,
     retry() {
-      return {}
+      return {};
     },
   },
   demuxer: (info) => createIcyStreamDemuxer({ metadataInterval: info.metadataInterval }),
-})
+});
 ```
 
 `reconnect.retry(error, context)` is optional for URL and custom connectors. Custom connector and body-read failures are retryable by default. Return `false` to stop, `{}` to keep the transport hint or normal backoff, or `{ delayMs }` for a bounded finite non-negative integer delay. `context` contains the next `attempt`, `maxRetries`, and `phase`. `close()` is invoked once after EOF, failure, or cancellation; cleanup gets a bounded grace period so an uncooperative transport cannot prevent shutdown.
@@ -245,16 +249,16 @@ For headless mixing, tests, benchmarks, or manual `mixFrames()` output, use `sta
 Bun embeds files in `bun build --compile` executables when they are imported with `with { type: "file" }`. Read the embedded file as bytes and pass it to `loadSound()` so audio decodes from memory instead of a file path.
 
 ```typescript
-import { file } from "bun"
-import { Audio } from "@opentui/core"
-import clickPath from "./click.wav" with { type: "file" }
+import { file } from "bun";
+import { Audio } from "@opentui/core";
+import clickPath from "./click.wav" with { type: "file" };
 
-const audio = Audio.create({ autoStart: false })
-const clickBytes = await file(clickPath).bytes()
-const click = audio.loadSound(clickBytes)
+const audio = Audio.create({ autoStart: false });
+const clickBytes = await file(clickPath).bytes();
+const click = audio.loadSound(clickBytes);
 
 if (click != null && audio.start()) {
-  audio.play(click)
+  audio.play(click);
 }
 ```
 
@@ -274,14 +278,14 @@ assets: {
 Load the embedded bytes through Node's SEA API and pass them directly to `loadSound()`, which accepts `ArrayBuffer` and `Uint8Array`:
 
 ```typescript
-import { getAsset } from "node:sea"
-import { Audio } from "@opentui/core"
+import { getAsset } from "node:sea";
+import { Audio } from "@opentui/core";
 
-const audio = Audio.create({ autoStart: false })
-const click = audio.loadSound(getAsset("app/click.wav"))
+const audio = Audio.create({ autoStart: false });
+const click = audio.loadSound(getAsset("app/click.wav"));
 
 if (click != null && audio.start()) {
-  audio.play(click)
+  audio.play(click);
 }
 ```
 
@@ -290,16 +294,16 @@ if (click != null && audio.start()) {
 Select devices before starting the engine:
 
 ```typescript
-const audio = Audio.create({ autoStart: false })
-const devices = audio.listPlaybackDevices() ?? []
-const device = devices.find((item) => item.isDefault) ?? devices[0]
+const audio = Audio.create({ autoStart: false });
+const devices = audio.listPlaybackDevices() ?? [];
+const device = devices.find((item) => item.isDefault) ?? devices[0];
 
 if (device) {
-  audio.selectPlaybackDevice(device.index)
+  audio.selectPlaybackDevice(device.index);
 }
 
 if (!audio.start()) {
-  console.error("No playback device available")
+  console.error("No playback device available");
 }
 ```
 

@@ -59,9 +59,9 @@ preload = ["@opentui/solid/preload"]
 Node support currently targets compiled Solid TSX. Use Solid's universal transform semantics and point the generated runtime imports at the published `solid-js` JS files:
 
 ```js
-import ts from "@babel/preset-typescript"
-import moduleResolver from "babel-plugin-module-resolver"
-import solid from "babel-preset-solid"
+import ts from "@babel/preset-typescript";
+import moduleResolver from "babel-plugin-module-resolver";
+import solid from "babel-preset-solid";
 
 export default {
   plugins: [
@@ -69,15 +69,15 @@ export default {
       moduleResolver,
       {
         resolvePath(specifier) {
-          if (specifier === "solid-js") return "solid-js/dist/solid.js"
-          if (specifier === "solid-js/store") return "solid-js/store/dist/store.js"
-          return specifier
+          if (specifier === "solid-js") return "solid-js/dist/solid.js";
+          if (specifier === "solid-js/store") return "solid-js/store/dist/store.js";
+          return specifier;
         },
       },
     ],
   ],
   presets: [[solid, { moduleName: "@opentui/solid", generate: "universal" }], [ts]],
-}
+};
 ```
 
 The current Node runtime path is still lower-level than Bun. OpenTUI's native renderer currently relies on Node's experimental FFI support, so select Node 26.4.0 before running it and pass `--experimental-ffi`, `--permission`, and the filesystem or FFI permissions your app needs. OpenTUI does not install Node automatically.
@@ -87,7 +87,7 @@ The current Node runtime path is still lower-level than Bun. OpenTUI's native re
 If your app loads external TS/TSX modules at runtime (for example a file-based plugin system), import this once in your entry file before dynamic imports:
 
 ```ts
-import "@opentui/solid/runtime-plugin-support"
+import "@opentui/solid/runtime-plugin-support";
 ```
 
 This entrypoint is Bun-only.
@@ -95,11 +95,11 @@ This entrypoint is Bun-only.
 ### 5. Create your app
 
 ```tsx
-import { render } from "@opentui/solid"
+import { render } from "@opentui/solid";
 
-const App = () => <text>Hello, World!</text>
+const App = () => <text>Hello, World!</text>;
 
-render(App)
+render(App);
 ```
 
 Run with `bun index.tsx`.
@@ -152,18 +152,18 @@ Use inside `<text>` components:
 Render a Solid component tree into a CLI renderer.
 
 ```tsx
-import { render } from "@opentui/solid"
+import { render } from "@opentui/solid";
 
-const App = () => <text>Hello, Solid!</text>
+const App = () => <text>Hello, Solid!</text>;
 
 // Simple usage
-render(() => <App />)
+render(() => <App />);
 
 // With renderer config
 render(() => <App />, {
   targetFps: 30,
   exitOnCtrlC: false,
-})
+});
 ```
 
 **Parameters:**
@@ -176,10 +176,10 @@ render(() => <App />, {
 Create a test renderer for snapshots and interaction tests.
 
 ```tsx
-import { testRender } from "@opentui/solid"
+import { testRender } from "@opentui/solid";
 
-const App = () => <text>Ready</text>
-const testSetup = await testRender(() => <App />, { width: 40, height: 10 })
+const App = () => <text>Ready</text>;
+const testSetup = await testRender(() => <App />, { width: 40, height: 10 });
 ```
 
 ### `extend(components)`
@@ -187,10 +187,10 @@ const testSetup = await testRender(() => <App />, { width: 40, height: 10 })
 Register custom renderables as JSX intrinsic elements.
 
 ```tsx
-import { BoxRenderable } from "@opentui/core"
-import { extend } from "@opentui/solid"
+import { BoxRenderable } from "@opentui/core";
+import { extend } from "@opentui/solid";
 
-extend({ custom_box: BoxRenderable })
+extend({ custom_box: BoxRenderable });
 ```
 
 ### `getComponentCatalogue()`
@@ -208,9 +208,9 @@ In [`split-footer`](/docs/core-concepts/renderer#split-footer) mode with `extern
 Render a JSX node once and append it as a scrollback commit.
 
 ```tsx
-import { writeSolidToScrollback } from "@opentui/solid"
+import { writeSolidToScrollback } from "@opentui/solid";
 
-writeSolidToScrollback(renderer, () => <text fg="#8BD5CA">api responded in 12ms</text>)
+writeSolidToScrollback(renderer, () => <text fg="#8BD5CA">api responded in 12ms</text>);
 ```
 
 ### `createScrollbackWriter(node, options?)`
@@ -218,11 +218,13 @@ writeSolidToScrollback(renderer, () => <text fg="#8BD5CA">api responded in 12ms<
 If you need to pass the same JSX rendering to multiple `writeToScrollback` calls (or hold onto the writer inside your own code), use the lower-level factory:
 
 ```tsx
-import { createScrollbackWriter } from "@opentui/solid"
+import { createScrollbackWriter } from "@opentui/solid";
 
-const writer = createScrollbackWriter(() => <text>logged at {new Date().toISOString()}</text>, { startOnNewLine: true })
+const writer = createScrollbackWriter(() => <text>logged at {new Date().toISOString()}</text>, {
+  startOnNewLine: true,
+});
 
-renderer.writeToScrollback(writer)
+renderer.writeToScrollback(writer);
 ```
 
 ### Options
@@ -244,19 +246,19 @@ The writer returns a `ScrollbackSnapshot` whose teardown disposes the inner Soli
 Access the OpenTUI renderer instance.
 
 ```tsx
-import { useRenderer } from "@opentui/solid"
-import { onMount } from "solid-js"
+import { useRenderer } from "@opentui/solid";
+import { onMount } from "solid-js";
 
 const App = () => {
-  const renderer = useRenderer()
+  const renderer = useRenderer();
 
   onMount(() => {
-    renderer.console.show()
-    console.log("Hello from console!")
-  })
+    renderer.console.show();
+    console.log("Hello from console!");
+  });
 
-  return <box />
-}
+  return <box />;
+};
 ```
 
 ### `useKeyboard(handler, options?)`
@@ -264,46 +266,46 @@ const App = () => {
 Subscribe to keyboard events.
 
 ```tsx
-import { useKeyboard, useRenderer } from "@opentui/solid"
+import { useKeyboard, useRenderer } from "@opentui/solid";
 
 const App = () => {
-  const renderer = useRenderer()
+  const renderer = useRenderer();
 
   useKeyboard((key) => {
     if (key.name === "escape") {
-      renderer.destroy()
+      renderer.destroy();
     }
-  })
+  });
 
-  return <text>Press ESC to close</text>
-}
+  return <text>Press ESC to close</text>;
+};
 ```
 
 With release events:
 
 ```tsx
-import { createSignal } from "solid-js"
+import { createSignal } from "solid-js";
 
 const App = () => {
-  const [pressedKeys, setPressedKeys] = createSignal(new Set<string>())
+  const [pressedKeys, setPressedKeys] = createSignal(new Set<string>());
 
   useKeyboard(
     (event) => {
       setPressedKeys((keys) => {
-        const newKeys = new Set(keys)
+        const newKeys = new Set(keys);
         if (event.eventType === "release") {
-          newKeys.delete(event.name)
+          newKeys.delete(event.name);
         } else {
-          newKeys.add(event.name)
+          newKeys.add(event.name);
         }
-        return newKeys
-      })
+        return newKeys;
+      });
     },
     { release: true },
-  )
+  );
 
-  return <text>Pressed: {Array.from(pressedKeys()).join(", ") || "none"}</text>
-}
+  return <text>Pressed: {Array.from(pressedKeys()).join(", ") || "none"}</text>;
+};
 ```
 
 ### `onResize(callback)`
@@ -311,15 +313,15 @@ const App = () => {
 Handle terminal resize events.
 
 ```tsx
-import { onResize } from "@opentui/solid"
+import { onResize } from "@opentui/solid";
 
 const App = () => {
   onResize((width, height) => {
-    console.log(`Resized to ${width}x${height}`)
-  })
+    console.log(`Resized to ${width}x${height}`);
+  });
 
-  return <text>Resize-aware component</text>
-}
+  return <text>Resize-aware component</text>;
+};
 ```
 
 ### `onFocus(callback)`
@@ -327,15 +329,15 @@ const App = () => {
 Run side effects when the terminal window gains focus.
 
 ```tsx
-import { onFocus } from "@opentui/solid"
+import { onFocus } from "@opentui/solid";
 
 const App = () => {
   onFocus(() => {
-    console.log("Terminal focused")
-  })
+    console.log("Terminal focused");
+  });
 
-  return <text>Switch away and back to trigger focus events</text>
-}
+  return <text>Switch away and back to trigger focus events</text>;
+};
 ```
 
 ### `onBlur(callback)`
@@ -343,15 +345,15 @@ const App = () => {
 Run side effects when the terminal window loses focus.
 
 ```tsx
-import { onBlur } from "@opentui/solid"
+import { onBlur } from "@opentui/solid";
 
 const App = () => {
   onBlur(() => {
-    console.log("Terminal blurred")
-  })
+    console.log("Terminal blurred");
+  });
 
-  return <text>Switch away and back to trigger blur events</text>
-}
+  return <text>Switch away and back to trigger blur events</text>;
+};
 ```
 
 These hooks listen for terminal focus-in/focus-out events when the terminal emulator supports them.
@@ -361,17 +363,17 @@ These hooks listen for terminal focus-in/focus-out events when the terminal emul
 Get reactive terminal dimensions (returns a Solid signal).
 
 ```tsx
-import { useTerminalDimensions } from "@opentui/solid"
+import { useTerminalDimensions } from "@opentui/solid";
 
 const App = () => {
-  const dimensions = useTerminalDimensions()
+  const dimensions = useTerminalDimensions();
 
   return (
     <text>
       Terminal: {dimensions().width}x{dimensions().height}
     </text>
-  )
-}
+  );
+};
 ```
 
 ### `usePaste(handler)`
@@ -379,17 +381,17 @@ const App = () => {
 Subscribe to paste events.
 
 ```tsx
-import { usePaste } from "@opentui/solid"
+import { usePaste } from "@opentui/solid";
 
-const textDecoder = new TextDecoder()
+const textDecoder = new TextDecoder();
 
 const App = () => {
   usePaste((event) => {
-    console.log("Pasted:", textDecoder.decode(event.bytes))
-  })
+    console.log("Pasted:", textDecoder.decode(event.bytes));
+  });
 
-  return <text>Paste something!</text>
-}
+  return <text>Paste something!</text>;
+};
 ```
 
 ### `useSelectionHandler(callback)`
@@ -397,15 +399,15 @@ const App = () => {
 Handle text selection events.
 
 ```tsx
-import { useSelectionHandler } from "@opentui/solid"
+import { useSelectionHandler } from "@opentui/solid";
 
 const App = () => {
   useSelectionHandler((selection) => {
-    console.log("Selected:", selection)
-  })
+    console.log("Selected:", selection);
+  });
 
-  return <text selectable>Select me!</text>
-}
+  return <text selectable>Select me!</text>;
+};
 ```
 
 ### `useTimeline(options?)`
@@ -413,16 +415,16 @@ const App = () => {
 Create and manage animations.
 
 ```tsx
-import { useTimeline } from "@opentui/solid"
-import { createSignal, onMount } from "solid-js"
+import { useTimeline } from "@opentui/solid";
+import { createSignal, onMount } from "solid-js";
 
 const App = () => {
-  const [width, setWidth] = createSignal(0)
+  const [width, setWidth] = createSignal(0);
 
   const timeline = useTimeline({
     duration: 2000,
     loop: false,
-  })
+  });
 
   onMount(() => {
     timeline.add(
@@ -432,14 +434,14 @@ const App = () => {
         duration: 2000,
         ease: "linear",
         onUpdate: (animation) => {
-          setWidth(animation.targets[0].width)
+          setWidth(animation.targets[0].width);
         },
       },
-    )
-  })
+    );
+  });
 
-  return <box style={{ width: width(), backgroundColor: "#6a5acd" }} />
-}
+  return <box style={{ width: width(), backgroundColor: "#6a5acd" }} />;
+};
 ```
 
 ## Special components
@@ -449,10 +451,10 @@ const App = () => {
 Render children into a different mount point (useful for modals and overlays).
 
 ```tsx
-import { Portal, useRenderer } from "@opentui/solid"
+import { Portal, useRenderer } from "@opentui/solid";
 
 const App = () => {
-  const renderer = useRenderer()
+  const renderer = useRenderer();
 
   return (
     <box>
@@ -461,8 +463,8 @@ const App = () => {
         <box border>Overlay</box>
       </Portal>
     </box>
-  )
-}
+  );
+};
 ```
 
 ### `Dynamic`
@@ -470,14 +472,14 @@ const App = () => {
 Render arbitrary intrinsic elements or components dynamically.
 
 ```tsx
-import { Dynamic } from "@opentui/solid"
-import { createSignal } from "solid-js"
+import { Dynamic } from "@opentui/solid";
+import { createSignal } from "solid-js";
 
 const App = () => {
-  const [isMultiline, setIsMultiline] = createSignal(false)
+  const [isMultiline, setIsMultiline] = createSignal(false);
 
-  return <Dynamic component={isMultiline() ? "textarea" : "input"} />
-}
+  return <Dynamic component={isMultiline() ? "textarea" : "input"} />;
+};
 ```
 
 ## Building for production
@@ -485,14 +487,14 @@ const App = () => {
 Use [Bun.build](https://bun.sh/docs/bundler) with the Solid plugin:
 
 ```ts
-import solidPlugin from "@opentui/solid/bun-plugin"
+import solidPlugin from "@opentui/solid/bun-plugin";
 
 await Bun.build({
   entrypoints: ["./index.tsx"],
   target: "bun",
   outdir: "./build",
   plugins: [solidPlugin],
-})
+});
 ```
 
 To compile to a standalone executable:
@@ -505,7 +507,7 @@ await Bun.build({
     target: "bun-darwin-arm64",
     outfile: "./app-macos",
   },
-})
+});
 ```
 
 If that executable loads external plugins/modules at runtime, keep `import "@opentui/solid/runtime-plugin-support"` in your app entry.
@@ -513,28 +515,28 @@ If that executable loads external plugins/modules at runtime, keep `import "@ope
 ## Example: counter
 
 ```tsx
-import { render, useKeyboard, useRenderer } from "@opentui/solid"
-import { createSignal } from "solid-js"
+import { render, useKeyboard, useRenderer } from "@opentui/solid";
+import { createSignal } from "solid-js";
 
 const App = () => {
-  const [count, setCount] = createSignal(0)
-  const renderer = useRenderer()
+  const [count, setCount] = createSignal(0);
+  const renderer = useRenderer();
 
   useKeyboard((key) => {
-    if (key.name === "up") setCount((c) => c + 1)
-    if (key.name === "down") setCount((c) => c - 1)
-    if (key.name === "escape") renderer.destroy()
-  })
+    if (key.name === "up") setCount((c) => c + 1);
+    if (key.name === "down") setCount((c) => c - 1);
+    if (key.name === "escape") renderer.destroy();
+  });
 
   return (
     <box border padding={2}>
       <text>Count: {count()}</text>
       <text fg="#888">Up/Down to change, ESC to close</text>
     </box>
-  )
-}
+  );
+};
 
-render(App)
+render(App);
 ```
 
 ## Differences from React bindings

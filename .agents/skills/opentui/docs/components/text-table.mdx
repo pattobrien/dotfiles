@@ -15,15 +15,21 @@ TextTable currently has an imperative renderable API. It is not registered as a 
 ## Basic usage
 
 ```typescript
-import { TextTableRenderable, bold, fg, type TextChunk, type TextTableContent } from "@opentui/core"
+import {
+  TextTableRenderable,
+  bold,
+  fg,
+  type TextChunk,
+  type TextTableContent,
+} from "@opentui/core";
 
-const cell = (text: string): TextChunk[] => [{ __isChunk: true, text }]
+const cell = (text: string): TextChunk[] => [{ __isChunk: true, text }];
 
 const content: TextTableContent = [
   [[bold("Service")], [bold("Status")], [bold("Notes")]],
   [cell("api"), [fg("#00d4aa")("OK")], cell("latency 28ms")],
   [cell("worker"), [fg("#b8a0ff")("DEGRADED")], cell("queue depth: 124")],
-]
+];
 
 const table = new TextTableRenderable(renderer, {
   width: "100%",
@@ -31,9 +37,9 @@ const table = new TextTableRenderable(renderer, {
   columnWidthMode: "content",
   borderStyle: "rounded",
   content,
-})
+});
 
-renderer.root.add(table)
+renderer.root.add(table);
 ```
 
 ## Content
@@ -41,8 +47,8 @@ renderer.root.add(table)
 The public content types are:
 
 ```typescript
-type TextTableCellContent = TextChunk[] | null | undefined
-type TextTableContent = TextTableCellContent[][]
+type TextTableCellContent = TextChunk[] | null | undefined;
+type TextTableContent = TextTableCellContent[][];
 ```
 
 Use styled-text helpers such as `bold()`, `fg()`, and `bg()` to build each cell's `TextChunk[]`. `null`, `undefined`, and missing cells render as empty text. Rows may have different lengths; the table uses the longest row's column count and fills missing cells with empty content.
@@ -55,7 +61,7 @@ Replace the table data through the `content` setter:
 table.content = [
   [[bold("Name")], [bold("State")]],
   [cell("worker-1"), [fg("#22c55e")("ready")]],
-]
+];
 ```
 
 ## Column sizing and wrapping
@@ -79,7 +85,7 @@ const table = new TextTableRenderable(renderer, {
   columnWidthMode: "full",
   columnFitter: "balanced",
   content,
-})
+});
 ```
 
 ## Borders and spacing
@@ -92,7 +98,7 @@ const table = new TextTableRenderable(renderer, {
   border: false,
   outerBorder: true,
   content,
-})
+});
 ```
 
 `showBorders: false` suppresses border glyph painting without removing the space reserved by enabled inner or outer borders. `columnGap` adds space between columns only when inner vertical borders are disabled.
@@ -107,8 +113,8 @@ Selection starts only within cell content, not on border glyphs. Selection withi
 
 ```typescript
 renderer.on("selection", () => {
-  console.log(table.getSelectedText())
-})
+  console.log(table.getSelectedText());
+});
 ```
 
 Selection-related methods are:

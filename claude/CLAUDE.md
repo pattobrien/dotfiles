@@ -28,8 +28,8 @@ name: Patt O'Brien.
   so we can view them together:
   1. `herdr pane split --current --direction right --cwd "$PWD" --no-focus`
   2. `herdr pane run <new-pane-id> "terminal-browser open <file>"`
-  Never use `terminal-browser --split` — it bypasses herdr and splits via
-  kitty remote control, leaving the pane unmanaged.
+     Never use `terminal-browser --split` — it bypasses herdr and splits via
+     kitty remote control, leaving the pane unmanaged.
 
 ## User Directories
 

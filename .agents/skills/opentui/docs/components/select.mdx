@@ -13,9 +13,9 @@ A vertical list for choosing from multiple options. Focus the select to enable k
 ### Renderable API
 
 ```typescript
-import { SelectRenderable, SelectRenderableEvents, createCliRenderer } from "@opentui/core"
+import { SelectRenderable, SelectRenderableEvents, createCliRenderer } from "@opentui/core";
 
-const renderer = await createCliRenderer()
+const renderer = await createCliRenderer();
 
 const menu = new SelectRenderable(renderer, {
   id: "menu",
@@ -27,22 +27,22 @@ const menu = new SelectRenderable(renderer, {
     { name: "Save", description: "Save current file" },
     { name: "Exit", description: "Exit the application" },
   ],
-})
+});
 
 menu.on(SelectRenderableEvents.ITEM_SELECTED, (index, option) => {
-  console.log("Selected:", option.name)
-})
+  console.log("Selected:", option.name);
+});
 
-menu.focus()
-renderer.root.add(menu)
+menu.focus();
+renderer.root.add(menu);
 ```
 
 ### Construct API
 
 ```typescript
-import { Select, createCliRenderer } from "@opentui/core"
+import { Select, createCliRenderer } from "@opentui/core";
 
-const renderer = await createCliRenderer()
+const renderer = await createCliRenderer();
 
 const menu = Select({
   width: 30,
@@ -52,10 +52,10 @@ const menu = Select({
     { name: "Option 2", description: "Second option" },
     { name: "Option 3", description: "Third option" },
   ],
-})
+});
 
-menu.focus()
-renderer.root.add(menu)
+menu.focus();
+renderer.root.add(menu);
 ```
 
 ## Keyboard navigation
@@ -76,11 +76,11 @@ When focused, the select responds to these keys:
 Fires when the user presses Enter on an option:
 
 ```typescript
-import { SelectRenderableEvents } from "@opentui/core"
+import { SelectRenderableEvents } from "@opentui/core";
 
 menu.on(SelectRenderableEvents.ITEM_SELECTED, (index: number, option: SelectOption) => {
-  console.log(`Selected index ${index}: ${option.name}`)
-})
+  console.log(`Selected index ${index}: ${option.name}`);
+});
 ```
 
 ### Selection changed
@@ -89,18 +89,18 @@ Fires when the highlighted item changes:
 
 ```typescript
 menu.on(SelectRenderableEvents.SELECTION_CHANGED, (index: number, option: SelectOption) => {
-  console.log(`Highlighted: ${option.name}`)
+  console.log(`Highlighted: ${option.name}`);
   // Update a preview pane, for example
-})
+});
 ```
 
 ## Option structure
 
 ```typescript
 interface SelectOption {
-  name: string // Display text
-  description: string // Displays below the name when showDescription is true
-  value?: any // Optional value
+  name: string; // Display text
+  description: string; // Displays below the name when showDescription is true
+  value?: any; // Optional value
 }
 ```
 
@@ -146,9 +146,9 @@ const styledMenu = new SelectRenderable(renderer, {
 ## Example: file menu
 
 ```typescript
-import { Box, Select, createCliRenderer } from "@opentui/core"
+import { Box, Select, createCliRenderer } from "@opentui/core";
 
-const renderer = await createCliRenderer()
+const renderer = await createCliRenderer();
 
 const fileMenu = Select({
   width: 25,
@@ -161,7 +161,7 @@ const fileMenu = Select({
     { name: "---", description: "" }, // Separator (visual only)
     { name: "Exit", description: "Quit application (Ctrl+Q)" },
   ],
-})
+});
 
 const menuPanel = Box(
   {
@@ -169,39 +169,39 @@ const menuPanel = Box(
     borderColor: "#666",
   },
   fileMenu,
-)
+);
 
-fileMenu.focus()
-renderer.root.add(menuPanel)
+fileMenu.focus();
+renderer.root.add(menuPanel);
 ```
 
 ## Programmatic control
 
 ```typescript
 // Get current selection index
-const currentIndex = menu.getSelectedIndex()
+const currentIndex = menu.getSelectedIndex();
 
 // Get currently selected option
-const option = menu.getSelectedOption()
+const option = menu.getSelectedOption();
 
 // Set selection programmatically
-menu.setSelectedIndex(2)
+menu.setSelectedIndex(2);
 
 // Navigate programmatically
-menu.moveUp() // Move up one item
-menu.moveDown() // Move down one item
-menu.moveUp(3) // Move up multiple items
-menu.selectCurrent() // Trigger selection of current item
+menu.moveUp(); // Move up one item
+menu.moveDown(); // Move down one item
+menu.moveUp(3); // Move up multiple items
+menu.selectCurrent(); // Trigger selection of current item
 
 // Update options dynamically
 menu.options = [
   { name: "New Option 1", description: "First" },
   { name: "New Option 2", description: "Second" },
-]
+];
 
 // Toggle display options
-menu.showDescription = false
-menu.showScrollIndicator = true
-menu.showSelectionIndicator = false
-menu.wrapSelection = true
+menu.showDescription = false;
+menu.showScrollIndicator = true;
+menu.showSelectionIndicator = false;
+menu.wrapSelection = true;
 ```

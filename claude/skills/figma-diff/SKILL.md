@@ -1,7 +1,6 @@
 ---
 name: figma-diff
-description:
-  Compare Figma designs to iOS Simulator screenshots using ImageMagick. Produces
+description: Compare Figma designs to iOS Simulator screenshots using ImageMagick. Produces
   layout diffs, color heatmaps, and directional diffs that show which image is
   the source of each difference. Use when the user wants to compare a Figma
   design to a running app, diff mockups against simulator output, do visual QA,

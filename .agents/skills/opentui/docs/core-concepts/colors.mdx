@@ -15,10 +15,10 @@ Every color also carries **color intent** inside the packed value: an RGB snapsh
 ### From integers (0-255)
 
 ```typescript
-import { RGBA } from "@opentui/core"
+import { RGBA } from "@opentui/core";
 
-const red = RGBA.fromInts(255, 0, 0, 255)
-const semiTransparentBlue = RGBA.fromInts(0, 0, 255, 128)
+const red = RGBA.fromInts(255, 0, 0, 255);
+const semiTransparentBlue = RGBA.fromInts(0, 0, 255, 128);
 ```
 
 ### From float values (0.0-1.0)
@@ -26,15 +26,15 @@ const semiTransparentBlue = RGBA.fromInts(0, 0, 255, 128)
 Float values are quantized to 8-bit channels for terminal output.
 
 ```typescript
-const green = RGBA.fromValues(0.0, 1.0, 0.0, 1.0)
-const transparent = RGBA.fromValues(1.0, 1.0, 1.0, 0.5)
+const green = RGBA.fromValues(0.0, 1.0, 0.0, 1.0);
+const transparent = RGBA.fromValues(1.0, 1.0, 1.0, 0.5);
 ```
 
 ### From hex strings
 
 ```typescript
-const purple = RGBA.fromHex("#800080")
-const withAlpha = RGBA.fromHex("#FF000080") // Semi-transparent red
+const purple = RGBA.fromHex("#800080");
+const withAlpha = RGBA.fromHex("#FF000080"); // Semi-transparent red
 ```
 
 ## String colors
@@ -42,20 +42,20 @@ const withAlpha = RGBA.fromHex("#FF000080") // Semi-transparent red
 Most component properties accept both `RGBA` objects and color strings:
 
 ```typescript
-import { Text, Box } from "@opentui/core"
+import { Text, Box } from "@opentui/core";
 
 // Using hex strings
-Text({ content: "Hello", fg: "#00FF00" })
+Text({ content: "Hello", fg: "#00FF00" });
 
 // Using CSS color names
-Box({ backgroundColor: "red", borderColor: "white" })
+Box({ backgroundColor: "red", borderColor: "white" });
 
 // Using RGBA objects
-const customColor = RGBA.fromInts(100, 150, 200, 255)
-Text({ content: "Custom", fg: customColor })
+const customColor = RGBA.fromInts(100, 150, 200, 255);
+Text({ content: "Custom", fg: customColor });
 
 // Transparent
-Box({ backgroundColor: "transparent" })
+Box({ backgroundColor: "transparent" });
 ```
 
 ## The parseColor utility
@@ -63,12 +63,12 @@ Box({ backgroundColor: "transparent" })
 The `parseColor()` function converts various color formats to RGBA:
 
 ```typescript
-import { parseColor } from "@opentui/core"
+import { parseColor } from "@opentui/core";
 
-const color1 = parseColor("#FF0000") // Hex
-const color2 = parseColor("blue") // CSS color name
-const color3 = parseColor("transparent") // Transparent
-const color4 = parseColor(RGBA.fromInts(255, 0, 0, 255)) // Pass-through
+const color1 = parseColor("#FF0000"); // Hex
+const color2 = parseColor("blue"); // CSS color name
+const color3 = parseColor("transparent"); // Transparent
+const color4 = parseColor(RGBA.fromInts(255, 0, 0, 255)); // Pass-through
 ```
 
 ## Color intent
@@ -84,49 +84,49 @@ Each color still carries its RGBA values so alpha blending and non-ANSI renderer
 ### Default foreground and background
 
 ```typescript
-import { RGBA } from "@opentui/core"
+import { RGBA } from "@opentui/core";
 
 // Will emit SGR 39 / 49 when rendered
-const fg = RGBA.defaultForeground()
-const bg = RGBA.defaultBackground()
+const fg = RGBA.defaultForeground();
+const bg = RGBA.defaultBackground();
 ```
 
 You can pass an optional snapshot color to override the RGBA fallback. The renderer uses the snapshot for early frames, before it detects the terminal palette:
 
 ```typescript
-const fg = RGBA.defaultForeground("#E6EDF3")
+const fg = RGBA.defaultForeground("#E6EDF3");
 ```
 
 ### Indexed ANSI colors (0-255)
 
 ```typescript
-import { RGBA, ansi256IndexToRgb } from "@opentui/core"
+import { RGBA, ansi256IndexToRgb } from "@opentui/core";
 
 // Indexed colors keep their palette slot even if the user changes their theme
-const ansiRed = RGBA.fromIndex(1)
-const ansiBrightBlue = RGBA.fromIndex(12)
+const ansiRed = RGBA.fromIndex(1);
+const ansiBrightBlue = RGBA.fromIndex(12);
 
 // With a custom RGBA snapshot (for early frames before palette detection)
-const themed = RGBA.fromIndex(4, "#1F6FEB")
+const themed = RGBA.fromIndex(4, "#1F6FEB");
 
 // Convert an ANSI 256 index to an RGB triplet
-const [r, g, b] = ansi256IndexToRgb(196)
+const [r, g, b] = ansi256IndexToRgb(196);
 ```
 
 ### Inspecting color intent
 
 ```typescript
-import { RGBA } from "@opentui/core"
+import { RGBA } from "@opentui/core";
 
-const fg = RGBA.defaultForeground()
-fg.intent // => "default"
+const fg = RGBA.defaultForeground();
+fg.intent; // => "default"
 
-const indexed = RGBA.fromIndex(10)
-indexed.intent // => "indexed"
-indexed.slot // => 10
+const indexed = RGBA.fromIndex(10);
+indexed.intent; // => "indexed"
+indexed.slot; // => 10
 
-const literal = RGBA.fromHex("#00FF00")
-literal.intent // => "rgb"
+const literal = RGBA.fromHex("#00FF00");
+literal.intent; // => "rgb"
 ```
 
 ### Exported color constants and types
@@ -145,11 +145,11 @@ literal.intent // => "rgb"
 `RGBA.buffer` is a `Uint16Array(4)`. The low byte of each component stores `r`, `g`, `b`, and `a`; the high bytes together store 32 bits of metadata.
 
 ```typescript
-const color = RGBA.fromIndex(6)
+const color = RGBA.fromIndex(6);
 
-color.buffer // Uint16Array(4)
-color.intent // "indexed"
-color.slot // 6
+color.buffer; // Uint16Array(4)
+color.intent; // "indexed"
+color.slot; // 6
 ```
 
 This lets native buffers compare current and next frame colors with exact integer equality. It also keeps palette intent attached to the color as it crosses the TypeScript/native boundary.
@@ -159,10 +159,10 @@ This lets native buffers compare current and next frame colors with exact intege
 When the terminal supports it, the renderer queries the active palette (OSC 4 for palette slots, OSC 10/11 for default fg/bg, plus other special colors where supported). Indexed colors stay mapped to the terminal's user-configured slots, default colors stay linked to the terminal defaults, and non-truecolor renderers can re-resolve RGB fallbacks against the detected palette.
 
 ```typescript
-const colors = await renderer.getPalette({ size: 256 })
+const colors = await renderer.getPalette({ size: 256 });
 
-console.log(colors.palette[1]) // '#cc0000' or whatever red your theme uses
-console.log(colors.defaultForeground, colors.defaultBackground)
+console.log(colors.palette[1]); // '#cc0000' or whatever red your theme uses
+console.log(colors.defaultForeground, colors.defaultBackground);
 ```
 
 Useful members:
@@ -179,18 +179,18 @@ Useful members:
 You can use transparent cells and alpha blending for layered effects:
 
 ```typescript
-import { FrameBufferRenderable, RGBA } from "@opentui/core"
+import { FrameBufferRenderable, RGBA } from "@opentui/core";
 
 const canvas = new FrameBufferRenderable(renderer, {
   id: "canvas",
   width: 50,
   height: 20,
-})
+});
 
 // Draw with alpha blending
-const semiTransparent = RGBA.fromValues(1.0, 0.0, 0.0, 0.5)
-const transparent = RGBA.fromInts(0, 0, 0, 0)
-canvas.frameBuffer.setCellWithAlphaBlending(10, 5, " ", transparent, semiTransparent)
+const semiTransparent = RGBA.fromValues(1.0, 0.0, 0.0, 0.5);
+const transparent = RGBA.fromInts(0, 0, 0, 0);
+canvas.frameBuffer.setCellWithAlphaBlending(10, 5, " ", transparent, semiTransparent);
 ```
 
 Blended colors become literal RGB colors internally. This is intentional: once colors are blended, the result no longer represents a specific ANSI slot or terminal default.
@@ -200,7 +200,7 @@ Blended colors become literal RGB colors internally. This is intentional: once c
 Combine colors with text attributes:
 
 ```typescript
-import { TextRenderable, TextAttributes, RGBA } from "@opentui/core"
+import { TextRenderable, TextAttributes, RGBA } from "@opentui/core";
 
 const styledText = new TextRenderable(renderer, {
   id: "styled",
@@ -208,7 +208,7 @@ const styledText = new TextRenderable(renderer, {
   fg: RGBA.fromHex("#FFFF00"),
   bg: RGBA.fromHex("#333333"),
   attributes: TextAttributes.BOLD | TextAttributes.UNDERLINE,
-})
+});
 ```
 
 ## Color constants
@@ -217,10 +217,10 @@ Common colors:
 
 ```typescript
 // Some examples of commonly used colors
-const white = RGBA.fromInts(255, 255, 255, 255)
-const black = RGBA.fromInts(0, 0, 0, 255)
-const red = RGBA.fromInts(255, 0, 0, 255)
-const green = RGBA.fromInts(0, 255, 0, 255)
-const blue = RGBA.fromInts(0, 0, 255, 255)
-const transparent = RGBA.fromInts(0, 0, 0, 0)
+const white = RGBA.fromInts(255, 255, 255, 255);
+const black = RGBA.fromInts(0, 0, 0, 255);
+const red = RGBA.fromInts(255, 0, 0, 255);
+const green = RGBA.fromInts(0, 255, 0, 255);
+const blue = RGBA.fromInts(0, 0, 255, 255);
+const transparent = RGBA.fromInts(0, 0, 0, 0);
 ```

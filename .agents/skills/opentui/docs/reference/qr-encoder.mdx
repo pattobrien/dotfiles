@@ -18,12 +18,12 @@ bun add @opentui/qrcode
 ## Encode text
 
 ```typescript
-import { ErrorCorrectionLevel, QRCode } from "@opentui/qrcode"
+import { ErrorCorrectionLevel, QRCode } from "@opentui/qrcode";
 
-const qr = QRCode.encodeText("https://opentui.com", ErrorCorrectionLevel.M)
+const qr = QRCode.encodeText("https://opentui.com", ErrorCorrectionLevel.M);
 
-console.log(`version=${qr.version} size=${qr.size} mask=${qr.mask}`)
-console.log(qr.toTerminalString({ ansi: true }))
+console.log(`version=${qr.version} size=${qr.size} mask=${qr.mask}`);
+console.log(qr.toTerminalString({ ansi: true }));
 ```
 
 `encodeText()` chooses the first version in the configured range that fits, optimizes mixed text into numeric, alphanumeric, byte, and optionally Kanji segments, and automatically chooses the lowest-penalty mask unless one is forced.
@@ -34,18 +34,18 @@ The requested error-correction level defaults to M. Because `boostEcl` defaults 
 
 ```typescript
 interface EncodeOptions {
-  minVersion?: number
-  maxVersion?: number
-  mask?: number
-  boostEcl?: boolean
-  optimize?: boolean
-  kanji?: boolean
-  byteEncoding?: ByteEncoding
-  eciForUtf8?: boolean
-  eciAssignment?: number | null
-  fnc1First?: boolean
-  fnc1Second?: { applicationIndicator: string | number }
-  structuredAppend?: { position: number; total: number; parity: number }
+  minVersion?: number;
+  maxVersion?: number;
+  mask?: number;
+  boostEcl?: boolean;
+  optimize?: boolean;
+  kanji?: boolean;
+  byteEncoding?: ByteEncoding;
+  eciForUtf8?: boolean;
+  eciAssignment?: number | null;
+  fnc1First?: boolean;
+  fnc1Second?: { applicationIndicator: string | number };
+  structuredAppend?: { position: number; total: number; parity: number };
 }
 ```
 
@@ -86,18 +86,18 @@ All encoder methods default to error-correction level M and `EncodeOptions = {}`
 For raw bytes that require an ECI designator, provide the ECI segment explicitly:
 
 ```typescript
-import { EciAssignment, ErrorCorrectionLevel, QRCode, QrSegment } from "@opentui/qrcode"
+import { EciAssignment, ErrorCorrectionLevel, QRCode, QrSegment } from "@opentui/qrcode";
 
 const qr = QRCode.encodeSegments(
   [QrSegment.makeEci(EciAssignment.ISO_8859_1), QrSegment.makeBytes([0x48, 0xe9])],
   ErrorCorrectionLevel.M,
-)
+);
 ```
 
 `QRCode.encodeEciText()` and `QrSegment.makeEciSegmentsFromEscapedText()` recognize a backslash followed by exactly six decimal digits as an ECI switch. A doubled backslash encodes one literal backslash. The segment helper defaults to ISO-8859-1 until a known ECI changes the encoding.
 
 ```typescript
-const qr = QRCode.encodeEciText("\\000026Hello, 世界")
+const qr = QRCode.encodeEciText("\\000026Hello, 世界");
 ```
 
 The encoder can signal any ECI assignment from 0 through 999999. It only performs text conversion for its known byte encodings; callers must provide already converted bytes for application-defined ECI transformations.
@@ -110,7 +110,7 @@ Pass a prebuilt GS1 payload string, or let `Gs1Element[]` join application ident
 const qr = QRCode.encodeGs1Text([
   { ai: "10", data: "LOT42", separatorAfter: true },
   { ai: "17", data: "260731" },
-])
+]);
 ```
 
 For FNC1 second position, `applicationIndicator` accepts an integer from 0 to 99, exactly two decimal digits, or one Latin letter. `fnc1First` and `fnc1Second` cannot be used together.
@@ -118,8 +118,8 @@ For FNC1 second position, `applicationIndicator` accepts an integer from 0 to 99
 ### Structured append
 
 ```typescript
-const parts = ["PART ONE", "PART TWO"].map((text) => QrSegment.makeSegments(text))
-const symbols = QRCode.encodeStructuredAppend(parts)
+const parts = ["PART ONE", "PART TWO"].map((text) => QrSegment.makeSegments(text));
+const symbols = QRCode.encodeStructuredAppend(parts);
 ```
 
 `encodeStructuredAppend()` requires 2–16 parts, computes XOR parity from the source segment bytes, and adds the 1-based position and total to each symbol. For manual headers, use `QrSegment.makeStructuredAppendHeader(position, total, parity)` or `QRCode.computeStructuredAppendParity(segments)`.
@@ -173,7 +173,7 @@ console.log(
     ansi: true,
     invert: false,
   }),
-)
+);
 ```
 
 | Option   | Default | Description                                             |
@@ -192,7 +192,7 @@ const svg = qr.toSvgString({
   moduleSize: 8,
   lightColor: "#ffffff",
   darkColor: "#111827",
-})
+});
 ```
 
 `toSvgString()` defaults to border 4, module size 1, light `#FFFFFF`, and dark `#000000`. The border must be an integer of at least 4. Pass a finite positive `moduleSize`: values less than or equal to zero throw, while the current implementation does not reject `NaN` or `Infinity` before producing unusable dimensions. Color strings are XML-escaped before insertion.
@@ -200,13 +200,13 @@ const svg = qr.toSvgString({
 For a text-to-SVG shortcut:
 
 ```typescript
-import { createQrSvg, ErrorCorrectionLevel } from "@opentui/qrcode"
+import { createQrSvg, ErrorCorrectionLevel } from "@opentui/qrcode";
 
 const svg = createQrSvg("https://opentui.com", {
   ecl: ErrorCorrectionLevel.H,
   border: 4,
   moduleSize: 8,
-})
+});
 ```
 
 `createQrSvg()` defaults to ECC M, border 4, and module size 8; other encoding options are forwarded to `encodeText()`.

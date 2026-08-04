@@ -13,9 +13,9 @@ Constructs let you compose your UI in a declarative, React-like way. They are fa
 Constructs look like function calls that return component descriptions:
 
 ```typescript
-import { createCliRenderer, Box, Text, Input } from "@opentui/core"
+import { createCliRenderer, Box, Text, Input } from "@opentui/core";
 
-const renderer = await createCliRenderer()
+const renderer = await createCliRenderer();
 
 renderer.root.add(
   Box(
@@ -23,7 +23,7 @@ renderer.root.add(
     Text({ content: "Welcome!" }),
     Input({ placeholder: "Enter your name..." }),
   ),
-)
+);
 ```
 
 Pass children as additional arguments after the props object, not as a property.
@@ -45,19 +45,19 @@ import {
   TabSelect,
   Text,
   RGBA,
-} from "@opentui/core"
+} from "@opentui/core";
 
 // These create VNodes, not actual Renderables
 const syntaxStyle = SyntaxStyle.fromStyles({
   default: { fg: RGBA.fromHex("#FFFFFF") },
-})
-const box = Box({ border: true })
-const text = Text({ content: "Hello" })
-const input = Input({ placeholder: "Type here..." })
-const code = Code({ content: "const x = 1", filetype: "typescript", syntaxStyle })
-const scrollBox = ScrollBox({ width: 40, height: 10 })
-const frameBuffer = FrameBuffer({ width: 20, height: 10 })
-const ascii = ASCIIFont({ text: "OPEN", font: "tiny" })
+});
+const box = Box({ border: true });
+const text = Text({ content: "Hello" });
+const input = Input({ placeholder: "Type here..." });
+const code = Code({ content: "const x = 1", filetype: "typescript", syntaxStyle });
+const scrollBox = ScrollBox({ width: 40, height: 10 });
+const frameBuffer = FrameBuffer({ width: 20, height: 10 });
+const ascii = ASCIIFont({ text: "OPEN", font: "tiny" });
 ```
 
 ## How Constructs Work
@@ -66,10 +66,10 @@ When you call a construct like `Box()`, it creates a VNode - a plain object desc
 
 ```typescript
 // This creates a VNode, not an actual BoxRenderable
-const myBox = Box({ width: 20, height: 10 })
+const myBox = Box({ width: 20, height: 10 });
 
 // The VNode is instantiated when added to the tree
-renderer.root.add(myBox) // Now it becomes a real BoxRenderable
+renderer.root.add(myBox); // Now it becomes a real BoxRenderable
 ```
 
 This deferred creation lets you:
@@ -88,7 +88,7 @@ function LabeledInput(props: { label: string; placeholder: string }) {
     { flexDirection: "row", gap: 1 },
     Text({ content: props.label }),
     Input({ placeholder: props.placeholder, width: 20 }),
-  )
+  );
 }
 
 renderer.root.add(
@@ -97,7 +97,7 @@ renderer.root.add(
     LabeledInput({ label: "Name:", placeholder: "Enter name..." }),
     LabeledInput({ label: "Email:", placeholder: "Enter email..." }),
   ),
-)
+);
 ```
 
 ## Method Chaining on VNodes
@@ -105,21 +105,21 @@ renderer.root.add(
 VNodes support method calls. The system queues these calls and applies them after creating the component:
 
 ```typescript
-const input = Input({ id: "my-input", placeholder: "Type here..." })
+const input = Input({ id: "my-input", placeholder: "Type here..." });
 
 // The VNode queues this call
-input.focus()
+input.focus();
 
 // When added, the system creates the input and calls focus()
-renderer.root.add(input)
+renderer.root.add(input);
 ```
 
 You can also set properties:
 
 ```typescript
-const box = Box({ id: "my-box" })
-box.backgroundColor = RGBA.fromHex("#333366")
-renderer.root.add(box)
+const box = Box({ id: "my-box" });
+box.backgroundColor = RGBA.fromHex("#333366");
+renderer.root.add(box);
 ```
 
 ## The delegate() Function
@@ -127,7 +127,7 @@ renderer.root.add(box)
 Composite components often need outer method calls to reach a specific inner component. The `delegate()` function maps method and property names to descendant IDs:
 
 ```typescript
-import { delegate, Box, Text, Input } from "@opentui/core"
+import { delegate, Box, Text, Input } from "@opentui/core";
 
 function LabeledInput(props: { id: string; label: string; placeholder: string }) {
   return delegate(
@@ -144,15 +144,19 @@ function LabeledInput(props: { id: string; label: string; placeholder: string })
         width: 20,
       }),
     ),
-  )
+  );
 }
 
-const username = LabeledInput({ id: "username", label: "Username:", placeholder: "Enter username..." })
+const username = LabeledInput({
+  id: "username",
+  label: "Username:",
+  placeholder: "Enter username...",
+});
 
 // This actually focuses the nested Input, not the outer Box
-username.focus()
+username.focus();
 
-renderer.root.add(username)
+renderer.root.add(username);
 ```
 
 ### Delegate Mappings
@@ -168,7 +172,7 @@ delegate(
     value: "inner-input", // .value get/set -> proxy to "inner-input"
   },
   vnode,
-)
+);
 ```
 
 ## Composing with Children
@@ -181,10 +185,12 @@ function Card(props: { title: string }, ...children: VChild[]) {
     { border: true, padding: 1, flexDirection: "column" },
     Text({ content: props.title, fg: "#FFFF00" }),
     Box({ flexDirection: "column" }, ...children),
-  )
+  );
 }
 
-renderer.root.add(Card({ title: "User Info" }, Text({ content: "Name: Alice" }), Text({ content: "Role: Admin" })))
+renderer.root.add(
+  Card({ title: "User Info" }, Text({ content: "Name: Alice" }), Text({ content: "Role: Admin" })),
+);
 ```
 
 ## Mixing Renderables and Constructs
@@ -192,24 +198,24 @@ renderer.root.add(Card({ title: "User Info" }, Text({ content: "Name: Alice" }),
 You can mix both approaches:
 
 ```typescript
-import { BoxRenderable, Text, Input } from "@opentui/core"
+import { BoxRenderable, Text, Input } from "@opentui/core";
 
 // Create a renderable directly
 const container = new BoxRenderable(renderer, {
   id: "container",
   flexDirection: "column",
-})
+});
 
 // Add constructs to it
-container.add(Text({ content: "Title" }), Input({ placeholder: "Type here..." }))
+container.add(Text({ content: "Title" }), Input({ placeholder: "Type here..." }));
 
-renderer.root.add(container)
+renderer.root.add(container);
 ```
 
 Or use constructs that contain renderables:
 
 ```typescript
-const customRenderable = new CustomRenderable(renderer, { id: "custom" })
+const customRenderable = new CustomRenderable(renderer, { id: "custom" });
 
 renderer.root.add(
   Box(
@@ -218,7 +224,7 @@ renderer.root.add(
     customRenderable, // Regular renderable mixed in
     Text({ content: "Footer" }),
   ),
-)
+);
 ```
 
 ## Next Steps

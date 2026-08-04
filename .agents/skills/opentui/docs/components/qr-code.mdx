@@ -21,28 +21,28 @@ bun install @opentui/qrcode
 ### Renderable API
 
 ```typescript
-import { createCliRenderer } from "@opentui/core"
-import { QRCodeRenderable } from "@opentui/qrcode"
+import { createCliRenderer } from "@opentui/core";
+import { QRCodeRenderable } from "@opentui/qrcode";
 
-const renderer = await createCliRenderer()
+const renderer = await createCliRenderer();
 
 const qr = new QRCodeRenderable(renderer, {
   id: "docs-link",
   content: "https://opentui.com/docs/getting-started",
   quietZone: 4,
   scale: 2,
-})
+});
 
-renderer.root.add(qr)
+renderer.root.add(qr);
 ```
 
 ### React JSX
 
 ```tsx
-import { createRoot } from "@opentui/react"
-import { registerQRCode } from "@opentui/qrcode/react"
+import { createRoot } from "@opentui/react";
+import { registerQRCode } from "@opentui/qrcode/react";
 
-registerQRCode()
+registerQRCode();
 
 createRoot(renderer).render(
   <qr-code
@@ -52,16 +52,16 @@ createRoot(renderer).render(
     foregroundColor="#111827"
     backgroundColor="#ffffff"
   />,
-)
+);
 ```
 
 ### Solid JSX
 
 ```tsx
-import { render } from "@opentui/solid"
-import { registerQRCode } from "@opentui/qrcode/solid"
+import { render } from "@opentui/solid";
+import { registerQRCode } from "@opentui/qrcode/solid";
 
-registerQRCode()
+registerQRCode();
 
 render(() => (
   <qr_code
@@ -71,7 +71,7 @@ render(() => (
     foregroundColor="#111827"
     backgroundColor="#ffffff"
   />
-))
+));
 ```
 
 ## Sizing
@@ -84,7 +84,7 @@ const qr = new QRCodeRenderable(renderer, {
   quietZone: 4,
   scale: 2,
   fit: "contain",
-})
+});
 ```
 
 Use `fit: "none"` when you want the configured scale to be the only rendered size.
@@ -100,7 +100,7 @@ const qr = new QRCodeRenderable(renderer, {
   content: "https://opentui.com/docs/getting-started",
   fallbackContent: "Resize for QR",
   fallbackColor: "#94a3b8",
-})
+});
 ```
 
 ## Error Correction
@@ -108,12 +108,12 @@ const qr = new QRCodeRenderable(renderer, {
 Set `errorCorrectionLevel` with the QR package error correction enum:
 
 ```typescript
-import { ErrorCorrectionLevel, QRCodeRenderable } from "@opentui/qrcode"
+import { ErrorCorrectionLevel, QRCodeRenderable } from "@opentui/qrcode";
 
 const qr = new QRCodeRenderable(renderer, {
   content: "opentui.com",
   errorCorrectionLevel: ErrorCorrectionLevel.H,
-})
+});
 ```
 
 Higher error correction improves resilience but can increase the QR version and rendered size for longer content.

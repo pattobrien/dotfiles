@@ -22,8 +22,8 @@ bun add @opentui/ssh @opentui/core
 ## Basic server
 
 ```typescript
-import { BoxRenderable, TextRenderable } from "@opentui/core"
-import { createServer } from "@opentui/ssh"
+import { BoxRenderable, TextRenderable } from "@opentui/core";
+import { createServer } from "@opentui/ssh";
 
 const server = createServer({
   hostKey: { path: "./host_key" },
@@ -34,17 +34,19 @@ const server = createServer({
     height: "100%",
     border: true,
     borderStyle: "rounded",
-  })
+  });
 
-  box.add(new TextRenderable(session.renderer, { content: `Hello, ${session.identity.username}!` }))
-  session.renderer.root.add(box)
+  box.add(
+    new TextRenderable(session.renderer, { content: `Hello, ${session.identity.username}!` }),
+  );
+  session.renderer.root.add(box);
 
   session.renderer.keyInput.on("keypress", (key) => {
-    if (key.name === "q" || (key.ctrl && key.name === "c")) session.end()
-  })
-})
+    if (key.name === "q" || (key.ctrl && key.name === "c")) session.end();
+  });
+});
 
-await server.listen(2222)
+await server.listen(2222);
 ```
 
 Connect from another terminal:
@@ -60,12 +62,12 @@ The server owns the renderers it creates and destroys them when their sessions d
 The public construction sequence is:
 
 ```typescript
-const builder = createServer(config)
-const configured = builder.use(middleware)
-const server = configured.serve(handler)
+const builder = createServer(config);
+const configured = builder.use(middleware);
+const server = configured.serve(handler);
 
-const info = await server.listen()
-await server.close()
+const info = await server.listen();
+await server.close();
 ```
 
 `createServer(config)` returns an immutable `ServerBuilder`. Every `.use()` returns a new builder with one more middleware and a widened context type. The builder intentionally has no `listen()` method. `.serve(handler)` seals the chain and returns the startable `Server`, so omitting the session handler is a type error.
@@ -74,9 +76,9 @@ await server.close()
 
 ```typescript
 interface ListenInfo {
-  host: string
-  port: number
-  fingerprints: string[]
+  host: string;
+  port: number;
+  fingerprints: string[];
 }
 ```
 
@@ -106,10 +108,10 @@ Session limits must be positive safe integers. Excess shell requests are rejecte
 Choose one host-key source:
 
 ```typescript
-createServer({ hostKey: { path: "./host_key" } })
-createServer({ hostKey: { pem: privateKeyPem } })
-createServer({ hostKey: { pem: [ed25519Pem, rsaPem] } })
-createServer() // ephemeral ed25519 key
+createServer({ hostKey: { path: "./host_key" } });
+createServer({ hostKey: { pem: privateKeyPem } });
+createServer({ hostKey: { pem: [ed25519Pem, rsaPem] } });
+createServer(); // ephemeral ed25519 key
 ```
 
 - `path`: load the existing key, or generate and persist an ed25519 key on first use. On POSIX systems, generated directories use mode `0700` and the key uses `0600`; Windows uses the directory ACL.
@@ -143,13 +145,14 @@ const server = createServer({
       authorizedKeys: "./authorized_keys",
       allow: ({ username, fingerprint }) => username === "deploy" && trusted.has(fingerprint),
     },
-    password: ({ username, password }) => username === "guest" && password === process.env.GUEST_PASSWORD,
+    password: ({ username, password }) =>
+      username === "guest" && password === process.env.GUEST_PASSWORD,
   },
 }).serve((session) => {
   if (session.identity.method === "publickey") {
-    console.log(session.identity.fingerprint)
+    console.log(session.identity.fingerprint);
   }
-})
+});
 ```
 
 If an authentication predicate throws, authentication fails closed and the error is reported through `onError`.
@@ -164,11 +167,11 @@ type Identity =
   | { method: "password"; username: string }
   | { method: "keyboard-interactive"; username: string }
   | {
-      method: "publickey"
-      username: string
-      fingerprint: string
-      publicKey: { algorithm: string; blob: Buffer }
-    }
+      method: "publickey";
+      username: string;
+      fingerprint: string;
+      publicKey: { algorithm: string; blob: Buffer };
+    };
 ```
 
 A public-key-only configuration makes `fingerprint` directly available. Mixed methods produce a discriminated union:
@@ -176,9 +179,9 @@ A public-key-only configuration makes `fingerprint` directly available. Mixed me
 ```typescript
 createServer({ auth: { publicKey: "any", password: checkPassword } }).serve((session) => {
   if (session.identity.method === "publickey") {
-    console.log(session.identity.fingerprint)
+    console.log(session.identity.fingerprint);
   }
-})
+});
 ```
 
 ## Session API
@@ -208,27 +211,29 @@ Middleware receives `MiddlewareSession`, which has the common fields, `context`,
 Middleware executes in registration order, with the first registered function as the outermost layer. It supports three source-backed patterns:
 
 ```typescript
-import { createServer, type Middleware } from "@opentui/ssh"
+import { createServer, type Middleware } from "@opentui/ssh";
 
 const timing: Middleware = async (session, next) => {
-  const startedAt = Date.now()
+  const startedAt = Date.now();
   try {
-    return await next()
+    return await next();
   } finally {
-    console.log(`${session.identity.username}: ${Date.now() - startedAt}ms`)
+    console.log(`${session.identity.username}: ${Date.now() - startedAt}ms`);
   }
-}
+};
 
 const server = createServer({ auth: { publicKey: "any" } })
   .use(timing)
   .use((session, next) => {
-    if (blocked.has(session.identity.fingerprint)) session.deny("This key is not authorized.")
-    return next()
+    if (blocked.has(session.identity.fingerprint)) session.deny("This key is not authorized.");
+    return next();
   })
-  .use((session, next) => next({ tier: admins.has(session.identity.fingerprint) ? "admin" : "user" }))
+  .use((session, next) =>
+    next({ tier: admins.has(session.identity.fingerprint) ? "admin" : "user" }),
+  )
   .serve((session) => {
-    console.log(session.context.tier)
-  })
+    console.log(session.context.tier);
+  });
 ```
 
 - Setup/teardown: `await next()` resolves when the session ends, so `finally` performs teardown.
@@ -240,15 +245,15 @@ Reusable middleware can use `Middleware`; use `MiddlewareFunction` when it requi
 ### Logging middleware
 
 ```typescript
-import { createServer, logging } from "@opentui/ssh"
+import { createServer, logging } from "@opentui/ssh";
 
-const events = []
+const events = [];
 
 createServer({ auth: { publicKey: "any" } })
   .use(logging({ log: (event) => events.push(event) }))
   .serve((session) => {
-    console.log(session.identity.username)
-  })
+    console.log(session.identity.username);
+  });
 ```
 
 `logging()` emits a `connect` event on entry and a `disconnect` event with `durationMs` during teardown. Events also contain `identity`, `remoteAddress`, `term`, `cols`, and `rows`. Without a custom sink, it writes one formatted line to `console.log`. Sink failures are isolated and ignored; application and transport errors remain the responsibility of `onError`.
@@ -260,16 +265,16 @@ createServer({ auth: { publicKey: "any" } })
 ### React
 
 ```tsx
-import { createRoot } from "@opentui/react"
-import { createServer } from "@opentui/ssh"
+import { createRoot } from "@opentui/react";
+import { createServer } from "@opentui/ssh";
 
-const App = ({ name }: { name: string }) => <text>Hello, {name}!</text>
+const App = ({ name }: { name: string }) => <text>Hello, {name}!</text>;
 
 createServer().serve((session) => {
-  const root = createRoot(session.renderer)
-  root.render(<App name={session.identity.username} />)
-  session.onClose(() => root.unmount())
-})
+  const root = createRoot(session.renderer);
+  root.render(<App name={session.identity.username} />);
+  session.onClose(() => root.unmount());
+});
 ```
 
 Create one React root per session and unmount the app-owned React tree in `onClose`. The SSH package independently owns and destroys the `CliRenderer`.
@@ -277,14 +282,14 @@ Create one React root per session and unmount the app-owned React tree in `onClo
 ### Solid
 
 ```tsx
-import { render } from "@opentui/solid"
-import { createServer } from "@opentui/ssh"
+import { render } from "@opentui/solid";
+import { createServer } from "@opentui/ssh";
 
-const App = (props: { name: string }) => <text>Hello, {props.name}!</text>
+const App = (props: { name: string }) => <text>Hello, {props.name}!</text>;
 
 createServer().serve(async (session) => {
-  await render(() => <App name={session.identity.username} />, session.renderer)
-})
+  await render(() => <App name={session.identity.username} />, session.renderer);
+});
 ```
 
 Solid's `render(node, renderer)` adopts the existing renderer. The Solid root is disposed when that renderer is destroyed, so this handoff does not add a separate `onClose` disposer.

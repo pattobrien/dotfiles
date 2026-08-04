@@ -13,25 +13,25 @@ Render markdown content with syntax-aware styling and optional Tree-sitter highl
 ### Renderable API
 
 ````typescript
-import { MarkdownRenderable, SyntaxStyle, RGBA, createCliRenderer } from "@opentui/core"
+import { MarkdownRenderable, SyntaxStyle, RGBA, createCliRenderer } from "@opentui/core";
 
-const renderer = await createCliRenderer()
+const renderer = await createCliRenderer();
 
 const syntaxStyle = SyntaxStyle.fromStyles({
   "markup.heading.1": { fg: RGBA.fromHex("#58A6FF"), bold: true },
   "markup.list": { fg: RGBA.fromHex("#FF7B72") },
   "markup.raw": { fg: RGBA.fromHex("#A5D6FF") },
   default: { fg: RGBA.fromHex("#E6EDF3") },
-})
+});
 
 const markdown = new MarkdownRenderable(renderer, {
   id: "readme",
   width: 60,
   content: "# Hello\n\n- One\n- Two\n\n```ts\nconst x = 1\n```",
   syntaxStyle,
-})
+});
 
-renderer.root.add(markdown)
+renderer.root.add(markdown);
 ````
 
 ## Fenced language normalization
@@ -46,10 +46,10 @@ Code fence info strings are normalized before Tree-sitter highlighting.
 Normalization uses `infoStringToFiletype()`. You can extend or override mappings at runtime:
 
 ```typescript
-import { extensionToFiletype, basenameToFiletype } from "@opentui/core"
+import { extensionToFiletype, basenameToFiletype } from "@opentui/core";
 
-extensionToFiletype.set("templ", "html")
-basenameToFiletype.set("mytoolrc", "yaml")
+extensionToFiletype.set("templ", "html");
+basenameToFiletype.set("mytoolrc", "yaml");
 ```
 
 ## Concealment
@@ -61,7 +61,7 @@ const markdown = new MarkdownRenderable(renderer, {
   content: "**bold** and `code`",
   syntaxStyle,
   conceal: true,
-})
+});
 ```
 
 Use `concealCode` to control concealment inside fenced code blocks independently (`false` by default).
@@ -75,11 +75,11 @@ const markdown = new MarkdownRenderable(renderer, {
   content: "",
   syntaxStyle,
   streaming: true,
-})
+});
 
-markdown.content += "# Live log\n"
-markdown.content += "- line 1\n"
-markdown.streaming = false
+markdown.content += "# Live log\n";
+markdown.content += "- line 1\n";
+markdown.streaming = false;
 ```
 
 ### Stable block prefix
@@ -89,23 +89,23 @@ markdown.streaming = false
 To use it, render with `internalBlockMode: "top-level"`. The renderable keeps each top-level markdown block (heading, paragraph, list, table, fenced code) as its own child renderable, and exposes `markdown._stableBlockCount` — the number of blocks at the head of the tree that are stable right now. This matches the shape [`ScrollbackSurface`](/docs/core-concepts/renderer#writing-to-scrollback) expects when you commit streamed output row-by-row.
 
 ```typescript
-import { MarkdownRenderable, RGBA, SyntaxStyle } from "@opentui/core"
+import { MarkdownRenderable, RGBA, SyntaxStyle } from "@opentui/core";
 
 const syntaxStyle = SyntaxStyle.fromStyles({
   default: { fg: RGBA.fromHex("#E6EDF3") },
-})
+});
 
 const md = new MarkdownRenderable(renderer, {
   content: "",
   syntaxStyle,
   streaming: true,
   internalBlockMode: "top-level",
-})
+});
 
-md.content = "# Title\n\nPara 1"
+md.content = "# Title\n\nPara 1";
 // md._stableBlockCount might be 1 here — "# Title" is settled, "Para 1" could still grow
 
-md.content = "# Title\n\nPara 1\n\nPara 2"
+md.content = "# Title\n\nPara 1\n\nPara 2";
 // md._stableBlockCount rises as earlier blocks are sealed by a blank line
 ```
 
@@ -131,7 +131,7 @@ const markdown = new MarkdownRenderable(renderer, {
     borderColor: "#6b7280",
     selectable: true,
   },
-})
+});
 ```
 
 ### `tableOptions`
@@ -168,11 +168,11 @@ const markdown = new MarkdownRenderable(renderer, {
   syntaxStyle,
   renderNode: (token, context) => {
     if (token.type === "heading") {
-      return context.defaultRender()
+      return context.defaultRender();
     }
-    return undefined
+    return undefined;
   },
-})
+});
 ```
 
 ### Custom fenced-code languages
@@ -188,9 +188,9 @@ import {
   createMarkdownCodeBlockRenderer,
   type CliRenderer,
   type MarkdownCodeBlockRenderer,
-} from "@opentui/core"
+} from "@opentui/core";
 
-const syntaxStyle = SyntaxStyle.fromStyles({ default: {} })
+const syntaxStyle = SyntaxStyle.fromStyles({ default: {} });
 
 const renderTaskFlow =
   (renderer: CliRenderer): MarkdownCodeBlockRenderer =>
@@ -198,7 +198,7 @@ const renderTaskFlow =
     const steps = token.text
       .split("\n")
       .filter((line) => line.startsWith("step "))
-      .map((line) => line.slice("step ".length))
+      .map((line) => line.slice("step ".length));
 
     const card = new BoxRenderable(renderer, {
       border: true,
@@ -207,14 +207,14 @@ const renderTaskFlow =
       paddingX: 1,
       flexDirection: "column",
       width: "100%",
-    })
+    });
 
     for (const step of steps) {
-      card.add(new TextRenderable(renderer, { content: `- ${step}`, width: "100%" }))
+      card.add(new TextRenderable(renderer, { content: `- ${step}`, width: "100%" }));
     }
 
-    return card
-  }
+    return card;
+  };
 
 const markdown = new MarkdownRenderable(renderer, {
   content: "```taskflow\nstep Parse markdown done\nstep Render widget active\n```",
@@ -222,7 +222,7 @@ const markdown = new MarkdownRenderable(renderer, {
   renderNode: createMarkdownCodeBlockRenderer({
     taskflow: renderTaskFlow(renderer),
   }),
-})
+});
 ````
 
 ## Construct API

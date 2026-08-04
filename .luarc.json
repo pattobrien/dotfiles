@@ -3,10 +3,7 @@
     "version": "Lua 5.4"
   },
   "workspace": {
-    "library": [
-      "${3rd}/luassert/library",
-      "~/.hammerspoon/Spoons/EmmyLua.spoon/annotations"
-    ],
+    "library": ["${3rd}/luassert/library", "~/.hammerspoon/Spoons/EmmyLua.spoon/annotations"],
     "ignoreDir": [".config/hammerspoon/Spoons"]
   },
   "diagnostics": {

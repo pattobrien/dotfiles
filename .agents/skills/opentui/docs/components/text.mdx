@@ -16,32 +16,32 @@ Display styled text content with support for colors, attributes, and text select
 ### Renderable API
 
 ```typescript
-import { TextRenderable, createCliRenderer } from "@opentui/core"
+import { TextRenderable, createCliRenderer } from "@opentui/core";
 
-const renderer = await createCliRenderer()
+const renderer = await createCliRenderer();
 
 const text = new TextRenderable(renderer, {
   id: "greeting",
   content: "Hello, OpenTUI!",
   fg: "#00FF00",
-})
+});
 
-renderer.root.add(text)
+renderer.root.add(text);
 ```
 
 ### Construct API
 
 ```typescript
-import { Text, createCliRenderer } from "@opentui/core"
+import { Text, createCliRenderer } from "@opentui/core";
 
-const renderer = await createCliRenderer()
+const renderer = await createCliRenderer();
 
 renderer.root.add(
   Text({
     content: "Hello, OpenTUI!",
     fg: "#00FF00",
   }),
-)
+);
 ```
 
 ## Text attributes
@@ -49,14 +49,14 @@ renderer.root.add(
 Combine multiple text attributes using bitwise OR:
 
 ```typescript
-import { TextRenderable, TextAttributes } from "@opentui/core"
+import { TextRenderable, TextAttributes } from "@opentui/core";
 
 const styledText = new TextRenderable(renderer, {
   id: "styled",
   content: "Important Message",
   fg: "#FFFF00",
   attributes: TextAttributes.BOLD | TextAttributes.UNDERLINE,
-})
+});
 ```
 
 ### Available attributes
@@ -77,31 +77,42 @@ const styledText = new TextRenderable(renderer, {
 Use the `t` template literal for inline styling within a single text element:
 
 ```typescript
-import { TextRenderable, t, bold, underline, fg, bg, italic } from "@opentui/core"
+import { TextRenderable, t, bold, underline, fg, bg, italic } from "@opentui/core";
 
 const richText = new TextRenderable(renderer, {
   id: "rich",
   content: t`${bold("Important:")} ${fg("#FF0000")(underline("Warning!"))} Normal text`,
-})
+});
 ```
 
 ### Available style functions
 
 ```typescript
-import { t, bold, dim, italic, underline, blink, reverse, strikethrough, fg, bg } from "@opentui/core"
+import {
+  t,
+  bold,
+  dim,
+  italic,
+  underline,
+  blink,
+  reverse,
+  strikethrough,
+  fg,
+  bg,
+} from "@opentui/core";
 
 // Basic attributes
-t`${bold("bold text")}`
-t`${italic("italic text")}`
-t`${underline("underlined")}`
-t`${strikethrough("deleted")}`
+t`${bold("bold text")}`;
+t`${italic("italic text")}`;
+t`${underline("underlined")}`;
+t`${strikethrough("deleted")}`;
 
 // Colors
-t`${fg("#FF0000")("red text")}`
-t`${bg("#0000FF")("blue background")}`
+t`${fg("#FF0000")("red text")}`;
+t`${bg("#0000FF")("blue background")}`;
 
 // Combining styles
-t`${bold(fg("#FFFF00")("bold yellow"))}`
+t`${bold(fg("#FFFF00")("bold yellow"))}`;
 ```
 
 ## Positioning
@@ -113,7 +124,7 @@ const text = new TextRenderable(renderer, {
   position: "absolute",
   left: 10,
   top: 5,
-})
+});
 ```
 
 ## Text selection
@@ -125,13 +136,13 @@ const selectableText = new TextRenderable(renderer, {
   id: "selectable",
   content: "Select me!",
   selectable: true, // Default is true
-})
+});
 
 const nonSelectable = new TextRenderable(renderer, {
   id: "label",
   content: "Button Label",
   selectable: false, // Disable selection
-})
+});
 ```
 
 ## Properties
@@ -149,7 +160,7 @@ const nonSelectable = new TextRenderable(renderer, {
 ## Example: status bar
 
 ```typescript
-import { Text, Box, t, bold, fg } from "@opentui/core"
+import { Text, Box, t, bold, fg } from "@opentui/core";
 
 const statusBar = Box(
   {
@@ -169,7 +180,7 @@ const statusBar = Box(
   Text({
     content: t`Ln ${fg("#00FF00")("42")}, Col ${fg("#00FF00")("15")}`,
   }),
-)
+);
 
-renderer.root.add(statusBar)
+renderer.root.add(statusBar);
 ```

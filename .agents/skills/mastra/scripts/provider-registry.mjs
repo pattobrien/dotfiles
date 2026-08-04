@@ -7,7 +7,7 @@ import { fileURLToPath } from "node:url";
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 function findRegistryPath() {
-  const rel = join('node_modules', '@mastra', 'core', 'dist', 'provider-registry.json');
+  const rel = join("node_modules", "@mastra", "core", "dist", "provider-registry.json");
   // Walk up from script location to find project root with node_modules
   let dir = __dirname;
   for (let i = 0; i < 10; i++) {
@@ -43,7 +43,7 @@ function loadRegistry() {
 function extractVersion(name) {
   // Use named capture to grab version-like sequences along with their context.
   // We capture digits separated by dots/hyphens, plus any trailing letter for filtering.
-  const regex = /(\d+(?:[.\-]\d+)*)([a-zA-Z])?/g;
+  const regex = /(\d+(?:[.-]\d+)*)([a-zA-Z])?/g;
   const candidates = [];
   let match;
   while ((match = regex.exec(name)) !== null) {
@@ -56,7 +56,7 @@ function extractVersion(name) {
   // Process candidates: filter and clean up non-version parts
   const processed = [];
   for (const c of candidates) {
-    let parts = c.numStr.split(/[.\-]/).map(Number);
+    let parts = c.numStr.split(/[.-]/).map(Number);
     // If followed by a size suffix (b/B/k/K/m/M/t/T) — e.g. "8b", "70B", "1t" —
     // strip the last numeric part (param count) but keep earlier parts as the version
     if (/^[bBkKmMtT]$/.test(c.suffix)) {
@@ -71,11 +71,14 @@ function extractVersion(name) {
     // Skip trailing date-like patterns (MM-DD) in the latter half of the name
     if (
       parts.length === 2 &&
-      parts[0] >= 1 && parts[0] <= 12 &&
-      parts[1] >= 1 && parts[1] <= 31 &&
+      parts[0] >= 1 &&
+      parts[0] <= 12 &&
+      parts[1] >= 1 &&
+      parts[1] <= 31 &&
       c.index > name.length / 2 &&
       candidates.length > 1
-    ) continue;
+    )
+      continue;
     processed.push(parts);
   }
 

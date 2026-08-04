@@ -11,7 +11,7 @@ skill:
 OpenTUI can ask the terminal emulator to show a desktop notification using OSC escape sequences. Use this for long-running tasks, background work, or prompts that need attention.
 
 ```typescript
-const ok = renderer.triggerNotification("Build finished", "OpenTUI")
+const ok = renderer.triggerNotification("Build finished", "OpenTUI");
 ```
 
 `triggerNotification(message, title?)` returns `true` when OpenTUI has detected a supported notification protocol, and `false` otherwise.
@@ -22,7 +22,7 @@ Check detection state through renderer capabilities:
 
 ```typescript
 if (renderer.capabilities?.notifications) {
-  renderer.triggerNotification("Tests passed", "CI")
+  renderer.triggerNotification("Tests passed", "CI");
 }
 ```
 

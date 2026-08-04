@@ -13,54 +13,58 @@ OpenTUI integrates Tree-sitter for fast, accurate syntax highlighting. You can r
 Use `addDefaultParsers()` before creating clients:
 
 ```typescript
-import { addDefaultParsers, getTreeSitterClient } from "@opentui/core"
+import { addDefaultParsers, getTreeSitterClient } from "@opentui/core";
 
 addDefaultParsers([
   {
     filetype: "python",
     wasm: "https://github.com/tree-sitter/tree-sitter-python/releases/download/v0.23.6/tree-sitter-python.wasm",
     queries: {
-      highlights: ["https://raw.githubusercontent.com/tree-sitter/tree-sitter-python/master/queries/highlights.scm"],
+      highlights: [
+        "https://raw.githubusercontent.com/tree-sitter/tree-sitter-python/master/queries/highlights.scm",
+      ],
     },
   },
-])
+]);
 
-const client = getTreeSitterClient()
-await client.initialize()
+const client = getTreeSitterClient();
+await client.initialize();
 ```
 
 ## Add parsers per client
 
 ```typescript
-import { TreeSitterClient } from "@opentui/core"
+import { TreeSitterClient } from "@opentui/core";
 
-const client = new TreeSitterClient({ dataPath: "./cache" })
-await client.initialize()
+const client = new TreeSitterClient({ dataPath: "./cache" });
+await client.initialize();
 
 client.addFiletypeParser({
   filetype: "rust",
   wasm: "https://github.com/tree-sitter/tree-sitter-rust/releases/download/v0.23.2/tree-sitter-rust.wasm",
   queries: {
-    highlights: ["https://raw.githubusercontent.com/tree-sitter/tree-sitter-rust/master/queries/highlights.scm"],
+    highlights: [
+      "https://raw.githubusercontent.com/tree-sitter/tree-sitter-rust/master/queries/highlights.scm",
+    ],
   },
-})
+});
 ```
 
 ## Parser configuration
 
 ```typescript
 interface FiletypeParserOptions {
-  filetype: string
-  aliases?: string[]
-  wasm: string
+  filetype: string;
+  aliases?: string[];
+  wasm: string;
   queries: {
-    highlights: string[]
-    injections?: string[]
-  }
+    highlights: string[];
+    injections?: string[];
+  };
   injectionMapping?: {
-    nodeTypes?: Record<string, string>
-    infoStringMap?: Record<string, string>
-  }
+    nodeTypes?: Record<string, string>;
+    infoStringMap?: Record<string, string>;
+  };
 }
 ```
 
@@ -95,7 +99,7 @@ client.addFiletypeParser({
       tsx: "typescriptreact",
     },
   },
-})
+});
 ```
 
 If `infoStringMap` has no match, the fence language label is used as the filetype id.
@@ -103,8 +107,8 @@ If `infoStringMap` has no match, the fence language label is used as the filetyp
 ## Use local files
 
 ```typescript
-import pythonWasm from "./parsers/tree-sitter-python.wasm" with { type: "file" }
-import pythonHighlights from "./queries/python/highlights.scm" with { type: "file" }
+import pythonWasm from "./parsers/tree-sitter-python.wasm" with { type: "file" };
+import pythonHighlights from "./queries/python/highlights.scm" with { type: "file" };
 
 addDefaultParsers([
   {
@@ -114,7 +118,7 @@ addDefaultParsers([
       highlights: [pythonHighlights],
     },
   },
-])
+]);
 ```
 
 ## Automated asset management
@@ -134,26 +138,26 @@ Use the `updateAssets` utility to download parsers and generate imports.
 ### Programmatic usage
 
 ```typescript
-import { updateAssets } from "@opentui/core/tree-sitter/update-assets"
+import { updateAssets } from "@opentui/core/tree-sitter/update-assets";
 
 await updateAssets({
   configPath: "./parsers-config.json",
   assetsDir: "./src/parsers",
   outputPath: "./src/parsers.ts",
-})
+});
 ```
 
 ## Using with CodeRenderable
 
 ```typescript
-import { CodeRenderable, RGBA, SyntaxStyle, getTreeSitterClient } from "@opentui/core"
+import { CodeRenderable, RGBA, SyntaxStyle, getTreeSitterClient } from "@opentui/core";
 
-const client = getTreeSitterClient()
-await client.initialize()
+const client = getTreeSitterClient();
+await client.initialize();
 
 const syntaxStyle = SyntaxStyle.fromStyles({
   default: { fg: RGBA.fromHex("#E6EDF3") },
-})
+});
 
 const code = new CodeRenderable(renderer, {
   id: "code",
@@ -161,7 +165,7 @@ const code = new CodeRenderable(renderer, {
   filetype: "typescript",
   syntaxStyle,
   treeSitterClient: client,
-})
+});
 ```
 
 ## Caching
@@ -171,17 +175,17 @@ Parser and query files are cached in the client `dataPath`. Set a custom cache d
 ```typescript
 const client = new TreeSitterClient({
   dataPath: "./my-cache",
-})
+});
 ```
 
 ## File type resolution
 
 ```typescript
-import { pathToFiletype, extToFiletype, infoStringToFiletype } from "@opentui/core"
+import { pathToFiletype, extToFiletype, infoStringToFiletype } from "@opentui/core";
 
-const ft1 = pathToFiletype("src/main.rs")
-const ft2 = extToFiletype("ts")
-const ft3 = infoStringToFiletype("TSX title=Button.tsx")
+const ft1 = pathToFiletype("src/main.rs");
+const ft2 = extToFiletype("ts");
+const ft3 = infoStringToFiletype("TSX title=Button.tsx");
 ```
 
 `infoStringToFiletype()` is used for fenced markdown code blocks.
@@ -189,8 +193,8 @@ const ft3 = infoStringToFiletype("TSX title=Button.tsx")
 You can extend or override mappings at runtime:
 
 ```typescript
-import { extensionToFiletype, basenameToFiletype } from "@opentui/core"
+import { extensionToFiletype, basenameToFiletype } from "@opentui/core";
 
-extensionToFiletype.set("templ", "html")
-basenameToFiletype.set("mytoolrc", "yaml")
+extensionToFiletype.set("templ", "html");
+basenameToFiletype.set("mytoolrc", "yaml");
 ```

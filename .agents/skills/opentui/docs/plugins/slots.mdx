@@ -38,16 +38,16 @@ Read on if you need to understand the underlying model, want to build a custom b
 Slot names map to the props each slot receives. The host context is a shared object passed to every plugin renderer.
 
 ```typescript
-import type { PluginContext } from "@opentui/core"
+import type { PluginContext } from "@opentui/core";
 
 type AppSlots = {
-  statusbar: { user: string }
-  sidebar: { section: "left" | "right" }
-}
+  statusbar: { user: string };
+  sidebar: { section: "left" | "right" };
+};
 
 interface AppContext extends PluginContext {
-  appName: string
-  version: string
+  appName: string;
+  version: string;
 }
 ```
 
@@ -56,16 +56,20 @@ The context can be any object. `PluginContext` is a type alias for `object` — 
 ## Create a registry
 
 ```typescript
-import { createSlotRegistry } from "@opentui/core"
+import { createSlotRegistry } from "@opentui/core";
 
 type AppSlots = {
-  statusbar: { user: string }
-  sidebar: { section: "left" | "right" }
-}
+  statusbar: { user: string };
+  sidebar: { section: "left" | "right" };
+};
 
-const context = { appName: "my-app", version: "1.0.0" }
+const context = { appName: "my-app", version: "1.0.0" };
 
-const registry = createSlotRegistry<string, AppSlots, typeof context>(renderer, "my-app:plugins", context)
+const registry = createSlotRegistry<string, AppSlots, typeof context>(
+  renderer,
+  "my-app:plugins",
+  context,
+);
 ```
 
 The first type parameter (`TNode`) is the node type your framework returns — `BaseRenderable` for core, `ReactNode` for React, `JSX.Element` for Solid. The framework-specific helpers fill this in for you.
@@ -76,12 +80,12 @@ Calling `createSlotRegistry` again with the same `(renderer, key)` pair returns 
 
 ```typescript
 // correct — same object reference
-const context = { appName: "my-app" }
-const reg1 = createSlotRegistry(renderer, "my-key", context)
-const reg2 = createSlotRegistry(renderer, "my-key", context) // returns reg1
+const context = { appName: "my-app" };
+const reg1 = createSlotRegistry(renderer, "my-key", context);
+const reg2 = createSlotRegistry(renderer, "my-key", context); // returns reg1
 
 // throws — different object even if structurally identical
-const reg3 = createSlotRegistry(renderer, "my-key", { appName: "my-app" })
+const reg3 = createSlotRegistry(renderer, "my-key", { appName: "my-app" });
 ```
 
 When the renderer is destroyed, all registries scoped to it are automatically cleared and disposed.
@@ -112,13 +116,13 @@ const unregister = registry.register({
   },
   slots: {
     statusbar(ctx, props) {
-      return `${ctx.appName}:${props.user}`
+      return `${ctx.appName}:${props.user}`;
     },
   },
-})
+});
 
 // later: remove this plugin
-unregister()
+unregister();
 ```
 
 `register()` returns an unregister function. Calling it removes the plugin and invokes its `dispose` hook.
@@ -156,10 +160,10 @@ Every slot mount or `<Slot>` component accepts a `mode`. The mode controls how p
 ## Resolve contributions
 
 ```typescript
-const entries = registry.resolveEntries("statusbar")
+const entries = registry.resolveEntries("statusbar");
 // Array<{ id: string, renderer: (ctx, props) => TNode }>
 
-const slotRenderers = registry.resolve("statusbar")
+const slotRenderers = registry.resolve("statusbar");
 // Array<(ctx, props) => TNode>
 ```
 
@@ -192,15 +196,15 @@ Registries expose plugin error events:
 
 ```typescript
 registry.onPluginError((event) => {
-  console.error(event.pluginId, event.phase, event.source, event.error.message)
-})
+  console.error(event.pluginId, event.phase, event.source, event.error.message);
+});
 ```
 
 You can also read and clear buffered errors:
 
 ```typescript
-const history = registry.getPluginErrors()
-registry.clearPluginErrors()
+const history = registry.getPluginErrors();
+registry.clearPluginErrors();
 ```
 
 ### PluginErrorReport

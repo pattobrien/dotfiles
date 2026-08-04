@@ -13,10 +13,10 @@ Use the bare engine when you want a custom host or when you want to build addons
 ## Construct a keymap
 
 ```ts
-import { Keymap, type KeymapHost } from "@opentui/keymap"
+import { Keymap, type KeymapHost } from "@opentui/keymap";
 
 function createKeymap(host: KeymapHost<object>) {
-  return new Keymap(host)
+  return new Keymap(host);
 }
 ```
 
@@ -61,7 +61,7 @@ keymap.registerLayer({
     { name: "save-file", title: "Save File", run() {} },
     { name: "quit", run() {} },
   ],
-})
+});
 
 keymap.registerLayer({
   target: editor,
@@ -71,7 +71,7 @@ keymap.registerLayer({
     { key: "ctrl+s", cmd: "save-file", desc: "Save file" },
     { key: "q", cmd: "quit", preventDefault: false },
   ],
-})
+});
 ```
 
 | Field        | Description                                                                          |
@@ -197,18 +197,18 @@ Field compilers can validate and normalize values before publishing attrs. They 
 ```ts
 keymap.registerLayerFields({
   name(value, ctx) {
-    ctx.attr("name", String(value).trim())
+    ctx.attr("name", String(value).trim());
   },
-})
+});
 
 keymap.registerCommandFields({
   enabled(value, ctx) {
-    ctx.activeWhen(() => value === true)
+    ctx.activeWhen(() => value === true);
   },
   title(value, ctx) {
-    ctx.attr("title", String(value).trim())
+    ctx.attr("title", String(value).trim());
   },
-})
+});
 ```
 
 In that example, layer `name` exposes metadata for graph/debug UIs. Command `enabled` controls availability but exposes no metadata, while command `title` exposes normalized metadata for command palettes and help UIs.
@@ -216,7 +216,7 @@ In that example, layer `name` exposes metadata for graph/debug UIs. Command `ena
 Use `stringifyKeyStroke()` or `stringifyKeySequence()` for display. Canonical formatting renders `return` as `enter`; `preferDisplay: true` keeps preserved token displays such as `<leader>`. Both are exported from `@opentui/keymap`:
 
 ```ts
-import { stringifyKeyStroke, stringifyKeySequence } from "@opentui/keymap"
+import { stringifyKeyStroke, stringifyKeySequence } from "@opentui/keymap";
 ```
 
 ## Commands and queries
@@ -233,7 +233,7 @@ keymap.registerLayer({
       run() {},
     },
   ],
-})
+});
 
 // getCommands()[0] is the same command object:
 // { name: "save-file", namespace: "file", title: "Save File", run }
@@ -268,31 +268,33 @@ Pure extra exported from `@opentui/keymap/extras`:
 Example:
 
 ```ts
-import { commandBindings } from "@opentui/keymap/extras"
+import { commandBindings } from "@opentui/keymap/extras";
 
 const bindings = commandBindings({
   "  save-file  ": "ctrl+s",
   ":write session.log": "<leader>s",
-})
+});
 
 // => [
 //      { key: "ctrl+s", cmd: "save-file" },
 //      { key: "<leader>s", cmd: ":write session.log" },
 //    ]
 
-keymap.registerLayer({ bindings })
+keymap.registerLayer({ bindings });
 ```
 
 ```ts
-import { formatCommandBindings, formatKeySequence } from "@opentui/keymap/extras"
+import { formatCommandBindings, formatKeySequence } from "@opentui/keymap/extras";
 
 formatKeySequence(keymap.parseKeySequence("<leader>s"), {
   tokenDisplay: { leader: "space" },
   modifierAliases: { meta: "alt" },
   keyNameAliases: { pageup: "pgup", pagedown: "pgdn", delete: "del" },
-})
+});
 
-formatCommandBindings(keymap.getCommandBindings({ visibility: "registered", commands: ["save-file"] }).get("save-file"))
+formatCommandBindings(
+  keymap.getCommandBindings({ visibility: "registered", commands: ["save-file"] }).get("save-file"),
+);
 ```
 
 `createBindingLookup()` is an opinionated config-to-keymap transformation for flat command config. Keys are command names and become `binding.cmd`. Values can be `false`, `"none"`, a key, a full binding object, or arrays of keys/binding objects. `false`, `"none"`, and empty arrays emit no bindings.
@@ -302,7 +304,7 @@ It deliberately keeps command identity separate from UI/layer grouping. Which bi
 Use `commandMap` when user-facing config names should differ from internal command names. Mapping happens when the lookup is created or updated; runtime lookups use internal command names.
 
 ```ts
-import { createBindingLookup } from "@opentui/keymap/extras"
+import { createBindingLookup } from "@opentui/keymap/extras";
 
 const bindings = createBindingLookup(
   {
@@ -315,22 +317,22 @@ const bindings = createBindingLookup(
   },
   {
     bindingDefaults({ binding }) {
-      if (binding.group !== undefined) return
-      return { group: "App" }
+      if (binding.group !== undefined) return;
+      return { group: "App" };
     },
     commandMap: {
       show_palette: "app.palette.show",
       exit_app: "app.exit",
     },
   },
-)
+);
 
-keymap.registerLayer({ bindings: bindings.gather("app", ["app.palette.show", "app.exit"]) })
-bindings.get("app.exit")
-bindings.has("app.exit")
-bindings.pick("app", ["app.exit"])
-bindings.omit("app", ["app.palette.show"])
-bindings.invalidate("app")
+keymap.registerLayer({ bindings: bindings.gather("app", ["app.palette.show", "app.exit"]) });
+bindings.get("app.exit");
+bindings.has("app.exit");
+bindings.pick("app", ["app.exit"]);
+bindings.omit("app", ["app.palette.show"]);
+bindings.invalidate("app");
 ```
 
 The lookup exposes these views:
@@ -408,9 +410,9 @@ Use `getCommandBindings()` when a UI already knows the commands it wants to labe
 const bindingsByCommand = keymap.getCommandBindings({
   visibility: "registered",
   commands: ["file.save", "app.quit"],
-})
+});
 
-const saveBindings = bindingsByCommand.get("file.save") ?? []
+const saveBindings = bindingsByCommand.get("file.save") ?? [];
 ```
 
 The returned map preserves the requested command order and includes every requested command with `[]` when no matching bindings exist. Formatting remains app-owned; each returned `ActiveBinding` includes its parsed `sequence`.
@@ -430,21 +432,21 @@ The returned map preserves the requested command order and includes every reques
 Layer custom fields remain available as raw `GraphLayer.fields`; compiled layer metadata published with `ctx.attr(...)` appears as `GraphLayer.attrs`. Use attrs for stable visualization metadata such as layer display names.
 
 ```ts
-import { getGraphSnapshot } from "@opentui/keymap/extras/graph"
+import { getGraphSnapshot } from "@opentui/keymap/extras/graph";
 
 keymap.registerLayerFields({
   name(value, ctx) {
-    ctx.attr("name", String(value).trim())
+    ctx.attr("name", String(value).trim());
   },
-})
+});
 
 keymap.registerLayer({
   name: "Global",
   bindings: [{ key: "?", cmd: "toggle-help" }],
-})
+});
 
-const snapshot = getGraphSnapshot(keymap)
-snapshot.layers[0]?.attrs?.name // "Global"
+const snapshot = getGraphSnapshot(keymap);
+snapshot.layers[0]?.attrs?.name; // "Global"
 ```
 
 ## Events and intercepts
@@ -527,11 +529,11 @@ Same-layer exact/prefix ambiguity is only allowed when at least one disambiguati
 ```ts
 keymap.appendDisambiguationResolver((ctx) => {
   if (ctx.sequence.length === 1) {
-    return ctx.continueSequence()
+    return ctx.continueSequence();
   }
 
-  return ctx.runExact()
-})
+  return ctx.runExact();
+});
 ```
 
 Resolver context exposes:

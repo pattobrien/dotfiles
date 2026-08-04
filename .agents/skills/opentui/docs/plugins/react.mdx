@@ -17,7 +17,7 @@ If you have not read the shared model yet, start with [Plugin Slots](/docs/plugi
 If your app loads plugins from disk at runtime (for example `await import(fileUrl)`), add this import once in your app entry:
 
 ```ts
-import "@opentui/react/runtime-plugin-support"
+import "@opentui/react/runtime-plugin-support";
 ```
 
 This installs Bun runtime support so external TS/TSX plugin modules resolve against the host runtime instances (`@opentui/react`, React JSX runtime modules, and core runtime modules).
@@ -25,33 +25,33 @@ This installs Bun runtime support so external TS/TSX plugin modules resolve agai
 Use this for plugin systems in both normal Bun runs and standalone compiled executables.
 
 ```ts
-import "@opentui/react/runtime-plugin-support"
+import "@opentui/react/runtime-plugin-support";
 
-const mod = await import(pathToFileURL(pluginPath).href)
-registry.register(mod.loadExternalPlugin())
+const mod = await import(pathToFileURL(pluginPath).href);
+registry.register(mod.loadExternalPlugin());
 ```
 
 If plugins need additional host-resolved modules, configure runtime support before the side-effect import is loaded:
 
 ```ts
-import { ensureRuntimePluginSupport } from "@opentui/react/runtime-plugin-support/configure"
+import { ensureRuntimePluginSupport } from "@opentui/react/runtime-plugin-support/configure";
 
 ensureRuntimePluginSupport({
   additional: {
     "my-runtime-module": { marker: "ok" },
   },
-})
+});
 ```
 
 First-party packages expose side-effect-free runtime module maps. For plugins that import `@opentui/three`, install `@opentui/three` in the host app and pass its runtime modules explicitly:
 
 ```ts
-import { runtimeModules as threeRuntimeModules } from "@opentui/three/runtime-modules"
-import { ensureRuntimePluginSupport } from "@opentui/react/runtime-plugin-support/configure"
+import { runtimeModules as threeRuntimeModules } from "@opentui/three/runtime-modules";
+import { ensureRuntimePluginSupport } from "@opentui/react/runtime-plugin-support/configure";
 
 ensureRuntimePluginSupport({
   additional: threeRuntimeModules,
-})
+});
 ```
 
 The side-effect import and configurable entrypoint install the same runtime plugin. Late additions throw with a clear error instead of being ignored.
@@ -70,38 +70,38 @@ Register plugins directly with `registry.register()` — no wrapper function is 
 ## Basic usage
 
 ```tsx
-import { createCliRenderer } from "@opentui/core"
-import { createReactSlotRegistry, createRoot, Slot } from "@opentui/react"
+import { createCliRenderer } from "@opentui/core";
+import { createReactSlotRegistry, createRoot, Slot } from "@opentui/react";
 
 type Slots = {
-  statusbar: { user: string }
-}
+  statusbar: { user: string };
+};
 
-const context = { appName: "react-app", version: "1.0.0" }
-const renderer = await createCliRenderer()
+const context = { appName: "react-app", version: "1.0.0" };
+const renderer = await createCliRenderer();
 
-const registry = createReactSlotRegistry<Slots, typeof context>(renderer, context)
+const registry = createReactSlotRegistry<Slots, typeof context>(renderer, context);
 
 const unregister = registry.register({
   id: "clock-plugin",
   slots: {
     statusbar(ctx, props) {
-      return <text>{`${ctx.appName}:${props.user}`}</text>
+      return <text>{`${ctx.appName}:${props.user}`}</text>;
     },
   },
-})
+});
 
-const AppSlot = Slot<Slots, typeof context>
+const AppSlot = Slot<Slots, typeof context>;
 
 function App() {
   return (
     <AppSlot registry={registry} name="statusbar" user="sam" mode="replace">
       <text>fallback-statusbar</text>
     </AppSlot>
-  )
+  );
 }
 
-createRoot(renderer).render(<App />)
+createRoot(renderer).render(<App />);
 ```
 
 ## Optional convenience helper
@@ -109,7 +109,7 @@ createRoot(renderer).render(<App />)
 If you prefer not to pass `registry` each time, you can still bind one once:
 
 ```tsx
-const AppSlot = createSlot(registry)
+const AppSlot = createSlot(registry);
 ```
 
 ## `<Slot>` props
@@ -134,9 +134,9 @@ const AppSlot = createSlot(registry)
 ```tsx
 const Slot = createSlot(registry, {
   pluginFailurePlaceholder(failure) {
-    return <text>{`plugin-error:${failure.pluginId}:${failure.phase}`}</text>
+    return <text>{`plugin-error:${failure.pluginId}:${failure.phase}`}</text>;
   },
-})
+});
 ```
 
 If a plugin throws, the slot renders the placeholder. If no placeholder is provided (or it returns `null`), the slot falls back to `children`.
@@ -147,8 +147,8 @@ Plugins that throw during the initial render call are caught inline. Plugins tha
 
 ```tsx
 registry.onPluginError((event) => {
-  console.error(event.pluginId, event.phase, event.source, event.error.message)
-})
+  console.error(event.pluginId, event.phase, event.source, event.error.message);
+});
 ```
 
 Example: `packages/react/examples/plugin-slots-errors.tsx`

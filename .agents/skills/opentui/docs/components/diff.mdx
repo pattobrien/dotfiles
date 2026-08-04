@@ -13,15 +13,15 @@ Render unified or split diffs with syntax highlighting and optional line numbers
 ### Renderable API
 
 ```typescript
-import { DiffRenderable, SyntaxStyle, RGBA, createCliRenderer } from "@opentui/core"
+import { DiffRenderable, SyntaxStyle, RGBA, createCliRenderer } from "@opentui/core";
 
-const renderer = await createCliRenderer()
+const renderer = await createCliRenderer();
 
 const syntaxStyle = SyntaxStyle.fromStyles({
   default: { fg: RGBA.fromHex("#E6EDF3") },
   string: { fg: RGBA.fromHex("#A5D6FF") },
   keyword: { fg: RGBA.fromHex("#FF7B72"), bold: true },
-})
+});
 
 const diff = new DiffRenderable(renderer, {
   id: "diff",
@@ -32,9 +32,9 @@ const diff = new DiffRenderable(renderer, {
   filetype: "typescript",
   syntaxStyle,
   showLineNumbers: true,
-})
+});
 
-renderer.root.add(diff)
+renderer.root.add(diff);
 ```
 
 ## Construct API
@@ -52,10 +52,10 @@ const diff = new DiffRenderable(renderer, {
   syncScroll: true,
   diff: patch,
   syntaxStyle,
-})
+});
 
 // Toggle at runtime
-diff.syncScroll = false
+diff.syncScroll = false;
 ```
 
 Scroll sync is a no-op in the unified view.

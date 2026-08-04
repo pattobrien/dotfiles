@@ -27,13 +27,13 @@ If you have not read the shared model yet, start with [Keymap overview](/docs/ke
 ```tsx
 /** @jsxImportSource @opentui/react */
 
-import { createCliRenderer } from "@opentui/core"
-import { createDefaultOpenTuiKeymap } from "@opentui/keymap/opentui"
-import { KeymapProvider, useBindings } from "@opentui/keymap/react"
-import { createRoot } from "@opentui/react"
+import { createCliRenderer } from "@opentui/core";
+import { createDefaultOpenTuiKeymap } from "@opentui/keymap/opentui";
+import { KeymapProvider, useBindings } from "@opentui/keymap/react";
+import { createRoot } from "@opentui/react";
 
-const renderer = await createCliRenderer()
-const keymap = createDefaultOpenTuiKeymap(renderer)
+const renderer = await createCliRenderer();
+const keymap = createDefaultOpenTuiKeymap(renderer);
 
 function App() {
   useBindings(
@@ -42,23 +42,23 @@ function App() {
         {
           name: "quit",
           run() {
-            renderer.destroy()
+            renderer.destroy();
           },
         },
       ],
       bindings: [{ key: "q", cmd: "quit" }],
     }),
     [],
-  )
+  );
 
-  return <text>Press q to quit</text>
+  return <text>Press q to quit</text>;
 }
 
 createRoot(renderer).render(
   <KeymapProvider keymap={keymap}>
     <App />
   </KeymapProvider>,
-)
+);
 ```
 
 ## Provider
@@ -101,8 +101,8 @@ React-specific layer shapes:
 ## `useActiveKeys()` and `usePendingSequence()`
 
 ```tsx
-const activeKeys = useActiveKeys({ includeMetadata: true })
-const pendingSequence = usePendingSequence()
+const activeKeys = useActiveKeys({ includeMetadata: true });
+const pendingSequence = usePendingSequence();
 ```
 
 Use these hooks for command palettes, key hint UIs, leader prompts and status bars.
@@ -115,7 +115,7 @@ Use this when an addon field expects a `ReactiveMatcher`, for example the shippe
 const matcher = useMemo(
   () => reactiveMatcherFromStore(store.subscribe, store.getSnapshot, (mode) => mode === "normal"),
   [store],
-)
+);
 
 useBindings(
   () => ({
@@ -123,7 +123,7 @@ useBindings(
     bindings: [{ key: "x", cmd: "delete-line" }],
   }),
   [matcher],
-)
+);
 ```
 
 Example: `packages/react/examples/keymap.tsx`

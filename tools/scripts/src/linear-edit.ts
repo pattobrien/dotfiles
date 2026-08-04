@@ -8,9 +8,7 @@ import { join } from "node:path";
 import { $ } from "bun";
 
 const issueId = process.argv[2];
-const args = issueId
-  ? ["issue", "view", issueId, "--json"]
-  : ["issue", "view", "--json"];
+const args = issueId ? ["issue", "view", issueId, "--json"] : ["issue", "view", "--json"];
 
 // Fetch current issue
 const result = await $`linear ${args}`.quiet().nothrow();

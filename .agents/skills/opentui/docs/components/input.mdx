@@ -16,38 +16,38 @@ Text input field with cursor, placeholder text, and focus states. Focus the inpu
 ### Renderable api
 
 ```typescript
-import { InputRenderable, InputRenderableEvents, createCliRenderer } from "@opentui/core"
+import { InputRenderable, InputRenderableEvents, createCliRenderer } from "@opentui/core";
 
-const renderer = await createCliRenderer()
+const renderer = await createCliRenderer();
 
 const input = new InputRenderable(renderer, {
   id: "name-input",
   width: 25,
   placeholder: "Enter your name...",
-})
+});
 
 input.on(InputRenderableEvents.CHANGE, (value) => {
-  console.log("Input value:", value)
-})
+  console.log("Input value:", value);
+});
 
-input.focus()
-renderer.root.add(input)
+input.focus();
+renderer.root.add(input);
 ```
 
 ### Construct api
 
 ```typescript
-import { Input, createCliRenderer } from "@opentui/core"
+import { Input, createCliRenderer } from "@opentui/core";
 
-const renderer = await createCliRenderer()
+const renderer = await createCliRenderer();
 
 const input = Input({
   placeholder: "Enter your name...",
   width: 25,
-})
+});
 
-input.focus()
-renderer.root.add(input)
+input.focus();
+renderer.root.add(input);
 ```
 
 ## Focus states
@@ -63,7 +63,7 @@ const input = new InputRenderable(renderer, {
   focusedBackgroundColor: "#2a2a2a",
   textColor: "#FFFFFF",
   cursorColor: "#00FF00",
-})
+});
 ```
 
 ## Events
@@ -73,11 +73,11 @@ const input = new InputRenderable(renderer, {
 Emitted after text insertion and deletion operations, and when assigning a different `value`. The listener receives the current value:
 
 ```typescript
-import { InputRenderableEvents } from "@opentui/core"
+import { InputRenderableEvents } from "@opentui/core";
 
 input.on(InputRenderableEvents.INPUT, (value: string) => {
-  console.log("Current value:", value)
-})
+  console.log("Current value:", value);
+});
 ```
 
 ### Change event
@@ -86,8 +86,8 @@ Fires when the input loses focus (blur) or when you press Enter, but only if the
 
 ```typescript
 input.on(InputRenderableEvents.CHANGE, (value: string) => {
-  console.log("Value committed:", value)
-})
+  console.log("Value committed:", value);
+});
 ```
 
 ### Enter event
@@ -96,20 +96,20 @@ Emitted when an Enter/Return submit succeeds. No event is emitted when the curre
 
 ```typescript
 input.on(InputRenderableEvents.ENTER, (value: string) => {
-  console.log("Submitted value:", value)
-})
+  console.log("Submitted value:", value);
+});
 ```
 
 ### Getting the current value
 
 ```typescript
-const currentValue = input.value
+const currentValue = input.value;
 ```
 
 ### Setting the value
 
 ```typescript
-input.value = "New value"
+input.value = "New value";
 ```
 
 ## Properties
@@ -130,9 +130,9 @@ input.value = "New value"
 ## Example: Login form
 
 ```typescript
-import { Box, Text, Input, delegate, createCliRenderer } from "@opentui/core"
+import { Box, Text, Input, delegate, createCliRenderer } from "@opentui/core";
 
-const renderer = await createCliRenderer()
+const renderer = await createCliRenderer();
 
 function LabeledInput(props: { id: string; label: string; placeholder: string }) {
   return delegate(
@@ -150,20 +150,20 @@ function LabeledInput(props: { id: string; label: string; placeholder: string })
         cursorColor: "#0F0",
       }),
     ),
-  )
+  );
 }
 
 const usernameInput = LabeledInput({
   id: "username",
   label: "Username:",
   placeholder: "Enter username",
-})
+});
 
 const passwordInput = LabeledInput({
   id: "password",
   label: "Password:",
   placeholder: "Enter password",
-})
+});
 
 const form = Box(
   {
@@ -174,12 +174,12 @@ const form = Box(
   },
   usernameInput,
   passwordInput,
-)
+);
 
 // Focus the username input
-usernameInput.focus()
+usernameInput.focus();
 
-renderer.root.add(form)
+renderer.root.add(form);
 ```
 
 ## Tab navigation
@@ -187,13 +187,13 @@ renderer.root.add(form)
 Add tab navigation between inputs:
 
 ```typescript
-const inputs = [usernameInput, passwordInput]
-let focusIndex = 0
+const inputs = [usernameInput, passwordInput];
+let focusIndex = 0;
 
 renderer.keyInput.on("keypress", (key) => {
   if (key.name === "tab") {
-    focusIndex = (focusIndex + 1) % inputs.length
-    inputs[focusIndex].focus()
+    focusIndex = (focusIndex + 1) % inputs.length;
+    inputs[focusIndex].focus();
   }
-})
+});
 ```

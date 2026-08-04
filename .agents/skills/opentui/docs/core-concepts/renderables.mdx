@@ -13,17 +13,17 @@ Renderables are the building blocks of your UI. You can position, style, and nes
 Create a renderable by instantiating a class with a render context (the renderer) and options:
 
 ```typescript
-import { createCliRenderer, TextRenderable, BoxRenderable } from "@opentui/core"
+import { createCliRenderer, TextRenderable, BoxRenderable } from "@opentui/core";
 
-const renderer = await createCliRenderer()
+const renderer = await createCliRenderer();
 
 const greeting = new TextRenderable(renderer, {
   id: "greeting",
   content: "Hello, OpenTUI!",
   fg: "#00FF00",
-})
+});
 
-renderer.root.add(greeting)
+renderer.root.add(greeting);
 ```
 
 ## Available Renderables
@@ -61,18 +61,18 @@ const container = new BoxRenderable(renderer, {
   id: "container",
   flexDirection: "column",
   padding: 1,
-})
+});
 
-const title = new TextRenderable(renderer, { id: "title", content: "My App" })
-const body = new TextRenderable(renderer, { id: "body", content: "Content here" })
+const title = new TextRenderable(renderer, { id: "title", content: "My App" });
+const body = new TextRenderable(renderer, { id: "body", content: "Content here" });
 
-container.add(title)
-container.add(body)
+container.add(title);
+container.add(body);
 
-renderer.root.add(container)
+renderer.root.add(container);
 
 // Later, remove a child by reference
-container.remove(body)
+container.remove(body);
 ```
 
 ## Finding Renderables
@@ -81,17 +81,17 @@ Navigate the tree to find specific renderables:
 
 ```typescript
 // Get a direct child by ID
-const title = container.getRenderable("title")
+const title = container.getRenderable("title");
 
 // Remove by ID lookup when needed
-const body = container.getRenderable("body")
-if (body) container.remove(body)
+const body = container.getRenderable("body");
+if (body) container.remove(body);
 
 // Recursively search all descendants
-const deepChild = container.findDescendantById("nested-input")
+const deepChild = container.findDescendantById("nested-input");
 
 // Get all children
-const children = container.getChildren()
+const children = container.getChildren();
 ```
 
 ## Layout Properties
@@ -124,7 +124,7 @@ const panel = new BoxRenderable(renderer, {
   padding: 2,
   paddingTop: 1,
   margin: 1,
-})
+});
 ```
 
 See the [Layout](/docs/core-concepts/layout) page for complete details.
@@ -137,18 +137,18 @@ Interactive renderables can receive keyboard focus:
 const input = new InputRenderable(renderer, {
   id: "username",
   placeholder: "Enter username...",
-})
+});
 
-renderer.root.add(input)
+renderer.root.add(input);
 
 // Give focus to the input
-input.focus()
+input.focus();
 
 // Remove focus
-input.blur()
+input.blur();
 
 // Check focus state
-console.log(input.focused) // true
+console.log(input.focused); // true
 ```
 
 By default, left-clicking a renderable will auto-focus the closest focusable ancestor. Disable this globally with
@@ -158,15 +158,15 @@ By default, left-clicking a renderable will auto-focus the closest focusable anc
 Listen for focus changes:
 
 ```typescript
-import { RenderableEvents } from "@opentui/core"
+import { RenderableEvents } from "@opentui/core";
 
 input.on(RenderableEvents.FOCUSED, () => {
-  console.log("Input focused")
-})
+  console.log("Input focused");
+});
 
 input.on(RenderableEvents.BLURRED, () => {
-  console.log("Input blurred")
-})
+  console.log("Input blurred");
+});
 ```
 
 ### Focused descendants
@@ -180,12 +180,12 @@ const panel = new BoxRenderable(renderer, {
   borderColor: "#444",
   focusedBorderColor: "#00AAFF",
   flexDirection: "column",
-})
+});
 
-const input = new InputRenderable(renderer, { id: "panel-input" })
-panel.add(input)
+const input = new InputRenderable(renderer, { id: "panel-input" });
+panel.add(input);
 
-input.focus() // panel.hasFocusedDescendant === true → border recolors
+input.focus(); // panel.hasFocusedDescendant === true → border recolors
 ```
 
 Custom renderables can read `this._hasFocusedDescendant` (protected) or `renderable.hasFocusedDescendant` (public) to add similar effects.
@@ -201,15 +201,15 @@ const button = new BoxRenderable(renderer, {
   id: "button",
   border: true,
   onMouseDown: (event) => {
-    console.log("Clicked at", event.x, event.y)
+    console.log("Clicked at", event.x, event.y);
   },
   onMouseOver: (event) => {
-    button.borderColor = "#FFFF00"
+    button.borderColor = "#FFFF00";
   },
   onMouseOut: (event) => {
-    button.borderColor = "#FFFFFF"
+    button.borderColor = "#FFFFFF";
   },
-})
+});
 ```
 
 Available mouse events:
@@ -227,19 +227,19 @@ Mouse events bubble up through the tree. Stop propagation with `event.stopPropag
 For focusable renderables:
 
 ```typescript
-const textDecoder = new TextDecoder()
+const textDecoder = new TextDecoder();
 
 const input = new InputRenderable(renderer, {
   id: "input",
   onKeyDown: (key) => {
     if (key.name === "escape") {
-      input.blur()
+      input.blur();
     }
   },
   onPaste: (event) => {
-    console.log("Pasted:", textDecoder.decode(event.bytes))
+    console.log("Pasted:", textDecoder.decode(event.bytes));
   },
-})
+});
 ```
 
 ## Visibility
@@ -248,10 +248,10 @@ Control visibility with the `visible` property:
 
 ```typescript
 // Hide (also removes from layout)
-panel.visible = false
+panel.visible = false;
 
 // Show
-panel.visible = true
+panel.visible = true;
 ```
 
 When `visible` is `false`, Yoga excludes the renderable from layout calculation (equivalent to CSS `display: none`).
@@ -261,7 +261,7 @@ When `visible` is `false`, Yoga excludes the renderable from layout calculation 
 Set opacity for semi-transparent rendering:
 
 ```typescript
-panel.opacity = 0.5 // 50% transparent
+panel.opacity = 0.5; // 50% transparent
 ```
 
 Opacity affects the renderable and all its children.
@@ -275,7 +275,7 @@ const overlay = new BoxRenderable(renderer, {
   id: "overlay",
   position: "absolute",
   zIndex: 100, // Higher values render on top
-})
+});
 ```
 
 ## Live Rendering
@@ -286,14 +286,14 @@ For animations, extend the Renderable class and override `onUpdate`:
 class AnimatedBox extends BoxRenderable {
   onUpdate(deltaTime) {
     // Update animation state
-    this.translateX += 1
+    this.translateX += 1;
   }
 }
 
 const box = new AnimatedBox(renderer, {
   id: "anim-box",
   live: true, // Enable continuous rendering
-})
+});
 ```
 
 ## Translation
@@ -302,8 +302,8 @@ Offset a renderable from its layout position (useful for scrolling/animation):
 
 ```typescript
 // Offset by pixels
-renderable.translateX = 10
-renderable.translateY = -5
+renderable.translateX = 10;
+renderable.translateY = -5;
 ```
 
 This moves the renderable visually without affecting layout.
@@ -313,16 +313,16 @@ This moves the renderable visually without affecting layout.
 Enable offscreen rendering for complex content and use hooks to draw to the buffer:
 
 ```typescript
-import { BoxRenderable, RGBA } from "@opentui/core"
+import { BoxRenderable, RGBA } from "@opentui/core";
 
 const complex = new BoxRenderable(renderer, {
   id: "complex",
   buffered: true, // Render to offscreen buffer first
   renderAfter: (buffer) => {
     // Draw directly to the buffer (or offscreen buffer if buffered=true)
-    buffer.fillRect(0, 0, 10, 5, RGBA.fromHex("#FF0000"))
+    buffer.fillRect(0, 0, 10, 5, RGBA.fromHex("#FF0000"));
   },
-})
+});
 ```
 
 `renderBefore` and `renderAfter` are draw-only hooks for custom rendering and decorations. They run after layout and viewport culling, so do not mutate layout props, children, visibility, or reactive state from them.
@@ -361,8 +361,8 @@ Clean up a renderable and remove it from the tree:
 
 ```typescript
 // Remove from parent and free resources
-renderable.destroy()
+renderable.destroy();
 
 // Destroy self and all children
-container.destroyRecursively()
+container.destroyRecursively();
 ```

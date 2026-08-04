@@ -24,13 +24,13 @@ If you have not read the shared model yet, start with [Keymap overview](/docs/ke
 ## Basic usage
 
 ```tsx
-import { createCliRenderer } from "@opentui/core"
-import { createDefaultOpenTuiKeymap } from "@opentui/keymap/opentui"
-import { KeymapProvider, useBindings } from "@opentui/keymap/solid"
-import { render } from "@opentui/solid"
+import { createCliRenderer } from "@opentui/core";
+import { createDefaultOpenTuiKeymap } from "@opentui/keymap/opentui";
+import { KeymapProvider, useBindings } from "@opentui/keymap/solid";
+import { render } from "@opentui/solid";
 
-const renderer = await createCliRenderer()
-const keymap = createDefaultOpenTuiKeymap(renderer)
+const renderer = await createCliRenderer();
+const keymap = createDefaultOpenTuiKeymap(renderer);
 
 function App() {
   useBindings(() => ({
@@ -38,14 +38,14 @@ function App() {
       {
         name: "quit",
         run() {
-          renderer.destroy()
+          renderer.destroy();
         },
       },
     ],
     bindings: [{ key: "q", cmd: "quit" }],
-  }))
+  }));
 
-  return <text>Press q to quit</text>
+  return <text>Press q to quit</text>;
 }
 
 await render(
@@ -55,7 +55,7 @@ await render(
     </KeymapProvider>
   ),
   renderer,
-)
+);
 ```
 
 ## Provider
@@ -97,11 +97,11 @@ Solid-specific layer shapes:
 `useKeymapSelector()` is the general derived-read API for Solid. It returns an `Accessor<T>`, so you read the current value by calling it:
 
 ```tsx
-const activeKeys = useKeymapSelector((keymap) => keymap.getActiveKeys({ includeMetadata: true }))
-const pendingSequence = useKeymapSelector((keymap) => keymap.getPendingSequence())
+const activeKeys = useKeymapSelector((keymap) => keymap.getActiveKeys({ includeMetadata: true }));
+const pendingSequence = useKeymapSelector((keymap) => keymap.getPendingSequence());
 
-activeKeys()
-pendingSequence()
+activeKeys();
+pendingSequence();
 ```
 
 Use it for command palettes, key hint UIs, leader prompts, status bars, or any other derived keymap view.
@@ -116,7 +116,7 @@ Use this when an addon field expects a `ReactiveMatcher`, for example the shippe
 useBindings(() => ({
   enabled: reactiveMatcherFromSignal(mode, (value) => value === "normal"),
   bindings: [{ key: "x", cmd: "delete-line" }],
-}))
+}));
 ```
 
 Example: `packages/solid/examples/components/keymap-demo.tsx`

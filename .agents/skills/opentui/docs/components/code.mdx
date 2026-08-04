@@ -13,9 +13,9 @@ Displays syntax-highlighted code using Tree-sitter. Supports many languages with
 ### Renderable API
 
 ```typescript
-import { CodeRenderable, createCliRenderer, SyntaxStyle, RGBA } from "@opentui/core"
+import { CodeRenderable, createCliRenderer, SyntaxStyle, RGBA } from "@opentui/core";
 
-const renderer = await createCliRenderer()
+const renderer = await createCliRenderer();
 
 const syntaxStyle = SyntaxStyle.fromStyles({
   keyword: { fg: RGBA.fromHex("#FF7B72"), bold: true },
@@ -24,7 +24,7 @@ const syntaxStyle = SyntaxStyle.fromStyles({
   number: { fg: RGBA.fromHex("#79C0FF") },
   function: { fg: RGBA.fromHex("#D2A8FF") },
   default: { fg: RGBA.fromHex("#E6EDF3") },
-})
+});
 
 const code = new CodeRenderable(renderer, {
   id: "code",
@@ -37,23 +37,23 @@ const code = new CodeRenderable(renderer, {
   syntaxStyle,
   width: 50,
   height: 10,
-})
+});
 
-renderer.root.add(code)
+renderer.root.add(code);
 ```
 
 ### Construct API
 
 ```typescript
-import { Code, Box, createCliRenderer, SyntaxStyle, RGBA } from "@opentui/core"
+import { Code, Box, createCliRenderer, SyntaxStyle, RGBA } from "@opentui/core";
 
-const renderer = await createCliRenderer()
+const renderer = await createCliRenderer();
 
 const syntaxStyle = SyntaxStyle.fromStyles({
   keyword: { fg: RGBA.fromHex("#FF7B72"), bold: true },
   string: { fg: RGBA.fromHex("#A5D6FF") },
   default: { fg: RGBA.fromHex("#E6EDF3") },
-})
+});
 
 renderer.root.add(
   Box(
@@ -64,7 +64,7 @@ renderer.root.add(
       syntaxStyle,
     }),
   ),
-)
+);
 ```
 
 ## Creating syntax styles
@@ -72,7 +72,7 @@ renderer.root.add(
 Use `SyntaxStyle.fromStyles()` to define colors and attributes for syntax tokens:
 
 ```typescript
-import { SyntaxStyle, RGBA, parseColor } from "@opentui/core"
+import { SyntaxStyle, RGBA, parseColor } from "@opentui/core";
 
 const syntaxStyle = SyntaxStyle.fromStyles({
   // Basic tokens
@@ -106,7 +106,7 @@ const syntaxStyle = SyntaxStyle.fromStyles({
 
   // Default fallback
   default: { fg: RGBA.fromHex("#E6EDF3") },
-})
+});
 ```
 
 ### Style properties
@@ -142,11 +142,11 @@ const code = new CodeRenderable(renderer, {
   filetype: "typescript",
   syntaxStyle,
   streaming: true, // Enable streaming mode
-})
+});
 
 // Later, append content
-code.content += "const x = 1\n"
-code.content += "const y = 2\n"
+code.content += "const x = 1\n";
+code.content += "const y = 2\n";
 ```
 
 Streaming mode changes intermediate rendering behavior during repeated updates. In particular, when `drawUnstyledText` is `false`, later updates keep the previous rendered buffer visible while a new one-shot highlight completes. Each highlight still processes the complete current `content`.
@@ -164,7 +164,7 @@ const code = new CodeRenderable(renderer, {
   selectable: true,
   selectionBg: "#264F78",
   selectionFg: "#FFFFFF",
-})
+});
 ```
 
 ## Concealment
@@ -178,7 +178,7 @@ const code = new CodeRenderable(renderer, {
   filetype: "markdown",
   syntaxStyle,
   conceal: true, // Hide formatting characters
-})
+});
 ```
 
 ## With line numbers
@@ -186,12 +186,18 @@ const code = new CodeRenderable(renderer, {
 Use `LineNumberRenderable` to add line numbers:
 
 ```typescript
-import { CodeRenderable, LineNumberRenderable, RGBA, ScrollBoxRenderable, SyntaxStyle } from "@opentui/core"
+import {
+  CodeRenderable,
+  LineNumberRenderable,
+  RGBA,
+  ScrollBoxRenderable,
+  SyntaxStyle,
+} from "@opentui/core";
 
-const sourceCode = "const answer = 42\nconsole.log(answer)\n"
+const sourceCode = "const answer = 42\nconsole.log(answer)\n";
 const syntaxStyle = SyntaxStyle.fromStyles({
   default: { fg: RGBA.fromHex("#E6EDF3") },
-})
+});
 
 const code = new CodeRenderable(renderer, {
   id: "code",
@@ -199,7 +205,7 @@ const code = new CodeRenderable(renderer, {
   filetype: "typescript",
   syntaxStyle,
   width: "100%",
-})
+});
 
 const lineNumbers = new LineNumberRenderable(renderer, {
   id: "code-with-lines",
@@ -209,16 +215,16 @@ const lineNumbers = new LineNumberRenderable(renderer, {
   fg: "#6b7280",
   bg: "#161b22",
   width: "100%",
-})
+});
 
 // Wrap in ScrollBox for scrolling
 const scrollbox = new ScrollBoxRenderable(renderer, {
   id: "scrollbox",
   width: 60,
   height: 20,
-})
-scrollbox.add(lineNumbers)
-renderer.root.add(scrollbox)
+});
+scrollbox.add(lineNumbers);
+renderer.root.add(scrollbox);
 ```
 
 ## Properties
@@ -276,5 +282,5 @@ const markdownStyle = SyntaxStyle.fromStyles({
   "markup.link": { fg: RGBA.fromHex("#58A6FF"), underline: true },
   "markup.link.url": { fg: RGBA.fromHex("#58A6FF"), underline: true },
   default: { fg: RGBA.fromHex("#E6EDF3") },
-})
+});
 ```

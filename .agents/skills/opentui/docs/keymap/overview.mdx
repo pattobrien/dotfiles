@@ -27,7 +27,7 @@ Live demo: [HTML keymap demo](/demos/keymap-html/)
 A binding can target a named command, an inline handler, or a specific key event:
 
 ```ts
-;[
+[
   { key: "x", cmd: "save-file" },
   { key: "ctrl+x", event: "release", cmd: "cut" },
   { key: "dd", cmd: "delete-line" },
@@ -36,12 +36,12 @@ A binding can target a named command, an inline handler, or a specific key event
   {
     key: "ctrl+k",
     cmd({ keymap }) {
-      keymap.setData("palette.open", true)
+      keymap.setData("palette.open", true);
     },
   },
   { key: "escape", event: "release", cmd: "close-help" },
   { key: { name: "return", ctrl: true }, cmd: "submit" },
-]
+];
 ```
 
 ![Keymap Engine Concept Overview](/keymap-engine-overview.svg)
@@ -115,11 +115,11 @@ This parser-driven model is why the same engine can support built-in strings lik
 Tokens are named single-stroke aliases used inside binding strings. Registration names are semantic and delimiter-free; the default parser maps `<leader>` syntax to the registered token named `"leader"`.
 
 ```ts
-keymap.registerToken({ name: "leader", key: { name: "space" } })
+keymap.registerToken({ name: "leader", key: { name: "space" } });
 
 keymap.registerLayer({
   bindings: [{ key: "<leader>s", cmd: "save-file" }],
-})
+});
 ```
 
 Tokens are compile-time input syntax, not a separate dispatch mode. They resolve to exactly one stroke, participate in sequence matching like any other stroke, and can be queried with their preserved display form.
@@ -131,28 +131,28 @@ Bindings that reference an unknown token fail closed. For example, `"<leader>s"`
 Sequence patterns are runtime captures used inside binding strings. Registration names are also semantic and delimiter-free; the default parser maps `{count}` syntax to the registered pattern named `"count"`.
 
 ```ts
-import type { Command, KeymapEvent } from "@opentui/keymap"
+import type { Command, KeymapEvent } from "@opentui/keymap";
 
 interface CountPayload {
-  count?: number
+  count?: number;
 }
 
 keymap.registerSequencePattern({
   name: "count",
   match(event) {
-    return /^\d$/.test(event.name) ? { value: event.name, display: event.name } : undefined
+    return /^\d$/.test(event.name) ? { value: event.name, display: event.name } : undefined;
   },
   finalize(values) {
-    return Number(values.join(""))
+    return Number(values.join(""));
   },
-})
+});
 
 const moveDownCommand: Command<object, KeymapEvent, CountPayload | undefined> = {
   name: "move-down",
   run({ payload }) {
-    moveDown(payload?.count ?? 1)
+    moveDown(payload?.count ?? 1);
   },
-}
+};
 
 keymap.registerLayer({
   commands: [moveDownCommand],
@@ -160,7 +160,7 @@ keymap.registerLayer({
     { key: "j", cmd: "move-down" },
     { key: "{count}j", cmd: "move-down" },
   ],
-})
+});
 ```
 
 By default, the command payload key is the pattern name, so `name: "count"` produces `payload.count`. Use `payloadKey` only when the command payload field should differ from the pattern name.
@@ -176,17 +176,17 @@ Bindings can carry custom fields, but those fields only mean something after you
 ```ts
 keymap.registerBindingFields({
   mode(value, ctx) {
-    ctx.require("vim.mode", value)
-    ctx.attr("mode", value)
+    ctx.require("vim.mode", value);
+    ctx.attr("mode", value);
   },
-})
+});
 
-keymap.registerToken({ name: "leader", key: { name: "space" } })
+keymap.registerToken({ name: "leader", key: { name: "space" } });
 
 keymap.registerLayer({
   commands: [{ name: "write-file", run() {} }],
   bindings: [{ key: "<leader>w", mode: "normal", cmd: "write-file" }],
-})
+});
 ```
 
 In that example, the binding is only active while `getData("vim.mode")` is `"normal"`, and the compiled binding metadata can expose `{ mode: "normal" }` through query APIs when metadata is requested.
@@ -198,14 +198,14 @@ Layer fields follow the same compiler model. Register them with `registerLayerFi
 ```ts
 keymap.registerLayerFields({
   name(value, ctx) {
-    ctx.attr("name", String(value).trim())
+    ctx.attr("name", String(value).trim());
   },
-})
+});
 
 keymap.registerLayer({
   name: "Global",
   bindings: [{ key: "?", cmd: "toggle-help" }],
-})
+});
 ```
 
 All host helpers use the same registration, dispatch and query model. They only differ in how they provide targets, focus and input events.
@@ -224,10 +224,10 @@ Fields can affect behavior. Metadata does not. A field compiler can make a recor
 ```ts
 keymap.registerBindingFields({
   mode(value, ctx) {
-    ctx.require("vim.mode", value)
-    ctx.attr("mode", value)
+    ctx.require("vim.mode", value);
+    ctx.attr("mode", value);
   },
-})
+});
 ```
 
 That field does two things: it gates the binding on `keymap.getData("vim.mode")`, and it exposes `{ mode: value }` to active-key metadata when requested. Layer fields can also publish attrs, but those appear on `GraphLayer.attrs` for graph/debug projections rather than on active keys.
@@ -237,9 +237,9 @@ Metadata can use a different name from the field when an addon wants to validate
 ```ts
 keymap.registerCommandFields({
   title(value, ctx) {
-    ctx.attr("label", String(value).trim())
+    ctx.attr("label", String(value).trim());
   },
-})
+});
 ```
 
 Use top-level custom fields for config DSL. Use `ctx.attr(...)` in field compilers for display/query metadata.
@@ -267,21 +267,21 @@ Runtime data is useful for application-specific modes that only exist to control
 ```ts
 keymap.registerLayerFields({
   appMode(value, ctx) {
-    ctx.require("app.mode", value)
+    ctx.require("app.mode", value);
   },
-})
+});
 
-keymap.setData("app.mode", "base")
+keymap.setData("app.mode", "base");
 
 keymap.registerLayer({
   appMode: "base",
   bindings: [{ key: "ctrl+p", cmd: "palette.open" }],
-})
+});
 
 keymap.registerLayer({
   appMode: "palette",
   bindings: [{ key: "escape", cmd: "palette.close" }],
-})
+});
 ```
 
 Changing `app.mode` recomputes active layers immediately. This keeps keymap-only state out of framework context or component props, while still letting normal layer ordering handle conflicts inside the active mode. If several independent overlays can be open at once, model that explicitly with a stack, depth counter or distinct mode values before writing the runtime data back.

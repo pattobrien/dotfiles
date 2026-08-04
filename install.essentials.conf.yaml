@@ -19,8 +19,7 @@
       description: Installing essential packages
     - command: ./scripts/dequarantine.zsh
       description: Removing the quarantine flag from installed apps
-    - command:
-        test -d ~/.oh-my-zsh/custom/plugins/zsh-pnpm-completions || git clone
+    - command: test -d ~/.oh-my-zsh/custom/plugins/zsh-pnpm-completions || git clone
         https://github.com/michakfromparis/zsh-pnpm-completions
         ~/.oh-my-zsh/custom/plugins/zsh-pnpm-completions
       description: Installing pnpm completions

@@ -13,9 +13,9 @@ Horizontal tab-based selection component with descriptions and scroll support. T
 ### Renderable API
 
 ```typescript
-import { TabSelectRenderable, TabSelectRenderableEvents, createCliRenderer } from "@opentui/core"
+import { TabSelectRenderable, TabSelectRenderableEvents, createCliRenderer } from "@opentui/core";
 
-const renderer = await createCliRenderer()
+const renderer = await createCliRenderer();
 
 const tabs = new TabSelectRenderable(renderer, {
   id: "tabs",
@@ -26,22 +26,22 @@ const tabs = new TabSelectRenderable(renderer, {
     { name: "Settings", description: "Application settings" },
   ],
   tabWidth: 20,
-})
+});
 
 tabs.on(TabSelectRenderableEvents.ITEM_SELECTED, (index, option) => {
-  console.log("Tab selected:", option.name)
-})
+  console.log("Tab selected:", option.name);
+});
 
-tabs.focus()
-renderer.root.add(tabs)
+tabs.focus();
+renderer.root.add(tabs);
 ```
 
 ### Construct API
 
 ```typescript
-import { TabSelect, createCliRenderer } from "@opentui/core"
+import { TabSelect, createCliRenderer } from "@opentui/core";
 
-const renderer = await createCliRenderer()
+const renderer = await createCliRenderer();
 
 const tabs = TabSelect({
   width: 60,
@@ -51,10 +51,10 @@ const tabs = TabSelect({
     { name: "Tab 2", description: "Second tab" },
     { name: "Tab 3", description: "Third tab" },
   ],
-})
+});
 
-tabs.focus()
-renderer.root.add(tabs)
+tabs.focus();
+renderer.root.add(tabs);
 ```
 
 ## Keyboard Navigation
@@ -74,12 +74,12 @@ When focused, the tab select responds to these keys:
 Emitted when the user presses Enter on a tab:
 
 ```typescript
-import { TabSelectRenderableEvents, type TabSelectOption } from "@opentui/core"
+import { TabSelectRenderableEvents, type TabSelectOption } from "@opentui/core";
 
 tabs.on(TabSelectRenderableEvents.ITEM_SELECTED, (index: number, option: TabSelectOption) => {
-  console.log(`Selected tab ${index}: ${option.name}`)
+  console.log(`Selected tab ${index}: ${option.name}`);
   // Switch to the corresponding panel
-})
+});
 ```
 
 ### Selection Changed
@@ -87,11 +87,11 @@ tabs.on(TabSelectRenderableEvents.ITEM_SELECTED, (index: number, option: TabSele
 Emitted when the highlighted tab changes:
 
 ```typescript
-import { TabSelectRenderableEvents, type TabSelectOption } from "@opentui/core"
+import { TabSelectRenderableEvents, type TabSelectOption } from "@opentui/core";
 
 tabs.on(TabSelectRenderableEvents.SELECTION_CHANGED, (index: number, option: TabSelectOption) => {
-  console.log(`Hovering: ${option.name}`)
-})
+  console.log(`Hovering: ${option.name}`);
+});
 ```
 
 ## Properties
@@ -118,23 +118,23 @@ tabs.on(TabSelectRenderableEvents.SELECTION_CHANGED, (index: number, option: Tab
 ## Example: Tabbed Interface
 
 ```typescript
-import { Box, Text, TabSelect, createCliRenderer } from "@opentui/core"
+import { Box, Text, TabSelect, createCliRenderer } from "@opentui/core";
 
-const renderer = await createCliRenderer()
+const renderer = await createCliRenderer();
 
 // Create content panels
 const panels = {
   home: Box({ padding: 1 }, Text({ content: "Home content here" })),
   files: Box({ padding: 1 }, Text({ content: "File browser here" })),
   settings: Box({ padding: 1 }, Text({ content: "Settings form here" })),
-}
+};
 
 // Create the tabbed container
 const container = Box({
   width: 60,
   height: 20,
   borderStyle: "rounded",
-})
+});
 
 const tabs = TabSelect({
   width: 60,
@@ -144,58 +144,58 @@ const tabs = TabSelect({
     { name: "Files", description: "Browse files" },
     { name: "Settings", description: "Preferences" },
   ],
-})
+});
 
 // Content area
-let currentPanel = panels.home
+let currentPanel = panels.home;
 const contentArea = Box({
   flexGrow: 1,
   padding: 1,
-})
-contentArea.add(currentPanel)
+});
+contentArea.add(currentPanel);
 
 // Handle tab changes
 tabs.on("itemSelected", (index, option) => {
   // Remove current panel
   if (currentPanel) {
-    contentArea.remove(currentPanel)
+    contentArea.remove(currentPanel);
   }
   // Add new panel based on selection
   switch (option.name) {
     case "Home":
-      currentPanel = panels.home
-      break
+      currentPanel = panels.home;
+      break;
     case "Files":
-      currentPanel = panels.files
-      break
+      currentPanel = panels.files;
+      break;
     case "Settings":
-      currentPanel = panels.settings
-      break
+      currentPanel = panels.settings;
+      break;
   }
-  contentArea.add(currentPanel)
-})
+  contentArea.add(currentPanel);
+});
 
-container.add(tabs)
-container.add(contentArea)
+container.add(tabs);
+container.add(contentArea);
 
-tabs.focus()
-renderer.root.add(container)
+tabs.focus();
+renderer.root.add(container);
 ```
 
 ## Programmatic Control
 
 ```typescript
 // Get current tab index
-const currentIndex = tabs.getSelectedIndex()
+const currentIndex = tabs.getSelectedIndex();
 
 // Set tab programmatically
-tabs.setSelectedIndex(1)
+tabs.setSelectedIndex(1);
 
 // Update tabs dynamically
 tabs.setOptions([
   { name: "New Tab 1", description: "Updated" },
   { name: "New Tab 2", description: "Also updated" },
-])
+]);
 ```
 
 ## Scroll Behavior

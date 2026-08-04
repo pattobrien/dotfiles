@@ -31,7 +31,7 @@ Core slot renderers receive both the host context and slot data: `(ctx, data) =>
 If your app loads plugin modules from disk at runtime, import this once in your app entry:
 
 ```ts
-import "@opentui/core/runtime-plugin-support"
+import "@opentui/core/runtime-plugin-support";
 ```
 
 This installs Bun runtime support for `@opentui/core` plus default core runtime entrypoints (`@opentui/core/testing`). Add first-party package runtime modules explicitly when a plugin imports them.
@@ -39,24 +39,25 @@ This installs Bun runtime support for `@opentui/core` plus default core runtime 
 If you need additional host-resolved modules, configure runtime support before the side-effect import is loaded:
 
 ```ts
-const { ensureRuntimePluginSupport } = await import("@opentui/core/runtime-plugin-support/configure")
+const { ensureRuntimePluginSupport } =
+  await import("@opentui/core/runtime-plugin-support/configure");
 
 ensureRuntimePluginSupport({
   additional: {
     "my-runtime-module": { marker: "ok" },
   },
-})
+});
 ```
 
 For plugins that import `@opentui/three`, install `@opentui/three` in the host app and pass its runtime module map:
 
 ```ts
-import { runtimeModules as threeRuntimeModules } from "@opentui/three/runtime-modules"
-import { ensureRuntimePluginSupport } from "@opentui/core/runtime-plugin-support/configure"
+import { runtimeModules as threeRuntimeModules } from "@opentui/three/runtime-modules";
+import { ensureRuntimePluginSupport } from "@opentui/core/runtime-plugin-support/configure";
 
 ensureRuntimePluginSupport({
   additional: threeRuntimeModules,
-})
+});
 ```
 
 The side-effect import and configurable entrypoint install the same runtime plugin. Late additions throw with a clear error instead of being ignored.
@@ -85,15 +86,15 @@ import {
   registerCorePlugin,
   SlotRenderable,
   TextRenderable,
-} from "@opentui/core"
+} from "@opentui/core";
 
-type Slots = "statusbar"
-type SlotData = { label: string }
-const context = { appName: "core-app", version: "1.0.0" }
+type Slots = "statusbar";
+type SlotData = { label: string };
+const context = { appName: "core-app", version: "1.0.0" };
 
-const renderer = await createCliRenderer()
+const renderer = await createCliRenderer();
 
-const registry = createCoreSlotRegistry<Slots, typeof context, SlotData>(renderer, context)
+const registry = createCoreSlotRegistry<Slots, typeof context, SlotData>(renderer, context);
 
 const unregister = registerCorePlugin(registry, {
   id: "clock-plugin",
@@ -103,10 +104,10 @@ const unregister = registerCorePlugin(registry, {
       return new TextRenderable(renderer, {
         id: "clock-status",
         content: `clock: ${data.label}`,
-      })
+      });
     },
   },
-})
+});
 
 const slot = new SlotRenderable(renderer, {
   id: "statusbar-slot",
@@ -122,15 +123,15 @@ const slot = new SlotRenderable(renderer, {
       id: "statusbar-fallback",
       content: "fallback",
     }),
-})
+});
 
-renderer.root.add(slot)
+renderer.root.add(slot);
 
 // later
-slot.mode = "replace"
-slot.data = { label: "updated" }
-slot.refresh()
-slot.destroy()
+slot.mode = "replace";
+slot.data = { label: "updated" };
+slot.refresh();
+slot.destroy();
 ```
 
 `registerCorePlugin` returns an unregister function (`() => void`). Calling it removes the plugin and invokes its `dispose` hook.
@@ -163,15 +164,15 @@ Because `SlotRenderable` extends `Renderable`, it accepts all standard layout op
 Resolve slot entries without mounting them. Useful when you need to inspect or render plugin output manually.
 
 ```typescript
-import { createCliRenderer, createCoreSlotRegistry, resolveCoreSlot } from "@opentui/core"
+import { createCliRenderer, createCoreSlotRegistry, resolveCoreSlot } from "@opentui/core";
 
-const renderer = await createCliRenderer()
+const renderer = await createCliRenderer();
 const registry = createCoreSlotRegistry<"statusbar">(renderer, {
   appName: "core-app",
   version: "1.0.0",
-})
+});
 
-const entries = resolveCoreSlot(registry, "statusbar")
+const entries = resolveCoreSlot(registry, "statusbar");
 // Array<{ id: string, renderer: (ctx, data) => BaseRenderable }>
 ```
 
@@ -188,9 +189,9 @@ const slot = new SlotRenderable(renderer, {
     return new TextRenderable(renderer, {
       id: `error-${failure.pluginId}`,
       content: `plugin error: ${failure.pluginId}`,
-    })
+    });
   },
-})
+});
 ```
 
 ## Managed slot contributions
@@ -203,7 +204,7 @@ registerCorePlugin(registry, {
   slots: {
     statusbar: {
       render(_ctx, data) {
-        return new TextRenderable(renderer, { id: "managed", content: "managed" })
+        return new TextRenderable(renderer, { id: "managed", content: "managed" });
       },
       onActivate(ctx) {
         // plugin became active in this slot (visible)
@@ -216,7 +217,7 @@ registerCorePlugin(registry, {
       },
     },
   },
-})
+});
 ```
 
 ### `CoreManagedSlot` interface
@@ -238,8 +239,8 @@ When a slot contribution is a **managed slot object**, the plugin owns the nodes
 
 ```typescript
 registry.onPluginError((event) => {
-  console.error(event.pluginId, event.phase, event.source, event.error.message)
-})
+  console.error(event.pluginId, event.phase, event.source, event.error.message);
+});
 ```
 
 Example: `packages/examples/src/core-plugin-slots-demo.ts`

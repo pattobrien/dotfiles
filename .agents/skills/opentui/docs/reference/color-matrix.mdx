@@ -98,15 +98,15 @@ Result values are not clamped to `[0, 1]`. Matrix coefficients and strengths can
 ## Example: invert whole buffer
 
 ```typescript
-import { INVERT_MATRIX, TargetChannel } from "@opentui/core"
+import { INVERT_MATRIX, TargetChannel } from "@opentui/core";
 
-frameBuffer.colorMatrixUniform(INVERT_MATRIX, 1.0, TargetChannel.Both)
+frameBuffer.colorMatrixUniform(INVERT_MATRIX, 1.0, TargetChannel.Both);
 ```
 
 ## Example: apply sepia to selected cells
 
 ```typescript
-import { SEPIA_MATRIX, TargetChannel } from "@opentui/core"
+import { SEPIA_MATRIX, TargetChannel } from "@opentui/core";
 
 // Affect only three cells at custom strengths
 const cellMask = new Float32Array([
@@ -119,21 +119,21 @@ const cellMask = new Float32Array([
   7,
   2,
   0.25, // subtle sepia at (7,2)
-])
+]);
 
-frameBuffer.colorMatrix(SEPIA_MATRIX, cellMask, 1.0, TargetChannel.FG)
+frameBuffer.colorMatrix(SEPIA_MATRIX, cellMask, 1.0, TargetChannel.FG);
 ```
 
 ## Example: custom saturation matrix
 
 ```typescript
-import { TargetChannel } from "@opentui/core"
+import { TargetChannel } from "@opentui/core";
 
 function createSaturationMatrix(saturation: number): Float32Array {
-  const rw = 0.299
-  const gw = 0.587
-  const bw = 0.114
-  const inv = 1 - saturation
+  const rw = 0.299;
+  const gw = 0.587;
+  const bw = 0.114;
+  const inv = 1 - saturation;
 
   return new Float32Array([
     rw * inv + saturation,
@@ -152,9 +152,9 @@ function createSaturationMatrix(saturation: number): Float32Array {
     0,
     0,
     1,
-  ])
+  ]);
 }
 
-const saturation = createSaturationMatrix(1.25)
-frameBuffer.colorMatrixUniform(saturation, 0.8, TargetChannel.Both)
+const saturation = createSaturationMatrix(1.25);
+frameBuffer.colorMatrixUniform(saturation, 0.8, TargetChannel.Both);
 ```

@@ -95,23 +95,23 @@ Both built-in host packages export adapter-specific helpers. Import the shared `
 ### Basic usage
 
 ```ts
-import { createCliRenderer } from "@opentui/core"
-import { createDefaultOpenTuiKeymap } from "@opentui/keymap/opentui"
+import { createCliRenderer } from "@opentui/core";
+import { createDefaultOpenTuiKeymap } from "@opentui/keymap/opentui";
 
-const renderer = await createCliRenderer()
-const keymap = createDefaultOpenTuiKeymap(renderer)
+const renderer = await createCliRenderer();
+const keymap = createDefaultOpenTuiKeymap(renderer);
 
 keymap.registerLayer({
   commands: [
     {
       name: "quit",
       run() {
-        renderer.destroy()
+        renderer.destroy();
       },
     },
   ],
   bindings: [{ key: "q", cmd: "quit" }],
-})
+});
 ```
 
 If you want to control the installed addons yourself, start from `createOpenTuiKeymap(renderer)` and register addons manually.
@@ -181,22 +181,22 @@ Live demo: [HTML keymap demo](/demos/keymap-html/)
 ### Basic usage
 
 ```ts
-import { createDefaultHtmlKeymap } from "@opentui/keymap/html"
+import { createDefaultHtmlKeymap } from "@opentui/keymap/html";
 
-const root = document.getElementById("app")!
-const keymap = createDefaultHtmlKeymap(root)
+const root = document.getElementById("app")!;
+const keymap = createDefaultHtmlKeymap(root);
 
 keymap.registerLayer({
   commands: [
     {
       name: "toggle-help",
       run() {
-        document.body.classList.toggle("help-open")
+        document.body.classList.toggle("help-open");
       },
     },
   ],
   bindings: [{ key: "?", cmd: "toggle-help" }],
-})
+});
 ```
 
 If you want to control parser or event-matching stages yourself, start from `createHtmlKeymap(root)` and install the pieces manually.
@@ -246,10 +246,10 @@ Call `prependEventMatchResolver(...)` for any custom resolver that must run befo
 If neither built-in host fits your runtime, implement `KeymapHost` yourself and construct the engine directly:
 
 ```ts
-import { Keymap, type KeymapHost } from "@opentui/keymap"
+import { Keymap, type KeymapHost } from "@opentui/keymap";
 
 function createCustomKeymap(host: KeymapHost<object>) {
-  return new Keymap(host)
+  return new Keymap(host);
 }
 ```
 

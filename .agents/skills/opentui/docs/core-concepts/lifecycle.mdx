@@ -21,27 +21,27 @@ OpenTUI does not automatically clean up on `process.exit` or unhandled errors. T
 Call `destroy()` when your app exits:
 
 ```typescript
-import { createCliRenderer } from "@opentui/core"
+import { createCliRenderer } from "@opentui/core";
 
-const renderer = await createCliRenderer()
+const renderer = await createCliRenderer();
 
 // ... your application code ...
 
 // Clean shutdown
-renderer.destroy()
+renderer.destroy();
 ```
 
 For reliable cleanup, keep renderer teardown in the same control flow as your app startup:
 
 ```typescript
-import { createCliRenderer } from "@opentui/core"
+import { createCliRenderer } from "@opentui/core";
 
-const renderer = await createCliRenderer()
+const renderer = await createCliRenderer();
 
 try {
   // ... your application code ...
 } finally {
-  renderer.destroy()
+  renderer.destroy();
 }
 ```
 
@@ -66,12 +66,12 @@ You can customize which signals trigger cleanup:
 // Only handle SIGINT and SIGTERM
 const renderer = await createCliRenderer({
   exitSignals: ["SIGINT", "SIGTERM"],
-})
+});
 
 // Disable all signal-based cleanup (handle it yourself)
 const renderer = await createCliRenderer({
   exitSignals: [],
-})
+});
 ```
 
 ## Ctrl+C behavior
@@ -82,14 +82,14 @@ By default, Ctrl+C calls `destroy()`. If you want to handle Ctrl+C yourself, dis
 const renderer = await createCliRenderer({
   exitOnCtrlC: false,
   exitSignals: ["SIGTERM", "SIGQUIT", "SIGABRT", "SIGHUP", "SIGBREAK", "SIGPIPE", "SIGBUS"],
-})
+});
 
 renderer.keyInput.on("keypress", (key) => {
   if (key.ctrl && key.name === "c") {
     // Custom Ctrl+C handling
-    console.log("Ctrl+C pressed, but not exiting")
+    console.log("Ctrl+C pressed, but not exiting");
   }
-})
+});
 ```
 
 ## Destroy callback
@@ -99,9 +99,9 @@ Run custom logic when the renderer is destroyed:
 ```typescript
 const renderer = await createCliRenderer({
   onDestroy: () => {
-    console.log("Renderer destroyed, performing additional cleanup...")
+    console.log("Renderer destroyed, performing additional cleanup...");
   },
-})
+});
 ```
 
 ## What `destroy()` cleans up
@@ -121,11 +121,11 @@ The `destroy()` method cleans up these resources:
 For socket, SSH, or pty sessions, give each connection its own renderer. Destroy it before closing the transport:
 
 ```typescript
-import { createCliRenderer, type CliRenderer } from "@opentui/core"
+import { createCliRenderer, type CliRenderer } from "@opentui/core";
 
 interface TerminalSession {
-  renderer: CliRenderer
-  closeTransport: () => void
+  renderer: CliRenderer;
+  closeTransport: () => void;
 }
 
 async function startSession(
@@ -140,15 +140,15 @@ async function startSession(
     height: stdout.rows || 24,
     exitOnCtrlC: false,
     exitSignals: [],
-  })
+  });
 
-  return { renderer, closeTransport }
+  return { renderer, closeTransport };
 }
 
 async function closeSession(session: TerminalSession): Promise<void> {
-  session.renderer.destroy()
-  await new Promise<void>((resolve) => queueMicrotask(resolve))
-  session.closeTransport()
+  session.renderer.destroy();
+  await new Promise<void>((resolve) => queueMicrotask(resolve));
+  session.closeTransport();
 }
 ```
 

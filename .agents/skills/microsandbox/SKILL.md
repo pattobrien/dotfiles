@@ -108,38 +108,38 @@ msb remove dev
 
 ### Common sandbox options
 
-| Flag | Description | Example |
-|------|-------------|---------|
-| `-n`, `--name` | Name the sandbox | `--name my-sandbox` |
-| `-m`, `--memory` | Memory allocation | `-m 512M`, `-m 1G` |
-| `-c`, `--cpus` | Number of vCPUs | `-c 2` |
-| `-v`, `--volume` | Mount host path or named volume | `-v ./src:/app:ro`, `-v data:/data` |
-| `--mount-dir`, `--mount-file`, `--mount-disk`, `--mount-named` | Explicit mount kind | `--mount-named data:/data:kind=disk,size=10G` |
-| `-p`, `--port` | Publish port | `-p 8080:80`, `-p 0.0.0.0:8080:80`, `-p 5353:5353/udp` |
-| `-e`, `--env` | Set non-secret env variable (use `--secret` for credentials) | `-e LOG_LEVEL=debug` |
-| `--label` | Attach label for selection/metrics | `--label app=worker` |
-| `-w`, `--workdir` | Working directory | `-w /app` |
-| `-t`, `--tty` | Force pseudo-terminal allocation | `-t` |
-| `-d`, `--detach` | Run in background, for `msb run` | `-d` |
-| `-u`, `--user` | Run as user | `-u nobody` |
-| `-H`, `--hostname` | Set guest hostname | `-H myhost` |
-| `--shell` | Default shell program | `--shell /bin/bash` |
-| `--replace` | Replace existing sandbox | `--replace` |
-| `--replace-with-timeout` | Grace before SIGKILL during replace | `--replace-with-timeout 30s` |
-| `--entrypoint` | Override image entrypoint | `--entrypoint /bin/sh` |
-| `--init`, `--init-arg`, `--init-env` | Hand off PID 1 to guest init | `--init /sbin/init` |
-| `--pull` | Pull policy | `--pull always` |
-| `--oci-upper-size` | Writable overlay upper size for OCI images | `--oci-upper-size 8G` |
-| `--security` | In-guest security profile | `--security restricted` |
-| `--max-duration` | Auto-stop timeout | `--max-duration 5m` |
-| `--idle-timeout` | Idle auto-stop | `--idle-timeout 30s` |
-| `--tmpfs` | Mount tmpfs | `--tmpfs /tmp:100M` |
-| `--copy`, `--copy-file`, `--copy-dir`, `--mkdir`, `--rm` | Patch rootfs before boot | `--copy ./config:/etc/app/config` |
-| `--script` | Register a shell snippet (wraps with shebang from `--shell`, decodes `\n`/`\t`/`\r`/`\\`/`\"`/`\'`) | `--script setup='apt-get update\napt-get install -y python3'` |
-| `--script-raw` | Register exact inline bytes; no shebang or decoding | `--script-raw setup=$'#!/bin/sh\necho hi\n'` |
-| `--script-path` | Register a script from a host file (contents read verbatim) | `--script-path setup:./setup.sh` |
-| `--snapshot` | Boot from a stopped-sandbox snapshot | `--snapshot baseline` |
-| `--no-net`, `--net-default`, `--net-rule` | Network isolation and allow/deny rules | `--no-net --net-rule "allow@api.example.com:tcp:443"` |
+| Flag                                                           | Description                                                                                         | Example                                                       |
+| -------------------------------------------------------------- | --------------------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
+| `-n`, `--name`                                                 | Name the sandbox                                                                                    | `--name my-sandbox`                                           |
+| `-m`, `--memory`                                               | Memory allocation                                                                                   | `-m 512M`, `-m 1G`                                            |
+| `-c`, `--cpus`                                                 | Number of vCPUs                                                                                     | `-c 2`                                                        |
+| `-v`, `--volume`                                               | Mount host path or named volume                                                                     | `-v ./src:/app:ro`, `-v data:/data`                           |
+| `--mount-dir`, `--mount-file`, `--mount-disk`, `--mount-named` | Explicit mount kind                                                                                 | `--mount-named data:/data:kind=disk,size=10G`                 |
+| `-p`, `--port`                                                 | Publish port                                                                                        | `-p 8080:80`, `-p 0.0.0.0:8080:80`, `-p 5353:5353/udp`        |
+| `-e`, `--env`                                                  | Set non-secret env variable (use `--secret` for credentials)                                        | `-e LOG_LEVEL=debug`                                          |
+| `--label`                                                      | Attach label for selection/metrics                                                                  | `--label app=worker`                                          |
+| `-w`, `--workdir`                                              | Working directory                                                                                   | `-w /app`                                                     |
+| `-t`, `--tty`                                                  | Force pseudo-terminal allocation                                                                    | `-t`                                                          |
+| `-d`, `--detach`                                               | Run in background, for `msb run`                                                                    | `-d`                                                          |
+| `-u`, `--user`                                                 | Run as user                                                                                         | `-u nobody`                                                   |
+| `-H`, `--hostname`                                             | Set guest hostname                                                                                  | `-H myhost`                                                   |
+| `--shell`                                                      | Default shell program                                                                               | `--shell /bin/bash`                                           |
+| `--replace`                                                    | Replace existing sandbox                                                                            | `--replace`                                                   |
+| `--replace-with-timeout`                                       | Grace before SIGKILL during replace                                                                 | `--replace-with-timeout 30s`                                  |
+| `--entrypoint`                                                 | Override image entrypoint                                                                           | `--entrypoint /bin/sh`                                        |
+| `--init`, `--init-arg`, `--init-env`                           | Hand off PID 1 to guest init                                                                        | `--init /sbin/init`                                           |
+| `--pull`                                                       | Pull policy                                                                                         | `--pull always`                                               |
+| `--oci-upper-size`                                             | Writable overlay upper size for OCI images                                                          | `--oci-upper-size 8G`                                         |
+| `--security`                                                   | In-guest security profile                                                                           | `--security restricted`                                       |
+| `--max-duration`                                               | Auto-stop timeout                                                                                   | `--max-duration 5m`                                           |
+| `--idle-timeout`                                               | Idle auto-stop                                                                                      | `--idle-timeout 30s`                                          |
+| `--tmpfs`                                                      | Mount tmpfs                                                                                         | `--tmpfs /tmp:100M`                                           |
+| `--copy`, `--copy-file`, `--copy-dir`, `--mkdir`, `--rm`       | Patch rootfs before boot                                                                            | `--copy ./config:/etc/app/config`                             |
+| `--script`                                                     | Register a shell snippet (wraps with shebang from `--shell`, decodes `\n`/`\t`/`\r`/`\\`/`\"`/`\'`) | `--script setup='apt-get update\napt-get install -y python3'` |
+| `--script-raw`                                                 | Register exact inline bytes; no shebang or decoding                                                 | `--script-raw setup=$'#!/bin/sh\necho hi\n'`                  |
+| `--script-path`                                                | Register a script from a host file (contents read verbatim)                                         | `--script-path setup:./setup.sh`                              |
+| `--snapshot`                                                   | Boot from a stopped-sandbox snapshot                                                                | `--snapshot baseline`                                         |
+| `--no-net`, `--net-default`, `--net-rule`                      | Network isolation and allow/deny rules                                                              | `--no-net --net-rule "allow@api.example.com:tcp:443"`         |
 
 ### Manage sandboxes
 

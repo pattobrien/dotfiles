@@ -20,7 +20,7 @@ const renderer = await createCliRenderer({
   height: rows,
   exitOnCtrlC: false,
   exitSignals: [],
-})
+});
 ```
 
 When `stdout` is not `process.stdout` and `bufferedOutput` is not `"memory"`, the renderer creates the feed, forwards each borrowed byte view to the original `stdout.write`, and keeps the native chunk pinned until the write callback runs. The renderer also drains and closes the feed during destruction.
@@ -30,25 +30,25 @@ When `stdout` is not `process.stdout` and `bufferedOutput` is not `"memory"`, th
 Direct use is intended for native integrations that already produce data through a native span-feed pointer. `NativeSpanFeed` is not a Node stream and does not expose `read()`, `write()`, or `pipe()`.
 
 ```typescript
-import { NativeSpanFeed } from "@opentui/core"
+import { NativeSpanFeed } from "@opentui/core";
 
 const feed = NativeSpanFeed.create({
   chunkSize: 64 * 1024,
   initialChunks: 2,
-})
+});
 
-const chunks: Uint8Array[] = []
+const chunks: Uint8Array[] = [];
 const offData = feed.onData((bytes) => {
   // Copy data that must outlive this synchronous handler.
-  chunks.push(bytes.slice())
-})
+  chunks.push(bytes.slice());
+});
 
 try {
   // A native producer that accepts NativeSpanFeed uses feed.streamPtr.
-  await feed.idle()
+  await feed.idle();
 } finally {
-  offData()
-  feed.close()
+  offData();
+  feed.close();
 }
 ```
 
@@ -57,20 +57,20 @@ The wrapper owns the attached feed after `create()` or `attach()` succeeds. Call
 ## Public API
 
 ```typescript
-type DataHandler = (data: Uint8Array) => void | Promise<void>
+type DataHandler = (data: Uint8Array) => void | Promise<void>;
 
 class NativeSpanFeed {
-  static create(options?: NativeSpanFeedOptions): NativeSpanFeed
-  static attach(streamPtr: Pointer, options?: NativeSpanFeedOptions): NativeSpanFeed
+  static create(options?: NativeSpanFeedOptions): NativeSpanFeed;
+  static attach(streamPtr: Pointer, options?: NativeSpanFeedOptions): NativeSpanFeed;
 
-  readonly streamPtr: Pointer
+  readonly streamPtr: Pointer;
 
-  onData(handler: DataHandler): () => void
-  onError(handler: (code: number) => void): () => void
-  isBackpressured(): boolean
-  drainAll(): void
-  idle(): Promise<void>
-  close(): void
+  onData(handler: DataHandler): () => void;
+  onError(handler: (code: number) => void): () => void;
+  isBackpressured(): boolean;
+  drainAll(): void;
+  idle(): Promise<void>;
+  close(): void;
 }
 ```
 
@@ -83,16 +83,16 @@ class NativeSpanFeed {
 ## Options
 
 ```typescript
-type GrowthPolicy = "grow" | "block"
+type GrowthPolicy = "grow" | "block";
 
 type NativeSpanFeedOptions = {
-  chunkSize?: number
-  initialChunks?: number
-  maxBytes?: bigint
-  growthPolicy?: GrowthPolicy
-  autoCommitOnFull?: boolean
-  spanQueueCapacity?: number
-}
+  chunkSize?: number;
+  initialChunks?: number;
+  maxBytes?: bigint;
+  growthPolicy?: GrowthPolicy;
+  autoCommitOnFull?: boolean;
+  spanQueueCapacity?: number;
+};
 ```
 
 | Option              | Default     | Description                                                                                           |
@@ -125,11 +125,11 @@ Renderer-managed custom output uses these rules to turn the `stdout.write(..., c
 
 ```typescript
 type NativeSpanFeedStats = {
-  bytesWritten: bigint
-  spansCommitted: bigint
-  chunks: number
-  pendingSpans: number
-}
+  bytesWritten: bigint;
+  spansCommitted: bigint;
+  chunks: number;
+  pendingSpans: number;
+};
 ```
 
 `NativeSpanFeed` itself has no public stats method. Do not call a nonexistent `feed.getStats()` or `feed.stats` property.

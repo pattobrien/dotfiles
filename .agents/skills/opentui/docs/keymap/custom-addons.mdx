@@ -16,28 +16,28 @@ If you want the shipped addon inventory instead, see [Built-in Addons](/docs/key
 ## Addon shape
 
 ```ts
-import type { Keymap, KeymapEvent } from "@opentui/keymap"
+import type { Keymap, KeymapEvent } from "@opentui/keymap";
 
 export function registerModeField<TTarget extends object, TEvent extends KeymapEvent>(
   keymap: Keymap<TTarget, TEvent>,
 ): () => void {
   const offField = keymap.registerBindingFields({
     mode(value, ctx) {
-      ctx.require("app.mode", value)
-      ctx.attr("mode", value)
+      ctx.require("app.mode", value);
+      ctx.attr("mode", value);
     },
-  })
+  });
 
   const offIntercept = keymap.intercept("key", ({ event, setData }) => {
     if (event.name === "escape") {
-      setData("app.mode", "normal")
+      setData("app.mode", "normal");
     }
-  })
+  });
 
   return () => {
-    offIntercept()
-    offField()
-  }
+    offIntercept();
+    offField();
+  };
 }
 ```
 
@@ -108,14 +108,14 @@ Fields can be behavior, metadata or both. Compiled metadata is only metadata.
 ```ts
 keymap.registerBindingFields({
   mode(value, ctx) {
-    ctx.require("app.mode", value)
-    ctx.attr("mode", value)
+    ctx.require("app.mode", value);
+    ctx.attr("mode", value);
   },
-})
+});
 
 keymap.registerLayer({
   bindings: [{ key: "x", mode: "normal", cmd() {} }],
-})
+});
 ```
 
 That `mode` field is both a condition and metadata. The binding is active only when `keymap.getData("app.mode")` is `"normal"`, and metadata queries can expose `{ mode: "normal" }`.
@@ -135,9 +135,9 @@ The attr name does not have to match the field name. That is useful when an addo
 ```ts
 keymap.registerCommandFields({
   title(value, ctx) {
-    ctx.attr("label", String(value).trim())
+    ctx.attr("label", String(value).trim());
   },
-})
+});
 ```
 
 Use same-name attrs when the field already is the public metadata shape:
@@ -145,9 +145,9 @@ Use same-name attrs when the field already is the public metadata shape:
 ```ts
 keymap.registerCommandFields({
   desc(value, ctx) {
-    ctx.attr("desc", String(value).trim())
+    ctx.attr("desc", String(value).trim());
   },
-})
+});
 ```
 
 Use no attr when the field is behavior-only:
@@ -155,9 +155,9 @@ Use no attr when the field is behavior-only:
 ```ts
 keymap.registerCommandFields({
   enabled(value, ctx) {
-    ctx.activeWhen(() => value === true)
+    ctx.activeWhen(() => value === true);
   },
-})
+});
 ```
 
 Compiled metadata is exposed through projections such as `GraphLayer.attrs`, `ActiveBinding.attrs`, `ActiveBinding.commandAttrs`, `ActiveKey.bindingAttrs` and `ActiveKey.commandAttrs`. `getCommands()` returns the original command objects, not a separate metadata record.
@@ -177,11 +177,11 @@ Use `require(...)` for keymap-owned state such as modes:
 ```ts
 keymap.registerBindingFields({
   mode(value, ctx) {
-    ctx.require("app.mode", value)
+    ctx.require("app.mode", value);
   },
-})
+});
 
-keymap.setData("app.mode", "insert")
+keymap.setData("app.mode", "insert");
 ```
 
 Use `activeWhen(...)` for derived or external state:
@@ -189,17 +189,17 @@ Use `activeWhen(...)` for derived or external state:
 ```ts
 keymap.registerBindingFields({
   hasSelection(_value, ctx) {
-    ctx.activeWhen(() => editor.selection.length > 0)
+    ctx.activeWhen(() => editor.selection.length > 0);
   },
-})
+});
 ```
 
 `require(...)` is a keyed equality check against runtime data. `ReactiveMatcher` is the subscription-aware matcher form:
 
 ```ts
 interface ReactiveMatcher {
-  get(): boolean
-  subscribe(onChange: () => void): () => void
+  get(): boolean;
+  subscribe(onChange: () => void): () => void;
 }
 ```
 
@@ -239,9 +239,9 @@ Return expansion objects to replace one binding string with many, or `undefined`
 
 ```ts
 keymap.appendBindingExpander(({ input }) => {
-  if (input !== "save") return undefined
-  return [{ key: "ctrl+s", displays: ["save"] }]
-})
+  if (input !== "save") return undefined;
+  return [{ key: "ctrl+s", displays: ["save"] }];
+});
 ```
 
 ### `BindingParserContext`
@@ -298,7 +298,7 @@ Command transformers run once for each command in a layer before command fields 
 ### `CommandResolver`
 
 ```ts
-;(command, ctx) => Command | undefined
+(command, ctx) => Command | undefined;
 ```
 
 `CommandResolverContext` exposes:
@@ -319,9 +319,9 @@ Return an explicit command result from `run()` when the command wants a specific
 return {
   name: ":write",
   run() {
-    return { ok: false, reason: "invalid-args" }
+    return { ok: false, reason: "invalid-args" };
   },
-}
+};
 ```
 
 Resolver results are resolved when command queries, bindings, `runCommand()` or `dispatchCommand()` need them.
@@ -450,20 +450,20 @@ This is how the OpenTUI textarea helpers safely share command and suspension inf
 `@opentui/keymap/testing` provides a small host-agnostic test harness for addon authors. It does not depend on OpenTUI renderers or `@opentui/core/testing`.
 
 ```ts
-import { createTestKeymap } from "@opentui/keymap/testing"
-import { registerMyAddon } from "./my-addon"
+import { createTestKeymap } from "@opentui/keymap/testing";
+import { registerMyAddon } from "./my-addon";
 
-const { keymap, host, diagnostics, cleanup } = createTestKeymap({ defaultKeys: true })
+const { keymap, host, diagnostics, cleanup } = createTestKeymap({ defaultKeys: true });
 
-registerMyAddon(keymap)
+registerMyAddon(keymap);
 keymap.registerLayer({
   commands: [{ name: "save", run() {} }],
   bindings: [{ key: "x", cmd: "save" }],
-})
+});
 
-host.press("x")
-diagnostics.takeErrors()
-cleanup()
+host.press("x");
+diagnostics.takeErrors();
+cleanup();
 ```
 
 Testing exports include:

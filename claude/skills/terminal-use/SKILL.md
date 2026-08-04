@@ -1,7 +1,6 @@
 ---
 name: terminal-use
-description:
-  Control the user's Terminal — send keystrokes to terminal apps via tmux
+description: Control the user's Terminal — send keystrokes to terminal apps via tmux
   (preferred) or AppleScript, take screenshots across multiple monitors, and
   verify results visually. Use when asked to interact with a visible app window.
 disable-model-invocation: true

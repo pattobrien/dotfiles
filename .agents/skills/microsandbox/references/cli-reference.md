@@ -15,14 +15,14 @@ msb run --tree
 
 Global logging flags:
 
-| Flag | Description |
-|------|-------------|
-| `--error` | Show only errors |
-| `--warn` | Show warnings and errors |
-| `--info` | Show info, warnings, and errors |
-| `--debug` | Show debug output |
-| `--trace` | Show all output including trace |
-| `--tree` | Display command tree with descriptions |
+| Flag      | Description                            |
+| --------- | -------------------------------------- |
+| `--error` | Show only errors                       |
+| `--warn`  | Show warnings and errors               |
+| `--info`  | Show info, warnings, and errors        |
+| `--debug` | Show debug output                      |
+| `--trace` | Show all output including trace        |
+| `--tree`  | Display command tree with descriptions |
 
 Agent notes:
 
@@ -45,69 +45,69 @@ msb run --name devbox ubuntu -- bash
 msb run -d --name worker python -- python worker.py
 ```
 
-| Flag | Description |
-|------|-------------|
-| `-n`, `--name` | Sandbox name; omitted means ephemeral |
-| `-c`, `--cpus` | Number of virtual CPUs |
-| `-m`, `--memory` | Memory allocation, such as `512M`, `1G` |
-| `-v`, `--volume` | Mount host path, named volume, tmpfs, or disk image (`SOURCE:DEST`) |
-| `--mount-dir`, `--mount-file`, `--mount-disk`, `--mount-named` | Explicit mount kind (`SOURCE:DEST[:OPTIONS]` or `NAME:DEST[:OPTIONS]`) |
-| `-p`, `--port` | Forward port (`HOST:GUEST` or `HOST:GUEST/udp`) |
-| `-e`, `--env` | Environment variable (`KEY=VALUE`) |
-| `--label` | Sandbox label (`KEY=VALUE`, or bare `KEY`), repeatable |
-| `-w`, `--workdir` | Working directory inside sandbox |
-| `--shell` | Default shell for `msb run` / attach sessions |
-| `-t`, `--tty` | Allocate a pseudo-terminal |
-| `-d`, `--detach` | Run in background and print sandbox name |
-| `--timeout` | Kill the command after duration; sandbox remains alive |
-| `--rlimit` | POSIX resource limit (`nofile=1024`, `nproc=64`, `as=1073741824`) |
-| `--detach-keys` | Key sequence to detach from interactive session |
-| `--replace` | Replace existing sandbox with same name |
-| `--replace-with-timeout` | Grace between SIGTERM and SIGKILL during replace |
-| `-q`, `--quiet` | Suppress progress output |
-| `--entrypoint` | Override image entrypoint |
-| `--init` | Hand off PID 1 to this guest init binary after setup |
-| `--init-arg` | Argument for the handoff init; repeatable |
-| `--init-env` | Env var for the handoff init only; repeatable |
-| `-H`, `--hostname` | Guest hostname |
-| `-u`, `--user` | Guest user (`nobody`, `1000`, `1000:1000`) |
-| `--pull` | Pull policy: `always`, `if-missing`, `never` |
-| `--oci-upper-size` | Writable overlay upper size for OCI images |
-| `--log-level` | Runtime log level: `error`, `warn`, `info`, `debug`, `trace` |
-| `--tmpfs` | Mount tmpfs (`PATH` or `PATH:SIZE`) |
-| `--security` | In-guest security profile: `default` or `restricted` |
-| `--script` | Register a shell snippet (`NAME=BODY`). Wrapped with a shebang from `--shell` (default `/bin/sh`). Decodes `\n`, `\t`, `\r`, `\\`, `\"`, `\'`; unknown escapes pass through |
-| `--script-raw` | Register exact inline script contents (`NAME=BODY`). No escape decoding or shebang is added |
-| `--script-path` | Register a script from a host file (`NAME:PATH`). Contents read verbatim |
-| `--copy`, `--copy-file`, `--copy-dir`, `--mkdir`, `--rm` | Patch the rootfs before boot |
-| `--snapshot` | Boot from a snapshot artifact instead of an image |
-| `--max-duration` | Kill entire sandbox after duration |
-| `--idle-timeout` | Stop sandbox after inactivity duration |
+| Flag                                                           | Description                                                                                                                                                                 |
+| -------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `-n`, `--name`                                                 | Sandbox name; omitted means ephemeral                                                                                                                                       |
+| `-c`, `--cpus`                                                 | Number of virtual CPUs                                                                                                                                                      |
+| `-m`, `--memory`                                               | Memory allocation, such as `512M`, `1G`                                                                                                                                     |
+| `-v`, `--volume`                                               | Mount host path, named volume, tmpfs, or disk image (`SOURCE:DEST`)                                                                                                         |
+| `--mount-dir`, `--mount-file`, `--mount-disk`, `--mount-named` | Explicit mount kind (`SOURCE:DEST[:OPTIONS]` or `NAME:DEST[:OPTIONS]`)                                                                                                      |
+| `-p`, `--port`                                                 | Forward port (`HOST:GUEST` or `HOST:GUEST/udp`)                                                                                                                             |
+| `-e`, `--env`                                                  | Environment variable (`KEY=VALUE`)                                                                                                                                          |
+| `--label`                                                      | Sandbox label (`KEY=VALUE`, or bare `KEY`), repeatable                                                                                                                      |
+| `-w`, `--workdir`                                              | Working directory inside sandbox                                                                                                                                            |
+| `--shell`                                                      | Default shell for `msb run` / attach sessions                                                                                                                               |
+| `-t`, `--tty`                                                  | Allocate a pseudo-terminal                                                                                                                                                  |
+| `-d`, `--detach`                                               | Run in background and print sandbox name                                                                                                                                    |
+| `--timeout`                                                    | Kill the command after duration; sandbox remains alive                                                                                                                      |
+| `--rlimit`                                                     | POSIX resource limit (`nofile=1024`, `nproc=64`, `as=1073741824`)                                                                                                           |
+| `--detach-keys`                                                | Key sequence to detach from interactive session                                                                                                                             |
+| `--replace`                                                    | Replace existing sandbox with same name                                                                                                                                     |
+| `--replace-with-timeout`                                       | Grace between SIGTERM and SIGKILL during replace                                                                                                                            |
+| `-q`, `--quiet`                                                | Suppress progress output                                                                                                                                                    |
+| `--entrypoint`                                                 | Override image entrypoint                                                                                                                                                   |
+| `--init`                                                       | Hand off PID 1 to this guest init binary after setup                                                                                                                        |
+| `--init-arg`                                                   | Argument for the handoff init; repeatable                                                                                                                                   |
+| `--init-env`                                                   | Env var for the handoff init only; repeatable                                                                                                                               |
+| `-H`, `--hostname`                                             | Guest hostname                                                                                                                                                              |
+| `-u`, `--user`                                                 | Guest user (`nobody`, `1000`, `1000:1000`)                                                                                                                                  |
+| `--pull`                                                       | Pull policy: `always`, `if-missing`, `never`                                                                                                                                |
+| `--oci-upper-size`                                             | Writable overlay upper size for OCI images                                                                                                                                  |
+| `--log-level`                                                  | Runtime log level: `error`, `warn`, `info`, `debug`, `trace`                                                                                                                |
+| `--tmpfs`                                                      | Mount tmpfs (`PATH` or `PATH:SIZE`)                                                                                                                                         |
+| `--security`                                                   | In-guest security profile: `default` or `restricted`                                                                                                                        |
+| `--script`                                                     | Register a shell snippet (`NAME=BODY`). Wrapped with a shebang from `--shell` (default `/bin/sh`). Decodes `\n`, `\t`, `\r`, `\\`, `\"`, `\'`; unknown escapes pass through |
+| `--script-raw`                                                 | Register exact inline script contents (`NAME=BODY`). No escape decoding or shebang is added                                                                                 |
+| `--script-path`                                                | Register a script from a host file (`NAME:PATH`). Contents read verbatim                                                                                                    |
+| `--copy`, `--copy-file`, `--copy-dir`, `--mkdir`, `--rm`       | Patch the rootfs before boot                                                                                                                                                |
+| `--snapshot`                                                   | Boot from a snapshot artifact instead of an image                                                                                                                           |
+| `--max-duration`                                               | Kill entire sandbox after duration                                                                                                                                          |
+| `--idle-timeout`                                               | Stop sandbox after inactivity duration                                                                                                                                      |
 
 Networking flags:
 
-| Flag | Description |
-|------|-------------|
-| `--no-net` | Disable all network access by default; combine with `--net-rule allow@...` for allowlists |
-| `--net-rule` | Add allow/deny rule tokens such as `allow@api.example.com:tcp:443` or `deny@*.ads.example.com` |
-| `--net-default` | Default action for unmatched traffic in both directions: `allow` or `deny` |
-| `--net-default-egress` | Default unmatched egress action |
-| `--net-default-ingress` | Default unmatched ingress action |
-| `--no-dns-rebind-protection` | Allow DNS responses to private/internal IPs |
-| `--dns-nameserver` | Upstream DNS server (`IP` or `IP:PORT`); repeatable |
-| `--dns-query-timeout-ms` | Per-DNS-query timeout |
-| `--net-ipv4-pool`, `--net-ipv6-pool` | Address pools for per-sandbox subnets |
-| `--max-connections` | Limit concurrent network connections |
-| `--trust-host-cas` | Ship host trusted root CAs into the guest |
-| `--secret` | Inject secret (`ENV=VALUE@HOST`) |
-| `--on-secret-violation` | `block`, `block-and-log`, `block-and-terminate`, or `passthrough` |
-| `--tls-intercept` | Enable HTTPS inspection |
-| `--tls-intercept-port` | TCP port to inspect; default `443` |
-| `--tls-bypass` | Skip TLS interception for domain pattern |
-| `--no-block-quic` | Allow QUIC/HTTP3 when TLS interception is on |
-| `--tls-intercept-ca-cert` | Custom interception CA certificate |
-| `--tls-intercept-ca-key` | Custom interception CA private key |
-| `--tls-upstream-ca-cert` | Additional upstream trust root; repeatable |
+| Flag                                 | Description                                                                                    |
+| ------------------------------------ | ---------------------------------------------------------------------------------------------- |
+| `--no-net`                           | Disable all network access by default; combine with `--net-rule allow@...` for allowlists      |
+| `--net-rule`                         | Add allow/deny rule tokens such as `allow@api.example.com:tcp:443` or `deny@*.ads.example.com` |
+| `--net-default`                      | Default action for unmatched traffic in both directions: `allow` or `deny`                     |
+| `--net-default-egress`               | Default unmatched egress action                                                                |
+| `--net-default-ingress`              | Default unmatched ingress action                                                               |
+| `--no-dns-rebind-protection`         | Allow DNS responses to private/internal IPs                                                    |
+| `--dns-nameserver`                   | Upstream DNS server (`IP` or `IP:PORT`); repeatable                                            |
+| `--dns-query-timeout-ms`             | Per-DNS-query timeout                                                                          |
+| `--net-ipv4-pool`, `--net-ipv6-pool` | Address pools for per-sandbox subnets                                                          |
+| `--max-connections`                  | Limit concurrent network connections                                                           |
+| `--trust-host-cas`                   | Ship host trusted root CAs into the guest                                                      |
+| `--secret`                           | Inject secret (`ENV=VALUE@HOST`)                                                               |
+| `--on-secret-violation`              | `block`, `block-and-log`, `block-and-terminate`, or `passthrough`                              |
+| `--tls-intercept`                    | Enable HTTPS inspection                                                                        |
+| `--tls-intercept-port`               | TCP port to inspect; default `443`                                                             |
+| `--tls-bypass`                       | Skip TLS interception for domain pattern                                                       |
+| `--no-block-quic`                    | Allow QUIC/HTTP3 when TLS interception is on                                                   |
+| `--tls-intercept-ca-cert`            | Custom interception CA certificate                                                             |
+| `--tls-intercept-ca-key`             | Custom interception CA private key                                                             |
+| `--tls-upstream-ca-cert`             | Additional upstream trust root; repeatable                                                     |
 
 Network rule tokens use `<action>[:<direction>]@<target>[:<proto>[:<ports>]]`. Targets can be IP/CIDR values, exact domains, suffixes such as `*.example.com`, or groups such as `public`, `private`, `multicast`, `loopback`, `link_local`, `metadata`, and `any`.
 
@@ -133,10 +133,10 @@ msb start [OPTIONS] <NAME>
 msb start --label app=engine
 ```
 
-| Flag | Description |
-|------|-------------|
-| `--label` | Start every sandbox carrying this label; repeatable, AND-matched |
-| `-q`, `--quiet` | Suppress progress output |
+| Flag            | Description                                                      |
+| --------------- | ---------------------------------------------------------------- |
+| `--label`       | Start every sandbox carrying this label; repeatable, AND-matched |
+| `-q`, `--quiet` | Suppress progress output                                         |
 
 ### msb stop
 
@@ -147,12 +147,12 @@ msb stop -t 10 devbox
 msb stop --label app=engine
 ```
 
-| Flag | Description |
-|------|-------------|
-| `--label` | Stop every sandbox carrying this label; repeatable, AND-matched |
-| `-f`, `--force` | Force kill immediately |
-| `-t`, `--timeout` | Seconds to wait before force-kill |
-| `-q`, `--quiet` | Suppress progress output |
+| Flag              | Description                                                     |
+| ----------------- | --------------------------------------------------------------- |
+| `--label`         | Stop every sandbox carrying this label; repeatable, AND-matched |
+| `-f`, `--force`   | Force kill immediately                                          |
+| `-t`, `--timeout` | Seconds to wait before force-kill                               |
+| `-q`, `--quiet`   | Suppress progress output                                        |
 
 ### msb remove
 
@@ -163,11 +163,11 @@ msb remove worker-1 worker-2
 msb remove --force --label app=engine
 ```
 
-| Flag | Description |
-|------|-------------|
-| `--label` | Remove every sandbox carrying this label; repeatable, AND-matched |
-| `-f`, `--force` | Stop if running, then remove |
-| `-q`, `--quiet` | Suppress progress output |
+| Flag            | Description                                                       |
+| --------------- | ----------------------------------------------------------------- |
+| `--label`       | Remove every sandbox carrying this label; repeatable, AND-matched |
+| `-f`, `--force` | Stop if running, then remove                                      |
+| `-q`, `--quiet` | Suppress progress output                                          |
 
 ## Execution
 
@@ -179,15 +179,15 @@ Execute a command inside a running sandbox.
 msb exec [OPTIONS] <NAME> -- <COMMAND>...
 ```
 
-| Flag | Description |
-|------|-------------|
-| `-t`, `--tty` | Allocate pseudo-terminal |
-| `-e`, `--env` | Environment variable (`KEY=VALUE`) |
-| `-w`, `--workdir` | Working directory |
-| `-u`, `--user` | Run as guest user |
-| `--timeout` | Kill after duration |
-| `--rlimit` | POSIX resource limit |
-| `-q`, `--quiet` | Suppress progress output |
+| Flag              | Description                        |
+| ----------------- | ---------------------------------- |
+| `-t`, `--tty`     | Allocate pseudo-terminal           |
+| `-e`, `--env`     | Environment variable (`KEY=VALUE`) |
+| `-w`, `--workdir` | Working directory                  |
+| `-u`, `--user`    | Run as guest user                  |
+| `--timeout`       | Kill after duration                |
+| `--rlimit`        | POSIX resource limit               |
+| `-q`, `--quiet`   | Suppress progress output           |
 
 The CLI auto-detects interactivity. Interactive terminal input uses attach/TTY
 mode; piped input captures stdout and stderr separately.
@@ -203,8 +203,8 @@ msb copy devbox:/tmp/a devbox:/tmp/b
 msb copy devbox:/tmp/a otherbox:/tmp/a
 ```
 
-| Flag | Description |
-|------|-------------|
+| Flag            | Description              |
+| --------------- | ------------------------ |
 | `-q`, `--quiet` | Suppress progress output |
 
 ## Logs and inspection
@@ -227,20 +227,20 @@ msb logs devbox --source system
 msb logs devbox --source all
 ```
 
-| Flag | Description |
-|------|-------------|
-| `--tail` | Show last N entries |
-| `--since` | Start time, RFC 3339 or relative (`5m`, `2h`, `1d`) |
-| `--until` | End time, same formats |
-| `-f`, `--follow` | Follow in real time |
-| `--timestamps` | Prefix lines with timestamps |
-| `--source` | `stdout`, `stderr`, `output`, `system`, `all` |
-| `--grep` | Regex filter on body |
-| `--json` | Emit raw JSON Lines |
-| `--raw` | Base64 encode non-UTF-8 bytes |
-| `--show-id` | Prefix lines with session id |
-| `--color-sessions` | Color by session id |
-| `--color`, `--no-color` | ANSI color control |
+| Flag                    | Description                                         |
+| ----------------------- | --------------------------------------------------- |
+| `--tail`                | Show last N entries                                 |
+| `--since`               | Start time, RFC 3339 or relative (`5m`, `2h`, `1d`) |
+| `--until`               | End time, same formats                              |
+| `-f`, `--follow`        | Follow in real time                                 |
+| `--timestamps`          | Prefix lines with timestamps                        |
+| `--source`              | `stdout`, `stderr`, `output`, `system`, `all`       |
+| `--grep`                | Regex filter on body                                |
+| `--json`                | Emit raw JSON Lines                                 |
+| `--raw`                 | Base64 encode non-UTF-8 bytes                       |
+| `--show-id`             | Prefix lines with session id                        |
+| `--color-sessions`      | Color by session id                                 |
+| `--color`, `--no-color` | ANSI color control                                  |
 
 Source tags:
 
@@ -293,12 +293,12 @@ msb image pull python
 msb image pull ghcr.io/my-org/my-image:v1
 ```
 
-| Flag | Description |
-|------|-------------|
-| `-f`, `--force` | Re-download even if cached |
-| `-q`, `--quiet` | Suppress progress output |
-| `--insecure` | Use HTTP instead of HTTPS |
-| `--ca-certs` | PEM file with additional CA roots |
+| Flag            | Description                       |
+| --------------- | --------------------------------- |
+| `-f`, `--force` | Re-download even if cached        |
+| `-q`, `--quiet` | Suppress progress output          |
+| `--insecure`    | Use HTTP instead of HTTPS         |
+| `--ca-certs`    | PEM file with additional CA roots |
 
 ### msb image
 
@@ -400,10 +400,10 @@ sftp -P 2222 root@127.0.0.1
 ssh -p 2222 -L 8080:127.0.0.1:80 root@127.0.0.1
 ```
 
-| Flag | Description |
-|------|-------------|
-| `--host` | Listener host, default `127.0.0.1` |
-| `--port` | Listener port, default `2222` |
+| Flag      | Description                                                          |
+| --------- | -------------------------------------------------------------------- |
+| `--host`  | Listener host, default `127.0.0.1`                                   |
+| `--port`  | Listener port, default `2222`                                        |
 | `--stdio` | Serve one SSH transport over stdin/stdout for OpenSSH `ProxyCommand` |
 
 Reverse forwarding (`-R`) and stream-local forwarding are not supported.

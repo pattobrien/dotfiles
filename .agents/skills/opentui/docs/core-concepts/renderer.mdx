@@ -16,12 +16,12 @@ The `CliRenderer` drives OpenTUI. It manages terminal output, handles input even
 Create a renderer with the async factory function:
 
 ```typescript
-import { createCliRenderer } from "@opentui/core"
+import { createCliRenderer } from "@opentui/core";
 
 const renderer = await createCliRenderer({
   exitOnCtrlC: true,
   targetFps: 30,
-})
+});
 ```
 
 The factory function does three things:
@@ -75,7 +75,7 @@ renderer exits. This is the standard mode for full-screen TUI applications.
 ```typescript
 const renderer = await createCliRenderer({
   screenMode: "alternate-screen",
-})
+});
 ```
 
 ### `"main-screen"`
@@ -85,7 +85,7 @@ Renders on the terminal's main screen without switching buffers. OpenTUI still r
 ```typescript
 const renderer = await createCliRenderer({
   screenMode: "main-screen",
-})
+});
 ```
 
 ### `"split-footer"`
@@ -98,10 +98,10 @@ The `footerHeight` option controls how many rows the footer requests (default: 1
 const renderer = await createCliRenderer({
   screenMode: "split-footer",
   footerHeight: 20,
-})
+});
 
 // Change footer height at runtime
-renderer.footerHeight = 15
+renderer.footerHeight = 15;
 ```
 
 Split-footer bookkeeping lives in the native renderer. A shared `SplitScrollback` model tracks the rows it has already published and the current tail column, so the footer pins to the bottom of the terminal as scrollback grows. Captured stdout and [scrollback writers](#writing-to-scrollback) both produce styled `OptimizedBuffer` snapshots. The native side emits these as ANSI alongside the footer repaint in one atomic frame. The renderer flushes pending output before `resize`, `suspend`, mode transitions, and `destroy`.
@@ -124,10 +124,10 @@ The default depends on the screen mode: `"capture-stdout"` for split-footer, `"p
 const renderer = await createCliRenderer({
   screenMode: "split-footer",
   externalOutputMode: "capture-stdout",
-})
+});
 
 // Switch at runtime
-renderer.externalOutputMode = "passthrough"
+renderer.externalOutputMode = "passthrough";
 ```
 
 ## Custom streams
@@ -142,7 +142,7 @@ const renderer = await createCliRenderer({
   height: rows,
   exitOnCtrlC: false,
   exitSignals: [],
-})
+});
 ```
 
 Initial size comes from `stdout.columns` / `stdout.rows`, then `width` / `height`, then `80x24`. For custom `stdout`, `remote` defaults to `true`; set `remote: false` only when the stream behaves like the local terminal and should receive default terminal env forwarding.
@@ -168,7 +168,7 @@ const renderer = await createCliRenderer({
   screenMode: "split-footer",
   externalOutputMode: "capture-stdout",
   consoleMode: "disabled",
-})
+});
 ```
 
 ## Writing to scrollback
@@ -182,7 +182,7 @@ Both APIs require `screenMode: "split-footer"` and `externalOutputMode: "capture
 Render a renderable tree into an off-screen buffer and commit it as one scrollback snapshot.
 
 ```typescript
-import { TextRenderable } from "@opentui/core"
+import { TextRenderable } from "@opentui/core";
 
 renderer.writeToScrollback((ctx) => {
   const root = new TextRenderable(ctx.renderContext, {
@@ -194,7 +194,7 @@ renderer.writeToScrollback((ctx) => {
     height: 1,
     content: "api responded in 12ms",
     fg: "#8BD5CA",
-  })
+  });
 
   return {
     root,
@@ -202,8 +202,8 @@ renderer.writeToScrollback((ctx) => {
     height: 1,
     startOnNewLine: true,
     trailingNewline: true,
-  }
-})
+  };
+});
 ```
 
 The writer receives a `ScrollbackRenderContext`:
@@ -234,7 +234,7 @@ Use `startOnNewLine: false` plus `trailingNewline: false` for inline output — 
 For streaming output that you want to render many times before committing (token-by-token code highlighting, markdown blocks settling as they parse), use a `ScrollbackSurface`. The surface renders into a backing buffer. You can re-render the tree in place and then commit specific row ranges to scrollback.
 
 ```typescript
-const surface = renderer.createScrollbackSurface({ startOnNewLine: true })
+const surface = renderer.createScrollbackSurface({ startOnNewLine: true });
 
 const code = new CodeRenderable(surface.renderContext, {
   id: "streamed-code",
@@ -244,17 +244,17 @@ const code = new CodeRenderable(surface.renderContext, {
   width: "100%",
   streaming: true,
   treeSitterClient,
-})
-surface.root.add(code)
+});
+surface.root.add(code);
 
-code.content = "const x = 1"
-await surface.settle() // waits for pending Tree-sitter highlighting
+code.content = "const x = 1";
+await surface.settle(); // waits for pending Tree-sitter highlighting
 
 // Commit the rows we've finished highlighting; the rest can keep re-rendering
-surface.commitRows(0, surface.height)
+surface.commitRows(0, surface.height);
 
 // Later, when the stream is done:
-surface.destroy()
+surface.destroy();
 ```
 
 | Method                                      | Description                                                                      |
@@ -273,10 +273,12 @@ For Solid, use the binding-level helpers that wrap `writeToScrollback` with JSX 
 Every renderer has a `root` property. It is a special `RootRenderable` at the top of the component tree:
 
 ```typescript
-import { Box, Text } from "@opentui/core"
+import { Box, Text } from "@opentui/core";
 
 // Add components to the root
-renderer.root.add(Box({ width: 40, height: 10, borderStyle: "rounded" }, Text({ content: "Hello, OpenTUI!" })))
+renderer.root.add(
+  Box({ width: 40, height: 10, borderStyle: "rounded" }, Text({ content: "Hello, OpenTUI!" })),
+);
 ```
 
 The root renderable fills the entire terminal and adjusts when you resize it.
@@ -290,8 +292,8 @@ You can use these control modes:
 If you do not call `start()`, the renderer re-renders only when the component tree changes:
 
 ```typescript
-const renderer = await createCliRenderer()
-renderer.root.add(Text({ content: "Static content" })) // Triggers render
+const renderer = await createCliRenderer();
+renderer.root.add(Text({ content: "Static content" })); // Triggers render
 ```
 
 ### Continuous mode
@@ -299,15 +301,15 @@ renderer.root.add(Text({ content: "Static content" })) // Triggers render
 Call `start()` to run the render loop continuously at the target FPS:
 
 ```typescript
-renderer.start() // Start continuous rendering
-renderer.stop() // Stop the render loop
+renderer.start(); // Start continuous rendering
+renderer.stop(); // Stop the render loop
 ```
 
 You can change the render loop cadence at runtime. `targetFps` sets the steady-state continuous render rate. `maxFps` caps how often `requestRender()` can produce an immediate extra frame:
 
 ```typescript
-renderer.targetFps = 60
-renderer.maxFps = 120
+renderer.targetFps = 60;
+renderer.maxFps = 120;
 ```
 
 ### Live rendering
@@ -316,10 +318,10 @@ For animations, call `requestLive()` to enable continuous rendering:
 
 ```typescript
 // Request live mode (increments internal counter)
-renderer.requestLive()
+renderer.requestLive();
 
 // When animation completes, drop the request
-renderer.dropLive()
+renderer.dropLive();
 ```
 
 Multiple components can request animations at the same time. The renderer stays live until all requests drop.
@@ -329,17 +331,17 @@ Multiple components can request animations at the same time. The renderer stays 
 `idle()` resolves when no render pass or scheduled render is pending. Use `getSchedulerState()` for diagnostics, especially in tests and custom-output sessions:
 
 ```typescript
-await renderer.idle()
-const state = renderer.getSchedulerState()
+await renderer.idle();
+const state = renderer.getSchedulerState();
 ```
 
 ### Pause and suspend
 
 ```typescript
-renderer.pause() // Pause rendering (use start() or requestLive() to run it again)
+renderer.pause(); // Pause rendering (use start() or requestLive() to run it again)
 
-renderer.suspend() // Fully suspend (disables mouse, input, and raw mode)
-renderer.resume() // Resume from suspended state
+renderer.suspend(); // Fully suspend (disables mouse, input, and raw mode)
+renderer.resume(); // Resume from suspended state
 ```
 
 By default, suspending or destroying clears the region OpenTUI owns on the main screen. If you want to keep that
@@ -349,7 +351,7 @@ content visible after shutdown, set `clearOnShutdown: false`:
 const renderer = await createCliRenderer({
   screenMode: "split-footer",
   clearOnShutdown: false,
-})
+});
 ```
 
 ## Key properties
@@ -397,27 +399,27 @@ Use `renderer.on(event, callback)` to subscribe:
 ```typescript
 // Terminal resized
 renderer.on("resize", (width, height) => {
-  console.log(`Terminal size: ${width}x${height}`)
-})
+  console.log(`Terminal size: ${width}x${height}`);
+});
 
 // Terminal focus events
 renderer.on("focus", () => {
-  console.log("Terminal gained focus")
-})
+  console.log("Terminal gained focus");
+});
 
 renderer.on("blur", () => {
-  console.log("Terminal lost focus")
-})
+  console.log("Terminal lost focus");
+});
 
 // Renderer destroyed
 renderer.on("destroy", () => {
-  console.log("Renderer destroyed")
-})
+  console.log("Renderer destroyed");
+});
 
 // Text selection completed
 renderer.on("selection", (selection) => {
-  console.log("Selected text:", selection.getSelectedText())
-})
+  console.log("Selected text:", selection.getSelectedText());
+});
 ```
 
 ## Theme mode
@@ -430,13 +432,13 @@ OpenTUI detects the terminal's preferred color scheme (dark or light) through tw
 Read the current mode via `renderer.themeMode` (`"dark"`, `"light"`, or `null` before detection completes) and subscribe to the `theme_mode` event for later changes.
 
 ```typescript
-import { type ThemeMode } from "@opentui/core"
+import { type ThemeMode } from "@opentui/core";
 
-const mode = renderer.themeMode
+const mode = renderer.themeMode;
 
 renderer.on("theme_mode", (nextMode: ThemeMode) => {
-  console.log("Theme mode changed:", nextMode)
-})
+  console.log("Theme mode changed:", nextMode);
+});
 ```
 
 DEC 2031 always wins over the OSC fallback, so a terminal that starts without DEC support but gains it later still reports the correct mode.
@@ -446,7 +448,7 @@ DEC 2031 always wins over the OSC fallback, so a terminal that starts without DE
 Use `waitForThemeMode` if you need to block briefly for theme detection at startup — for example, to pick a light or dark color palette before the first paint. It resolves with the detected mode, or `null` if the timeout elapses before either source reports.
 
 ```typescript
-const mode = await renderer.waitForThemeMode(1000) // defaults to 1000 ms
+const mode = await renderer.waitForThemeMode(1000); // defaults to 1000 ms
 ```
 
 Pass `0` to read the current mode synchronously without waiting.
@@ -460,14 +462,14 @@ They write through the renderer output backend, so custom `stdout` sessions rece
 ### Terminal title and background
 
 ```typescript
-renderer.setTerminalTitle("OpenTUI – editing notes.md")
+renderer.setTerminalTitle("OpenTUI – editing notes.md");
 
 // Set the render buffer background. OpenTUI also emits OSC 11
 // so the terminal's own background matches.
-renderer.setBackgroundColor("#0D1117")
+renderer.setBackgroundColor("#0D1117");
 
 // Reset terminal background to its theme default via OSC 111
-renderer.resetTerminalBgColor()
+renderer.resetTerminalBgColor();
 ```
 
 `destroy()` and `suspend()` call `resetTerminalBgColor()` for you. Call it yourself only for cases the renderer does not own — for example, before pausing with SIGTSTP.
@@ -477,16 +479,16 @@ renderer.resetTerminalBgColor()
 OpenTUI can set and clear the terminal's clipboard via OSC 52. This works across SSH sessions and remote editors. Terminals that opt out silently ignore these calls.
 
 ```typescript
-import { ClipboardTarget } from "@opentui/core"
+import { ClipboardTarget } from "@opentui/core";
 
 if (renderer.isOsc52Supported()) {
-  renderer.copyToClipboardOSC52("https://opentui.dev")
-  renderer.clearClipboardOSC52()
+  renderer.copyToClipboardOSC52("https://opentui.dev");
+  renderer.clearClipboardOSC52();
 }
 
 // Target specific OSC 52 selections
-renderer.copyToClipboardOSC52("primary", ClipboardTarget.Primary)
-renderer.copyToClipboardOSC52("secondary", ClipboardTarget.Secondary)
+renderer.copyToClipboardOSC52("primary", ClipboardTarget.Primary);
+renderer.copyToClipboardOSC52("secondary", ClipboardTarget.Secondary);
 ```
 
 `ClipboardTarget` provides `Clipboard`, `Primary`, `Select`, and `Secondary`,
@@ -502,7 +504,7 @@ terminal acceptance or a clipboard change.
 Trigger a terminal-mediated desktop notification:
 
 ```typescript
-renderer.triggerNotification("Build finished", "OpenTUI")
+renderer.triggerNotification("Build finished", "OpenTUI");
 ```
 
 The method returns `false` when no OSC notification protocol was detected. See [Notifications](/docs/core-concepts/notifications) for details.
@@ -514,10 +516,10 @@ Subscribe to raw OSC sequences the terminal emits — palette queries, cursor po
 ```typescript
 const unsubscribe = renderer.subscribeOsc((sequence) => {
   // sequence is the full ESC ] ... BEL / ST payload
-})
+});
 
 // later
-unsubscribe()
+unsubscribe();
 ```
 
 ## Cursor control
@@ -526,24 +528,24 @@ Use these methods to control the cursor position and style:
 
 ```typescript
 // Position and visibility
-renderer.setCursorPosition(10, 5, true)
+renderer.setCursorPosition(10, 5, true);
 
 // Cursor style
 //
 // Available styles: "default", "block", "underline", "line"
 // The default style is "default", which preserves the terminal's native cursor
 // style instead of overriding it.
-renderer.setCursorStyle({ style: "block", blinking: true }) // Blinking block
-renderer.setCursorStyle({ style: "underline", blinking: false }) // Steady underline
-renderer.setCursorStyle({ style: "line", blinking: true }) // Blinking line
-renderer.setCursorStyle({ style: "default" }) // Reset to terminal's native cursor
+renderer.setCursorStyle({ style: "block", blinking: true }); // Blinking block
+renderer.setCursorStyle({ style: "underline", blinking: false }); // Steady underline
+renderer.setCursorStyle({ style: "line", blinking: true }); // Blinking line
+renderer.setCursorStyle({ style: "default" }); // Reset to terminal's native cursor
 
 // Cursor style with color
 renderer.setCursorStyle({
   style: "block",
   blinking: true,
   color: RGBA.fromHex("#FF0000"),
-})
+});
 
 // Cursor style with mouse pointer
 //
@@ -553,7 +555,7 @@ renderer.setCursorStyle({
   style: "block",
   blinking: false,
   cursor: "pointer",
-})
+});
 ```
 
 ## Input handling
@@ -564,10 +566,10 @@ Add custom input handlers:
 renderer.addInputHandler((sequence) => {
   if (sequence === "\x1b[A") {
     // Up arrow - handle and consume
-    return true
+    return true;
   }
-  return false // Let other handlers process
-})
+  return false; // Let other handlers process
+});
 ```
 
 By default, `addInputHandler()` appends handlers to the chain and runs them after built-in handlers. Use `prependInputHandler()` to add a handler at the start of the chain and run it before built-in handlers.
@@ -577,15 +579,15 @@ By default, `addInputHandler()` appends handlers to the chain and runs them afte
 Use the debug overlay to show FPS, memory usage, and other stats:
 
 ```typescript
-renderer.toggleDebugOverlay()
+renderer.toggleDebugOverlay();
 
 // You can also configure it
-import { DebugOverlayCorner } from "@opentui/core"
+import { DebugOverlayCorner } from "@opentui/core";
 
 renderer.configureDebugOverlay({
   enabled: true,
   corner: DebugOverlayCorner.topRight,
-})
+});
 ```
 
 ## Cleanup
@@ -593,7 +595,7 @@ renderer.configureDebugOverlay({
 Always destroy the renderer when you finish so you restore the terminal state:
 
 ```typescript
-renderer.destroy()
+renderer.destroy();
 ```
 
 Destroying the renderer restores the terminal to its original state, disables mouse tracking, and cleans up resources.
@@ -601,9 +603,9 @@ Destroying the renderer restores the terminal to its original state, disables mo
 For custom stream transports, destroy the renderer before closing the socket or channel. If the transport closes immediately, allow one microtask so feed-backed shutdown bytes can flush:
 
 ```typescript
-renderer.destroy()
-await new Promise<void>((resolve) => queueMicrotask(resolve))
-channel.close()
+renderer.destroy();
+await new Promise<void>((resolve) => queueMicrotask(resolve));
+channel.close();
 ```
 
 **Important:** OpenTUI does not automatically clean up on `process.exit` or unhandled errors. This design gives you control. See [Lifecycle](/docs/core-concepts/lifecycle/) for signal handling options and best practices.

@@ -31,27 +31,27 @@ It does not provide React or Solid component subpaths. `ThreeRenderable` is the 
 This example follows the package's rotating-cube examples while using the `THREE` namespace re-export:
 
 ```typescript
-import { RGBA, createCliRenderer } from "@opentui/core"
-import { THREE, ThreeRenderable } from "@opentui/three"
+import { RGBA, createCliRenderer } from "@opentui/core";
+import { THREE, ThreeRenderable } from "@opentui/three";
 
-const renderer = await createCliRenderer({ targetFps: 60 })
-renderer.start()
+const renderer = await createCliRenderer({ targetFps: 60 });
+renderer.start();
 
-const scene = new THREE.Scene()
-scene.add(new THREE.AmbientLight(new THREE.Color(0.35, 0.35, 0.35), 1))
+const scene = new THREE.Scene();
+scene.add(new THREE.AmbientLight(new THREE.Color(0.35, 0.35, 0.35), 1));
 
-const light = new THREE.DirectionalLight(new THREE.Color(1, 0.95, 0.9), 1.2)
-light.position.set(2.5, 2, 3)
-scene.add(light)
+const light = new THREE.DirectionalLight(new THREE.Color(1, 0.95, 0.9), 1.2);
+light.position.set(2.5, 2, 3);
+scene.add(light);
 
 const cube = new THREE.Mesh(
   new THREE.BoxGeometry(1, 1, 1),
   new THREE.MeshPhongMaterial({ color: new THREE.Color(0.25, 0.8, 1) }),
-)
-scene.add(cube)
+);
+scene.add(cube);
 
-const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 100)
-camera.position.set(0, 0, 3)
+const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 100);
+camera.position.set(0, 0, 3);
 
 const view = new ThreeRenderable(renderer, {
   width: "100%",
@@ -63,23 +63,23 @@ const view = new ThreeRenderable(renderer, {
     alpha: true,
     backgroundColor: RGBA.fromValues(0, 0, 0, 0),
   },
-})
+});
 
-renderer.root.add(view)
+renderer.root.add(view);
 renderer.setFrameCallback(async (deltaMs) => {
-  cube.rotation.x += 0.6 * (deltaMs / 1000)
-  cube.rotation.y += 0.4 * (deltaMs / 1000)
-})
+  cube.rotation.x += 0.6 * (deltaMs / 1000);
+  cube.rotation.y += 0.4 * (deltaMs / 1000);
+});
 ```
 
 ### Options and defaults
 
 ```typescript
 interface ThreeRenderableOptions extends RenderableOptions<ThreeRenderable> {
-  scene?: THREE.Scene | null
-  camera?: THREE.PerspectiveCamera | THREE.OrthographicCamera
-  renderer?: Omit<ThreeCliRendererOptions, "width" | "height" | "autoResize">
-  autoAspect?: boolean
+  scene?: THREE.Scene | null;
+  camera?: THREE.PerspectiveCamera | THREE.OrthographicCamera;
+  renderer?: Omit<ThreeCliRendererOptions, "width" | "height" | "autoResize">;
+  autoAspect?: boolean;
 }
 ```
 
@@ -117,22 +117,22 @@ Destroying the renderable removes its frame callback, destroys its `ThreeCliRend
 Use `ThreeCliRenderer` directly when you need to choose the destination `OptimizedBuffer` on every frame:
 
 ```typescript
-import { RGBA } from "@opentui/core"
-import { THREE, ThreeCliRenderer } from "@opentui/three"
+import { RGBA } from "@opentui/core";
+import { THREE, ThreeCliRenderer } from "@opentui/three";
 
 const engine = new ThreeCliRenderer(renderer, {
   width: renderer.terminalWidth,
   height: renderer.terminalHeight,
   focalLength: 8,
   backgroundColor: RGBA.fromValues(0, 0, 0, 1),
-})
+});
 
-await engine.init()
-engine.setActiveCamera(camera)
+await engine.init();
+engine.setActiveCamera(camera);
 
 renderer.setFrameCallback(async (deltaMs) => {
-  await engine.drawScene(scene, renderer.nextRenderBuffer, deltaMs / 1000)
-})
+  await engine.drawScene(scene, renderer.nextRenderBuffer, deltaMs / 1000);
+});
 ```
 
 Unlike `ThreeRenderable`, direct use requires an explicit `await engine.init()` before canvas-dependent methods such as screenshots, supersampling configuration, or actual scene rendering. The engine registers for `CliRenderer` destruction and destroys itself with the host renderer; call `destroy()` yourself when ending its lifetime earlier.
@@ -141,14 +141,14 @@ Unlike `ThreeRenderable`, direct use requires an explicit `await engine.init()` 
 
 ```typescript
 interface ThreeCliRendererOptions {
-  width: number
-  height: number
-  focalLength?: number
-  backgroundColor?: RGBA
-  superSample?: SuperSampleType
-  alpha?: boolean
-  autoResize?: boolean
-  libPath?: string
+  width: number;
+  height: number;
+  focalLength?: number;
+  backgroundColor?: RGBA;
+  superSample?: SuperSampleType;
+  alpha?: boolean;
+  autoResize?: boolean;
+  libPath?: string;
 }
 ```
 
@@ -238,12 +238,12 @@ The shared `PhysicsWorld`, `PhysicsRigidBody`, and descriptor interfaces live in
 `@opentui/three/runtime-modules` exports a side-effect-free module map for OpenTUI's runtime plugin support:
 
 ```typescript
-import { ensureRuntimePluginSupport } from "@opentui/core/runtime-plugin-support/configure"
-import { runtimeModules as threeRuntimeModules } from "@opentui/three/runtime-modules"
+import { ensureRuntimePluginSupport } from "@opentui/core/runtime-plugin-support/configure";
+import { runtimeModules as threeRuntimeModules } from "@opentui/three/runtime-modules";
 
 ensureRuntimePluginSupport({
   additional: threeRuntimeModules,
-})
+});
 ```
 
 The map contains the `@opentui/three` root module. It does not provide separate mappings for `three`, `three/webgpu`, or `three/tsl`.

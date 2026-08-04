@@ -13,30 +13,39 @@ OpenTUI provides two ways to build your UI: the imperative Renderable API and th
 You create `Renderable` instances with a `RenderContext` and compose them using `add()`. You mutate state and behavior directly on instances through setters and methods.
 
 ```typescript
-import { BoxRenderable, TextRenderable, InputRenderable, createCliRenderer, type RenderContext } from "@opentui/core"
+import {
+  BoxRenderable,
+  TextRenderable,
+  InputRenderable,
+  createCliRenderer,
+  type RenderContext,
+} from "@opentui/core";
 
-const renderer = await createCliRenderer()
+const renderer = await createCliRenderer();
 
 const loginForm = new BoxRenderable(renderer, {
   id: "login-form",
   width: 40,
   height: 10,
   padding: 1,
-})
+});
 
 // Compose multiple renderables into one
-function createLabeledInput(renderer: RenderContext, props: { label: string; placeholder: string; id: string }) {
+function createLabeledInput(
+  renderer: RenderContext,
+  props: { label: string; placeholder: string; id: string },
+) {
   const container = new BoxRenderable(renderer, {
     id: `${props.id}-container`,
     flexDirection: "row",
-  })
+  });
 
   container.add(
     new TextRenderable(renderer, {
       id: `${props.id}-label`,
       content: props.label + " ",
     }),
-  )
+  );
 
   container.add(
     new InputRenderable(renderer, {
@@ -44,22 +53,22 @@ function createLabeledInput(renderer: RenderContext, props: { label: string; pla
       placeholder: props.placeholder,
       width: 20,
     }),
-  )
+  );
 
-  return container
+  return container;
 }
 
 const username = createLabeledInput(renderer, {
   id: "username",
   label: "Username:",
   placeholder: "Enter username...",
-})
-loginForm.add(username)
+});
+loginForm.add(username);
 
 // You must navigate to the nested component to focus it
-username.getRenderable("username-input")?.focus()
+username.getRenderable("username-input")?.focus();
 
-renderer.root.add(loginForm)
+renderer.root.add(loginForm);
 ```
 
 ### Characteristics
@@ -74,9 +83,9 @@ renderer.root.add(loginForm)
 Builds a lightweight VNode graph using functional constructs. Instances don't exist until you add the node to the tree. VNodes queue method calls and replay them when instantiated.
 
 ```typescript
-import { Text, Input, Box, createCliRenderer, delegate } from "@opentui/core"
+import { Text, Input, Box, createCliRenderer, delegate } from "@opentui/core";
 
-const renderer = await createCliRenderer()
+const renderer = await createCliRenderer();
 
 function LabeledInput(props: { id: string; label: string; placeholder: string }) {
   return delegate(
@@ -90,17 +99,17 @@ function LabeledInput(props: { id: string; label: string; placeholder: string })
         width: 20,
       }),
     ),
-  )
+  );
 }
 
 const usernameInput = LabeledInput({
   id: "username",
   label: "Username:",
   placeholder: "Enter username...",
-})
+});
 
 // delegate() automatically routes focus to the nested input
-usernameInput.focus()
+usernameInput.focus();
 
 const loginForm = Box(
   { width: 40, height: 10, padding: 1 },
@@ -110,9 +119,9 @@ const loginForm = Box(
     label: "Password:",
     placeholder: "Enter password...",
   }),
-)
+);
 
-renderer.root.add(loginForm)
+renderer.root.add(loginForm);
 ```
 
 ### Characteristics
@@ -140,11 +149,11 @@ function Button(props: { id: string; label: string; onClick: () => void }) {
       },
       Text({ content: props.label }),
     ),
-  )
+  );
 }
 
-const button = Button({ id: "submit", label: "Submit", onClick: handleSubmit })
-button.focus() // Focuses the inner Box
+const button = Button({ id: "submit", label: "Submit", onClick: handleSubmit });
+button.focus(); // Focuses the inner Box
 ```
 
 ## When to use which
@@ -168,16 +177,16 @@ button.focus() // Focuses the inner Box
 You can mix both approaches in the same application:
 
 ```typescript
-import { BoxRenderable, Text, Input } from "@opentui/core"
+import { BoxRenderable, Text, Input } from "@opentui/core";
 
 // Create a renderable container
 const container = new BoxRenderable(renderer, {
   id: "container",
   flexDirection: "column",
-})
+});
 
 // Add constructs to it
-container.add(Text({ content: "Title" }), Input({ placeholder: "Type here..." }))
+container.add(Text({ content: "Title" }), Input({ placeholder: "Type here..." }));
 
-renderer.root.add(container)
+renderer.root.add(container);
 ```

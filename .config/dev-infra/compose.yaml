@@ -204,7 +204,6 @@ services:
       - "127.0.0.1:8080:8080"
     environment:
       MONGO_URI: mongodb://mongo:27017/hyperdx
-      IS_LOCAL_MODE: "true"
     depends_on:
       - mongo
       - clickhouse

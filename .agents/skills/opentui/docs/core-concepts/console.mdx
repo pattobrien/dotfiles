@@ -11,19 +11,19 @@ OpenTUI includes a built-in console overlay that captures all `console.log`, `co
 ## Basic usage
 
 ```typescript
-import { createCliRenderer, ConsolePosition } from "@opentui/core"
+import { createCliRenderer, ConsolePosition } from "@opentui/core";
 
 const renderer = await createCliRenderer({
   consoleOptions: {
     position: ConsolePosition.BOTTOM,
     sizePercent: 30,
   },
-})
+});
 
 // These appear in the overlay instead of stdout
-console.log("This appears in the overlay")
-console.error("Errors are color-coded red")
-console.warn("Warnings appear in yellow")
+console.log("This appears in the overlay");
+console.error("Errors are color-coded red");
+console.warn("Warnings appear in yellow");
 ```
 
 ## Console vs stdout
@@ -44,18 +44,18 @@ const renderer = await createCliRenderer({
     colorError: "#FF0000", // Color for console.error
     startInDebugMode: false, // Show file/line info in logs
   },
-})
+});
 ```
 
 ## Console positions
 
 ```typescript
-import { ConsolePosition } from "@opentui/core"
+import { ConsolePosition } from "@opentui/core";
 
-ConsolePosition.TOP // Dock at top
-ConsolePosition.BOTTOM // Dock at bottom
-ConsolePosition.LEFT // Dock at left
-ConsolePosition.RIGHT // Dock at right
+ConsolePosition.TOP; // Dock at top
+ConsolePosition.BOTTOM; // Dock at bottom
+ConsolePosition.LEFT; // Dock at left
+ConsolePosition.RIGHT; // Dock at right
 ```
 
 ## Toggling the console
@@ -64,7 +64,7 @@ Toggle the console overlay in code:
 
 ```typescript
 // Toggle visibility and focus
-renderer.console.toggle()
+renderer.console.toggle();
 
 // When open but not focused, toggle() focuses the console
 // When focused, toggle() closes the console
@@ -88,14 +88,14 @@ Add a keyboard shortcut to toggle the console:
 renderer.keyInput.on("keypress", (key) => {
   // Toggle with backtick key
   if (key.name === "`") {
-    renderer.console.toggle()
+    renderer.console.toggle();
   }
 
   // Or with a modifier
   if (key.ctrl && key.name === "l") {
-    renderer.console.toggle()
+    renderer.console.toggle();
   }
-})
+});
 ```
 
 ## Why use the console?
