@@ -9,6 +9,8 @@ import { pollFor, type TermBackend, type TermLaunchOptions, type TermSession } f
 export interface TermlessSession extends TermSession {
   /** The underlying Termless terminal, for matchers and region selectors. */
   readonly term: TestTerminal;
+  /** The recording label actually in use (uniquified on collision). */
+  readonly label: string;
   /** Drop a named marker into this session's recording. */
   mark(label: string): void;
   /**
@@ -74,6 +76,9 @@ export function createTermlessBackend(
 
       return {
         term,
+        get label() {
+          return recorder.label;
+        },
         mark: (label) => recorder.mark(label),
         // Exact assignment, no uniquifying: relabel targets are already
         // unique (one worker per test file), and watch-mode reruns should
