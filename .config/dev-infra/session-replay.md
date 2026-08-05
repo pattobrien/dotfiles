@@ -18,8 +18,10 @@ otel-collector  ──routing/logs──▶ rr-web.event?  ── yes ─▶ cli
 - **Routing + sink** — `otel-collector.yaml`: a `routing/logs` connector splits logs
   carrying an `rr-web.event` attribute into a `clickhouse/rrweb` exporter that writes
   the `otel.hyperdx_sessions` table.
-- **Table** — `clickhouse/hyperdx_sessions.sql`: pre-created (the exporter runs
-  `create_schema:false`), DDL lifted verbatim from HyperDX so the viewer reads it.
+- **Table** — `otel.hyperdx_sessions` is auto-created by the exporter
+  (`create_schema:true`, same as the `otel_logs`/`otel_traces` sinks) — no hand-maintained
+  DDL. The exporter's schema omits HyperDX's `TimestampTime` column, so the viewer's
+  session source must use `Timestamp` as its timestamp column (see below).
 
 ## Browser SDK (in your app)
 
@@ -56,12 +58,5 @@ HyperDX stores sources/connections in Mongo, so this is done in the app UI (`:80
 
 ## Reproducibility note
 
-`hyperdx_sessions.sql` is applied manually, not yet wired as a ClickHouse init script,
-so a **fresh** dev-infra ClickHouse data dir won't have the table and the rrweb exporter
-will log `schema detection failed` until it's applied:
-
-```sh
-CH_PW=$(grep '^CLICKHOUSE_PASSWORD=' ~/.config/dev-infra/.env | cut -d= -f2-)
-docker exec -i dev-infra-clickhouse-1 clickhouse-client --user clickhouse \
-  --password "$CH_PW" --multiquery < ~/.config/dev-infra/clickhouse/hyperdx_sessions.sql
-```
+Nothing to seed — `create_schema:true` creates `otel.hyperdx_sessions` at collector
+startup, so a fresh dev-infra ClickHouse data dir needs no manual step.

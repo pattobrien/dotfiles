@@ -37,16 +37,15 @@ exporters:
       initial_interval: 5s
       max_interval: 30s
 
-  # Session-replay sink. The hyperdx_sessions table is pre-created from
-  # clickhouse/hyperdx_sessions.sql to match exactly what the HyperDX viewer
-  # queries, so create_schema stays off here.
+  # Session-replay sink. The exporter creates the hyperdx_sessions table itself
+  # (same create_schema:true the otel_logs/otel_traces sinks already rely on).
   clickhouse/rrweb:
     endpoint: tcp://clickhouse:9000?dial_timeout=10s
     database: otel
     username: clickhouse
     password: ${env:CLICKHOUSE_PASSWORD}
     logs_table_name: hyperdx_sessions
-    create_schema: false
+    create_schema: true
     ttl: 720h
     timeout: 10s
     retry_on_failure:
