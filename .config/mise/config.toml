@@ -88,8 +88,13 @@ typst = "0.14.2"
 jq = "1.8.1"
 protoc = "33.3"
 "github:steipete/peekaboo" = "latest"
+hcloud = "latest"
 "github:alltuner/mise-completions-sync" = "latest"
+sops = "latest"
+age = "latest"
+"ubi:Mic92/ssh-to-age" = "latest"
 jj = "latest"
+doctl = "latest"
 
 [hooks]
 postinstall = "misecompsync --new-only --shell zsh"
