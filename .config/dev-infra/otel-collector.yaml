@@ -11,6 +11,18 @@ processors:
     timeout: 5s
     send_batch_size: 8192
 
+connectors:
+  # Split rrweb session-replay logs (the browser SDK tags each with an
+  # rr-web.event attribute) into their own pipeline; all other logs fall
+  # through to the default sink.
+  routing/logs:
+    default_pipelines: [logs/out-default]
+    error_mode: ignore
+    table:
+      - context: log
+        statement: route() where IsMatch(attributes["rr-web.event"], ".*")
+        pipelines: [logs/out-rrweb]
+
 exporters:
   clickhouse:
     endpoint: tcp://clickhouse:9000?dial_timeout=10s
@@ -19,6 +31,23 @@ exporters:
     password: ${env:CLICKHOUSE_PASSWORD}
     create_schema: true
     ttl: 2160h
+    timeout: 10s
+    retry_on_failure:
+      enabled: true
+      initial_interval: 5s
+      max_interval: 30s
+
+  # Session-replay sink. The hyperdx_sessions table is pre-created from
+  # clickhouse/hyperdx_sessions.sql to match exactly what the HyperDX viewer
+  # queries, so create_schema stays off here.
+  clickhouse/rrweb:
+    endpoint: tcp://clickhouse:9000?dial_timeout=10s
+    database: otel
+    username: clickhouse
+    password: ${env:CLICKHOUSE_PASSWORD}
+    logs_table_name: hyperdx_sessions
+    create_schema: false
+    ttl: 720h
     timeout: 10s
     retry_on_failure:
       enabled: true
@@ -35,7 +64,14 @@ service:
       receivers: [otlp]
       processors: [batch]
       exporters: [clickhouse]
-    logs:
+    logs/in:
       receivers: [otlp]
+      exporters: [routing/logs]
+    logs/out-default:
+      receivers: [routing/logs]
       processors: [batch]
       exporters: [clickhouse]
+    logs/out-rrweb:
+      receivers: [routing/logs]
+      processors: [batch]
+      exporters: [clickhouse/rrweb]
