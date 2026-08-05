@@ -369,7 +369,7 @@ credentials into it's session).
   - vercel
   - expo
   - linear
-  - neon
+  - neonctl
   - doctl
   - flyctl
   - railway

@@ -88,6 +88,11 @@ typst = "0.14.2"
 jq = "1.8.1"
 protoc = "33.3"
 "github:steipete/peekaboo" = "latest"
+"github:alltuner/mise-completions-sync" = "latest"
+jj = "latest"
+
+[hooks]
+postinstall = "misecompsync --new-only --shell zsh"
 
 [tasks.dotfiles]
 description = "Navigate to dotfiles"

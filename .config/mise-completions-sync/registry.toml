@@ -1,0 +1,11 @@
+schema_version = 1
+
+[tools]
+hcloud = { zsh = "hcloud completion zsh" }
+turbo = { zsh = "turbo completion zsh" }
+linear-cli = { zsh = "linear completions zsh" }
+herdr = { zsh = "herdr completion zsh" }
+kubebuilder = { zsh = "kubebuilder completion zsh" }
+sentry-cli = { zsh = "sentry-cli completions zsh" }
+typst = { zsh = "typst completions zsh" }
+neonctl = { zsh = "neonctl completion zsh" }
