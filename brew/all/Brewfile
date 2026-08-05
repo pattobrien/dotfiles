@@ -88,6 +88,8 @@ brew "ossp-uuid"
 brew "pam-reattach"
 # Package compiler and linker metadata toolkit
 brew "pkgconf"
+# Tool for managing OCI containers and pods
+brew "podman"
 # Theme for zsh
 brew "powerlevel10k"
 # Cloud native development platform
@@ -192,8 +194,6 @@ cask "daisydisk"
 cask "diffusionbee"
 # Voice and text chat software
 cask "discord"
-# App to build and share containerised applications and microservices
-cask "docker-desktop"
 # Assign keys, and then decorate and label them
 cask "elgato-stream-deck"
 # Status monitoring
@@ -237,6 +237,8 @@ cask "parallels-toolbox"
 cask "pearcleaner"
 # Administration and development platform for PostgreSQL
 cask "pgadmin4"
+# Open source desktop tool to build, manage and run containers
+cask "podman-desktop"
 # Peer to peer Bitorrent client
 cask "qbittorrent"
 # Control your tools with a few keystrokes
