@@ -242,6 +242,7 @@ services:
       API_URL: https://openpanel.tailc7bb96.ts.net/api
       API_URL_SSR: http://openpanel-api:3000
       COOKIE_SECRET: ${OPENPANEL_COOKIE_SECRET}
+      CUSTOM_COOKIE_DOMAIN: .tailc7bb96.ts.net
     depends_on:
       postgres:
         condition: service_healthy
@@ -257,7 +258,9 @@ services:
       start_period: 90s
 
   openpanel-dashboard:
-    image: docker.io/lindesvard/openpanel-dashboard:2
+    build:
+      context: ./openpanel
+    image: dev-infra/openpanel-dashboard:2
     restart: unless-stopped
     environment: *openpanel-env
     depends_on:
