@@ -42,21 +42,32 @@ HyperDX.init({
 (session key `rum.sessionId` in resource attributes). Configure rrweb privacy masking
 via its options; nothing is masked by default beyond the SDK's defaults.
 
-## Viewer (one-time HyperDX UI step — not automatable from config)
+## Viewer (seeded declaratively — no UI clicks)
 
-HyperDX stores sources/connections in Mongo, so this is done in the app UI (`:8082`):
+HyperDX stores connections/sources in Mongo. Rather than clicking through
+**Team Settings**, the `hyperdx` service seeds them from `DEFAULT_CONNECTIONS`
+and `DEFAULT_SOURCES` env vars in `compose.yaml`:
 
-1. **Team Settings → Connections** — ensure a ClickHouse connection exists:
-   host `clickhouse:8123`, user `clickhouse`, password from `op://Infra/dev-infra-clickhouse`.
-2. **Team Settings → Sources → Add Source → Session**:
-   - Database `otel`, Table `hyperdx_sessions`
-   - Timestamp column `Timestamp`
-   - Body/event expression `Body`, event attributes `LogAttributes`
-   - Correlate to your logs/traces source via the session id (`rum.sessionId` /
-     `ResourceAttributes`).
-3. Replays then appear under **Sessions** in HyperDX.
+- **Connection** `Default` → `http://clickhouse:8123`, user `clickhouse`
+  (password interpolated from `CLICKHOUSE_PASSWORD`).
+- **Sources** `Logs` (`otel.otel_logs`), `Traces` (`otel.otel_traces`), and
+  `Sessions` (`otel.hyperdx_sessions`), cross-linked. The session-replay page
+  **requires** the session source to reference a trace source
+  (`traceSourceId`) and log source (`logSourceId`) — a lone session source
+  fails validation ("Source 'Sessions' has validation issues"), so all three
+  are seeded together and linked by name (HyperDX's seeder resolves names → ids).
+  The session source uses timestamp column `Timestamp` (the exporter's schema
+  omits HyperDX's default `TimestampTime`).
+
+The seed only applies when Mongo has **zero** connections/sources, so it
+provisions a fresh machine without ever clobbering hand-edits on a live one.
+To re-seed an existing install, drop the `hyperdx` Mongo db first.
+
+Replays then appear under **Sessions** in HyperDX (`:8082`). Correlate to your
+logs/traces via the session id (`rum.sessionId` in `ResourceAttributes`).
 
 ## Reproducibility note
 
-Nothing to seed — `create_schema:true` creates `otel.hyperdx_sessions` at collector
-startup, so a fresh dev-infra ClickHouse data dir needs no manual step.
+Fully declarative, no manual steps: `create_schema:true` creates
+`otel.hyperdx_sessions` at collector startup, and the `DEFAULT_CONNECTIONS`/
+`DEFAULT_SOURCES` env vars provision the HyperDX viewer on first boot.
