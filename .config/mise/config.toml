@@ -1,5 +1,6 @@
 [settings]
 npm.package_manager = "pnpm"
+pipx.uvx = true
 # native-preview only publishes daily dev builds, all younger than the default min release age
 minimum_release_age_excludes = ["npm:@typescript/native-preview"]
 experimental = true
@@ -18,6 +19,7 @@ node = "24"
 "npm:@earendil-works/pi-coding-agent" = "latest"
 "npm:@posthog/cli" = "latest"
 "npm:@railway/cli" = "latest"
+"npm:@tigrisdata/cli" = { version = "latest", exe = "tigris" }
 "npm:@typescript/native-preview" = "latest"
 "npm:codemod" = "latest"
 "npm:eas-cli" = "latest"
@@ -27,6 +29,7 @@ node = "24"
 "npm:oxlint" = "latest"
 "npm:turbo" = "latest"
 "npm:vercel" = "latest"
+"npm:wrangler" = "latest"
 "ubi:voidzero-dev/vite-plus" = { version = "latest", exe = "vp" }
 # vite-plus (`vp`) is installed via Homebrew, not mise: the npm backend ships a
 # broken CLI (missing `vp add` etc). See brew/personal/Brewfile.
@@ -71,6 +74,8 @@ minikube = "1.37.0"
 kind = "0.31.0"
 kubebuilder = "4.10.1"
 skaffold = "2.17.1"
+"github:cloudflare/cloudflared" = "latest"
+"pipx:tinybird" = "latest"
 
 # Docs & misc CLIs
 "github:pattobrien/herdr" = "0.8.0-graphics.3"
