@@ -21,9 +21,11 @@
 # Authenticate HTTPS pushes/pulls with the gh CLI's stored token (`gh auth
 # login`); this overrides the system osxkeychain helper for github.com.
 [credential "https://github.com"]
-	helper = !gh auth git-credential
+	helper = 
+	helper = !/opt/homebrew/bin/gh auth git-credential
 [credential "https://gist.github.com"]
-	helper = !gh auth git-credential
+	helper = 
+	helper = !/opt/homebrew/bin/gh auth git-credential
 [gpg]
 	format = ssh
 [gpg "ssh"]
