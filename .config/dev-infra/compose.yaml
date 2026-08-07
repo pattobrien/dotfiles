@@ -260,9 +260,7 @@ services:
       start_period: 90s
 
   openpanel-dashboard:
-    build:
-      context: ./openpanel
-    image: dev-infra/openpanel-dashboard:2
+    image: ghcr.io/pattobrien/openpanel-dashboard:selfhost
     restart: unless-stopped
     environment: *openpanel-env
     depends_on:
