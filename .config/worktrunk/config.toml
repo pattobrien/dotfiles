@@ -5,3 +5,9 @@
 # checkouts land in the same tree (the workspace-manager plugin's catch-all
 # layout matches worktrees by this path prefix).
 worktree-path = "~/.herdr/worktrees/{{ repo }}/{{ branch | sanitize }}"
+
+# Base each new worktree on freshly-merged origin, not a stale local default
+# branch. Fetches and fast-forwards the new (commit-less) branch onto
+# origin/<default>. Skipped when branching off a non-default base (--base @).
+[pre-start]
+sync = "{% if base == default_branch %}git fetch {{ remote }} {{ default_branch }} && git rebase {{ remote }}/{{ default_branch }}{% endif %}"
