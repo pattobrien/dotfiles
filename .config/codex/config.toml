@@ -107,13 +107,13 @@ NODE_REPL_NODE_MODULE_DIRS = "/Applications/ChatGPT.app/Contents/Resources/cua_n
 NODE_REPL_NODE_PATH = "/Applications/ChatGPT.app/Contents/Resources/cua_node/bin/node"
 NODE_REPL_TRUSTED_CODE_PATHS = "/Users/patt/.codex"
 CODEX_HOME = "/Users/patt/.codex"
-NODE_REPL_TRUSTED_BROWSER_CLIENT_SHA256S = "6d25aa7656feac858f3a3bdaea5bcbab0dbfd426c9de8e6931ce90c399ee8e4f,e13fd947e846d3d306e9249dd3c73d14931b6494803dbafb16cef85e6add9506"
+NODE_REPL_TRUSTED_BROWSER_CLIENT_SHA256S = "028a14b6eaa6d98dac2aae00764345ab9f244801ed8493d42b9af3be5575006e,f204d340535055781952b10ed396de20b842f00a19e430852f7e121ad1ce91f6"
 BROWSER_USE_AVAILABLE_BACKENDS = "chrome,iab"
 NODE_REPL_INSTRUCTIONS_USE_CASE_BROWSER = "Control the in-app browser in conjunction with the Browser Plugin."
 NODE_REPL_INSTRUCTIONS_USE_CASE_CHROME = "Control the Chrome browser in conjunction with the Chrome Plugin. Prefer this method of controlling Chrome over alternatives (such as Computer Use) unless the user explicitly mentions an alternative."
 NODE_REPL_INSTRUCTIONS_USE_CASE_COMPUTER_USE = "Control desktop apps on macOS through Computer Use."
 BROWSER_USE_CODEX_APP_BUILD_FLAVOR = "prod"
-BROWSER_USE_CODEX_APP_VERSION = "26.721.41059"
+BROWSER_USE_CODEX_APP_VERSION = "26.727.51351"
 CODEX_CLI_PATH = "/Applications/ChatGPT.app/Contents/Resources/codex"
 
 [mcp_servers.computer-use]
@@ -123,18 +123,18 @@ cwd = "."
 enabled = false
 
 [marketplaces.openai-bundled]
-last_updated = "2026-07-26T15:28:26Z"
+last_updated = "2026-08-05T17:46:29Z"
 source_type = "local"
 source = "/Users/patt/.codex/.tmp/bundled-marketplaces/openai-bundled"
 
 [marketplaces.openai-primary-runtime]
-last_updated = "2026-07-25T08:29:23Z"
+last_updated = "2026-08-05T17:50:08Z"
 source_type = "local"
 source = "/Users/patt/.cache/codex-runtimes/codex-primary-runtime/plugins/openai-primary-runtime"
 
 [marketplaces.RevenueCat]
-last_updated = "2026-07-25T08:27:17Z"
-last_revision = "05054b7820ff9abe66d0aea86762b4f9ec05b87d"
+last_updated = "2026-08-05T17:46:27Z"
+last_revision = "8d3a13815bca740e632540aa3d3b92a7c010bc3c"
 source_type = "git"
 source = "https://github.com/RevenueCat/ai-toolkit.git"
 
@@ -151,8 +151,8 @@ source_type = "git"
 source = "https://github.com/superultrainc/superwhisper-codex.git"
 
 [marketplaces.worktrunk]
-last_updated = "2026-07-31T19:18:51Z"
-last_revision = "6387923b0f0b6a375c8f4ad379a0ffbdc6ce68e9"
+last_updated = "2026-08-05T17:46:59Z"
+last_revision = "970976bd32d141de32b16fc3f66f3b99fca1e3c6"
 source_type = "git"
 source = "https://github.com/max-sixty/worktrunk.git"
 
@@ -713,5 +713,5 @@ global = "cursor"
 
 [shell_environment_policy.set]
 BROWSER_USE_AVAILABLE_BACKENDS = "chrome,iab"
-NODE_REPL_TRUSTED_BROWSER_CLIENT_SHA256S = "6d25aa7656feac858f3a3bdaea5bcbab0dbfd426c9de8e6931ce90c399ee8e4f,e13fd947e846d3d306e9249dd3c73d14931b6494803dbafb16cef85e6add9506"
+NODE_REPL_TRUSTED_BROWSER_CLIENT_SHA256S = "028a14b6eaa6d98dac2aae00764345ab9f244801ed8493d42b9af3be5575006e,f204d340535055781952b10ed396de20b842f00a19e430852f7e121ad1ce91f6"
 NODE_REPL_TRUSTED_CODE_PATHS = "/Users/patt/.codex"
