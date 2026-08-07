@@ -96,6 +96,7 @@ age = "latest"
 "ubi:Mic92/ssh-to-age" = "latest"
 jj = "latest"
 doctl = "latest"
+pulumi = "latest"
 
 [hooks]
 postinstall = "misecompsync --new-only --shell zsh"
