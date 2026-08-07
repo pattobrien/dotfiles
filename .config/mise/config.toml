@@ -85,6 +85,7 @@ skaffold = "2.17.1"
 "github:modem-dev/hunk" = "latest"
 "github:agavra/tuicr" = "latest"
 "github:gammons/slk" = "latest"
+"github:slackapi/slack-cli" = { version = "latest", exe = "slack", matching = "slack_cli_4" }
 pandoc = "3.8.3"
 typst = "0.14.2"
 jq = "1.8.1"
