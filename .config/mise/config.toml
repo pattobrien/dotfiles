@@ -18,6 +18,7 @@ node = "24"
 "npm:@open-pencil/cli" = "latest"
 "npm:@earendil-works/pi-coding-agent" = "latest"
 "npm:@posthog/cli" = "latest"
+"npm:cf" = "latest"
 "npm:@railway/cli" = "latest"
 "npm:@tigrisdata/cli" = { version = "latest", exe = "tigris" }
 "npm:@typescript/native-preview" = "latest"

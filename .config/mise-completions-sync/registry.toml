@@ -9,3 +9,4 @@ kubebuilder = { zsh = "kubebuilder completion zsh" }
 sentry-cli = { zsh = "sentry-cli completions zsh" }
 typst = { zsh = "typst completions zsh" }
 neonctl = { zsh = "neonctl completion zsh" }
+cf = { zsh = "cf complete zsh" }
