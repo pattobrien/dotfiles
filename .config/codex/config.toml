@@ -1,4 +1,4 @@
-model = "gpt-5.6-terra"
+model = "gpt-5.6-sol"
 model_reasoning_effort = "high"
 personality = "pragmatic"
 sandbox_mode = "danger-full-access"
@@ -133,8 +133,8 @@ source_type = "local"
 source = "/Users/patt/.cache/codex-runtimes/codex-primary-runtime/plugins/openai-primary-runtime"
 
 [marketplaces.RevenueCat]
-last_updated = "2026-08-05T17:46:27Z"
-last_revision = "8d3a13815bca740e632540aa3d3b92a7c010bc3c"
+last_updated = "2026-08-07T15:28:04Z"
+last_revision = "7aa440b998e70bdebabde00fd0195f4ec9c6aa6d"
 source_type = "git"
 source = "https://github.com/RevenueCat/ai-toolkit.git"
 
@@ -151,8 +151,8 @@ source_type = "git"
 source = "https://github.com/superultrainc/superwhisper-codex.git"
 
 [marketplaces.worktrunk]
-last_updated = "2026-08-05T17:46:59Z"
-last_revision = "970976bd32d141de32b16fc3f66f3b99fca1e3c6"
+last_updated = "2026-08-07T15:30:47Z"
+last_revision = "f57fac365b229f6a6e7941d45215276ab92aacd8"
 source_type = "git"
 source = "https://github.com/max-sixty/worktrunk.git"
 
