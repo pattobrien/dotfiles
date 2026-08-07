@@ -181,7 +181,9 @@
     "patt@pattobrien": true,
     "worktrunk@worktrunk": true,
     "rust-analyzer-lsp@claude-plugins-official": true,
-    "plannotator-effective-html@effective-html": true
+    "plannotator-effective-html@effective-html": true,
+    "codex@openai-codex": true,
+    "slack@claude-plugins-official": true
   },
   "extraKnownMarketplaces": {
     "claude-notifications-go": {
@@ -212,7 +214,8 @@
       "source": {
         "source": "directory",
         "path": "/Users/patt/dev/pattobrien/shed"
-      }
+      },
+      "autoUpdate": true
     },
     "worktrunk": {
       "source": {
@@ -224,6 +227,12 @@
       "source": {
         "source": "github",
         "repo": "plannotator/effective-html"
+      }
+    },
+    "openai-codex": {
+      "source": {
+        "source": "github",
+        "repo": "openai/codex-plugin-cc"
       }
     }
   },
