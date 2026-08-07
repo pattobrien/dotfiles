@@ -76,6 +76,7 @@ kubebuilder = "4.10.1"
 skaffold = "2.17.1"
 "github:cloudflare/cloudflared" = "latest"
 "pipx:tinybird" = "latest"
+"pipx:claude-swap" = { version = "latest", exe = "cswap" }
 
 # Docs & misc CLIs
 "github:pattobrien/herdr" = "0.8.0-graphics.3"

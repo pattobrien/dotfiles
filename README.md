@@ -121,6 +121,10 @@ holds anything too sensitive or personal for this public repo:
 
 ## Maintenance
 
+### Claude Code Accounts
+
+Switch between Claude Code accounts with `cswap switch`.
+
 ### Brew Dump
 
 Dumps a snapshot of all brew-installed applications. VS Code extensions live in

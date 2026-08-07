@@ -23,7 +23,3 @@ alias trail='<<<${(F)path}'
 # is still owned by zshrc, which rebuilds PATH from scratch.
 export PATH="$HOME/Library/pnpm/bin:$HOME/.local/share/mise/shims:$HOME/.local/bin:/opt/homebrew/bin:$PATH"
 
-export CLAUDE_AUTH_PERSONAL="$HOME/.claude-auth-personal"
-export CLAUDE_AUTH_WORK=""
-export CLAUDE_SECURESTORAGE_CONFIG_DIR="$CLAUDE_AUTH_WORK"
-
