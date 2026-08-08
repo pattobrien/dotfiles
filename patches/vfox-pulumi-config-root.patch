@@ -1,0 +1,17 @@
+diff --git a/hooks/mise_env.lua b/hooks/mise_env.lua
+index 7335459..f4036b5 100644
+--- a/hooks/mise_env.lua
++++ b/hooks/mise_env.lua
+@@ -82,8 +82,10 @@ function PLUGIN:MiseEnv(ctx)
+     local go_mod_path = ctx.options.module_path or ""
+     local content = nil
+ 
+-    -- Find git root - module_path is relative to git root
+-    local git_root = find_git_root()
++    -- module_path is relative to the project root: prefer the config's own
++    -- location (works regardless of cwd, e.g. `mise prune` from another repo),
++    -- falling back to walking up from cwd for older mise without config_root
++    local git_root = ctx.config_root or find_git_root()
+ 
+     if git_root then
+         -- Construct path relative to git root
