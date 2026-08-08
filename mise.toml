@@ -1,0 +1,6 @@
+[env]
+OP_SERVICE_ACCOUNT_TOKEN = '{{ exec(command="security find-generic-password -s op-sa.finedesigns.io -a local-ai-agents -w 2>/dev/null || true") }}'
+
+[tasks.seed-op-token]
+description = "Seed the Local AI Agents 1Password service-account token into the macOS keychain"
+run = 'op item get "Local AI Agents Service Account Token" --vault FineDesigns --fields credential --reveal | xargs security add-generic-password -U -s op-sa.finedesigns.io -a local-ai-agents -w'
