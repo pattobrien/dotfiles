@@ -25,6 +25,7 @@ node = "latest"
 "npm:@kitlangton/stack" = "latest"
 "npm:@nubjs/nub" = "latest"
 "npm:@open-pencil/cli" = "latest"
+"npm:@photon-ai/cli" = { version = "latest", exe = "photon" }
 "npm:@earendil-works/pi-coding-agent" = "latest"
 "npm:@posthog/cli" = "latest"
 "npm:cf" = "latest"
