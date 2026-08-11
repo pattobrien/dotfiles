@@ -1,0 +1,6 @@
+{
+  "$schema": "https://agent-browser.dev/schema.json",
+  "executablePath": "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
+  "profile": "Default",
+  "args": "--hide-crash-restore-bubble,--no-first-run,--no-default-browser-check"
+}

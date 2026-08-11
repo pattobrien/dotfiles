@@ -7,6 +7,9 @@
       stdout: true
       stdin: true
 
+- link:
+    ~/.agent-browser/config.json: .config/agent-browser/config.json
+
 - shell:
     - command: ./scripts/brew_bundle.zsh brew/personal/Brewfile
     - command: ./scripts/dequarantine.zsh
