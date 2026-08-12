@@ -1,0 +1,174 @@
+#!/usr/bin/env zsh
+# herdr-worktree-menu — workmux-dashboard-style popup menu for worktree actions.
+# Runs inside a herdr popup pane; dispatches to the herdr CLI.
+set -u
+
+# regular panes export HERDR_WORKSPACE_ID; popup panes export HERDR_ACTIVE_*
+ws_id=${HERDR_WORKSPACE_ID:-${HERDR_ACTIVE_WORKSPACE_ID:?not inside a herdr pane}}
+
+# Catppuccin-ish colors
+autoload -Uz colors && colors
+title_fg=$'\e[38;5;223m'
+hint_fg=$'\e[38;5;245m'
+sel_bg=$'\e[48;5;223m\e[38;5;235m'
+reset=$'\e[0m'
+
+typeset -a labels hotkeys
+labels=(add open close delete sidebar quit)
+hotkeys=(a o c d s q)
+sel=1
+
+pause_on_error() { # $1 = message
+  print -u2 -- "$1"
+  print -u2 -n -- "press any key..."
+  read -sk1
+}
+
+run_or_pause() { # run a herdr command, keep popup open on failure
+  local out
+  if ! out=$("$@" 2>&1); then
+    pause_on_error "$out"
+    return 1
+  fi
+  print -- "$out"
+}
+
+repo_worktrees() { herdr worktree list --workspace "$ws_id"; }
+
+# label<TAB>workspace_id rows for open worktree workspaces of the current repo
+repo_workspaces() {
+  local repo_key
+  repo_key=$(repo_worktrees | jq -r '.result.source.repo_key') || return 1
+  herdr workspace list | jq -r --arg k "$repo_key" '
+    .result.workspaces[]
+    | select(.worktree.is_linked_worktree == true and .worktree.repo_key == $k)
+    | [.label, .workspace_id] | @tsv'
+}
+
+pick() { # $1 = prompt, stdin = tsv rows (display first column onward)
+  fzf --height=100% --reverse --no-info --prompt="$1 > " \
+    --delimiter=$'\t' --with-nth=1
+}
+
+do_add() {
+  clear
+  print -n -- "${title_fg}branch${reset} (empty = auto): "
+  local branch; read -r branch
+  if [[ -n $branch ]]; then
+    run_or_pause herdr worktree create --workspace "$ws_id" --branch "$branch" --focus
+  else
+    run_or_pause herdr worktree create --workspace "$ws_id" --focus
+  fi
+}
+
+do_open() {
+  local rows choice wt_path open_ws
+  rows=$(repo_worktrees | jq -r '
+    .result.worktrees[]
+    | [(if .open_workspace_id then "● " else "  " end) + .branch, .path, (.open_workspace_id // "")]
+    | @tsv') || { pause_on_error "worktree list failed"; return }
+  [[ -z $rows ]] && { pause_on_error "no worktrees"; return }
+  choice=$(print -- "$rows" | pick open) || return
+  wt_path=$(print -- "$choice" | cut -f2)
+  open_ws=$(print -- "$choice" | cut -f3)
+  if [[ -n $open_ws ]]; then
+    run_or_pause herdr workspace focus "$open_ws"
+  else
+    run_or_pause herdr worktree open --workspace "$ws_id" --path "$wt_path" --focus
+  fi
+}
+
+pick_repo_workspace() { # $1 = prompt; prints workspace_id
+  local rows choice
+  rows=$(repo_workspaces) || { pause_on_error "workspace list failed"; return 1 }
+  [[ -z $rows ]] && { pause_on_error "no open worktree workspaces for this repo"; return 1 }
+  choice=$(print -- "$rows" | pick "$1") || return 1
+  print -- "$choice" | cut -f2
+}
+
+do_close() {
+  local target
+  target=$(pick_repo_workspace close) || return
+  run_or_pause herdr workspace close "$target"
+}
+
+do_delete() {
+  # worktree remove only takes a workspace id, so closed worktrees are
+  # opened (unfocused) first to obtain one
+  local rows choice wt_path target
+  rows=$(repo_worktrees | jq -r '
+    .result.worktrees[]
+    | select(.is_linked_worktree)
+    | [(if .open_workspace_id then "● " else "  " end) + .branch, .path, (.open_workspace_id // "")]
+    | @tsv') || { pause_on_error "worktree list failed"; return }
+  [[ -z $rows ]] && { pause_on_error "no worktrees"; return }
+  choice=$(print -- "$rows" | pick delete) || return
+  wt_path=$(print -- "$choice" | cut -f2)
+  target=$(print -- "$choice" | cut -f3)
+  clear
+  print -n -- "${title_fg}delete worktree?${reset} $wt_path [y/N] "
+  local ans; read -sk1 ans; print
+  [[ $ans == [yY] ]] || return
+  if [[ -z $target ]]; then
+    target=$(herdr worktree open --workspace "$ws_id" --path "$wt_path" --no-focus \
+      | jq -r '.result.workspace.workspace_id') || { pause_on_error "worktree open failed"; return }
+  fi
+  local out
+  if ! out=$(herdr worktree remove --workspace "$target" 2>&1); then
+    print -u2 -- "$out"
+    print -n -u2 -- "force? [y/N] "
+    read -sk1 ans; print
+    [[ $ans == [yY] ]] || return
+    run_or_pause herdr worktree remove --workspace "$target" --force
+  fi
+}
+
+do_sidebar() { run_or_pause herdr terminal sidebar toggle; }
+
+draw() {
+  clear
+  print -- " ${title_fg}worktree${reset}"
+  local i
+  for i in {1..$#labels}; do
+    if (( i == sel )); then
+      print -- "  ${sel_bg} ${(r:10:)labels[i]}(${hotkeys[i]}) ${reset}"
+    else
+      print -- "   ${(r:10:)labels[i]}${hint_fg}(${hotkeys[i]})${reset}"
+    fi
+  done
+}
+
+dispatch() { # $1 = label; exits the menu unless the action was cancelled
+  case $1 in
+    add) do_add ;;
+    open) do_open ;;
+    close) do_close ;;
+    delete) do_delete ;;
+    sidebar) do_sidebar ;;
+    quit) exit 0 ;;
+  esac
+  exit 0
+}
+
+while true; do
+  draw
+  read -sk1 key
+  case $key in
+    j) (( sel = sel % $#labels + 1 )) ;;
+    k) (( sel = (sel + $#labels - 2) % $#labels + 1 )) ;;
+    $'\n'|$'\r') dispatch "${labels[sel]}" ;;
+    $'\e')
+      # arrow keys arrive as ESC [ A/B; bare ESC quits
+      if read -sk1 -t 0.01 k2 && [[ $k2 == "[" ]] && read -sk1 -t 0.01 k3; then
+        case $k3 in
+          A) (( sel = (sel + $#labels - 2) % $#labels + 1 )) ;;
+          B) (( sel = sel % $#labels + 1 )) ;;
+        esac
+      else
+        exit 0
+      fi
+      ;;
+    a|o|c|d|s) dispatch "${labels[${hotkeys[(ie)$key]}]}" ;;
+    q) exit 0 ;;
+  esac
+done

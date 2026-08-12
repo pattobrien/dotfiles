@@ -253,13 +253,16 @@ key = "f12"
 type = "shell"
 command = "herdr pane send-keys \"$HERDR_ACTIVE_PANE_ID\" ctrl+l"
 description = "clear screen"
-# Cmd+E → F11 → worktree picker (the old workmux-dashboard slot; worktrunk is
-# its successor). Also still on prefix+shift+w above.
+# Cmd+E → F11 → worktree menu (the old workmux-dashboard slot): add/open/
+# close/delete worktree + sidebar toggle. The worktrunk switch/create picker
+# remains on prefix+shift+w above.
 [[keys.command]]
 key = "f11"
-type = "plugin_action"
-command = "worktrunk.open"
-description = "worktree: switch/create"
+type = "popup"
+command = "\"$HOME/dev/pattobrien/dotfiles/scripts/herdr-worktree-menu\""
+width = 44
+height = 14
+description = "worktree: menu"
 
 # Hunk diff plugin (edmundmiller/herdr-plugin-hunk): review working-tree
 # changes in a hunk TUI split. Staged/branch variants are in the palettes.
