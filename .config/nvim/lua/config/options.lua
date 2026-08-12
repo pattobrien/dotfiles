@@ -32,3 +32,7 @@ vim.opt.list = false
 -- Disable smooth scrolling — <C-d>/<C-u> are instant (with zz centering in keymaps)
 vim.opt.smoothscroll = false
 -- vim.opt.iskeyword:append("-")
+
+-- own filetype keeps jsonls (trailing-comma warnings) off hujson files
+vim.filetype.add({ extension = { hujson = "hujson" } })
+vim.treesitter.language.register("json5", "hujson")
