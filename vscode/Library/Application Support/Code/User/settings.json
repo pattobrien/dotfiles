@@ -403,7 +403,7 @@
   "github.copilot.nextEditSuggestions.enabled": true,
   "editor.minimap.enabled": false,
   "security.workspace.trust.untrustedFiles": "open",
-  "editor.fontFamily": "IBM Plex Mono, Input, Menlo, Monaco, 'Courier New', monospace",
+  "editor.fontFamily": "'Geist Mono', IBM Plex Mono, Input, Menlo, Monaco, 'Courier New', monospace",
   "terminal.integrated.suggest.enabled": true,
   "docker.extension.enableComposeLanguageServer": false,
   "chat.mcp.access": "all",

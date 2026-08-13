@@ -191,9 +191,15 @@ cask "expo-orbit"
 cask "firefox"
 # Offline voice-to-text dictation app with AI enhancement
 cask "fluidvoice"
+cask "font-dm-mono"
+cask "font-geist"
+cask "font-geist-mono"
+cask "font-geist-mono-nerd-font"
 # Focusrite interface controller for devices of the 4th generation and newer
 cask "focusrite-control-2"
 cask "font-hack-nerd-font"
+cask "font-space-mono"
+cask "font-space-mono-nerd-font"
 # Terminal emulator that uses platform-native UI and GPU acceleration
 cask "ghostty"
 # Web browser

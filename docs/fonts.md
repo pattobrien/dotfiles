@@ -28,3 +28,10 @@
 - Recursive (2018) — Arrow Type
 - Roboto Mono (2015) — Christian Robertson
 - Twilio Sans Mono (2020) — Sharp Type
+
+### Additions (2026-08)
+
+- CoFo Sans Mono — Contrast Foundry ★
+- DM Mono (2020) — Colophon Foundry
+- Geist Mono (2023) — Vercel
+- Space Mono (2016) — Colophon Foundry

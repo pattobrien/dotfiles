@@ -405,7 +405,7 @@
     "*.sdb": "${capture}.${extname}-*",
     "*.s3db": "${capture}.${extname}-*"
   },
-  "editor.fontFamily": "IBM Plex Mono, Input, Menlo, Monaco, 'Courier New', monospace",
+  "editor.fontFamily": "'Geist Mono', IBM Plex Mono, Input, Menlo, Monaco, 'Courier New', monospace",
   "gitlens.ai.model": "gitkraken",
   "gitlens.ai.gitkraken.model": "gemini:gemini-2.0-flash",
   "zig.zls.enabled": "on",
