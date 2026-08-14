@@ -72,6 +72,7 @@
     ~/.config/dev-infra: .config/dev-infra
     ~/Library/LaunchAgents/com.pattobrien.dev-infra.plist: .config/dev-infra/com.pattobrien.dev-infra.plist
     ~/Library/LaunchAgents/actions.runner.pattobrien-shed.macbook.plist: .config/github-runner/actions.runner.pattobrien-shed.macbook.plist
+    ~/actions-runner/shed/.env: .config/github-runner/env
     ~/.config/terminal-browser/extensions/vimium:
       path: ~/dev/pattobrien/vimium
       ignore-missing: true
