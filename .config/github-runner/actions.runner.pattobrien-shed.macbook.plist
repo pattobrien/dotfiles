@@ -19,9 +19,15 @@
     <key>StandardErrorPath</key>
     <string>/Users/patt/Library/Logs/actions.runner.pattobrien-shed.macbook/stderr.log</string>
     <key>EnvironmentVariables</key>
-    <dict> 
+    <dict>
       <key>ACTIONS_RUNNER_SVC</key>
       <string>1</string>
+      <key>PATH</key>
+      <string>/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin</string>
+      <key>TMPDIR</key>
+      <string>/tmp</string>
+      <key>MISE_GLOBAL_CONFIG_FILE</key>
+      <string>/dev/null</string>
     </dict>
     <key>ProcessType</key>
     <string>Interactive</string>

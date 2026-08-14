@@ -69,14 +69,10 @@
     ~/Library/Application Support/Code/User/tasks.json: vscode/Library/Application Support/Code/User/tasks.json
     ~/.config/macos-defaults: .config/macos-defaults
     ~/.config/workmux: .config/workmux
-    ~/.config/dev-infra: .config/dev-infra
-    ~/Library/LaunchAgents/com.pattobrien.dev-infra.plist: .config/dev-infra/com.pattobrien.dev-infra.plist
     ~/Library/LaunchAgents/actions.runner.pattobrien-shed.macbook.plist: .config/github-runner/actions.runner.pattobrien-shed.macbook.plist
-    ~/actions-runner/shed/.env: .config/github-runner/env
     ~/.config/terminal-browser/extensions/vimium:
       path: ~/dev/pattobrien/vimium
       ignore-missing: true
-    ~/.local/bin/dev-infra: scripts/dev-infra
     ~/.local/bin/herdr-gh-repos: scripts/herdr-gh-repos
     ~/.local/bin/herdr-jump-or-create: scripts/herdr-jump-or-create
     ~/.local/bin/herdr-quick-actions-popup: scripts/herdr-quick-actions-popup
