@@ -7,9 +7,9 @@
     "CLAUDE_CODE_ENHANCED_TELEMETRY_BETA": "1",
     "CLAUDE_CODE_NEW_INIT": "1",
     "CLAUDE_CODE_NO_FLICKER": "1",
-    "DISABLE_AUTOUPDATER": "0",
+    "DISABLE_AUTOUPDATER": "1",
     "EDITOR": "nvim",
-    "ENABLE_LSP_TOOL": "1",
+    "ENABLE_LSP_TOOL": "0",
     "OTEL_EXPORTER_OTLP_ENDPOINT": "http://barn:4317",
     "OTEL_EXPORTER_OTLP_PROTOCOL": "grpc",
     "OTEL_LOGS_EXPORTER": "otlp",
@@ -97,16 +97,9 @@
       "WebFetch(domain:raw.githubusercontent.com)",
       "WebFetch(domain:unpkg.com)"
     ],
-    "deny": [
-      "Bash(npm *)",
-      "Bash(npx *)",
-      "mcp__ide__getDiagnostics"
-    ],
-    "ask": [
-      "Bash(pnpm* add *)",
-      "Bash(brew install *)"
-    ],
-    "defaultMode": "bypassPermissions"
+    "deny": ["Bash(npm *)", "Bash(npx *)", "mcp__ide__getDiagnostics"],
+    "ask": ["Bash(pnpm* add *)", "Bash(brew install *)"],
+    "defaultMode": "auto"
   },
   "model": "claude-fable-5[1m]",
   "enableAllProjectMcpServers": true,
