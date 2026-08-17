@@ -20,6 +20,8 @@ Treat microsandbox as a defensive tool and operate it with least privilege.
 ## Agent operating guidance
 
 - Prefer canonical command names in generated instructions and scripts: use `msb list`, `msb status`, `msb remove`, `msb copy`, `msb image list`, `msb image remove`, `msb volume list`, and `msb snapshot list` instead of shorter aliases.
+- Treat backend choice as explicit user intent. Use `MSB_BACKEND=cloud`, `MSB_PROFILE`, an active cloud profile, or the SDK's programmatic backend setter when Cloud is requested. Never infer Cloud from `MSB_API_KEY` or `MSB_API_URL`; those values only configure a backend after it is selected.
+- When Cloud is explicitly selected but its credential is unavailable, surface the configuration error. Never retry the operation against Local.
 - Do not use host installation management such as `msb install`, `msb uninstall`, `msb self update`, or `msb self uninstall` unless the user explicitly asks to manage their local `msb` installation.
 - Treat host paths, secrets, mounted directories, registry credentials, SSH keys, and published ports as security-sensitive. Prefer least privilege: read-only mounts, explicit allow rules, named volumes for durable state, and scoped secret hosts.
 - Use the CLI for quick local workflows and the SDK references when writing application code. Load the relevant reference file only when needed.
@@ -56,6 +58,15 @@ npm install microsandbox
 pip install microsandbox
 go get github.com/superradcompany/microsandbox/sdk/go
 ```
+
+Cloud is opt-in for the CLI and SDKs. Use an explicit selector plus a separately supplied credential:
+
+```bash
+export MSB_BACKEND=cloud
+export MSB_API_KEY=msb_...
+```
+
+Alternatively, select a cloud profile with `MSB_PROFILE=<name>` or `active_profile` in `~/.microsandbox/config.json`. `MSB_API_URL` is optional and defaults to `https://api.microsandbox.dev`; it does not select Cloud.
 
 ## Quick reference
 
@@ -108,38 +119,38 @@ msb remove dev
 
 ### Common sandbox options
 
-| Flag                                                           | Description                                                                                         | Example                                                       |
-| -------------------------------------------------------------- | --------------------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
-| `-n`, `--name`                                                 | Name the sandbox                                                                                    | `--name my-sandbox`                                           |
-| `-m`, `--memory`                                               | Memory allocation                                                                                   | `-m 512M`, `-m 1G`                                            |
-| `-c`, `--cpus`                                                 | Number of vCPUs                                                                                     | `-c 2`                                                        |
-| `-v`, `--volume`                                               | Mount host path or named volume                                                                     | `-v ./src:/app:ro`, `-v data:/data`                           |
-| `--mount-dir`, `--mount-file`, `--mount-disk`, `--mount-named` | Explicit mount kind                                                                                 | `--mount-named data:/data:kind=disk,size=10G`                 |
-| `-p`, `--port`                                                 | Publish port                                                                                        | `-p 8080:80`, `-p 0.0.0.0:8080:80`, `-p 5353:5353/udp`        |
-| `-e`, `--env`                                                  | Set non-secret env variable (use `--secret` for credentials)                                        | `-e LOG_LEVEL=debug`                                          |
-| `--label`                                                      | Attach label for selection/metrics                                                                  | `--label app=worker`                                          |
-| `-w`, `--workdir`                                              | Working directory                                                                                   | `-w /app`                                                     |
-| `-t`, `--tty`                                                  | Force pseudo-terminal allocation                                                                    | `-t`                                                          |
-| `-d`, `--detach`                                               | Run in background, for `msb run`                                                                    | `-d`                                                          |
-| `-u`, `--user`                                                 | Run as user                                                                                         | `-u nobody`                                                   |
-| `-H`, `--hostname`                                             | Set guest hostname                                                                                  | `-H myhost`                                                   |
-| `--shell`                                                      | Default shell program                                                                               | `--shell /bin/bash`                                           |
-| `--replace`                                                    | Replace existing sandbox                                                                            | `--replace`                                                   |
-| `--replace-with-timeout`                                       | Grace before SIGKILL during replace                                                                 | `--replace-with-timeout 30s`                                  |
-| `--entrypoint`                                                 | Override image entrypoint                                                                           | `--entrypoint /bin/sh`                                        |
-| `--init`, `--init-arg`, `--init-env`                           | Hand off PID 1 to guest init                                                                        | `--init /sbin/init`                                           |
-| `--pull`                                                       | Pull policy                                                                                         | `--pull always`                                               |
-| `--oci-upper-size`                                             | Writable overlay upper size for OCI images                                                          | `--oci-upper-size 8G`                                         |
-| `--security`                                                   | In-guest security profile                                                                           | `--security restricted`                                       |
-| `--max-duration`                                               | Auto-stop timeout                                                                                   | `--max-duration 5m`                                           |
-| `--idle-timeout`                                               | Idle auto-stop                                                                                      | `--idle-timeout 30s`                                          |
-| `--tmpfs`                                                      | Mount tmpfs                                                                                         | `--tmpfs /tmp:100M`                                           |
-| `--copy`, `--copy-file`, `--copy-dir`, `--mkdir`, `--rm`       | Patch rootfs before boot                                                                            | `--copy ./config:/etc/app/config`                             |
-| `--script`                                                     | Register a shell snippet (wraps with shebang from `--shell`, decodes `\n`/`\t`/`\r`/`\\`/`\"`/`\'`) | `--script setup='apt-get update\napt-get install -y python3'` |
-| `--script-raw`                                                 | Register exact inline bytes; no shebang or decoding                                                 | `--script-raw setup=$'#!/bin/sh\necho hi\n'`                  |
-| `--script-path`                                                | Register a script from a host file (contents read verbatim)                                         | `--script-path setup:./setup.sh`                              |
-| `--snapshot`                                                   | Boot from a stopped-sandbox snapshot                                                                | `--snapshot baseline`                                         |
-| `--no-net`, `--net-default`, `--net-rule`                      | Network isolation and allow/deny rules                                                              | `--no-net --net-rule "allow@api.example.com:tcp:443"`         |
+| Flag | Description | Example |
+|------|-------------|---------|
+| `-n`, `--name` | Name the sandbox | `--name my-sandbox` |
+| `-m`, `--memory` | Memory allocation | `-m 512M`, `-m 1G` |
+| `-c`, `--cpus` | Number of vCPUs | `-c 2` |
+| `-v`, `--volume` | Mount host path or named volume | `-v ./src:/app:ro`, `-v data:/data` |
+| `--mount-dir`, `--mount-file`, `--mount-disk`, `--mount-named` | Explicit mount kind | `--mount-named data:/data:kind=disk,size=10G` |
+| `-p`, `--port` | Publish port | `-p 8080:80`, `-p 0.0.0.0:8080:80`, `-p 5353:5353/udp` |
+| `-e`, `--env` | Set non-secret env variable (use `--secret` for credentials) | `-e LOG_LEVEL=debug` |
+| `--label` | Attach label for selection/metrics | `--label app=worker` |
+| `-w`, `--workdir` | Working directory | `-w /app` |
+| `-t`, `--tty` | Force pseudo-terminal allocation | `-t` |
+| `-d`, `--detach` | Run in background, for `msb run` | `-d` |
+| `-u`, `--user` | Run as user | `-u nobody` |
+| `-H`, `--hostname` | Set guest hostname | `-H myhost` |
+| `--shell` | Default shell program | `--shell /bin/bash` |
+| `--replace` | Replace existing sandbox | `--replace` |
+| `--replace-with-timeout` | Grace before SIGKILL during replace | `--replace-with-timeout 30s` |
+| `--entrypoint` | Override image entrypoint | `--entrypoint /bin/sh` |
+| `--init`, `--init-arg`, `--init-env` | Hand off PID 1 to guest init | `--init /sbin/init` |
+| `--pull` | Pull policy | `--pull always` |
+| `--oci-upper-size` | Writable overlay upper size for OCI images | `--oci-upper-size 8G` |
+| `--security` | In-guest security profile | `--security restricted` |
+| `--max-duration` | Auto-stop timeout | `--max-duration 5m` |
+| `--idle-timeout` | Idle auto-stop | `--idle-timeout 30s` |
+| `--tmpfs` | Mount tmpfs | `--tmpfs /tmp:100M` |
+| `--copy`, `--copy-file`, `--copy-dir`, `--mkdir`, `--rm` | Patch rootfs before boot | `--copy ./config:/etc/app/config` |
+| `--script` | Register a shell snippet (wraps with shebang from `--shell`, decodes `\n`/`\t`/`\r`/`\\`/`\"`/`\'`) | `--script setup='apt-get update\napt-get install -y python3'` |
+| `--script-raw` | Register exact inline bytes; no shebang or decoding | `--script-raw setup=$'#!/bin/sh\necho hi\n'` |
+| `--script-path` | Register a script from a host file (contents read verbatim) | `--script-path setup:./setup.sh` |
+| `--snapshot` | Boot from a stopped-sandbox snapshot | `--snapshot baseline` |
+| `--no-net`, `--net-default`, `--net-rule` | Network isolation and allow/deny rules | `--no-net --net-rule "allow@api.example.com:tcp:443"` |
 
 ### Manage sandboxes
 
@@ -283,7 +294,7 @@ sftp -P 2222 root@127.0.0.1
 ## Key behaviors
 
 - Sandboxes are **real microVMs** with hardware-level isolation.
-- Default network policy is **public-only**.
+- Default network policy uses the **public** profile.
 - Sandboxes from `msb run` without `--name` are **ephemeral**.
 - Sandboxes from `msb create` or `msb run --name` are **persistent**.
 - `msb create` boots without running a command; use `msb run -d` for detached command runs.

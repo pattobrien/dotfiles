@@ -4,6 +4,10 @@
 go get github.com/superradcompany/microsandbox/sdk/go
 ```
 
+## Backend selection
+
+The default backend is Local. Select Cloud explicitly with `MSB_BACKEND=cloud` plus `MSB_API_KEY`, or with a cloud `MSB_PROFILE`/`active_profile`. `MSB_API_KEY` and `MSB_API_URL` never select Cloud on their own.
+
 The Go SDK uses top-level functions plus functional options. Call
 `EnsureInstalled(ctx)` during startup to surface runtime install errors early.
 
@@ -66,7 +70,18 @@ sb, err = m.CreateSandboxDetached(ctx, "worker", m.WithImage("alpine"))
 sb, err = m.StartSandbox(ctx, "worker")
 sb, err = m.StartSandboxDetached(ctx, "worker")
 handle, err := m.GetSandbox(ctx, "worker")
-all, err := m.ListSandboxes(ctx)
+page, err := m.ListSandboxes(ctx)
+filtered, err := m.ListSandboxesWith(ctx,
+    m.WithListLimit(50),
+    m.WithListLabels(map[string]string{"team": "backend"}),
+)
+if filtered.NextCursor != nil {
+    nextPage, err := m.ListSandboxesWith(ctx,
+        m.WithListLimit(50),
+        m.WithListCursor(*filtered.NextCursor),
+        m.WithListLabels(map[string]string{"team": "backend"}),
+    )
+}
 err = m.RemoveSandbox(ctx, "worker")
 metrics, err := m.AllSandboxMetrics(ctx)
 ```
@@ -208,7 +223,7 @@ sb, err := m.CreateSandbox(ctx, "worker",
 ```go
 sb, err := m.CreateSandbox(ctx, "agent",
     m.WithImage("python"),
-    m.WithNetwork(m.NetworkPolicy.PublicOnly()),
+    m.WithNetwork(m.NetworkPolicy.FromProfiles(m.NetworkProfilePublic)),
     m.WithSecrets(m.Secret.Env(
         "OPENAI_API_KEY",
         apiKey,

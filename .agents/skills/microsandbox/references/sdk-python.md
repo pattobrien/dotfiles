@@ -4,6 +4,10 @@
 pip install microsandbox
 ```
 
+## Backend selection
+
+The default backend is Local. Select Cloud explicitly with `MSB_BACKEND=cloud` plus `MSB_API_KEY`, with a cloud `MSB_PROFILE`/`active_profile`, or programmatically with `set_default_backend("cloud", api_key=key)`. `MSB_API_KEY` and `MSB_API_URL` never select Cloud on their own.
+
 The Python SDK is async-first. Use `await Sandbox.create(...)` or
 `async with await Sandbox.create(...)` for automatic cleanup.
 
@@ -11,7 +15,7 @@ The Python SDK is async-first. Use `await Sandbox.create(...)` or
 
 ```python
 import asyncio
-from microsandbox import Network, Sandbox, Volume
+from microsandbox import Network, NetworkProfile, Sandbox, Volume
 
 async def main():
     async with await Sandbox.create(
@@ -23,7 +27,7 @@ async def main():
         volumes={
             "/app/src": Volume.bind("./src", readonly=True),
         },
-        network=Network.public_only(),
+        network=Network.from_profiles(NetworkProfile.PUBLIC),
         replace=True,
     ) as sb:
         output = await sb.exec("python", ["-c", "print('hello')"])
@@ -39,7 +43,14 @@ sb = await Sandbox.create("worker", image="alpine")
 session = Sandbox.create_with_progress("worker", image="alpine")
 sb = await Sandbox.start("worker", detached=False)
 handle = await Sandbox.get("worker")
-all_sandboxes = await Sandbox.list()
+page = await Sandbox.list()
+filtered = await Sandbox.list_with(limit=50, labels={"team": "backend"})
+if filtered.next_cursor is not None:
+    next_page = await Sandbox.list_with(
+        cursor=filtered.next_cursor,
+        limit=50,
+        labels={"team": "backend"},
+    )
 await Sandbox.remove("worker")
 ```
 
@@ -72,7 +83,7 @@ sb = await Sandbox.create(
         "/disk": Volume.disk("./data.qcow2", fstype="ext4", readonly=True),
     },
     ports={8000: 8000},
-    network=Network.public_only(),
+    network=Network.from_profiles(NetworkProfile.PUBLIC),
 )
 ```
 
@@ -188,14 +199,15 @@ Volume.disk("./data.qcow2", fstype="ext4", readonly=True)
 ## Networking and secrets
 
 ```python
-from microsandbox import Network, Secret
+from microsandbox import Network, NetworkPolicy, NetworkProfile, Secret
 
 Network.none()
-Network.public_only()
+Network.from_profiles(NetworkProfile.PUBLIC)
+Network.from_profiles(NetworkProfile.PUBLIC, NetworkProfile.PRIVATE)
 Network.allow_all()
 
 network = Network(
-    policy="public_only",
+    policy=NetworkPolicy.from_profiles([NetworkProfile.PUBLIC]),
     deny_domains=["ads.example.com"],
     deny_domain_suffixes=[".tracking.com"],
     max_connections=50,

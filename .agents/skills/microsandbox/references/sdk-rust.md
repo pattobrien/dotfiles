@@ -2,14 +2,18 @@
 
 ```toml
 [dependencies]
-microsandbox = "0.6.4"
+microsandbox = "0.6.8"
 tokio = { version = "1", features = ["full"] }
 ```
+
+## Backend selection
+
+The default backend is Local. Select Cloud explicitly with `MSB_BACKEND=cloud` plus `MSB_API_KEY`, with a cloud `MSB_PROFILE`/`active_profile`, or programmatically with `set_default_backend(Arc::new(CloudBackend::with_api_key(key)?))`. `MSB_API_KEY` and `MSB_API_URL` never select Cloud on their own.
 
 ## Sandbox
 
 ```rust
-use microsandbox::{NetworkPolicy, Sandbox};
+use microsandbox::{NetworkPolicy, NetworkProfile, Sandbox};
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
@@ -19,7 +23,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         .cpus(2)
         .env("PYTHONDONTWRITEBYTECODE", "1")
         .volume("/app/src", |v| v.bind("./src").readonly())
-        .network(|n| n.policy(NetworkPolicy::public_only()))
+        .network(|n| n.policy(NetworkPolicy::from_profiles([NetworkProfile::Public])))
         .replace()
         .create()
         .await?;
@@ -49,7 +53,12 @@ let builder = Sandbox::builder("worker");
 let sb = Sandbox::start("worker").await?;
 let sb = Sandbox::start_detached("worker").await?;
 let handle = Sandbox::get("worker").await?;
-let all = Sandbox::list().await?;
+let page = Sandbox::list().await?;
+let filtered = Sandbox::list_with(|list| list.limit(50).label("team", "backend")).await?;
+let next = match filtered.next_cursor {
+    Some(cursor) => Some(Sandbox::list_with(|list| list.limit(50).cursor(cursor).label("team", "backend")).await?),
+    None => None,
+};
 Sandbox::remove("worker").await?;
 ```
 
@@ -213,17 +222,17 @@ let sb = Sandbox::builder("worker")
 ## Networking and secrets
 
 ```rust
-use microsandbox::{NetworkPolicy, Sandbox};
+use microsandbox::{NetworkPolicy, NetworkProfile, Sandbox};
 
 NetworkPolicy::none();
-NetworkPolicy::public_only();
-NetworkPolicy::non_local();
+NetworkPolicy::from_profiles([NetworkProfile::Public]);
+NetworkPolicy::from_profiles([NetworkProfile::Public, NetworkProfile::Private]);
 NetworkPolicy::allow_all();
 
 let sb = Sandbox::builder("agent")
     .image("python")
     .network(|n| n
-        .policy(NetworkPolicy::public_only())
+        .policy(NetworkPolicy::from_profiles([NetworkProfile::Public]))
         .deny_domain("ads.example.com")
         .deny_domain_suffix(".tracking.com")
         .max_connections(50)

@@ -4,6 +4,10 @@
 npm install microsandbox
 ```
 
+## Backend selection
+
+The default backend is Local. Select Cloud explicitly with `MSB_BACKEND=cloud` plus `MSB_API_KEY`, with a cloud `MSB_PROFILE`/`active_profile`, or programmatically with `setDefaultBackend({ kind: "cloud", apiKey })`. `MSB_API_KEY` and `MSB_API_URL` never select Cloud on their own.
+
 The current TypeScript SDK is builder-only for new sandboxes. Start with
 `Sandbox.builder(name)`, chain configuration, then call `.create()`.
 
@@ -18,7 +22,7 @@ await using sb = await Sandbox.builder("worker")
   .cpus(2)
   .env("PYTHONDONTWRITEBYTECODE", "1")
   .volume("/app/src", (m) => m.bind("./src").readonly())
-  .network((n) => n.policy(NetworkPolicy.publicOnly()))
+  .network((n) => n.policy(NetworkPolicy.fromProfiles(["public"])))
   .replace()
   .create();
 
@@ -29,7 +33,10 @@ console.log(output.stdout());
 Create a detached sandbox by setting the builder flag before calling `create()`:
 
 ```typescript
-const sb = await Sandbox.builder("worker").image("python:3.12").detached(true).create();
+const sb = await Sandbox.builder("worker")
+  .image("python:3.12")
+  .detached(true)
+  .create();
 ```
 
 Static methods:
@@ -39,7 +46,15 @@ const builder = Sandbox.builder("worker");
 const sb = await Sandbox.start("worker");
 const sbDetached = await Sandbox.startDetached("worker");
 const handle = await Sandbox.get("worker");
-const all = await Sandbox.list();
+const page = await Sandbox.list();
+const filtered = await Sandbox.listWith((list) =>
+  list.limit(50).label("team", "backend"),
+);
+const next = filtered.nextCursor
+  ? await Sandbox.listWith((list) =>
+      list.limit(50).cursor(filtered.nextCursor!).label("team", "backend"),
+    )
+  : undefined;
 await Sandbox.remove("worker");
 ```
 
@@ -47,7 +62,7 @@ Builder methods:
 
 ```typescript
 await using sb = await Sandbox.builder("worker")
-  .image("python") // OCI image, local rootfs, or disk path
+  .image("python")                 // OCI image, local rootfs, or disk path
   // .fromSnapshot("after-setup")  // Use instead of image()
   .memory(1024)
   .cpus(2)
@@ -82,7 +97,11 @@ console.log(output.code);
 console.log(output.success);
 
 const output2 = await sb.execWith("python", (e) =>
-  e.args(["compute.py"]).cwd("/app").env("PYTHONPATH", "/app/lib").timeout(30_000).user("nobody"),
+  e.args(["compute.py"])
+    .cwd("/app")
+    .env("PYTHONPATH", "/app/lib")
+    .timeout(30_000)
+    .user("nobody"),
 );
 
 const shellOut = await sb.shell("ls -la /app && echo done");
@@ -158,7 +177,10 @@ for (const entry of logs) console.log(entry.text());
 ```typescript
 import { Volume } from "microsandbox";
 
-const vol = await Volume.builder("my-data").quota(5120).label("env", "dev").create();
+const vol = await Volume.builder("my-data")
+  .quota(5120)
+  .label("env", "dev")
+  .create();
 
 const handle = await Volume.get("my-data");
 const allVolumes = await Volume.list();
@@ -183,8 +205,8 @@ await using sb = await Sandbox.builder("worker")
 import { Destination, NetworkPolicy, Rule, Sandbox } from "microsandbox";
 
 NetworkPolicy.none();
-NetworkPolicy.publicOnly();
-NetworkPolicy.nonLocal();
+NetworkPolicy.fromProfiles(["public"]);
+NetworkPolicy.fromProfiles(["public", "private"]);
 NetworkPolicy.allowAll();
 
 const policy = {
@@ -199,8 +221,7 @@ const policy = {
 await using sb = await Sandbox.builder("agent")
   .image("python")
   .network((n) =>
-    n
-      .policy(policy)
+    n.policy(policy)
       .denyDomain("ads.example.com")
       .denyDomainSuffix(".tracking.com")
       .maxConnections(50)
@@ -208,8 +229,7 @@ await using sb = await Sandbox.builder("agent")
   )
   .secretEnv("OPENAI_API_KEY", process.env.OPENAI_API_KEY!, "api.openai.com")
   .secret((s) =>
-    s
-      .env("STRIPE_KEY")
+    s.env("STRIPE_KEY")
       .value(process.env.STRIPE_KEY!)
       .allowHost("api.stripe.com")
       .allowHostPattern("*.stripe.com")
@@ -227,8 +247,7 @@ Rootfs patches are applied before boot:
 await using sb = await Sandbox.builder("patched")
   .image("alpine")
   .patch((p) =>
-    p
-      .text("/etc/app/config.json", '{"debug":true}', { mode: 0o644, replace: true })
+    p.text("/etc/app/config.json", '{"debug":true}', { mode: 0o644, replace: true })
       .mkdir("/var/log/app", { mode: 0o755 })
       .append("/etc/profile", "\nexport APP_ENV=dev\n")
       .copyFile("./cert.pem", "/etc/ssl/cert.pem", { replace: true })
@@ -248,7 +267,9 @@ const handle = await Sandbox.get("baseline");
 const snap = await handle.snapshot("after-setup");
 const snap2 = await handle.snapshotTo("/tmp/snaps/after-setup");
 
-await using worker = await Sandbox.builder("worker").fromSnapshot("after-setup").create();
+await using worker = await Sandbox.builder("worker")
+  .fromSnapshot("after-setup")
+  .create();
 
 const allSnaps = await Snapshot.list();
 const snapHandle = await Snapshot.get("after-setup");
