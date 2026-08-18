@@ -36,3 +36,8 @@ vim.opt.smoothscroll = false
 -- own filetype keeps jsonls (trailing-comma warnings) off hujson files
 vim.filetype.add({ extension = { hujson = "hujson" } })
 vim.treesitter.language.register("json5", "hujson")
+
+vim.filetype.add({
+  filename = { Caddyfile = "caddy" },
+  pattern = { ["%.?Caddyfile[%w.]*"] = "caddy" },
+})
