@@ -46,8 +46,40 @@ return {
         },
 
         -- gh_actions_ls — GitHub's Actions language server; only attaches to
-        -- .github/workflows files
-        gh_actions_ls = {},
+        -- .github/workflows files. sessionToken + repos unlock `with:` input
+        -- completion (fetched from each action's action.yml), runs-on labels,
+        -- and environment names — without both, those value providers are off.
+        gh_actions_ls = {
+          before_init = function(params, config)
+            local token = vim.trim(vim.fn.system({ "gh", "auth", "token" }))
+            if vim.v.shell_error ~= 0 then
+              return
+            end
+            local repo_root = vim.fs.root(config.root_dir, ".git")
+            if not repo_root then
+              return
+            end
+            local remote = vim.trim(vim.fn.system({ "git", "-C", repo_root, "remote", "get-url", "origin" }))
+            local owner, name = remote:match("github%.com[:/]([^/]+)/([^/%s]+)")
+            if not owner then
+              return
+            end
+            -- params snapshots init_options before this hook runs, so set the
+            -- request payload directly
+            params.initializationOptions = {
+              sessionToken = token,
+              repos = {
+                {
+                  id = 0,
+                  owner = owner,
+                  name = name:gsub("%.git$", ""),
+                  organizationOwned = false,
+                  workspaceUri = vim.uri_from_fname(repo_root),
+                },
+              },
+            }
+          end,
+        },
 
         -- yamlls — non-Actions yaml only; workflow files belong to
         -- gh_actions_ls, so gate attach via root_dir (same trick as copilot)
