@@ -44,6 +44,21 @@ return {
         jsonls = {
           init_options = { provideFormatter = false },
         },
+
+        -- gh_actions_ls — GitHub's Actions language server; only attaches to
+        -- .github/workflows files
+        gh_actions_ls = {},
+
+        -- yamlls — non-Actions yaml only; workflow files belong to
+        -- gh_actions_ls, so gate attach via root_dir (same trick as copilot)
+        yamlls = {
+          root_dir = function(bufnr, on_dir)
+            local name = vim.api.nvim_buf_get_name(bufnr)
+            if not name:match("%.github/workflows/") then
+              on_dir(vim.fs.root(bufnr, ".git") or vim.uv.cwd())
+            end
+          end,
+        },
       },
     },
   },
