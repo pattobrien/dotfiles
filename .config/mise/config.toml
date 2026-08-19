@@ -111,6 +111,7 @@ age = "latest"
 jj = "latest"
 doctl = "latest"
 pulumi = "latest"
+"github:railwayapp/railpack" = "latest"
 "github:swamp-club/swamp" = "latest"
 
 [hooks]
