@@ -97,7 +97,8 @@ skaffold = "latest"
 "pipx:claude-swap" = { version = "latest", exe = "cswap", uvx_args = "--python 3.13" }
 
 # Docs & misc CLIs
-"github:pattobrien/herdr" = { version = "0.8.0-graphics.4", os = ["macos"] }
+# "github:pattobrien/herdr" = { version = "0.8.0-graphics.4", os = ["macos"] }
+"github:ogulcancelik/herdr" = "0.8.2"
 "github:schpet/linear-cli" = { version = "latest", exe = "linear" }
 "github:modem-dev/hunk" = "latest"
 "github:agavra/tuicr" = "latest"
