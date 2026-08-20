@@ -15,9 +15,28 @@ layouts:
           - title: install
             command: pnpm install
 
+  # shed: the `ccp` alias (opus 5 1m) as the agent, plus an install tab that
+  # closes itself once `pnpm install` exits.
+  - id: shed
+    tabs:
+      - title: agent
+        panes:
+          - title: ccp
+            agent: claude
+            agentArgs:
+              - --model
+              - claude-opus-5[1m]
+      - title: install
+        panes:
+          - title: install
+            command: pnpm install
+            persist: false
+
 # Catch-all: every Herdr/worktrunk worktree lives under ~/.herdr/worktrees,
 # so a path prefix match applies the default layout to all of them.
 # Add `repo:` entries above this one for per-project layouts.
 workspaces:
+  - repo: shed
+    defaultLayout: shed
   - path: ~/.herdr/worktrees
     defaultLayout: default
