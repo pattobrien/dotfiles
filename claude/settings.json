@@ -101,7 +101,7 @@
     "ask": ["Bash(pnpm* add *)", "Bash(brew install *)"],
     "defaultMode": "bypassPermissions"
   },
-  "model": "claude-fable-5[1m]",
+  "model": "opus",
   "enableAllProjectMcpServers": true,
   "hooks": {
     "Notification": [
@@ -269,6 +269,7 @@
       }
     }
   },
+  "outputStyle": "Concise",
   "alwaysThinkingEnabled": true,
   "effortLevel": "xhigh",
   "promptSuggestionEnabled": false,
@@ -292,7 +293,6 @@
   },
   "skipDangerousModePermissionPrompt": true,
   "theme": "dark",
-  "outputStyle": "Concise",
   "editorMode": "vim",
   "preferredNotifChannel": "notifications_disabled",
   "remoteControlAtStartup": true,

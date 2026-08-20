@@ -11,7 +11,11 @@ PULUMI_VERSION_MISE = "3.253.0"
 npm.package_manager = "pnpm"
 pipx.uvx = true
 # native-preview only publishes daily dev builds, all younger than the default min release age
-minimum_release_age_excludes = ["npm:@typescript/native-preview"]
+minimum_release_age_excludes = [
+  "npm:@typescript/native-preview",
+  "claude-code",
+  "github:voidzero-dev/vite-plus",
+]
 experimental = true
 idiomatic_version_file_enable_tools = ["node"]
 
