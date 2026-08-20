@@ -56,7 +56,6 @@
       "Bash(sed *)",
       "Bash(sort *)",
       "Bash(tail *)",
-      "Bash(xargs *)",
       "Bash(wc *)",
       "Bash(yq *)",
       "Bash(brew *)",
@@ -189,7 +188,10 @@
     "codex@openai-codex": true,
     "slack@claude-plugins-official": false,
     "langfuse-observability@langfuse-observability": true,
-    "cloudflare@claude-plugins-official": false
+    "cloudflare@claude-plugins-official": false,
+    "ponytail@ponytail": true,
+    "iso-24495-plain-language@iso-24495": true,
+    "pstack@cursor-plugins": true
   },
   "extraKnownMarketplaces": {
     "claude-notifications-go": {
@@ -246,6 +248,24 @@
         "source": "github",
         "repo": "langfuse/Claude-Observability-Plugin"
       }
+    },
+    "ponytail": {
+      "source": {
+        "source": "github",
+        "repo": "DietrichGebert/ponytail"
+      }
+    },
+    "iso-24495": {
+      "source": {
+        "source": "git",
+        "url": "https://github.com/GaZmagik/iso-24495.git"
+      }
+    },
+    "cursor-plugins": {
+      "source": {
+        "source": "directory",
+        "path": "/Users/patt/dev/cursor/plugins"
+      }
     }
   },
   "alwaysThinkingEnabled": true,
@@ -265,6 +285,7 @@
   },
   "autoUpdatesChannel": "stable",
   "plansDirectory": "./docs/plans",
+  "tui": "default",
   "voice": {
     "enabled": true,
     "mode": "hold"
@@ -275,5 +296,15 @@
   "preferredNotifChannel": "notifications_disabled",
   "remoteControlAtStartup": true,
   "agentPushNotifEnabled": true,
+  "autoMode": {
+    "allow": [
+      "$defaults",
+      "Bash(herdr pane:*)",
+      "Bash(herdr agent read:*)",
+      "Bash(vp:*)",
+      "Bash(op read:*)",
+      "Bash(op item list:*)"
+    ]
+  },
   "voiceEnabled": true
 }
