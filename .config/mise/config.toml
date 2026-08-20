@@ -16,6 +16,7 @@ experimental = true
 idiomatic_version_file_enable_tools = ["node"]
 
 [tools]
+claude-code = "latest"
 lua-language-server = "latest"
 neovim = "latest"
 node = "latest"
