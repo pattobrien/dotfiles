@@ -1,0 +1,7 @@
+# shed opts out of the wildcard's git/shell tabs — workspace-manager owns this
+# repo's worktree layout (agent + install). A repo layout beats `repo = "*"`,
+# and a single command-less tab only renames the root tab, adding nothing.
+repo = "shed"
+
+[[tabs]]
+name = "agent"
