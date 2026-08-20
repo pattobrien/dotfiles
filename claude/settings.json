@@ -99,7 +99,7 @@
     ],
     "deny": ["Bash(npm *)", "Bash(npx *)", "mcp__ide__getDiagnostics"],
     "ask": ["Bash(pnpm* add *)", "Bash(brew install *)"],
-    "defaultMode": "auto"
+    "defaultMode": "bypassPermissions"
   },
   "model": "claude-fable-5[1m]",
   "enableAllProjectMcpServers": true,
