@@ -278,3 +278,8 @@ if [[ ! -s "$_zsh_cache_dir/shed_completions.zsh" ]] && command -v shed &>/dev/n
   shed --completion >| "$_zsh_cache_dir/shed_completions.zsh" 2>/dev/null
 fi
 [[ -s "$_zsh_cache_dir/shed_completions.zsh" ]] && source "$_zsh_cache_dir/shed_completions.zsh"
+
+# herdr-automatic-rename: rename the tab the instant a command starts
+for _f in ${HOME}/.config/herdr/plugins/github/herdr-automatic-rename-*/shell/hook.zsh(N); do
+  source $_f; break
+done
