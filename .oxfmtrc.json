@@ -19,6 +19,7 @@
   "proseWrap": "always",
   "ignorePatterns": [
     ".agents/skills",
+    "claude/skills",
     ".cache",
     ".git",
     ".next",
