@@ -292,6 +292,7 @@
   },
   "skipDangerousModePermissionPrompt": true,
   "theme": "dark",
+  "outputStyle": "Concise",
   "editorMode": "vim",
   "preferredNotifChannel": "notifications_disabled",
   "remoteControlAtStartup": true,

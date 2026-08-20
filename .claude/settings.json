@@ -5,5 +5,5 @@
     "deny": [],
     "additionalDirectories": ["~"]
   },
-  "outputStyle": "default"
+  "outputStyle": "Concise"
 }
