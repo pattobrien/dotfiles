@@ -18,6 +18,7 @@
   },
   "proseWrap": "always",
   "ignorePatterns": [
+    ".agents/skills",
     ".cache",
     ".git",
     ".next",
