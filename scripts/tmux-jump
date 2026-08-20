@@ -3,7 +3,7 @@
 # Shows a tmux status message if no match exists. Picks the first match when
 # multiple windows share a name (since `:=NAME` errors on duplicates).
 # Usage: tmux-jump <window-name>
-TMUX_BIN=/opt/homebrew/bin/tmux
+TMUX_BIN="$HOME/.local/share/mise/shims/tmux"
 
 name="$1"
 

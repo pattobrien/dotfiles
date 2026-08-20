@@ -4,7 +4,7 @@
 # Picks the first match when multiple windows share a name (since `:=NAME`
 # alone errors with "more than one window found" on duplicates).
 # Usage: tmux-jump-or-create <window-name> [command...]
-TMUX_BIN=/opt/homebrew/bin/tmux
+TMUX_BIN="$HOME/.local/share/mise/shims/tmux"
 
 name="$1"
 shift

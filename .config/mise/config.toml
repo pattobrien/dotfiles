@@ -49,6 +49,13 @@ swift = "latest"
 sentry-cli = "latest"
 # yarn = "latest"
 
+# Shell & file CLIs
+fd = "latest"
+fzf = "latest"
+bat = "latest"
+eza = "latest"
+tmux = "latest"
+
 # Language runtimes & SDKs (migrated from asdf .tool-versions)
 bun = "latest"
 deno = "latest"
@@ -71,7 +78,7 @@ maven = "latest"
 cmake = "latest"
 ninja = "latest"
 just = "latest"
-cocoapods = "latest"
+cocoapods = { version = "latest", os = ["macos"] }
 
 # Infra, Kubernetes & cloud
 terraform = "latest"
@@ -90,7 +97,7 @@ skaffold = "latest"
 "pipx:claude-swap" = { version = "latest", exe = "cswap", uvx_args = "--python 3.13" }
 
 # Docs & misc CLIs
-"github:pattobrien/herdr" = "0.8.0-graphics.4"
+"github:pattobrien/herdr" = { version = "0.8.0-graphics.4", os = ["macos"] }
 "github:schpet/linear-cli" = { version = "latest", exe = "linear" }
 "github:modem-dev/hunk" = "latest"
 "github:agavra/tuicr" = "latest"
@@ -100,7 +107,7 @@ pandoc = "latest"
 typst = "latest"
 jq = "latest"
 protoc = "latest"
-"github:steipete/peekaboo" = "latest"
+"github:steipete/peekaboo" = { version = "latest", os = ["macos"] }
 "github:openclaw/gogcli" = { version = "latest", exe = "gog" }
 hcloud = "latest"
 "github:alltuner/mise-completions-sync" = "latest"

@@ -5,7 +5,7 @@
 # decay: recent visits score higher, frequency accumulates). Excludes the
 # current session. Used by tmux Cmd+Shift+R mapping.
 
-TMUX_BIN=/opt/homebrew/bin/tmux
+TMUX_BIN="$HOME/.local/share/mise/shims/tmux"
 log="$HOME/.cache/tmux-frecency.tsv"
 prefix="/Users/pattobrien/dev/gd/meagain__worktrees/"
 

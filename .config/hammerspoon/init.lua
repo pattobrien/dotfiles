@@ -74,7 +74,7 @@ local function getKittyTmuxSession()
                                 local cmdline = table.concat(proc.cmdline or {}, " ")
                                 if cmdline:match("tmux") then
                                     local tmuxOut, tmuxOk = hs.execute(
-                                        "/opt/homebrew/bin/tmux list-clients -F '#{client_pid} #{session_name}' 2>&1"
+                                        os.getenv("HOME") .. "/.local/share/mise/shims/tmux list-clients -F '#{client_pid} #{session_name}' 2>&1"
                                     )
                                     if tmuxOk and tmuxOut then
                                         for line in tmuxOut:gmatch("[^\n]+") do

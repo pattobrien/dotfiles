@@ -8,18 +8,15 @@ brew "zsh-autosuggestions"
 brew "zsh-syntax-highlighting"
 
 # Essential CLI tools
-brew "fd"
-brew "fzf"
-brew "bat"
-brew "eza"
 brew "tree"
-brew "tmux"
 brew "raine/workmux/workmux"
 # Touch ID for sudo inside tmux (see scripts/setup_touchid_sudo.zsh)
 brew "pam-reattach"
 brew "wget"
 brew "curl"
 
+# gh is not in mise: mise reads its token to authenticate GitHub API calls
+# (see zsh/zshrc), so it must exist before the first `mise install`.
 brew "gh"
 brew "dsully/tap/macos-defaults"
 brew "mise"

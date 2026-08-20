@@ -9,8 +9,6 @@ brew "ast-grep"
 brew "autoconf"
 # Official Amazon AWS command-line interface
 brew "awscli"
-# Clone of cat(1) with syntax highlighting and Git integration
-brew "bat"
 # Emacs dependency management
 brew "cask"
 # Formatting tools for C, C++, Obj-C, Java, JavaScript, TypeScript
@@ -23,20 +21,14 @@ brew "curl"
 brew "docker-compose"
 # Command-line tool for DigitalOcean
 brew "doctl"
-# Modern, maintained replacement for ls
-brew "eza"
-# Simple, fast and user-friendly alternative to find
-brew "fd"
 # Command-line tools for fly.io services
 brew "flyctl"
-# Command-line fuzzy finder written in Go
-brew "fzf"
 # GNU compiler collection
 brew "gcc"
-# GitHub command-line tool
-brew "gh"
 # Installer for the general purpose language Haskell
 brew "ghcup"
+# GitHub command-line tool
+brew "gh"
 # Syntax-highlighting pager for git and diff output
 brew "git-delta"
 # GNU Privacy Guard (OpenPGP)
@@ -86,8 +78,6 @@ brew "swift"
 # User interface to the TELNET protocol
 brew "telnet"
 # tflint - migrated to asdf
-# Terminal multiplexer
-brew "tmux"
 # Display directories as trees (with optional color/HTML output)
 brew "tree"
 # Find and verify credentials
