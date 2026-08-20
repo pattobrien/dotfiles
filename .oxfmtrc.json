@@ -20,6 +20,7 @@
   "ignorePatterns": [
     ".agents/skills",
     "claude/skills",
+    ".config/gh/hosts.yml",
     ".cache",
     ".git",
     ".next",
