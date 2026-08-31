@@ -4,17 +4,7 @@ alias gc="git commit -m"
 alias ga="git add ."
 alias gs="git status"
 
-# alias p="pnpm"
-alias pni="pnpm install"
-alias pnd="pnpm dev"
-alias pnf="pnpm format"
-alias pnl="pnpm lint"
-alias pnt="pnpm test"
-alias pnu="pnpm update"
-alias pnx="pnpx"
-
 alias pn="pnpm"
-
 alias pnpx="pnpm dlx"
 
 # alias jq="jq -C"  # always colorize
@@ -30,34 +20,15 @@ alias pnpx="pnpm dlx"
 alias preview="fzf --preview 'bat --color=always {}'" # preview files in fzf
 alias gbr="git branch | fzf | xargs git switch"       # switch to a branch in fzf (also: Ctrl-G Ctrl-B via fzf-git.sh)
 
-function gws() { # git worktree switch via fzf
-  local selected dir
-  selected=$(git worktree list | awk '{name=$1; sub(/.*\//, "", name); print name "\t" $1}' | fzf --reverse --with-nth=1 | cut -f2) && cursor "$selected"
-}
-
-function gwc() { # git worktree checkout existing remote branch via fzf
-  local branch
-  branch=$(git branch -r --format='%(refname:short)' | sed 's|^origin/||' | grep -v '^HEAD$' | fzf --reverse) || return
-  git worktree add --track -b "$branch" .worktrees/"$branch" origin/"$branch"
-}
-
 alias maestro="maestro-runner --platform ios"
 
 alias reload="source ~/.zshrc"
 alias resource="source ~/.zshrc"
 alias rss="source ~/.zshrc"
 
-alias linear-edit="$HOME/dev/pattobrien/dotfiles/scripts/linear-edit"
-
 alias claude="claude --allow-dangerously-skip-permissions"
 alias cc="claude"
 alias ccr="claude --resume"
-alias cx="codex"
-alias cxr="codex resume"
-alias cxs="codex --model gpt-5.6-sol"
-alias cxsr="codex resume --model gpt-5.6-sol"
-alias cxt="codex --model gpt-5.6-terra"
-alias cxtr="codex resume --model gpt-5.6-terra"
 alias ccf="claude --model \"claude-fable-5[1m]\""
 alias ccfr="claude --model \"claude-fable-5[1m]\" --resume"
 alias cco="claude --model \"claude-opus-4-8[1m]\""
@@ -66,6 +37,14 @@ alias ccp="claude --model \"claude-opus-5[1m]\""
 alias ccpr="claude --model \"claude-opus-5[1m]\" --resume"
 alias ccs="claude --model \"claude-sonnet-5[1m]\""
 alias ccsr="claude --model \"claude-sonnet-5[1m]\" --resume"
+
+alias cx="codex"
+alias cxr="codex resume"
+alias cxs="codex --model gpt-5.6-sol"
+alias cxsr="codex resume --model gpt-5.6-sol"
+alias cxt="codex --model gpt-5.6-terra"
+alias cxtr="codex resume --model gpt-5.6-terra"
+
 alias oc="opencode"
 
 alias wm="workmux"
