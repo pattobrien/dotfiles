@@ -31,6 +31,7 @@ vim.opt.list = false
 
 -- Disable smooth scrolling — <C-d>/<C-u> are instant (with zz centering in keymaps)
 vim.opt.smoothscroll = false
+vim.opt.showtabline = 2 -- bufferline auto-toggle is off; snacks dashboard hides/restores this
 -- vim.opt.iskeyword:append("-")
 
 -- own filetype keeps jsonls (trailing-comma warnings) off hujson files

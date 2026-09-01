@@ -33,6 +33,14 @@ return {
     },
   },
 
+  {
+    "akinsho/bufferline.nvim",
+    opts = function(_, opts)
+      opts.options.auto_toggle_bufferline = false
+      opts.highlights = require("catppuccin.special.bufferline").get_theme({ styles = {} })
+    end,
+  },
+
   -- Customize lualine — declutter the statusline
   {
     "nvim-lualine/lualine.nvim",
