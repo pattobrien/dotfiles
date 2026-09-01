@@ -11,6 +11,7 @@
     "DISABLE_AUTOUPDATER": "1",
     "EDITOR": "nvim",
     "ENABLE_LSP_TOOL": "0",
+    "FORCE_HYPERLINK": "1",
     "OTEL_EXPORTER_OTLP_ENDPOINT": "http://barn:4317",
     "OTEL_EXPORTER_OTLP_PROTOCOL": "grpc",
     "OTEL_LOGS_EXPORTER": "otlp",
