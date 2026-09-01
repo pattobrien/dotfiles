@@ -151,8 +151,8 @@ source_type = "git"
 source = "https://github.com/superultrainc/superwhisper-codex.git"
 
 [marketplaces.worktrunk]
-last_updated = "2026-08-19T20:37:55Z"
-last_revision = "a06102fdd5523c51f242e5ee1f1517917f5e7396"
+last_updated = "2026-08-21T01:45:24Z"
+last_revision = "9c37aae5b9af7e5a38306479b2453c919ea7b99c"
 source_type = "git"
 source = "https://github.com/max-sixty/worktrunk.git"
 
