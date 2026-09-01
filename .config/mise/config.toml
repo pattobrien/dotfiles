@@ -17,6 +17,7 @@ minimum_release_age_excludes = [
   "github:voidzero-dev/vite-plus",
 ]
 experimental = true
+use_versions_host = false
 idiomatic_version_file_enable_tools = ["node"]
 
 [tools]
