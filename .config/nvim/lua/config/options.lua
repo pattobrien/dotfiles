@@ -41,3 +41,5 @@ vim.filetype.add({
   filename = { Caddyfile = "caddy" },
   pattern = { ["%.?Caddyfile[%w.]*"] = "caddy" },
 })
+
+vim.opt.guicursor:append("a:block")
