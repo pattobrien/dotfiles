@@ -61,6 +61,10 @@ Common directories/repositories to be aware of:
 
 ## Tools
 
+- Monitor tool: use `timeout_ms: 480000` unless a shorter watch fits; never
+  above `600000`.
+- Use `gh` for anything GitHub-related, not WebSearch.
+
 ### Typical Commands in a Monorepo
 
 ```sh
