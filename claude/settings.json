@@ -97,8 +97,15 @@
       "WebFetch(domain:raw.githubusercontent.com)",
       "WebFetch(domain:unpkg.com)"
     ],
-    "deny": ["Bash(npm *)", "Bash(npx *)", "mcp__ide__getDiagnostics"],
-    "ask": ["Bash(pnpm* add *)", "Bash(brew install *)"],
+    "deny": [
+      "Bash(npm *)",
+      "Bash(npx *)",
+      "mcp__ide__getDiagnostics"
+    ],
+    "ask": [
+      "Bash(pnpm* add *)",
+      "Bash(brew install *)"
+    ],
     "defaultMode": "bypassPermissions"
   },
   "model": "opus",
@@ -307,5 +314,6 @@
       "Bash(op item list:*)"
     ]
   },
-  "voiceEnabled": true
+  "voiceEnabled": true,
+  "feedbackDrafts": "off"
 }
