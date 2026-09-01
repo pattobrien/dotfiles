@@ -85,13 +85,13 @@ restores it.
 - kitty installed (`brew install --cask kitty`) — for the `e2e-kitty` tests and the
   optional kitty emulator backend
 - herdr on `PATH` for the herdr behavior tests
-- the diagnostic-rendering test needs a `tmux-256color` terminfo entry with
-  undercurl capabilities (`Smulx`, `Setulc`, `Su`); macOS's system entry lacks
-  them:
+- the diagnostic-rendering tests need terminfo entries with undercurl
+  capabilities (`Smulx`, `Setulc`, `Su`) for `tmux-256color` (tmux path) and
+  `xterm-256color` (herdr panes); macOS's system entries lack them:
 
 ```bash
-tic -x -o ~/.terminfo \
-  ../../.config/tmux/tmux-256color-undercurl.terminfo
+tic -x -o ~/.terminfo ../../.config/tmux/tmux-256color.terminfo
+tic -x -o ~/.terminfo ../../.config/herdr/xterm-256color.terminfo
 ```
 
-Verify with `infocmp -x tmux-256color | grep -E 'Smulx|Setulc|Su[, ]'`.
+Verify with `infocmp -x <name> | grep -E 'Smulx|Setulc|Su[, ]'`.
