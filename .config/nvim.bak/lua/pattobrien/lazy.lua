@@ -17,7 +17,8 @@ vim.g.mapleader = " " -- Make sure to set `mapleader` before lazy so your mappin
 
 
 if vim.g.vscode == nil then
-    require("lazy").setup({
+    ---@type LazySpec
+    local spec = {
         {
             "folke/which-key.nvim",
             event = 'VeryLazy',
@@ -165,12 +166,14 @@ if vim.g.vscode == nil then
         --   }
         -- }
 
-    }, {})
+    }
+    require("lazy").setup(spec, {})
 end
 
 -- vscode-only plugins
 if vim.g.vscode then
-    require("lazy").setup({
+    ---@type LazySpec
+    local spec = {
         'numToStr/Comment.nvim', -- comment using gc
         {
             "folke/flash.nvim",
@@ -195,5 +198,6 @@ if vim.g.vscode then
                 { "<c-s>", mode = { "c" },           function() require("flash").toggle() end,            desc = "Toggle Flash Search" },
             },
         }
-    })
+    }
+    require("lazy").setup(spec)
 end

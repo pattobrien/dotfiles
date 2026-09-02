@@ -4,7 +4,7 @@
   },
   "workspace": {
     "library": ["${3rd}/luassert/library", "~/.hammerspoon/Spoons/EmmyLua.spoon/annotations"],
-    "ignoreDir": [".config/hammerspoon/Spoons"]
+    "ignoreDir": ["Spoons"]
   },
   "diagnostics": {
     "globals": ["vim"],
