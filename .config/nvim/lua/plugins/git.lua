@@ -9,7 +9,7 @@ return {
   -- review.nvim — tuicr-style local review comments on top of codediff
   {
     "georgeguimaraes/review.nvim",
-    version = "v*",
+    version = "*",
     dependencies = {
       "esmuellert/codediff.nvim",
       "MunifTanjim/nui.nvim",
