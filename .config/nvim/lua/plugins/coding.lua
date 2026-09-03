@@ -17,8 +17,17 @@ return {
         -- evaluated before copilot-native sets the flag, so disable explicitly
         ghost_text = { enabled = false },
       },
+      sources = {
+        providers = {
+          buffer = { enabled = false },
+        },
+      },
     },
   },
+
+  -- LazyVim pulls this in as a blink.cmp dependency. blink's snippets source
+  -- still loads VS Code-style snippets from ~/.config/nvim/snippets/.
+  { "rafamadriz/friendly-snippets", enabled = false },
 
   -- hardtime.nvim — trains you out of bad vim habits (e.g. repeated jjjj)
   -- Disabled during LazyVim migration — uncomment to re-enable.

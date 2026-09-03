@@ -7,9 +7,11 @@
 --   clipboard="unnamedplus", splitright, splitbelow, undofile, inccommand="nosplit",
 --   showmode=false, laststatus=3, smoothscroll, shiftround, confirm, autowrite
 
--- TypeScript LSP: "vtsls" (default), "ts_ls", or "tsgo"
--- tsgo is Microsoft's Go-based TS type checker — much faster, but still preview.
--- Install: npm install -g @typescript/native-preview
+-- TypeScript LSP: "vtsls" (default) or "tsgo"
+-- TODO: migrate "tsgo" -> "tsc" (TS 7 stable; lspconfig/mason deprecated tsgo).
+-- Blocked on LazyVim PR: https://github.com/LazyVim/LazyVim/pull/7233
+-- Then: set this to "tsc", rename `servers.tsgo` in plugins/lsp.lua to
+-- `servers.tsc`, and swap the Mason `tsgo` package for `tsc`.
 vim.g.lazyvim_ts_lsp = "tsgo"
 
 -- Disable eslint as a formatter — oxfmt is the formatter, eslint is diagnostics-only.
