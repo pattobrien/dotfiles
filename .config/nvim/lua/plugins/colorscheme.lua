@@ -5,6 +5,11 @@ return {
     name = "catppuccin",
     opts = {
       flavour = "mocha",
+      custom_highlights = function(C)
+        return {
+          AtlasTextMuted = { fg = C.subtext0 },
+        }
+      end,
     },
     config = function(_, opts)
       require("catppuccin").setup(opts)

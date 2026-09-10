@@ -6,23 +6,69 @@ return {
     opts = {},
   },
 
-  -- review.nvim — tuicr-style local review comments on top of codediff
+  -- atlas replaces the snacks gh_issue/gh_pr pickers on the same keys
   {
-    "georgeguimaraes/review.nvim",
-    version = "*",
-    dependencies = {
-      "esmuellert/codediff.nvim",
-      "MunifTanjim/nui.nvim",
-    },
-    cmd = "Review",
+    "folke/snacks.nvim",
     keys = {
-      { "<leader>gr", "<cmd>Review<cr>", desc = "Review (working tree)" },
-      { "<leader>gR", "<cmd>Review commits<cr>", desc = "Review (pick commits)" },
+      { "<leader>gi", false },
+      { "<leader>gI", false },
+      { "<leader>gp", false },
+      { "<leader>gP", false },
+    },
+  },
+
+  -- atlas — GitHub PR review (threads, suggestions, viewed state) in AtlasDiff
+  {
+    "emrearmagan/atlas.nvim",
+    cmd = { "Atlas", "AtlasDiff", "AtlasPr" },
+    keys = {
+      { "<leader>gp", "<cmd>AtlasPr<cr>", desc = "Review PR (current branch)" },
+      { "<leader>gP", "<cmd>Atlas pulls github<cr>", desc = "Pull Requests (Atlas)" },
+      { "<leader>gi", "<cmd>Atlas issues github<cr>", desc = "Issues (Atlas)" },
+    },
+    opts = {
+      providers = { github = {} },
+      pulls = {
+        repo_config = { paths = { ["pattobrien/*"] = "~/dev/pattobrien/*" } },
+        diff = {
+          comment_display = "virtual_text",
+          explorer = { preview = true },
+        },
+      },
     },
     config = function(_, opts)
-      require("review").setup(opts)
-      -- disable the hardcoded 7-day session expiry (storage.lua deletes stale JSON on load)
-      require("review.storage").cleanup_expired = function() end
+      require("atlas").setup(opts)
+      vim.api.nvim_create_autocmd("User", {
+        pattern = "AtlasDiffOpened",
+        callback = function(ev)
+          vim.t[ev.data.tabpage].atlas_diff = true
+          vim.o.showtabline = 0
+        end,
+      })
+      vim.api.nvim_create_autocmd("TabLeave", {
+        callback = function()
+          if not vim.t.atlas_diff then
+            vim.g.atlas_saved_showtabline = vim.o.showtabline
+          end
+        end,
+      })
+      vim.api.nvim_create_autocmd("TabEnter", {
+        callback = function()
+          vim.o.showtabline = vim.t.atlas_diff and 0 or vim.g.atlas_saved_showtabline or 2
+        end,
+      })
+      vim.api.nvim_create_user_command("AtlasPr", function(cmd)
+        local argv = { "gh", "pr", "view", "--json", "url", "--jq", ".url" }
+        if cmd.args ~= "" then
+          table.insert(argv, 4, cmd.args)
+        end
+        local result = vim.system(argv, { text = true }):wait()
+        if result.code ~= 0 then
+          vim.notify(vim.trim(result.stderr), vim.log.levels.ERROR)
+          return
+        end
+        vim.cmd.Atlas("review", vim.trim(result.stdout))
+      end, { nargs = "?", desc = "Open the PR diff for a branch, PR number, or URL (default: current branch)" })
     end,
   },
 

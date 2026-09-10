@@ -58,6 +58,8 @@ return {
         return table.concat(names, ", ")
       end
 
+      table.insert(opts.options.disabled_filetypes.statusline, "atlas")
+
       opts.sections = {
         lualine_a = { "mode" },
         lualine_b = { "branch" },
