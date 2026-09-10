@@ -1,4 +1,4 @@
-model = "gpt-5.6-sol"
+model = "gpt-6-astra"
 model_reasoning_effort = "high"
 personality = "pragmatic"
 sandbox_mode = "danger-full-access"
@@ -59,6 +59,37 @@ fast_default_opt_out = true
 [notice.model_migrations]
 "gpt-5.3-codex" = "gpt-5.4"
 
+[apps.connector_openai_hotline]
+enabled = false
+
+# Box
+[apps.asdk_app_695bfc98071c8191bac7bc479aa27de7]
+enabled = false
+
+# Finances
+[apps.connector_693864f100e4819093e6ed9b651239f1]
+enabled = false
+
+# Neon
+[apps.asdk_app_69e0086d87088191a3edc052fa50c29f]
+enabled = false
+
+# Figma
+[apps.connector_68df038e0ba48191908c8434991bbac2]
+enabled = false
+
+# Vercel
+[apps.connector_690a90ec05c881918afb6a55dc9bbaa1]
+enabled = false
+
+# Slack
+[apps.asdk_app_69a1d78e929881919bba0dbda1f6436d]
+enabled = false
+
+# Sites
+[apps.connector_20205bf7d4e99a89d7154bb849718324]
+enabled = false
+
 [features]
 browser_use = true
 browser_use_external = true
@@ -107,28 +138,20 @@ NODE_REPL_NODE_MODULE_DIRS = "/Applications/ChatGPT.app/Contents/Resources/cua_n
 NODE_REPL_NODE_PATH = "/Applications/ChatGPT.app/Contents/Resources/cua_node/bin/node"
 NODE_REPL_TRUSTED_CODE_PATHS = "/Users/patt/.codex:/Applications/ChatGPT.app/Contents/Resources/cua_node/lib/node_modules"
 CODEX_HOME = "/Users/patt/.codex"
-NODE_REPL_TRUSTED_BROWSER_CLIENT_SHA256S = "e7fc907079d6797973cb63f97d2562c965aad8d33f52fb726005bf6702f30afc"
 BROWSER_USE_AVAILABLE_BACKENDS = "chrome,iab"
-NODE_REPL_INSTRUCTIONS_USE_CASE_BROWSER = "Control the in-app browser in conjunction with the Browser Plugin."
-NODE_REPL_INSTRUCTIONS_USE_CASE_CHROME = "Control the Chrome browser in conjunction with the Chrome Plugin. Prefer this method of controlling Chrome over alternatives (such as Computer Use) unless the user explicitly mentions an alternative."
-NODE_REPL_INSTRUCTIONS_USE_CASE_COMPUTER_USE = "Control desktop apps on macOS through Computer Use."
+BROWSER_USE_TINYSKY_ENABLED = "1"
+NODE_REPL_INSTRUCTIONS_USE_CASE_BROWSER = ""
+NODE_REPL_INSTRUCTIONS_USE_CASE_CHROME = ""
 BROWSER_USE_CODEX_APP_BUILD_FLAVOR = "prod"
-BROWSER_USE_CODEX_APP_VERSION = "26.803.81509"
+BROWSER_USE_CODEX_APP_VERSION = "26.903.61454"
+NODE_REPL_TRUSTED_SERVICES = '{"browser":"/Users/patt/.codex/plugins/cache/openai-bundled/browser/26.903.61454/scripts/browser-service.mjs"}'
 CODEX_CLI_PATH = "/Applications/ChatGPT.app/Contents/Resources/codex"
 
-[mcp_servers.computer-use]
-command = "./Codex Computer Use.app/Contents/SharedSupport/SkyComputerUseClient.app/Contents/MacOS/SkyComputerUseClient"
-args = ["mcp"]
-cwd = "."
-enabled = false
-
 [marketplaces.openai-bundled]
-last_updated = "2026-08-13T08:56:00Z"
 source_type = "local"
 source = "/Users/patt/.codex/.tmp/bundled-marketplaces/openai-bundled"
 
 [marketplaces.openai-primary-runtime]
-last_updated = "2026-08-13T08:56:29Z"
 source_type = "local"
 source = "/Users/patt/.cache/codex-runtimes/codex-primary-runtime/plugins/openai-primary-runtime"
 
@@ -226,7 +249,7 @@ enabled = true
 enabled = true
 
 [plugins."sites@openai-bundled"]
-enabled = true
+enabled = false
 
 [plugins."browser@openai-bundled"]
 enabled = true
@@ -255,7 +278,10 @@ enabled = false
 [plugins."ponytail@ponytail"]
 enabled = true
 
-[plugins."iso-24495-plain-language@iso-24495"]
+[plugins."codex-app-tools@openai-bundled"]
+enabled = true
+
+[plugins."unified-computer-use@openai-bundled"]
 enabled = true
 
 [tui]
@@ -764,6 +790,28 @@ skill = "#b06dff"
 global = "cursor"
 
 [shell_environment_policy.set]
-BROWSER_USE_AVAILABLE_BACKENDS = "chrome,iab"
 NODE_REPL_TRUSTED_BROWSER_CLIENT_SHA256S = "e7fc907079d6797973cb63f97d2562c965aad8d33f52fb726005bf6702f30afc"
-NODE_REPL_TRUSTED_CODE_PATHS = "/Users/patt/.codex:/Applications/ChatGPT.app/Contents/Resources/cua_node/lib/node_modules"
+
+[[skills.config]]
+name = "ponytail:ponytail-audit"
+enabled = false
+
+[[skills.config]]
+name = "ponytail:ponytail-review"
+enabled = false
+
+[[skills.config]]
+name = "ponytail:ponytail-debt"
+enabled = false
+
+[[skills.config]]
+name = "ponytail:ponytail-gain"
+enabled = false
+
+[[skills.config]]
+name = "ponytail:ponytail-help"
+enabled = false
+
+[[skills.config]]
+name = "tailscale"
+enabled = false
