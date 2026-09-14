@@ -1,0 +1,4 @@
+name = "Open PR Diff"
+description = "Focus the workspace's diff tab, or open the current branch's PR in nvim (atlas)"
+type = "command"
+command = "\"{{.Home}}/.local/share/mise/shims/bun\" \"{{.Home}}/dev/pattobrien/herdr-ensure-tab/bin/ensure-tab.ts\" diff --workspace {{.WorkspaceId}}"

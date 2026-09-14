@@ -15,3 +15,8 @@ label = "dev"
 [[tabs.dev.panes]]
 command = "pnpm dev"
 persist = true
+
+[tabs.diff]
+match = []
+label = "diff"
+command = "nvim +AtlasPr"

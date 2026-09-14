@@ -223,6 +223,12 @@ type = "shell"
 command = "\"$HOME/.local/share/mise/shims/bun\" \"$HOME/dev/pattobrien/herdr-ensure-tab/bin/ensure-tab.ts\" dev"
 description = "pnpm dev: open or create" # Cmd+L
 
+[[keys.command]]
+key = "shift+f12"
+type = "shell"
+command = "\"$HOME/.local/share/mise/shims/bun\" \"$HOME/dev/pattobrien/herdr-ensure-tab/bin/ensure-tab.ts\" diff"
+description = "pr diff (nvim atlas): open or create" # Cmd+D
+
 # Workspace jumps on the Cmd+Shift relay (Cmd+Shift+; / D / N → ctrl+F5/F6/F7;
 # same roles as the old tmux switch-client bindings). `recent` toggles to the
 # last non-dotfiles/notes workspace, tracked by the script itself since herdr
@@ -266,12 +272,6 @@ description = "worktree: menu"
 
 # Hunk diff plugin (edmundmiller/herdr-plugin-hunk): review working-tree
 # changes in a hunk TUI split. Staged/branch variants are in the palettes.
-[[keys.command]]
-key = "shift+f12"
-type = "plugin_action"
-command = "hunk.diff.worktree-split"
-description = "hunk: diff worktree" # Cmd+D
-
 [[keys.command]]
 key = "prefix+d"
 type = "plugin_action"
