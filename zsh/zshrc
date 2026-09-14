@@ -222,6 +222,9 @@ if [[ ! -s "$_zsh_cache_dir/tv_init.zsh" ]] && command -v tv &>/dev/null; then
 fi
 [[ -s "$_zsh_cache_dir/tv_init.zsh" ]] && source "$_zsh_cache_dir/tv_init.zsh"
 
+# zoxide: `z`/`zi` frecency cd. Feeds herdr-navigator and the tv zoxide channel.
+eval "$(zoxide init zsh)"
+
 # Cmd+K (via Ghostty F12 escape sequence): clear screen + scrollback when not in tmux
 # Inside tmux this is handled by tmux's F12 binding in .tmux.conf
 if [[ -z "$TMUX" ]]; then

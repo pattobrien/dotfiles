@@ -62,6 +62,7 @@ fd = "latest"
 fzf = "latest"
 bat = "latest"
 eza = "latest"
+zoxide = "latest"
 tmux = "latest"
 
 # Language runtimes & SDKs (migrated from asdf .tool-versions)
@@ -122,7 +123,7 @@ hcloud = "latest"
 "github:alltuner/mise-completions-sync" = "latest"
 sops = "latest"
 age = "latest"
-"ubi:Mic92/ssh-to-age" = "latest"
+"github:Mic92/ssh-to-age" = { version = "latest", rename_exe = "ssh-to-age" }
 "github:inngest/inngest" = "latest"
 jj = "latest"
 doctl = "latest"
