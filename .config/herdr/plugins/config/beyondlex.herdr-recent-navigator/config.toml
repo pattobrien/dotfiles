@@ -1,0 +1,10 @@
+theme = "dark"
+
+[keybindings]
+move_up = ["Up", "C-k", "C-p"]
+move_down = ["Down", "C-j", "C-n"]
+next_category = ["Tab", "C-l"]
+previous_category = ["S-Tab", "C-h"]
+
+[navigator]
+tabs = ["workspaces", "agents"]

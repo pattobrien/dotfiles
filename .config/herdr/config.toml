@@ -167,6 +167,20 @@ type = "plugin_action"
 command = "worktrunk.open"
 description = "worktree: switch/create"
 
+# Recent navigator (beyondlex/herdr-recent-navigator): MRU popup over
+# workspaces/tabs/panes/agents; C-j/C-k and C-n/C-p configured in its config.toml.
+[[keys.command]]
+key = "prefix+y"
+type = "plugin_action"
+command = "beyondlex.herdr-recent-navigator.focus-workspaces"
+description = "recent: workspaces"
+
+[[keys.command]]
+key = "prefix+a"
+type = "plugin_action"
+command = "beyondlex.herdr-recent-navigator.focus-agents"
+description = "recent: agents"
+
 # Navigator plugin: one fuzzy picker for workspaces/agents/projects/dirs (trial)
 [[keys.command]]
 key = "prefix+t"
