@@ -35,6 +35,7 @@ return {
     "folke/snacks.nvim",
     keys = {
       { "<leader>ff", LazyVim.pick("smart"), desc = "Find Files (Root Dir)" },
+      { "<leader>fz", function() Snacks.picker.zoxide() end, desc = "Zoxide Dirs" },
     },
     opts = {
       picker = {
