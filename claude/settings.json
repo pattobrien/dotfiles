@@ -104,7 +104,6 @@
       "mcp__ide__getDiagnostics"
     ],
     "ask": [
-      "Bash(pnpm* add *)",
       "Bash(brew install *)"
     ],
     "defaultMode": "bypassPermissions"
