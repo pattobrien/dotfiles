@@ -40,7 +40,7 @@ keybind = super+a=text:\x1b[15~
 keybind = super+n=text:\x1b[20;2~
 # Cmd+S      → User1    → shell window
 keybind = super+s=text:\x1b[26~
-# Cmd+D      → shift+F12 → hunk diff (herdr-only)
+# Cmd+D      → shift+F12 → nvim PR diff tab (herdr-only)
 keybind = super+d=text:\x1b[24;2~
 # --- Cmd+Shift+* → session/workspace navigation (across-session namespace) ---
 # Cmd+Shift+;  → ctrl+F5 → last project workspace / tmux last session
