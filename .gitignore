@@ -16,6 +16,7 @@
 .dart_tool/**/*
 !.config
 claude/**/*.local.*
+claude/skills/synced/
 .claude/worktrees/
 
 # Build artifacts

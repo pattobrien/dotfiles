@@ -1,10 +1,9 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-settings.json",
-  "bashEditDiffEnabled": false,
   "cleanupPeriodDays": 365,
   "env": {
     "CLAUDE_CODE_DISABLE_FEEDBACK_SURVEY": "1",
-    "CLAUDE_CODE_ENABLE_CFC": "0",
+    "CLAUDE_CODE_ENABLE_CFC": "1",
     "CLAUDE_CODE_ENABLE_TASKS": "1",
     "CLAUDE_CODE_ENABLE_TELEMETRY": "1",
     "CLAUDE_CODE_ENHANCED_TELEMETRY_BETA": "1",
@@ -14,7 +13,7 @@
     "EDITOR": "nvim",
     "ENABLE_LSP_TOOL": "0",
     "FORCE_HYPERLINK": "1",
-    "OTEL_EXPORTER_OTLP_ENDPOINT": "http://barn:4317",
+    "OTEL_EXPORTER_OTLP_ENDPOINT": "http://garden:4317",
     "OTEL_EXPORTER_OTLP_PROTOCOL": "grpc",
     "OTEL_LOGS_EXPORTER": "otlp",
     "OTEL_LOG_ASSISTANT_RESPONSES": "1",
@@ -170,6 +169,7 @@
   "worktree": {
     "baseRef": "fresh"
   },
+  "bashEditDiffEnabled": false,
   "statusLine": {
     "type": "command",
     "command": "bash -c 'input=$(cat); model=$(echo \"$input\" | jq -r \".model.display_name\"); total_in=$(echo \"$input\" | jq -r \".context_window.total_input_tokens\"); total_out=$(echo \"$input\" | jq -r \".context_window.total_output_tokens\"); total=$((total_in + total_out)); if [ $total -ge 1000000 ]; then tokens=$(printf \"%.1fM\" $(echo \"scale=1; $total / 1000000\" | bc)); elif [ $total -ge 1000 ]; then tokens=$(printf \"%.1fK\" $(echo \"scale=1; $total / 1000\" | bc)); else tokens=\"$total\"; fi; usage=$(echo \"$input\" | jq \".context_window.current_usage\"); if [ \"$usage\" != \"null\" ]; then current=$(echo \"$usage\" | jq \".input_tokens + .cache_creation_input_tokens + .cache_read_input_tokens\"); size=$(echo \"$input\" | jq \".context_window.context_window_size\"); pct=$((current * 100 / size)); context=\"${pct}%\"; else context=\"0%\"; fi; printf \"\\033[36m%s\\033[0m | \\033[33m%s tokens\\033[0m | \\033[35m%s context\\033[0m\" \"$model\" \"$tokens\" \"$context\"'"
@@ -303,7 +303,7 @@
     "langfuse-observability@langfuse-observability": {
       "options": {
         "LANGFUSE_PUBLIC_KEY": "pk-lf-4b770f0f-f02c-483e-8d03-30458e273f44",
-        "LANGFUSE_BASE_URL": "https://langfuse.finedesigns.io",
+        "LANGFUSE_BASE_URL": "https://langfuse.garden.finedesigns.io",
         "LANGFUSE_USER_ID": "patt",
         "CC_LANGFUSE_DEBUG": true
       }
