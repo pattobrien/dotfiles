@@ -57,6 +57,7 @@ return {
         sources = {
           explorer = {
             hidden = true,
+            layout = { preset = "sidebar", preview = "main" },
           },
           files = {
             hidden = true,
