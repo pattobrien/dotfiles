@@ -293,3 +293,6 @@ fi
 for _f in ${HOME}/.config/herdr/plugins/github/herdr-automatic-rename-*/shell/hook.zsh(N); do
   source $_f; break
 done
+
+# Vite+ bin (https://viteplus.dev)
+. "/Users/patt/.vite-plus/env"
