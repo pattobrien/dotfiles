@@ -202,7 +202,9 @@
     "ponytail@ponytail": true,
     "iso-24495-plain-language@iso-24495": true,
     "pstack@cursor-plugins": true,
-    "show-me@skills": true
+    "show-me@skills": true,
+    "typesafe@typesafe-ai": true,
+    "fast-jev-compaction@fast-jev-compaction": true
   },
   "extraKnownMarketplaces": {
     "claude-notifications-go": {
@@ -282,6 +284,18 @@
       "source": {
         "source": "github",
         "repo": "humanlayer/skills"
+      }
+    },
+    "typesafe-ai": {
+      "source": {
+        "source": "github",
+        "repo": "typesafe-ai/skills"
+      }
+    },
+    "fast-jev-compaction": {
+      "source": {
+        "source": "github",
+        "repo": "tamaratran/fast-jev-compaction"
       }
     }
   },
