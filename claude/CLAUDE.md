@@ -67,17 +67,15 @@ Common directories/repositories to be aware of:
 
 ### Typical Commands in a Monorepo
 
+Vite+ (`vp`) conventions:
+
 ```sh
 pnpm install
 pnpm dev
 pnpm build
-pnpm test # or `pnpm test:watch`
-pnpm lint
-pnpm lint:fix
-pnpm format
-pnpm format:check
-pnpm typecheck # or `pnpm typecheck:watch`
-pnpm validate # combines `lint`, `typecheck`, and `test`
+pnpm test
+pnpm check # `vp check`: format, lint and typecheck. `vp check --fix` to fix
+pnpm ready # root only: `vp check && vp run -r test && vp run -r build`
 ```
 
 ### API Keys
