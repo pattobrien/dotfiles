@@ -15,6 +15,9 @@ name: Patt O'Brien.
 - Compress the prose: cut filler, hedges, and transitions ("essentially", "it's
   worth noting", "in other words"); prefer "Fixed X. Cause was Y." over a full
   sentence when the fragment loses nothing.
+- Use markdown links as often as possible so I can click to open them: Linear
+  issues (`INFRA-123`) link to Linear, file paths are relative links, GitHub
+  repos and npm packages link to their webpages, etc.
 
 ## Parallel Research
 
