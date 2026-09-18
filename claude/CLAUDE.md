@@ -15,9 +15,17 @@ name: Patt O'Brien.
 - Compress the prose: cut filler, hedges, and transitions ("essentially", "it's
   worth noting", "in other words"); prefer "Fixed X. Cause was Y." over a full
   sentence when the fragment loses nothing.
-- Use markdown links as often as possible so I can click to open them: Linear
-  issues (`INFRA-123`) link to Linear, file paths link to local file paths, GitHub
-  repos and npm packages link to their webpages, etc.
+- Always write a reference as a markdown link, so I can click it in chat:
+  - Linear issue: `[INFRA-123](https://linear.app/finedesigns/issue/INFRA-123)`
+  - GitHub repo, PR or issue:
+    `[owner/repo#12](https://github.com/owner/repo/pull/12)`
+  - npm package: `[pathe](https://www.npmjs.com/package/pathe)`
+  - docs or any other web page: link the page itself
+  - local file: the absolute path as the target, a short path as the text, and
+    the position as a fragment:
+    - line: `[src/a.ts:42](/abs/path/src/a.ts#L42)`
+    - line and column: `[src/a.ts:42:7](/abs/path/src/a.ts#L42C7)`
+    - line range: `[src/a.ts:42-50](/abs/path/src/a.ts#L42-L50)`
 
 ## Parallel Research
 
