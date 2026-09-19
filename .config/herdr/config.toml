@@ -197,15 +197,11 @@ type = "plugin_action"
 command = "cloudmanic.herdr-plus.projects"
 description = "herdr-plus: projects"
 
-# Palette plugin (ramarivera/herdr-palette): Raycast-style overlay over
-# keybindings, plugin actions, custom commands, and workspaces/tabs/agents.
-# Displaced the herdr-plus quick-actions popup from this slot; quick actions
-# remain reachable inside the palettes themselves.
 [[keys.command]]
 key = "shift+f11"
 type = "plugin_action"
-command = "ramarivera.palette.open"
-description = "palette: all actions" # Cmd+Shift+P
+command = "cloudmanic.herdr-plus.quick-actions"
+description = "herdr-plus: quick actions (Cmd+Shift+P)"
 
 # Command palette (JanTvrdik/herdr-command-palette): fzf popup over every
 # plugin action.
