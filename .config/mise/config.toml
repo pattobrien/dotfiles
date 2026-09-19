@@ -6,6 +6,7 @@
 # repo the hook's go.mod-derived values override these.
 GO_VERSION_MISE = "1.25.11"
 PULUMI_VERSION_MISE = "3.253.0"
+AI_GATEWAY_API_KEY = '{{ exec(command="security find-generic-password -s ai-gateway.vercel.sh -a pattobrien -w 2>/dev/null || true") }}'
 
 [settings]
 npm.package_manager = "pnpm"
@@ -28,6 +29,7 @@ lua-language-server = "latest"
 neovim = "latest"
 node = "latest"
 "npm:agent-browser" = "latest"
+"npm:ai-cli" = { version = "latest", exe = "ai" }
 "npm:@ecrindigital/facet-cli" = "latest"
 "npm:@kitlangton/ghui" = "latest"
 "npm:@kitlangton/stack" = "latest"
@@ -130,6 +132,7 @@ doctl = "latest"
 pulumi = "latest"
 "github:railwayapp/railpack" = "latest"
 "github:swamp-club/swamp" = "latest"
+"npm:acpx" = "latest"
 
 [hooks]
 postinstall = "misecompsync --new-only --shell zsh"
@@ -137,6 +140,10 @@ postinstall = "misecompsync --new-only --shell zsh"
 [tasks.dotfiles]
 description = "Navigate to dotfiles"
 run = "cd ~/dev/pattobrien/dotfiles && exec $SHELL"
+
+[tasks.seed-ai-gateway-key]
+description = "Seed the Vercel AI Gateway key from 1Password into the macOS keychain"
+run = "op read 'op://FineDesigns/Vercel API Token - pattobrien/credential' | xargs security add-generic-password -U -s ai-gateway.vercel.sh -a pattobrien -w"
 
 [tasks."patch:vfox-pulumi"]
 description = "Apply dotfiles/patches to the vfox-pulumi mise plugin (re-run after `mise plugins update`)"
