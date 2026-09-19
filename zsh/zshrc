@@ -268,8 +268,9 @@ export PATH="$BUN_INSTALL/bin:$PATH"
 
 export LINEAR_ISSUE_SORT="priority"
 export LINEAR_VCS="git"
-export LINEAR_TEAM_ID="ENG"
-export LINEAR_WORKSPACE="getdots"
+export LINEAR_WORKSPACE="finedesigns"
+# repo .env files hold op:// references, which the CLI would read as the API key
+export LINEAR_IGNORE_ENV_FILE=1
 
 
 # maestro-runner
