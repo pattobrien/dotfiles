@@ -16,6 +16,7 @@ name: Patt O'Brien.
   worth noting", "in other words"); prefer "Fixed X. Cause was Y." over a full
   sentence when the fragment loses nothing.
 - Always write a reference as a markdown link, so I can click it in chat:
+  - any web url: `[github.com/settings/apps](https://github.com/settings/apps)`
   - Linear issue: `[INFRA-123](https://linear.app/finedesigns/issue/INFRA-123)`
   - GitHub repo, PR or issue:
     `[owner/repo#12](https://github.com/owner/repo/pull/12)`
