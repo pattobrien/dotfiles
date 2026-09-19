@@ -1,4 +1,4 @@
-name = "Open PR"
+name = "Web: Open PR"
 description = "Pick an open PR from this repo"
 type = "select"
 options_command = '''gh pr list --json number,title,author --jq '.[] | "\(.number)\t\(.title) · @\(.author.login)"' '''

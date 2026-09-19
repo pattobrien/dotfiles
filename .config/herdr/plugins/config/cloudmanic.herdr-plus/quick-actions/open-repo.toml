@@ -5,7 +5,7 @@
 # the command). If `value` is omitted, the label is used as the value too. An
 # optional `description` shows dim text next to the label.
 
-name = "Open Repo on GitHub"
+name = "Web: Open Repo"
 description = "Pick one of our repos and open it"
 type = "select"
 command = "{{opener}} https://github.com/cloudmanic/{{.Value}}"

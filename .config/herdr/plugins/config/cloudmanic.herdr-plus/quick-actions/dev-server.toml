@@ -1,4 +1,4 @@
-name = "Dev Server"
+name = "Herdr: Dev Server"
 description = "Focus the workspace's pnpm dev pane, or start one at the space cwd"
 type = "command"
 command = "bun \"{{.Home}}/dev/pattobrien/herdr-ensure-tab/bin/ensure-tab.ts\" dev --workspace {{.WorkspaceId}}"

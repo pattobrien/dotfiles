@@ -4,7 +4,7 @@
 #
 # The optional [form] table customizes the field's prompt and placeholder.
 
-name = "Search Google"
+name = "Web: Search Google"
 description = "Type a query and open the results"
 type = "form"
 command = "{{opener}} 'https://www.google.com/search?q={{.Value | urlquery}}'"
