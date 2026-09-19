@@ -10,7 +10,12 @@
 [init]
 	defaultBranch = main
 [core]
-	editor = code --wait
+	editor = nvim
+  pager = delta
+[interactive]
+	diffFilter = delta --color-only
+[delta]
+	features = line-numbers decorations
 [http]
 	postBuffer = 100000000
 # Route all GitHub traffic over HTTPS, rewriting any ssh-style git@github.com:
@@ -32,5 +37,9 @@
 	program = /Applications/1Password.app/Contents/MacOS/op-ssh-sign
 [commit]
 	gpgsign = true
-[alias]
-	wt = "!f() { root=\"$(dirname \"$(git rev-parse --path-format=absolute --git-common-dir)\")\"; git fetch origin && git worktree add --no-track \"$root/.worktrees/$1\" -b \"patt/$1\" origin/main; }; f"
+[tag]
+	gpgsign = true
+
+[rerere]
+	enabled = true
+	autoupdate = true
