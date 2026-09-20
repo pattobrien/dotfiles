@@ -4,8 +4,6 @@
 # Picks the first match when multiple windows share a name (since `:=NAME`
 # alone errors with "more than one window found" on duplicates).
 # Usage: tmux-jump-or-create <window-name> [command...]
-TMUX_BIN="$HOME/.local/share/mise/shims/tmux"
-
 name="$1"
 shift
 
@@ -14,13 +12,13 @@ if [ -z "$name" ]; then
   exit 1
 fi
 
-target=$($TMUX_BIN list-windows -F '#{window_id}|#{window_name}' \
+target=$(tmux list-windows -F '#{window_id}|#{window_name}' \
   | awk -F'|' -v n="$name" '$2 == n {print $1; exit}')
 
 if [ -n "$target" ]; then
-  $TMUX_BIN select-window -t "$target"
+  tmux select-window -t "$target"
 elif [ "$#" -gt 0 ]; then
-  $TMUX_BIN new-window -n "$name" "$*"
+  tmux new-window -n "$name" "$*"
 else
-  $TMUX_BIN new-window -n "$name"
+  tmux new-window -n "$name"
 fi
