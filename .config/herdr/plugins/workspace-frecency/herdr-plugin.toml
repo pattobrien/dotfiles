@@ -1,0 +1,14 @@
+id = "workspace-frecency"
+name = "Workspace Frecency"
+version = "0.1.0"
+min_herdr_version = "0.9.0"
+description = "Record each workspace focus in a fre store, read by the Cmd+O picker and the Cmd+Shift+; jump."
+platforms = ["macos", "linux"]
+
+[[events]]
+on = "workspace.focused"
+command = ["sh", "-c", '''
+id=$(printf '%s' "$HERDR_PLUGIN_EVENT_JSON" | jq -r '.data.workspace_id')
+label=$("$HERDR_BIN_PATH" workspace get "$id" | jq -r '.result.workspace.label')
+fre --store_name herdr-workspaces.json --add "$label"
+''']

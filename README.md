@@ -84,8 +84,8 @@ dumps for Raycast, Shottr, superwhisper, FluidVoice, and eul. Apply each with:
 macos-defaults apply ~/.config/macos-defaults/exports/<app>.yaml
 ```
 
-Then restart the app (or log out/in). Also copy the FluidVoice custom
-vocabulary into place:
+Then restart the app (or log out/in). Also copy the FluidVoice custom vocabulary
+into place:
 
 ```sh
 mkdir -p ~/Library/Application\ Support/FluidVoice
@@ -93,8 +93,8 @@ cp ~/dev/pattobrien/dotfiles/.config/fluidvoice/parakeet_custom_vocabulary.json 
   ~/Library/Application\ Support/FluidVoice/
 ```
 
-A full snapshot of everything that was installed on the old machine (beyond
-the curated `personal`/`work` profiles) is in `brew/all/Brewfile`:
+A full snapshot of everything that was installed on the old machine (beyond the
+curated `personal`/`work` profiles) is in `brew/all/Brewfile`:
 
 ```sh
 brew bundle --file=~/dev/pattobrien/dotfiles/brew/all/Brewfile
@@ -105,19 +105,19 @@ brew bundle --file=~/dev/pattobrien/dotfiles/brew/all/Brewfile
 holds anything too sensitive or personal for this public repo:
 
 - `raycast/*.rayconfig` — the official Raycast export (extensions, snippets,
-  quicklinks, hotkeys, extension tokens). Import via Raycast Settings →
-  Advanced → Import. Prefer this over the raycast.yaml defaults dump.
-- `shottr/shottr-full.yaml` — unredacted Shottr defaults **including the
-  license key** (`kc-license`), which is stripped from the public export.
-  Apply this one instead of `exports/shottr.yaml` on a trusted machine.
+  quicklinks, hotkeys, extension tokens). Import via Raycast Settings → Advanced
+  → Import. Prefer this over the raycast.yaml defaults dump.
+- `shottr/shottr-full.yaml` — unredacted Shottr defaults **including the license
+  key** (`kc-license`), which is stripped from the public export. Apply this one
+  instead of `exports/shottr.yaml` on a trusted machine.
 - `chrome/` — Bookmarks, Preferences, and extension ID lists for all three
   profiles, in case Chrome profile sign-in sync misses anything.
-- `superwhisper/` — defaults plist plus agent/database dirs (models
-  re-download on first launch).
+- `superwhisper/` — defaults plist plus agent/database dirs (models re-download
+  on first launch).
 - `zsh_history` — shell history from the old machine.
 
-> SSH keys are intentionally absent: auth goes through the 1Password SSH
-> agent, so signing into 1Password (step 3) restores SSH access.
+> SSH keys are intentionally absent: auth goes through the 1Password SSH agent,
+> so signing into 1Password (step 3) restores SSH access.
 
 ## Maintenance
 
@@ -158,18 +158,19 @@ Shortcuts are split across layers, each scoped to a specific context.
     nvim / `pnpm dev` / nvim PR diff (`nvim +AtlasPr`) tab layouts (same roles
     as the old tmux bindings; inline shell in `config.toml` that tags each new
     pane with `herdr pane report-metadata --token layout=<name>` and finds it
-    again by that token,
-    also in the herdr-plus quick-actions picker as Open Agent / Open Neovim /
-    Dev Server / Open PR Diff), `Cmd+[`/`Cmd+]` cycle
+    again by that token, also in the herdr-plus quick-actions picker as Open
+    Agent / Open Neovim / Dev Server / Open PR Diff), `Cmd+[`/`Cmd+]` cycle
     agents, `Cmd+Shift+[`/`]` cycle tabs, `Cmd+1..9` tab N, `Cmd+T`/`W`
     new/close, `Cmd+;` last pane, `Cmd+Shift+D`/`Cmd+Shift+N` jump to the
-    dotfiles / notes workspaces, `Cmd+Shift+;` toggle to the last
-    project (`scripts/herdr-workspace-jump`), `Cmd+E` worktrees, `prefix+d`
-    hunk diff of the working tree in a split (herdr-plugin-hunk; staged/branch
-    variants in the palettes), `Ctrl+Alt+H/J/K/L` pane
-    focus (direct, no relay). Displaced to prefix mode: `prefix+o` jump to
-    agent needing attention, `prefix+shift+n` new workspace, `prefix+b`
-    toggle sidebar
+    dotfiles / notes workspaces, `Cmd+Shift+;` toggle to the last project,
+    `Cmd+O` workspace picker in frecency order (both inline in `config.toml`,
+    reading the `fre` store filled by the
+    `.config/herdr/plugins/workspace-frecency` plugin on `workspace.focused`;
+    linked with `herdr plugin link`), `Cmd+E` worktrees, `prefix+d` hunk diff of
+    the working tree in a split (herdr-plugin-hunk; staged/branch variants in
+    the palettes), `Ctrl+Alt+H/J/K/L` pane focus (direct, no relay). Displaced
+    to prefix mode: `prefix+o` jump to agent needing attention, `prefix+shift+n`
+    new workspace, `prefix+b` toggle sidebar
   - Avoid overriding:
     - Cmd+Q/H/M/W/N (macOS window mgmt)
     - Cmd+C/V/X/Z (clipboard)
@@ -209,10 +210,10 @@ On macOS Sequoia, apps can get stuck in a limbo permission state
 from other apps" dialog to reappear on every restart.
 
 > **Before running the fix:** quit the affected apps and dismiss any pending
-> "access data from other apps" dialog first. While a prompt is on screen (or the
-> app is running), macOS keeps re-writing the entry back to the `5` limbo state,
-> which clobbers the `UPDATE` below. If an entry reverts to `5` right after you
-> fix it, a live prompt/app is the cause — close it and re-run.
+> "access data from other apps" dialog first. While a prompt is on screen (or
+> the app is running), macOS keeps re-writing the entry back to the `5` limbo
+> state, which clobbers the `UPDATE` below. If an entry reverts to `5` right
+> after you fix it, a live prompt/app is the cause — close it and re-run.
 
 **Check for stuck entries:**
 
@@ -322,8 +323,8 @@ asdf global golang latest && asdf global nodejs latest && asdf global deno lates
 
 ### TODO: Agentic App Authorization
 
-Using Claude Code + computer_use/browser_use plugins to authorize apps using
-the credentials stored in 1password (without the agent needing to copy/paste
+Using Claude Code + computer_use/browser_use plugins to authorize apps using the
+credentials stored in 1password (without the agent needing to copy/paste
 credentials into it's session).
 
 - web apps:
