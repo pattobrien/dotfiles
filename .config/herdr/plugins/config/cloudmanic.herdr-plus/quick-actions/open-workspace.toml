@@ -1,4 +1,4 @@
-name = "Herdr: Open Workspace"
+name = "Herdr: Open Workspace — ⌘ O"
 description = "Pick an existing herdr workspace and focus it"
 type = "select"
 options_command = '''

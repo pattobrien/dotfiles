@@ -188,14 +188,42 @@ type = "plugin_action"
 command = "herdr-navigator.open"
 description = "navigator: jump to anything"
 
-# herdr-plus pickers on the Cmd relay (Cmd+O → shift+F10, Cmd+Shift+P →
-# shift+F11 — sent by kitty/ghostty; herdr only sees modified F-keys past
-# F12, hence the shift+F slots)
+# Pickers on the Cmd relay (Cmd+O → shift+F10, Cmd+Shift+P → shift+F11 — sent
+# by kitty/ghostty; herdr only sees modified F-keys past F12, hence the
+# shift+F slots). Cmd+O is the same list as the "Herdr: Open Workspace" quick
+# action, in fzf.
 [[keys.command]]
 key = "shift+f10"
-type = "plugin_action"
-command = "cloudmanic.herdr-plus.projects"
-description = "herdr-plus: projects"
+type = "popup"
+command = '''
+id=$(herdr workspace list | jq -r '.result.workspaces[] | select(.worktree.is_linked_worktree != true) | [.workspace_id, .label, (.worktree.checkout_path // "")] | @tsv' |
+while IFS=$'\t' read -r id label cwd; do
+  wt=$(herdr worktree list --workspace "$id" 2>/dev/null)
+  repo=$(printf '%s' "$wt" | jq -r '.result.source.repo_name // empty' 2>/dev/null)
+  [ -z "$repo" ] && { printf '%s\t%s\n' "$id" "$label"; continue; }
+  [ -z "$cwd" ] && cwd=$(printf '%s' "$wt" | jq -r '.result.source.source_checkout_path')
+  branch=$(printf '%s' "$wt" | jq -r --arg p "$cwd" 'first(.result.worktrees[] | select(.path == $p) | .branch) // "detached"')
+  printf '%s\t%s\t%s · %s\n' "$id" "$label" "$repo" "$branch"
+done | fzf --delimiter='\t' --with-nth=2.. --prompt='workspace> ' | cut -f1)
+[ -n "$id" ] && herdr workspace focus "$id"
+'''
+width = 70
+height = 20
+description = "workspace: open" # Cmd+O
+
+# Cmd+B → ctrl+F8: the "Herdr: Open Worktree" quick action's list, in fzf.
+[[keys.command]]
+key = "ctrl+f8"
+type = "popup"
+command = '''
+ws=$HERDR_ACTIVE_WORKSPACE_ID
+id=$(herdr worktree list --workspace "$ws" | jq -r --arg ws "$ws" '.result.worktrees[] | select(.open_workspace_id and .open_workspace_id != $ws) | [.open_workspace_id, (.branch // .path)] | @tsv' |
+fzf --delimiter='\t' --with-nth=2.. --prompt='worktree> ' | cut -f1)
+[ -n "$id" ] && herdr workspace focus "$id"
+'''
+width = 70
+height = 20
+description = "worktree: open" # Cmd+B
 
 [[keys.command]]
 key = "shift+f11"

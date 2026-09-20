@@ -1,4 +1,4 @@
-name = "Herdr: Open Worktree"
+name = "Herdr: Open Worktree — ⌘ B"
 description = "Pick an open worktree of this workspace's repo and focus it"
 type = "select"
 options_command = '''herdr worktree list --workspace {{.WorkspaceId}} | jq -r '.result.worktrees[] | select(.open_workspace_id and .open_workspace_id != "{{.WorkspaceId}}") | "\(.branch // .path)\t\(.path)"' '''

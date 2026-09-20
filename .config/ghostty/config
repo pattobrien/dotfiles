@@ -56,8 +56,10 @@ keybind = super+shift+m=text:\x1b[42~
 keybind = super+shift+slash=text:\x1b[43~
 
 # --- herdr-plus pickers (herdr-only, no tmux bindings) ---
-# Cmd+O        → shift+F10 → projects picker
+# Cmd+O        → shift+F10 → workspace picker
 # Cmd+Shift+P  → shift+F11 → quick actions
+# Cmd+B        → ctrl+F8   → worktree picker
+keybind = super+b=text:\x1b[19;5~
 keybind = super+o=text:\x1b[21;2~
 keybind = super+shift+p=text:\x1b[23;2~
 
