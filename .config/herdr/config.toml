@@ -196,22 +196,14 @@ description = "navigator: jump to anything"
 key = "shift+f10"
 type = "popup"
 command = '''
-list=$(herdr workspace list | jq -r '.result.workspaces[] | select(.worktree.is_linked_worktree != true) | [.workspace_id, .label, (.worktree.checkout_path // "")] | @tsv' |
-while IFS=$'\t' read -r id label cwd; do
-  wt=$(herdr worktree list --workspace "$id" 2>/dev/null)
-  repo=$(printf '%s' "$wt" | jq -r '.result.source.repo_name // empty' 2>/dev/null)
-  [ -z "$repo" ] && { printf '%s\t%s\n' "$id" "$label"; continue; }
-  [ -z "$cwd" ] && cwd=$(printf '%s' "$wt" | jq -r '.result.source.source_checkout_path')
-  branch=$(printf '%s' "$wt" | jq -r --arg p "$cwd" 'first(.result.worktrees[] | select(.path == $p) | .branch) // "detached"')
-  printf '%s\t%s\t%s · %s\n' "$id" "$label" "$repo" "$branch"
-done)
+list=$(herdr workspace list | jq -r '.result.workspaces[] | select(.worktree.is_linked_worktree != true) | [.workspace_id, .label] | @tsv')
 n=$(printf '%s\n' "$list" | wc -l); [ "$n" -gt 12 ] && n=12
-pick=$(printf '%s\n' "$list" | awk -F'\t' '{ print ($3 == "" ? $2 : $2 "  \033[90m" $3 "\033[0m") }' |
-gum filter --no-strip-ansi --height $((n + 7)) --padding '1 1' \
+pick=$(printf '%s\n' "$list" | cut -f2 |
+gum filter --height $((n + 7)) --padding '1 1' \
   --header 'Herdr: Open Workspace — ⌘ O' --header.foreground '#11111B' --header.background '#A78BFA' --header.bold --header.padding '0 1' --header.margin '0 0 1 0' \
   --prompt '❯ ' --prompt.foreground 5 --prompt.bold --placeholder 'Pick an option…' --placeholder.foreground 8 \
   --indicator '▌' --indicator.foreground 5 --cursor-text.bold --match.foreground 3 --match.bold)
-id=$(printf '%s\n' "$list" | awk -F'\t' -v p="$pick" '($3 == "" ? $2 : $2 "  " $3) == p { print $1; exit }')
+id=$(printf '%s\n' "$list" | awk -F'\t' -v p="$pick" '$2 == p { print $1; exit }')
 [ -n "$id" ] && herdr workspace focus "$id"
 '''
 width = 70
