@@ -109,9 +109,6 @@ ZSH_DISABLE_COMPFIX=true
 PATH="$HOMEBREW_PREFIX/share/zsh/site-functions:${PATH}"
 FPATH="$HOMEBREW_PREFIX/share/zsh/site-functions:${FPATH}"
 
-# Docker CLI completions (must be before oh-my-zsh.sh so compinit picks them up in one pass)
-fpath=(/Users/pattobrien/.docker/completions $fpath)
-
 # mise-installed tools' completions (synced by misecompsync); also before compinit
 fpath=(${XDG_DATA_HOME:-$HOME/.local/share}/mise-completions/zsh $fpath)
 
@@ -247,20 +244,6 @@ esac
 # alias exa='exa -laFh --git --icons'
 # alias ls='exa'
 
-
-## [Completion]
-## Completion scripts setup. Remove the following line to uninstall
-[[ -f /Users/pattobrien/.dart-cli-completion/zsh-config.zsh ]] && . /Users/pattobrien/.dart-cli-completion/zsh-config.zsh || true
-## [/Completion]
-
-
-# Added by LM Studio CLI (lms)
-export PATH="$PATH:/Users/pattobrien/.cache/lm-studio/bin"
-# End of LM Studio CLI section
-
-
-# bun completions
-[ -s "/Users/pattobrien/.bun/_bun" ] && source "/Users/pattobrien/.bun/_bun"
 
 # bun
 export BUN_INSTALL="$HOME/.bun"
