@@ -109,7 +109,7 @@ skaffold = "latest"
 
 # Docs & misc CLIs
 # "github:pattobrien/herdr" = { version = "0.8.0-graphics.4", os = ["macos"] }
-"github:ogulcancelik/herdr" = "0.9.0"
+"github:ogulcancelik/herdr" = "latest"
 "github:schpet/linear-cli" = { version = "latest", exe = "linear" }
 "github:modem-dev/hunk" = "latest"
 "github:agavra/tuicr" = "latest"
