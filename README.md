@@ -156,9 +156,9 @@ Shortcuts are split across layers, each scoped to a specific context.
     are invisible to it, so overflow slots use `shift+F5`-style encodings.
   - Herdr highlights: `Cmd+A`/`Cmd+N`/`Cmd+L`/`Cmd+D` open-or-create claude /
     nvim / `pnpm dev` / nvim PR diff (`nvim +AtlasPr`) tab layouts (same roles
-    as the old tmux bindings, via the
-    [herdr-ensure-tab](https://github.com/pattobrien/herdr-ensure-tab) plugin;
-    layouts in `.config/herdr/plugins/config/herdr-ensure-tab/layouts.toml`,
+    as the old tmux bindings; inline shell in `config.toml` that tags each new
+    pane with `herdr pane report-metadata --token layout=<name>` and finds it
+    again by that token,
     also in the herdr-plus quick-actions picker as Open Agent / Open Neovim /
     Dev Server / Open PR Diff), `Cmd+[`/`Cmd+]` cycle
     agents, `Cmd+Shift+[`/`]` cycle tabs, `Cmd+1..9` tab N, `Cmd+T`/`W`

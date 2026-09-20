@@ -211,32 +211,86 @@ type = "plugin_action"
 command = "jt.command-palette.open"
 description = "palette: plugin actions (fzf)"
 
-# Open-or-create tab layouts (herdr-ensure-tab plugin; layouts declared in
-# plugins/config/herdr-ensure-tab/layouts.toml). Ported from the old tmux
-# jump-or-create bindings — same slots, same muscle memory. Also exposed as
-# herdr-plus quick actions (Open Neovim / Open Agent / Dev Server).
+# Open-or-create tab layouts. Each new pane is tagged `layout=<name>` with
+# `herdr pane report-metadata`, and later presses find it by that token (tab
+# label as the fallback, since tokens don't survive a server restart). Ported
+# from the old tmux jump-or-create bindings — same slots, same muscle memory.
+# Also exposed as herdr-plus quick actions (Open Neovim / Open Agent / Dev
+# Server / Open PR Diff).
 [[keys.command]]
 key = "f5"
 type = "shell"
-command = "\"$HOME/.local/share/mise/shims/bun\" \"$HOME/dev/pattobrien/herdr-ensure-tab/bin/ensure-tab.ts\" claude"
+command = '''
+ws=$HERDR_ACTIVE_WORKSPACE_ID
+tab=$(herdr pane list --workspace "$ws" | jq -r 'first(.result.panes[] | select(.tokens.layout == "claude" or .agent == "claude") | .tab_id)')
+[ -z "$tab" ] && tab=$(herdr tab list --workspace "$ws" | jq -r 'first(.result.tabs[] | select(.label == "claude") | .tab_id)')
+if [ -z "$tab" ]; then
+  cwd=$(herdr workspace get "$ws" | jq -r '.result.workspace.worktree.checkout_path // empty')
+  new=$(herdr tab create --workspace "$ws" ${cwd:+--cwd "$cwd"} --label claude --no-focus)
+  tab=$(echo "$new" | jq -r .result.tab.tab_id)
+  pane=$(echo "$new" | jq -r .result.root_pane.pane_id)
+  herdr pane report-metadata "$pane" --source layouts --token layout=claude
+  herdr pane run "$pane" "claude; exit"
+fi
+herdr tab focus "$tab"
+'''
 description = "claude: open or create" # Cmd+A
 
 [[keys.command]]
 key = "shift+f9"
 type = "shell"
-command = "\"$HOME/.local/share/mise/shims/bun\" \"$HOME/dev/pattobrien/herdr-ensure-tab/bin/ensure-tab.ts\" nvim"
+command = '''
+ws=$HERDR_ACTIVE_WORKSPACE_ID
+tab=$(herdr pane list --workspace "$ws" | jq -r 'first(.result.panes[] | select(.tokens.layout == "nvim") | .tab_id)')
+[ -z "$tab" ] && tab=$(herdr tab list --workspace "$ws" | jq -r 'first(.result.tabs[] | select(.label == "nvim") | .tab_id)')
+if [ -z "$tab" ]; then
+  cwd=$(herdr workspace get "$ws" | jq -r '.result.workspace.worktree.checkout_path // empty')
+  new=$(herdr tab create --workspace "$ws" ${cwd:+--cwd "$cwd"} --label nvim --no-focus)
+  tab=$(echo "$new" | jq -r .result.tab.tab_id)
+  pane=$(echo "$new" | jq -r .result.root_pane.pane_id)
+  herdr pane report-metadata "$pane" --source layouts --token layout=nvim
+  herdr pane run "$pane" "nvim; exit"
+fi
+herdr tab focus "$tab"
+'''
 description = "nvim: open or create" # Cmd+N
 
 [[keys.command]]
 key = "f10"
 type = "shell"
-command = "\"$HOME/.local/share/mise/shims/bun\" \"$HOME/dev/pattobrien/herdr-ensure-tab/bin/ensure-tab.ts\" dev"
+command = '''
+ws=$HERDR_ACTIVE_WORKSPACE_ID
+tab=$(herdr pane list --workspace "$ws" | jq -r 'first(.result.panes[] | select(.tokens.layout == "dev") | .tab_id)')
+[ -z "$tab" ] && tab=$(herdr tab list --workspace "$ws" | jq -r 'first(.result.tabs[] | select(.label == "dev") | .tab_id)')
+if [ -z "$tab" ]; then
+  cwd=$(herdr workspace get "$ws" | jq -r '.result.workspace.worktree.checkout_path // empty')
+  new=$(herdr tab create --workspace "$ws" ${cwd:+--cwd "$cwd"} --label dev --no-focus)
+  tab=$(echo "$new" | jq -r .result.tab.tab_id)
+  pane=$(echo "$new" | jq -r .result.root_pane.pane_id)
+  herdr pane report-metadata "$pane" --source layouts --token layout=dev
+  herdr pane run "$pane" "pnpm dev"
+fi
+herdr tab focus "$tab"
+'''
 description = "pnpm dev: open or create" # Cmd+L
 
 [[keys.command]]
 key = "shift+f12"
 type = "shell"
-command = "\"$HOME/.local/share/mise/shims/bun\" \"$HOME/dev/pattobrien/herdr-ensure-tab/bin/ensure-tab.ts\" diff"
+command = '''
+ws=$HERDR_ACTIVE_WORKSPACE_ID
+tab=$(herdr pane list --workspace "$ws" | jq -r 'first(.result.panes[] | select(.tokens.layout == "diff") | .tab_id)')
+[ -z "$tab" ] && tab=$(herdr tab list --workspace "$ws" | jq -r 'first(.result.tabs[] | select(.label == "diff") | .tab_id)')
+if [ -z "$tab" ]; then
+  cwd=$(herdr workspace get "$ws" | jq -r '.result.workspace.worktree.checkout_path // empty')
+  new=$(herdr tab create --workspace "$ws" ${cwd:+--cwd "$cwd"} --label diff --no-focus)
+  tab=$(echo "$new" | jq -r .result.tab.tab_id)
+  pane=$(echo "$new" | jq -r .result.root_pane.pane_id)
+  herdr pane report-metadata "$pane" --source layouts --token layout=diff
+  herdr pane run "$pane" "nvim +AtlasPr; exit"
+fi
+herdr tab focus "$tab"
+'''
 description = "pr diff (nvim atlas): open or create" # Cmd+D
 
 # Workspace jumps on the Cmd+Shift relay (Cmd+Shift+; / D / N → ctrl+F5/F6/F7;

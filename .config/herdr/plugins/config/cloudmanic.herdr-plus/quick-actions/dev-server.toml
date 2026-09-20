@@ -1,4 +1,17 @@
 name = "Herdr: Dev Server — ⌘ L"
 description = "Focus the workspace's pnpm dev pane, or start one at the space cwd"
 type = "command"
-command = "bun \"{{.Home}}/dev/pattobrien/herdr-ensure-tab/bin/ensure-tab.ts\" dev --workspace {{.WorkspaceId}}"
+command = '''
+ws={{.WorkspaceId}}
+tab=$(herdr pane list --workspace "$ws" | jq -r 'first(.result.panes[] | select(.tokens.layout == "dev") | .tab_id)')
+[ -z "$tab" ] && tab=$(herdr tab list --workspace "$ws" | jq -r 'first(.result.tabs[] | select(.label == "dev") | .tab_id)')
+if [ -z "$tab" ]; then
+  cwd=$(herdr workspace get "$ws" | jq -r '.result.workspace.worktree.checkout_path // empty')
+  new=$(herdr tab create --workspace "$ws" ${cwd:+--cwd "$cwd"} --label dev --no-focus)
+  tab=$(echo "$new" | jq -r .result.tab.tab_id)
+  pane=$(echo "$new" | jq -r .result.root_pane.pane_id)
+  herdr pane report-metadata "$pane" --source layouts --token layout=dev
+  herdr pane run "$pane" "pnpm dev"
+fi
+herdr tab focus "$tab"
+'''
