@@ -20,8 +20,9 @@ alias trail='<<<${(F)path}'
 
 # CLI tool dirs, so non-interactive shells (scripts, Hammerspoon, launchd
 # agents) resolve the same tools a terminal does. Interactive PATH ordering
-# is still owned by zshrc, which rebuilds PATH from scratch.
-export PATH="$HOME/Library/pnpm/bin:$HOME/.local/share/mise/shims:$HOME/.local/bin:/opt/homebrew/bin:$PATH"
+# is still owned by zshrc, which rebuilds PATH from scratch. mise shims go
+# last: each shim call costs 60-90ms, so an inherited real tool dir must win.
+export PATH="$HOME/Library/pnpm/bin:$HOME/.local/bin:/opt/homebrew/bin:$PATH:$HOME/.local/share/mise/shims"
 
 
 # Vite+ bin (https://viteplus.dev)
