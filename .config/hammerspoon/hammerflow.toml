@@ -13,7 +13,7 @@ key_maps_per_line = 3 # optional, default 5, number of key maps per line in the 
 
 # bluetooth shortcuts
 a = [
-  "cmd:/Users/pattobrien/dev/pattobrien/dotfiles/scripts/airpods-toggle fc-b2-14-ee-4f-36",
+  "cmd:$HOME/dev/pattobrien/dotfiles/scripts/airpods-toggle fc-b2-14-ee-4f-36",
   "AirPods Pro",
 ]
 
@@ -96,11 +96,6 @@ i = "input:https://google.com/search?q={input}" # capture input and insert it in
 #   "center half",
 # ]
 
-
-[w]
-label = "[worktrees]"
-a = ["cmd:open -na Ghostty --args -e /Users/pattobrien/.local/bin/wt-attach", "attach"]
-c = ["cmd:open -na Ghostty --args -e /Users/pattobrien/.local/bin/wt-create", "create"]
 
 # this group is handy to copy over
 # for quick access to your config
