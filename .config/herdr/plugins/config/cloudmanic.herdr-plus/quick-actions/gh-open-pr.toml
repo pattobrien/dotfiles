@@ -1,0 +1,12 @@
+name = "Github: Open PR"
+description = "Pick an open PR for this repo and open its branch as a worktree"
+type = "select"
+options_command = '''cd "$(herdr worktree list --workspace {{.WorkspaceId}} | jq -r .result.source.repo_root)" && gh pr list --json number,title,headRefName --jq '.[] | "\(.headRefName)\t#\(.number) \(.title)"' '''
+command = '''
+ws={{.WorkspaceId}}
+b='{{.Value}}'
+if ! herdr worktree open --workspace "$ws" --branch "$b" --focus >/dev/null 2>&1; then
+  git -C "$(herdr worktree list --workspace "$ws" | jq -r .result.source.repo_root)" fetch origin "$b:$b" 2>/dev/null || true
+  herdr worktree create --workspace "$ws" --branch "$b" --focus
+fi
+'''

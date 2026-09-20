@@ -1,0 +1,10 @@
+name = "Claude: New Session"
+description = "Start a fresh claude in a new tab of this workspace"
+type = "command"
+command = '''
+new=$(herdr tab create --workspace {{.WorkspaceId}} --label claude --no-focus)
+pane=$(echo "$new" | jq -r .result.root_pane.pane_id)
+herdr pane wait-output "$pane" --regex '\S' --source visible --timeout 5000 >/dev/null 2>&1 || true
+herdr pane run "$pane" "claude; exit"
+herdr tab focus "$(echo "$new" | jq -r .result.tab.tab_id)"
+'''

@@ -1,0 +1,14 @@
+name = "Herdr: Create Workspace"
+description = "Pick a repo under ~/dev and open it as a workspace"
+type = "select"
+options_command = '''cd "$HOME/dev" && ls -d */*/.git 2>/dev/null | sed 's|/.git$||' '''
+command = '''
+path="$HOME/dev/{{.Value}}"
+label=$(basename "$path")
+id=$(herdr workspace list | jq -r --arg p "$path" --arg l "$label" 'first(.result.workspaces[] | select(.worktree.checkout_path == $p or .label == $l) | .workspace_id)')
+if [ -n "$id" ]; then
+  herdr workspace focus "$id"
+else
+  herdr workspace create --cwd "$path" --label "$label" --focus
+fi
+'''

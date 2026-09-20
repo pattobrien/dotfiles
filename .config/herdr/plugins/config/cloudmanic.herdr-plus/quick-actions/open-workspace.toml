@@ -1,0 +1,18 @@
+name = "Herdr: Open Workspace"
+description = "Pick an existing herdr workspace and focus it"
+type = "select"
+options_command = '''
+herdr workspace list | jq -r '.result.workspaces[] | select(.worktree.is_linked_worktree != true) | [.workspace_id, .label, (.worktree.checkout_path // "")] | @tsv' |
+while IFS=$'\t' read -r id label cwd; do
+  wt=$(herdr worktree list --workspace "$id" 2>/dev/null)
+  repo=$(printf '%s' "$wt" | jq -r '.result.source.repo_name // empty' 2>/dev/null)
+  [ -z "$repo" ] && { printf '%s\n' "$label"; continue; }
+  [ -z "$cwd" ] && cwd=$(printf '%s' "$wt" | jq -r '.result.source.source_checkout_path')
+  branch=$(printf '%s' "$wt" | jq -r --arg p "$cwd" 'first(.result.worktrees[] | select(.path == $p) | .branch) // "detached"')
+  printf '%s\t%s · %s\n' "$label" "$repo" "$branch"
+done
+'''
+command = '''
+id=$(herdr workspace list | jq -r --arg l '{{.Value}}' 'first(.result.workspaces[] | select(.label == $l) | .workspace_id)')
+herdr workspace focus "$id"
+'''
