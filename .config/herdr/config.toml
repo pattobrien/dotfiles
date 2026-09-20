@@ -191,12 +191,12 @@ description = "navigator: jump to anything"
 # Pickers on the Cmd relay (Cmd+O → shift+F10, Cmd+Shift+P → shift+F11 — sent
 # by kitty/ghostty; herdr only sees modified F-keys past F12, hence the
 # shift+F slots). Cmd+O is the same list as the "Herdr: Open Workspace" quick
-# action, in fzf.
+# action, in a gum filter styled after the herdr-plus picker.
 [[keys.command]]
 key = "shift+f10"
 type = "popup"
 command = '''
-id=$(herdr workspace list | jq -r '.result.workspaces[] | select(.worktree.is_linked_worktree != true) | [.workspace_id, .label, (.worktree.checkout_path // "")] | @tsv' |
+list=$(herdr workspace list | jq -r '.result.workspaces[] | select(.worktree.is_linked_worktree != true) | [.workspace_id, .label, (.worktree.checkout_path // "")] | @tsv' |
 while IFS=$'\t' read -r id label cwd; do
   wt=$(herdr worktree list --workspace "$id" 2>/dev/null)
   repo=$(printf '%s' "$wt" | jq -r '.result.source.repo_name // empty' 2>/dev/null)
@@ -204,21 +204,35 @@ while IFS=$'\t' read -r id label cwd; do
   [ -z "$cwd" ] && cwd=$(printf '%s' "$wt" | jq -r '.result.source.source_checkout_path')
   branch=$(printf '%s' "$wt" | jq -r --arg p "$cwd" 'first(.result.worktrees[] | select(.path == $p) | .branch) // "detached"')
   printf '%s\t%s\t%s · %s\n' "$id" "$label" "$repo" "$branch"
-done | fzf --delimiter='\t' --with-nth=2.. --prompt='workspace> ' | cut -f1)
+done)
+n=$(printf '%s\n' "$list" | wc -l); [ "$n" -gt 12 ] && n=12
+pick=$(printf '%s\n' "$list" | awk -F'\t' '{ print ($3 == "" ? $2 : $2 "  \033[90m" $3 "\033[0m") }' |
+gum filter --no-strip-ansi --height $((n + 7)) --padding '1 1' \
+  --header 'Herdr: Open Workspace — ⌘ O' --header.foreground '#11111B' --header.background '#A78BFA' --header.bold --header.padding '0 1' --header.margin '0 0 1 0' \
+  --prompt '❯ ' --prompt.foreground 5 --prompt.bold --placeholder 'Pick an option…' --placeholder.foreground 8 \
+  --indicator '▌' --indicator.foreground 5 --cursor-text.bold --match.foreground 3 --match.bold)
+id=$(printf '%s\n' "$list" | awk -F'\t' -v p="$pick" '($3 == "" ? $2 : $2 "  " $3) == p { print $1; exit }')
 [ -n "$id" ] && herdr workspace focus "$id"
 '''
 width = 70
 height = 20
 description = "workspace: open" # Cmd+O
 
-# Cmd+B → ctrl+F8: the "Herdr: Open Worktree" quick action's list, in fzf.
+# Cmd+B → ctrl+F8: the "Herdr: Open Worktree" quick action's list, same gum look.
 [[keys.command]]
 key = "ctrl+f8"
 type = "popup"
 command = '''
 ws=$HERDR_ACTIVE_WORKSPACE_ID
-id=$(herdr worktree list --workspace "$ws" | jq -r --arg ws "$ws" '.result.worktrees[] | select(.open_workspace_id and .open_workspace_id != $ws) | [.open_workspace_id, (.branch // .path)] | @tsv' |
-fzf --delimiter='\t' --with-nth=2.. --prompt='worktree> ' | cut -f1)
+list=$(herdr worktree list --workspace "$ws" | jq -r --arg ws "$ws" '.result.worktrees[] | select(.open_workspace_id and .open_workspace_id != $ws) | [.open_workspace_id, (.branch // .path)] | @tsv')
+[ -z "$list" ] && list=$(printf '\tno other open worktrees')
+n=$(printf '%s\n' "$list" | wc -l); [ "$n" -gt 12 ] && n=12
+pick=$(printf '%s\n' "$list" | cut -f2 |
+gum filter --height $((n + 7)) --padding '1 1' \
+  --header 'Herdr: Open Worktree — ⌘ B' --header.foreground '#11111B' --header.background '#A78BFA' --header.bold --header.padding '0 1' --header.margin '0 0 1 0' \
+  --prompt '❯ ' --prompt.foreground 5 --prompt.bold --placeholder 'Pick an option…' --placeholder.foreground 8 \
+  --indicator '▌' --indicator.foreground 5 --cursor-text.bold --match.foreground 3 --match.bold)
+id=$(printf '%s\n' "$list" | awk -F'\t' -v p="$pick" '$2 == p { print $1; exit }')
 [ -n "$id" ] && herdr workspace focus "$id"
 '''
 width = 70
