@@ -1,8 +1,8 @@
 id = "workspace-frecency"
 name = "Workspace Frecency"
-version = "0.1.0"
+version = "0.2.0"
 min_herdr_version = "0.9.0"
-description = "Record each workspace focus in a fre store, read by the Cmd+O picker and the Cmd+Shift+; jump."
+description = "Record each workspace focus in fre stores: every label in herdr-workspaces.json (Cmd+O, Cmd+Shift+;), linked worktree branches in herdr-worktrees.json (Cmd+B)."
 platforms = ["macos", "linux"]
 
 [[events]]
@@ -11,4 +11,6 @@ command = ["sh", "-c", '''
 id=$(printf '%s' "$HERDR_PLUGIN_EVENT_JSON" | jq -r '.data.workspace_id')
 label=$("$HERDR_BIN_PATH" workspace get "$id" | jq -r '.result.workspace.label')
 fre --store_name herdr-workspaces.json --add "$label"
+branch=$("$HERDR_BIN_PATH" worktree list --workspace "$id" | jq -r --arg id "$id" 'first(.result.worktrees[]? | select(.open_workspace_id == $id and .is_linked_worktree) | .branch // empty)')
+if [ -n "$branch" ]; then fre --store_name herdr-worktrees.json --add "$branch"; fi
 ''']

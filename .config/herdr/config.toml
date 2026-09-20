@@ -215,12 +215,15 @@ height = 20
 description = "workspace: open" # Cmd+O
 
 # Cmd+B → ctrl+F8: the "Herdr: Open Worktree" quick action's list, same gum look.
+# Rows are ordered by branch frecency from the herdr-worktrees.json fre store
+# the workspace-frecency plugin fills (never focused ones last).
 [[keys.command]]
 key = "ctrl+f8"
 type = "popup"
 command = '''
 ws=$HERDR_ACTIVE_WORKSPACE_ID
-list=$(herdr worktree list --workspace "$ws" | jq -r --arg ws "$ws" '.result.worktrees[] | select(.open_workspace_id and .open_workspace_id != $ws) | [.open_workspace_id, (.branch // .path)] | @tsv')
+frecent=$(fre --store_name herdr-worktrees.json --sorted)
+list=$(herdr worktree list --workspace "$ws" | jq -r --arg ws "$ws" --arg frecent "$frecent" '($frecent | split("\n")) as $rank | [.result.worktrees[] | select(.open_workspace_id and .open_workspace_id != $ws)] | sort_by(.branch as $b | ($rank | index($b)) // ($rank | length)) | .[] | [.open_workspace_id, (.branch // .path)] | @tsv')
 [ -z "$list" ] && list=$(printf '\tno other open worktrees')
 n=$(printf '%s\n' "$list" | wc -l); [ "$n" -gt 12 ] && n=12
 pick=$(printf '%s\n' "$list" | cut -f2 |
