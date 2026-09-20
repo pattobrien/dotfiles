@@ -323,8 +323,8 @@ description = "pr diff (nvim atlas): open or create" # Cmd+D
 
 # Workspace jumps on the Cmd+Shift relay (Cmd+Shift+; / D / N → ctrl+F5/F6/F7;
 # same roles as the old tmux switch-client bindings). `recent` toggles to the
-# last non-dotfiles/notes workspace, tracked by the script itself since herdr
-# has no focus history.
+# last project (dotfiles and notes included), tracked by the script itself
+# since herdr has no focus history.
 [[keys.command]]
 key = "ctrl+f5"
 type = "shell"

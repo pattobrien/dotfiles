@@ -163,8 +163,8 @@ Shortcuts are split across layers, each scoped to a specific context.
     Dev Server / Open PR Diff), `Cmd+[`/`Cmd+]` cycle
     agents, `Cmd+Shift+[`/`]` cycle tabs, `Cmd+1..9` tab N, `Cmd+T`/`W`
     new/close, `Cmd+;` last pane, `Cmd+Shift+D`/`Cmd+Shift+N` jump to the
-    dotfiles / notes workspaces, `Cmd+Shift+;` back to the last project
-    workspace (`scripts/herdr-workspace-jump`), `Cmd+E` worktrees, `prefix+d`
+    dotfiles / notes workspaces, `Cmd+Shift+;` toggle to the last
+    project (`scripts/herdr-workspace-jump`), `Cmd+E` worktrees, `prefix+d`
     hunk diff of the working tree in a split (herdr-plugin-hunk; staged/branch
     variants in the palettes), `Ctrl+Alt+H/J/K/L` pane
     focus (direct, no relay). Displaced to prefix mode: `prefix+o` jump to
