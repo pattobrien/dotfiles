@@ -225,8 +225,7 @@
 
   // -- yaml --
   "yaml.schemas": {
-    "https://json.schemastore.org/dart-build.json": "build.yaml",
-    "file:///Users/pattobrien/.vscode/extensions/atlassian.atlascode-2.10.12/resources/schemas/pipelines-schema.json": "bitbucket-pipelines.yml"
+    "https://json.schemastore.org/dart-build.json": "build.yaml"
   },
   "[yaml]": {
     "editor.autoIndent": "advanced",
@@ -245,11 +244,6 @@
     "editor.tabCompletion": "onlySnippets",
     "editor.wordBasedSuggestions": "off"
   },
-  "dart.sdkPaths": [
-    "/Users/pattobrien/.fvm/default/bin/cache/dart-sdk",
-    "/Users/pattobrien/.fvm/versions/",
-    "/Users/pattobrien/.dswitch/channels/dev/versions/"
-  ],
   "dart.warnWhenEditingFilesInPubCache": false,
   "dart.previewFlutterUiGuides": true,
   "dart.flutterGenerateLocalizationsOnSave": "allIfDirty",
@@ -270,7 +264,6 @@
     "editor.defaultFormatter": "ms-python.black-formatter",
     "editor.formatOnSave": true
   },
-  "python.defaultInterpreterPath": "/Users/pattobrien/.miniconda/bin/python",
 
   // -- lua --
   "Lua.diagnostics.globals": ["vim"],
@@ -311,12 +304,6 @@
   "workbench.iconTheme": "vscode-icons",
   "workbench.tree.indent": 12,
   "workbench.activityBar.orientation": "vertical",
-  // below is required, per the docs (see: https://github.com/be5invis/vscode-custom-css/tree/master#getting-started)
-  // for more custom css properties to use, see the vscode source code, for example:
-  // - https://github.com/microsoft/vscode/blob/main/src/vs/platform/quickinput/browser/media/quickInput.css
-  "vscode_custom_css.imports": [
-    "file:///Users/pattobrien/dev/fine_designs/sidecar2/.vscode/vscode.css"
-  ],
 
   "zenMode.fullScreen": false,
   "zenMode.hideLineNumbers": false,
