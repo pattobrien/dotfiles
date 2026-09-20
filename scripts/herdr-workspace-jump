@@ -6,8 +6,6 @@
 # first other project when that record is missing or stale.
 # Usage: herdr-workspace-jump <dotfiles|notes|recent>
 set -euo pipefail
-# Runs inside herdr's shell-command environment, so PATH may lack homebrew.
-export PATH="/opt/homebrew/bin:$HOME/.local/bin:$HOME/.local/share/mise/shims:$PATH"
 
 herdr="${HERDR_BIN_PATH:-herdr}"
 state="$HOME/.cache/herdr-last-project"

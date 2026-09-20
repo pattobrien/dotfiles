@@ -6,8 +6,6 @@
 # (HERDR_ACTIVE_PANE_ID) and herdr-plus quick actions (--pane {{.PaneId}}).
 # Usage: herdr-jump-or-create [--pane ID] [--label LABEL] <match> [command...]
 set -euo pipefail
-# Runs inside herdr's shell-command environment, so PATH may lack homebrew.
-export PATH="/opt/homebrew/bin:$HOME/.local/bin:$HOME/.local/share/mise/shims:$PATH"
 
 herdr="${HERDR_BIN_PATH:-herdr}"
 

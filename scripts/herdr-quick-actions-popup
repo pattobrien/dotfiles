@@ -5,9 +5,7 @@
 # context from the active pane and opens the picker entrypoint as a popup.
 # `--placement popup` and `--width`/`--height` are accepted by the CLI but
 # missing from its --help (verified against the socket API schema, protocol 17).
-# Runs inside herdr's shell-command environment, so PATH may lack homebrew.
 set -euo pipefail
-export PATH="/opt/homebrew/bin:$HOME/.local/bin:$HOME/.local/share/mise/shims:$PATH"
 
 herdr="${HERDR_BIN_PATH:-herdr}"
 
