@@ -178,8 +178,14 @@ description = "recent: workspaces"
 [[keys.command]]
 key = "prefix+a"
 type = "plugin_action"
-command = "beyondlex.herdr-recent-navigator.focus-agents"
-description = "recent: agents"
+command = "beyondlex.herdr-recent-navigator.focus-agents-priority"
+description = "recent: agents (priority)"
+
+[[keys.command]]
+key = "ctrl+f9"
+type = "plugin_action"
+command = "beyondlex.herdr-recent-navigator.focus-agents-priority"
+description = "recent: agents (priority)" # Cmd+Shift+A
 
 # Navigator plugin: one fuzzy picker for workspaces/agents/projects/dirs (trial)
 [[keys.command]]

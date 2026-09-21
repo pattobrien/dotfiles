@@ -160,11 +160,12 @@ Shortcuts are split across layers, each scoped to a specific context.
     pane with `herdr pane report-metadata --token layout=<name>` and finds it
     again by that token, also in the herdr-plus quick-actions picker as Open
     Agent / Open Neovim / Dev Server / Open PR Diff), `Cmd+[`/`Cmd+]` cycle
-    agents, `Cmd+Shift+[`/`]` cycle tabs, `Cmd+1..9` tab N, `Cmd+T`/`W`
-    new/close, `Cmd+;` last pane, `Cmd+Shift+D`/`Cmd+Shift+N` jump to the
-    dotfiles / notes workspaces, `Cmd+Shift+;` toggle to the last project,
-    `Cmd+O` workspace picker and `Cmd+B` open-worktree picker in frecency order
-    (all inline in `config.toml`, reading the `fre` stores filled by the
+    agents, `Cmd+Shift+A` recent-navigator agents picker, `Cmd+Shift+[`/`]`
+    cycle tabs, `Cmd+1..9` tab N, `Cmd+T`/`W` new/close, `Cmd+;` last pane,
+    `Cmd+Shift+D`/`Cmd+Shift+N` jump to the dotfiles / notes workspaces,
+    `Cmd+Shift+;` toggle to the last project, `Cmd+O` workspace picker and
+    `Cmd+B` open-worktree picker in frecency order (all inline in `config.toml`,
+    reading the `fre` stores filled by the
     `.config/herdr/plugins/workspace-frecency` plugin on `workspace.focused`:
     workspace labels in `herdr-workspaces.json`, linked worktree branches in
     `herdr-worktrees.json`; linked with `herdr plugin link`), `Cmd+E` worktrees,

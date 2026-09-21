@@ -68,6 +68,8 @@ keybind = super+shift+p=text:\x1b[23;2~
 # Cmd+]        → shift+F6 → next agent
 # Cmd+Shift+[  → shift+F7 → previous tab
 # Cmd+Shift+]  → shift+F8 → next tab
+# Cmd+Shift+A  → ctrl+F9  → recent agents picker
+keybind = super+shift+a=text:\x1b[20;5~
 keybind = super+left_bracket=text:\x1b[15;2~
 keybind = super+right_bracket=text:\x1b[17;2~
 keybind = super+shift+left_bracket=text:\x1b[18;2~
