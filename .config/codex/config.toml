@@ -1,5 +1,5 @@
-model = "gpt-6-astra"
-model_reasoning_effort = "high"
+model = "gpt-5.6-sol"
+model_reasoning_effort = "medium"
 personality = "pragmatic"
 sandbox_mode = "danger-full-access"
 approval_policy = "never"
@@ -51,6 +51,108 @@ trust_level = "trusted"
 trust_level = "trusted"
 
 [projects."/Users/patt/dev/pattobrien/shed"]
+trust_level = "trusted"
+
+[projects."/Users/patt/.herdr/worktrees/shed/feat-factory-2/apps/factory/workspace/shed"]
+trust_level = "trusted"
+
+[projects."/Users/patt/.herdr/worktrees/shed/feat-factory-2/apps/factory/workspace/shed/733ef71d85c22e673e8a17d6ab6e8ff7b53a8e8b"]
+trust_level = "trusted"
+
+[projects."/Users/patt/.herdr/worktrees/shed/feat-factory-2/apps/factory/workspace/shed/970e94f060e19940deaacfd58048730600e8ecec"]
+trust_level = "trusted"
+
+[projects."/Users/patt/.herdr/worktrees/shed/feat-factory-2/apps/factory/workspace/shed/bf42a1fb046876932bf01dc2b63cff95a6db16b7"]
+trust_level = "trusted"
+
+[projects."/Users/patt/.herdr/worktrees/shed/feat-factory-2/apps/factory/workspace/shed/11909054-aa80-40f4-a2a7-f371498d164f"]
+trust_level = "trusted"
+
+[projects."/Users/patt/.herdr/worktrees/shed/feat-factory-2/apps/factory/workspace/shed/21e3ddd6-91ed-4e67-a937-97586516a591"]
+trust_level = "trusted"
+
+[projects."/Users/patt/.herdr/worktrees/shed/feat-factory-2/apps/factory/workspace/shed/6f5beff8-88c8-45c2-b9cb-9ebad0db59ef"]
+trust_level = "trusted"
+
+[projects."/Users/patt/.herdr/worktrees/shed/feat-factory-2/apps/factory/workspace/shed/f4af7cf7-f666-4588-99e9-6660b6a845bf"]
+trust_level = "trusted"
+
+[projects."/Users/patt/.herdr/worktrees/shed/feat-factory-2/apps/factory/workspace/shed/cc0e9b5e-99bd-4477-973a-33915c49e32e"]
+trust_level = "trusted"
+
+[projects."/Users/patt/.herdr/worktrees/shed/feat-factory-2/apps/factory/workspace/shed/0fcede59-db73-445b-91cd-69ecbea902ae"]
+trust_level = "trusted"
+
+[projects."/Users/patt/.herdr/worktrees/shed/feat-factory-2/apps/factory/workspace/shed/39420d8f-1dbe-474a-af31-2462c45bbea4"]
+trust_level = "trusted"
+
+[projects."/Users/patt/.herdr/worktrees/shed/feat-factory-2/apps/factory/workspace/shed/9d63f15b-5914-435f-ab70-b646f832f567"]
+trust_level = "trusted"
+
+[projects."/Users/patt/.herdr/worktrees/shed/feat-factory-2/apps/factory/workspace/shed/d094d0dc-dc74-40ca-9366-bbe43a9ba08b"]
+trust_level = "trusted"
+
+[projects."/Users/patt/.herdr/worktrees/shed/feat-factory-2/apps/factory/workspace/shed/5d171c04-7f92-43d4-953e-df28fcb433fc"]
+trust_level = "trusted"
+
+[projects."/Users/patt/.herdr/worktrees/shed/feat-factory-2/apps/factory/workspace/shed/fd813c31-fe9f-44b6-93dd-ab38f4ef9c03"]
+trust_level = "trusted"
+
+[projects."/Users/patt/.herdr/worktrees/shed/feat-factory-2/apps/factory/workspace/shed/ce309ba8-f7ef-4381-b297-fc0acc6b0397"]
+trust_level = "trusted"
+
+[projects."/Users/patt/.herdr/worktrees/shed/feat-factory-2/apps/factory/workspace/shed/80d791b4-9dfb-4355-8916-7eb420bfddad"]
+trust_level = "trusted"
+
+[projects."/Users/patt/.herdr/worktrees/shed/feat-factory-2/apps/factory/workspace/shed/73d74c82-84c0-4756-8573-432ca04bcacc"]
+trust_level = "trusted"
+
+[projects."/Users/patt/.herdr/worktrees/shed/feat-factory-2/apps/factory/workspace/shed/6e67eb64-11ec-4a16-8edf-850cc8ae72f1"]
+trust_level = "trusted"
+
+[projects."/Users/patt/.herdr/worktrees/shed/feat-factory-2/apps/factory/workspace/shed/05786edf-5cdc-4c8d-aecb-17c8e67bb159"]
+trust_level = "trusted"
+
+[projects."/Users/patt/.herdr/worktrees/shed/feat-factory-2/apps/factory/workspace/shed/fec2c012-e3c7-42ea-b768-ba98c8ad410c"]
+trust_level = "trusted"
+
+[projects."/Users/patt/.herdr/worktrees/shed/feat-factory-2/apps/factory/workspace/shed/eb82d762-4e9e-4989-8a1c-322c806ffd72"]
+trust_level = "trusted"
+
+[projects."/Users/patt/.herdr/worktrees/shed/feat-factory-2/apps/factory/workspace/shed/fa9e20a6-b5ea-4321-a6bd-b6b0a551b917"]
+trust_level = "trusted"
+
+[projects."/Users/patt/.herdr/worktrees/shed/feat-factory-2/apps/factory/workspace/shed/4f1cabe2-50a7-4ae1-9632-4fe9f2dab9ae"]
+trust_level = "trusted"
+
+[projects."/Users/patt/.herdr/worktrees/shed/feat-factory-2/apps/factory/workspace/shed/c4954b1d-2df7-4b25-a12f-90615c348971"]
+trust_level = "trusted"
+
+[projects."/Users/patt/.herdr/worktrees/shed/feat-factory-2/apps/factory/workspace/shed/3a740e83-a9f2-408f-bc22-0e63c8bd3d99"]
+trust_level = "trusted"
+
+[projects."/Users/patt/.herdr/worktrees/shed/feat-factory-2/apps/factory/workspace/shed/f02cb072-069a-46bf-98a4-f723038827fe"]
+trust_level = "trusted"
+
+[projects."/Users/patt/.herdr/worktrees/shed/feat-factory-2/apps/factory/workspace/shed/8eed4b9d-6431-489d-bc3c-c6551e7adf65"]
+trust_level = "trusted"
+
+[projects."/Users/patt/.herdr/worktrees/shed/feat-factory-2/apps/factory/workspace/shed/71f719a9-34a4-4649-ab6c-cd51f7f1b13f"]
+trust_level = "trusted"
+
+[projects."/Users/patt/.herdr/worktrees/shed/feat-builder-sandbox/apps/factory/workspace/shed/5c9fdb35-7600-40ab-a540-9c5cfa570ae5"]
+trust_level = "trusted"
+
+[projects."/private/var/folders/4v/gkwf4tyn05zgpwctz09xdjkr0000gn/T/tmp.lvbKyZhiFa"]
+trust_level = "trusted"
+
+[projects."/private/tmp/claude-501/-Users-patt--herdr-worktrees-shed-ops-remote-agents/f7d014b0-ab0c-461a-829c-0e17c5e42179/scratchpad/revtest"]
+trust_level = "trusted"
+
+[projects."/private/tmp/acpx-smoke.uANv4Q"]
+trust_level = "trusted"
+
+[projects."/private/tmp/claude-501/-Users-patt-dev-pattobrien-shed/756d1830-f51d-4bbc-9d11-ec2b7eb4b931/scratchpad/pr251"]
 trust_level = "trusted"
 
 [notice]
@@ -143,8 +245,8 @@ BROWSER_USE_TINYSKY_ENABLED = "1"
 NODE_REPL_INSTRUCTIONS_USE_CASE_BROWSER = ""
 NODE_REPL_INSTRUCTIONS_USE_CASE_CHROME = ""
 BROWSER_USE_CODEX_APP_BUILD_FLAVOR = "prod"
-BROWSER_USE_CODEX_APP_VERSION = "26.903.61454"
-NODE_REPL_TRUSTED_SERVICES = '{"browser":"/Users/patt/.codex/plugins/cache/openai-bundled/browser/26.903.61454/scripts/browser-service.mjs"}'
+BROWSER_USE_CODEX_APP_VERSION = "26.915.31945"
+NODE_REPL_TRUSTED_SERVICES = '{"browser":"/Users/patt/.codex/plugins/cache/openai-bundled/browser/26.915.31945/scripts/browser-service.mjs"}'
 CODEX_CLI_PATH = "/Applications/ChatGPT.app/Contents/Resources/codex"
 
 [marketplaces.openai-bundled]
@@ -247,9 +349,6 @@ enabled = true
 
 [plugins."visualize@openai-bundled"]
 enabled = true
-
-[plugins."sites@openai-bundled"]
-enabled = false
 
 [plugins."browser@openai-bundled"]
 enabled = true

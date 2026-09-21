@@ -44,6 +44,8 @@ alias cxs="codex --model gpt-5.6-sol"
 alias cxsr="codex resume --model gpt-5.6-sol"
 alias cxt="codex --model gpt-5.6-terra"
 alias cxtr="codex resume --model gpt-5.6-terra"
+alias cxa="codex --model gpt-6-astra"
+alias cxar="codex resume --model gpt-6-astra"
 
 alias oc="opencode"
 
