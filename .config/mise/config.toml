@@ -66,6 +66,7 @@ bat = "latest"
 eza = "latest"
 zoxide = "latest"
 tmux = "latest"
+gum = "latest"
 
 # Language runtimes & SDKs (migrated from asdf .tool-versions)
 bun = "latest"
@@ -131,6 +132,9 @@ jj = "latest"
 doctl = "latest"
 pulumi = "latest"
 "github:railwayapp/railpack" = "latest"
+docker-cli = "latest"
+"aqua:docker/buildx" = "latest"
+"ubi:docker/sbx-releases" = { version = "latest", extract_all = true, bin_path = "bin", matching = "darwin", os = ["macos"] }
 "github:swamp-club/swamp" = "latest"
 "npm:acpx" = "latest"
 "cargo:fre" = "latest"
