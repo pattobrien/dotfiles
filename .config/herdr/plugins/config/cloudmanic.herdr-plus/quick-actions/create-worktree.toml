@@ -1,0 +1,15 @@
+name = "Herdr: Create Worktree"
+description = "Create a worktree on a new branch with wt, then open and focus it"
+type = "form"
+command = '''
+branch='{{.Value}}'
+src=$(herdr worktree list --workspace {{.WorkspaceId}} | jq -c '.result.source')
+root=$(printf '%s' "$src" | jq -r '.repo_root')
+ws=$(printf '%s' "$src" | jq -r '.source_workspace_id')
+path=$(wt -C "$root" switch --create "$branch" --no-cd --format=json | jq -r '.path')
+herdr worktree open --workspace "$ws" --path "$path" --focus
+'''
+
+[form]
+prompt = "Branch name"
+placeholder = "e.g. patt/my-feature"
