@@ -20,6 +20,8 @@ minimum_release_age_excludes = [
 ]
 experimental = true
 use_versions_host = false
+fetch_remote_versions_cache = "5m"
+jobs = 32
 idiomatic_version_file_enable_tools = ["node"]
 
 [tools]
