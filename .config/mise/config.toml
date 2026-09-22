@@ -134,7 +134,7 @@ pulumi = "latest"
 "github:railwayapp/railpack" = "latest"
 docker-cli = "latest"
 "aqua:docker/buildx" = "latest"
-"ubi:docker/sbx-releases" = { version = "latest", extract_all = true, bin_path = "bin", matching = "darwin", os = ["macos"] }
+"github:docker/sbx-releases" = { version = "latest", asset_pattern = "DockerSandboxes-darwin.tar.gz", bin_path = "bin", os = ["macos"] }
 "github:swamp-club/swamp" = "latest"
 "npm:acpx" = "latest"
 "cargo:fre" = "latest"
