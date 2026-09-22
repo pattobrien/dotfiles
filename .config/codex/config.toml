@@ -155,6 +155,9 @@ trust_level = "trusted"
 [projects."/private/tmp/claude-501/-Users-patt-dev-pattobrien-shed/756d1830-f51d-4bbc-9d11-ec2b7eb4b931/scratchpad/pr251"]
 trust_level = "trusted"
 
+[projects."/private/tmp/claude-501/-Users-patt--herdr-worktrees-shed-fix-reviewer-efficiency/3cf54721-4eca-456a-972d-60ddd4af89d5/scratchpad/revtest"]
+trust_level = "trusted"
+
 [notice]
 fast_default_opt_out = true
 
