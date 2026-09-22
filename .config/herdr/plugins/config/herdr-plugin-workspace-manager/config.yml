@@ -15,17 +15,17 @@ layouts:
           - title: install
             command: pnpm install
 
-  # shed: the `ccf` alias (fable 5.1 1m) as the agent, plus an install tab that
+  # shed: the `ccp` alias (opus 5.5 1m) as the agent, plus an install tab that
   # closes itself once `pnpm install` exits.
   - id: shed
     tabs:
       - title: agent
         panes:
-          - title: ccf
+          - title: ccp
             agent: claude
             agentArgs:
               - --model
-              - claude-fable-5-1[1m]
+              - claude-opus-5-5[1m]
       - title: install
         panes:
           - title: install
