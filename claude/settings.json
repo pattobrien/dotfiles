@@ -34,7 +34,7 @@
       "Bash(pnpm* knip*)",
       "Bash(pnpm* lint*)",
       "Bash(pnpm* list*)",
-      "Bash(pnpm* outdated:*)",
+      "Bash(pnpm* outdated*)",
       "Bash(pnpm* remove*)",
       "Bash(pnpm* run*)",
       "Bash(pnpm* start*)",
