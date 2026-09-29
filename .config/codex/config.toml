@@ -378,7 +378,7 @@ enabled = false
 enabled = false
 
 [plugins."ponytail@ponytail"]
-enabled = true
+enabled = false
 
 [plugins."codex-app-tools@openai-bundled"]
 enabled = true
