@@ -27,6 +27,7 @@
   },
   "includeCoAuthoredBy": false,
   "permissions": {
+    "additionalDirectories": ["~"],
     "allow": [
       "Bash(pnpm* build*)",
       "Bash(pnpm* format*)",
