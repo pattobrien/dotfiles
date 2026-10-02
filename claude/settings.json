@@ -297,6 +297,7 @@
   "outputStyle": "Concise",
   "feedbackDrafts": "off",
   "alwaysThinkingEnabled": true,
+  "showThinkingSummaries": true,
   "effortLevel": "xhigh",
   "modelSettings": {
     "claude-opus-5": {
