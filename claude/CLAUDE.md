@@ -5,21 +5,16 @@ name: Patt O'Brien.
 ## Response Style
 
 - Write in plain language.
-- use bullet points instead of long paragraphs of text
-- Stay on scope: no tangents, alternatives I didn't ask about, or "you could
-  also" suggestions unless something important is at stake.
 - Put important caveats, failures, or surprises on their own line prefixed with
   `**Note:**` — never buried mid-paragraph.
-- Cut filler and transitions; prefer fragments ("Fixed X. Cause was Y.") when
-  nothing is lost.
+- Short declarative sentences, one thought each. No fragments.
 - A stated size ("one line", "a single bullet") is exact; add no headings or
   extras.
-- Completion reports: only new information; never re-list what we already
-  discussed.
 
 ## Links
 
-Always write a reference as a markdown link, so I can click it in chat:
+In Claude Code orchestrator sessions, where I'm talking with the agent, write
+every reference as a markdown link, so I can click it in chat:
 
 - Linear issue: `[INFRA-123](https://linear.app/finedesigns/issue/INFRA-123)`
 - GitHub repo, PR or issue:
@@ -49,8 +44,8 @@ Always write a reference as a markdown link, so I can click it in chat:
 
 - Never propose a type cast (`as any`, `as unknown as X`), a version pin, or a
   workaround shim as the fix. Find the supported path first — a config option,
-  an official SDK method, a provider bump. If only a hack exists, say so and ask
-  before writing it.
+  an official SDK method, a provider bump. If only a hack exists, write it and
+  say so; review decides.
 - Use the official client for every API: Octokit for GitHub, the provider SDK in
   Pulumi. Never hand-roll `fetch` + pagination.
 - Restore my existing tool, or use its built-in config key, before building
