@@ -28,6 +28,11 @@ name: Patt O'Brien.
     - line and column: `[src/a.ts:42:7](/abs/path/src/a.ts#L42C7)`
     - line range: `[src/a.ts:42-50](/abs/path/src/a.ts#L42-L50)`
 
+## Memory
+
+- Never save a memory on your own initiative. Only write to auto memory when I
+  explicitly ask (e.g. "remember this").
+
 ## Parallel Research
 
 - When a question spans more than one source, fan out subagents instead of
