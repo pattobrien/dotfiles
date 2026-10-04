@@ -204,7 +204,7 @@
     "langfuse-observability@langfuse-observability": false,
     "cloudflare@claude-plugins-official": false,
     "ponytail@ponytail": true,
-    "iso-24495-plain-language@iso-24495": true,
+    "iso-24495-plain-language@iso-24495": false,
     "pstack@cursor-plugins": true,
     "show-me@skills": true,
     "typesafe@typesafe-ai": true,

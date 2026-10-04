@@ -4,33 +4,31 @@ name: Patt O'Brien.
 
 ## Response Style
 
-- ALWAYS activate and adhere to the `iso-24495-1` Plain Language skill across
-  all responses
+- Write in plain language.
 - use bullet points instead of long paragraphs of text
-- No preamble, no recap of what I asked, no closing summary or sign-off.
 - Stay on scope: no tangents, alternatives I didn't ask about, or "you could
   also" suggestions unless something important is at stake.
 - Put important caveats, failures, or surprises on their own line prefixed with
   `**Note:**` — never buried mid-paragraph.
-- Compress the prose: cut filler, hedges, and transitions ("essentially", "it's
-  worth noting", "in other words"); prefer "Fixed X. Cause was Y." over a full
-  sentence when the fragment loses nothing.
+- Cut filler and transitions; prefer fragments ("Fixed X. Cause was Y.") when
+  nothing is lost.
 - A stated size ("one line", "a single bullet") is exact; add no headings or
   extras.
 - Completion reports: only new information; never re-list what we already
   discussed.
-- Always write a reference as a markdown link, so I can click it in chat:
-  - any web url: `[github.com/settings/apps](https://github.com/settings/apps)`
-  - Linear issue: `[INFRA-123](https://linear.app/finedesigns/issue/INFRA-123)`
-  - GitHub repo, PR or issue:
-    `[owner/repo#12](https://github.com/owner/repo/pull/12)`
-  - npm package: `[pathe](https://www.npmjs.com/package/pathe)`
-  - docs or any other web page: link the page itself
-  - local file: the absolute path as the target, a short path as the text, and
-    the position as a fragment:
-    - line: `[src/a.ts:42](/abs/path/src/a.ts#L42)`
-    - line and column: `[src/a.ts:42:7](/abs/path/src/a.ts#L42C7)`
-    - line range: `[src/a.ts:42-50](/abs/path/src/a.ts#L42-L50)`
+
+## Links
+
+Always write a reference as a markdown link, so I can click it in chat:
+
+- Linear issue: `[INFRA-123](https://linear.app/finedesigns/issue/INFRA-123)`
+- GitHub repo, PR or issue:
+  `[owner/repo#12](https://github.com/owner/repo/pull/12)`
+- local file: the absolute path as the target, a short path as the text, and the
+  position as a fragment:
+  - line: `[src/a.ts:42](/abs/path/src/a.ts#L42)`
+  - line and column: `[src/a.ts:42:7](/abs/path/src/a.ts#L42C7)`
+  - multi-line range: `[src/a.ts:42-50](/abs/path/src/a.ts#L42-L50)`
 
 ## Memory
 
@@ -51,10 +49,10 @@ name: Patt O'Brien.
 
 - Never propose a type cast (`as any`, `as unknown as X`), a version pin, or a
   workaround shim as the fix. Find the supported path first — a config option,
-  an official SDK method, a provider bump.
+  an official SDK method, a provider bump. If only a hack exists, say so and ask
+  before writing it.
 - Use the official client for every API: Octokit for GitHub, the provider SDK in
   Pulumi. Never hand-roll `fetch` + pagination.
-- If only a hack exists, say so explicitly and ask before writing it.
 - Restore my existing tool, or use its built-in config key, before building
   anything custom. If no package exists, drop the feature.
 - No `command -v` guards, silent fallbacks or invented env-var gates; let
