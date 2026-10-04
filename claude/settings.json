@@ -24,7 +24,10 @@
     "OTEL_METRICS_EXPORTER": "otlp",
     "OTEL_TRACES_EXPORTER": "otlp"
   },
-  "includeCoAuthoredBy": false,
+  "attribution": {
+    "commit": "",
+    "pr": ""
+  },
   "permissions": {
     "allow": [
       "Bash(pnpm* build*)",
@@ -92,9 +95,6 @@
       "Bash(docker *)",
       "Bash(linear issue *)",
       "Bash(defaults read *)",
-      "mcp__expo-mcp__*",
-      "mcp__plugin_figma_figma__*",
-      "mcp__plugin_figma_figma-desktop__*",
       "WebFetch(domain:code.claude.com)",
       "WebFetch(domain:raw.githubusercontent.com)",
       "WebFetch(domain:unpkg.com)"
@@ -115,20 +115,54 @@
   },
   "model": "opus[1m]",
   "enableAllProjectMcpServers": true,
+  "skillOverrides": {
+    "swamp": "off",
+    "swamp-getting-started": "off",
+    "railpack": "off",
+    "anthropic-skills:docs": "off",
+    "anthropic-skills:docx": "off",
+    "anthropic-skills:google-workspace": "off",
+    "anthropic-skills:import-memory": "off",
+    "anthropic-skills:morning": "off",
+    "anthropic-skills:pdf": "off",
+    "anthropic-skills:pptx": "off",
+    "anthropic-skills:xlsx": "off",
+    "figma-diff": "off",
+    "jsonforms-control": "off",
+    "workmux": "off",
+    "worktree": "off",
+    "coordinator": "off",
+    "merge": "off",
+    "open-pr": "off",
+    "terminal-use": "off",
+    "caveman": "off",
+    "inngest-agent-evals": "name-only",
+    "inngest-agents": "name-only",
+    "inngest-api": "name-only",
+    "inngest-api-cli": "name-only",
+    "inngest-brownfield-audit": "name-only",
+    "inngest-cli": "name-only",
+    "inngest-durable-functions": "name-only",
+    "inngest-events": "name-only",
+    "inngest-flow-control": "name-only",
+    "inngest-middleware": "name-only",
+    "inngest-realtime": "name-only",
+    "inngest-setup": "name-only",
+    "inngest-steps": "name-only",
+    "inngest-v3-v4-migration": "name-only",
+    "mastra": "name-only",
+    "mastra-factory": "name-only",
+    "chat-sdk": "name-only",
+    "axe": "name-only",
+    "microsandbox": "name-only",
+    "opentui": "name-only",
+    "effect-ts": "name-only",
+    "remotion-best-practices": "name-only",
+    "tailscale": "name-only",
+    "typesafe-ai": "name-only"
+  },
   "hooks": {
-    "PreCompact": [],
-    "SessionStart": [
-      {
-        "matcher": "*",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "bash '/Users/patt/.claude/hooks/herdr-agent-state.sh' session",
-            "timeout": 10
-          }
-        ]
-      }
-    ]
+    "SessionStart": [{"matcher":"^(startup|resume|clear|compact|fork)$","hooks":[{"type":"command","command":"bash '/Users/patt/.claude/hooks/herdr-agent-state.sh' session","timeout":10}]}]
   },
   "worktree": {
     "baseRef": "fresh"
@@ -143,20 +177,16 @@
     "code-simplifier@claude-plugins-official": true,
     "commit-commands@claude-plugins-official": false,
     "expo-app-design@expo-plugins": false,
+    "fast-jev-compaction@fast-jev-compaction": false,
     "figma@claude-plugins-official": false,
-    "gopls-lsp@claude-plugins-official": false,
     "linear@claude-plugins-official": true,
-    "lua-lsp@claude-plugins-official": false,
     "plugin-dev@claude-plugins-official": false,
     "pr-review-toolkit@claude-plugins-official": false,
     "skill-creator@claude-plugins-official": true,
     "superwhisper@superwhisper": false,
-    "swift-lsp@claude-plugins-official": false,
-    "typescript-lsp@claude-plugins-official": false,
     "understand-anything@understand-anything": false,
     "patt@pattobrien": true,
     "worktrunk@worktrunk": true,
-    "rust-analyzer-lsp@claude-plugins-official": false,
     "plannotator-effective-html@effective-html": false,
     "codex@openai-codex": false,
     "slack@claude-plugins-official": false,
@@ -263,9 +293,6 @@
   "alwaysThinkingEnabled": true,
   "effortLevel": "xhigh",
   "modelSettings": {
-    "claude-opus-5": {
-      "effortLevel": "medium"
-    },
     "claude-fable-5-1": {
       "effortLevel": "high"
     },
@@ -314,52 +341,5 @@
       "Bash(op read:*)",
       "Bash(op item list:*)"
     ]
-  },
-  "voiceEnabled": true,
-  "skillOverrides": {
-    "swamp": "off",
-    "swamp-getting-started": "off",
-    "railpack": "off",
-    "anthropic-skills:docs": "off",
-    "anthropic-skills:docx": "off",
-    "anthropic-skills:google-workspace": "off",
-    "anthropic-skills:import-memory": "off",
-    "anthropic-skills:morning": "off",
-    "anthropic-skills:pdf": "off",
-    "anthropic-skills:pptx": "off",
-    "anthropic-skills:xlsx": "off",
-    "figma-diff": "off",
-    "jsonforms-control": "off",
-    "workmux": "off",
-    "worktree": "off",
-    "coordinator": "off",
-    "merge": "off",
-    "open-pr": "off",
-    "terminal-use": "off",
-    "caveman": "off",
-    "inngest-agent-evals": "name-only",
-    "inngest-agents": "name-only",
-    "inngest-api": "name-only",
-    "inngest-api-cli": "name-only",
-    "inngest-brownfield-audit": "name-only",
-    "inngest-cli": "name-only",
-    "inngest-durable-functions": "name-only",
-    "inngest-events": "name-only",
-    "inngest-flow-control": "name-only",
-    "inngest-middleware": "name-only",
-    "inngest-realtime": "name-only",
-    "inngest-setup": "name-only",
-    "inngest-steps": "name-only",
-    "inngest-v3-v4-migration": "name-only",
-    "mastra": "name-only",
-    "mastra-factory": "name-only",
-    "chat-sdk": "name-only",
-    "axe": "name-only",
-    "microsandbox": "name-only",
-    "opentui": "name-only",
-    "effect-ts": "name-only",
-    "remotion-best-practices": "name-only",
-    "tailscale": "name-only",
-    "typesafe-ai": "name-only"
   }
 }
