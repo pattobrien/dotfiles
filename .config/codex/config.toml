@@ -313,7 +313,7 @@ enabled = true
 enabled = true
 
 [plugins."vercel@openai-curated"]
-enabled = true
+enabled = false
 
 [plugins."expo@openai-curated"]
 enabled = true
@@ -921,4 +921,8 @@ enabled = false
 
 [[skills.config]]
 name = "tailscale"
+enabled = false
+
+[[skills.config]]
+name = "railpack"
 enabled = false

@@ -198,17 +198,17 @@
     "patt@pattobrien": true,
     "worktrunk@worktrunk": true,
     "rust-analyzer-lsp@claude-plugins-official": false,
-    "plannotator-effective-html@effective-html": true,
-    "codex@openai-codex": true,
+    "plannotator-effective-html@effective-html": false,
+    "codex@openai-codex": false,
     "slack@claude-plugins-official": false,
     "langfuse-observability@langfuse-observability": false,
     "cloudflare@claude-plugins-official": false,
-    "ponytail@ponytail": true,
+    "ponytail@ponytail": false,
     "iso-24495-plain-language@iso-24495": false,
     "pstack@cursor-plugins": true,
     "show-me@skills": true,
     "typesafe@typesafe-ai": true,
-    "vercel@claude-plugins-official": true,
+    "vercel@claude-plugins-official": false,
     "gh-stack@pattobrien": true,
     "claude-md-management@claude-plugins-official": true
   },
@@ -356,5 +356,18 @@
       "Bash(op item list:*)"
     ]
   },
-  "voiceEnabled": true
+  "voiceEnabled": true,
+  "skillOverrides": {
+    "swamp": "off",
+    "swamp-getting-started": "off",
+    "railpack": "off",
+    "anthropic-skills:docs": "off",
+    "anthropic-skills:docx": "off",
+    "anthropic-skills:google-workspace": "off",
+    "anthropic-skills:import-memory": "off",
+    "anthropic-skills:morning": "off",
+    "anthropic-skills:pdf": "off",
+    "anthropic-skills:pptx": "off",
+    "anthropic-skills:xlsx": "off"
+  }
 }
