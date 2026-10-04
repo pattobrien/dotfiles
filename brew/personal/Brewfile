@@ -161,6 +161,8 @@ cask "chromium"
 cask "claude"
 # OpenAI's coding agent that runs in your terminal
 cask "codex"
+# Node-based image, video and audio generator
+cask "comfy"
 # Write, edit, and chat about your code with AI
 cask "cursor"
 # Disk space visualiser
