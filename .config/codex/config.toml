@@ -1,4 +1,4 @@
-model = "gpt-5.6-sol"
+model = "gpt-6.1-sol"
 model_reasoning_effort = "medium"
 personality = "pragmatic"
 sandbox_mode = "danger-full-access"
@@ -158,11 +158,15 @@ trust_level = "trusted"
 [projects."/private/tmp/claude-501/-Users-patt--herdr-worktrees-shed-fix-reviewer-efficiency/3cf54721-4eca-456a-972d-60ddd4af89d5/scratchpad/revtest"]
 trust_level = "trusted"
 
+[projects."/private/tmp/claude-501/-Users-patt--herdr-worktrees-shed-feat-gpt-6-reviewer/6fa50a04-74e1-4567-b3a3-aee1b78609be/scratchpad"]
+trust_level = "trusted"
+
 [notice]
 fast_default_opt_out = true
 
 [notice.model_migrations]
 "gpt-5.3-codex" = "gpt-5.4"
+"gpt-5.6-terra" = "gpt-6-sol"
 
 [apps.connector_openai_hotline]
 enabled = false
@@ -248,9 +252,9 @@ BROWSER_USE_TINYSKY_ENABLED = "1"
 NODE_REPL_INSTRUCTIONS_USE_CASE_BROWSER = ""
 NODE_REPL_INSTRUCTIONS_USE_CASE_CHROME = ""
 BROWSER_USE_CODEX_APP_BUILD_FLAVOR = "prod"
-BROWSER_USE_CODEX_APP_VERSION = "26.915.31945"
-NODE_REPL_TRUSTED_SERVICES = '{"browser":"/Users/patt/.codex/plugins/cache/openai-bundled/browser/26.915.31945/scripts/browser-service.mjs"}'
-CODEX_CLI_PATH = "/Applications/ChatGPT.app/Contents/Resources/codex"
+BROWSER_USE_CODEX_APP_VERSION = "26.924.51851"
+NODE_REPL_TRUSTED_SERVICES = '{"browser":"/Users/patt/.codex/plugins/cache/openai-bundled/browser/26.924.51851/scripts/browser-service.mjs"}'
+CODEX_CLI_PATH = "/Applications/ChatGPT.app/Contents/Resources/codex-cli/CodexCLI.app/Contents/MacOS/codex"
 
 [marketplaces.openai-bundled]
 source_type = "local"
@@ -402,6 +406,7 @@ status_line = [
 ]
 status_line_use_colors = true
 vim_mode_default = true
+screen_reader_detection_done = true
 
 [tui.keymap.editor]
 insert_newline = "shift-enter"
