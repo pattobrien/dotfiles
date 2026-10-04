@@ -15,6 +15,10 @@ name: Patt O'Brien.
 - Compress the prose: cut filler, hedges, and transitions ("essentially", "it's
   worth noting", "in other words"); prefer "Fixed X. Cause was Y." over a full
   sentence when the fragment loses nothing.
+- A stated size ("one line", "a single bullet") is exact; add no headings or
+  extras.
+- Completion reports: only new information; never re-list what we already
+  discussed.
 - Always write a reference as a markdown link, so I can click it in chat:
   - any web url: `[github.com/settings/apps](https://github.com/settings/apps)`
   - Linear issue: `[INFRA-123](https://linear.app/finedesigns/issue/INFRA-123)`
@@ -51,6 +55,26 @@ name: Patt O'Brien.
 - Use the official client for every API: Octokit for GitHub, the provider SDK in
   Pulumi. Never hand-roll `fetch` + pagination.
 - If only a hack exists, say so explicitly and ask before writing it.
+- Restore my existing tool, or use its built-in config key, before building
+  anything custom. If no package exists, drop the feature.
+- No `command -v` guards, silent fallbacks or invented env-var gates; let
+  missing tools fail loudly.
+
+## Verification
+
+- Validate and reproduce everything yourself in staging; never hand me a test
+  checklist. Screenshot before claiming any browser state.
+- If your conclusion contradicts what I said about my own system, check the
+  source first.
+
+## Herdr
+
+- Never launch anything with focus; always `--no-focus`, then tell me where it
+  is.
+- Test herdr only in a separate `herdr --session <name>`, never my live session.
+- PR branches go in `herdr worktree create`; the main checkout stays on `main`.
+- Run tests in their own herdr tab, never the Bash tool; never pipe through
+  `tail`.
 
 ## Visual Artifacts
 
@@ -81,6 +105,8 @@ Common directories/repositories to be aware of:
 - Monitor tool: use `timeout_ms: 480000` unless a shorter watch fits; never
   above `600000`.
 - Use `gh` for anything GitHub-related, not WebSearch.
+- Use `pnpx`, never `npx`.
+- Poll command output with ~5s timeouts and repeat; no long blocking waits.
 
 ### Typical Commands in a Monorepo
 
@@ -114,3 +140,4 @@ pnpm ready # root only: `vp check && vp run -r test && vp run -r build`
 
 - write scripts in Typescript (Node or Bun), not bash/zsh
 - DO NOT USE EXCESSIVE DOC COMMENTS; well-written code is self-documenting
+- No explanatory or meta comments in any file (code, configs, docs)
