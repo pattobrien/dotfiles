@@ -126,6 +126,7 @@ typst = "latest"
 jq = "latest"
 protoc = "latest"
 "github:steipete/peekaboo" = { version = "latest", os = ["macos"] }
+"github:cameroncooke/AXe" = { version = "latest", asset_pattern = "AXe-macOS-*-universal.tar.gz", exe = "axe", os = ["macos"] }
 "github:openclaw/gogcli" = { version = "latest", exe = "gog" }
 hcloud = "latest"
 "github:alltuner/mise-completions-sync" = "latest"

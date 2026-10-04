@@ -148,8 +148,6 @@ brew "leoafarias/fvm/fvm", trusted: true
 brew "namespacelabs/namespace/nsc", trusted: true
 # Opinionated workflow tool that orchestrates git worktrees and tmux
 brew "raine/workmux/workmux", link: false, trusted: true
-# Lightning-fast macOS screenshots & AI vision analysis
-brew "steipete/tap/peekaboo", trusted: true
 # Spins up lightweight VMs in milliseconds from SDKs
 brew "superradcompany/tap/microsandbox", trusted: true
 # Password manager that keeps all passwords secure behind one password
