@@ -162,7 +162,18 @@
     "typesafe-ai": "name-only"
   },
   "hooks": {
-    "SessionStart": [{"matcher":"^(startup|resume|clear|compact|fork)$","hooks":[{"type":"command","command":"bash '/Users/patt/.claude/hooks/herdr-agent-state.sh' session","timeout":10}]}]
+    "SessionStart": [
+      {
+        "matcher": "^(startup|resume|clear|compact|fork)$",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash '/Users/patt/.claude/hooks/herdr-agent-state.sh' session",
+            "timeout": 10
+          }
+        ]
+      }
+    ]
   },
   "worktree": {
     "baseRef": "fresh"
@@ -199,7 +210,8 @@
     "typesafe@typesafe-ai": false,
     "vercel@claude-plugins-official": false,
     "gh-stack@pattobrien": true,
-    "claude-md-management@claude-plugins-official": true
+    "claude-md-management@claude-plugins-official": true,
+    "gh-channels@pattobrien": false
   },
   "extraKnownMarketplaces": {
     "claude-notifications-go": {
