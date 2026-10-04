@@ -1,7 +1,6 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-settings.json",
   "cleanupPeriodDays": 365,
-  "crossSessionInbound": "accept",
   "env": {
     "CLAUDE_CODE_DISABLE_FEEDBACK_SURVEY": "1",
     "CLAUDE_CODE_ENABLE_CFC": "1",
@@ -27,7 +26,6 @@
   },
   "includeCoAuthoredBy": false,
   "permissions": {
-    "additionalDirectories": ["~"],
     "allow": [
       "Bash(pnpm* build*)",
       "Bash(pnpm* format*)",
@@ -101,9 +99,19 @@
       "WebFetch(domain:raw.githubusercontent.com)",
       "WebFetch(domain:unpkg.com)"
     ],
-    "deny": ["Bash(npm *)", "Bash(npx *)", "mcp__ide__getDiagnostics"],
-    "ask": ["Bash(brew install *)"],
-    "defaultMode": "bypassPermissions"
+    "deny": [
+      "Bash(npm *)",
+      "Bash(npx *)",
+      "mcp__ide__getDiagnostics",
+      "Artifact"
+    ],
+    "ask": [
+      "Bash(brew install *)"
+    ],
+    "defaultMode": "bypassPermissions",
+    "additionalDirectories": [
+      "~"
+    ]
   },
   "model": "opus[1m]",
   "enableAllProjectMcpServers": true,
@@ -201,7 +209,8 @@
     "show-me@skills": true,
     "typesafe@typesafe-ai": true,
     "vercel@claude-plugins-official": true,
-    "gh-stack@pattobrien": true
+    "gh-stack@pattobrien": true,
+    "claude-md-management@claude-plugins-official": true
   },
   "extraKnownMarketplaces": {
     "claude-notifications-go": {
@@ -293,7 +302,6 @@
   "outputStyle": "Concise",
   "feedbackDrafts": "off",
   "alwaysThinkingEnabled": true,
-  "showThinkingSummaries": true,
   "effortLevel": "xhigh",
   "modelSettings": {
     "claude-opus-5": {
@@ -330,11 +338,13 @@
     "enabled": true,
     "mode": "hold"
   },
+  "showThinkingSummaries": true,
   "skipDangerousModePermissionPrompt": true,
   "theme": "dark",
   "editorMode": "vim",
   "preferredNotifChannel": "notifications_disabled",
   "remoteControlAtStartup": true,
+  "crossSessionInbound": "accept",
   "agentPushNotifEnabled": true,
   "autoMode": {
     "allow": [
