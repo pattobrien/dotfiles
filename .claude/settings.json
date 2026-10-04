@@ -5,5 +5,6 @@
     "deny": [],
     "additionalDirectories": ["~"]
   },
-  "outputStyle": "Concise"
+  "outputStyle": "Concise",
+  "autoMemoryDirectory": "~/dev/pattobrien/notes/memories/dotfiles"
 }
