@@ -199,14 +199,15 @@
     "plannotator-effective-html@effective-html": true,
     "codex@openai-codex": true,
     "slack@claude-plugins-official": false,
-    "langfuse-observability@langfuse-observability": true,
+    "langfuse-observability@langfuse-observability": false,
     "cloudflare@claude-plugins-official": false,
     "ponytail@ponytail": true,
     "iso-24495-plain-language@iso-24495": true,
     "pstack@cursor-plugins": true,
     "show-me@skills": true,
     "typesafe@typesafe-ai": true,
-    "vercel@claude-plugins-official": true
+    "vercel@claude-plugins-official": true,
+    "gh-stack@pattobrien": true
   },
   "extraKnownMarketplaces": {
     "claude-notifications-go": {
