@@ -149,7 +149,11 @@ docker-cli = "latest"
 "cargo:fre" = "latest"
 
 [hooks]
-postinstall = "misecompsync --new-only --shell zsh"
+postinstall = [
+  "misecompsync --new-only --shell zsh",
+  "herdr integration install claude",
+  "herdr integration install codex",
+]
 
 [tasks.dotfiles]
 description = "Navigate to dotfiles"
