@@ -138,8 +138,6 @@ brew "zsh"
 brew "zsh-autosuggestions"
 # Fish shell like syntax highlighting for zsh
 brew "zsh-syntax-highlighting"
-# The AI coding agent built for the terminal.
-brew "anomalyco/tap/opencode", trusted: true
 # Defaults setting for macOS
 brew "dsully/tap/macos-defaults"
 # Simple hotkey-daemon for macOS.
