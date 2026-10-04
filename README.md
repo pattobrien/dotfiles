@@ -65,15 +65,7 @@ sh ~/dev/pattobrien/dotfiles/install vscode
 > **Note:** Some macOS settings (e.g. mouse/trackpad scaling, key repeat) only
 > take effect after a logout or restart once the `install macos` step has run.
 
-### 4. Set permissions
-
-Sets permissions for required files (only required once on the system)
-
-```sh
-chmod +x ~/.local/scripts/tmux-sessionizer
-```
-
-### 5. Restore app settings (from 2026-07 machine migration)
+### 4. Restore app settings (from 2026-07 machine migration)
 
 Settings snapshots from the previous MacBook live in two places:
 
@@ -192,16 +184,17 @@ Shortcuts are split across layers, each scoped to a specific context.
   - Same F-key relay pattern as Cmd+key
 - **Hammerflow (F18 leader)** — system-wide app switching and cross-app
   workflows
-  - Defined in: `hammerflow.toml`
+  - Defined in: `.config/hammerspoon/hammerflow.toml`
   - F18 is mapped from Right Cmd via Karabiner
 - **Hammerspoon direct hotkeys** — system-wide shortcuts that need scripting
   logic
-  - Defined in: `hammerspoon/init.lua`
+  - Defined in: `.config/hammerspoon/init.lua`
 - **Karabiner** — hardware-level key remaps (Caps Lock → Esc/Ctrl, Right Cmd →
   F18)
-  - Defined in: `karabiner/karabiner.json`
+  - Defined in: `.config/karabiner/karabiner.json`
 - **Neovim** — editor keymaps (leader = Space)
-  - Defined in: `nvim/lua/pattobrien/remap.lua`, `nvim/after/plugin/*.lua`
+  - Defined in: `.config/nvim/lua/config/keymaps.lua`,
+    `.config/nvim/lua/plugins/*.lua`
 
 ## Troubleshooting
 
@@ -237,148 +230,13 @@ macOS to re-create it in the same broken state.
 
 ## TODO
 
-- [x] Add zsh config
-- [x] Add Brewfile
-- [x] Add NVIM config
-- [x] Add tmux config
-- [x] Add kitty config
-- [x] Separate brew packages into separate files
-- [x] Clean up outdated /scripts/ folder
-- [x] BUG: tmux requirement in .zshrc causes terminal crash when tmux is not yet
-      installed
-- [x] Add VSCode config
-- [x] Steps for initializing TMUX plugins
-- [x] setup 1password in case passwords are needed for app installations
-- [x] can `xcode-select --install` be run from the install script?
-- [x] does asdf have a zsh autocomplete plugin?
 - [ ] Raycast settings import script (Cloud Sync is premium; the exported
       `.config/macos-defaults/exports/raycast.yaml` is currently never applied)
-
-### Notes from previous setup runs
-
-- [x] existing real dotfiles (e.g. a stock `~/.zshenv`) are backed up to
-      `<file>.bak` before linking, so the first `install` no longer fails on a
-      fresh/migrated Mac — see `scripts/backup_dotfiles.zsh`
-- [x] error: zshrc sourced oh-my-zsh.sh before it existed — `setup_omz.zsh` now
-      installs Oh My Zsh first
-
-```
-/Users/fern/.zshrc:source:97: no such file or directory: /Users/fern/.oh-my-zsh/oh-my-zsh.sh
-```
-
-- brew: too many apps were installed
-  - [x] should maintain a `work` set of apps
-- mac settings
-  - [x] mouse/trackpad
+- [ ] Raycast does not override Cmd+K
+- macOS settings
   - [ ] window / desktop transition
-  - [x] finder settings
-  - [ ] apple account signed in? (should this just be a part of the get started
-        guide?)
-  - [ ] accessibility/privacy settings per-app (e.g. Zoom needs screen-share
-        access)
-  - [ ] settings for apps that open on startup
-    - BetterTouchTool
-    - RayCast
-    - 1Password
-    - eul
-  - [x] auto-hide dock
-  - [x] allow holding down `hjkl` keys (I think this was a keyboard config?)
-  - [ ] raycast did not override command+K
   - [ ] dock apps
-- [ ] apps that require settings sync
-  - [x] eul (`exports/eul.yaml`)
-  - [x] raycast (`exports/raycast.yaml` + `.rayconfig` in machine-backup)
-  - [x] shottr (`exports/shottr.yaml`; license in machine-backup)
-  - [ ] Messages (disable notification sounds)
-  - [ ]
-- [x] vscode settings / profile (synced via `stow_vscode.sh`; extensions via
-      brew)
-- manual app setup steps:
-  - [x] 1password sign-in
-  - [ ] github sign-in
-- [ ] make `/dev` default directory
-- chrome settings
-  - [ ] 1password extensions (and others)
-  - [ ] bookmarks?
-- [x] install default sdks (migrated asdf → mise; `mise install` bootstraps from
-      config)
-  - e.g. `fvm install stable && fvm install beta && fvm install master`
-  - sdks to install:
-    - flutter (fvm)
-    - node (asdf)
-    - ts (asdf)
-    - go (asdf)
-    - typescript (via `npm i -g`)
-
-```console
-asdf plugin add golang && asdf plugin add nodejs && asdf plugin add deno
-asdf install golang latest && asdf install nodejs latest && asdf plugin install deno latest
-asdf global golang latest && asdf global nodejs latest && asdf global deno latest
-```
-
-- [ ] automatically accept xcode license (`xcodebuild -license accept`)
-- [x] needed to comment out `1password` zsh plugin in `.zshrc`, because `op`
-      doesnt have the proper permissions (now re-enabled)
-- xcode select tools:
-  - [ ] update to latest version (using `softwareupdate` ?)
-  - [ ] approve terms (using `softwareupdate` ?)
-
-### TODO: Agentic App Authorization
-
-Using Claude Code + computer_use/browser_use plugins to authorize apps using the
-credentials stored in 1password (without the agent needing to copy/paste
-credentials into it's session).
-
-- web apps:
-  - chrome profile login
-  - google apps (e.g. gmail)
-  - github
-  - claude
-  - reddit (personal)
-  - vercel
-  - expo
-  - neon DB
-  - cursor
-  - vs-code
-  - youtube (personal account, which has YT red/premium)
-  - figma (personal)
-  - linear (personal)
-  - spotify
-  - raycast
-- desktop apps (most use web-based oauth):
-  - claude desktop
-  - cursor
-  - spotify
-  - linear
-  - vscode
-  - codex app
-  - figma
-  - raycast
-  - chatgpt
-  - slack
-  - discord
-  - zoom
-  - loom
-  - docker-desktop
-  - expo-orbit
-  - brave-browser
-  - android-studio
-  - obsidian
-  - shottr (license setup)
-- desktop apps (no auth needed, just need to be opened to initialize)
-  - karabiner elements
-- macOS permissions (grant via System Settings → Privacy & Security)
-  - [ ] script to check each app's granted permissions (query TCC.db)
-  - hammerspoon (Accessibility)
-  - kitty (Full Disk Access)
-- cli apps (most use web-based oauth):
-  - claude-code
-  - gh
-  - vercel
-  - expo
-  - linear
-  - neonctl
-  - doctl
-  - flyctl
-  - railway
-  - mas
+  - [ ] apps that open on startup (BetterTouchTool, Raycast, 1Password, eul)
+  - [ ] per-app accessibility/privacy permissions (e.g. Zoom screen share,
+        Hammerspoon Accessibility, kitty Full Disk Access)
+  - [ ] Messages: disable notification sounds
