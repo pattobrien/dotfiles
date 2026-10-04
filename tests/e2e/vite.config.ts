@@ -16,7 +16,6 @@ const serverDeps = {
 };
 
 export default defineConfig({
-  fmt: {},
   test: {
     include: ["tests/integration/**/*.test.ts", "tests/e2e/**/*.test.ts"],
     reporters: [

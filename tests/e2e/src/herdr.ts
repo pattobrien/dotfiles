@@ -43,7 +43,14 @@ export async function createHerdrSession(
   options: HerdrSessionOptions = {},
 ): Promise<HerdrTestSession> {
   const name = `e2e-${randomUUID().slice(0, 8)}`;
-  const socketPath = path.join(homedir(), ".config", "herdr", "sessions", name, "herdr.sock");
+  const socketPath = path.join(
+    homedir(),
+    ".config",
+    "herdr",
+    "sessions",
+    name,
+    "herdr.sock",
+  );
   const backend = options.backend ?? createTermlessBackend();
 
   const term = (await backend.launch(["herdr", "--session", name], {
@@ -66,7 +73,9 @@ export async function createHerdrSession(
   }
   if (!socketReady) {
     await term.dispose();
-    throw new Error(`herdr session ${name}: socket never appeared at ${socketPath}`);
+    throw new Error(
+      `herdr session ${name}: socket never appeared at ${socketPath}`,
+    );
   }
 
   const client = new Herdr({ socketPath });

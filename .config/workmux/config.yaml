@@ -10,7 +10,8 @@ base_branch: origin/main
 pre_create:
   - git fetch origin --prune
   # ff-only can never rewrite or lose anything; fails harmlessly if main diverged
-  - 'git merge --ff-only origin/main || echo "note: local main not fast-forwarded"'
+  - 'git merge --ff-only origin/main || echo "note: local main not
+    fast-forwarded"'
 
 worktree_naming: basename # full | basename
 # worktree_dir: "{project}-wt"

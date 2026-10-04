@@ -7,10 +7,14 @@ platforms = ["macos", "linux"]
 
 [[events]]
 on = "workspace.focused"
-command = ["sh", "-c", '''
+command = [
+  "sh",
+  "-c",
+  '''
 id=$(printf '%s' "$HERDR_PLUGIN_EVENT_JSON" | jq -r '.data.workspace_id')
 label=$("$HERDR_BIN_PATH" workspace get "$id" | jq -r '.result.workspace.label')
 fre --store_name herdr-workspaces.json --add "$label"
 branch=$("$HERDR_BIN_PATH" worktree list --workspace "$id" | jq -r --arg id "$id" 'first(.result.worktrees[]? | select(.open_workspace_id == $id and .is_linked_worktree) | .branch // empty)')
 if [ -n "$branch" ]; then fre --store_name herdr-worktrees.json --add "$branch"; fi
-''']
+''',
+]

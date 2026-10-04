@@ -29,11 +29,14 @@ for (const backend of backends) {
   });
 
   test(`${backend.name}: raw stream preserves SGR sequences`, async () => {
-    const session = await backend.launch(["/usr/bin/printf", "\\033[1mbold-marker\\033[0m\\n"], {
-      cols: 40,
-      rows: 5,
-      label: `conformance ${backend.name} sgr`,
-    });
+    const session = await backend.launch(
+      ["/usr/bin/printf", "\\033[1mbold-marker\\033[0m\\n"],
+      {
+        cols: 40,
+        rows: 5,
+        label: `conformance ${backend.name} sgr`,
+      },
+    );
     try {
       await session.waitFor("bold-marker", 5_000);
       expect(session.raw()).toContain("\x1b[1m");

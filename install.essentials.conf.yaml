@@ -13,13 +13,16 @@
     # personal/work/server/runner bundles run later.
     # koekeishiya/formulae (skhd/yabai) now redirects upstream to asmvik/formulae,
     # so both names are trusted to cover the redirect on fresh installs.
-    - command: brew trust --tap anomalyco/tap asmvik/formulae dsully/tap koekeishiya/formulae leoafarias/fvm raine/workmux
+    - command:
+        brew trust --tap anomalyco/tap asmvik/formulae dsully/tap
+        koekeishiya/formulae leoafarias/fvm raine/workmux
       description: Trusting third-party Homebrew taps
     - command: brew bundle --file brew/essentials/Brewfile
       description: Installing essential packages
     - command: ./scripts/dequarantine.zsh
       description: Removing the quarantine flag from installed apps
-    - command: test -d ~/.oh-my-zsh/custom/plugins/zsh-pnpm-completions || git clone
+    - command:
+        test -d ~/.oh-my-zsh/custom/plugins/zsh-pnpm-completions || git clone
         https://github.com/michakfromparis/zsh-pnpm-completions
         ~/.oh-my-zsh/custom/plugins/zsh-pnpm-completions
       description: Installing pnpm completions

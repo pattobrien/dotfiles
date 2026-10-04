@@ -37,7 +37,10 @@ declare module "vitest" {
   }
 }
 
-async function attachRecording(task: Parameters<typeof recordArtifact>[0], cast: string | null) {
+async function attachRecording(
+  task: Parameters<typeof recordArtifact>[0],
+  cast: string | null,
+) {
   if (cast === null) return;
   await recordArtifact(task, {
     type: "e2e:recording",
@@ -49,7 +52,11 @@ async function attachRecording(task: Parameters<typeof recordArtifact>[0], cast:
  * Reset buffer and assert clean state, retrying once if transient plugin
  * floats (which-key, noice) haven't settled yet.
  */
-async function resetAndAssert(nvim: NvimInstance, label: string, testName?: string) {
+async function resetAndAssert(
+  nvim: NvimInstance,
+  label: string,
+  testName?: string,
+) {
   await nvim.resetBuffer(testName);
   let violations = await nvim.checkStartState();
   if (violations.length > 0) {
@@ -58,7 +65,9 @@ async function resetAndAssert(nvim: NvimInstance, label: string, testName?: stri
     await nvim.resetBuffer(testName);
     violations = await nvim.checkStartState();
     if (violations.length > 0) {
-      throw new Error(`nvim not in start state ${label} test:\n  ${violations.join("\n  ")}`);
+      throw new Error(
+        `nvim not in start state ${label} test:\n  ${violations.join("\n  ")}`,
+      );
     }
   }
 }
@@ -109,13 +118,18 @@ export const test = base
       // browser-mode producer — the terminal reporter prints
       // attachments[0].originalPath under the failure.
       if (task.result?.state === "fail") {
-        const dir = path.resolve(import.meta.dirname, "../test-results/failures");
+        const dir = path.resolve(
+          import.meta.dirname,
+          "../test-results/failures",
+        );
         mkdirSync(dir, { recursive: true });
         const file = path.join(dir, `${safeName}.svg`);
         writeFileSync(file, rawNvim.term.term.screenshotSvg());
         await recordArtifact(task, {
           type: "internal:failureScreenshot",
-          attachments: [{ contentType: "image/svg+xml", path: file, originalPath: file }],
+          attachments: [
+            { contentType: "image/svg+xml", path: file, originalPath: file },
+          ],
         } satisfies FailureScreenshotArtifact);
       }
       // The worker's recording grows across the file's tests; each test
@@ -128,14 +142,17 @@ export const test = base
   })
 
   // Test-scoped: isolated herdr server + SDK client + attached emulator.
-  .extend("herdr", async ({ task }, { onCleanup }): Promise<HerdrTestSession> => {
-    const session = await createHerdrSession({ label: `herdr ${task.name}` });
-    onCleanup(async () => {
-      await attachRecording(task, session.term.save());
-      await session.dispose();
-    });
-    return session;
-  })
+  .extend(
+    "herdr",
+    async ({ task }, { onCleanup }): Promise<HerdrTestSession> => {
+      const session = await createHerdrSession({ label: `herdr ${task.name}` });
+      onCleanup(async () => {
+        await attachRecording(task, session.term.save());
+        await session.dispose();
+      });
+      return session;
+    },
+  )
 
   // Worker-scoped: real kitty OS window attached to the tmux fixture.
   .extend("kitty", { scope: "worker" }, async ({ tmux }) => {

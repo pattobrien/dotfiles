@@ -9,7 +9,10 @@ import { expect } from "vite-plus/test";
 
 import { test } from "../fixtures.ts";
 
-const FIXTURE_DIR = path.resolve(import.meta.dirname, "../../fixtures/ts-project");
+const FIXTURE_DIR = path.resolve(
+  import.meta.dirname,
+  "../../fixtures/ts-project",
+);
 
 /** Wait for a non-copilot LSP client to attach to the current buffer. */
 async function waitForLspClient(client: NeovimClient, timeoutMs = 5_000) {
@@ -37,8 +40,13 @@ async function waitForDiagnostic(client: NeovimClient, timeoutMs = 5_000) {
  * Launch nvim at a shell prompt inside the multiplexer under test and attach
  * an RPC client to it. `runCommand` types the command and presses Enter.
  */
-async function launchNvim(runCommand: (command: string) => Promise<void>): Promise<NeovimClient> {
-  const socket = path.join(os.tmpdir(), `nvim-e2e-${randomUUID().slice(0, 8)}.sock`);
+async function launchNvim(
+  runCommand: (command: string) => Promise<void>,
+): Promise<NeovimClient> {
+  const socket = path.join(
+    os.tmpdir(),
+    `nvim-e2e-${randomUUID().slice(0, 8)}.sock`,
+  );
   await runCommand(`nvim --cmd 'set noswapfile' --listen ${socket}`);
 
   const deadline = Date.now() + 5_000;
@@ -47,7 +55,8 @@ async function launchNvim(runCommand: (command: string) => Promise<void>): Promi
       await fs.access(socket);
       break;
     } catch {
-      if (Date.now() > deadline) throw new Error(`nvim socket never appeared at ${socket}`);
+      if (Date.now() > deadline)
+        throw new Error(`nvim socket never appeared at ${socket}`);
       await new Promise((r) => setTimeout(r, 100));
     }
   }
@@ -102,7 +111,9 @@ async function expectSquiggle(
       local n = tonumber((C.red:gsub("#", "")), 16)
       return { math.floor(n / 65536) % 256, math.floor(n / 256) % 256, n % 256 }
     `)) as [number, number, number];
-  const redUnderline = new RegExp(`\\x1b\\[58[;:]2[;:]{1,2}${red[0]}[;:]${red[1]}[;:]${red[2]}m`);
+  const redUnderline = new RegExp(
+    `\\x1b\\[58[;:]2[;:]{1,2}${red[0]}[;:]${red[1]}[;:]${red[2]}m`,
+  );
 
   // The redraw reaches the outer terminal asynchronously.
   const deadline = Date.now() + 3_000;
@@ -112,7 +123,9 @@ async function expectSquiggle(
     output = await readOutput();
   }
 
-  const seen = [...new Set(output.match(new RegExp(`${ESC}\\[[0-9;:]*m`, "g")) ?? [])]
+  const seen = [
+    ...new Set(output.match(new RegExp(`${ESC}\\[[0-9;:]*m`, "g")) ?? []),
+  ]
     .filter((sgr) => /(^|[;[])4[:;m]|58[;:]/.test(sgr))
     .map((sgr) => JSON.stringify(sgr))
     .join(" ");
@@ -138,7 +151,9 @@ test(
   "diagnostic underline renders as red squiggle through tmux",
   { timeout: 20_000 },
   async ({ tmux }) => {
-    const client = await launchNvim((command) => tmux.sendKeys(command, "Enter"));
+    const client = await launchNvim((command) =>
+      tmux.sendKeys(command, "Enter"),
+    );
 
     try {
       await openErrorFile(client);
@@ -167,7 +182,9 @@ test(
     await term.waitFor(/\+/, 5_000);
 
     const pane = await herdrClient.panes.current();
-    const client = await launchNvim((command) => herdrClient.panes.run(pane.id, command));
+    const client = await launchNvim((command) =>
+      herdrClient.panes.run(pane.id, command),
+    );
 
     try {
       await openErrorFile(client);

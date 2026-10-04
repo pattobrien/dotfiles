@@ -27,7 +27,10 @@ export interface TmuxSession {
    * Attach an emulator client to this session (tmux as system under test,
    * emulator as data plane for rendering asserts).
    */
-  attachTerm: (opts?: { cols?: number; rows?: number }) => Promise<TermlessSession>;
+  attachTerm: (opts?: {
+    cols?: number;
+    rows?: number;
+  }) => Promise<TermlessSession>;
   /** Kill the tmux server (and any emulator clients attached to it). */
   dispose: () => Promise<void>;
 }
@@ -44,12 +47,16 @@ function buildSession(socket: string, session: string): TmuxSession {
     },
 
     async capture() {
-      const { stdout } = await execaCommand(`tmux -L ${socket} capture-pane -t ${session} -p`);
+      const { stdout } = await execaCommand(
+        `tmux -L ${socket} capture-pane -t ${session} -p`,
+      );
       return stdout;
     },
 
     async captureRaw() {
-      const { stdout } = await execaCommand(`tmux -L ${socket} capture-pane -t ${session} -pe`);
+      const { stdout } = await execaCommand(
+        `tmux -L ${socket} capture-pane -t ${session} -pe`,
+      );
       return stdout;
     },
 
@@ -57,15 +64,25 @@ function buildSession(socket: string, session: string): TmuxSession {
       const deadline = Date.now() + timeoutSecs * 1000;
       const re = new RegExp(pattern);
       while (Date.now() < deadline) {
-        const { stdout } = await execaCommand(`tmux -L ${socket} capture-pane -t ${session} -p`);
+        const { stdout } = await execaCommand(
+          `tmux -L ${socket} capture-pane -t ${session} -p`,
+        );
         if (re.test(stdout)) return;
         await new Promise((r) => setTimeout(r, 100));
       }
-      throw new Error(`Timed out after ${timeoutSecs}s waiting for: ${pattern}`);
+      throw new Error(
+        `Timed out after ${timeoutSecs}s waiting for: ${pattern}`,
+      );
     },
 
     async runCommand(...args: string[]) {
-      const { stdout } = await execa("tmux", ["-L", socket, ...args, "-t", session]);
+      const { stdout } = await execa("tmux", [
+        "-L",
+        socket,
+        ...args,
+        "-t",
+        session,
+      ]);
       return stdout;
     },
 

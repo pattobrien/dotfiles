@@ -1,14 +1,27 @@
 import { mkdirSync, writeFileSync } from "node:fs";
 import path from "node:path";
 
-import { createRecording, createTerminal, encodeAsciicast, millisToMicros } from "@termless/core";
+import {
+  createRecording,
+  createTerminal,
+  encodeAsciicast,
+  millisToMicros,
+} from "@termless/core";
 import type { IoEvent, TerminalBackend, TestTerminal } from "@termless/core";
 import { resolve as resolveGhostty } from "@termless/ghostty";
 import { resolve as resolveKitty } from "@termless/kitty";
 
-import { pollFor, type TermBackend, type TermLaunchOptions, type TermSession } from "./backend.ts";
+import {
+  pollFor,
+  type TermBackend,
+  type TermLaunchOptions,
+  type TermSession,
+} from "./backend.ts";
 
-const RECORDINGS_DIR = path.resolve(import.meta.dirname, "../../test-results/recordings");
+const RECORDINGS_DIR = path.resolve(
+  import.meta.dirname,
+  "../../test-results/recordings",
+);
 
 function sanitize(label: string): string {
   return label.replace(/[^a-zA-Z0-9-_.]/g, "_");
@@ -56,14 +69,18 @@ function uniqueLabel(label: string): string {
 export function createTermlessBackend(
   backendName = process.env.E2E_TERM_BACKEND ?? "ghostty",
 ): TermBackend & {
-  launch(command: string[], options?: TermLaunchOptions): Promise<TermlessSession>;
+  launch(
+    command: string[],
+    options?: TermLaunchOptions,
+  ): Promise<TermlessSession>;
 } {
   return {
     name: `termless:${backendName}`,
 
     async launch(command, options = {}) {
       const factory = FACTORIES[backendName];
-      if (!factory) throw new Error(`no factory registered for backend "${backendName}"`);
+      if (!factory)
+        throw new Error(`no factory registered for backend "${backendName}"`);
       const b = await factory();
       const cols = options.cols ?? 200;
       const rows = options.rows ?? 50;
@@ -95,7 +112,10 @@ export function createTermlessBackend(
         const file = path.join(RECORDINGS_DIR, `${sanitize(label)}.cast`);
         writeFileSync(
           file,
-          encodeAsciicast(recording, { title: label, timestamp: Math.floor(start / 1000) }),
+          encodeAsciicast(recording, {
+            title: label,
+            timestamp: Math.floor(start / 1000),
+          }),
         );
         return file;
       };

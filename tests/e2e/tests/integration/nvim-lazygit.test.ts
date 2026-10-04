@@ -8,7 +8,9 @@ import { expect } from "vite-plus/test";
 import { pollFor } from "../../src/term/backend.ts";
 import { test } from "../fixtures.ts";
 
-test("lazygit 'o' opens file in nvim buffer, not external editor", async ({ nvim }) => {
+test("lazygit 'o' opens file in nvim buffer, not external editor", async ({
+  nvim,
+}) => {
   // Hermetic repo: lazygit's Files panel lists this repo's changes, so the
   // test controls exactly what 'o' opens (the suite's own checkout may be
   // clean, leaving lazygit with nothing to select).
@@ -29,7 +31,10 @@ test("lazygit 'o' opens file in nvim buffer, not external editor", async ({ nvim
     // lazygit. Mode isn't screen-observable, so this one waits on RPC.
     if ((await nvim.getMode()) !== "t") {
       await nvim.command("startinsert");
-      await pollFor(async () => (await nvim.getMode()) === "t", "terminal-insert mode");
+      await pollFor(
+        async () => (await nvim.getMode()) === "t",
+        "terminal-insert mode",
+      );
     }
 
     // Files panel is focused by default, in tree view — toggle to the flat

@@ -73,7 +73,9 @@ async function kittyWindowExists(): Promise<boolean> {
  * land there while assertions read the fresh server — so it is closed and
  * recreated, never reused.
  */
-export async function createKittyInstance(tmux: TmuxSession): Promise<KittyInstance> {
+export async function createKittyInstance(
+  tmux: TmuxSession,
+): Promise<KittyInstance> {
   const socket = await findKittySocket();
   if (await kittyWindowExists()) {
     await execa("kitty", [
@@ -171,7 +173,14 @@ function buildKittyInstance(tmux: TmuxSession): KittyInstance {
 
     async getText(opts?: { ansi?: boolean }) {
       const socket = await findKittySocket();
-      const args = ["@", "--to", socket, "get-text", "--match", `title:${E2E_WINDOW_TITLE}`];
+      const args = [
+        "@",
+        "--to",
+        socket,
+        "get-text",
+        "--match",
+        `title:${E2E_WINDOW_TITLE}`,
+      ];
       if (opts?.ansi) args.push("--ansi");
       const { stdout } = await execa("kitty", args);
       return stdout;

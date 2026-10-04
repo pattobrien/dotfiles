@@ -52,7 +52,8 @@ export class CtrfReporter implements Reporter {
       for (const test of module.children.allTests()) {
         const result = test.result();
         const diagnostic = test.diagnostic();
-        const error = result.state === "failed" ? result.errors?.[0] : undefined;
+        const error =
+          result.state === "failed" ? result.errors?.[0] : undefined;
         tests.push({
           name: test.fullName,
           status: toCtrfStatus(result.state),
@@ -66,7 +67,8 @@ export class CtrfReporter implements Reporter {
       }
     }
 
-    const count = (status: CtrfStatus) => tests.filter((t) => t.status === status).length;
+    const count = (status: CtrfStatus) =>
+      tests.filter((t) => t.status === status).length;
     const report = {
       reportFormat: "CTRF",
       specVersion: "0.0.0",
@@ -88,7 +90,10 @@ export class CtrfReporter implements Reporter {
 
     const dir = path.resolve(this.#ctx.config.root, this.#outputDir);
     mkdirSync(dir, { recursive: true });
-    writeFileSync(path.join(dir, this.#outputFile), JSON.stringify(report, null, 2));
+    writeFileSync(
+      path.join(dir, this.#outputFile),
+      JSON.stringify(report, null, 2),
+    );
   }
 }
 

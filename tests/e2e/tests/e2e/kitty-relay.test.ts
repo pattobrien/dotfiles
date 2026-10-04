@@ -6,7 +6,9 @@ import { expect } from "vite-plus/test";
 
 import { test } from "../fixtures.ts";
 
-test("Cmd+K clears terminal via kitty → F12 → tmux relay", async ({ kitty }) => {
+test("Cmd+K clears terminal via kitty → F12 → tmux relay", async ({
+  kitty,
+}) => {
   const { tmux } = kitty;
 
   // Create a temp shell window (the persistent pane has nvim running)
@@ -27,7 +29,9 @@ test("Cmd+K clears terminal via kitty → F12 → tmux relay", async ({ kitty })
   }
 });
 
-test("Cmd+Shift+D triggers wt cleanup popup via kitty → F7 → tmux relay", async ({ kitty }) => {
+test("Cmd+Shift+D triggers wt cleanup popup via kitty → F7 → tmux relay", async ({
+  kitty,
+}) => {
   const { tmux } = kitty;
 
   // Create a temp shell window (the persistent pane has nvim running)

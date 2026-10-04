@@ -5,7 +5,10 @@ import { expect } from "vite-plus/test";
 
 import { test } from "../fixtures.ts";
 
-const FIXTURE_DIR = path.resolve(import.meta.dirname, "../../fixtures/ts-project");
+const FIXTURE_DIR = path.resolve(
+  import.meta.dirname,
+  "../../fixtures/ts-project",
+);
 
 test("file explorer shows hidden dotfiles", async ({ nvim }) => {
   const dir = `/tmp/nvim-e2e-explorer-${Date.now()}`;
@@ -28,7 +31,9 @@ test("file explorer shows hidden dotfiles", async ({ nvim }) => {
 
 test("file picker shows hidden files", async ({ nvim }) => {
   // Open picker scoped to the fixture dir (feedkeys " ff" uses git root)
-  await nvim.client.lua(`Snacks.picker.files({ cwd = "${FIXTURE_DIR}", hidden = true })`);
+  await nvim.client.lua(
+    `Snacks.picker.files({ cwd = "${FIXTURE_DIR}", hidden = true })`,
+  );
 
   await nvim.term.waitFor(/\.dotrc/, 3_000);
 

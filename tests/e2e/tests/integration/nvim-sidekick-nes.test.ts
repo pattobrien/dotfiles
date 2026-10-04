@@ -3,10 +3,12 @@ import path from "node:path";
 import { expect } from "vite-plus/test";
 
 import type { NvimInstance } from "../../src/nvim.ts";
-
 import { test } from "../fixtures.ts";
 
-const FIXTURE_DIR = path.resolve(import.meta.dirname, "../../fixtures/ts-project");
+const FIXTURE_DIR = path.resolve(
+  import.meta.dirname,
+  "../../fixtures/ts-project",
+);
 
 /** Wait for the copilot LSP client to attach to the current buffer. */
 async function waitForCopilot(nvim: NvimInstance, timeoutMs = 5_000) {
@@ -72,7 +74,9 @@ test("copilot shows a basic inline ghost-text completion", async ({ nvim }) => {
   expect(shown).toBe(true);
 });
 
-test("blink ghost text stays disabled (copilot owns ghost text)", async ({ nvim }) => {
+test("blink ghost text stays disabled (copilot owns ghost text)", async ({
+  nvim,
+}) => {
   await nvim.command(`cd ${FIXTURE_DIR}`);
   await nvim.command(`edit ${FIXTURE_DIR}/nes.ts`);
   await waitForCopilot(nvim);
@@ -85,7 +89,10 @@ test("blink ghost text stays disabled (copilot owns ghost text)", async ({ nvim 
   const deadline = Date.now() + 3_000;
   let menuVisible = false;
   while (Date.now() < deadline) {
-    menuVisible = (await nvim.client.lua('return require("blink.cmp").is_menu_visible()')) === true;
+    menuVisible =
+      (await nvim.client.lua(
+        'return require("blink.cmp").is_menu_visible()',
+      )) === true;
     if (menuVisible) break;
     await new Promise((r) => setTimeout(r, 100));
   }
@@ -96,13 +103,18 @@ test("blink ghost text stays disabled (copilot owns ghost text)", async ({ nvim 
       if not ns then return 0 end
       return #vim.api.nvim_buf_get_extmarks(0, ns, 0, -1, {})
     `);
-  expect(blinkGhostMarks, "blink is rendering its own ghost text on top of copilot's").toBe(0);
+  expect(
+    blinkGhostMarks,
+    "blink is rendering its own ghost text on top of copilot's",
+  ).toBe(0);
 
   await nvim.input("<Esc>");
   await nvim.command("silent! edit!");
 });
 
-test("sidekick.nvim loads when editing a file (no keypress required)", async ({ nvim }) => {
+test("sidekick.nvim loads when editing a file (no keypress required)", async ({
+  nvim,
+}) => {
   await nvim.command(`cd ${FIXTURE_DIR}`);
   await nvim.command(`edit ${FIXTURE_DIR}/nes.ts`);
   await waitForCopilot(nvim);
@@ -145,7 +157,9 @@ test(
     const deadline = Date.now() + 3_000;
     let have = false;
     while (Date.now() < deadline) {
-      have = (await nvim.client.lua('return require("sidekick.nes").have()')) === true;
+      have =
+        (await nvim.client.lua('return require("sidekick.nes").have()')) ===
+        true;
       if (have) break;
       await new Promise((r) => setTimeout(r, 250));
     }
@@ -163,7 +177,9 @@ test(
 
     // A suggestion exists — applying it must succeed and change the buffer.
     const before = await nvim.getBufferContent();
-    const applied = await nvim.client.lua('return require("sidekick.nes").apply() ~= nil');
+    const applied = await nvim.client.lua(
+      'return require("sidekick.nes").apply() ~= nil',
+    );
     expect(applied, "Nes.apply() reported no edits applied").toBe(true);
     const after = await nvim.getBufferContent();
     expect(after).not.toBe(before);

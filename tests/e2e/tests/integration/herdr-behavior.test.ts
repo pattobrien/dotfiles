@@ -28,7 +28,10 @@ async function attachScreen(
   });
 }
 
-test("tab bar renders at the bottom (tab_bar_position)", async ({ herdr, annotate }) => {
+test("tab bar renders at the bottom (tab_bar_position)", async ({
+  herdr,
+  annotate,
+}) => {
   const { term } = herdr;
   // The tab strip shows the tab number and the new-tab button ("1", "+").
   await term.waitFor(/\+/, 5_000);
@@ -39,7 +42,10 @@ test("tab bar renders at the bottom (tab_bar_position)", async ({ herdr, annotat
   await attachScreen(annotate, t.screenshotSvg());
 });
 
-test("pane split renders a divider between panes", async ({ herdr, annotate }) => {
+test("pane split renders a divider between panes", async ({
+  herdr,
+  annotate,
+}) => {
   const { client, term } = herdr;
   await term.waitFor(/\+/, 5_000);
 
@@ -70,12 +76,15 @@ test("pane split renders a divider between panes", async ({ herdr, annotate }) =
   // poll the screen until the divider is actually drawn.
   const drawDeadline = Date.now() + 3_000;
   while (Date.now() < drawDeadline) {
-    if (sampleRows.every((row) => t.row(row).getText()[dividerCol] === "│")) break;
+    if (sampleRows.every((row) => t.row(row).getText()[dividerCol] === "│"))
+      break;
     await new Promise((r) => setTimeout(r, 100));
   }
   for (const row of sampleRows) {
     const line = t.row(row).getText();
-    expect(line[dividerCol], `divider at row ${row}, col ${dividerCol}`).toBe("│");
+    expect(line[dividerCol], `divider at row ${row}, col ${dividerCol}`).toBe(
+      "│",
+    );
   }
   await attachScreen(annotate, t.screenshotSvg());
 });
@@ -90,7 +99,8 @@ test("mouse click moves pane focus", async ({ herdr, annotate }) => {
   const layout = await client.panes.layout();
   const focused = layout.panes.find((p) => p.focused);
   const unfocused = layout.panes.find((p) => !p.focused);
-  if (!focused || !unfocused) throw new Error("expected one focused and one unfocused pane");
+  if (!focused || !unfocused)
+    throw new Error("expected one focused and one unfocused pane");
 
   const clickCol = unfocused.rect.x + Math.floor(unfocused.rect.width / 2);
   const clickRow = unfocused.rect.y + Math.floor(unfocused.rect.height / 2);

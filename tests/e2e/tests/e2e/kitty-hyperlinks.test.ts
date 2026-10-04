@@ -6,7 +6,9 @@ import { expect } from "vite-plus/test";
 
 import { test } from "../fixtures.ts";
 
-test("OSC 8 hyperlinks with custom text are clickable in kitty + tmux", async ({ kitty }) => {
+test("OSC 8 hyperlinks with custom text are clickable in kitty + tmux", async ({
+  kitty,
+}) => {
   const { tmux } = kitty;
 
   await execa("tmux", ["-L", tmux.socket, "new-window", "-t", tmux.session]);

@@ -3,10 +3,12 @@ import path from "node:path";
 import { expect } from "vite-plus/test";
 
 import type { NvimInstance } from "../../src/nvim.ts";
-
 import { test } from "../fixtures.ts";
 
-const FIXTURE_DIR = path.resolve(import.meta.dirname, "../../fixtures/ts-project");
+const FIXTURE_DIR = path.resolve(
+  import.meta.dirname,
+  "../../fixtures/ts-project",
+);
 
 /** Wait for a non-copilot LSP client to attach to the current buffer. */
 async function waitForLspClient(nvim: NvimInstance, timeoutMs = 3_000) {
@@ -21,7 +23,11 @@ async function waitForLspClient(nvim: NvimInstance, timeoutMs = 3_000) {
 }
 
 /** Wait for a specific LSP client (by name) to attach to the current buffer. */
-async function waitForNamedLspClient(nvim: NvimInstance, name: string, timeoutMs = 5_000) {
+async function waitForNamedLspClient(
+  nvim: NvimInstance,
+  name: string,
+  timeoutMs = 5_000,
+) {
   const deadline = Date.now() + timeoutMs;
   while (Date.now() < deadline) {
     const present = await nvim.client.lua(
@@ -99,7 +105,9 @@ test("hover shows type info", async ({ nvim }) => {
     if (hoverContent.includes("interface Promise")) break;
     await new Promise((r) => setTimeout(r, 200));
   }
-  expect(hoverContent, `hover popup content: "${hoverContent}"`).toContain("interface Promise");
+  expect(hoverContent, `hover popup content: "${hoverContent}"`).toContain(
+    "interface Promise",
+  );
 });
 
 /**
@@ -109,7 +117,10 @@ test("hover shows type info", async ({ nvim }) => {
  * server resolves ZodString into zod's node_modules types, so the test
  * below exercises a single gd press against a ready server.
  */
-async function waitForDefinitionResolution(nvim: NvimInstance, timeoutMs = 5_000) {
+async function waitForDefinitionResolution(
+  nvim: NvimInstance,
+  timeoutMs = 5_000,
+) {
   const deadline = Date.now() + timeoutMs;
   while (Date.now() < deadline) {
     const resolved = await nvim.client.lua(`
@@ -135,7 +146,9 @@ async function waitForDefinitionResolution(nvim: NvimInstance, timeoutMs = 5_000
   throw new Error("tsgo never resolved ZodString into node_modules/zod");
 }
 
-test("gd jumps to definition of an imported type used in a type alias", async ({ nvim }) => {
+test("gd jumps to definition of an imported type used in a type alias", async ({
+  nvim,
+}) => {
   await nvim.command(`cd ${FIXTURE_DIR}`);
   await nvim.command(`edit ${FIXTURE_DIR}/device.ts`);
 
@@ -185,11 +198,16 @@ test("gd jumps to definition of an imported type used in a type alias", async ({
     if (curBuf.includes("/node_modules/") && curBuf.includes("/zod/")) break;
     // Re-send while the picker stays visible: a <CR> that races the
     // picker's input mount is silently dropped.
-    if (nvim.term.text().includes("Lsp Definitions") && Date.now() - lastConfirm > 500) {
+    if (
+      nvim.term.text().includes("Lsp Definitions") &&
+      Date.now() - lastConfirm > 500
+    ) {
       lastConfirm = Date.now();
       await nvim.input("<CR>");
     }
     await new Promise((r) => setTimeout(r, 100));
   }
-  expect(curBuf, `current buffer after gd: "${curBuf}"`).toMatch(/\/node_modules\/.*\/zod\//);
+  expect(curBuf, `current buffer after gd: "${curBuf}"`).toMatch(
+    /\/node_modules\/.*\/zod\//,
+  );
 });

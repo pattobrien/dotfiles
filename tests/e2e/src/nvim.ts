@@ -54,7 +54,9 @@ async function waitForLazyVim(client: NeovimClient, timeoutMs = 5_000) {
     }
     await new Promise((r) => setTimeout(r, 100));
   }
-  throw new Error("Timed out waiting for LazyVim (keymaps not loaded after VeryLazy)");
+  throw new Error(
+    "Timed out waiting for LazyVim (keymaps not loaded after VeryLazy)",
+  );
 }
 
 /** Wait for a file to exist on disk. */
@@ -71,7 +73,10 @@ async function waitForFile(filePath: string, timeoutMs = 5_000) {
   throw new Error(`Timed out waiting for file: ${filePath}`);
 }
 
-function buildNvimInstance(client: NeovimClient, term: TermlessSession): NvimInstance {
+function buildNvimInstance(
+  client: NeovimClient,
+  term: TermlessSession,
+): NvimInstance {
   return {
     client,
     term,
@@ -186,18 +191,27 @@ function buildNvimInstance(client: NeovimClient, term: TermlessSession): NvimIns
         listed_bufs: string[];
       };
 
-      if (state.mode !== "n") violations.push(`mode: expected 'n', got '${state.mode}'`);
-      if (state.win_count !== 1) violations.push(`windows: expected 1, got ${state.win_count}`);
-      if (state.float_count > 0) violations.push(`floats: expected 0, got ${state.float_count}`);
+      if (state.mode !== "n")
+        violations.push(`mode: expected 'n', got '${state.mode}'`);
+      if (state.win_count !== 1)
+        violations.push(`windows: expected 1, got ${state.win_count}`);
+      if (state.float_count > 0)
+        violations.push(`floats: expected 0, got ${state.float_count}`);
       if (state.line_count > 1)
-        violations.push(`lines: expected 1 empty line, got ${state.line_count}`);
-      if (state.first_line !== "") violations.push(`buffer not empty: '${state.first_line}'`);
+        violations.push(
+          `lines: expected 1 empty line, got ${state.line_count}`,
+        );
+      if (state.first_line !== "")
+        violations.push(`buffer not empty: '${state.first_line}'`);
 
       // Only e2e-home and hover.ts should be listed
       const allowed = new Set(["e2e-home", "hover.ts"]);
       // Current scratch buffer is also fine (test-* names get wiped via bufhidden)
-      const stale = state.listed_bufs.filter((b) => !allowed.has(b) && !b.startsWith("test-"));
-      if (stale.length > 0) violations.push(`stale buffers: ${stale.join(", ")}`);
+      const stale = state.listed_bufs.filter(
+        (b) => !allowed.has(b) && !b.startsWith("test-"),
+      );
+      if (stale.length > 0)
+        violations.push(`stale buffers: ${stale.join(", ")}`);
 
       // cwd should be the checkout root
       if (state.cwd !== REPO_ROOT) {

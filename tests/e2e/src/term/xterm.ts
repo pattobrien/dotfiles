@@ -1,7 +1,12 @@
 import xterm from "@xterm/headless";
 import { spawn as ptySpawn } from "node-pty";
 
-import { pollFor, type TermBackend, type TermLaunchOptions, type TermSession } from "./backend.ts";
+import {
+  pollFor,
+  type TermBackend,
+  type TermLaunchOptions,
+  type TermSession,
+} from "./backend.ts";
 
 /** Minimal named-key → escape-sequence map (extend as tests need keys). */
 const KEYS: Record<string, string> = {
@@ -79,7 +84,11 @@ export function createXtermBackend(): TermBackend {
             typeof pattern === "string"
               ? new RegExp(pattern.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"))
               : pattern;
-          await pollFor(() => re.test(screenText()), `screen to match ${re}`, timeoutMs);
+          await pollFor(
+            () => re.test(screenText()),
+            `screen to match ${re}`,
+            timeoutMs,
+          );
         },
         resize: (newCols, newRows) => {
           pty.resize(newCols, newRows);

@@ -243,10 +243,29 @@ fallback_channel = "files"
   "git pull",
   "git push",
 ]
-"git-log" = ["git log", "git show", "git cherry-pick", "git revert", "git reset"]
-"git-stash" = ["git stash pop", "git stash apply", "git stash drop", "git stash show"]
-"git-worktrees" = ["git worktree remove", "git worktree lock", "git worktree unlock"]
-"linear-issues" = ["linear issue view", "linear issue start", "linear issue url"]
+"git-log" = [
+  "git log",
+  "git show",
+  "git cherry-pick",
+  "git revert",
+  "git reset",
+]
+"git-stash" = [
+  "git stash pop",
+  "git stash apply",
+  "git stash drop",
+  "git stash show",
+]
+"git-worktrees" = [
+  "git worktree remove",
+  "git worktree lock",
+  "git worktree unlock",
+]
+"linear-issues" = [
+  "linear issue view",
+  "linear issue start",
+  "linear issue url",
+]
 "gh-prs" = ["gh pr checkout", "gh pr view", "gh pr diff", "gh pr merge"]
 "gh-issues" = ["gh issue view", "gh issue develop", "gh issue close"]
 "docker-images" = ["docker run", "docker rmi", "docker image rm", "docker push"]
@@ -269,7 +288,12 @@ fallback_channel = "files"
 ]
 "tmux-sessions" = ["tmux attach", "tmux attach-session", "tmux kill-session"]
 "npm-scripts" = ["pnpm run", "pn run", "vp run", "npm run", "bun run"]
-"brew-packages" = ["brew uninstall", "brew info", "brew upgrade", "brew reinstall"]
+"brew-packages" = [
+  "brew uninstall",
+  "brew info",
+  "brew upgrade",
+  "brew reinstall",
+]
 "ssh-hosts" = ["ssh", "scp", "sftp"]
 "man-pages" = ["man"]
 "git-repos" = ["nvim", "code", "hx", "cursor", "git clone"]
