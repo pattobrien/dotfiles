@@ -1,0 +1,8 @@
+{
+  "name": "Patt",
+  "base": "dark",
+  "overrides": {
+    "composerSidebarBackground": "#181825",
+    "clawd_body": "#26d9bb"
+  }
+}

@@ -338,7 +338,7 @@
   },
   "showThinkingSummaries": true,
   "skipDangerousModePermissionPrompt": true,
-  "theme": "dark",
+  "theme": "custom:patt",
   "editorMode": "vim",
   "preferredNotifChannel": "notifications_disabled",
   "remoteControlAtStartup": true,
