@@ -76,26 +76,14 @@ name: Patt O'Brien.
 - Run tests in their own herdr tab, never the Bash tool; never pipe through
   `tail`.
 
-## Visual Artifacts
-
-- Always prefer dark mode for anything visual I'll look at — HTML
-  artifacts/wireframes/mockups, generated UIs, charts, screenshots of themed
-  tools. Default to a dark palette.
-- Always render HTML artifacts in a true herdr pane next to the conversation so
-  we can view them together:
-  1. `herdr pane split --current --direction right --cwd "$PWD" --no-focus`
-  2. `herdr pane run <new-pane-id> "terminal-browser open <file>"` Never use
-     `terminal-browser --split` — it bypasses herdr and splits via kitty remote
-     control, leaving the pane unmanaged.
-
-## User Directories
-
-Common directories/repositories to be aware of:
+## Directories and Repos
 
 - `~/dev/*`: where all git repositories live
 - `~/dev/pattobrien/<repo-name>`: place to clone my personal repos
 - `~/dev/pattobrien/dotfiles`: personal dotfiles (symlinked to their respective
   applications' directories); use this repo to declare any global/userland tools
+- `~/dev/pattobrien/shed`: reusable, importable, but private TS tools and
+  packages (e.g. personal lint rules, vite plugins, turbo base configs, etc)
 - `~/dev/<org-name>/<repo-name>`: non-personal repos, e.g. work orgs
 - `~/dev/exploring/<repo-name>`: place to clone any external repo that needs to
   be explored
@@ -107,37 +95,13 @@ Common directories/repositories to be aware of:
 - Use `gh` for anything GitHub-related, not WebSearch.
 - Use `pnpx`, never `npx`.
 - Poll command output with ~5s timeouts and repeat; no long blocking waits.
-
-### Typical Commands in a Monorepo
-
-Vite+ (`vp`) conventions:
-
-```sh
-pnpm install
-pnpm dev
-pnpm build
-pnpm test
-pnpm check # `vp check`: format, lint and typecheck. `vp check --fix` to fix
-pnpm ready # root only: `vp check && vp run -r test && vp run -r build`
-```
-
-### API Keys
-
-- When you need an API key, don't ask me first — just look it up directly via
-  the `op` CLI (e.g. `op item list --categories "API Credential"` to discover,
-  then `op read "op://<vault>/<item>/credential"` to fetch). Each read still
-  requires manual approval in 1Password, so it's safe. Prefer piping the secret
-  straight into an `.env` file or env var rather than printing to chat.
-
-## Personal Platform
-
-- `pattobrien/dotfiles`
-- `pattobrien/ts-workflows`: ??
-- `pattobrien/shed`: reusable, importable, but private TS tools and packages
-  (e.g. personal lint rules, vite plugins, turbo base configs, etc)
+- Fetch API keys yourself with `op`
+  (`op item list --categories "API Credential"`, then `op read`); pipe into
+  `.env` or env vars, never chat.
 
 ## General Coding Rules
 
 - write scripts in Typescript (Node or Bun), not bash/zsh
 - DO NOT USE EXCESSIVE DOC COMMENTS; well-written code is self-documenting
 - No explanatory or meta comments in any file (code, configs, docs)
+- Prefer dark mode for visual artifacts (HTML pages, mockups, charts).
