@@ -41,6 +41,20 @@ renderer.root.add(textarea)
 textarea.focus()
 ```
 
+At 30 columns, longer text wraps at word boundaries:
+
+```typescript
+textarea.width = 30
+textarea.setText("Long lines wrap at word boundaries.\nKeep paragraphs readable.")
+```
+
+```text terminal=textarea-wrap surface
+Notes
+Long lines wrap at word
+boundaries.
+Keep paragraphs readable.
+```
+
 ## Submit handling
 
 Bind a submit action and listen for `onSubmit`:
@@ -87,6 +101,7 @@ const textarea = new TextareaRenderable(renderer, {
 | `selectionFg`            | `string` or `RGBA`                    | -                  | Selection foreground                    |
 | `cursorColor`            | `string` or `RGBA`                    | `#FFFFFF`          | Cursor color                            |
 | `cursorStyle`            | `CursorStyleOptions`                  | -                  | Cursor style and blinking               |
+| `selectionOccupancy`     | `"cell"` or `"boundary"`              | `"cell"`           | Which cells a selection occupies        |
 | `keyBindings`            | `KeyBinding[]`                        | -                  | Custom key bindings                     |
 | `keyAliasMap`            | `Record<string, string>`              | -                  | Key alias mapping                       |
 | `onSubmit`               | `(event: SubmitEvent) => void`        | -                  | Submit handler                          |
@@ -138,12 +153,25 @@ textarea.gotoBufferEnd({ select: true })
 
 ### Selection
 
+Textarea uses the repeated-click behavior from [Text selection](/docs/core-concepts/interaction#text-selection). After a
+double-click or triple-click, the cursor stays on the clicked grapheme. A later Shift+Arrow keeps the selected text and
+continues the selection by cells, not by words or lines.
+
 ```typescript
-textarea.setSelection(start, end) // half-open offsets
-textarea.setSelectionInclusive(start, end) // inclusive end
+textarea.setSelection(start, end) // half-open [start, end) in both occupancy modes
+textarea.setSelectionInclusive(start, end) // also selects the grapheme at end in cell mode
 textarea.selectAll()
 textarea.clearSelection()
 textarea.deleteSelection()
+```
+
+Selecting `keyboard focus` in a draft:
+
+```text terminal=textarea-selection surface
+Draft
+Plan the release
+Review keyboard focus
+Ship the update
 ```
 
 ### Editing
@@ -165,6 +193,10 @@ textarea.redo()
 
 These methods update the editor and request a render as needed. Selection behavior depends on the method. Movement with
 `{ select: true }` extends the selection. Call `clearSelection()` when a command must clear the global selection.
+
+The default occupancy is `cell`: the selection covers both endpoint cells, so the first shift+right selects two
+cells. If you use a bar cursor (`cursorStyle: { style: "line" }`), also set `selectionOccupancy: "boundary"`. The
+cursor style is visual only and never changes which text you select, copy, or delete.
 
 ## Traits
 

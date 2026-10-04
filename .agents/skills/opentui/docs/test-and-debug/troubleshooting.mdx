@@ -20,9 +20,12 @@ Start with the visible symptom. Run the diagnostic in its row, then open the lin
 
 ## Node.js and native loading
 
+For a native crash, use [Native crash debugging](/docs/test-and-debug/native-crashes) to load matching release symbols
+and collect a useful report.
+
 | Symptom                                                    | Diagnostic and first action                                                                                                                                                                                                                                                                                              | Canonical guide                                                                                                                             |
 | ---------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------- |
-| `OpenTUI native FFI is not available for this runtime yet` | Run `node --version`. It must print `v26.4.0`. Start the ESM app with `node --experimental-ffi app.mjs`. With `--permission`, also grant `--allow-ffi` and native-library read access.                                                                                                                                   | [Node.js runtime](/docs/getting-started/runtime-support#runtime-versions)                                                                   |
+| `OpenTUI native FFI is not available for this runtime yet` | Run `node --version`. It must print `v26.4.0` or later. Start the ESM app with `node --experimental-ffi app.mjs`. With `--permission`, also grant `--allow-ffi` and native-library read access.                                                                                                                          | [Node.js runtime](/docs/getting-started/runtime-support#runtime-versions)                                                                   |
 | `ERR_REQUIRE_ASYNC_MODULE`                                 | Find `require("@opentui/core")` or a CommonJS entry. Change the application to ESM and use `import`.                                                                                                                                                                                                                     | [Node.js runtime](/docs/getting-started/runtime-support#runtime-versions)                                                                   |
 | A native package or library is missing                     | Run `bun -e 'console.log(process.platform, process.arch, process.env.OPENTUI_LIBC ? process.env.OPENTUI_LIBC : "glibc")'`. Replace `bun` with `node` for a Node.js host. Check for the matching `@opentui/core-*` optional package. An install that omits optional dependencies can defer the failure until native work. | [Native artifacts](/docs/getting-started/runtime-support#native-artifacts)                                                                  |
 | Linux reports a loader error for `libopentui.so`           | Compare the selected libc with the target system. Set `OPENTUI_LIBC=musl` before Core imports on musl. On Alpine, install `libstdc++` and `libgcc`.                                                                                                                                                                      | [Select the Linux libc](/docs/getting-started/runtime-support#select-the-linux-libc)                                                        |
@@ -59,6 +62,19 @@ Start with the visible symptom. Run the diagnostic in its row, then open the lin
 | Symptom                                              | Diagnostic and first action                                                                                                                                                                                            | Canonical guide                                                                            |
 | ---------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------ |
 | `Timed out waiting for visual idle after ... frames` | Read the attached `frameId`, `nativeFrameCount`, `cellsUpdated`, and scheduler fields. Stop unintended live rendering or release the live request. Increase `maxFrames` only when the expected work needs more frames. | [Waiting for observable output](/docs/core-concepts/testing#waiting-for-observable-output) |
+
+## Native builds across worktrees
+
+Zig shares its global cache by default. For repeated native builds across many worktrees, you can also share the project
+cache:
+
+```sh
+export ZIG_LOCAL_CACHE_DIR="$HOME/.cache/opentui/zig-local-0.16.0"
+bun run build:native
+```
+
+Use a persistent local directory. Use a separate directory for each Zig version. `bun run clean` does not remove an
+external cache.
 
 ## Next
 
