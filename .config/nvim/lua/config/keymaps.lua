@@ -29,8 +29,33 @@ vim.keymap.set("n", "<PageUp>", "<C-b>zz")
 vim.keymap.set("x", "<leader>p", '"_dP')
 
 -- allows deleting words by holding down Alt+Delete, same as in CC
-vim.keymap.set({ "i", "c" }, "<M-BS>", "<C-w>", { desc = "Delete Word Backward" })
-vim.keymap.set("i", "<M-Del>", "<C-o>dw", { desc = "Delete Word Forward" })
+local before_last_word = "^(.-)[%w\128-\255]*[^%w\128-\255]*$"
+
+vim.keymap.set({ "i", "c" }, "<M-BS>", function()
+  if vim.fn.mode() == "c" then
+    local line, pos = vim.fn.getcmdline(), vim.fn.getcmdpos() - 1
+    local kept = line:sub(1, pos):match(before_last_word)
+    vim.fn.setcmdline(kept .. line:sub(pos + 1), #kept + 1)
+    return
+  end
+  local row, col = unpack(vim.api.nvim_win_get_cursor(0))
+  if col == 0 then
+    return vim.api.nvim_feedkeys(vim.keycode("<BS>"), "n", false)
+  end
+  local kept = vim.api.nvim_get_current_line():sub(1, col):match(before_last_word)
+  vim.api.nvim_buf_set_text(0, row - 1, #kept, row - 1, col, {})
+  vim.api.nvim_win_set_cursor(0, { row, #kept })
+end, { desc = "Delete Word Backward" })
+
+vim.keymap.set({ "i", "c" }, "<M-Del>", function()
+  if vim.fn.mode() == "c" then
+    local pos = vim.fn.getcmdpos()
+    vim.fn.setcmdline(vim.fn.getcmdline():sub(1, pos - 1), pos)
+    return
+  end
+  local row, col = unpack(vim.api.nvim_win_get_cursor(0))
+  vim.api.nvim_buf_set_text(0, row - 1, col, row - 1, #vim.api.nvim_get_current_line(), {})
+end, { desc = "Delete To Line End" })
 
 -- open netrw explorer — disabled, using LazyVim's <leader>e instead
 -- vim.keymap.set("n", "<leader>pv", vim.cmd.Ex)

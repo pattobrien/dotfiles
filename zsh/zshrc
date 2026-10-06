@@ -209,6 +209,9 @@ bindkey -v # set up vim motions in interactive terminal
 # same as Tab. Must come after `bindkey -v` (switching keymaps resets bindings).
 bindkey '^ ' fzf-tab-complete
 
+bindkey -M viins '^[^?' backward-kill-word
+bindkey -M viins '^[[3;3~' kill-line
+
 # Television: `tv` completions + shell integration. Rebinds Ctrl+T (channel-aware
 # smart autocomplete) and Ctrl+R (history) away from the omz fzf plugin — fzf
 # stays for fzf-tab, fzf-git (Ctrl-G chords), and Alt+C cd. Must also come after
