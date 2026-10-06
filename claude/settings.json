@@ -211,7 +211,8 @@
     "vercel@claude-plugins-official": false,
     "gh-stack@pattobrien": true,
     "claude-md-management@claude-plugins-official": true,
-    "gh-channels@pattobrien": false
+    "gh-channels@pattobrien": false,
+    "cc-plugin-you-should-know@builtin": true
   },
   "extraKnownMarketplaces": {
     "claude-notifications-go": {
