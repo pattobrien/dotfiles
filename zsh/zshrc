@@ -65,7 +65,6 @@ plugins=(
   zsh-interactive-cd
 
   # untested plugins below:
-  1password
   gh
   # kubectl
   # minikube
@@ -189,38 +188,11 @@ export MISE_ACTIVATE_AGGRESSIVE=1
 # ~/.config/gh/hosts.yml, but gh stores ours in the macOS keyring. mise runs
 # this lazily, only when it needs a token (`gh auth token` costs ~30ms).
 export MISE_GITHUB_CREDENTIAL_COMMAND="gh auth token"
-
-# `mise activate` always ends with a full `hook-env` run (~80ms for the 136 tools
-# in the global config, jdx/mise#6279), so the activation itself is deferred to
-# after the first prompt via zsh-defer. Until then the global tool bin dirs come
-# from a cache, so everything below still resolves mise-installed tools; the
-# cache is rebuilt when mise, its config or any install dir is newer than it.
+# Activation runs its first hook-env (and any project [hooks.enter]) here,
+# before the first prompt and before oh-my-zsh plugins look up mise-installed
+# tools; deferring it into zle froze typing for the hook's whole duration.
 # Completions come from Homebrew's _mise in site-functions.
-_mise_installs=${MISE_DATA_DIR:-$HOME/.local/share/mise}/installs
-_mise_config=${MISE_GLOBAL_CONFIG_FILE:-${XDG_CONFIG_HOME:-$HOME/.config}/mise/config.toml}
-_mise_newest=($_mise_installs/*(/om[1]N))
-_mise_paths_cache=$_zsh_cache_dir/mise_bin_paths
-if [[ ! -s $_mise_paths_cache || ${commands[mise]:A} -nt $_mise_paths_cache ||
-      ${_mise_config:A} -nt $_mise_paths_cache || $_mise_installs -nt $_mise_paths_cache ||
-      $_mise_newest -nt $_mise_paths_cache ]]; then
-  mkdir -p "$_zsh_cache_dir"
-  mise -C ~ bin-paths >| "$_mise_paths_cache"
-fi
-path=(${(f)"$(<$_mise_paths_cache)"} $path)
-unset _mise_installs _mise_config _mise_newest _mise_paths_cache
-
-source ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-defer/zsh-defer.plugin.zsh
-# The 100ms delay lets the first prompt's gitstatusd answer paint before the
-# hook-env run occupies zle. A command typed or pasted before the deferred run
-# fires triggers the same activation from preexec, so it still gets the project
-# tool versions and mise env vars (PATH edits in preexec apply to that command).
-autoload -Uz add-zsh-hook
-_mise_activate() {
-  add-zsh-hook -d preexec _mise_activate
-  (( $+functions[_mise_hook] )) || eval "$(mise activate zsh)"
-}
-add-zsh-hook preexec _mise_activate
-zsh-defer -t 0.1 _mise_activate
+eval "$(mise activate zsh)"
 
 source $ZSH/oh-my-zsh.sh
 

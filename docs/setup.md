@@ -48,7 +48,6 @@ cd ~/.oh-my-zsh/custom/plugins
 git clone https://github.com/Aloxaf/fzf-tab.git
 git clone https://github.com/junegunn/fzf-git.sh.git
 git clone https://github.com/michakfromparis/zsh-pnpm-completions.git
-git clone https://github.com/romkatv/zsh-defer.git
 ```
 
 ## 4. Restore app settings (from 2026-07 machine migration)
