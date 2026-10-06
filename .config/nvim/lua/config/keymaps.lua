@@ -28,6 +28,10 @@ vim.keymap.set("n", "<PageUp>", "<C-b>zz")
 -- paste over selection without yanking the replaced text
 vim.keymap.set("x", "<leader>p", '"_dP')
 
+-- allows deleting words by holding down Alt+Delete, same as in CC
+vim.keymap.set({ "i", "c" }, "<M-BS>", "<C-w>", { desc = "Delete Word Backward" })
+vim.keymap.set("i", "<M-Del>", "<C-o>dw", { desc = "Delete Word Forward" })
+
 -- open netrw explorer — disabled, using LazyVim's <leader>e instead
 -- vim.keymap.set("n", "<leader>pv", vim.cmd.Ex)
 
