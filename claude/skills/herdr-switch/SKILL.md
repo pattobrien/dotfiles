@@ -1,9 +1,9 @@
 ---
 name: herdr-switch
-description: Create a new herdr worktree and move this session's pane into it.
+description: Create a new herdr worktree and move this session into it.
 ---
 
-Create a new herdr worktree, then move this session's herdr pane to it.
+Create a new herdr worktree, resume this session there, and close this pane.
 
 1. Read this pane's live ids (`$HERDR_PANE_ID` and `$HERDR_WORKSPACE_ID` go
    stale once a pane has moved):
@@ -12,7 +12,15 @@ Create a new herdr worktree, then move this session's herdr pane to it.
    herdr pane current --current
    ```
 
-   Use `.result.pane.pane_id` and `.result.pane.workspace_id` below.
+   Use `.result.pane.pane_id` and `.result.pane.workspace_id` below. Then read
+   this session's id:
+
+   ```bash
+   echo "$CLAUDE_CODE_SESSION_ID"
+   ```
+
+   Do not use herdr's `agent_session` for this; a nested `claude` run in this
+   pane overwrites it.
 
 2. Worktrees are created from the main-checkout workspace of the repo. Find it
    for this pane's workspace, or for another workspace if the task names a
@@ -33,8 +41,7 @@ Create a new herdr worktree, then move this session's herdr pane to it.
    herdr worktree create --workspace <source_workspace_id> --branch <branch> --base <ref> --no-focus
    ```
 
-   Read `.result.workspace.workspace_id` and `.result.worktree.path` from the
-   JSON.
+   Read `.result.workspace.workspace_id` from the JSON.
 
 4. The worktree layout starts an empty Claude session in the new workspace.
    Find it:
@@ -43,11 +50,10 @@ Create a new herdr worktree, then move this session's herdr pane to it.
    herdr pane list --workspace <new_workspace_id>
    ```
 
-   Take the `pane_id` and `tab_id` of the pane that has `agent` set. If none is
-   listed, list once more. If still none, take the first pane's `tab_id` and
-   skip the `pane close` in step 5.
+   Take the `pane_id` of the pane that has `agent` set. If none is listed, list
+   once more. If still none, take the first pane's `pane_id` and skip step 6.
 
-5. Moving a workspace's last pane closes it, which orphans its worktrees. If
+5. Closing a workspace's last pane closes it, which orphans its worktrees. If
    this pane is alone in its workspace (`workspace_id` from step 1), leave a
    shell behind first:
 
@@ -55,26 +61,25 @@ Create a new herdr worktree, then move this session's herdr pane to it.
    herdr pane split <pane_id> --direction right --no-focus
    ```
 
-   Then replace that empty session with this pane:
+6. Quit the empty Claude, which leaves its shell in the worktree:
 
    ```bash
-   herdr pane move <pane_id> --tab <tab_id> --split right --no-focus
-   herdr pane close <agent_pane_id>
+   herdr agent prompt <agent_pane_id> "/exit"
    ```
 
-   The move gives this pane a new id: `.result.pane.pane_id`.
-
-6. Report the new cwd to herdr. Run this command alone:
+   Then wait for that shell to be back in the foreground:
 
    ```bash
-   printf '\033]7;file://%s\033\\' "<worktree path>" > "/dev/$(ps -o tty= -p $PPID | tr -d ' ')"
+   herdr pane process-info --pane <agent_pane_id>
    ```
 
-7. Move this session to the worktree. Claude cannot run `/cd` itself, so queue
-   it through herdr; it runs when this turn ends:
+   Repeat until `.result.process_info.foreground_process_group_id` equals
+   `.result.process_info.shell_pid`.
+
+7. Hand this session over. The worktree shell closes this pane, then resumes
+   this session in the worktree and continues it. Run this as your last
+   command; it ends this process:
 
    ```bash
-   herdr agent prompt <new_pane_id> "/cd <worktree path>"
+   herdr pane run <agent_pane_id> "herdr pane close <pane_id>; claude --resume <session_id> Continue"
    ```
-
-   Then end the turn: reply with the worktree path and nothing else.
