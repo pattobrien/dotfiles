@@ -292,11 +292,10 @@ tab=$(herdr pane list --workspace "$ws" | jq -r 'first(.result.panes[] | select(
 [ -z "$tab" ] && tab=$(herdr tab list --workspace "$ws" | jq -r 'first(.result.tabs[] | select(.label == "nvim") | .tab_id)')
 if [ -z "$tab" ]; then
   cwd=$(herdr workspace get "$ws" | jq -r '.result.workspace.worktree.checkout_path // empty')
-  new=$(herdr tab create --workspace "$ws" ${cwd:+--cwd "$cwd"} --label nvim --no-focus)
+  new=$(herdr tab create --workspace "$ws" ${cwd:+--cwd "$cwd"} --label nvim --env HERDR_SHELL_EXEC=nvim --no-focus)
   tab=$(echo "$new" | jq -r .result.tab.tab_id)
   pane=$(echo "$new" | jq -r .result.root_pane.pane_id)
   herdr pane report-metadata "$pane" --source layouts --token layout=nvim
-  herdr pane run "$pane" "nvim; exit"
 fi
 herdr tab focus "$tab"
 '''
@@ -330,11 +329,10 @@ tab=$(herdr pane list --workspace "$ws" | jq -r 'first(.result.panes[] | select(
 [ -z "$tab" ] && tab=$(herdr tab list --workspace "$ws" | jq -r 'first(.result.tabs[] | select(.label == "diff") | .tab_id)')
 if [ -z "$tab" ]; then
   cwd=$(herdr workspace get "$ws" | jq -r '.result.workspace.worktree.checkout_path // empty')
-  new=$(herdr tab create --workspace "$ws" ${cwd:+--cwd "$cwd"} --label diff --no-focus)
+  new=$(herdr tab create --workspace "$ws" ${cwd:+--cwd "$cwd"} --label diff --env "HERDR_SHELL_EXEC=nvim +AtlasPr" --no-focus)
   tab=$(echo "$new" | jq -r .result.tab.tab_id)
   pane=$(echo "$new" | jq -r .result.root_pane.pane_id)
   herdr pane report-metadata "$pane" --source layouts --token layout=diff
-  herdr pane run "$pane" "nvim +AtlasPr; exit"
 fi
 herdr tab focus "$tab"
 '''

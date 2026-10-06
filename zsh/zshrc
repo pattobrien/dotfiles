@@ -27,6 +27,12 @@ export SSH_AUTH_SOCK="$HOME/Library/Group Containers/2BUA8C4S2C.com.1password/t/
 # fi
 
 
+if [[ -n $HERDR_SHELL_EXEC ]]; then
+  _herdr_shell_exec=$HERDR_SHELL_EXEC
+  unset HERDR_SHELL_EXEC
+  exec ${=_herdr_shell_exec}
+fi
+
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
