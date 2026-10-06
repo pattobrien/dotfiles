@@ -1,27 +1,35 @@
 # nvim opening `tests/e2e/src/nvim.ts`
 
-- Trigger: `nvim tests/e2e/src/nvim.ts` launched in a fresh kitty window.
-- Zero: launch, from the clapper, so the 28–44ms display pipeline is excluded.
+- Trigger: `clap.ts` launches `nvim tests/e2e/src/nvim.ts` in a 100×24-cell
+  kitty window.
+- Zero: launch on the host clock, so values include the display pipeline.
 - Recording: 60fps. Each value is ±1 frame (17ms).
-- Runs: 1.
+- Runs: 5. Times are medians. Frames are from run 3.
 
-| Since launch | Δ      | Frame | What changed                                     |
-| ------------ | ------ | ----- | ------------------------------------------------ |
-| +32ms        | +32ms  | 312   | nvim takes over the screen                       |
-| +216ms       | +184ms | 323   | File text appears, no colors                     |
-| +316ms       | +100ms | 329   | Syntax highlighting and buffer tab appear        |
-| +432ms       | +116ms | 336   | Status line appears, showing oxfmt and tsgo      |
-| +782ms       | +350ms | 357   | copilot and oxlint attach; settled after 1s idle |
+| Since launch | Δ      | Frame | What changed                                      |
+| ------------ | ------ | ----- | ------------------------------------------------- |
+| +41ms        | +41ms  | 809   | nvim clears the screen                            |
+| +170ms       | +129ms | 817   | File text appears, already highlighted            |
+| +254ms       | +84ms  | 822   | Buffer tab appears                                |
+| +328ms       | +74ms  | 827   | Status line appears                               |
+| +637ms       | +309ms | 845   | copilot appears in the status line; settled      |
 
-nvim's own `--startuptime` log puts the first screen update at 209.8ms. The
-video shows it at 216ms, within one frame.
+Run 1 was cold. Its text appeared plain at +174ms (frame 84), and highlighting
+arrived with the buffer tab at +274ms (frame 90). See
+[boundary-frames.png](boundary-frames.png).
+
+nvim's own `--startuptime` log puts the first screen update at 142.8ms
+(median). The video shows it 11–36ms later per run. That gap is the display
+pipeline plus frame rounding.
 
 Proof:
 
-- Boundary frames 322–329: [boundary-frames.png](boundary-frames.png)
-- Recording: [nvim-open.mp4](/abs/scratchpad/nvim-open.mp4)
-- Trigger log: [clap.json](/abs/scratchpad/clap.json)
-- App log: [nvim-startuptime.log](/abs/scratchpad/nvim-startuptime.log)
+- Boundary frames per change, run 3: [run3-changes.png](/abs/scratchpad/run3-changes.png)
+- Recording: [nvim-take.mp4](/abs/scratchpad/nvim-take.mp4)
+- Trigger logs: [run-1.json](/abs/scratchpad/run-1.json) through
+  [run-5.json](/abs/scratchpad/run-5.json)
+- App logs: [startuptime-1.log](/abs/scratchpad/startuptime-1.log) through
+  [startuptime-5.log](/abs/scratchpad/startuptime-5.log)
 
-The stage is the `perf-demo` kitty window on the right half of the display. It
-is still open.
+The stage is the `watch-stage` kitty window at the top right of the display.
+It is still open.

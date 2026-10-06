@@ -64,12 +64,13 @@ the frame rate.
 ## 5. Boundary frames
 
 Build a contact sheet per change, from the frame before the change through its
-end. Crop to native pixels. Run `drawtext` before `select`, so labels keep the
+end. Show the whole window at native pixels. Run `drawtext` before `select`, so labels keep the
 original frame numbers. See
 [`references/boundary-frames.png`](references/boundary-frames.png).
 
-Look at every sheet before describing a change. Name only what the frames
-show.
+Read every sheet yourself, and describe only what the frames visibly show,
+before telling the user. The pipeline delays everything, so a change just after zero can come
+from before it, such as the shell redrawing its prompt.
 
 ## Report
 
