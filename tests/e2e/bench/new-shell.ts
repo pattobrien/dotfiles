@@ -1,8 +1,9 @@
+import { dlopen, ptr } from "bun:ffi";
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import path from "node:path";
 import { parseArgs } from "node:util";
 
-import { createKittyRc, findKittySocket } from "./kitty-rc.ts";
+import { createKittyRc, findKittySocket, type KittyRc } from "./kitty-rc.ts";
 
 const TITLE = "prompt-bench";
 const MATCH = `title:${TITLE}`;
@@ -41,15 +42,59 @@ const { values } = parseArgs({
       ),
     },
     shell: { type: "string", default: "/bin/zsh" },
+    cwd: { type: "string" },
+    type: { type: "string" },
+    "type-at": { type: "string", default: "200" },
+    "type-every": { type: "string", default: "150" },
+    reanalyze: { type: "string" },
   },
 });
 
+type RunResult = Analysis &
+  Trigger & {
+    run: number;
+    idleAfter: boolean;
+    video: string;
+  };
+
+interface SavedResults {
+  config?: {
+    cwd: string;
+    chunks: string[];
+    typeAtMs: number;
+    typeEveryMs: number;
+  };
+  results: RunResult[];
+}
+
 const runs = Number(values.runs);
 const shell = values.shell;
-const outDir = path.resolve(values.out);
+const reanalyzeDir = values.reanalyze ? path.resolve(values.reanalyze) : null;
+const saved = reanalyzeDir
+  ? (JSON.parse(
+      readFileSync(path.join(reanalyzeDir, "results.json"), "utf8"),
+    ) as SavedResults)
+  : null;
+const outDir = reanalyzeDir ?? path.resolve(values.out);
 const fixture = path.resolve(values.fixture);
-const fixtureName = path.basename(fixture);
+const cwd =
+  saved?.config?.cwd ?? (values.cwd ? path.resolve(values.cwd) : fixture);
+const cwdName = path.basename(cwd);
+const chunks =
+  saved?.config?.chunks ?? (values.type ? values.type.split("|") : []);
+const typed = chunks.join("");
+const typeAtMs = saved?.config?.typeAtMs ?? Number(values["type-at"]);
+const typeEveryMs = saved?.config?.typeEveryMs ?? Number(values["type-every"]);
 mkdirSync(outDir, { recursive: true });
+
+const { symbols: libc } = dlopen("libSystem.B.dylib", {
+  mach_absolute_time: { args: [], returns: "u64" },
+  mach_timebase_info: { args: ["ptr"], returns: "i32" },
+});
+const timebase = new Uint32Array(2);
+libc.mach_timebase_info(ptr(timebase));
+const hostSeconds = () =>
+  (Number(libc.mach_absolute_time()) * timebase[0]) / timebase[1] / 1e9;
 
 async function sh(cmd: string[], cwd?: string): Promise<string> {
   const proc = Bun.spawn(cmd, { cwd, stdout: "pipe", stderr: "pipe" });
@@ -85,11 +130,14 @@ async function ensureFixture(): Promise<void> {
   writeFileSync(path.join(fixture, "untracked.txt"), "x\n");
 }
 
-await ensureFixture();
-const rc = createKittyRc(await findKittySocket());
-if (!(await rc.windowExists(MATCH))) {
-  await rc.launchOsWindow({ title: TITLE, cwd: fixture, position: POSITION });
-  await Bun.sleep(1000);
+let rc!: KittyRc;
+if (!saved) {
+  await ensureFixture();
+  rc = createKittyRc(await findKittySocket());
+  if (!(await rc.windowExists(MATCH))) {
+    await rc.launchOsWindow({ title: TITLE, cwd: fixture, position: POSITION });
+    await Bun.sleep(1000);
+  }
 }
 
 const nonEmpty = (text: string) =>
@@ -97,11 +145,10 @@ const nonEmpty = (text: string) =>
     .split("\n")
     .map((l) => l.trimEnd())
     .filter(Boolean);
-const isIdle = (line: string) =>
-  line.includes(fixtureName) &&
-  line.includes("!1") &&
-  line.includes("?1") &&
-  line.endsWith("❯");
+const isIdle = (line: string, buffer = "") =>
+  line.includes(cwdName) &&
+  (cwd !== fixture || (line.includes("!1") && line.includes("?1"))) &&
+  (buffer ? line.includes(`❯ ${buffer}`) : line.endsWith("❯"));
 
 async function waitFor(
   pred: (rows: string[]) => boolean,
@@ -118,12 +165,15 @@ async function waitFor(
 }
 
 const idleAtBottom = (rows: string[]) => isIdle(rows.at(-1) ?? "");
+const idleWithTypedAtBottom = (rows: string[]) =>
+  isIdle(rows.at(-1) ?? "", typed);
 
 async function prepare(): Promise<void> {
+  await rc.sendText(MATCH, "\x15");
   if (!(await waitFor(idleAtBottom, 5000))) {
-    await rc.sendText(MATCH, `\x15cd ${fixture}\r`);
+    await rc.sendText(MATCH, `\x15cd ${cwd}\r`);
     if (!(await waitFor(idleAtBottom, 10000)))
-      throw new Error(`${TITLE} shell is not idle at ${fixture}`);
+      throw new Error(`${TITLE} shell is not idle at ${cwd}`);
   }
   await rc.sendText(MATCH, "\x0c");
   if (!(await waitFor((rows) => rows.length === 1 && isIdle(rows[0]), 5000)))
@@ -184,12 +234,17 @@ async function screenDevice(): Promise<string> {
   return m[1];
 }
 
+interface Trigger {
+  triggerAt: number;
+  typedAt: number[];
+}
+
 async function record(
   video: string,
   clapLog: string,
   device: string,
   b: Bounds,
-): Promise<number> {
+): Promise<Trigger> {
   const even = (n: number) => Math.round(n / 2) * 2;
   const ff = Bun.spawn(
     [
@@ -242,6 +297,17 @@ async function record(
     { stdout: "inherit", stderr: "inherit" },
   );
   if ((await clap.exited) !== 0) throw new Error("clap failed");
+  const { triggerAt } = JSON.parse(readFileSync(clapLog, "utf8")) as {
+    triggerAt: number;
+  };
+  const typedAt: number[] = [];
+  for (const [i, chunk] of chunks.entries()) {
+    const due = triggerAt + (typeAtMs + i * typeEveryMs) / 1000;
+    const wait = (due - hostSeconds()) * 1000;
+    if (wait > 0) await Bun.sleep(wait);
+    typedAt.push(hostSeconds());
+    await rc.sendText(MATCH, chunk);
+  }
   await Bun.sleep(POST_S * 1000);
   ff.kill("SIGINT");
   await ff.exited;
@@ -249,8 +315,7 @@ async function record(
     .split("\n")
     .filter((l) => l && !l.includes("NSKVONotifying"));
   if (err.length) console.error(err.join("\n"));
-  return (JSON.parse(readFileSync(clapLog, "utf8")) as { triggerAt: number })
-    .triggerAt;
+  return { triggerAt, typedAt };
 }
 
 interface Milestone {
@@ -258,11 +323,19 @@ interface Milestone {
   ms: number;
 }
 
+interface TypedChunk {
+  text: string;
+  sent: Milestone;
+  visible: Milestone | null;
+  latencyMs: number | null;
+}
+
 interface Analysis {
   frames: number;
   baseFrame: number;
   firstPrompt: Milestone | null;
   fullPrompt: Milestone | null;
+  typing: TypedChunk[];
   settled: boolean;
   bandInk: { base: number; first: number | null; final: number };
   changes: {
@@ -273,7 +346,10 @@ interface Analysis {
   }[];
 }
 
-async function analyze(video: string, triggerAt: number): Promise<Analysis> {
+async function analyze(
+  video: string,
+  { triggerAt, typedAt }: Trigger,
+): Promise<Analysis> {
   const ptsProc = Bun.spawn(
     [
       "ffmpeg",
@@ -372,6 +448,18 @@ async function analyze(video: string, triggerAt: number): Promise<Analysis> {
   const fullPrompt = last ? { frame: last.n, ms: rel(last.n) } : null;
   const settled = last ? pts[frames - 1] - pts[last.n] >= SETTLE_S : false;
 
+  const typing = typedAt.map((at, i): TypedChunk => {
+    const sentN = pts.findIndex((t) => t >= at);
+    if (sentN < 0) throw new Error("no frame after typing");
+    const vis = changed.find((c) => c.n >= sentN);
+    return {
+      text: chunks[i],
+      sent: { frame: sentN, ms: rel(sentN) },
+      visible: vis ? { frame: vis.n, ms: rel(vis.n) } : null,
+      latencyMs: vis ? Math.round((pts[vis.n] - at) * 1000) : null,
+    };
+  });
+
   const merged: { startN: number; endN: number; maxPixels: number }[] = [];
   for (const c of changed) {
     const m = merged.at(-1);
@@ -392,6 +480,7 @@ async function analyze(video: string, triggerAt: number): Promise<Analysis> {
     baseFrame,
     firstPrompt,
     fullPrompt,
+    typing,
     settled,
     bandInk: { base: bandInk(base), first: firstInk, final: finalInk },
     changes,
@@ -426,29 +515,43 @@ async function sheet(
   ]);
 }
 
-const device = await screenDevice();
-const results: (Analysis & {
-  run: number;
-  triggerAt: number;
-  idleAfter: boolean;
-  video: string;
-})[] = [];
-for (let run = 1; run <= runs; run++) {
-  await prepare();
-  const bounds = await windowBounds();
-  const video = path.join(outDir, `run-${run}.mp4`);
-  const triggerAt = await record(
-    video,
-    path.join(outDir, `run-${run}.clap.json`),
-    device,
-    bounds,
-  );
-  const idleAfter = Boolean(await waitFor(idleAtBottom, 5000));
-  const analysis = await analyze(video, triggerAt);
-  results.push({ run, triggerAt, idleAfter, video, ...analysis });
+const results: RunResult[] = [];
+const report = (run: number, analysis: Analysis) =>
   console.error(
-    `run ${run}: firstPrompt ${analysis.firstPrompt?.ms ?? "-"} ms, fullPrompt ${analysis.fullPrompt?.ms ?? "-"} ms`,
+    `run ${run}: firstPrompt ${analysis.firstPrompt?.ms ?? "-"} ms, fullPrompt ${analysis.fullPrompt?.ms ?? "-"} ms` +
+      analysis.typing
+        .map(
+          (c) =>
+            `, typed at ${c.sent.ms} ms visible after ${c.latencyMs ?? "-"} ms`,
+        )
+        .join(""),
   );
+if (saved) {
+  for (const r of saved.results) {
+    const analysis = await analyze(r.video, {
+      triggerAt: r.triggerAt,
+      typedAt: r.typedAt,
+    });
+    results.push({ ...r, ...analysis });
+    report(r.run, analysis);
+  }
+} else {
+  const device = await screenDevice();
+  for (let run = 1; run <= runs; run++) {
+    await prepare();
+    const bounds = await windowBounds();
+    const video = path.join(outDir, `run-${run}.mp4`);
+    const trigger = await record(
+      video,
+      path.join(outDir, `run-${run}.clap.json`),
+      device,
+      bounds,
+    );
+    const idleAfter = Boolean(await waitFor(idleWithTypedAtBottom, 5000));
+    const analysis = await analyze(video, trigger);
+    results.push({ run, ...trigger, idleAfter, video, ...analysis });
+    report(run, analysis);
+  }
 }
 
 function stats(xs: number[]) {
@@ -462,21 +565,40 @@ function stats(xs: number[]) {
 }
 
 const valid = results.filter(
-  (r) => r.firstPrompt && r.fullPrompt && r.settled && r.idleAfter,
+  (r) =>
+    r.firstPrompt &&
+    r.fullPrompt &&
+    r.settled &&
+    r.idleAfter &&
+    r.typing.every((c) => c.visible),
 );
 const summary = {
   runs: results.length,
   valid: valid.length,
   firstPrompt: stats(valid.map((r) => r.firstPrompt!.ms)),
   fullPrompt: stats(valid.map((r) => r.fullPrompt!.ms)),
+  typedLatency: chunks.map((text, i) => ({
+    text,
+    ...stats(valid.map((r) => r.typing[i].latencyMs!)),
+  })),
 };
-const medianRun = [...valid].sort(
-  (a, b) => a.fullPrompt!.ms - b.fullPrompt!.ms,
-)[(valid.length - 1) >> 1];
+const rank = (r: (typeof valid)[number]) =>
+  chunks.length
+    ? Math.max(...r.typing.map((c) => c.latencyMs!))
+    : r.fullPrompt!.ms;
+const medianRun = [...valid].sort((a, b) => rank(a) - rank(b))[
+  (valid.length - 1) >> 1
+];
 const sheetPath = path.join(outDir, `median-run-${medianRun.run}.sheet.png`);
-const picks = {
+const picks: Record<string, number> = {
   beforeFirstPrompt: medianRun.firstPrompt!.frame - 1,
   firstPrompt: medianRun.firstPrompt!.frame,
+  ...Object.fromEntries(
+    medianRun.typing.flatMap((c, i) => [
+      [`typed${i + 1}Sent`, c.sent.frame],
+      [`typed${i + 1}Visible`, c.visible!.frame],
+    ]),
+  ),
   beforeFullPrompt: medianRun.fullPrompt!.frame - 1,
   fullPrompt: medianRun.fullPrompt!.frame,
 };
@@ -491,6 +613,7 @@ writeFileSync(
   path.join(outDir, "results.json"),
   JSON.stringify(
     {
+      config: { cwd, chunks, typeAtMs, typeEveryMs },
       summary,
       medianRun: { run: medianRun.run, sheet: sheetPath, frames: picks },
       results,
@@ -501,18 +624,38 @@ writeFileSync(
 );
 
 const cell = (m: Milestone | null) => (m ? `${m.ms} (f${m.frame})` : "-");
+const typingTable = chunks.length
+  ? [
+      "",
+      "| run | chunk | text | sent ms (frame) | visible ms (frame) | latency ms |",
+      "| --- | --- | --- | --- | --- | --- |",
+      ...results.flatMap((r) =>
+        r.typing.map(
+          (c, i) =>
+            `| ${r.run} | ${i + 1} | \`${c.text}\` | ${cell(c.sent)} | ${cell(c.visible)} | ${c.latencyMs ?? "-"} |`,
+        ),
+      ),
+    ]
+  : [];
 const md = [
+  `cwd: ${cwd}${chunks.length ? `  typed ${chunks.map((c) => `"${c}"`).join(", ")} from +${typeAtMs} ms every ${typeEveryMs} ms` : ""}`,
+  "",
   "| run | firstPrompt ms (frame) | fullPrompt ms (frame) | settled | idle after |",
   "| --- | --- | --- | --- | --- |",
   ...results.map(
     (r) =>
       `| ${r.run} | ${cell(r.firstPrompt)} | ${cell(r.fullPrompt)} | ${r.settled ? "yes" : "no"} | ${r.idleAfter ? "yes" : "no"} |`,
   ),
+  ...typingTable,
   "",
   "| milestone | min | median | max |",
   "| --- | --- | --- | --- |",
   `| firstPrompt | ${summary.firstPrompt.min} | ${summary.firstPrompt.median} | ${summary.firstPrompt.max} |`,
   `| fullPrompt | ${summary.fullPrompt.min} | ${summary.fullPrompt.median} | ${summary.fullPrompt.max} |`,
+  ...summary.typedLatency.map(
+    (t, i) =>
+      `| typed chunk ${i + 1} latency | ${t.min} | ${t.median} | ${t.max} |`,
+  ),
   "",
   `Median run ${medianRun.run} sheet, top to bottom: frames ${[...new Set(Object.values(picks))].sort((a, b) => a - b).join(", ")} (${Object.entries(
     picks,

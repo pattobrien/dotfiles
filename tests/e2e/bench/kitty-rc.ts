@@ -97,16 +97,24 @@ export function createKittyRc(to: string): KittyRc {
     },
 
     async launchOsWindow({ title, cwd, position }) {
+      const [left, top] = position.split("x");
       const reply = await request("launch", {
-        type: "os-window",
+        type: "os-panel",
         keep_focus: true,
         location: "default",
         stdin_source: "none",
         logo_alpha: -1,
         window_title: title,
         os_window_title: title,
-        os_window_state: "normal",
-        os_window_position: position,
+        os_panel: [
+          "edge=none",
+          "layer=top",
+          "focus-policy=not-allowed",
+          `margin-left=${left}`,
+          `margin-top=${top}`,
+          "columns=100",
+          "lines=24",
+        ],
         cwd,
       });
       if (!reply.ok) throw new Error(`kitty launch failed: ${reply.error}`);
