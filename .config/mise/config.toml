@@ -127,7 +127,9 @@ typst = "latest"
 jq = "latest"
 protoc = "latest"
 "github:steipete/peekaboo" = { version = "latest", os = ["macos"] }
-"github:cameroncooke/AXe" = { version = "latest", asset_pattern = "AXe-macOS-*-universal.tar.gz", exe = "axe", os = ["macos"] }
+"github:cameroncooke/AXe" = { version = "latest", asset_pattern = "AXe-macOS-*-universal.tar.gz", exe = "axe", os = [
+  "macos",
+] }
 "github:openclaw/gogcli" = { version = "latest", exe = "gog" }
 hcloud = "latest"
 "github:alltuner/mise-completions-sync" = "latest"
@@ -148,6 +150,8 @@ docker-cli = "latest"
 "github:swamp-club/swamp" = "latest"
 "npm:acpx" = "latest"
 "cargo:fre" = "latest"
+# cli stopwatch clock, for timing perf using video recording
+"go:github.com/MHNightCat/tshock" = "latest"
 
 [hooks]
 postinstall = [
