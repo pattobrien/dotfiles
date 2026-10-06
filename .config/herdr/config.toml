@@ -196,26 +196,14 @@ description = "navigator: jump to anything"
 
 # Pickers on the Cmd relay (Cmd+O → shift+F10, Cmd+Shift+P → shift+F11 — sent
 # by kitty/ghostty; herdr only sees modified F-keys past F12, hence the
-# shift+F slots). Cmd+O is the same list as the "Herdr: Open Workspace" quick
-# action, in a gum filter styled after the herdr-plus picker. Rows are ordered
-# by frecency from the fre store the workspace-frecency plugin fills (never
-# focused ones last), and the focused workspace is left out.
+# shift+F slots). Cmd+O is the shed CLI's OpenTUI workspace picker, installed by
+# mise. Full path because popups run under /bin/sh with the server PATH, which
+# lacks mise. stdin from /dev/null: the picker reads keys from /dev/tty itself,
+# and a non-tty stdin skips trpc-cli prompts.
 [[keys.command]]
 key = "shift+f10"
 type = "popup"
-command = '''
-list=$(herdr workspace list | jq -r '.result.workspaces[] | select(.worktree.is_linked_worktree != true and .focused != true) | [.workspace_id, .label] | @tsv')
-n=$(printf '%s\n' "$list" | wc -l); [ "$n" -gt 12 ] && n=12
-labels=$(printf '%s\n' "$list" | cut -f2)
-pick=$({ fre --store_name herdr-workspaces.json --sorted; printf '%s\n' "$labels"; } |
-open="$labels" awk 'BEGIN { n = split(ENVIRON["open"], a, "\n"); for (i = 1; i <= n; i++) ok[a[i]] = 1 } ok[$0] && !seen[$0]++' |
-gum filter --height $((n + 7)) --padding '1 1' \
-  --header 'Herdr: Open Workspace — ⌘ O' --header.foreground '#11111B' --header.background '#A78BFA' --header.bold --header.padding '0 1' --header.margin '0 0 1 0' \
-  --prompt '❯ ' --prompt.foreground 5 --prompt.bold --placeholder 'Pick an option…' --placeholder.foreground 8 \
-  --indicator '▌' --indicator.foreground 5 --cursor-text.bold --match.foreground 3 --match.bold)
-id=$(printf '%s\n' "$list" | awk -F'\t' -v p="$pick" '$2 == p { print $1; exit }')
-[ -n "$id" ] && herdr workspace focus "$id"
-'''
+command = "$HOME/.local/share/mise/installs/github-pattobrien-shed/latest/shed herdr workspaces open </dev/null"
 width = 70
 height = 20
 description = "workspace: open" # Cmd+O
