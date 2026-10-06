@@ -152,6 +152,7 @@ docker-cli = "latest"
 "cargo:fre" = "latest"
 # cli stopwatch clock, for timing perf using video recording
 "go:github.com/MHNightCat/tshock" = "latest"
+ffmpeg = "latest"
 
 [hooks]
 postinstall = [
