@@ -157,6 +157,8 @@ cask "chatgpt"
 cask "chromium"
 # Anthropic's official Claude AI desktop app
 cask "claude"
+# Free app that makes your Internet safer
+cask "cloudflare-warp"
 # OpenAI's coding agent that runs in your terminal
 cask "codex"
 # Node-based image, video and audio generator
