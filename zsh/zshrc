@@ -211,8 +211,16 @@ unset _mise_installs _mise_config _mise_newest _mise_paths_cache
 
 source ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-defer/zsh-defer.plugin.zsh
 # The 100ms delay lets the first prompt's gitstatusd answer paint before the
-# hook-env run occupies zle.
-zsh-defer -t 0.1 -c 'eval "$(mise activate zsh)"'
+# hook-env run occupies zle. A command typed or pasted before the deferred run
+# fires triggers the same activation from preexec, so it still gets the project
+# tool versions and mise env vars (PATH edits in preexec apply to that command).
+autoload -Uz add-zsh-hook
+_mise_activate() {
+  add-zsh-hook -d preexec _mise_activate
+  (( $+functions[_mise_hook] )) || eval "$(mise activate zsh)"
+}
+add-zsh-hook preexec _mise_activate
+zsh-defer -t 0.1 _mise_activate
 
 source $ZSH/oh-my-zsh.sh
 
