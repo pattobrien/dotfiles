@@ -29,11 +29,25 @@ return {
   -- still loads VS Code-style snippets from ~/.config/nvim/snippets/.
   { "rafamadriz/friendly-snippets", enabled = false },
 
-  -- hardtime.nvim — trains you out of bad vim habits (e.g. repeated jjjj)
-  -- Disabled during LazyVim migration — uncomment to re-enable.
-  -- {
-  --   "m4xshen/hardtime.nvim",
-  --   event = "VeryLazy",
-  --   opts = {},
-  -- },
+  {
+    "m4xshen/hardtime.nvim",
+    lazy = false,
+    dependencies = { "MunifTanjim/nui.nvim" },
+    opts = {
+      restriction_mode = "hint",
+      disable_mouse = false,
+      disabled_keys = {
+        ["<Up>"] = false,
+        ["<Down>"] = false,
+        ["<Left>"] = false,
+        ["<Right>"] = false,
+      },
+      disabled_filetypes = {
+        snacks_picker_input = true,
+        snacks_input = true,
+        snacks_terminal = true,
+        ["sidekick.*"] = true,
+      },
+    },
+  },
 }
