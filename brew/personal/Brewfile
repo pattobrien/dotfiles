@@ -198,6 +198,8 @@ cask "hammerspoon"
 cask "homerow"
 # Keyboard customiser
 cask "karabiner-elements"
+# Keystroke visualiser
+cask "keycastr"
 # GPU-based terminal emulator
 cask "kitty"
 # App to manage software development and track bugs

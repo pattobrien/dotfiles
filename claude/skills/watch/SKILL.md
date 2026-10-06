@@ -69,6 +69,8 @@ the frame rate.
 - Pass `-copyts`, so frame times stay on the host clock.
 - Crop to the stage. ffmpeg cannot capture a single window.
 - Hide the cursor.
+- For a keypress trigger, run KeyCastr with its overlay inside the stage. Zero
+  is the first frame showing the key.
 - Use `-fps_mode passthrough` and hardware h264.
 - Device indices shift when displays or phones connect, so list them first.
 
