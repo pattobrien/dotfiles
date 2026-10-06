@@ -35,13 +35,17 @@ const { values } = parseArgs({
     },
     fixture: {
       type: "string",
-      default:
-        "/private/tmp/claude-501/-Users-patt-dev-pattobrien-dotfiles/0aa31406-c230-4405-b02d-a0e4496d764b/scratchpad/prompt-bench/fixture-repo",
+      default: path.resolve(
+        import.meta.dirname,
+        "../test-results/new-shell-fixture",
+      ),
     },
+    shell: { type: "string", default: "/bin/zsh" },
   },
 });
 
 const runs = Number(values.runs);
+const shell = values.shell;
 const outDir = path.resolve(values.out);
 const fixture = path.resolve(values.fixture);
 const fixtureName = path.basename(fixture);
@@ -124,10 +128,10 @@ async function prepare(): Promise<void> {
   await rc.sendText(MATCH, "\x0c");
   if (!(await waitFor((rows) => rows.length === 1 && isIdle(rows[0]), 5000)))
     throw new Error("screen did not clear to a single idle prompt");
-  await rc.sendText(MATCH, "exec zsh");
+  await rc.sendText(MATCH, `exec ${shell}`);
   if (
     !(await waitFor(
-      (rows) => rows.length === 1 && rows[0].endsWith("❯ exec zsh"),
+      (rows) => rows.length === 1 && rows[0].endsWith(`❯ exec ${shell}`),
       5000,
     ))
   )

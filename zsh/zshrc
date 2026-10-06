@@ -144,7 +144,7 @@ cached-init brew_shellenv $HOMEBREW_PREFIX/bin/brew $HOMEBREW_PREFIX/bin/brew sh
 # invalidation on every startup. Un-export it: every shell rebuilds fpath from
 # scratch above, so nothing needs the inherited copy.
 typeset +x FPATH
-typeset -U fpath
+typeset -U fpath path
 
 export PATH="$HOMEBREW_PREFIX/bin:$PATH"
 
@@ -159,9 +159,8 @@ FPATH="$HOMEBREW_PREFIX/share/zsh/site-functions:${FPATH}"
 # mise-installed tools' completions (synced by misecompsync); also before compinit
 fpath=(${XDG_DATA_HOME:-$HOME/.local/share}/mise-completions/zsh $fpath)
 
-# Tool dirs. Every PATH edit sits above `mise activate` below: the activation
-# hook records PATH and the MISE_* vars, and the first prompt only skips a second
-# ~90ms `mise hook-env` run if neither changed since.
+# Tool dirs. Every PATH edit sits above the mise block below, so the cached mise
+# bin dirs land in front and the deferred activation records the final PATH.
 source ~/dev/pattobrien/dotfiles/zsh/flutter.zsh
 source ~/dev/pattobrien/dotfiles/zsh/go.zsh
 source ~/dev/pattobrien/dotfiles/zsh/php.zsh
@@ -190,8 +189,30 @@ export MISE_ACTIVATE_AGGRESSIVE=1
 # ~/.config/gh/hosts.yml, but gh stores ours in the macOS keyring. mise runs
 # this lazily, only when it needs a token (`gh auth token` costs ~30ms).
 export MISE_GITHUB_CREDENTIAL_COMMAND="gh auth token"
+
+# `mise activate` always ends with a full `hook-env` run (~80ms for the 136 tools
+# in the global config, jdx/mise#6279), so the activation itself is deferred to
+# after the first prompt via zsh-defer. Until then the global tool bin dirs come
+# from a cache, so everything below still resolves mise-installed tools; the
+# cache is rebuilt when mise, its config or any install dir is newer than it.
 # Completions come from Homebrew's _mise in site-functions.
-eval "$(mise activate zsh)"
+_mise_installs=${MISE_DATA_DIR:-$HOME/.local/share/mise}/installs
+_mise_config=${MISE_GLOBAL_CONFIG_FILE:-${XDG_CONFIG_HOME:-$HOME/.config}/mise/config.toml}
+_mise_newest=($_mise_installs/*(/om[1]N))
+_mise_paths_cache=$_zsh_cache_dir/mise_bin_paths
+if [[ ! -s $_mise_paths_cache || ${commands[mise]:A} -nt $_mise_paths_cache ||
+      ${_mise_config:A} -nt $_mise_paths_cache || $_mise_installs -nt $_mise_paths_cache ||
+      $_mise_newest -nt $_mise_paths_cache ]]; then
+  mkdir -p "$_zsh_cache_dir"
+  mise -C ~ bin-paths >| "$_mise_paths_cache"
+fi
+path=(${(f)"$(<$_mise_paths_cache)"} $path)
+unset _mise_installs _mise_config _mise_newest _mise_paths_cache
+
+source ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-defer/zsh-defer.plugin.zsh
+# The 100ms delay lets the first prompt's gitstatusd answer paint before the
+# hook-env run occupies zle.
+zsh-defer -t 0.1 -c 'eval "$(mise activate zsh)"'
 
 source $ZSH/oh-my-zsh.sh
 
