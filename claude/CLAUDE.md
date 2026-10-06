@@ -39,6 +39,8 @@ every reference as a markdown link, so I can click it in chat:
 - Default to fan-out for decisions that matter (tool selection, version
   migrations, architecture comparisons) and for any audit that sweeps many
   files, runs, or logs.
+- Spawn subagents with `model: "opus"` instead of inheriting a Fable model,
+  unless Fable is explicitly requested.
 
 ## No Hacks or Shortcuts
 
