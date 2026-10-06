@@ -3,6 +3,7 @@ tap "asmvik/formulae", "https://github.com/asmvik/homebrew-formulae.git", truste
 tap "dsully/tap", trusted: true
 tap "koekeishiya/formulae", "https://github.com/asmvik/homebrew-formulae.git", trusted: true
 tap "leoafarias/fvm", trusted: true
+tap "penso/tap", trusted: true
 tap "raine/workmux", trusted: true
 tap "vjeantet/tap", trusted: true
 # Run your GitHub Actions locally
@@ -252,6 +253,8 @@ cask "visual-studio-code@insiders"
 cask "whatsapp"
 # Video communication and virtual meeting platform
 cask "zoom"
+# Native macOS client for Herdr, built with Rust and GPUI
+cask "penso/tap/herdr-gpui"
 mas "GarageBand", id: 682658836
 mas "iMovie", id: 408981434
 mas "Keynote", id: 409183694
