@@ -25,5 +25,8 @@ alias trail='<<<${(F)path}'
 export PATH="$HOME/Library/pnpm/bin:$HOME/.local/bin:/opt/homebrew/bin:$PATH:$HOME/.local/share/mise/shims"
 
 
-# Vite+ bin (https://viteplus.dev)
-. "$HOME/.vite-plus/env"
+# Vite+ bin (https://viteplus.dev). zshrc sources the env file for the `vp`
+# function and completions; sourcing it here too costs ~175ms per shell on a
+# long inherited PATH (voidzero-dev/vite-plus dedupe loop), so only PATH is set.
+export VP_HOME="$HOME/.vite-plus"
+path=("$VP_HOME/bin" ${path:#$VP_HOME/(bin|fallback-bin)} "$VP_HOME/fallback-bin")
