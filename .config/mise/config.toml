@@ -69,6 +69,7 @@ fzf = "latest"
 bat = "latest"
 eza = "latest"
 zoxide = "latest"
+atuin = "latest"
 tmux = "latest"
 gum = "latest"
 
@@ -153,6 +154,10 @@ postinstall = [
   "misecompsync --new-only --shell zsh",
   "herdr integration install claude",
   "herdr integration install codex",
+  "atuin hook install claude-code",
+  "atuin hook install codex",
+  "atuin hook install opencode",
+  "atuin hook install pi",
 ]
 
 [tasks.dotfiles]

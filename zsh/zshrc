@@ -222,6 +222,10 @@ fi
 # zoxide: `z`/`zi` frecency cd. Feeds herdr-navigator and the tv zoxide channel.
 eval "$(zoxide init zsh)"
 
+# atuin: passive history recorder (command, cwd, exit code, duration) in
+# ~/.local/share/atuin/history.db. Keybindings stay with Television above.
+eval "$(atuin init zsh --disable-up-arrow --disable-ctrl-r --disable-ai)"
+
 # Cmd+K (via Ghostty F12 escape sequence): clear screen + scrollback when not in tmux
 # Inside tmux this is handled by tmux's F12 binding in .tmux.conf
 if [[ -z "$TMUX" ]]; then

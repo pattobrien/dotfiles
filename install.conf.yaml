@@ -59,6 +59,7 @@
     ~/.config/lazygit: .config/lazygit
     ~/.config/bat: .config/bat
     ~/.config/television: .config/television
+    ~/.config/atuin/config.toml: .config/atuin/config.toml
     ~/.hammerspoon:
       path: .config/hammerspoon
       force: true

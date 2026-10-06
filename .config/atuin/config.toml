@@ -1,0 +1,28 @@
+auto_sync = false
+update_check = false
+
+search_mode = "fuzzy"
+filter_mode = "global"
+workspaces = true
+style = "compact"
+inline_height = 20
+keymap_mode = "auto"
+enter_accept = false
+show_help = false
+
+# vars: {time} {exit} {duration} {directory} {command} {host} {user} {session} {author} {intent} {uuid}
+history_format = "{time}\t{exit}\t{duration}\t{directory}\t{command}"
+secrets_filter = true
+store_failed = true
+
+[search]
+filters = ["workspace", "directory", "session", "host", "global"]
+
+[ui]
+# columns: exit duration time datetime directory host user command; each may be { type, width, expand }
+columns = ["exit", "duration", "time", { type = "directory", width = 28 }, "command"]
+
+[stats]
+common_subcommands = ["git", "gh", "pnpm", "vp", "mise", "herdr", "wt", "docker", "cargo", "npm", "tmux", "op", "claude"]
+common_prefix = ["sudo", "command"]
+ignored_commands = ["cd", "ls", "z", "zi", "clear", "exit"]
