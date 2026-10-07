@@ -13,30 +13,22 @@ blocks come from the nvim test in the references; treat them as examples, not a 
 
 ## 1. Stage
 
-Before opening or moving any window to make room, ask the user which area of
-the screen to use. They may want to close what is there themselves.
+The stage is the `watch-stage` virtual screen. Apps render on it as on a real
+display, and the user never sees it. [`scripts/stage.ts`](scripts/stage.ts)
+brings it up, opens a kitty OS window on it without taking focus, sizes it in
+cells, and prints the ffmpeg device, crop and record command. Run it with
+`bun` from the directory the app should start in. Geometry and gotchas:
+[`references/virtual-screen.md`](references/virtual-screen.md).
 
-Open the app under test in a new window without taking focus, so the user
-keeps working undisturbed. The window must stay visible and unobscured for the
-whole take. Read its bounds from `CGWindowListCopyWindowInfo` through JXA
-(`osascript -l JavaScript`).
+```sh
+bun ~/.claude/skills/watch/scripts/stage.ts --cols 100 --rows 24
+```
 
 Size the window appropriately. Keep it small enough that the video and frames
 stay cheap to analyze, and large enough that every detail stays legible. Record
 the whole app window, never a slice of it. For nvim, about 20 lines of code plus
 the status line is right for most tests e.g. capturing when syntax-highlighting
 is shown.
-
-```sh
-kitty @ --to unix:/tmp/kitty-90145 launch --type=os-window --keep-focus \
-  --title watch-stage --os-window-title watch-stage \
-  --os-window-position 1400x120 --cwd ~/dev/pattobrien/dotfiles
-kitty @ --to unix:/tmp/kitty-90145 resize-os-window --match id:3 \
-  --unit cells --width 100 --height 24
-osascript -l JavaScript -e 'ObjC.import("CoreGraphics");
-  const list = ObjC.castRefToObject($.CGWindowListCopyWindowInfo($.kCGWindowListOptionOnScreenOnly, 0));
-  JSON.stringify(ObjC.deepUnwrap(list).filter(w => w.kCGWindowName === "watch-stage").map(w => w.kCGWindowBounds))'
-```
 
 Optional: run `tshock stopwatch` in a small terminal window in a top corner,
 inside the recorded region. It is a human-readable cross-check, not a data
@@ -50,7 +42,7 @@ clock (`mach_absolute_time`), which avfoundation stamps frames with.
 This zero includes the display pipeline, so it measures what the user sees.
 
 ```sh
-kitty @ --to unix:/tmp/kitty-90145 send-text --match id:3 \
+kitty @ --to unix:/tmp/kitty-90145 send-text --match title:watch-stage \
   'bun ~/.claude/skills/watch/scripts/clap.ts --log run-1.json -- nvim --startuptime startuptime-1.log tests/e2e/src/nvim.ts\r'
 ```
 
@@ -72,12 +64,11 @@ the frame rate.
 - For a keypress trigger, run KeyCastr with its overlay inside the stage. Zero
   is the first frame showing the key.
 - Use `-fps_mode passthrough` and hardware h264.
-- Device indices shift when displays or phones connect, so list them first.
+- Name the device; indices shift when displays or phones connect.
 
 ```sh
-ffmpeg -f avfoundation -list_devices true -i ""
-ffmpeg -f avfoundation -capture_cursor 0 -framerate 60 -i "2:none" \
-  -copyts -vf crop=800:440:1398:30 -fps_mode passthrough \
+ffmpeg -f avfoundation -capture_cursor 0 -framerate 60 -t 8 -i "Capture screen 1:none" \
+  -copyts -vf crop=800:440:100:68 -fps_mode passthrough \
   -c:v h264_videotoolbox -b:v 20M nvim-take.mp4
 ```
 
@@ -125,4 +116,4 @@ zero can come from before it, such as the shell redrawing its prompt.
 ## Report
 
 Follow [`references/report-example.md`](references/report-example.md). Leave
-the stage window open.
+the stage up; `stage.ts --down` only when the user asks.

@@ -166,6 +166,8 @@ cask "android-studio"
 cask "another-redis-desktop-manager"
 # Application uninstaller
 cask "appcleaner"
+# Display management tool
+cask "betterdisplay"
 # Web browser focusing on privacy
 cask "brave-browser"
 # OpenAI's official ChatGPT desktop app
