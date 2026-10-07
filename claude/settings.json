@@ -238,14 +238,14 @@
     "cloudflare@claude-plugins-official": false,
     "ponytail@ponytail": false,
     "iso-24495-plain-language@iso-24495": false,
-    "pstack@cursor-plugins": true,
+    "pstack@cursor-plugins": false,
     "show-me@skills": true,
     "typesafe@typesafe-ai": false,
     "vercel@claude-plugins-official": false,
     "gh-stack@pattobrien": true,
     "claude-md-management@claude-plugins-official": true,
     "gh-channels@pattobrien": false,
-    "cc-plugin-you-should-know@builtin": true,
+    "cc-plugin-you-should-know@builtin": false,
     "ttstack@pattobrien": true
   },
   "extraKnownMarketplaces": {
@@ -347,6 +347,7 @@
       "effortLevel": "high"
     }
   },
+  "autoCompactWindow": 240000,
   "promptSuggestionEnabled": false,
   "awaySummaryEnabled": false,
   "askUserQuestionTimeout": "never",
