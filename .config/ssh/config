@@ -5,6 +5,15 @@ Host *
     UseKeychain yes
     ServerAliveInterval 60
 
+# garden's docker context (ssh://root@178.156.155.230): alchemy dials docker
+# ~30 times in parallel, past sshd's MaxStartups, so the dials share one session
+Host garden 178.156.155.230
+    HostName 178.156.155.230
+    User root
+    ControlMaster auto
+    ControlPath ~/.ssh/cm-%r@%h:%p
+    ControlPersist 10m
+
 # Example of development environments (non-sensitive)
 # Host dev
 #     HostName dev.example.com
