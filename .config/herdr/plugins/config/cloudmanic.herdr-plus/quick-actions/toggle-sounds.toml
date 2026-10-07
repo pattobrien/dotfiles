@@ -1,0 +1,4 @@
+name = "Herdr: Toggle Notification Sounds"
+description = "Flip [ui.sound] enabled and reload config"
+type = "command"
+command = "herdr-sound toggle"

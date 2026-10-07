@@ -12,5 +12,8 @@
     "@types/node": "catalog:",
     "typescript": "catalog:",
     "vite-plus": "catalog:"
+  },
+  "dependencies": {
+    "@decimalturn/toml-patch": "catalog:"
   }
 }
