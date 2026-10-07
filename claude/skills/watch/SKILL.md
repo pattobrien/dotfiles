@@ -113,7 +113,21 @@ Read every sheet yourself, and describe only what the frames visibly show,
 before telling the user. The pipeline delays everything, so a change just after
 zero can come from before it, such as the shell redrawing its prompt.
 
+## 6. Tear down
+
+Tear the stage down as soon as the last take is recorded:
+
+```sh
+bun ~/.claude/skills/watch/scripts/stage.ts --down
+```
+
+A stage left up breaks the user's desktop. The hidden kitty window can take
+focus on Cmd+Tab, so the user's real kitty window never comes forward. The
+virtual screen also stays connected and the mouse can wander onto it.
+
+Keep the stage up only when more takes are coming soon in this session. If you
+do, tell the user the stage is still up and how to take it down.
+
 ## Report
 
-Follow [`references/report-example.md`](references/report-example.md). Leave
-the stage up; `stage.ts --down` only when the user asks.
+Follow [`references/report-example.md`](references/report-example.md).
