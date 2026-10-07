@@ -51,6 +51,11 @@ return {
           init_options = { provideFormatter = false },
         },
 
+        -- tombi — TOML hover/completion/validation from SchemaStore or a
+        -- `#:schema <url>` directive (taplo 0.10 can't parse the current
+        -- SchemaStore catalog)
+        tombi = {},
+
         -- gh_actions_ls — GitHub's Actions language server; only attaches to
         -- .github/workflows files. sessionToken + repos unlock `with:` input
         -- completion (fetched from each action's action.yml), runs-on labels,
