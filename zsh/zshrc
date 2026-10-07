@@ -173,15 +173,11 @@ export PATH="$BUN_INSTALL/bin:$PATH"
 
 export PATH="$HOME/.maestro-runner/bin:$PATH"
 
-# Vite+ (https://viteplus.dev): PATH dirs and the `vp` function. Its completions
-# need compinit, so the file is sourced once more after oh-my-zsh.
-. "$VP_HOME/env"
-
 # Trust per-worktree and per-project mise configs; the activation hook reads
 # this var immediately.
 export MISE_TRUSTED_CONFIG_PATHS="$HOME/.dotfiles__worktrees:$HOME/dev/pattobrien"
 # Keep mise tool dirs at the front of PATH on every hook run, ahead of the
-# Vite+ node/pnpm shims.
+# PNPM_HOME and BUN_INSTALL bins.
 export MISE_ACTIVATE_AGGRESSIVE=1
 # Authenticate mise's GitHub API calls (60/hr anonymous -> 5000/hr). mise's
 # github.gh_cli_tokens setting can't find the token on its own: it reads
@@ -303,7 +299,7 @@ for _f in ${HOME}/.config/herdr/plugins/github/herdr-automatic-rename-*/shell/ho
   source $_f; break
 done
 
-# Vite+ completions (compdef is available now). The env file's PATH dedupe loop
-# costs ~200ms on the full PATH, so it runs on a local one-entry PATH that is
-# discarded; only `vp` needs to resolve for the completion generator.
-() { local PATH=$VP_HOME/bin; . "$VP_HOME/env" }
+# Vite+ completions and the `vp` function (compdef is available now). The env
+# file also prepends its node/pnpm shims, so it runs on a local one-entry PATH
+# that is discarded; `vp` itself comes from mise.
+() { local PATH=$HOME/.vite-plus/bin; . "$HOME/.vite-plus/env" }
