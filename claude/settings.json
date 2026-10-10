@@ -24,7 +24,6 @@
     "OTEL_METRICS_EXPORTER": "otlp",
     "OTEL_TRACES_EXPORTER": "otlp"
   },
-  "otelHeadersHelper": "/Users/patt/.local/bin/claude-otel-headers",
   "attribution": {
     "commit": "",
     "pr": ""
@@ -248,7 +247,8 @@
     "claude-md-management@claude-plugins-official": true,
     "gh-channels@pattobrien": false,
     "cc-plugin-you-should-know@builtin": false,
-    "ttstack@pattobrien": true
+    "ttstack@pattobrien": true,
+    "cursor-team-kit@cursor-plugins": true
   },
   "extraKnownMarketplaces": {
     "claude-notifications-go": {
@@ -337,6 +337,7 @@
       }
     }
   },
+  "otelHeadersHelper": "/Users/patt/.local/bin/claude-otel-headers",
   "outputStyle": "Concise",
   "feedbackDrafts": "off",
   "alwaysThinkingEnabled": true,
