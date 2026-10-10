@@ -248,7 +248,8 @@
     "gh-channels@pattobrien": false,
     "cc-plugin-you-should-know@builtin": false,
     "ttstack@pattobrien": true,
-    "cursor-team-kit@cursor-plugins": true
+    "cursor-team-kit@cursor-plugins": false,
+    "deslop@cursor-plugins": true
   },
   "extraKnownMarketplaces": {
     "claude-notifications-go": {
