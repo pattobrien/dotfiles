@@ -1,6 +1,3 @@
-tap "dsully/tap", trusted: true
-tap "raine/workmux", trusted: true
-
 # Shell
 brew "zsh"
 brew "powerlevel10k"
@@ -9,7 +6,6 @@ brew "zsh-syntax-highlighting"
 
 # Essential CLI tools
 brew "tree"
-brew "raine/workmux/workmux"
 # Touch ID for sudo inside tmux (see scripts/setup_touchid_sudo.zsh)
 brew "pam-reattach"
 brew "wget"
@@ -18,7 +14,6 @@ brew "curl"
 # gh is not in mise: mise reads its token to authenticate GitHub API calls
 # (see zsh/zshrc), so it must exist before the first `mise install`.
 brew "gh"
-brew "dsully/tap/macos-defaults"
 brew "mise"
 
 # 1Password

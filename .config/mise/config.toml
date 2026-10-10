@@ -73,6 +73,14 @@ zoxide = "latest"
 atuin = "latest"
 tmux = "latest"
 gum = "latest"
+starship = "latest"
+delta = "latest"
+lazygit = "latest"
+television = "latest"
+watchexec = "latest"
+ast-grep = "latest"
+cloc = "latest"
+"github:boyter/scc" = "latest"
 
 # Language runtimes & SDKs (migrated from asdf .tool-versions)
 bun = "latest"
@@ -97,6 +105,12 @@ cmake = "latest"
 ninja = "latest"
 just = "latest"
 cocoapods = { version = "latest", os = ["macos"] }
+xcbeautify = "latest"
+xcodes = "latest"
+mas = "latest"
+ghcup = "latest"
+"github:leoafarias/fvm" = "latest"
+wasmer = "latest"
 
 # Infra, Kubernetes & cloud
 terraform = "latest"
@@ -110,6 +124,15 @@ minikube = "latest"
 kind = "latest"
 kubebuilder = "latest"
 skaffold = "latest"
+kubeconform = "latest"
+awscli = "latest"
+flyctl = "latest"
+act = "latest"
+trufflehog = "latest"
+websocat = "latest"
+microsandbox = "latest"
+container = { version = "latest", os = ["macos"] }
+"pipx:langgraph-cli" = "latest"
 "github:cloudflare/cloudflared" = "latest"
 "pipx:tinybird" = { version = "latest", uvx_args = "--python 3.13" }
 "pipx:claude-swap" = { version = "latest", exe = "cswap", uvx_args = "--python 3.13" }
@@ -131,6 +154,7 @@ protoc = "latest"
 "github:cameroncooke/AXe" = { version = "latest", asset_pattern = "AXe-macOS-*-universal.tar.gz", exe = "axe", os = [
   "macos",
 ] }
+"github:dsully/macos-defaults" = { version = "latest", os = ["macos"] }
 "github:openclaw/gogcli" = { version = "latest", exe = "gog" }
 hcloud = "latest"
 "github:alltuner/mise-completions-sync" = "latest"
@@ -140,6 +164,7 @@ age = "latest"
 "github:inngest/inngest" = "latest"
 jj = "latest"
 worktrunk = "latest"
+"github:raine/workmux" = "latest"
 doctl = "latest"
 doppler = "latest"
 pulumi = "latest"

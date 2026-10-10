@@ -5,6 +5,11 @@
       stdin: true
 
 - shell:
+    - command: mise trust ~/.config/mise/config.toml
+      description: Trusting mise config
+    - command: mise install github:dsully/macos-defaults
+      description: Installing macos-defaults via mise
+
     - command: ./scripts/setup_macos.zsh
       description: |
         Applying macOS defaults: YAML configs (macos-defaults) AND shell-based

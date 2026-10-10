@@ -1,73 +1,42 @@
 tap "anomalyco/tap", trusted: true
 tap "asmvik/formulae", "https://github.com/asmvik/homebrew-formulae.git", trusted: true
-tap "dsully/tap", trusted: true
 tap "koekeishiya/formulae", "https://github.com/asmvik/homebrew-formulae.git", trusted: true
-tap "leoafarias/fvm", trusted: true
 tap "penso/tap", trusted: true
-tap "raine/workmux", trusted: true
 tap "vjeantet/tap", trusted: true
-# Run your GitHub Actions locally
-brew "act"
 # ANother Tool for Language Recognition
 brew "antlr"
 # Download with resuming and segmented downloading
 brew "aria2"
-# Extendable version manager with support for Ruby, Node.js, Erlang & more
-brew "asdf"
-# Code searching, linting, rewriting
-brew "ast-grep"
 # Automatic configure script builder
 brew "autoconf"
-# Official Amazon AWS command-line interface
-brew "awscli"
 # Get/set bluetooth power and discoverable state
 brew "blueutil"
 # Emacs dependency management
 brew "cask"
 # Formatting tools for C, C++, Obj-C, Java, JavaScript, TypeScript
 brew "clang-format"
-# Statistics utility to count lines of code
-brew "cloc"
 # Get a file from an HTTP, HTTPS or FTP server
 brew "curl"
 # Isolated development environments using Docker
 brew "docker-compose"
-# Command-line tool for DigitalOcean
-brew "doctl"
-# Command-line tools for fly.io services
-brew "flyctl"
 # GNU compiler collection
 brew "gcc"
-# Installer for the general purpose language Haskell
-brew "ghcup"
 # GitHub command-line tool
 brew "gh"
-# Syntax-highlighting pager for git and diff output
-brew "git-delta"
 # GNU Privacy Guard (OpenPGP)
 brew "gnupg"
 # Tool for managing apps on iOS devices
 brew "ideviceinstaller"
 # Tools and libraries to manipulate images in select formats
 brew "imagemagick"
-# FAST Kubernetes manifests validator, with support for Custom Resources!
-brew "kubeconform"
-# Command-line interface for deploying apps to the LangGraph platform
-brew "langgraph-cli"
-# Simple terminal UI for git commands
-brew "lazygit"
 # Graphical front-end for GCC's coverage testing tool (gcov)
 brew "lcov"
 # Pager program similar to more
 brew "less"
 # Postgres C API library
 brew "libpq"
-# Mac App Store command-line interface
-brew "mas"
 # Polyglot runtime manager (asdf rust clone)
 brew "mise"
-# Development kit for the Java programming language
-brew "openjdk@11"
 # OpenShift command-line interface tools
 brew "openshift-cli"
 # ISO-C API and CLI for generating UUIDs
@@ -80,40 +49,20 @@ brew "pkgconf"
 brew "podman"
 # Theme for zsh
 brew "powerlevel10k"
-# Develop and deploy code with zero configuration
-brew "railway"
 # Command-line tool for the Amazon S3 service
 brew "s3cmd"
-# Fast and accurate code counter with complexity and COCOMO estimates
-brew "scc"
 # Organize software neatly under a single directory tree (e.g. /usr/local)
 brew "stow"
-# High-performance system programming language
-brew "swift"
-# General purpose fuzzy finder TUI
-brew "television"
 # User interface to the TELNET protocol
 brew "telnet"
 # Display directories as trees (with optional color/HTML output)
 brew "tree"
-# Find and verify credentials
-brew "trufflehog"
 # Vi 'workalike' with many additional features
 brew "vim"
-# Universal WebAssembly Runtime
-brew "wasmer"
-# Execute commands when watched files change
-brew "watchexec"
-# Command-line client for WebSockets
-brew "websocat"
 # Internet file retriever
 brew "wget"
-# Little beautifier tool for xcodebuild
-brew "xcbeautify"
 # Build server protocol implementation for integrating Xcode with sourcekit-lsp
 brew "xcode-build-server"
-# Best command-line tool to install and switch between multiple versions of Xcode
-brew "xcodes"
 # General-purpose lossless data-compression library
 brew "zlib"
 # UNIX shell (command interpreter)
@@ -122,14 +71,8 @@ brew "zsh"
 brew "zsh-autosuggestions"
 # Fish shell like syntax highlighting for zsh
 brew "zsh-syntax-highlighting"
-# Defaults setting for macOS
-brew "dsully/tap/macos-defaults"
 # Simple hotkey-daemon for macOS.
 brew "koekeishiya/formulae/skhd"
-# Simple cli to manage Flutter SDK versions per project
-brew "leoafarias/fvm/fvm", trusted: true
-# Opinionated workflow tool that orchestrates git worktrees and tmux
-brew "raine/workmux/workmux", trusted: true
 # Send macOS User Notifications from the command line (used by herdr-focus-notify)
 brew "vjeantet/tap/alerter"
 # Password manager that keeps all passwords secure behind one password
