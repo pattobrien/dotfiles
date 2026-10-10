@@ -21,8 +21,14 @@ return {
           filetypes = { "typescript", "typescriptreact", "markdown" },
         },
 
-        oxfmt = {},
-        oxlint = {},
+        oxfmt = {
+          cmd = { "vp", "fmt", "--lsp" },
+          mason = false,
+        },
+        oxlint = {
+          cmd = { "vp", "lint", "--lsp" },
+          mason = false,
+        },
 
         -- copilot — everywhere except markdown (native LSP configs have no
         -- filetype denylist, so gate attach via root_dir)
