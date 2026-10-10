@@ -235,7 +235,7 @@
     "plannotator-effective-html@effective-html": false,
     "codex@openai-codex": false,
     "slack@claude-plugins-official": false,
-    "langfuse-observability@langfuse-observability": false,
+    "langfuse-observability@langfuse-observability": true,
     "cloudflare@claude-plugins-official": false,
     "ponytail@ponytail": false,
     "iso-24495-plain-language@iso-24495": false,
@@ -360,7 +360,7 @@
     "langfuse-observability@langfuse-observability": {
       "options": {
         "LANGFUSE_PUBLIC_KEY": "pk-lf-4b770f0f-f02c-483e-8d03-30458e273f44",
-        "LANGFUSE_BASE_URL": "https://langfuse.garden.finedesigns.io",
+        "LANGFUSE_BASE_URL": "https://langfuse.finedesigns.io",
         "LANGFUSE_USER_ID": "patt",
         "CC_LANGFUSE_DEBUG": true
       }
