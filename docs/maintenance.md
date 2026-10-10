@@ -4,6 +4,15 @@
 
 Switch between Claude Code accounts with `cswap switch`.
 
+## Claude Code Telemetry
+
+Claude Code exports OTLP/HTTP to `https://otlp.finedesigns.io`, which sits
+behind Cloudflare Access. Its `otelHeadersHelper` runs
+`tools/scripts/src/claude-otel-headers.ts` (linked to
+`~/.local/bin/claude-otel-headers`), which reads the service token
+`OTLP_ACCESS_CLIENT_ID` and `OTLP_ACCESS_CLIENT_SECRET` from Doppler
+`shed/prod`.
+
 ## Brew Dump
 
 Dumps a snapshot of all brew-installed applications. VS Code extensions live in
