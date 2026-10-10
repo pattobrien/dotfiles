@@ -108,8 +108,6 @@ brew "watchexec"
 brew "websocat"
 # Internet file retriever
 brew "wget"
-# CLI for Git worktree management, designed for parallel AI agent workflows
-brew "worktrunk"
 # Little beautifier tool for xcodebuild
 brew "xcbeautify"
 # Build server protocol implementation for integrating Xcode with sourcekit-lsp

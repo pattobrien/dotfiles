@@ -139,6 +139,7 @@ age = "latest"
 "github:Mic92/ssh-to-age" = { version = "latest", rename_exe = "ssh-to-age" }
 "github:inngest/inngest" = "latest"
 jj = "latest"
+worktrunk = "latest"
 doctl = "latest"
 doppler = "latest"
 pulumi = "latest"
