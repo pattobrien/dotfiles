@@ -150,7 +150,7 @@ pandoc = "latest"
 typst = "latest"
 jq = "latest"
 protoc = "latest"
-"github:steipete/peekaboo" = { version = "latest", os = ["macos"] }
+"github:steipete/peekaboo" = { version = "latest", bin_path = "peekaboo-macos-arm64", os = ["macos"] }
 "github:cameroncooke/AXe" = { version = "latest", asset_pattern = "AXe-macOS-*-universal.tar.gz", exe = "axe", os = [
   "macos",
 ] }
