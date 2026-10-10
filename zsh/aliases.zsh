@@ -3,6 +3,7 @@ alias k="kubectl"
 alias gc="git commit -m"
 alias ga="git add ."
 alias gs="git status"
+alias gp="git pull"
 
 alias pn="pnpm"
 alias pnpx="pnpm dlx"
