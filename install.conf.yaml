@@ -60,6 +60,7 @@
     ~/.config/bat: .config/bat
     ~/.config/television: .config/television
     ~/.config/atuin/config.toml: .config/atuin/config.toml
+    ~/.vite-plus/config.json: .config/vite-plus/config.json
     ~/.hammerspoon:
       path: .config/hammerspoon
       force: true

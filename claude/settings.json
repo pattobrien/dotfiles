@@ -115,6 +115,7 @@
   },
   "model": "opus[1m]",
   "enableAllProjectMcpServers": true,
+  "disableClaudeAiConnectors": true,
   "skillOverrides": {
     "swamp": "off",
     "swamp-getting-started": "off",
@@ -341,13 +342,15 @@
   "effortLevel": "xhigh",
   "modelSettings": {
     "claude-fable-5-1": {
-      "effortLevel": "high"
+      "effortLevel": "high",
+      "autoCompactWindow": 300000
     },
     "claude-opus-5-5": {
-      "effortLevel": "high"
+      "effortLevel": "high",
+      "autoCompactWindow": 250000
     }
   },
-  "autoCompactWindow": 240000,
+  "autoCompactWindow": 250000,
   "promptSuggestionEnabled": false,
   "awaySummaryEnabled": false,
   "askUserQuestionTimeout": "never",
