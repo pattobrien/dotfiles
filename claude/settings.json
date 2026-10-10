@@ -235,7 +235,7 @@
     "plannotator-effective-html@effective-html": false,
     "codex@openai-codex": false,
     "slack@claude-plugins-official": false,
-    "langfuse-observability@langfuse-observability": true,
+    "langfuse-observability@langfuse-observability": false,
     "cloudflare@claude-plugins-official": false,
     "ponytail@ponytail": false,
     "iso-24495-plain-language@iso-24495": false,
