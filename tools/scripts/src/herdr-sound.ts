@@ -17,8 +17,7 @@ if (!modes.includes(mode)) {
 }
 
 const herdr = process.env.HERDR_BIN_PATH ?? "herdr";
-const configPath =
-  process.env.HERDR_CONFIG_PATH ?? join(homedir(), ".config/herdr/config.toml");
+const configPath = process.env.HERDR_CONFIG_PATH ?? join(homedir(), ".config/herdr/config.toml");
 const source = await readFile(configPath, "utf8");
 const config = parse(source);
 
