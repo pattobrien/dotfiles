@@ -137,7 +137,7 @@ brew "vjeantet/tap/alerter"
 # Password manager that keeps all passwords secure behind one password
 cask "1password"
 # Command-line interface for 1Password
-cask "1password-cli"
+cask "1password-cli@beta"
 # Command-line tools for building and debugging Android apps
 cask "android-commandlinetools"
 # Toolset to implement parts of Android apps in native code
