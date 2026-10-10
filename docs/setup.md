@@ -93,5 +93,9 @@ holds anything too sensitive or personal for this public repo:
   on first launch).
 - `zsh_history` — shell history from the old machine.
 
-> SSH keys are intentionally absent: auth goes through the 1Password SSH agent,
-> so signing into 1Password (step 3) restores SSH access.
+> SSH auth keys are intentionally absent: auth goes through the 1Password SSH
+> agent, so signing into 1Password (step 3) restores SSH access. Commit signing
+> uses a local passphrase-less key instead, so a new machine needs
+> `ssh-keygen -t ed25519 -N "" -C git-signing -f ~/.ssh/git-signing`, then
+> `gh ssh-key add --type signing -t "<host> git-signing" ~/.ssh/git-signing.pub`
+> and its public key line in `.config/git/allowed_signers`.

@@ -82,7 +82,7 @@ plugins=(
   gitignore
   # asdf # replaced by mise
   fzf
-  # doctl # this causes 1password prompt when re-sourcing zshrc file, for some reason... so we should not use this
+  # doctl # runs `doctl completion zsh` on every shell start; through an op plugin alias that is a 1Password prompt per new tty
   # pnpm-shell-completion
   zsh-pnpm-completions
   # other plugins available that we should install at some point:
