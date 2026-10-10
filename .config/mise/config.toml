@@ -18,6 +18,7 @@ minimum_release_age_excludes = [
   "codex",
   "github:voidzero-dev/vite-plus",
   "github:pattobrien/shed",
+  "github:pattobrien/herdr",
 ]
 experimental = true
 use_versions_host = false
@@ -139,8 +140,7 @@ container = { version = "latest", os = ["macos"] }
 "pipx:batrachian-toad" = { version = "latest", exe = "toad", uvx_args = "--python 3.14" }
 
 # Docs & misc CLIs
-# "github:pattobrien/herdr" = { version = "0.8.0-graphics.4", os = ["macos"] }
-"github:ogulcancelik/herdr" = "latest"
+"github:pattobrien/herdr" = "latest"
 "github:schpet/linear-cli" = { version = "latest", exe = "linear" }
 hunk = "latest"
 "github:agavra/tuicr" = "latest"
