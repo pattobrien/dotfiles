@@ -1,7 +1,10 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/razajamil/herdr-plugin-workspace-manager/main/schema.json
 # herdr-plugin-workspace-manager — applied automatically when a worktree is
 # created. Mirrors the old workmux windows template: a focused claude agent
-# plus a background `pnpm install` tab.
+# plus a background `pnpm install` tab. Agent panes drop Remote Control,
+# telemetry and the claude.ai connectors: an idle worker then holds ~1 TCP
+# connection instead of 23, and the public CGNAT gateway blackholes the Mac
+# once it passes roughly 600-850 flows.
 
 layouts:
   - id: default
@@ -10,6 +13,9 @@ layouts:
         panes:
           - title: claude
             agent: claude
+            env:
+              CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC: 1
+              ENABLE_CLAUDEAI_MCP_SERVERS: false
       - title: install
         panes:
           - title: install
@@ -26,6 +32,9 @@ layouts:
             agentArgs:
               - --model
               - claude-opus-5-5[1m]
+            env:
+              CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC: 1
+              ENABLE_CLAUDEAI_MCP_SERVERS: false
       - title: install
         panes:
           - title: install
