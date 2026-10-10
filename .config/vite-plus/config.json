@@ -1,0 +1,8 @@
+{
+  "packageManagerShimModes": {
+    "bun": "system_first",
+    "npm": "managed",
+    "pnpm": "managed",
+    "yarn": "managed"
+  }
+}
