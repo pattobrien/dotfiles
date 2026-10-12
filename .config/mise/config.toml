@@ -6,7 +6,11 @@
 # repo the hook's go.mod-derived values override these.
 GO_VERSION_MISE = "1.25.11"
 PULUMI_VERSION_MISE = "3.253.0"
-AI_GATEWAY_API_KEY = '{{ exec(command="security find-generic-password -s ai-gateway.vercel.sh -a pattobrien -w 2>/dev/null || true") }}'
+AI_GATEWAY_API_KEY = { value = "{{ exec(command='doppler secrets get AI_GATEWAY_API_KEY --plain -p platform -c prod', cache_duration='1d') }}", tools = true }
+BROWSERLESS_TOKEN = { value = "{{ exec(command='doppler secrets get BROWSERLESS_TOKEN --plain -p platform -c prod', cache_duration='1d') }}", tools = true }
+BROWSERLESS_API_KEY = { value = "{{ exec(command='doppler secrets get BROWSERLESS_API_KEY --plain -p platform -c prod', cache_duration='1d') }}", tools = true }
+BROWSERBASE_API_KEY = { value = "{{ exec(command='doppler secrets get BROWSERBASE_API_KEY --plain -p platform -c prod', cache_duration='1d') }}", tools = true }
+KERNEL_API_KEY = { value = "{{ exec(command='doppler secrets get KERNEL_API_KEY --plain -p platform -c prod', cache_duration='1d') }}", tools = true }
 
 [settings]
 npm.package_manager = "pnpm"
@@ -33,6 +37,8 @@ lua-language-server = "latest"
 neovim = "latest"
 node = "latest"
 "npm:agent-browser" = "latest"
+"npm:@browserless.io/cli" = { version = "latest", exe = "browserless" }
+"npm:browse" = "latest"
 "npm:ai-cli" = { version = "latest", exe = "ai" }
 "npm:@ecrindigital/facet-cli" = "latest"
 "npm:@kitlangton/ghui" = "latest"
@@ -141,6 +147,7 @@ container = { version = "latest", os = ["macos"] }
 
 # Docs & misc CLIs
 "github:pattobrien/herdr" = "latest"
+"github:kernel/cli" = { version = "latest", exe = "kernel" }
 "github:schpet/linear-cli" = { version = "latest", exe = "linear" }
 hunk = "latest"
 "github:agavra/tuicr" = "latest"
@@ -196,10 +203,6 @@ postinstall = [
 [tasks.dotfiles]
 description = "Navigate to dotfiles"
 run = "cd ~/dev/pattobrien/dotfiles && exec $SHELL"
-
-[tasks.seed-ai-gateway-key]
-description = "Seed the Vercel AI Gateway key from 1Password into the macOS keychain"
-run = "op read 'op://FineDesigns/Vercel API Token - pattobrien/credential' | xargs security add-generic-password -U -s ai-gateway.vercel.sh -a pattobrien -w"
 
 [tasks."patch:vfox-pulumi"]
 description = "Apply dotfiles/patches to the vfox-pulumi mise plugin (re-run after `mise plugins update`)"
