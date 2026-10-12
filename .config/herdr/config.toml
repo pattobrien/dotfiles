@@ -209,14 +209,14 @@ height = 20
 description = "workspace: open" # Cmd+O
 
 # Cmd+B → ctrl+F8: the "Herdr: Open Worktree" quick action's list, same gum look.
-# Rows are ordered by branch frecency from the herdr-worktrees.json fre store
-# the workspace-frecency plugin fills (never focused ones last).
+# Rows are ordered by branch frecency from the worktrees/ files the
+# workspace-frecency plugin writes to its state dir (never focused ones last).
 [[keys.command]]
 key = "ctrl+f8"
 type = "popup"
 command = '''
 ws=$HERDR_ACTIVE_WORKSPACE_ID
-frecent=$(fre --store_name herdr-worktrees.json --sorted)
+frecent=$(jq -rn '[inputs] | sort_by(-.frecency) | .[].item' "$XDG_STATE_HOME"/herdr/plugins/workspace-frecency/worktrees/*.json)
 list=$(herdr worktree list --workspace "$ws" | jq -r --arg ws "$ws" --arg frecent "$frecent" '($frecent | split("\n")) as $rank | [.result.worktrees[] | select(.open_workspace_id and .open_workspace_id != $ws)] | sort_by(.branch as $b | ($rank | index($b)) // ($rank | length)) | .[] | [.open_workspace_id, (.branch // .path)] | @tsv')
 [ -z "$list" ] && list=$(printf '\tno other open worktrees')
 n=$(printf '%s\n' "$list" | wc -l); [ "$n" -gt 12 ] && n=12
@@ -329,12 +329,12 @@ description = "pr diff (nvim atlas): open or create" # Cmd+D
 # Workspace jumps on the Cmd+Shift relay (Cmd+Shift+; / D / N → ctrl+F5/F6/F7;
 # same roles as the old tmux switch-client bindings). `recent` toggles to the
 # last project (dotfiles and notes included): the most recent open, unfocused
-# label in the fre store the workspace-frecency plugin fills.
+# label in the workspaces/ files of the workspace-frecency plugin's state dir.
 [[keys.command]]
 key = "ctrl+f5"
 type = "shell"
 command = '''
-recent=$(fre --store_name herdr-workspaces.json --sorted --sort_method recent)
+recent=$(jq -rn '[inputs] | sort_by(-.lastFocused) | .[].item' "$XDG_STATE_HOME"/herdr/plugins/workspace-frecency/workspaces/*.json)
 herdr workspace focus "$(herdr workspace list | jq -r --arg recent "$recent" '.result.workspaces as $ws | first($recent | split("\n")[] as $l | $ws[] | select(.label == $l and .focused != true) | .workspace_id)')"
 '''
 description = "workspace: last project" # Cmd+Shift+;

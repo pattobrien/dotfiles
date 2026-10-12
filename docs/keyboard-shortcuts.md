@@ -22,14 +22,15 @@ Shortcuts are split across layers, each scoped to a specific context.
     `Cmd+Shift+D`/`Cmd+Shift+N` jump to the dotfiles / notes workspaces,
     `Cmd+Shift+;` toggle to the last project, `Cmd+O` workspace picker and
     `Cmd+B` open-worktree picker in frecency order (all inline in `config.toml`,
-    reading the `fre` stores filled by the
-    `.config/herdr/plugins/workspace-frecency` plugin on `workspace.focused`:
-    workspace labels in `herdr-workspaces.json`, linked worktree branches in
-    `herdr-worktrees.json`; linked with `herdr plugin link`), `Cmd+E` worktrees,
-    `prefix+d` hunk diff of the working tree in a split (herdr-plugin-hunk;
-    staged/branch variants in the palettes), `Ctrl+Alt+H/J/K/L` pane focus
-    (direct, no relay). Displaced to prefix mode: `prefix+o` jump to agent
-    needing attention, `prefix+shift+n` new workspace, `prefix+b` toggle sidebar
+    reading the per-item JSON files the
+    `.config/herdr/plugins/workspace-frecency` plugin writes under its state dir
+    on `workspace.focused`: workspace labels in `workspaces/`, linked worktree
+    branches in `worktrees/`; linked with `herdr plugin link`), `Cmd+E`
+    worktrees, `prefix+d` hunk diff of the working tree in a split
+    (herdr-plugin-hunk; staged/branch variants in the palettes),
+    `Ctrl+Alt+H/J/K/L` pane focus (direct, no relay). Displaced to prefix mode:
+    `prefix+o` jump to agent needing attention, `prefix+shift+n` new workspace,
+    `prefix+b` toggle sidebar
   - Avoid overriding:
     - Cmd+Q/H/M/W/N (macOS window mgmt)
     - Cmd+C/V/X/Z (clipboard)
