@@ -15,5 +15,4 @@ Personal dotfiles managed with [dotbot](https://github.com/anishathalye/dotbot).
 - Kitty is the daily driver; ignore Ghostty.
 - Install skills with
   `pnpx skills add <repo> -g --skill <name> --agent claude-code --agent amp -y`.
-- Repo CLIs: `bin` in package.json plus `pnpm add -g .`; no registry in
-  dotfiles.
+- Shed CLIs: `pnpm add -g @pattobrien/<pkg>@latest` in mise `postinstall`.
