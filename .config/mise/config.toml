@@ -21,7 +21,6 @@ minimum_release_age_excludes = [
   "claude-code",
   "codex",
   "github:voidzero-dev/vite-plus",
-  "github:pattobrien/shed",
   "github:pattobrien/herdr",
 ]
 experimental = true
@@ -182,7 +181,6 @@ docker-cli = "latest"
   "macos",
 ] }
 "github:swamp-club/swamp" = "latest"
-"github:pattobrien/shed" = { version = "latest", version_prefix = "shed-cli-v", bin = "shed" }
 "npm:acpx" = "latest"
 "cargo:fre" = "latest"
 # cli stopwatch clock, for timing perf using video recording
@@ -198,6 +196,7 @@ postinstall = [
   "atuin hook install codex",
   "atuin hook install opencode",
   "atuin hook install pi",
+  "pnpm add -g @pattobrien/shed-cli@latest",
 ]
 
 [tasks.dotfiles]
