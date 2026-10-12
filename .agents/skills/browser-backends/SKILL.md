@@ -1,11 +1,15 @@
 ---
-name: browser-providers
-description: Choose where agent-browser runs - local Chrome or a cloud provider (`-p`), and which provider. Use before launching a browser task that needs logins, stealth, proxies, parallelism or unattended runs.
+name: browser-backends
+description: Choose the browser backend - local Chrome, Claude in Chrome, or a cloud provider (`-p`), and which provider. Use before launching a browser task that needs logins, stealth, proxies, parallelism or unattended runs.
 ---
 
-# Browser providers
+# Browser backends
+
+Tips on local Chrome instances and remote providers to use with `agent-browser` CLI.
 
 ## Providers
+
+Accounts exist for each of these providers (mostly free tiers):
 
 - **Kernel:** best all-rounder. Saved logins via named profiles (`KERNEL_PROFILE_NAME` + `KERNEL_PROFILE_SAVE_CHANGES`), optional stealth (`KERNEL_STEALTH`), configurable timeout. No proxy setting yet.
 - **Browser Use:** location-specific IPs (`BROWSER_USE_PROXY_COUNTRY`), saved profiles (`BROWSER_USE_PROFILE_ID`), session recording.
@@ -17,7 +21,7 @@ description: Choose where agent-browser runs - local Chrome or a cloud provider 
 
 - Needs Patt's logins: cloned profile, `--cdp 9222 --pin-tab`.
 - Clean or test browsing: `--session <name> --restore`.
-- One-off look at Patt's live Chrome: `--auto-connect` (one consent prompt per session).
+- Working alongside users in existing Chrome session: use `Claude in Chrome` instead of `agent-browser`
 
 ## Remote provider (`-p`)
 
