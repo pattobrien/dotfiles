@@ -1,12 +1,16 @@
-# herdr plugins, managed declaratively by herdr-lazy (sync/update/restore).
-# plugins.lock next to this file records resolved commits — keep both in git.
-natori-hrj/herdr-lazy
-devashish2203/herdr-worktrunk
-thanhdat77/herdr-navigator
-cloudmanic/herdr-plus
-razajamil/herdr-plugin-workspace-manager
-wyattjoh/herdr-plugin-gh-pr
-ramarivera/herdr-palette
-JanTvrdik/herdr-command-palette
-qu8n/herdr-automatic-rename
-lmilojevicc/herdr-splits.nvim
+natori-hrj/herdr-lazy@8caad442f3710be6aff6872b03069068a931b38f
+devashish2203/herdr-worktrunk@a3107ca566bafcd463bc138007a0c01051970784
+thanhdat77/herdr-navigator@68064d53d25c53b6947d50c5ba440e9dc3b47b21
+cloudmanic/herdr-plus@f38df3570bea8f7ca71dc1ba11bce3b123d14402
+razajamil/herdr-plugin-workspace-manager@0da7e74999ba1cc7937b2b1787db1779febef031
+wyattjoh/herdr-plugin-gh-pr@6fe22de9a90c569f2186595cfddc3707f55ba1bd
+ramarivera/herdr-palette@0478a908afd4f0775d8165765dcdc7d70a6e5ac1
+JanTvrdik/herdr-command-palette@eab940018c2135ac23718efa11e23e9dddcd2a75
+qu8n/herdr-automatic-rename@654a4a6b1798504714994b3dfc4b3e09b8e16460
+lmilojevicc/herdr-splits.nvim@94f30cf4e9ac76ddf185a3acd0977be728fa4106
+edmundmiller/herdr-plugin-hunk@11ba5dcca4358203ca68f160becf6870cf016c18
+ogulcancelik/herdr-browser@f05ae7a61ead89685eef5a7365f01f81110ba777
+osamahbeig/herdr-pane-mover@a9fde7a4f98f1b6c230c64e2036b387d9c8d5bc3
+persiyanov/herdr-fresh-worktree@012de485147bc57012f5138ea44611fd7128a049
+StructuPath/herdr-browser@72b986e3a0233b938b0046806bc2aaeefb56e12e
+iurysza/termscope@cbc6da8103c263343b7082e27e804cc91312f944
