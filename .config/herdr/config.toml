@@ -196,16 +196,11 @@ description = "navigator: jump to anything"
 
 # Pickers on the Cmd relay (Cmd+O → shift+F10, Cmd+Shift+P → shift+F11 — sent
 # by kitty/ghostty; herdr only sees modified F-keys past F12, hence the
-# shift+F slots). Cmd+O is the shed CLI's OpenTUI workspace picker, installed by
-# mise. Full path because popups run under /bin/sh with the server PATH, which
-# lacks mise. stdin from /dev/null: the picker reads keys from /dev/tty itself,
-# and a non-tty stdin skips trpc-cli prompts.
+# shift+F slots). Cmd+O is the shed plugin's OpenTUI workspace picker.
 [[keys.command]]
 key = "shift+f10"
-type = "popup"
-command = "$HOME/.local/share/mise/installs/github-pattobrien-shed/latest/shed herdr workspaces open </dev/null"
-width = 70
-height = 20
+type = "plugin_action"
+command = "shed.workspaces-open"
 description = "workspace: open" # Cmd+O
 
 # Cmd+B → ctrl+F8: the "Herdr: Open Worktree" quick action's list, same gum look.
