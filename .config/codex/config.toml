@@ -259,6 +259,18 @@ BROWSER_USE_CODEX_APP_VERSION = "26.924.51851"
 NODE_REPL_TRUSTED_SERVICES = '{"browser":"/Users/patt/.codex/plugins/cache/openai-bundled/browser/26.924.51851/scripts/browser-service.mjs"}'
 CODEX_CLI_PATH = "/Applications/ChatGPT.app/Contents/Resources/codex-cli/CodexCLI.app/Contents/MacOS/codex"
 
+[mcp_servers.browserless]
+url = "https://mcp.browserless.io/mcp"
+bearer_token_env_var = "BROWSERLESS_TOKEN"
+
+[mcp_servers.browserbase]
+url = "https://mcp.browserbase.com/mcp"
+bearer_token_env_var = "BROWSERBASE_API_KEY"
+
+[mcp_servers.kernel]
+url = "https://mcp.onkernel.com/mcp"
+bearer_token_env_var = "KERNEL_API_KEY"
+
 [marketplaces.openai-bundled]
 source_type = "local"
 source = "/Users/patt/.codex/.tmp/bundled-marketplaces/openai-bundled"
