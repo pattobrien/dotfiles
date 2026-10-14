@@ -38,6 +38,7 @@
     ~/.p10k.zsh: zsh/p10k.zsh
     ~/.actrc: .config/act/.actrc
     ~/.npmrc: .config/npm/npmrc
+    ~/.config/pnpm/config.yaml: .config/pnpm/config.yaml
     ~/.config/git: .config/git
     ~/.config/kitty: .config/kitty
     ~/.config/gh: .config/gh
