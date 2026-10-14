@@ -13,8 +13,6 @@
     "test": "vp test"
   },
   "devDependencies": {
-    "oxfmt": "catalog:",
-    "oxlint": "catalog:",
     "typescript": "catalog:",
     "vite-plus": "catalog:"
   },
