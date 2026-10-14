@@ -40,8 +40,7 @@ sh ~/dev/pattobrien/dotfiles/install vscode
 > **Note:** Some macOS settings (e.g. mouse/trackpad scaling, key repeat) only
 > take effect after a logout or restart once the `install macos` step has run.
 
-The zsh config also uses these oh-my-zsh custom plugins, which are plain
-clones:
+The zsh config also uses these oh-my-zsh custom plugins, which are plain clones:
 
 ```sh
 cd ~/.oh-my-zsh/custom/plugins

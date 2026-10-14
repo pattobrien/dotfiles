@@ -20,9 +20,29 @@ filters = ["workspace", "directory", "session", "host", "global"]
 
 [ui]
 # columns: exit duration time datetime directory host user command; each may be { type, width, expand }
-columns = ["exit", "duration", "time", { type = "directory", width = 28 }, "command"]
+columns = [
+  "exit",
+  "duration",
+  "time",
+  { type = "directory", width = 28 },
+  "command",
+]
 
 [stats]
-common_subcommands = ["git", "gh", "pnpm", "vp", "mise", "herdr", "wt", "docker", "cargo", "npm", "tmux", "op", "claude"]
+common_subcommands = [
+  "git",
+  "gh",
+  "pnpm",
+  "vp",
+  "mise",
+  "herdr",
+  "wt",
+  "docker",
+  "cargo",
+  "npm",
+  "tmux",
+  "op",
+  "claude",
+]
 common_prefix = ["sudo", "command"]
 ignored_commands = ["cd", "ls", "z", "zi", "clear", "exit"]

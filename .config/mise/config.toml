@@ -48,7 +48,9 @@ node = "latest"
 "npm:@earendil-works/pi-coding-agent" = "latest"
 "npm:@posthog/cli" = "latest"
 "npm:cf" = "latest"
-"npm:@opencode/cli" = { version = "latest", exe = "opencode", allow_builds = ["@opencode/cli"] }
+"npm:@opencode/cli" = { version = "latest", exe = "opencode", allow_builds = [
+  "@opencode/cli",
+] }
 "github:railwayapp/cli" = "latest"
 "npm:@tigrisdata/cli" = { version = "latest", exe = "tigris" }
 "npm:@typescript/native-preview" = "latest"
@@ -154,7 +156,9 @@ pandoc = "latest"
 typst = "latest"
 jq = "latest"
 protoc = "latest"
-"github:steipete/peekaboo" = { version = "latest", bin_path = "peekaboo-macos-arm64", os = ["macos"] }
+"github:steipete/peekaboo" = { version = "latest", bin_path = "peekaboo-macos-arm64", os = [
+  "macos",
+] }
 "github:cameroncooke/AXe" = { version = "latest", asset_pattern = "AXe-macOS-*-universal.tar.gz", exe = "axe", os = [
   "macos",
 ] }
