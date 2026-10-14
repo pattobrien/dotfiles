@@ -12,15 +12,15 @@
     "theme": "dark",
     "interfaceSize": "micro",
     "overrides": {
+      "radius.keyCap": 3,
       "size.panelHeight": 506,
       "size.bottomBarHeight": 32,
       "size.barButtonHeight": 20,
       "size.menuButton": 22,
-      "typography.bar": 11,
       "typography.rowTrailing": 11,
       "typography.keyCap": 11,
       "typography.compactKeyCap": 11,
-      "radius.keyCap": 3
+      "typography.bar": 11
     },
     "compactMode": true,
     "showFavoritesInCompactMode": true,
@@ -30,7 +30,8 @@
   "hyperKey": {
     "key": "none",
     "includesShift": true,
-    "quickPress": "none"
+    "quickPress": "none",
+    "secureInputCompatibility": false
   },
   "calculator": {
     "numberStyle": "system"
@@ -71,7 +72,7 @@
     "enabled": true,
     "showInLauncher": true,
     "opensNewWindow": false,
-    "selectionFallback": "ask",
+    "passesSelectedText": false,
     "confirmsBeforeDelete": true,
     "commands": {}
   },
@@ -100,6 +101,7 @@
     "microphone": null,
     "destination": "paste",
     "adaptsCapitalization": true,
+    "liveInsertion": false,
     "releaseAfterMinutes": 1,
     "language": null
   },
@@ -138,9 +140,9 @@
     "commands": {}
   },
   "windowManagement": {
-    "enabled": false,
+    "enabled": true,
     "showInLauncher": true,
-    "gap": 0,
+    "gap": 8,
     "cycle": "off",
     "layoutsShowInLauncher": true,
     "roomsShowInLauncher": true,
@@ -184,7 +186,39 @@
     "aliases": {},
     "customSizes": [],
     "layouts": [],
-    "rooms": [],
+    "rooms": [
+      {
+        "name": "Browse",
+        "layout": "auto",
+        "windows": [
+          { "app": "com.google.Chrome", "appName": "Google Chrome" }
+        ]
+      },
+      {
+        "name": "Explore",
+        "layout": "focus",
+        "windows": [
+          { "app": "net.kovidgoyal.kitty", "appName": "kitty" },
+          { "app": "com.google.Chrome", "appName": "Google Chrome" }
+        ]
+      },
+      {
+        "name": "Code",
+        "layout": "columns",
+        "windows": [
+          { "app": "net.kovidgoyal.kitty", "appName": "kitty" },
+          { "app": "net.kovidgoyal.kitty", "appName": "kitty" }
+        ]
+      },
+      {
+        "name": "Triage",
+        "layout": "focus",
+        "windows": [
+          { "app": "net.kovidgoyal.kitty", "appName": "kitty" },
+          { "app": "com.linear", "appName": "Linear" }
+        ]
+      }
+    ],
     "commands": {}
   },
   "clipboard": {
@@ -198,7 +232,9 @@
     ],
     "commands": {
       "clipboard-history": {
-        "shortcut": "cmd+shift+v"
+        "shortcut": "shift+cmd+v",
+        "alias": null,
+        "showInLauncher": true
       }
     }
   },
