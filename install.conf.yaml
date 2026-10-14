@@ -55,6 +55,7 @@
     ~/.config/mise/config.toml: .config/mise/config.toml
     ~/.config/nvim: .config/nvim
     ~/.config/aerospace: .config/aerospace
+    ~/.config/tinycast/settings.json: .config/tinycast/settings.json
     ~/Documents/superwhisper/settings: .config/superwhisper/settings
     ~/Documents/superwhisper/modes: .config/superwhisper/modes
     ~/.config/karabiner: .config/karabiner
