@@ -1,0 +1,73 @@
+{
+  "createdAt" : "2026-10-14T13:36:19Z",
+  "id" : "C8E0198E-BE47-43EA-A845-2C7A19BFAD8A",
+  "menuBarLayout" : {
+    "customNames" : {
+
+    },
+    "itemOrder" : {
+      "hidden" : [
+        "eu.exelban.Stats:Battery_battery",
+        "eu.exelban.Stats:Network_speed",
+        "com.barut.OmniWM:omniwm_main",
+        "com.1password.1password:bb3cc23c-6950-4e96-8b40-850e09f46934",
+        "com.apple.controlcenter:NowPlaying",
+        "pro.betterdisplay.BetterDisplay:Item-0",
+        "com.superduper.superwhisper:Item-0",
+        "com.FluidApp.app:Item-0",
+        "com.raycast.macos:extension_herdr_menu-bar__b827eb4a-a2f2-4988-a7b4-c8713ebac833",
+        "com.tinycast.app:Item-0",
+        "com.tinycast.app.overrides:Item-0",
+        "com.cloudflare.1dot1dot1dot1.macos:Item-0"
+      ],
+      "visible" : [
+        "eu.exelban.Stats:CPU_mini",
+        "eu.exelban.Stats:Disk_mini",
+        "eu.exelban.Stats:RAM_mini",
+        "io.tailscale.ipn.macsys:Item-0",
+        "com.apple.controlcenter:Bluetooth",
+        "com.apple.controlcenter:WiFi",
+        "com.apple.controlcenter:Battery",
+        "com.stonerl.Thaw:Thaw.ControlItem.Visible",
+        "com.apple.controlcenter:BentoBox-0",
+        "com.apple.controlcenter:Clock"
+      ]
+    },
+    "pinnedAlwaysHiddenBundleIDs" : [
+
+    ],
+    "pinnedHiddenBundleIDs" : [
+
+    ],
+    "savedSectionOrder" : {
+      "hidden" : [
+        "eu.exelban.Stats:Battery_battery",
+        "eu.exelban.Stats:Network_speed",
+        "com.barut.OmniWM:omniwm_main",
+        "com.1password.1password:bb3cc23c-6950-4e96-8b40-850e09f46934",
+        "com.apple.controlcenter:NowPlaying",
+        "pro.betterdisplay.BetterDisplay:Item-0",
+        "com.superduper.superwhisper:Item-0",
+        "com.FluidApp.app:Item-0",
+        "com.raycast.macos:extension_herdr_menu-bar__b827eb4a-a2f2-4988-a7b4-c8713ebac833",
+        "com.tinycast.app:Item-0",
+        "com.tinycast.app.overrides:Item-0",
+        "com.cloudflare.1dot1dot1dot1.macos:Item-0"
+      ],
+      "visible" : [
+        "eu.exelban.Stats:CPU_mini",
+        "eu.exelban.Stats:Disk_mini",
+        "eu.exelban.Stats:RAM_mini",
+        "io.tailscale.ipn.macsys:Item-0",
+        "com.apple.controlcenter:Bluetooth",
+        "com.apple.controlcenter:WiFi",
+        "com.apple.controlcenter:Battery",
+        "com.stonerl.Thaw:Thaw.ControlItem.Visible",
+        "com.apple.controlcenter:BentoBox-0",
+        "com.apple.controlcenter:Clock"
+      ]
+    }
+  },
+  "modifiedAt" : "2026-10-14T13:53:38Z",
+  "name" : "Base"
+}

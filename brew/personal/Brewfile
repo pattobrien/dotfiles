@@ -75,9 +75,9 @@ brew "zsh-autosuggestions"
 brew "zsh-syntax-highlighting"
 # Simple hotkey-daemon for macOS.
 brew "koekeishiya/formulae/skhd"
-# Send macOS User Notifications from the command line (used by herdr-focus-notify)
 # Highly customizable macOS status bar replacement
-brew "felixkratz/formulae/sketchybar", restart_service: :changed
+brew "felixkratz/formulae/sketchybar"
+# Send macOS User Notifications from the command line (used by herdr-focus-notify)
 brew "vjeantet/tap/alerter"
 # Password manager that keeps all passwords secure behind one password
 cask "1password"
@@ -121,8 +121,6 @@ cask "diffusionbee"
 cask "discord"
 # Assign keys, and then decorate and label them
 cask "elgato-stream-deck"
-# Status monitoring
-cask "eul"
 # Launch builds and start simulators from your menu bar
 cask "expo-orbit"
 # Web browser
@@ -189,12 +187,16 @@ cask "shottr"
 cask "slack"
 # Music streaming service
 cask "spotify"
+# System monitor for the menu bar
+cask "stats"
 # Dictation tool including LLM reformatting
 cask "superwhisper"
 # Mesh VPN based on WireGuard
 cask "tailscale-app"
 # JDK from the Eclipse Foundation (Adoptium)
 cask "temurin"
+# Menu bar manager
+cask "thaw"
 # To-do list
 cask "todoist-app"
 # Open-source code editor
