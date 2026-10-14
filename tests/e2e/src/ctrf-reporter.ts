@@ -1,7 +1,7 @@
 import { mkdirSync, writeFileSync } from "node:fs";
 import path from "node:path";
 
-import type { Reporter, TestModule, Vitest } from "vitest/node";
+import type { Reporter, TestModule, Vitest } from "vite-plus/test/node";
 
 /**
  * CTRF (https://ctrf.io) JSON reporter. Local because the published
