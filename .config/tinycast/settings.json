@@ -1,6 +1,6 @@
 {
   "general": {
-    "launcherShortcut": "option+space",
+    "launcherShortcut": "cmd+space",
     "showInMenuBar": true,
     "automaticallyCheckForUpdates": false,
     "popToRootSeconds": 90,
@@ -216,6 +216,14 @@
         "windows": [
           { "app": "net.kovidgoyal.kitty", "appName": "kitty" },
           { "app": "com.linear", "appName": "Linear" }
+        ]
+      },
+      {
+        "name": "Review",
+        "layout": "columns",
+        "windows": [
+          { "app": "net.kovidgoyal.kitty", "appName": "kitty" },
+          { "app": "com.google.Chrome", "appName": "Google Chrome" }
         ]
       }
     ],
