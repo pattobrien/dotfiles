@@ -37,6 +37,8 @@ jobs:
     # The full sequence (brew bundles + `mise install` of the whole SDK list) is
     # long; give it plenty of headroom.
     timeout-minutes: 120
+    env:
+      GITHUB_TOKEN: ${{ github.token }}
 
     steps:
       # --- README Setup step 2: clone the repo --------------------------------
