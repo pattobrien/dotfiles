@@ -11,6 +11,7 @@ BROWSERLESS_TOKEN = { value = "{{ exec(command='doppler secrets get BROWSERLESS_
 BROWSERLESS_API_KEY = { value = "{{ exec(command='doppler secrets get BROWSERLESS_API_KEY --plain -p platform -c prod', cache_duration='1d') }}", tools = true }
 BROWSERBASE_API_KEY = { value = "{{ exec(command='doppler secrets get BROWSERBASE_API_KEY --plain -p platform -c prod', cache_duration='1d') }}", tools = true }
 KERNEL_API_KEY = { value = "{{ exec(command='doppler secrets get KERNEL_API_KEY --plain -p platform -c prod', cache_duration='1d') }}", tools = true }
+GH_PKG_TOKEN = { value = "{{ exec(command='/opt/homebrew/bin/gh auth token', cache_duration='1d') }}", tools = true }
 
 [settings]
 npm.package_manager = "pnpm"

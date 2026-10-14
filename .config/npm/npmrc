@@ -1,2 +1,2 @@
 @pattobrien:registry=https://npm.pkg.github.com
-//npm.pkg.github.com/:tokenHelper=/opt/homebrew/bin/gh auth token
+//npm.pkg.github.com/:_authToken=${GH_PKG_TOKEN}
