@@ -62,8 +62,6 @@ node = "latest"
 "npm:vercel" = "latest"
 "npm:wrangler" = "latest"
 "github:voidzero-dev/vite-plus" = { version = "latest", exe = "vp" }
-# vite-plus (`vp`) is installed via Homebrew, not mise: the npm backend ships a
-# broken CLI (missing `vp add` etc). See brew/personal/Brewfile.
 pnpm = "latest"
 swift = "latest"
 sentry-cli = "latest"
