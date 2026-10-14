@@ -1,4 +1,3 @@
-tap "abue-ammar/tinycast", trusted: true
 tap "anomalyco/tap", trusted: true
 tap "asmvik/formulae", "https://github.com/asmvik/homebrew-formulae.git", trusted: true
 tap "jurplel/tap"
@@ -177,8 +176,6 @@ cask "podman-desktop"
 cask "qbittorrent"
 # Control your tools with a few keystrokes
 cask "raycast"
-# Tiny, fully native macOS launcher, hotkeys, and clipboard history
-cask "abue-ammar/tinycast/tinycast", trusted: true
 # Tool that provides consistent, highly configurable symbols for apps
 cask "sf-symbols"
 # Screenshot measurement and annotation tool

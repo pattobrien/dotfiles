@@ -2,7 +2,7 @@
   "general": {
     "launcherShortcut": "option+space",
     "showInMenuBar": true,
-    "automaticallyCheckForUpdates": true,
+    "automaticallyCheckForUpdates": false,
     "popToRootSeconds": 90,
     "escapeKeyBehavior": "navigateBackOrClose",
     "autoSwitchInputSource": null,
@@ -10,7 +10,18 @@
   },
   "appearance": {
     "theme": "dark",
-    "interfaceSize": "standard",
+    "interfaceSize": "micro",
+    "overrides": {
+      "size.panelHeight": 506,
+      "size.bottomBarHeight": 32,
+      "size.barButtonHeight": 20,
+      "size.menuButton": 22,
+      "typography.bar": 11,
+      "typography.rowTrailing": 11,
+      "typography.keyCap": 11,
+      "typography.compactKeyCap": 11,
+      "radius.keyCap": 3
+    },
     "compactMode": true,
     "showFavoritesInCompactMode": true,
     "followCursorAcrossDisplays": true,
