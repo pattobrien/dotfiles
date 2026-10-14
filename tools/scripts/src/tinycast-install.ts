@@ -7,6 +7,7 @@ import { $ } from "bun";
 
 const repo = join(homedir(), "dev/pattobrien/tinycast");
 const identity = "Tinycast Self-Signed";
+const identityHash = "13B9D8CD6BF08689A783F554961A7B09FD8ADFD9";
 const bundleId = "com.tinycast.app";
 const installed = "/Applications/Tinycast.app";
 const derived = join(repo, "build/DerivedData");
@@ -16,6 +17,11 @@ const identities = await $`security find-identity -p codesigning`.text();
 if (!identities.includes(`"${identity}"`)) {
   throw new Error(
     `'${identity}' is not in the login keychain; create it per ${repo}/docs/signing.md`,
+  );
+}
+if (!identities.includes(`${identityHash} "${identity}"`)) {
+  throw new Error(
+    `'${identity}' in the keychain is no longer ${identityHash}; installing would void Tinycast's Accessibility grant`,
   );
 }
 
