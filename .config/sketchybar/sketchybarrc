@@ -1,0 +1,41 @@
+#!/bin/bash
+
+source "$CONFIG_DIR/colors.sh"
+
+PLUGIN_DIR="$CONFIG_DIR/plugins"
+ITEM_DIR="$CONFIG_DIR/items"
+
+sketchybar --bar height=36             \
+                 blur_radius=30        \
+                 position=top          \
+                 sticky=off            \
+                 font_smoothing=on     \
+                 padding_left=8        \
+                 padding_right=8       \
+                 color=$BAR_COLOR
+
+sketchybar --default icon.font="SF Pro:Semibold:14.0"  \
+                     icon.color=$TEXT_COLOR            \
+                     label.font="SF Pro:Semibold:13.0" \
+                     label.color=$TEXT_COLOR           \
+                     background.color=$ITEM_BG_COLOR   \
+                     background.border_color=$ITEM_BORDER_COLOR \
+                     background.border_width=1         \
+                     background.corner_radius=8        \
+                     background.height=26              \
+                     padding_left=3                    \
+                     padding_right=3                   \
+                     label.padding_left=5              \
+                     label.padding_right=10            \
+                     icon.padding_left=10              \
+                     icon.padding_right=5
+
+source "$ITEM_DIR/spaces.sh"
+source "$ITEM_DIR/front_app.sh"
+
+source "$ITEM_DIR/calendar.sh"
+source "$ITEM_DIR/volume.sh"
+source "$ITEM_DIR/battery.sh"
+source "$ITEM_DIR/cpu.sh"
+
+sketchybar --update

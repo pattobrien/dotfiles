@@ -43,6 +43,7 @@
     ~/.config/gh: .config/gh
     ~/.config/yabai: .config/yabai
     ~/.config/skhd: .config/skhd
+    ~/.config/sketchybar: .config/sketchybar
     ~/.config/herdr/config.toml: .config/herdr/config.toml
     ~/.config/herdr/plugins/config: .config/herdr/plugins/config
     ~/.config/herdr-automatic-rename: .config/herdr-automatic-rename
