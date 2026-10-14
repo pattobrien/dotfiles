@@ -55,6 +55,8 @@
     ~/.config/mise/config.toml: .config/mise/config.toml
     ~/.config/nvim: .config/nvim
     ~/.config/aerospace: .config/aerospace
+    ~/Documents/superwhisper/settings: .config/superwhisper/settings
+    ~/Documents/superwhisper/modes: .config/superwhisper/modes
     ~/.config/karabiner: .config/karabiner
     ~/.config/ghostty: .config/ghostty
     ~/.config/cmux: .config/cmux
