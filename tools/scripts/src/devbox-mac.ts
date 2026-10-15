@@ -13,6 +13,9 @@ const devboxCli = join(homedir(), ".local/bin/devbox");
 const dotfiles = "/Volumes/devbox/dev/pattobrien/dotfiles";
 const dopplerServiceAccount = "sa-agent-builder";
 const dopplerTokenTtlMs = 7 * 24 * 60 * 60 * 1000;
+// mise renders the global [env] templates, which call doppler, before any exec
+// or shim runs, so the token must be set through the binary's own path.
+const guestDoppler = "/Volumes/devbox/mise/installs/doppler/latest/doppler";
 const capturePromptAllow = { x: 1280, y: 813 };
 
 const spec = (name: string) => ({
@@ -100,7 +103,7 @@ const seedDopplerToken = async (devbox: Devbox, name: string) => {
   const token = await mintDopplerToken(name);
   await guest(
     devbox,
-    "mise trust ~/.config/mise/config.toml && mise install -y doppler && mise exec doppler -- doppler configure set token --scope / --silent",
+    `mise trust ~/.config/mise/config.toml && mise install -y doppler && ${guestDoppler} configure set token --scope / --silent`,
     `${token}\n`,
   );
 };
