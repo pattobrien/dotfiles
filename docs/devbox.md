@@ -45,6 +45,55 @@ window picker" dialog from appearing on the first screenshot; TCC rows alone do
 not cover it. Secrets land before `install` so mise can use the GitHub token and
 the Doppler token on the first boot of a fresh volume.
 
+## Instances
+
+`devbox-mac instance` runs the same boot on a raw Namespace compute instance
+(`nsc create`, `macos/arm64:6x14`, macOS 27) instead of a Devbox. An instance
+can attach a cache volume, which a Devbox cannot, so it mounts the Xcode
+compilation cache that Tinycast CI writes under the cache tag `tinycast-xcode`.
+
+```sh
+devbox-mac instance up <name>    # reuse or create, then run the boot phases
+devbox-mac instance ssh <name>   # nsc ssh into the instance
+devbox-mac instance vnc <name>   # nsc vnc, the only way to see the screen
+devbox-mac instance down <name>  # nsc destroy
+```
+
+What differs from the Devbox:
+
+- An instance carries two volumes. A persistent volume tagged `<name>` (100 GB)
+  mounts at `/Volumes/devbox`, so the boot and everything under
+  [What persists](#what-persists) work unchanged. The `tinycast-xcode` cache
+  volume (50 GB) mounts at `/Volumes/cache`.
+- The boot runs with `--cache /Volumes/cache`. That links
+  `~/Library/Developer/Xcode/DerivedData/CompilationCache.noindex` to
+  `/Volumes/cache/Users/runner/Library/Developer/Xcode/DerivedData/CompilationCache.noindex`,
+  where CI's cache action leaves it, and exports
+  `COMPILATION_CACHE_ENABLE_CACHING_DEFAULT=YES`. The build log then shows
+  `Cache hit` or `Cache miss` per compile job.
+- There is no display API. The boot skips the vmguest TCC rows, the replayd
+  approval and the screen-capture probe, which only the Devbox passes with
+  `--display`, and there is no `screenshot` phase. Use `nsc vnc` to look.
+- GitHub auth comes from the host. `up` pipes `gh auth token` into
+  `gh auth login --with-token` on the guest and runs `gh auth setup-git`.
+- An instance has no stop. `up` labels it `devbox-mac=<name>`, reuses a running
+  instance with that label, and otherwise creates one with `--duration 8h`.
+  Namespace destroys it when the duration ends. Each create starts from a fresh
+  home, so `up` runs the full boot again on the persistent volume.
+- A create forks the newest cache generation that the node it lands on holds.
+  Namespace copies a new generation to other nodes in the background, and a node
+  without a copy mounts an empty volume
+  ([cache volumes](https://namespace.so/docs/architecture/storage/cache-volumes.md#cache-hits-and-misses)).
+  On 2026-10-15 both instances mounted an empty volume, one of them 12 minutes
+  after a CI job had started from an 838 MiB generation, so the first Debug
+  build on each ran 199 cache misses in about 40 s.
+- `down` destroys the instance. Namespace commits a generation only when an
+  instance ends cleanly, and its docs do not say whether `nsc destroy` counts.
+  If it does, the instance's generation replaces CI's as the newest one.
+
+An instance costs $0.06/min while it runs, which is $3.60 an hour and $28.80 for
+a full 8 h duration.
+
 ## Doppler
 
 Each `up` mints a Doppler API token on the `sa-agent-builder` service account
