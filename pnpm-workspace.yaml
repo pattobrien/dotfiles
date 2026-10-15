@@ -27,6 +27,7 @@ catalog:
   "@xterm/headless": ^6.0.0
   "@xterm/xterm": ^6.0.0
   node-pty: ^1.1.0
+  plist: ^5.0.0
   typescript: ^7.0.2
   vite: npm:@voidzero-dev/vite-plus-core@1.2.0
   vite-plus: 1.2.0

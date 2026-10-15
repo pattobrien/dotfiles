@@ -19,7 +19,6 @@ import type {
   Entry,
   Probe,
 } from "../../../scripts/permissions/manifest.ts";
-import { parsePlist, Uid } from "../../../scripts/permissions/plist.ts";
 
 const dir = mkdtempSync(join(tmpdir(), "permissions-"));
 
@@ -538,37 +537,4 @@ test("formats one line per entry with the fix for unmet entries", () => {
       "MISSING    Xcode first launch: exit 69 (fix: run sudo xcodebuild -runFirstLaunch)",
     ].join("\n"),
   );
-});
-
-const xml = (body: string) =>
-  `<?xml version="1.0" encoding="UTF-8"?><plist version="1.0">${body}</plist>`;
-
-test.each([
-  ["<dict><key/><string>v</string></dict>", { "": "v" }],
-  ["<string>&#65;&#x42;&lt;&amp;</string>", "AB<&"],
-  [
-    "<array><real>+infinity</real><real>-infinity</real><real>1.5</real></array>",
-    [Infinity, -Infinity, 1.5],
-  ],
-  [
-    "<dict><key>a</key><dict/><key>b</key><array/><key>c</key><true/><key>d</key><date>2020-01-01T00:00:00Z</date></dict>",
-    { a: {}, b: [], c: true, d: new Date("2020-01-01T00:00:00Z") },
-  ],
-  [
-    "<array><dict><key>CF$UID</key><integer>7</integer></dict></array>",
-    [new Uid(7)],
-  ],
-])("parses plist %s", (body, expected) => {
-  expect(parsePlist(xml(body))).toEqual(expected);
-});
-
-test.each([
-  [
-    "<string><![CDATA[a < b]]></string>",
-    "plist: CDATA and comments are not supported",
-  ],
-  ["<string>&nbsp;</string>", "plist: unknown entity &nbsp;"],
-  ["<uid>1</uid>", "plist: unexpected <uid>"],
-])("rejects plist %s", (body, message) => {
-  expect(() => parsePlist(xml(body))).toThrow(message);
 });

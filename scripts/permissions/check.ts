@@ -4,6 +4,8 @@ import { homedir, userInfo } from "node:os";
 import { join } from "node:path";
 import { parseArgs } from "node:util";
 
+import { parse, type PlistValue } from "plist";
+
 import {
   manifest,
   targetsFor,
@@ -14,7 +16,6 @@ import {
   type Target,
   type TccClient,
 } from "./manifest.ts";
-import { isDict, parsePlist, Uid, type Plist } from "./plist.ts";
 
 export type Outcome = {
   status: "ok" | "missing" | "unchecked" | "error";
@@ -69,10 +70,17 @@ const read = (host: Host, argv: string[]) => {
   return output.stdout;
 };
 
+type Dict = { [key: string]: PlistValue };
+
+const isDict = (value: PlistValue | undefined): value is Dict =>
+  typeof value === "object" &&
+  value !== null &&
+  !Array.isArray(value) &&
+  !(value instanceof Date) &&
+  !(value instanceof Uint8Array);
+
 const readPlist = (host: Host, file: HostFile) =>
-  parsePlist(
-    read(host, ["plutil", "-convert", "xml1", "-o", "-", host.path(file)]),
-  );
+  parse(read(host, ["plutil", "-convert", "xml1", "-o", "-", host.path(file)]));
 
 const readAppData = (host: Host, file: HostFile) => {
   try {
@@ -91,17 +99,19 @@ const readAppData = (host: Host, file: HostFile) => {
   return readPlist(host, file);
 };
 
-const archiveObjects = (plist: Plist, what: string) => {
+const archiveObjects = (plist: PlistValue, what: string) => {
   const objects = isDict(plist) ? plist.$objects : undefined;
   if (!Array.isArray(objects))
     throw new Error(`${what} is not a keyed archive`);
   return objects;
 };
 
-const deref = (objects: Plist[], value: Plist | undefined) =>
-  value instanceof Uid ? objects[value.uid] : value;
+const deref = (objects: PlistValue[], value: PlistValue | undefined) => {
+  const uid = isDict(value) ? value["CF$UID"] : undefined;
+  return typeof uid === "number" ? objects[uid] : value;
+};
 
-const archivedList = (objects: Plist[], value: Plist | undefined) => {
+const archivedList = (objects: PlistValue[], value: PlistValue | undefined) => {
   const list = deref(objects, value);
   const items = isDict(list) ? list["NS.objects"] : undefined;
   if (!Array.isArray(items)) throw new Error("expected an archived collection");
@@ -141,7 +151,7 @@ const tcc = (
   );
 };
 
-const localNetwork = (signingId: string, plist: Plist): Outcome => {
+const localNetwork = (signingId: string, plist: PlistValue): Outcome => {
   const objects = archiveObjects(plist, "networkextension plist");
   const rules = objects
     .filter(isDict)
@@ -157,7 +167,7 @@ const localNetwork = (signingId: string, plist: Plist): Outcome => {
 
 const allowNotifications = 2 ** 25;
 
-const notifications = (bundleId: string, plist: Plist): Outcome => {
+const notifications = (bundleId: string, plist: PlistValue): Outcome => {
   const apps = isDict(plist) ? plist.apps : undefined;
   if (!Array.isArray(apps)) throw new Error("usernoted plist has no apps");
   const app = apps.filter(isDict).find((a) => a["bundle-id"] === bundleId);
@@ -170,7 +180,7 @@ const notifications = (bundleId: string, plist: Plist): Outcome => {
     : missing("Allow notifications is off");
 };
 
-const replaydApproval = (client: string, plist: Plist): Outcome => {
+const replaydApproval = (client: string, plist: PlistValue): Outcome => {
   if (!isDict(plist)) throw new Error("replayd plist is not a dictionary");
   const entry = plist[client];
   const until = isDict(entry) ? entry.kScreenCapturePrivacyHintDate : entry;
@@ -189,7 +199,7 @@ const dispositionFlags: [number, string, string][] = [
 const backgroundItem = (
   identifier: string,
   user: string,
-  plist: Plist,
+  plist: PlistValue,
 ): Outcome => {
   const objects = archiveObjects(plist, "background items store");
   const top = isDict(plist) ? plist.$top : undefined;
