@@ -116,6 +116,7 @@ const phases: Record<Phase, Step[]> = {
     },
     shellEnvStep,
     { name: "install base", run: () => run("./install") },
+    { name: "op config dir", run: () => run("chmod 700 ~/.config/op") },
     { name: "oh-my-zsh", run: () => run("./scripts/setup_omz.zsh") },
     {
       name: "brew bundle",
