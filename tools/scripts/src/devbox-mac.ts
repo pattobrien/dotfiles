@@ -10,7 +10,7 @@ type Phase = { name: string; run: () => Promise<unknown> };
 
 const devboxCli = join(homedir(), ".local/bin/devbox");
 const dotfiles = "/Volumes/devbox/dev/pattobrien/dotfiles";
-// The doppler shim fails while no token is configured, because mise's [env] templates call doppler.
+// The doppler shim exits 1 on mise before 2026.10 while no token is configured.
 const guestDoppler = "/Volumes/devbox/mise/installs/doppler/latest/doppler";
 const capturePromptAllow = { x: 1280, y: 813 };
 
@@ -71,8 +71,8 @@ const seedOpToken = async (devbox: Devbox) => {
   ).trim();
   await guest(
     devbox,
-    'security unlock-keychain -p "" ~/Library/Keychains/login.keychain-db && security add-generic-password -U -s op-sa.finedesigns.io -a local-ai-agents -w',
-    `${token}\n${token}\n`,
+    'security unlock-keychain -p "" ~/Library/Keychains/login.keychain-db && xargs security add-generic-password -U -s op-sa.finedesigns.io -a local-ai-agents -w',
+    `${token}\n`,
   );
 };
 
