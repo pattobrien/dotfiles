@@ -97,6 +97,19 @@ What differs from the Devbox:
   boot runs with `--display`, so the vmguest TCC rows, the replayd approval and
   the screen-capture probe run as on a Devbox, and `up` ends with a
   `<name>-up.png` screenshot.
+- Apple's Screen Sharing drops pointer and key events for 2 s after its agent
+  reports the cursor position, which happens at session start and 0.6 s after
+  every cursor move, unless the viewer sent Apple's `SetMode` message (type 10,
+  mode 2) after the handshake. The published SDK never sends it, so
+  `patches/@namespacelabs__sdk@1.5.1.patch` adds the write under Apple Remote
+  Desktop authentication until
+  [pattobrien/typescript-sdk@vnc-setmode](https://github.com/pattobrien/typescript-sdk/tree/vnc-setmode)
+  lands upstream. Measured on fresh daemons, a click 1.2 s into the session
+  landed 3 of 3 times with the message and 0 of 3 without.
+- Each new VNC session makes macOS show "Your screen is being controlled", which
+  takes focus 0.3 to 1.6 s after connecting and closes any open menu. Launching
+  apps is unaffected. Menu-driving work needs one session per task, or clicks
+  from inside the guest over `nsc ssh`.
 - GitHub auth comes from the host. `up` pipes `gh auth token` into
   `gh auth login --with-token` on the guest and runs `gh auth setup-git`.
 - An instance has no stop. `up` labels it `devbox-mac=<name>`, reuses a running
