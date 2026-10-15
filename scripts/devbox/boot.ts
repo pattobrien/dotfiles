@@ -20,10 +20,13 @@ type TccGrant = { service: string; client: string; clientType: 0 | 1 };
 
 const {
   positionals: [phase],
-  values: { cache },
+  values: { cache, display },
 } = parseArgs({
   allowPositionals: true,
-  options: { cache: { type: "string" } },
+  options: {
+    cache: { type: "string" },
+    display: { type: "boolean", default: false },
+  },
 });
 
 const repo = join(import.meta.dirname, "../..");
@@ -73,11 +76,15 @@ const shellEnv: Record<string, string> = {
   ...(cache ? { COMPILATION_CACHE_ENABLE_CACHING_DEFAULT: "YES" } : {}),
 };
 
-const tccGrants: TccGrant[] = [
-  { service: "kTCCServiceAccessibility", client: tinycastDev, clientType: 0 },
+const vmguestGrants: TccGrant[] = [
   { service: "kTCCServiceScreenCapture", client: vmguest, clientType: 1 },
   { service: "kTCCServiceAccessibility", client: vmguest, clientType: 1 },
   { service: "kTCCServicePostEvent", client: vmguest, clientType: 1 },
+];
+
+const tccGrants: TccGrant[] = [
+  { service: "kTCCServiceAccessibility", client: tinycastDev, clientType: 0 },
+  ...(display ? vmguestGrants : []),
 ];
 
 const run = (command: string, input?: string) => {
@@ -116,6 +123,22 @@ const shellEnvStep: Step = {
     }
   },
 };
+
+const displaySteps: Step[] = [
+  {
+    name: "screen-capture approval",
+    run: () => {
+      run(
+        `defaults write "$HOME/Library/Group Containers/group.com.apple.replayd/ScreenCaptureApprovals.plist" ${vmguest} -date "3024-01-01 00:00:00 +0000"`,
+      );
+      run("killall cfprefsd");
+    },
+  },
+  {
+    name: "wake display and probe screen capture",
+    run: () => run("caffeinate -u -t 2; screencapture -x /tmp/boot-probe.png"),
+  },
+];
 
 const cacheStep = (mount: string): Step => {
   const cacheLink: Link = {
@@ -159,15 +182,6 @@ const phases: Record<Phase, Step[]> = {
       },
     },
     {
-      name: "screen-capture approval",
-      run: () => {
-        run(
-          `defaults write "$HOME/Library/Group Containers/group.com.apple.replayd/ScreenCaptureApprovals.plist" ${vmguest} -date "3024-01-01 00:00:00 +0000"`,
-        );
-        run("killall cfprefsd");
-      },
-    },
-    {
       name: "never sleep",
       run: () => {
         run("sudo -n pmset -a sleep 0 displaysleep 0 disksleep 0");
@@ -175,11 +189,7 @@ const phases: Record<Phase, Step[]> = {
         run("defaults write com.apple.screensaver idleTime 0");
       },
     },
-    {
-      name: "wake display and probe screen capture",
-      run: () =>
-        run("caffeinate -u -t 2; screencapture -x /tmp/boot-probe.png"),
-    },
+    ...(display ? displaySteps : []),
     ...(cache ? [cacheStep(cache)] : []),
   ],
   install: [
@@ -203,7 +213,7 @@ const phases: Record<Phase, Step[]> = {
 
 if (phase !== "prepare" && phase !== "install") {
   console.error(
-    "usage: node scripts/devbox/boot.ts prepare|install [--cache <mount>]",
+    "usage: node scripts/devbox/boot.ts prepare|install [--display] [--cache <mount>]",
   );
   process.exit(1);
 }

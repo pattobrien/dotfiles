@@ -172,7 +172,7 @@ const devboxUp = (name: string) =>
   withDevbox(name, (devbox) =>
     up(name, {
       guest: devboxGuest(devbox),
-      bootFlags: [],
+      bootFlags: ["--display"],
       github: () => $`${devboxCli} setup-github ${name}`,
       after: [
         {
