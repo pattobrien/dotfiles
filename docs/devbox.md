@@ -89,7 +89,12 @@ What differs from the Devbox:
   without a copy mounts an empty volume
   ([cache volumes](https://namespace.so/docs/architecture/storage/cache-volumes.md#cache-hits-and-misses)).
   An instance can fork an empty volume and build cold once. One created 3
-  minutes after a commit to the tag still did.
+  minutes after a commit to the tag still did; one created 5 minutes after it
+  forked the full generation.
+- Xcode keys each compile by the canonical source path, so the hits only come
+  for a build from `~/dev/pattobrien/tinycast`, which resolves to
+  `/Volumes/devbox/dev/pattobrien/tinycast`, the path CI's `agent-cache` job
+  builds at. A checkout anywhere else reuses only the SDK module tasks.
 - `down` destroys the instance, and Namespace commits the instance's own
   generation back to `tinycast-xcode-agent`. The next `agent-cache` run forks it
   and commits a fresh one.
