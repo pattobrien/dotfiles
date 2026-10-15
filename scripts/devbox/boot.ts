@@ -13,10 +13,17 @@ import { homedir } from "node:os";
 import { dirname, join } from "node:path";
 import { parseArgs } from "node:util";
 
+import {
+  bootTccGrants,
+  targetsFor,
+  tinycastDev,
+  vmguest,
+  type Probe,
+} from "../permissions/manifest.ts";
+
 type Step = { name: string; run: () => void };
 type Phase = "prepare" | "install";
 type Link = { target: string; path: string };
-type TccGrant = { service: string; client: string; clientType: 0 | 1 };
 
 const {
   positionals: [phase],
@@ -33,8 +40,6 @@ const repo = join(import.meta.dirname, "../..");
 const home = homedir();
 const volume = "/Volumes/devbox";
 const state = join(volume, "state");
-const tinycastDev = "com.tinycast.app.dev";
-const vmguest = "/opt/namespace/vmguest";
 const xcode = "/Applications/Xcode_26.6.app";
 const compilationCache =
   "Library/Developer/Xcode/DerivedData/CompilationCache.noindex";
@@ -76,16 +81,7 @@ const shellEnv: Record<string, string> = {
   ...(cache ? { COMPILATION_CACHE_ENABLE_CACHING_DEFAULT: "YES" } : {}),
 };
 
-const vmguestGrants: TccGrant[] = [
-  { service: "kTCCServiceScreenCapture", client: vmguest, clientType: 1 },
-  { service: "kTCCServiceAccessibility", client: vmguest, clientType: 1 },
-  { service: "kTCCServicePostEvent", client: vmguest, clientType: 1 },
-];
-
-const tccGrants: TccGrant[] = [
-  { service: "kTCCServiceAccessibility", client: tinycastDev, clientType: 0 },
-  ...(display ? vmguestGrants : []),
-];
+const targets = targetsFor("devbox", display);
 
 const run = (command: string, input?: string) => {
   execFileSync("/bin/bash", ["-lc", command], {
@@ -103,8 +99,10 @@ const link = ({ target, path }: Link) => {
   symlinkSync(target, path);
 };
 
-const tccRow = ({ service, client, clientType }: TccGrant) =>
-  `INSERT OR REPLACE INTO access (service,client,client_type,auth_value,auth_reason,auth_version,indirect_object_identifier_type,indirect_object_identifier,flags,last_modified) VALUES ('${service}','${client}',${clientType},2,4,1,0,'UNUSED',0,strftime('%s','now'));`;
+const tccRow = ({ service, client }: Extract<Probe, { kind: "tcc" }>) => {
+  const [id, type] = "path" in client ? [client.path, 1] : [client.bundleId, 0];
+  return `INSERT OR REPLACE INTO access (service,client,client_type,auth_value,auth_reason,auth_version,indirect_object_identifier_type,indirect_object_identifier,flags,last_modified) VALUES ('kTCCService${service}','${id}',${type},2,4,1,0,'UNUSED',0,strftime('%s','now'));`;
+};
 
 const shellEnvStep: Step = {
   name: "shell env",
@@ -182,7 +180,7 @@ const phases: Record<Phase, Step[]> = {
       run: () => {
         run(
           "sudo -n sqlite3 '/Library/Application Support/com.apple.TCC/TCC.db'",
-          tccGrants.map(tccRow).join("\n"),
+          bootTccGrants(targets).map(tccRow).join("\n"),
         );
         run("sudo -n killall tccd");
       },
@@ -213,6 +211,19 @@ const phases: Record<Phase, Step[]> = {
         }
         run("./install devbox");
       },
+    },
+    {
+      name: "permission checks",
+      run: () =>
+        execFileSync(
+          process.execPath,
+          [
+            join(repo, "scripts/permissions/check.ts"),
+            "devbox",
+            ...(display ? ["--display"] : []),
+          ],
+          { stdio: "inherit" },
+        ),
     },
   ],
 };
