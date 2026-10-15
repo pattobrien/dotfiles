@@ -1,0 +1,35 @@
+- defaults:
+    link:
+      relink: true
+      create: true
+    shell:
+      stderr: true
+      stdout: true
+      stdin: true
+
+- link:
+    ~/.config/tinycast-dev/settings.json: .config/tinycast/settings.json
+
+- shell:
+    - command: ./scripts/setup_omz.zsh
+      description: Installing Oh My Zsh
+    - command: ./scripts/brew_bundle.zsh brew/devbox/Brewfile
+      description: Installing devbox packages
+    - command:
+        test -d ~/.oh-my-zsh/custom/plugins/zsh-pnpm-completions || git clone
+        https://github.com/michakfromparis/zsh-pnpm-completions
+        ~/.oh-my-zsh/custom/plugins/zsh-pnpm-completions
+      description: Installing pnpm completions
+    - command: mise trust ~/.config/mise/config.toml
+      description: Trusting mise config
+    - command: mise install github:dsully/macos-defaults
+      description: Installing macos-defaults via mise
+    - command: ./scripts/setup_macos.zsh
+      description: Applying macOS defaults
+    - description: Key-repeat speed (see https://mac-key-repeat.zaymon.dev)
+      command: |
+        defaults write -g InitialKeyRepeat -int 12
+        defaults write -g KeyRepeat -int 5
+        defaults write -g ApplePressAndHoldEnabled -bool false
+    - command: mise install
+      description: Installing tools from mise config

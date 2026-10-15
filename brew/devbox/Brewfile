@@ -1,0 +1,18 @@
+# Shell
+brew "zsh"
+brew "powerlevel10k"
+brew "zsh-autosuggestions"
+brew "zsh-syntax-highlighting"
+
+# Essential CLI tools
+brew "tree"
+brew "pam-reattach"
+brew "wget"
+brew "curl"
+
+# gh is not in mise: mise reads its token to authenticate GitHub API calls
+# (see zsh/zshrc), so it must exist before the first `mise install`.
+brew "gh"
+brew "mise"
+
+cask "1password-cli"
