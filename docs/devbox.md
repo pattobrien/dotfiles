@@ -64,11 +64,15 @@ devbox-mac instance down <name>  # nsc destroy
 What differs from the Devbox:
 
 - An instance carries one volume, the `tinycast-xcode-agent` cache volume (50
-  GB) at `/Volumes/cache`. A second volume of any kind, persistent or another
-  cache volume, makes Namespace fork an empty cache volume. Two instances
-  created in the same second against the tag showed it. The cache-only one
+  GB) at `/Volumes/cache`. Every instance measured with a second volume,
+  persistent or another cache volume, forked an empty cache volume. Of two
+  instances created in the same second against the tag, the cache-only one
   forked 577 MB and the one that also attached a persistent volume got an empty
   cache. So there is no persistent volume.
+- A cache-only machine can still fork an empty volume. On 2026-10-15 CI's
+  `agent-cache` runner did at 12:07 and 12:44 UTC, and an instance created at
+  12:44, 13 minutes after the last commit to the tag, did too. That build runs
+  cold, and the `compilation cache` step prints `0B`.
 - `/Volumes/devbox` is a plain directory on the instance disk, owned by
   `runner`, which the `devbox dir` phase creates before the boot. The boot and
   every path under [What persists](#what-persists) work unchanged, but nothing
