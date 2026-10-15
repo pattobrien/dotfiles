@@ -78,13 +78,20 @@ const seedOpToken = async (devbox: Devbox) => {
 
 const runPhases = async (phases: Phase[]) => {
   const timings: Record<string, number> = {};
+  const failures: string[] = [];
   for (const phase of phases) {
     const started = performance.now();
-    await phase.run();
+    try {
+      await phase.run();
+    } catch (error) {
+      failures.push(
+        `${phase.name}: ${error instanceof Error ? error.message : String(error)}`,
+      );
+    }
     timings[phase.name] = Math.round(performance.now() - started);
     console.log(`${phase.name}: ${timings[phase.name]}ms`);
   }
-  return timings;
+  return { timings, failures };
 };
 
 const up = (name: string, dopplerReference?: string) =>
@@ -98,7 +105,7 @@ const up = (name: string, dopplerReference?: string) =>
           },
         ]
       : [];
-    const timings = await runPhases([
+    const { timings, failures } = await runPhases([
       {
         name: "dotfiles",
         run: () =>
@@ -115,6 +122,16 @@ const up = (name: string, dopplerReference?: string) =>
             `cd ${dotfiles} && node scripts/devbox/boot.ts prepare`,
           ),
       },
+      {
+        name: "dismiss capture prompt",
+        run: async () => {
+          await devbox.display.click(
+            capturePromptAllow.x,
+            capturePromptAllow.y,
+          );
+          await Bun.sleep(1500);
+        },
+      },
       { name: "github", run: () => $`${devboxCli} setup-github ${name}` },
       { name: "1password token", run: () => seedOpToken(devbox) },
       ...doppler,
@@ -126,20 +143,14 @@ const up = (name: string, dopplerReference?: string) =>
             `cd ${dotfiles} && node scripts/devbox/boot.ts install`,
           ),
       },
-      {
-        name: "dismiss capture prompt",
-        run: async () => {
-          await devbox.display.click(
-            capturePromptAllow.x,
-            capturePromptAllow.y,
-          );
-          await Bun.sleep(1500);
-        },
-      },
       { name: "screenshot", run: () => screenshot(devbox, out) },
     ]);
     const total = Object.values(timings).reduce((sum, ms) => sum + ms, 0);
     console.log(`up: ${total}ms, screenshot ${out}`);
+    if (failures.length > 0) {
+      console.error(`failed phases:\n${failures.join("\n")}`);
+      process.exitCode = 1;
+    }
   });
 
 const usage =
