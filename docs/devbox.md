@@ -55,10 +55,12 @@ compilation cache under the cache tag `tinycast-xcode-agent`. Tinycast CI's
 CI's Release build writes `tinycast-xcode`, which an instance never mounts.
 
 ```sh
-devbox-mac instance up <name>    # reuse or create, then run the boot phases
-devbox-mac instance ssh <name>   # nsc ssh into the instance
-devbox-mac instance vnc <name>   # nsc vnc, the only way to see the screen
-devbox-mac instance down <name>  # nsc destroy
+devbox-mac instance up <name>              # reuse or create, boot, screenshot
+devbox-mac instance shot <name> [out.png]  # screenshot over the instance's VNC
+devbox-mac instance click <name> <x> <y>   # click at framebuffer pixels
+devbox-mac instance ssh <name>             # nsc ssh into the instance
+devbox-mac instance vnc <name>             # nsc vnc, to watch the screen
+devbox-mac instance down <name>            # nsc destroy
 ```
 
 What differs from the Devbox:
@@ -88,9 +90,13 @@ What differs from the Devbox:
   `Cache hit` or `Cache miss` per compile job. The `compilation cache` step
   prints the size of the forked cache, so an empty fork shows in the `up`
   output.
-- There is no display API. The boot skips the vmguest TCC rows, the replayd
-  approval and the screen-capture probe, which only the Devbox passes with
-  `--display`, and there is no `screenshot` phase. Use `nsc vnc` to look.
+- `shot` and `click` use the same VNC service a Devbox's display API uses.
+  `GetVNCConfig` on the regional Compute API, picked from the instance's
+  `ingress_domain`, returns the endpoint and credentials, and the SDK's generic
+  `@namespacelabs/sdk/vnc` client connects with the ingress bearer token. The
+  boot runs with `--display`, so the vmguest TCC rows, the replayd approval and
+  the screen-capture probe run as on a Devbox, and `up` ends with a
+  `<name>-up.png` screenshot.
 - GitHub auth comes from the host. `up` pipes `gh auth token` into
   `gh auth login --with-token` on the guest and runs `gh auth setup-git`.
 - An instance has no stop. `up` labels it `devbox-mac=<name>`, reuses a running

@@ -136,7 +136,12 @@ const displaySteps: Step[] = [
   },
   {
     name: "wake display and probe screen capture",
-    run: () => run("caffeinate -u -t 2; screencapture -x /tmp/boot-probe.png"),
+    // An ssh session has no WindowServer connection; hop into the console
+    // user's launchd session so screencapture reaches the display.
+    run: () =>
+      run(
+        `sudo -n launchctl asuser "$(id -u)" sudo -n -u "$(id -un)" bash -c "caffeinate -u -t 2; screencapture -x /tmp/boot-probe.png"`,
+      ),
   },
 ];
 

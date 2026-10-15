@@ -5,7 +5,10 @@ import { homedir, tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 
 import DopplerSDK from "@dopplerhq/node-sdk";
+import { createComputeClient } from "@namespacelabs/sdk/api";
+import { loadDefaults, TOKEN_MIN_VALIDITY_MS } from "@namespacelabs/sdk/auth";
 import { createDevboxClient, type Devbox } from "@namespacelabs/sdk/devbox";
+import { openVnc } from "@namespacelabs/sdk/vnc";
 import { $ } from "bun";
 
 type Phase = { name: string; run: () => Promise<unknown> };
@@ -82,55 +85,114 @@ const nscGuest = (id: string): Guest => ({
   },
 });
 
-const findInstance = async (name: string) => {
+type Instance = { id: string; ingressDomain: string };
+
+const instanceEntry = (entry: unknown): Instance => {
+  if (
+    typeof entry === "object" &&
+    entry !== null &&
+    "cluster_id" in entry &&
+    typeof entry.cluster_id === "string" &&
+    "ingress_domain" in entry &&
+    typeof entry.ingress_domain === "string"
+  ) {
+    return { id: entry.cluster_id, ingressDomain: entry.ingress_domain };
+  }
+  throw new Error(
+    `nsc list entry has no cluster_id and ingress_domain: ${JSON.stringify(entry)}`,
+  );
+};
+
+const listInstances = async (name: string) => {
   const listed: unknown = JSON.parse(
     await $`nsc list --label ${instanceLabel}=${name} -o json`.text(),
   );
-  if (listed === null) return undefined;
+  if (listed === null) return [];
   if (!Array.isArray(listed)) {
     throw new Error(`nsc list returned ${JSON.stringify(listed)}`);
   }
-  const ids = listed.map((entry: unknown) => {
-    if (
-      typeof entry === "object" &&
-      entry !== null &&
-      "cluster_id" in entry &&
-      typeof entry.cluster_id === "string"
-    ) {
-      return entry.cluster_id;
-    }
+  return listed.map(instanceEntry);
+};
+
+const findInstance = async (name: string) => {
+  const instances = await listInstances(name);
+  if (instances.length > 1) {
     throw new Error(
-      `nsc list entry has no cluster_id: ${JSON.stringify(entry)}`,
-    );
-  });
-  if (ids.length > 1) {
-    throw new Error(
-      `more than one instance labelled ${instanceLabel}=${name}: ${ids.join(", ")}`,
+      `more than one instance labelled ${instanceLabel}=${name}: ${instances.map((instance) => instance.id).join(", ")}`,
     );
   }
-  return ids[0];
+  return instances[0];
 };
 
 const requireInstance = async (name: string) => {
-  const id = await findInstance(name);
-  if (!id)
+  const instance = await findInstance(name);
+  if (!instance)
     throw new Error(`no running instance labelled ${instanceLabel}=${name}`);
-  return id;
+  return instance;
 };
 
-const createInstance = async (name: string) => {
+const createInstance = async (name: string): Promise<Instance> => {
   const cidfile = join(await mkdtemp(join(tmpdir(), "devbox-mac-")), "cid");
   await $`nsc create --machine_type ${instanceMachineType} --selectors ${instanceSelectors} --volume ${cacheVolume} --duration ${instanceDuration} --cidfile ${cidfile} --label ${instanceLabel}=${name}`;
-  return (await Bun.file(cidfile).text()).trim();
+  const id = (await Bun.file(cidfile).text()).trim();
+  const created = (await listInstances(name)).find(
+    (instance) => instance.id === id,
+  );
+  if (!created)
+    throw new Error(`nsc list does not show the new instance ${id}`);
+  return created;
+};
+
+type Display = {
+  screenshot(options: { timeoutMs: number }): Promise<{ png: Uint8Array }>;
+  click(x: number, y: number): Promise<void>;
+};
+
+const saveScreenshot = async (display: Display, out: string) => {
+  const shot = await display.screenshot({ timeoutMs: 60_000 });
+  await Bun.write(out, shot.png);
+  return out;
+};
+
+const ingressRegion = (ingressDomain: string) => {
+  const suffix = ".nscluster.cloud";
+  if (!ingressDomain.endsWith(suffix)) {
+    throw new Error(`ingress domain ${ingressDomain} is not under ${suffix}`);
+  }
+  return ingressDomain.slice(0, -suffix.length);
+};
+
+const withInstanceDisplay = async <T>(
+  { id, ingressDomain }: Instance,
+  use: (display: Display) => Promise<T>,
+) => {
+  const tokenSource = await loadDefaults();
+  const compute = createComputeClient({
+    region: ingressRegion(ingressDomain),
+    tokenSource,
+  });
+  const config = await compute.compute.getVNCConfig({ instanceId: id });
+  const token = await tokenSource.issueToken(TOKEN_MIN_VALIDITY_MS);
+  const vnc = await openVnc({
+    endpoint: config.endpoint,
+    username: config.username,
+    password: config.password,
+    headers: { "x-nsc-ingress-auth": `Bearer ${token}` },
+  });
+  try {
+    return await use(vnc);
+  } finally {
+    vnc.close();
+  }
 };
 
 const instanceUp = async (name: string) => {
-  const id = (await findInstance(name)) ?? (await createInstance(name));
-  console.log(`instance ${id}`);
-  const guest = nscGuest(id);
+  const instance = (await findInstance(name)) ?? (await createInstance(name));
+  console.log(`instance ${instance.id}`);
+  const guest = nscGuest(instance.id);
   await up(name, {
     guest,
-    bootFlags: ["--cache", cacheMount],
+    bootFlags: ["--cache", cacheMount, "--display"],
     github: async () =>
       guest.exec(
         "gh auth login --with-token && gh auth setup-git",
@@ -145,7 +207,15 @@ const instanceUp = async (name: string) => {
           ),
       },
     ],
-    after: [],
+    after: [
+      {
+        name: "screenshot",
+        run: async () =>
+          console.log(
+            `screenshot ${await withInstanceDisplay(instance, (display) => saveScreenshot(display, resolve(`${name}-up.png`)))}`,
+          ),
+      },
+    ],
   });
 };
 
@@ -154,24 +224,31 @@ const interactive = async (command: string[]) => {
   process.exitCode = await proc.exited;
 };
 
-const instanceCommands: Record<string, (name: string) => Promise<unknown>> = {
+const instanceCommands: Record<
+  string,
+  (name: string, args: string[]) => Promise<unknown>
+> = {
   up: instanceUp,
   down: async (name) => {
-    const id = await findInstance(name);
-    if (!id) {
+    const instance = await findInstance(name);
+    if (!instance) {
       console.log(`no running instance labelled ${instanceLabel}=${name}`);
       return;
     }
-    await $`nsc destroy ${id} --force`;
+    await $`nsc destroy ${instance.id} --force`;
   },
-  ssh: async (name) => interactive(["nsc", "ssh", await requireInstance(name)]),
-  vnc: async (name) => interactive(["nsc", "vnc", await requireInstance(name)]),
-};
-
-const screenshot = async (devbox: Devbox, out: string) => {
-  const shot = await devbox.display.screenshot({ timeoutMs: 60_000 });
-  await Bun.write(out, shot.png);
-  return out;
+  ssh: async (name) =>
+    interactive(["nsc", "ssh", (await requireInstance(name)).id]),
+  vnc: async (name) =>
+    interactive(["nsc", "vnc", (await requireInstance(name)).id]),
+  shot: async (name, [out]) =>
+    withInstanceDisplay(await requireInstance(name), async (display) =>
+      console.log(await saveScreenshot(display, resolve(out ?? `${name}.png`))),
+    ),
+  click: async (name, [x, y]) =>
+    withInstanceDisplay(await requireInstance(name), (display) =>
+      display.click(coordinate(x, "x"), coordinate(y, "y")),
+    ),
 };
 
 const mintDopplerToken = async (name: string) => {
@@ -285,7 +362,7 @@ const devboxUp = (name: string) =>
           name: "screenshot",
           run: async () =>
             console.log(
-              `screenshot ${await screenshot(devbox, resolve(`${name}-up.png`))}`,
+              `screenshot ${await saveScreenshot(devbox.display, resolve(`${name}-up.png`))}`,
             ),
         },
       ],
@@ -293,7 +370,7 @@ const devboxUp = (name: string) =>
   );
 
 const usage =
-  "usage: devbox-mac create|up|down <name> | shot <name> [out.png] | click <name> <x> <y> | instance up|down|ssh|vnc <name>";
+  "usage: devbox-mac create|up|down <name> | shot <name> [out.png] | click <name> <x> <y> | instance up|down|ssh|vnc <name> | instance shot <name> [out.png] | instance click <name> <x> <y>";
 
 const arg = (value: string | undefined, label: string) => {
   if (!value) throw new Error(`missing <${label}>\n${usage}`);
@@ -315,16 +392,18 @@ const commands: Record<string, (args: string[]) => Promise<unknown>> = {
   up: ([name]) => devboxUp(arg(name, "name")),
   shot: ([name, out]) =>
     withDevbox(arg(name, "name"), async (devbox) =>
-      console.log(await screenshot(devbox, resolve(out ?? `${name}.png`))),
+      console.log(
+        await saveScreenshot(devbox.display, resolve(out ?? `${name}.png`)),
+      ),
     ),
   click: ([name, x, y]) =>
     withDevbox(arg(name, "name"), (devbox) =>
       devbox.display.click(coordinate(x, "x"), coordinate(y, "y")),
     ),
   down: ([name]) => $`${devboxCli} shutdown ${arg(name, "name")} --force`,
-  instance: ([sub = "", name]) => {
+  instance: ([sub = "", name, ...rest]) => {
     if (!Object.hasOwn(instanceCommands, sub)) throw new Error(usage);
-    return instanceCommands[sub](arg(name, "name"));
+    return instanceCommands[sub](arg(name, "name"), rest);
   },
 };
 
