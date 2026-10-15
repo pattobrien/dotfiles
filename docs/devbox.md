@@ -88,8 +88,8 @@ What differs from the Devbox:
   Namespace copies a new generation to other nodes in the background, and a node
   without a copy mounts an empty volume
   ([cache volumes](https://namespace.so/docs/architecture/storage/cache-volumes.md#cache-hits-and-misses)).
-  An instance created within about a minute of a commit to the tag can fork an
-  empty volume and build cold once.
+  An instance can fork an empty volume and build cold once. One created 3
+  minutes after a commit to the tag still did.
 - `down` destroys the instance, and Namespace commits the instance's own
   generation back to `tinycast-xcode-agent`. The next `agent-cache` run forks it
   and commits a fresh one.
