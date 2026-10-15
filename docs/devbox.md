@@ -50,7 +50,9 @@ the Doppler token on the first boot of a fresh volume.
 `devbox-mac instance` runs the same boot on a raw Namespace compute instance
 (`nsc create`, `macos/arm64:6x14`, macOS 27) instead of a Devbox. An instance
 can attach a cache volume, which a Devbox cannot, so it mounts the Xcode
-compilation cache that Tinycast CI writes under the cache tag `tinycast-xcode`.
+compilation cache under the cache tag `tinycast-xcode-agent`. Tinycast CI's
+`agent-cache` job builds Debug into that tag on every Tinycast pull request.
+CI's Release build writes `tinycast-xcode`, which an instance never mounts.
 
 ```sh
 devbox-mac instance up <name>    # reuse or create, then run the boot phases
@@ -63,14 +65,16 @@ What differs from the Devbox:
 
 - An instance carries two volumes. A persistent volume tagged `<name>` (100 GB)
   mounts at `/Volumes/devbox`, so the boot and everything under
-  [What persists](#what-persists) work unchanged. The `tinycast-xcode` cache
-  volume (50 GB) mounts at `/Volumes/cache`.
+  [What persists](#what-persists) work unchanged. The `tinycast-xcode-agent`
+  cache volume (50 GB) mounts at `/Volumes/cache`.
 - The boot runs with `--cache /Volumes/cache`. That links
   `~/Library/Developer/Xcode/DerivedData/CompilationCache.noindex` to
   `/Volumes/cache/Users/runner/Library/Developer/Xcode/DerivedData/CompilationCache.noindex`,
   where CI's cache action leaves it, and exports
   `COMPILATION_CACHE_ENABLE_CACHING_DEFAULT=YES`. The build log then shows
-  `Cache hit` or `Cache miss` per compile job.
+  `Cache hit` or `Cache miss` per compile job. The `compilation cache` step
+  prints the size of the forked cache, so an empty fork shows in the `up`
+  output.
 - There is no display API. The boot skips the vmguest TCC rows, the replayd
   approval and the screen-capture probe, which only the Devbox passes with
   `--display`, and there is no `screenshot` phase. Use `nsc vnc` to look.
@@ -84,12 +88,11 @@ What differs from the Devbox:
   Namespace copies a new generation to other nodes in the background, and a node
   without a copy mounts an empty volume
   ([cache volumes](https://namespace.so/docs/architecture/storage/cache-volumes.md#cache-hits-and-misses)).
-  On 2026-10-15 both instances mounted an empty volume, one of them 12 minutes
-  after a CI job had started from an 838 MiB generation, so the first Debug
-  build on each ran 199 cache misses in about 40 s.
-- `down` destroys the instance. Namespace commits a generation only when an
-  instance ends cleanly, and its docs do not say whether `nsc destroy` counts.
-  If it does, the instance's generation replaces CI's as the newest one.
+  An instance created within about a minute of a commit to the tag can fork an
+  empty volume and build cold once.
+- `down` destroys the instance, and Namespace commits the instance's own
+  generation back to `tinycast-xcode-agent`. The next `agent-cache` run forks it
+  and commits a fresh one.
 
 An instance costs $0.06/min while it runs, which is $3.60 an hour and $28.80 for
 a full 8 h duration.
