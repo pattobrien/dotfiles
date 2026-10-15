@@ -24,7 +24,7 @@ const instanceSelectors = "macos.version=27.x";
 const instanceDuration = "8h";
 const instanceVolume = (name: string) =>
   `persistent:${name}:/Volumes/devbox:100GB`;
-const cacheTag = "tinycast-xcode";
+const cacheTag = "tinycast-xcode-agent";
 const cacheMount = "/Volumes/cache";
 const cacheVolume = `cache:${cacheTag}:${cacheMount}:50GB`;
 

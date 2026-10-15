@@ -150,6 +150,7 @@ const cacheStep = (mount: string): Step => {
     run: () => {
       mkdirSync(cacheLink.target, { recursive: true });
       link(cacheLink);
+      run(`du -sh ${cacheLink.target}`);
     },
   };
 };
