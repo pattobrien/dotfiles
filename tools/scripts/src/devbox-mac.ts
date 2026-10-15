@@ -146,16 +146,6 @@ const up = (name: string) =>
             `cd ${dotfiles} && node scripts/devbox/boot.ts prepare`,
           ),
       },
-      {
-        name: "dismiss capture prompt",
-        run: async () => {
-          await devbox.display.click(
-            capturePromptAllow.x,
-            capturePromptAllow.y,
-          );
-          await Bun.sleep(1500);
-        },
-      },
       { name: "github", run: () => $`${devboxCli} setup-github ${name}` },
       { name: "doppler token", run: () => seedDopplerToken(devbox, name) },
       {
@@ -165,6 +155,16 @@ const up = (name: string) =>
             devbox,
             `cd ${dotfiles} && node scripts/devbox/boot.ts install`,
           ),
+      },
+      {
+        name: "dismiss capture prompt",
+        run: async () => {
+          await devbox.display.click(
+            capturePromptAllow.x,
+            capturePromptAllow.y,
+          );
+          await Bun.sleep(1500);
+        },
       },
       { name: "screenshot", run: () => screenshot(devbox, out) },
     ]);
