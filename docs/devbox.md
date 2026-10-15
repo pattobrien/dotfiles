@@ -63,10 +63,16 @@ devbox-mac instance down <name>  # nsc destroy
 
 What differs from the Devbox:
 
-- An instance carries two volumes. A persistent volume tagged `<name>` (100 GB)
-  mounts at `/Volumes/devbox`, so the boot and everything under
-  [What persists](#what-persists) work unchanged. The `tinycast-xcode-agent`
-  cache volume (50 GB) mounts at `/Volumes/cache`.
+- An instance carries one volume, the `tinycast-xcode-agent` cache volume (50
+  GB) at `/Volumes/cache`. A second volume of any kind, persistent or another
+  cache volume, makes Namespace fork an empty cache volume. Two instances
+  created in the same second against the tag showed it. The cache-only one
+  forked 577 MB and the one that also attached a persistent volume got an empty
+  cache. So there is no persistent volume.
+- `/Volumes/devbox` is a plain directory on the instance disk, owned by
+  `runner`, which the `devbox dir` phase creates before the boot. The boot and
+  every path under [What persists](#what-persists) work unchanged, but nothing
+  there outlives the instance, which lives at most 8 h. Push work before `down`.
 - The boot runs with `--cache /Volumes/cache`. That links
   `~/Library/Developer/Xcode/DerivedData/CompilationCache.noindex` to
   `/Volumes/cache/Users/runner/Library/Developer/Xcode/DerivedData/CompilationCache.noindex`,
@@ -82,15 +88,8 @@ What differs from the Devbox:
   `gh auth login --with-token` on the guest and runs `gh auth setup-git`.
 - An instance has no stop. `up` labels it `devbox-mac=<name>`, reuses a running
   instance with that label, and otherwise creates one with `--duration 8h`.
-  Namespace destroys it when the duration ends. Each create starts from a fresh
-  home, so `up` runs the full boot again on the persistent volume.
-- A create forks the newest cache generation that the node it lands on holds.
-  Namespace copies a new generation to other nodes in the background, and a node
-  without a copy mounts an empty volume
-  ([cache volumes](https://namespace.so/docs/architecture/storage/cache-volumes.md#cache-hits-and-misses)).
-  An instance can fork an empty volume and build cold once. One created 3
-  minutes after a commit to the tag still did; one created 5 minutes after it
-  forked the full generation.
+  Namespace destroys it when the duration ends, and `/Volumes/devbox` goes with
+  it. Each create runs the full boot, `mise install` included.
 - Xcode keys each compile by the canonical source path, so the hits only come
   for a build from `~/dev/pattobrien/tinycast`, which resolves to
   `/Volumes/devbox/dev/pattobrien/tinycast`, the path CI's `agent-cache` job
