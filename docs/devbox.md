@@ -39,11 +39,17 @@ devbox-mac down <name>            # stop the Devbox
 `xcode-select`, TCC grants, the replayd screen-capture approval for
 `/opt/namespace/vmguest`, never sleep, wake), `devbox setup-github`, the Doppler
 token, `install` (`./install devbox`, which is `mise install` and the macOS
-defaults), then it saves `<name>-up.png` in the current directory. The replayd
-approval is what keeps the "vmguest is requesting to bypass the system private
-window picker" dialog from appearing on the first screenshot; TCC rows alone do
-not cover it. Secrets land before `install` so mise can use the GitHub token and
-the Doppler token on the first boot of a fresh volume.
+defaults, then `pnpm install` for the workspace root and the permission checks),
+then it saves `<name>-up.png` in the current directory. The checks
+([scripts/permissions/check.ts](../scripts/permissions/check.ts)) read the
+grants and settings the boot made and fail the boot on any unmet entry. The
+manifest ([manifest.ts](../scripts/permissions/manifest.ts)) is also the source
+of the boot's TCC inserts, and its `local` target documents the grants this Mac
+needs: `node scripts/permissions/check.ts local`. The replayd approval is what
+keeps the "vmguest is requesting to bypass the system private window picker"
+dialog from appearing on the first screenshot; TCC rows alone do not cover it.
+Secrets land before `install` so mise can use the GitHub token and the Doppler
+token on the first boot of a fresh volume.
 
 ## Instances
 
