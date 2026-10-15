@@ -11,10 +11,6 @@
     ~/.config/tinycast-dev/settings.json: .config/tinycast/settings.json
 
 - shell:
-    - command: ./scripts/setup_omz.zsh
-      description: Installing Oh My Zsh
-    - command: ./scripts/brew_bundle.zsh brew/devbox/Brewfile
-      description: Installing devbox packages
     - command:
         test -d ~/.oh-my-zsh/custom/plugins/zsh-pnpm-completions || git clone
         https://github.com/michakfromparis/zsh-pnpm-completions

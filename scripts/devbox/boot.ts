@@ -1,5 +1,6 @@
 import { execFileSync, spawnSync } from "node:child_process";
 import {
+  existsSync,
   lstatSync,
   mkdirSync,
   readFileSync,
@@ -12,6 +13,7 @@ import { homedir } from "node:os";
 import { dirname, join } from "node:path";
 
 type Step = { name: string; run: () => void };
+type Phase = "prepare" | "install";
 type Link = { target: string; path: string };
 type TccGrant = { service: string; client: string; clientType: 0 | 1 };
 
@@ -85,80 +87,102 @@ const link = ({ target, path }: Link) => {
 const tccRow = ({ service, client, clientType }: TccGrant) =>
   `INSERT OR REPLACE INTO access (service,client,client_type,auth_value,auth_reason,auth_version,indirect_object_identifier_type,indirect_object_identifier,flags,last_modified) VALUES ('${service}','${client}',${clientType},2,4,1,0,'UNUSED',0,strftime('%s','now'));`;
 
-const steps: Step[] = [
-  {
-    name: "volume layout",
-    run: () => {
-      for (const dir of volumeDirs) mkdirSync(dir, { recursive: true });
-      for (const entry of links) link(entry);
-    },
+const shellEnvStep: Step = {
+  name: "shell env",
+  run: () => {
+    const exports = `${Object.entries(shellEnv)
+      .map(([key, value]) => `export ${key}="${value}"`)
+      .join("\n")}\n`;
+    run("sudo -n tee /etc/zshenv >/dev/null", exports);
+    if (!readFileSync("/etc/profile", "utf8").includes(exports)) {
+      run("sudo -n tee -a /etc/profile >/dev/null", `\n${exports}`);
+    }
+    for (const [key, value] of Object.entries(shellEnv)) {
+      process.env[key] = value
+        .replaceAll("$HOME", home)
+        .replaceAll("$PATH", `${process.env.PATH}`);
+    }
   },
-  {
-    name: "shell env",
-    run: () => {
-      const exports = `${Object.entries(shellEnv)
-        .map(([key, value]) => `export ${key}="${value}"`)
-        .join("\n")}\n`;
-      run("sudo -n tee /etc/zshenv >/dev/null", exports);
-      if (!readFileSync("/etc/profile", "utf8").includes(exports)) {
-        run("sudo -n tee -a /etc/profile >/dev/null", `\n${exports}`);
-      }
-      for (const [key, value] of Object.entries(shellEnv)) {
-        process.env[key] = value
-          .replaceAll("$HOME", home)
-          .replaceAll("$PATH", `${process.env.PATH}`);
-      }
-    },
-  },
-  { name: "install base", run: () => run("./install") },
-  { name: "xcode", run: () => run(`sudo -n xcode-select -s ${xcode}`) },
-  {
-    name: "install devbox",
-    run: () => {
-      const gh = spawnSync("/bin/bash", ["-lc", "gh auth token"], {
-        encoding: "utf8",
-      });
-      if (gh.status === 0) {
-        process.env.GITHUB_TOKEN = gh.stdout.trim();
-      } else {
-        console.log("gh has no token yet; mise calls GitHub unauthenticated");
-      }
-      run("./install devbox");
-    },
-  },
-  {
-    name: "tcc grants",
-    run: () => {
-      run(
-        "sudo -n sqlite3 '/Library/Application Support/com.apple.TCC/TCC.db'",
-        tccGrants.map(tccRow).join("\n"),
-      );
-      run("sudo -n killall tccd");
-    },
-  },
-  {
-    name: "never sleep",
-    run: () => {
-      run("sudo -n pmset -a sleep 0 displaysleep 0 disksleep 0");
-      run("defaults -currentHost write com.apple.screensaver idleTime 0");
-      run("defaults write com.apple.screensaver idleTime 0");
-    },
-  },
-  {
-    name: "wake display and surface the screen-capture prompt",
-    run: () => run("caffeinate -u -t 2; screencapture -x /tmp/boot-probe.png"),
-  },
-];
+};
 
-const at = new Date().toISOString();
-const timings: Record<string, number> = {};
-for (const step of steps) {
+const phases: Record<Phase, Step[]> = {
+  prepare: [
+    {
+      name: "volume layout",
+      run: () => {
+        for (const dir of volumeDirs) mkdirSync(dir, { recursive: true });
+        for (const entry of links) link(entry);
+      },
+    },
+    shellEnvStep,
+    { name: "install base", run: () => run("./install") },
+    { name: "oh-my-zsh", run: () => run("./scripts/setup_omz.zsh") },
+    {
+      name: "brew bundle",
+      run: () => run("./scripts/brew_bundle.zsh brew/devbox/Brewfile"),
+    },
+    { name: "xcode", run: () => run(`sudo -n xcode-select -s ${xcode}`) },
+    {
+      name: "tcc grants",
+      run: () => {
+        run(
+          "sudo -n sqlite3 '/Library/Application Support/com.apple.TCC/TCC.db'",
+          tccGrants.map(tccRow).join("\n"),
+        );
+        run("sudo -n killall tccd");
+      },
+    },
+    {
+      name: "never sleep",
+      run: () => {
+        run("sudo -n pmset -a sleep 0 displaysleep 0 disksleep 0");
+        run("defaults -currentHost write com.apple.screensaver idleTime 0");
+        run("defaults write com.apple.screensaver idleTime 0");
+      },
+    },
+    {
+      name: "wake display and surface the screen-capture prompt",
+      run: () =>
+        run("caffeinate -u -t 2; screencapture -x /tmp/boot-probe.png"),
+    },
+  ],
+  install: [
+    shellEnvStep,
+    {
+      name: "install devbox",
+      run: () => {
+        const gh = spawnSync("/bin/bash", ["-lc", "gh auth token"], {
+          encoding: "utf8",
+        });
+        if (gh.status === 0) {
+          process.env.GITHUB_TOKEN = gh.stdout.trim();
+        } else {
+          console.log("gh has no token yet; mise calls GitHub unauthenticated");
+        }
+        run("./install devbox");
+      },
+    },
+  ],
+};
+
+const phase = process.argv[2];
+if (phase !== "prepare" && phase !== "install") {
+  console.error("usage: node scripts/devbox/boot.ts prepare|install");
+  process.exit(1);
+}
+
+const bootFile = join(state, "last-boot.json");
+const timings: Record<string, number> =
+  phase === "install" && existsSync(bootFile)
+    ? JSON.parse(readFileSync(bootFile, "utf8")).timings
+    : {};
+for (const step of phases[phase]) {
   const started = performance.now();
   step.run();
   timings[step.name] = Math.round(performance.now() - started);
   console.log(`${step.name}: ${timings[step.name]}ms`);
 }
 writeFileSync(
-  join(state, "last-boot.json"),
-  `${JSON.stringify({ at, timings }, null, 2)}\n`,
+  bootFile,
+  `${JSON.stringify({ at: new Date().toISOString(), timings }, null, 2)}\n`,
 );

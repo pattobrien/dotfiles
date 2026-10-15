@@ -27,39 +27,44 @@ volume:
 ## Commands
 
 ```sh
-devbox-mac create <name>             # create the Devbox from the spec, then up
-devbox-mac up <name>                 # pull dotfiles, boot, gh auth, 1Password token, screenshot
-devbox-mac shot <name> [out.png]     # screenshot only
-devbox-mac click <name> <x> <y>      # click at framebuffer pixels (2560x1600)
-devbox-mac down <name>               # stop the Devbox
-devbox-mac seed-doppler <name> <op-reference>
+devbox-mac create <name> [doppler-op-reference]   # create from the spec, then up
+devbox-mac up <name> [doppler-op-reference]       # boot and seed secrets, see below
+devbox-mac shot <name> [out.png]                  # screenshot only
+devbox-mac click <name> <x> <y>                   # click at framebuffer pixels (2560x1600)
+devbox-mac down <name>                            # stop the Devbox
 ```
 
-`up` clicks Allow on the "vmguest is requesting to bypass the system private
-window picker" prompt, which the boot raises on purpose with its first
-`screencapture`. Then it saves `<name>-up.png` in the current directory.
+`up` runs these phases in order: pull the dotfiles onto the volume, `prepare`
+(volume links, shell env, base `./install`, oh-my-zsh, the devbox Brewfile,
+`xcode-select`, TCC grants, never sleep, wake), `devbox setup-github`, the
+1Password service-account token, the Doppler token when a reference is given,
+`install` (`./install devbox`, which is `mise install` and the macOS defaults),
+then it clicks Allow on the "vmguest is requesting to bypass the system private
+window picker" prompt that `prepare` raises on purpose, and saves
+`<name>-up.png` in the current directory. Secrets land before `install` so mise
+can use the GitHub token and the Doppler token on the first boot of a fresh
+volume.
 
 ## Doppler
 
 The global mise config resolves its `[env]` with
 `doppler secrets get … -p platform -c prod`. Without a Doppler token, `mise env`
 and every mise shim exit 1, so mise tools on the Devbox stay broken.
-`setup_macos.zsh` calls `macos-defaults` through a shim, so `./install devbox`,
-and with it `up`, exits non-zero until a token is configured.
+`setup_macos.zsh` calls `macos-defaults` through a shim, so the `install` phase
+of `up` exits non-zero until a token is configured. The `prepare` phase and the
+TCC grants still complete, so Xcode builds and screenshots work without one.
 
 None of the tokens in the 1Password item "Doppler Service Tokens" can read
 project `platform`. To fix this, an operator creates a `platform/prod` service
-token in Doppler and stores it in 1Password. After that, run this before `up` on
+token in Doppler, stores it in 1Password, and passes its reference to `up` on
 every boot:
 
 ```sh
-devbox-mac seed-doppler <name> "op://<vault>/<item>/<field>"
+devbox-mac up <name> "op://<vault>/<item>/<field>"
 ```
 
-`up` cannot persist the token, because Doppler keeps it in the login keychain
-with a reference in `~/.doppler`, and both reset on every start. On a brand-new
-Devbox, the Doppler binary only exists after the first `up` has run
-`mise install`, so seed after that first run.
+Every boot needs it again, because Doppler keeps the token in the login keychain
+with a reference in `~/.doppler`, and both reset on every start.
 
 ## Costs and limits
 

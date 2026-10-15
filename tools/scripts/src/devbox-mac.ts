@@ -56,6 +56,15 @@ const screenshot = async (devbox: Devbox, out: string) => {
   return out;
 };
 
+const seedDopplerToken = async (devbox: Devbox, reference: string) => {
+  const token = (await $`op read ${reference}`.text()).trim();
+  await guest(
+    devbox,
+    `mise trust ~/.config/mise/config.toml && mise install -y doppler && ${guestDoppler} configure set token --scope / --silent`,
+    `${token}\n`,
+  );
+};
+
 const seedOpToken = async (devbox: Devbox) => {
   const token = (
     await $`op item get ${"Local AI Agents Service Account Token"} --vault FineDesigns --fields credential --reveal`.text()
@@ -78,9 +87,17 @@ const runPhases = async (phases: Phase[]) => {
   return timings;
 };
 
-const up = (name: string) =>
+const up = (name: string, dopplerReference?: string) =>
   withDevbox(name, async (devbox) => {
     const out = resolve(`${name}-up.png`);
+    const doppler: Phase[] = dopplerReference
+      ? [
+          {
+            name: "doppler token",
+            run: () => seedDopplerToken(devbox, dopplerReference),
+          },
+        ]
+      : [];
     const timings = await runPhases([
       {
         name: "dotfiles",
@@ -91,12 +108,24 @@ const up = (name: string) =>
           ),
       },
       {
-        name: "boot",
+        name: "prepare",
         run: () =>
-          guest(devbox, `cd ${dotfiles} && node scripts/devbox/boot.ts`),
+          guest(
+            devbox,
+            `cd ${dotfiles} && node scripts/devbox/boot.ts prepare`,
+          ),
       },
       { name: "github", run: () => $`${devboxCli} setup-github ${name}` },
       { name: "1password token", run: () => seedOpToken(devbox) },
+      ...doppler,
+      {
+        name: "install",
+        run: () =>
+          guest(
+            devbox,
+            `cd ${dotfiles} && node scripts/devbox/boot.ts install`,
+          ),
+      },
       {
         name: "dismiss capture prompt",
         run: async () => {
@@ -114,7 +143,7 @@ const up = (name: string) =>
   });
 
 const usage =
-  "usage: devbox-mac create|up|down <name> | shot <name> [out.png] | click <name> <x> <y> | seed-doppler <name> <op-reference>";
+  "usage: devbox-mac create|up <name> [doppler-op-reference] | down <name> | shot <name> [out.png] | click <name> <x> <y>";
 
 const arg = (value: string | undefined, label: string) => {
   if (!value) throw new Error(`missing <${label}>\n${usage}`);
@@ -128,12 +157,12 @@ const coordinate = (value: string | undefined, label: string) => {
 };
 
 const commands: Record<string, (args: string[]) => Promise<unknown>> = {
-  create: async ([name]) => {
+  create: async ([name, dopplerReference]) => {
     const box = arg(name, "name");
     await $`${devboxCli} create --from - --from_format json --name ${box} < ${new Response(JSON.stringify(spec(box)))}`;
-    await up(box);
+    await up(box, dopplerReference);
   },
-  up: ([name]) => up(arg(name, "name")),
+  up: ([name, dopplerReference]) => up(arg(name, "name"), dopplerReference),
   shot: ([name, out]) =>
     withDevbox(arg(name, "name"), async (devbox) =>
       console.log(await screenshot(devbox, resolve(out ?? `${name}.png`))),
@@ -143,17 +172,6 @@ const commands: Record<string, (args: string[]) => Promise<unknown>> = {
       devbox.display.click(coordinate(x, "x"), coordinate(y, "y")),
     ),
   down: ([name]) => $`${devboxCli} shutdown ${arg(name, "name")} --force`,
-  "seed-doppler": ([name, reference]) =>
-    withDevbox(arg(name, "name"), async (devbox) => {
-      const token = (
-        await $`op read ${arg(reference, "op-reference")}`.text()
-      ).trim();
-      await guest(
-        devbox,
-        `${guestDoppler} configure set token --scope / --silent`,
-        `${token}\n`,
-      );
-    }),
 };
 
 const [command = "", ...args] = process.argv.slice(2);
