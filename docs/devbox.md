@@ -49,10 +49,10 @@ volume.
 
 The global mise config resolves its `[env]` with
 `doppler secrets get … -p platform -c prod`. Without a Doppler token, `mise env`
-and every mise shim exit 1, so mise tools on the Devbox stay broken.
-`setup_macos.zsh` calls `macos-defaults` through a shim, so the `install` phase
-of `up` exits non-zero until a token is configured. The `prepare` phase and the
-TCC grants still complete, so Xcode builds and screenshots work without one.
+exits 1, so the `mise activate` hook in zshrc prints an error at every prompt
+and none of those secrets reach the shell. Measured with mise 2026.10.10, the
+shims still run, so `./install devbox` and the `install` phase of `up` pass
+without a token.
 
 None of the tokens in the 1Password item "Doppler Service Tokens" can read
 project `platform`. To fix this, an operator creates a `platform/prod` service

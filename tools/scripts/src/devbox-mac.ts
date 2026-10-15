@@ -71,7 +71,7 @@ const seedOpToken = async (devbox: Devbox) => {
   ).trim();
   await guest(
     devbox,
-    "security add-generic-password -U -s op-sa.finedesigns.io -a local-ai-agents -w",
+    'security unlock-keychain -p "" ~/Library/Keychains/login.keychain-db && security add-generic-password -U -s op-sa.finedesigns.io -a local-ai-agents -w',
     `${token}\n${token}\n`,
   );
 };
