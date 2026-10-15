@@ -11,11 +11,20 @@ import {
 } from "node:fs";
 import { homedir } from "node:os";
 import { dirname, join } from "node:path";
+import { parseArgs } from "node:util";
 
 type Step = { name: string; run: () => void };
 type Phase = "prepare" | "install";
 type Link = { target: string; path: string };
 type TccGrant = { service: string; client: string; clientType: 0 | 1 };
+
+const {
+  positionals: [phase],
+  values: { cache },
+} = parseArgs({
+  allowPositionals: true,
+  options: { cache: { type: "string" } },
+});
 
 const repo = join(import.meta.dirname, "../..");
 const home = homedir();
@@ -24,6 +33,8 @@ const state = join(volume, "state");
 const tinycastDev = "com.tinycast.app.dev";
 const vmguest = "/opt/namespace/vmguest";
 const xcode = "/Applications/Xcode_26.6.app";
+const compilationCache =
+  "Library/Developer/Xcode/DerivedData/CompilationCache.noindex";
 
 const volumeDirs = [
   "dev",
@@ -59,6 +70,7 @@ const shellEnv: Record<string, string> = {
   HOMEBREW_NO_AUTO_UPDATE: "1",
   HOMEBREW_NO_ENV_HINTS: "1",
   PATH: "$HOME/.local/bin:/opt/homebrew/bin:$HOME/.local/share/mise/shims:$PATH",
+  ...(cache ? { COMPILATION_CACHE_ENABLE_CACHING_DEFAULT: "YES" } : {}),
 };
 
 const tccGrants: TccGrant[] = [
@@ -103,6 +115,20 @@ const shellEnvStep: Step = {
         .replaceAll("$PATH", `${process.env.PATH}`);
     }
   },
+};
+
+const cacheStep = (mount: string): Step => {
+  const cacheLink: Link = {
+    target: join(mount, home, compilationCache),
+    path: join(home, compilationCache),
+  };
+  return {
+    name: "compilation cache",
+    run: () => {
+      mkdirSync(cacheLink.target, { recursive: true });
+      link(cacheLink);
+    },
+  };
 };
 
 const phases: Record<Phase, Step[]> = {
@@ -154,6 +180,7 @@ const phases: Record<Phase, Step[]> = {
       run: () =>
         run("caffeinate -u -t 2; screencapture -x /tmp/boot-probe.png"),
     },
+    ...(cache ? [cacheStep(cache)] : []),
   ],
   install: [
     shellEnvStep,
@@ -174,9 +201,10 @@ const phases: Record<Phase, Step[]> = {
   ],
 };
 
-const phase = process.argv[2];
 if (phase !== "prepare" && phase !== "install") {
-  console.error("usage: node scripts/devbox/boot.ts prepare|install");
+  console.error(
+    "usage: node scripts/devbox/boot.ts prepare|install [--cache <mount>]",
+  );
   process.exit(1);
 }
 
