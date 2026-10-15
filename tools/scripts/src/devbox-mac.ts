@@ -40,18 +40,29 @@ const withDevbox = async <T>(
   }
 };
 
-const guest = async (devbox: Devbox, script: string, stdin?: string) => {
-  const result = await devbox.exec(["/bin/bash", "-lc", script], {
-    stdin,
-    onStdout: (data) => process.stdout.write(data),
-    onStderr: (data) => process.stderr.write(data),
-  });
-  if (result.exitCode !== 0) {
-    throw new Error(
-      `guest exited ${result.exitCode ?? result.signal}: ${script}${result.error ? ` (${result.error})` : ""}`,
-    );
-  }
+type Guest = { exec(script: string, stdin?: string): Promise<void> };
+
+type Machine = {
+  guest: Guest;
+  bootFlags: string[];
+  github: () => Promise<unknown>;
+  after: Phase[];
 };
+
+const devboxGuest = (devbox: Devbox): Guest => ({
+  exec: async (script, stdin) => {
+    const result = await devbox.exec(["/bin/bash", "-lc", script], {
+      stdin,
+      onStdout: (data) => process.stdout.write(data),
+      onStderr: (data) => process.stderr.write(data),
+    });
+    if (result.exitCode !== 0) {
+      throw new Error(
+        `guest exited ${result.exitCode ?? result.signal}: ${script}${result.error ? ` (${result.error})` : ""}`,
+      );
+    }
+  },
+});
 
 const screenshot = async (devbox: Devbox, out: string) => {
   const shot = await devbox.display.screenshot({ timeoutMs: 60_000 });
@@ -98,10 +109,9 @@ const mintDopplerToken = async (name: string) => {
   return created.api_key;
 };
 
-const seedDopplerToken = async (devbox: Devbox, name: string) => {
+const seedDopplerToken = async (guest: Guest, name: string) => {
   const token = await mintDopplerToken(name);
-  await guest(
-    devbox,
+  await guest.exec(
     `mise trust ~/.config/mise/config.toml && mise install -y doppler && ${guestDoppler} configure set token --scope / --silent`,
     `${token}\n`,
   );
@@ -125,45 +135,51 @@ const runPhases = async (phases: Phase[]) => {
   return { timings, failures };
 };
 
-const up = (name: string) =>
-  withDevbox(name, async (devbox) => {
-    const out = resolve(`${name}-up.png`);
-    const { timings, failures } = await runPhases([
-      {
-        name: "dotfiles",
-        run: () =>
-          guest(
-            devbox,
-            `if [ -d ${dotfiles}/.git ]; then git -C ${dotfiles} pull --ff-only; else git clone https://github.com/pattobrien/dotfiles.git ${dotfiles}; fi`,
-          ),
-      },
-      {
-        name: "prepare",
-        run: () =>
-          guest(
-            devbox,
-            `cd ${dotfiles} && node scripts/devbox/boot.ts prepare`,
-          ),
-      },
-      { name: "github", run: () => $`${devboxCli} setup-github ${name}` },
-      { name: "doppler token", run: () => seedDopplerToken(devbox, name) },
-      {
-        name: "install",
-        run: () =>
-          guest(
-            devbox,
-            `cd ${dotfiles} && node scripts/devbox/boot.ts install`,
-          ),
-      },
-      { name: "screenshot", run: () => screenshot(devbox, out) },
-    ]);
-    const total = Object.values(timings).reduce((sum, ms) => sum + ms, 0);
-    console.log(`up: ${total}ms, screenshot ${out}`);
-    if (failures.length > 0) {
-      console.error(`failed phases:\n${failures.join("\n")}`);
-      process.exitCode = 1;
-    }
-  });
+const up = async (
+  name: string,
+  { guest, bootFlags, github, after }: Machine,
+) => {
+  const boot = (phase: string) =>
+    `cd ${dotfiles} && node scripts/devbox/boot.ts ${[phase, ...bootFlags].join(" ")}`;
+  const { timings, failures } = await runPhases([
+    {
+      name: "dotfiles",
+      run: () =>
+        guest.exec(
+          `if [ -d ${dotfiles}/.git ]; then git -C ${dotfiles} pull --ff-only; else git clone https://github.com/pattobrien/dotfiles.git ${dotfiles}; fi`,
+        ),
+    },
+    { name: "prepare", run: () => guest.exec(boot("prepare")) },
+    { name: "github", run: github },
+    { name: "doppler token", run: () => seedDopplerToken(guest, name) },
+    { name: "install", run: () => guest.exec(boot("install")) },
+    ...after,
+  ]);
+  const total = Object.values(timings).reduce((sum, ms) => sum + ms, 0);
+  console.log(`up: ${total}ms`);
+  if (failures.length > 0) {
+    console.error(`failed phases:\n${failures.join("\n")}`);
+    process.exitCode = 1;
+  }
+};
+
+const devboxUp = (name: string) =>
+  withDevbox(name, (devbox) =>
+    up(name, {
+      guest: devboxGuest(devbox),
+      bootFlags: [],
+      github: () => $`${devboxCli} setup-github ${name}`,
+      after: [
+        {
+          name: "screenshot",
+          run: async () =>
+            console.log(
+              `screenshot ${await screenshot(devbox, resolve(`${name}-up.png`))}`,
+            ),
+        },
+      ],
+    }),
+  );
 
 const usage =
   "usage: devbox-mac create|up|down <name> | shot <name> [out.png] | click <name> <x> <y>";
@@ -183,9 +199,9 @@ const commands: Record<string, (args: string[]) => Promise<unknown>> = {
   create: async ([name]) => {
     const box = arg(name, "name");
     await $`${devboxCli} create --from - --from_format json --name ${box} < ${new Response(JSON.stringify(spec(box)))}`;
-    await up(box);
+    await devboxUp(box);
   },
-  up: ([name]) => up(arg(name, "name")),
+  up: ([name]) => devboxUp(arg(name, "name")),
   shot: ([name, out]) =>
     withDevbox(arg(name, "name"), async (devbox) =>
       console.log(await screenshot(devbox, resolve(out ?? `${name}.png`))),
