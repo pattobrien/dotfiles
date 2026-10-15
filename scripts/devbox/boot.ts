@@ -213,6 +213,10 @@ const phases: Record<Phase, Step[]> = {
       },
     },
     {
+      name: "workspace deps",
+      run: () => run("pnpm install --frozen-lockfile --filter dotfiles"),
+    },
+    {
       name: "permission checks",
       run: () =>
         execFileSync(
