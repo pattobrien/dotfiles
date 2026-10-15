@@ -89,7 +89,7 @@
     ~/.config/workmux: .config/workmux
     ~/.config/terminal-browser/extensions/vimium:
       path: ~/dev/pattobrien/vimium
-      ignore-missing: true
+      if: test -d ~/dev/pattobrien/vimium
     ~/.local/share/mise-completions-sync/registry.toml: .config/mise-completions-sync/registry.toml
     ~/.local/bin/herdr-gh-repos: scripts/herdr-gh-repos
     ~/.local/bin/herdr-jump-or-create: scripts/herdr-jump-or-create

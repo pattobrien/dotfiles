@@ -11,11 +11,23 @@ import {
 } from "node:fs";
 import { homedir } from "node:os";
 import { dirname, join } from "node:path";
+import { parseArgs } from "node:util";
 
 type Step = { name: string; run: () => void };
 type Phase = "prepare" | "install";
 type Link = { target: string; path: string };
 type TccGrant = { service: string; client: string; clientType: 0 | 1 };
+
+const {
+  positionals: [phase],
+  values: { cache, display },
+} = parseArgs({
+  allowPositionals: true,
+  options: {
+    cache: { type: "string" },
+    display: { type: "boolean", default: false },
+  },
+});
 
 const repo = join(import.meta.dirname, "../..");
 const home = homedir();
@@ -24,6 +36,8 @@ const state = join(volume, "state");
 const tinycastDev = "com.tinycast.app.dev";
 const vmguest = "/opt/namespace/vmguest";
 const xcode = "/Applications/Xcode_26.6.app";
+const compilationCache =
+  "Library/Developer/Xcode/DerivedData/CompilationCache.noindex";
 
 const volumeDirs = [
   "dev",
@@ -59,13 +73,18 @@ const shellEnv: Record<string, string> = {
   HOMEBREW_NO_AUTO_UPDATE: "1",
   HOMEBREW_NO_ENV_HINTS: "1",
   PATH: "$HOME/.local/bin:/opt/homebrew/bin:$HOME/.local/share/mise/shims:$PATH",
+  ...(cache ? { COMPILATION_CACHE_ENABLE_CACHING_DEFAULT: "YES" } : {}),
 };
 
-const tccGrants: TccGrant[] = [
-  { service: "kTCCServiceAccessibility", client: tinycastDev, clientType: 0 },
+const vmguestGrants: TccGrant[] = [
   { service: "kTCCServiceScreenCapture", client: vmguest, clientType: 1 },
   { service: "kTCCServiceAccessibility", client: vmguest, clientType: 1 },
   { service: "kTCCServicePostEvent", client: vmguest, clientType: 1 },
+];
+
+const tccGrants: TccGrant[] = [
+  { service: "kTCCServiceAccessibility", client: tinycastDev, clientType: 0 },
+  ...(display ? vmguestGrants : []),
 ];
 
 const run = (command: string, input?: string) => {
@@ -105,6 +124,42 @@ const shellEnvStep: Step = {
   },
 };
 
+const displaySteps: Step[] = [
+  {
+    name: "screen-capture approval",
+    run: () => {
+      run(
+        `defaults write "$HOME/Library/Group Containers/group.com.apple.replayd/ScreenCaptureApprovals.plist" ${vmguest} -date "3024-01-01 00:00:00 +0000"`,
+      );
+      run("killall cfprefsd");
+    },
+  },
+  {
+    name: "wake display and probe screen capture",
+    // An ssh session has no WindowServer connection; hop into the console
+    // user's launchd session so screencapture reaches the display.
+    run: () =>
+      run(
+        `sudo -n launchctl asuser "$(id -u)" sudo -n -u "$(id -un)" bash -c "caffeinate -u -t 2; screencapture -x /tmp/boot-probe.png"`,
+      ),
+  },
+];
+
+const cacheStep = (mount: string): Step => {
+  const cacheLink: Link = {
+    target: join(mount, home, compilationCache),
+    path: join(home, compilationCache),
+  };
+  return {
+    name: "compilation cache",
+    run: () => {
+      mkdirSync(cacheLink.target, { recursive: true });
+      link(cacheLink);
+      run(`du -sh ${cacheLink.target}`);
+    },
+  };
+};
+
 const phases: Record<Phase, Step[]> = {
   prepare: [
     {
@@ -133,15 +188,6 @@ const phases: Record<Phase, Step[]> = {
       },
     },
     {
-      name: "screen-capture approval",
-      run: () => {
-        run(
-          `defaults write "$HOME/Library/Group Containers/group.com.apple.replayd/ScreenCaptureApprovals.plist" ${vmguest} -date "3024-01-01 00:00:00 +0000"`,
-        );
-        run("killall cfprefsd");
-      },
-    },
-    {
       name: "never sleep",
       run: () => {
         run("sudo -n pmset -a sleep 0 displaysleep 0 disksleep 0");
@@ -149,11 +195,8 @@ const phases: Record<Phase, Step[]> = {
         run("defaults write com.apple.screensaver idleTime 0");
       },
     },
-    {
-      name: "wake display and probe screen capture",
-      run: () =>
-        run("caffeinate -u -t 2; screencapture -x /tmp/boot-probe.png"),
-    },
+    ...(display ? displaySteps : []),
+    ...(cache ? [cacheStep(cache)] : []),
   ],
   install: [
     shellEnvStep,
@@ -174,9 +217,10 @@ const phases: Record<Phase, Step[]> = {
   ],
 };
 
-const phase = process.argv[2];
 if (phase !== "prepare" && phase !== "install") {
-  console.error("usage: node scripts/devbox/boot.ts prepare|install");
+  console.error(
+    "usage: node scripts/devbox/boot.ts prepare|install [--display] [--cache <mount>]",
+  );
   process.exit(1);
 }
 

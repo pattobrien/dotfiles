@@ -52,6 +52,9 @@ overrides:
   vite@*: "catalog:"
   vitest@*: "catalog:"
 
+patchedDependencies:
+  "@namespacelabs/sdk@1.5.1": patches/@namespacelabs__sdk@1.5.1.patch
+
 peerDependencyRules:
   allowAny:
     - vite

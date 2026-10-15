@@ -1,10 +1,14 @@
 #!/usr/bin/env bun
 
-import { homedir } from "node:os";
+import { mkdtemp } from "node:fs/promises";
+import { homedir, tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 
 import DopplerSDK from "@dopplerhq/node-sdk";
+import { createComputeClient } from "@namespacelabs/sdk/api";
+import { loadDefaults, TOKEN_MIN_VALIDITY_MS } from "@namespacelabs/sdk/auth";
 import { createDevboxClient, type Devbox } from "@namespacelabs/sdk/devbox";
+import { openVnc } from "@namespacelabs/sdk/vnc";
 import { $ } from "bun";
 
 type Phase = { name: string; run: () => Promise<unknown> };
@@ -16,6 +20,14 @@ const dopplerTokenTtlMs = 7 * 24 * 60 * 60 * 1000;
 // mise renders the global [env] templates, which call doppler, before any exec
 // or shim runs, so the token must be set through the binary's own path.
 const guestDoppler = "/Volumes/devbox/mise/installs/doppler/latest/doppler";
+
+const instanceLabel = "devbox-mac";
+const instanceMachineType = "macos/arm64:6x14";
+const instanceSelectors = "macos.version=27.x";
+const instanceDuration = "8h";
+const cacheTag = "tinycast-xcode-agent";
+const cacheMount = "/Volumes/cache";
+const cacheVolume = `cache:${cacheTag}:${cacheMount}:50GB`;
 
 const spec = (name: string) => ({
   name,
@@ -40,23 +52,203 @@ const withDevbox = async <T>(
   }
 };
 
-const guest = async (devbox: Devbox, script: string, stdin?: string) => {
-  const result = await devbox.exec(["/bin/bash", "-lc", script], {
-    stdin,
-    onStdout: (data) => process.stdout.write(data),
-    onStderr: (data) => process.stderr.write(data),
-  });
-  if (result.exitCode !== 0) {
+type Guest = { exec(script: string, stdin?: string): Promise<void> };
+
+type Machine = {
+  guest: Guest;
+  bootFlags: string[];
+  github: () => Promise<unknown>;
+  before: Phase[];
+  after: Phase[];
+};
+
+const devboxGuest = (devbox: Devbox): Guest => ({
+  exec: async (script, stdin) => {
+    const result = await devbox.exec(["/bin/bash", "-lc", script], {
+      stdin,
+      onStdout: (data) => process.stdout.write(data),
+      onStderr: (data) => process.stderr.write(data),
+    });
+    if (result.exitCode !== 0) {
+      throw new Error(
+        `guest exited ${result.exitCode ?? result.signal}: ${script}${result.error ? ` (${result.error})` : ""}`,
+      );
+    }
+  },
+});
+
+const shellQuote = (value: string) => `'${value.replaceAll("'", `'\\''`)}'`;
+
+const nscGuest = (id: string): Guest => ({
+  exec: async (script, stdin = "") => {
+    await $`nsc ssh -T ${id} -- bash -lc ${shellQuote(script)} < ${new Response(stdin)}`;
+  },
+});
+
+type Instance = { id: string; ingressDomain: string };
+
+const instanceEntry = (entry: unknown): Instance => {
+  if (
+    typeof entry === "object" &&
+    entry !== null &&
+    "cluster_id" in entry &&
+    typeof entry.cluster_id === "string" &&
+    "ingress_domain" in entry &&
+    typeof entry.ingress_domain === "string"
+  ) {
+    return { id: entry.cluster_id, ingressDomain: entry.ingress_domain };
+  }
+  throw new Error(
+    `nsc list entry has no cluster_id and ingress_domain: ${JSON.stringify(entry)}`,
+  );
+};
+
+const listInstances = async (name: string) => {
+  const listed: unknown = JSON.parse(
+    await $`nsc list --label ${instanceLabel}=${name} -o json`.text(),
+  );
+  if (listed === null) return [];
+  if (!Array.isArray(listed)) {
+    throw new Error(`nsc list returned ${JSON.stringify(listed)}`);
+  }
+  return listed.map(instanceEntry);
+};
+
+const findInstance = async (name: string) => {
+  const instances = await listInstances(name);
+  if (instances.length > 1) {
     throw new Error(
-      `guest exited ${result.exitCode ?? result.signal}: ${script}${result.error ? ` (${result.error})` : ""}`,
+      `more than one instance labelled ${instanceLabel}=${name}: ${instances.map((instance) => instance.id).join(", ")}`,
     );
+  }
+  return instances[0];
+};
+
+const requireInstance = async (name: string) => {
+  const instance = await findInstance(name);
+  if (!instance)
+    throw new Error(`no running instance labelled ${instanceLabel}=${name}`);
+  return instance;
+};
+
+const createInstance = async (name: string): Promise<Instance> => {
+  const cidfile = join(await mkdtemp(join(tmpdir(), "devbox-mac-")), "cid");
+  await $`nsc create --machine_type ${instanceMachineType} --selectors ${instanceSelectors} --volume ${cacheVolume} --duration ${instanceDuration} --cidfile ${cidfile} --label ${instanceLabel}=${name}`;
+  const id = (await Bun.file(cidfile).text()).trim();
+  const created = (await listInstances(name)).find(
+    (instance) => instance.id === id,
+  );
+  if (!created)
+    throw new Error(`nsc list does not show the new instance ${id}`);
+  return created;
+};
+
+type Display = {
+  screenshot(options: { timeoutMs: number }): Promise<{ png: Uint8Array }>;
+  click(x: number, y: number): Promise<void>;
+};
+
+const saveScreenshot = async (display: Display, out: string) => {
+  const shot = await display.screenshot({ timeoutMs: 60_000 });
+  await Bun.write(out, shot.png);
+  return out;
+};
+
+const ingressRegion = (ingressDomain: string) => {
+  const suffix = ".nscluster.cloud";
+  if (!ingressDomain.endsWith(suffix)) {
+    throw new Error(`ingress domain ${ingressDomain} is not under ${suffix}`);
+  }
+  return ingressDomain.slice(0, -suffix.length);
+};
+
+const withInstanceDisplay = async <T>(
+  { id, ingressDomain }: Instance,
+  use: (display: Display) => Promise<T>,
+) => {
+  const tokenSource = await loadDefaults();
+  const compute = createComputeClient({
+    region: ingressRegion(ingressDomain),
+    tokenSource,
+  });
+  const config = await compute.compute.getVNCConfig({ instanceId: id });
+  const token = await tokenSource.issueToken(TOKEN_MIN_VALIDITY_MS);
+  const vnc = await openVnc({
+    endpoint: config.endpoint,
+    username: config.username,
+    password: config.password,
+    headers: { "x-nsc-ingress-auth": `Bearer ${token}` },
+  });
+  try {
+    return await use(vnc);
+  } finally {
+    vnc.close();
   }
 };
 
-const screenshot = async (devbox: Devbox, out: string) => {
-  const shot = await devbox.display.screenshot({ timeoutMs: 60_000 });
-  await Bun.write(out, shot.png);
-  return out;
+const instanceUp = async (name: string) => {
+  const instance = (await findInstance(name)) ?? (await createInstance(name));
+  console.log(`instance ${instance.id}`);
+  const guest = nscGuest(instance.id);
+  await up(name, {
+    guest,
+    bootFlags: ["--cache", cacheMount, "--display"],
+    github: async () =>
+      guest.exec(
+        "gh auth login --with-token && gh auth setup-git",
+        await $`gh auth token`.text(),
+      ),
+    before: [
+      {
+        name: "devbox dir",
+        run: () =>
+          guest.exec(
+            "sudo -n mkdir -p /Volumes/devbox && sudo -n chown runner /Volumes/devbox",
+          ),
+      },
+    ],
+    after: [
+      {
+        name: "screenshot",
+        run: async () =>
+          console.log(
+            `screenshot ${await withInstanceDisplay(instance, (display) => saveScreenshot(display, resolve(`${name}-up.png`)))}`,
+          ),
+      },
+    ],
+  });
+};
+
+const interactive = async (command: string[]) => {
+  const proc = Bun.spawn(command, { stdio: ["inherit", "inherit", "inherit"] });
+  process.exitCode = await proc.exited;
+};
+
+const instanceCommands: Record<
+  string,
+  (name: string, args: string[]) => Promise<unknown>
+> = {
+  up: instanceUp,
+  down: async (name) => {
+    const instance = await findInstance(name);
+    if (!instance) {
+      console.log(`no running instance labelled ${instanceLabel}=${name}`);
+      return;
+    }
+    await $`nsc destroy ${instance.id} --force`;
+  },
+  ssh: async (name) =>
+    interactive(["nsc", "ssh", (await requireInstance(name)).id]),
+  vnc: async (name) =>
+    interactive(["nsc", "vnc", (await requireInstance(name)).id]),
+  shot: async (name, [out]) =>
+    withInstanceDisplay(await requireInstance(name), async (display) =>
+      console.log(await saveScreenshot(display, resolve(out ?? `${name}.png`))),
+    ),
+  click: async (name, [x, y]) =>
+    withInstanceDisplay(await requireInstance(name), (display) =>
+      display.click(coordinate(x, "x"), coordinate(y, "y")),
+    ),
 };
 
 const mintDopplerToken = async (name: string) => {
@@ -98,10 +290,9 @@ const mintDopplerToken = async (name: string) => {
   return created.api_key;
 };
 
-const seedDopplerToken = async (devbox: Devbox, name: string) => {
+const seedDopplerToken = async (guest: Guest, name: string) => {
   const token = await mintDopplerToken(name);
-  await guest(
-    devbox,
+  await guest.exec(
     `mise trust ~/.config/mise/config.toml && mise install -y doppler && ${guestDoppler} configure set token --scope / --silent`,
     `${token}\n`,
   );
@@ -125,48 +316,61 @@ const runPhases = async (phases: Phase[]) => {
   return { timings, failures };
 };
 
-const up = (name: string) =>
-  withDevbox(name, async (devbox) => {
-    const out = resolve(`${name}-up.png`);
-    const { timings, failures } = await runPhases([
-      {
-        name: "dotfiles",
-        run: () =>
-          guest(
-            devbox,
-            `if [ -d ${dotfiles}/.git ]; then git -C ${dotfiles} pull --ff-only; else git clone https://github.com/pattobrien/dotfiles.git ${dotfiles}; fi`,
-          ),
+const up = async (
+  name: string,
+  { guest, bootFlags, github, before, after }: Machine,
+) => {
+  const boot = (phase: string) =>
+    `cd ${dotfiles} && node scripts/devbox/boot.ts ${[phase, ...bootFlags].join(" ")}`;
+  const { timings, failures } = await runPhases([
+    ...before,
+    {
+      name: "dotfiles",
+      run: async () => {
+        const branch = (
+          await $`git -C ${import.meta.dir} branch --show-current`.text()
+        ).trim();
+        if (!branch) throw new Error("host dotfiles checkout has no branch");
+        await guest.exec(
+          `if [ -d ${dotfiles}/.git ]; then git -C ${dotfiles} fetch origin && git -C ${dotfiles} switch ${branch} && git -C ${dotfiles} pull --ff-only; else git clone --branch ${branch} https://github.com/pattobrien/dotfiles.git ${dotfiles}; fi`,
+        );
       },
-      {
-        name: "prepare",
-        run: () =>
-          guest(
-            devbox,
-            `cd ${dotfiles} && node scripts/devbox/boot.ts prepare`,
-          ),
-      },
-      { name: "github", run: () => $`${devboxCli} setup-github ${name}` },
-      { name: "doppler token", run: () => seedDopplerToken(devbox, name) },
-      {
-        name: "install",
-        run: () =>
-          guest(
-            devbox,
-            `cd ${dotfiles} && node scripts/devbox/boot.ts install`,
-          ),
-      },
-      { name: "screenshot", run: () => screenshot(devbox, out) },
-    ]);
-    const total = Object.values(timings).reduce((sum, ms) => sum + ms, 0);
-    console.log(`up: ${total}ms, screenshot ${out}`);
-    if (failures.length > 0) {
-      console.error(`failed phases:\n${failures.join("\n")}`);
-      process.exitCode = 1;
-    }
-  });
+    },
+    { name: "prepare", run: () => guest.exec(boot("prepare")) },
+    { name: "github", run: github },
+    { name: "doppler token", run: () => seedDopplerToken(guest, name) },
+    { name: "install", run: () => guest.exec(boot("install")) },
+    ...after,
+  ]);
+  const total = Object.values(timings).reduce((sum, ms) => sum + ms, 0);
+  console.log(`up: ${total}ms`);
+  if (failures.length > 0) {
+    console.error(`failed phases:\n${failures.join("\n")}`);
+    process.exitCode = 1;
+  }
+};
+
+const devboxUp = (name: string) =>
+  withDevbox(name, (devbox) =>
+    up(name, {
+      guest: devboxGuest(devbox),
+      bootFlags: ["--display"],
+      github: () => $`${devboxCli} setup-github ${name}`,
+      before: [],
+      after: [
+        {
+          name: "screenshot",
+          run: async () =>
+            console.log(
+              `screenshot ${await saveScreenshot(devbox.display, resolve(`${name}-up.png`))}`,
+            ),
+        },
+      ],
+    }),
+  );
 
 const usage =
-  "usage: devbox-mac create|up|down <name> | shot <name> [out.png] | click <name> <x> <y>";
+  "usage: devbox-mac create|up|down <name> | shot <name> [out.png] | click <name> <x> <y> | instance up|down|ssh|vnc <name> | instance shot <name> [out.png] | instance click <name> <x> <y>";
 
 const arg = (value: string | undefined, label: string) => {
   if (!value) throw new Error(`missing <${label}>\n${usage}`);
@@ -183,18 +387,24 @@ const commands: Record<string, (args: string[]) => Promise<unknown>> = {
   create: async ([name]) => {
     const box = arg(name, "name");
     await $`${devboxCli} create --from - --from_format json --name ${box} < ${new Response(JSON.stringify(spec(box)))}`;
-    await up(box);
+    await devboxUp(box);
   },
-  up: ([name]) => up(arg(name, "name")),
+  up: ([name]) => devboxUp(arg(name, "name")),
   shot: ([name, out]) =>
     withDevbox(arg(name, "name"), async (devbox) =>
-      console.log(await screenshot(devbox, resolve(out ?? `${name}.png`))),
+      console.log(
+        await saveScreenshot(devbox.display, resolve(out ?? `${name}.png`)),
+      ),
     ),
   click: ([name, x, y]) =>
     withDevbox(arg(name, "name"), (devbox) =>
       devbox.display.click(coordinate(x, "x"), coordinate(y, "y")),
     ),
   down: ([name]) => $`${devboxCli} shutdown ${arg(name, "name")} --force`,
+  instance: ([sub = "", name, ...rest]) => {
+    if (!Object.hasOwn(instanceCommands, sub)) throw new Error(usage);
+    return instanceCommands[sub](arg(name, "name"), rest);
+  },
 };
 
 const [command = "", ...args] = process.argv.slice(2);

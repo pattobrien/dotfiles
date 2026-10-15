@@ -1,0 +1,26 @@
+diff --git a/dist/cjs/vnc/protocol.js b/dist/cjs/vnc/protocol.js
+index 134272de7a4853bb06aefc13a8c269685d19792e..7b54cdb8f4ba69de5913e2d9792886ca182e1940 100644
+--- a/dist/cjs/vnc/protocol.js
++++ b/dist/cjs/vnc/protocol.js
+@@ -59,6 +59,8 @@ async function handshake(reader, write, username, password) {
+     const desktopName = (await reader.read(await reader.uint32())).toString("utf8");
+     await write(setPixelFormatMessage());
+     await write(setEncodingsMessage());
++    if (securityType === ardSecurityType)
++        await write(Buffer.from([10, 0, 0, 2]));
+     return { width, height, desktopName };
+ }
+ /**
+diff --git a/dist/esm/vnc/protocol.js b/dist/esm/vnc/protocol.js
+index 8bdd557b9ca7546b747a41ab25d9a1feff3c0c4a..602bbd084521b00616b9d53845430cfbb805f533 100644
+--- a/dist/esm/vnc/protocol.js
++++ b/dist/esm/vnc/protocol.js
+@@ -50,6 +50,8 @@ export async function handshake(reader, write, username, password) {
+     const desktopName = (await reader.read(await reader.uint32())).toString("utf8");
+     await write(setPixelFormatMessage());
+     await write(setEncodingsMessage());
++    if (securityType === ardSecurityType)
++        await write(Buffer.from([10, 0, 0, 2]));
+     return { width, height, desktopName };
+ }
+ /**
