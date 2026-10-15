@@ -1,6 +1,7 @@
 #!/usr/bin/env bun
 
-import { homedir } from "node:os";
+import { mkdtemp } from "node:fs/promises";
+import { homedir, tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 
 import DopplerSDK from "@dopplerhq/node-sdk";
@@ -16,6 +17,16 @@ const dopplerTokenTtlMs = 7 * 24 * 60 * 60 * 1000;
 // mise renders the global [env] templates, which call doppler, before any exec
 // or shim runs, so the token must be set through the binary's own path.
 const guestDoppler = "/Volumes/devbox/mise/installs/doppler/latest/doppler";
+
+const instanceLabel = "devbox-mac";
+const instanceMachineType = "macos/arm64:6x14";
+const instanceSelectors = "macos.version=27.x";
+const instanceDuration = "8h";
+const instanceVolume = (name: string) =>
+  `persistent:${name}:/Volumes/devbox:100GB`;
+const cacheTag = "tinycast-xcode";
+const cacheMount = "/Volumes/cache";
+const cacheVolume = `cache:${cacheTag}:${cacheMount}:50GB`;
 
 const spec = (name: string) => ({
   name,
@@ -63,6 +74,91 @@ const devboxGuest = (devbox: Devbox): Guest => ({
     }
   },
 });
+
+const shellQuote = (value: string) => `'${value.replaceAll("'", `'\\''`)}'`;
+
+const nscGuest = (id: string): Guest => ({
+  exec: async (script, stdin = "") => {
+    await $`nsc ssh -T ${id} -- bash -lc ${shellQuote(script)} < ${new Response(stdin)}`;
+  },
+});
+
+const findInstance = async (name: string) => {
+  const listed: unknown = JSON.parse(
+    await $`nsc list --label ${instanceLabel}=${name} -o json`.text(),
+  );
+  if (listed === null) return undefined;
+  if (!Array.isArray(listed)) {
+    throw new Error(`nsc list returned ${JSON.stringify(listed)}`);
+  }
+  const ids = listed.map((entry: unknown) => {
+    if (
+      typeof entry === "object" &&
+      entry !== null &&
+      "cluster_id" in entry &&
+      typeof entry.cluster_id === "string"
+    ) {
+      return entry.cluster_id;
+    }
+    throw new Error(
+      `nsc list entry has no cluster_id: ${JSON.stringify(entry)}`,
+    );
+  });
+  if (ids.length > 1) {
+    throw new Error(
+      `more than one instance labelled ${instanceLabel}=${name}: ${ids.join(", ")}`,
+    );
+  }
+  return ids[0];
+};
+
+const requireInstance = async (name: string) => {
+  const id = await findInstance(name);
+  if (!id)
+    throw new Error(`no running instance labelled ${instanceLabel}=${name}`);
+  return id;
+};
+
+const createInstance = async (name: string) => {
+  const cidfile = join(await mkdtemp(join(tmpdir(), "devbox-mac-")), "cid");
+  await $`nsc create --machine_type ${instanceMachineType} --selectors ${instanceSelectors} --volume ${instanceVolume(name)} --volume ${cacheVolume} --duration ${instanceDuration} --cidfile ${cidfile} --label ${instanceLabel}=${name}`;
+  return (await Bun.file(cidfile).text()).trim();
+};
+
+const instanceUp = async (name: string) => {
+  const id = (await findInstance(name)) ?? (await createInstance(name));
+  console.log(`instance ${id}`);
+  const guest = nscGuest(id);
+  await up(name, {
+    guest,
+    bootFlags: ["--cache", cacheMount],
+    github: async () =>
+      guest.exec(
+        "gh auth login --with-token && gh auth setup-git",
+        await $`gh auth token`.text(),
+      ),
+    after: [],
+  });
+};
+
+const interactive = async (command: string[]) => {
+  const proc = Bun.spawn(command, { stdio: ["inherit", "inherit", "inherit"] });
+  process.exitCode = await proc.exited;
+};
+
+const instanceCommands: Record<string, (name: string) => Promise<unknown>> = {
+  up: instanceUp,
+  down: async (name) => {
+    const id = await findInstance(name);
+    if (!id) {
+      console.log(`no running instance labelled ${instanceLabel}=${name}`);
+      return;
+    }
+    await $`nsc destroy ${id} --force`;
+  },
+  ssh: async (name) => interactive(["nsc", "ssh", await requireInstance(name)]),
+  vnc: async (name) => interactive(["nsc", "vnc", await requireInstance(name)]),
+};
 
 const screenshot = async (devbox: Devbox, out: string) => {
   const shot = await devbox.display.screenshot({ timeoutMs: 60_000 });
@@ -187,7 +283,7 @@ const devboxUp = (name: string) =>
   );
 
 const usage =
-  "usage: devbox-mac create|up|down <name> | shot <name> [out.png] | click <name> <x> <y>";
+  "usage: devbox-mac create|up|down <name> | shot <name> [out.png] | click <name> <x> <y> | instance up|down|ssh|vnc <name>";
 
 const arg = (value: string | undefined, label: string) => {
   if (!value) throw new Error(`missing <${label}>\n${usage}`);
@@ -216,6 +312,10 @@ const commands: Record<string, (args: string[]) => Promise<unknown>> = {
       devbox.display.click(coordinate(x, "x"), coordinate(y, "y")),
     ),
   down: ([name]) => $`${devboxCli} shutdown ${arg(name, "name")} --force`,
+  instance: ([sub = "", name]) => {
+    if (!Object.hasOwn(instanceCommands, sub)) throw new Error(usage);
+    return instanceCommands[sub](arg(name, "name"));
+  },
 };
 
 const [command = "", ...args] = process.argv.slice(2);
