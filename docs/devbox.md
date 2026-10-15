@@ -69,11 +69,12 @@ What differs from the Devbox:
   instances created in the same second against the tag, the cache-only one
   forked 577 MB and the one that also attached a persistent volume got an empty
   cache. So there is no persistent volume.
-- A machine that forked an empty volume commits an empty generation when it is
-  destroyed, and that generation is what the tag hands out next. On 2026-10-15
-  three such probes were destroyed at 12:41 UTC, and CI's `agent-cache` runner
-  and an instance both forked `0B` at 12:44. CI's run reseeded the tag, and the
-  next instance forked 577 MB and hit 199 of 199 compiles. So when the
+- A tag can hand out an empty fork for a while after empty-fork machines are
+  destroyed. On 2026-10-15 three probes that had forked empty were destroyed
+  around 12:42 UTC, and CI's `agent-cache` runner and an instance both forked
+  `0B` at 12:44, while `nsc volume list` kept reporting the tag at 578 MB. CI's
+  run reseeded the tag, and the next instance forked 577 MB and hit 199 of 199
+  compiles. The cause is not confirmed. What is measured is that when the
   `compilation cache` step prints `0B`, the next preview run heals it.
 - `/Volumes/devbox` is a plain directory on the instance disk, owned by
   `runner`, which the `devbox dir` phase creates before the boot. The boot and
