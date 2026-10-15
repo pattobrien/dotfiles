@@ -22,8 +22,6 @@ const instanceLabel = "devbox-mac";
 const instanceMachineType = "macos/arm64:6x14";
 const instanceSelectors = "macos.version=27.x";
 const instanceDuration = "8h";
-const instanceVolume = (name: string) =>
-  `persistent:${name}:/Volumes/devbox:100GB`;
 const cacheTag = "tinycast-xcode-agent";
 const cacheMount = "/Volumes/cache";
 const cacheVolume = `cache:${cacheTag}:${cacheMount}:50GB`;
@@ -57,6 +55,7 @@ type Machine = {
   guest: Guest;
   bootFlags: string[];
   github: () => Promise<unknown>;
+  before: Phase[];
   after: Phase[];
 };
 
@@ -121,7 +120,7 @@ const requireInstance = async (name: string) => {
 
 const createInstance = async (name: string) => {
   const cidfile = join(await mkdtemp(join(tmpdir(), "devbox-mac-")), "cid");
-  await $`nsc create --machine_type ${instanceMachineType} --selectors ${instanceSelectors} --volume ${instanceVolume(name)} --volume ${cacheVolume} --duration ${instanceDuration} --cidfile ${cidfile} --label ${instanceLabel}=${name}`;
+  await $`nsc create --machine_type ${instanceMachineType} --selectors ${instanceSelectors} --volume ${cacheVolume} --duration ${instanceDuration} --cidfile ${cidfile} --label ${instanceLabel}=${name}`;
   return (await Bun.file(cidfile).text()).trim();
 };
 
@@ -137,6 +136,15 @@ const instanceUp = async (name: string) => {
         "gh auth login --with-token && gh auth setup-git",
         await $`gh auth token`.text(),
       ),
+    before: [
+      {
+        name: "devbox dir",
+        run: () =>
+          guest.exec(
+            "sudo -n mkdir -p /Volumes/devbox && sudo -n chown runner /Volumes/devbox",
+          ),
+      },
+    ],
     after: [],
   });
 };
@@ -233,11 +241,12 @@ const runPhases = async (phases: Phase[]) => {
 
 const up = async (
   name: string,
-  { guest, bootFlags, github, after }: Machine,
+  { guest, bootFlags, github, before, after }: Machine,
 ) => {
   const boot = (phase: string) =>
     `cd ${dotfiles} && node scripts/devbox/boot.ts ${[phase, ...bootFlags].join(" ")}`;
   const { timings, failures } = await runPhases([
+    ...before,
     {
       name: "dotfiles",
       run: async () => {
@@ -270,6 +279,7 @@ const devboxUp = (name: string) =>
       guest: devboxGuest(devbox),
       bootFlags: ["--display"],
       github: () => $`${devboxCli} setup-github ${name}`,
+      before: [],
       after: [
         {
           name: "screenshot",
