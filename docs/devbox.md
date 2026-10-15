@@ -36,13 +36,14 @@ devbox-mac down <name>            # stop the Devbox
 
 `up` runs these phases in order: pull the dotfiles onto the volume, `prepare`
 (volume links, shell env, base `./install`, oh-my-zsh, the devbox Brewfile,
-`xcode-select`, TCC grants, never sleep, wake), `devbox setup-github`, the
-Doppler token, `install` (`./install devbox`, which is `mise install` and the
-macOS defaults), then it clicks Allow on the "vmguest is requesting to bypass
-the system private window picker" prompt that `prepare` raises on purpose, and
-saves `<name>-up.png` in the current directory. Secrets land before `install` so
-mise can use the GitHub token and the Doppler token on the first boot of a fresh
-volume.
+`xcode-select`, TCC grants, the replayd screen-capture approval for
+`/opt/namespace/vmguest`, never sleep, wake), `devbox setup-github`, the Doppler
+token, `install` (`./install devbox`, which is `mise install` and the macOS
+defaults), then it saves `<name>-up.png` in the current directory. The replayd
+approval is what keeps the "vmguest is requesting to bypass the system private
+window picker" dialog from appearing on the first screenshot; TCC rows alone do
+not cover it. Secrets land before `install` so mise can use the GitHub token and
+the Doppler token on the first boot of a fresh volume.
 
 ## Doppler
 

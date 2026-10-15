@@ -133,6 +133,15 @@ const phases: Record<Phase, Step[]> = {
       },
     },
     {
+      name: "screen-capture approval",
+      run: () => {
+        run(
+          `defaults write "$HOME/Library/Group Containers/group.com.apple.replayd/ScreenCaptureApprovals.plist" ${vmguest} -date "3024-01-01 00:00:00 +0000"`,
+        );
+        run("killall cfprefsd");
+      },
+    },
+    {
       name: "never sleep",
       run: () => {
         run("sudo -n pmset -a sleep 0 displaysleep 0 disksleep 0");
@@ -141,7 +150,7 @@ const phases: Record<Phase, Step[]> = {
       },
     },
     {
-      name: "wake display and surface the screen-capture prompt",
+      name: "wake display and probe screen capture",
       run: () =>
         run("caffeinate -u -t 2; screencapture -x /tmp/boot-probe.png"),
     },

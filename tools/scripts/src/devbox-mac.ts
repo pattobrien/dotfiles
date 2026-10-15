@@ -16,7 +16,6 @@ const dopplerTokenTtlMs = 7 * 24 * 60 * 60 * 1000;
 // mise renders the global [env] templates, which call doppler, before any exec
 // or shim runs, so the token must be set through the binary's own path.
 const guestDoppler = "/Volumes/devbox/mise/installs/doppler/latest/doppler";
-const capturePromptAllow = { x: 1280, y: 813 };
 
 const spec = (name: string) => ({
   name,
@@ -155,16 +154,6 @@ const up = (name: string) =>
             devbox,
             `cd ${dotfiles} && node scripts/devbox/boot.ts install`,
           ),
-      },
-      {
-        name: "dismiss capture prompt",
-        run: async () => {
-          await devbox.display.click(
-            capturePromptAllow.x,
-            capturePromptAllow.y,
-          );
-          await Bun.sleep(1500);
-        },
       },
       { name: "screenshot", run: () => screenshot(devbox, out) },
     ]);
