@@ -144,10 +144,15 @@ const up = async (
   const { timings, failures } = await runPhases([
     {
       name: "dotfiles",
-      run: () =>
-        guest.exec(
-          `if [ -d ${dotfiles}/.git ]; then git -C ${dotfiles} pull --ff-only; else git clone https://github.com/pattobrien/dotfiles.git ${dotfiles}; fi`,
-        ),
+      run: async () => {
+        const branch = (
+          await $`git -C ${import.meta.dir} branch --show-current`.text()
+        ).trim();
+        if (!branch) throw new Error("host dotfiles checkout has no branch");
+        await guest.exec(
+          `if [ -d ${dotfiles}/.git ]; then git -C ${dotfiles} fetch origin && git -C ${dotfiles} switch ${branch} && git -C ${dotfiles} pull --ff-only; else git clone --branch ${branch} https://github.com/pattobrien/dotfiles.git ${dotfiles}; fi`,
+        );
+      },
     },
     { name: "prepare", run: () => guest.exec(boot("prepare")) },
     { name: "github", run: github },
