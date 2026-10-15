@@ -29,4 +29,5 @@ vp run build -r     # build all packages
 - [Maintenance](docs/maintenance.md)
 - [Keyboard Shortcuts](docs/keyboard-shortcuts.md)
 - [Troubleshooting](docs/troubleshooting.md)
+- [Devbox](docs/devbox.md)
 - [TODO](docs/todo.md)
