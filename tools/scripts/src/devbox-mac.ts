@@ -3,6 +3,7 @@
 import { homedir } from "node:os";
 import { join, resolve } from "node:path";
 
+import DopplerSDK from "@dopplerhq/node-sdk";
 import { createDevboxClient, type Devbox } from "@namespacelabs/sdk/devbox";
 import { $ } from "bun";
 
@@ -10,8 +11,8 @@ type Phase = { name: string; run: () => Promise<unknown> };
 
 const devboxCli = join(homedir(), ".local/bin/devbox");
 const dotfiles = "/Volumes/devbox/dev/pattobrien/dotfiles";
-// The doppler shim exits 1 on mise before 2026.10 while no token is configured.
-const guestDoppler = "/Volumes/devbox/mise/installs/doppler/latest/doppler";
+const dopplerServiceAccount = "sa-agent-builder";
+const dopplerTokenTtlMs = 7 * 24 * 60 * 60 * 1000;
 const capturePromptAllow = { x: 1280, y: 813 };
 
 const spec = (name: string) => ({
@@ -56,22 +57,50 @@ const screenshot = async (devbox: Devbox, out: string) => {
   return out;
 };
 
-const seedDopplerToken = async (devbox: Devbox, reference: string) => {
-  const token = (await $`op read ${reference}`.text()).trim();
-  await guest(
-    devbox,
-    `mise trust ~/.config/mise/config.toml && mise install -y doppler && ${guestDoppler} configure set token --scope / --silent`,
-    `${token}\n`,
+const mintDopplerToken = async (name: string) => {
+  const accessToken = (
+    await $`doppler configure get token --plain`.text()
+  ).trim();
+  const doppler = new DopplerSDK({ accessToken });
+  const { service_accounts = [] } = await doppler.serviceAccounts.list({
+    perPage: 100,
+  });
+  const account = service_accounts.find(
+    (candidate) => candidate.name === dopplerServiceAccount,
   );
+  if (!account?.slug) {
+    throw new Error(
+      `Doppler service account ${dopplerServiceAccount} not found`,
+    );
+  }
+  const tokenName = `devbox-${name}`;
+  const { api_tokens = [] } = await doppler.serviceAccountTokens.list(
+    account.slug,
+    { perPage: 100 },
+  );
+  for (const stale of api_tokens) {
+    if (stale.name === tokenName && stale.slug) {
+      await doppler.serviceAccountTokens.delete(account.slug, stale.slug);
+    }
+  }
+  const created = await doppler.serviceAccountTokens.create(
+    {
+      name: tokenName,
+      expires_at: new Date(Date.now() + dopplerTokenTtlMs).toISOString(),
+    },
+    account.slug,
+  );
+  if (!created.api_key) {
+    throw new Error(`Doppler returned no api_key for ${tokenName}`);
+  }
+  return created.api_key;
 };
 
-const seedOpToken = async (devbox: Devbox) => {
-  const token = (
-    await $`op item get ${"Local AI Agents Service Account Token"} --vault FineDesigns --fields credential --reveal`.text()
-  ).trim();
+const seedDopplerToken = async (devbox: Devbox, name: string) => {
+  const token = await mintDopplerToken(name);
   await guest(
     devbox,
-    'security unlock-keychain -p "" ~/Library/Keychains/login.keychain-db && xargs security add-generic-password -U -s op-sa.finedesigns.io -a local-ai-agents -w',
+    "mise trust ~/.config/mise/config.toml && mise install -y doppler && mise exec doppler -- doppler configure set token --scope / --silent",
     `${token}\n`,
   );
 };
@@ -94,17 +123,9 @@ const runPhases = async (phases: Phase[]) => {
   return { timings, failures };
 };
 
-const up = (name: string, dopplerReference?: string) =>
+const up = (name: string) =>
   withDevbox(name, async (devbox) => {
     const out = resolve(`${name}-up.png`);
-    const doppler: Phase[] = dopplerReference
-      ? [
-          {
-            name: "doppler token",
-            run: () => seedDopplerToken(devbox, dopplerReference),
-          },
-        ]
-      : [];
     const { timings, failures } = await runPhases([
       {
         name: "dotfiles",
@@ -133,8 +154,7 @@ const up = (name: string, dopplerReference?: string) =>
         },
       },
       { name: "github", run: () => $`${devboxCli} setup-github ${name}` },
-      { name: "1password token", run: () => seedOpToken(devbox) },
-      ...doppler,
+      { name: "doppler token", run: () => seedDopplerToken(devbox, name) },
       {
         name: "install",
         run: () =>
@@ -154,7 +174,7 @@ const up = (name: string, dopplerReference?: string) =>
   });
 
 const usage =
-  "usage: devbox-mac create|up <name> [doppler-op-reference] | down <name> | shot <name> [out.png] | click <name> <x> <y>";
+  "usage: devbox-mac create|up|down <name> | shot <name> [out.png] | click <name> <x> <y>";
 
 const arg = (value: string | undefined, label: string) => {
   if (!value) throw new Error(`missing <${label}>\n${usage}`);
@@ -168,12 +188,12 @@ const coordinate = (value: string | undefined, label: string) => {
 };
 
 const commands: Record<string, (args: string[]) => Promise<unknown>> = {
-  create: async ([name, dopplerReference]) => {
+  create: async ([name]) => {
     const box = arg(name, "name");
     await $`${devboxCli} create --from - --from_format json --name ${box} < ${new Response(JSON.stringify(spec(box)))}`;
-    await up(box, dopplerReference);
+    await up(box);
   },
-  up: ([name, dopplerReference]) => up(arg(name, "name"), dopplerReference),
+  up: ([name]) => up(arg(name, "name")),
   shot: ([name, out]) =>
     withDevbox(arg(name, "name"), async (devbox) =>
       console.log(await screenshot(devbox, resolve(out ?? `${name}.png`))),

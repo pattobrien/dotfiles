@@ -15,6 +15,7 @@
   },
   "dependencies": {
     "@decimalturn/toml-patch": "catalog:",
+    "@dopplerhq/node-sdk": "catalog:",
     "@namespacelabs/sdk": "catalog:"
   }
 }
