@@ -36,20 +36,22 @@ devbox-mac down <name>            # stop the Devbox
 
 `up` runs these phases in order: pull the dotfiles onto the volume, `prepare`
 (volume links, shell env, base `./install`, oh-my-zsh, the devbox Brewfile,
-`xcode-select`, TCC grants, the replayd screen-capture approval for
-`/opt/namespace/vmguest`, never sleep, wake), `devbox setup-github`, the Doppler
-token, `install` (`./install devbox`, which is `mise install` and the macOS
-defaults, then `pnpm install` for the workspace root and the permission checks),
-then it saves `<name>-up.png` in the current directory. The checks
-([scripts/permissions/check.ts](../scripts/permissions/check.ts)) read the
-grants and settings the boot made and fail the boot on any unmet entry. The
-manifest ([manifest.ts](../scripts/permissions/manifest.ts)) is also the source
-of the boot's TCC inserts, and its `local` target documents the grants this Mac
-needs: `node scripts/permissions/check.ts local`. The replayd approval is what
-keeps the "vmguest is requesting to bypass the system private window picker"
-dialog from appearing on the first screenshot; TCC rows alone do not cover it.
-Secrets land before `install` so mise can use the GitHub token and the Doppler
-token on the first boot of a fresh volume.
+`xcode-select`, never sleep), `devbox setup-github`, the Doppler token,
+`install` (`./install devbox`, which is `mise install` and the macOS defaults,
+then TCC grants, the replayd screen-capture approval for
+`/opt/namespace/vmguest`, wake, and the permission checks), then it saves
+`<name>-up.png` in the current directory. The permission checks
+([scripts/permissions/check.ts](../scripts/permissions/check.ts)) run one SQL
+file per target (`local.sql`, `devbox.sql`, `devbox-display.sql`) through
+osquery, and ask lnpctl for Local Network rules. Each file lists its expected
+grants and settings as a `VALUES` table, and any MISSING row fails the boot. The
+TCC grants step runs `tccutil` for each TCC row those same files return, so the
+grants and the checks share one list. On this Mac,
+`node scripts/permissions/check.ts local` lists the grants the dotfiles need.
+The replayd approval is what keeps the "vmguest is requesting to bypass the
+system private window picker" dialog from appearing on the first screenshot; TCC
+rows alone do not cover it. Secrets land before `install` so mise can use the
+GitHub token and the Doppler token on the first boot of a fresh volume.
 
 ## Instances
 
