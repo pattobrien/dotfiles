@@ -49,9 +49,7 @@ node = "latest"
 "npm:@earendil-works/pi-coding-agent" = "latest"
 "npm:@posthog/cli" = "latest"
 "npm:cf" = "latest"
-"npm:@opencode/cli" = { version = "latest", allow_builds = [
-  "@opencode/cli",
-] }
+"npm:@opencode/cli" = { version = "latest", allow_builds = ["@opencode/cli"] }
 "github:railwayapp/cli" = "latest"
 "npm:@tigrisdata/cli" = { version = "latest" }
 "npm:@typescript/native-preview" = "latest"
