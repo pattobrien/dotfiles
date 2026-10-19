@@ -37,23 +37,23 @@ lua-language-server = "latest"
 neovim = "latest"
 node = "latest"
 "npm:agent-browser" = "latest"
-"npm:@browserless.io/cli" = { version = "latest", exe = "browserless" }
+"npm:@browserless.io/cli" = { version = "latest" }
 "npm:browse" = "latest"
-"npm:ai-cli" = { version = "latest", exe = "ai" }
+"npm:ai-cli" = { version = "latest" }
 "npm:@ecrindigital/facet-cli" = "latest"
 "npm:@kitlangton/ghui" = "latest"
 "npm:@kitlangton/stack" = "latest"
 "npm:@nubjs/nub" = "latest"
 "npm:@open-pencil/cli" = "latest"
-"npm:@photon-ai/cli" = { version = "latest", exe = "photon" }
+"npm:@photon-ai/cli" = { version = "latest" }
 "npm:@earendil-works/pi-coding-agent" = "latest"
 "npm:@posthog/cli" = "latest"
 "npm:cf" = "latest"
-"npm:@opencode/cli" = { version = "latest", exe = "opencode", allow_builds = [
+"npm:@opencode/cli" = { version = "latest", allow_builds = [
   "@opencode/cli",
 ] }
 "github:railwayapp/cli" = "latest"
-"npm:@tigrisdata/cli" = { version = "latest", exe = "tigris" }
+"npm:@tigrisdata/cli" = { version = "latest" }
 "npm:@typescript/native-preview" = "latest"
 "npm:codemod" = "latest"
 "npm:eas-cli" = "latest"
@@ -64,7 +64,7 @@ node = "latest"
 "npm:turbo" = "latest"
 "npm:vercel" = "latest"
 "npm:wrangler" = "latest"
-"github:voidzero-dev/vite-plus" = { version = "latest", exe = "vp" }
+"github:voidzero-dev/vite-plus" = { version = "latest" }
 pnpm = "latest"
 swift = "latest"
 sentry-cli = "latest"
@@ -142,17 +142,17 @@ container = { version = "latest", os = ["macos"] }
 "pipx:langgraph-cli" = "latest"
 "github:cloudflare/cloudflared" = "latest"
 "pipx:tinybird" = { version = "latest", uvx_args = "--python 3.13" }
-"pipx:claude-swap" = { version = "latest", exe = "cswap", uvx_args = "--python 3.13" }
-"pipx:batrachian-toad" = { version = "latest", exe = "toad", uvx_args = "--python 3.14" }
+"pipx:claude-swap" = { version = "latest", uvx_args = "--python 3.13" }
+"pipx:batrachian-toad" = { version = "latest", uvx_args = "--python 3.14" }
 
 # Docs & misc CLIs
 "github:pattobrien/herdr" = "latest"
-"github:kernel/cli" = { version = "latest", exe = "kernel" }
-"github:schpet/linear-cli" = { version = "latest", exe = "linear" }
+"github:kernel/cli" = { version = "latest" }
+"github:schpet/linear-cli" = { version = "latest" }
 hunk = "latest"
 "github:agavra/tuicr" = "latest"
 "github:gammons/slk" = "latest"
-"github:slackapi/slack-cli" = { version = "latest", exe = "slack", matching = "slack_cli_4" }
+"github:slackapi/slack-cli" = { version = "latest", matching = "slack_cli_4" }
 pandoc = "latest"
 typst = "latest"
 jq = "latest"
@@ -160,14 +160,14 @@ protoc = "latest"
 "github:steipete/peekaboo" = { version = "latest", bin_path = "peekaboo-macos-arm64", os = [
   "macos",
 ] }
-"github:cameroncooke/AXe" = { version = "latest", asset_pattern = "AXe-macOS-*-universal.tar.gz", exe = "axe", os = [
+"github:cameroncooke/AXe" = { version = "latest", asset_pattern = "AXe-macOS-*-universal.tar.gz", os = [
   "macos",
 ] }
 "github:dsully/macos-defaults" = { version = "latest", os = ["macos"] }
 "github:osquery/osquery" = { version = "latest", bin_path = "opt/osquery/lib/osquery.app/Contents/MacOS", os = [
   "macos",
 ] }
-"github:openclaw/gogcli" = { version = "latest", exe = "gog" }
+"github:openclaw/gogcli" = { version = "latest" }
 hcloud = "latest"
 "github:alltuner/mise-completions-sync" = "latest"
 sops = "latest"
