@@ -13,10 +13,11 @@ import { homedir } from "node:os";
 import { dirname, join } from "node:path";
 import { parseArgs } from "node:util";
 
+import { query, type Target } from "../permissions/check.ts";
+
 type Step = { name: string; run: () => void };
 type Phase = "prepare" | "install";
 type Link = { target: string; path: string };
-type TccGrant = { service: string; client: string; clientType: 0 | 1 };
 
 const {
   positionals: [phase],
@@ -76,16 +77,7 @@ const shellEnv: Record<string, string> = {
   ...(cache ? { COMPILATION_CACHE_ENABLE_CACHING_DEFAULT: "YES" } : {}),
 };
 
-const vmguestGrants: TccGrant[] = [
-  { service: "kTCCServiceScreenCapture", client: vmguest, clientType: 1 },
-  { service: "kTCCServiceAccessibility", client: vmguest, clientType: 1 },
-  { service: "kTCCServicePostEvent", client: vmguest, clientType: 1 },
-];
-
-const tccGrants: TccGrant[] = [
-  { service: "kTCCServiceAccessibility", client: tinycastDev, clientType: 0 },
-  ...(display ? vmguestGrants : []),
-];
+const checks: Target[] = display ? ["devbox", "devbox-display"] : ["devbox"];
 
 const run = (command: string, input?: string) => {
   execFileSync("/bin/bash", ["-lc", command], {
@@ -102,9 +94,6 @@ const link = ({ target, path }: Link) => {
   mkdirSync(dirname(path), { recursive: true });
   symlinkSync(target, path);
 };
-
-const tccRow = ({ service, client, clientType }: TccGrant) =>
-  `INSERT OR REPLACE INTO access (service,client,client_type,auth_value,auth_reason,auth_version,indirect_object_identifier_type,indirect_object_identifier,flags,last_modified) VALUES ('${service}','${client}',${clientType},2,4,1,0,'UNUSED',0,strftime('%s','now'));`;
 
 const shellEnvStep: Step = {
   name: "shell env",
@@ -178,16 +167,6 @@ const phases: Record<Phase, Step[]> = {
     },
     { name: "xcode", run: () => run(`sudo -n xcode-select -s ${xcode}`) },
     {
-      name: "tcc grants",
-      run: () => {
-        run(
-          "sudo -n sqlite3 '/Library/Application Support/com.apple.TCC/TCC.db'",
-          tccGrants.map(tccRow).join("\n"),
-        );
-        run("sudo -n killall tccd");
-      },
-    },
-    {
       name: "never sleep",
       run: () => {
         run("sudo -n pmset -a sleep 0 displaysleep 0 disksleep 0");
@@ -195,7 +174,6 @@ const phases: Record<Phase, Step[]> = {
         run("defaults write com.apple.screensaver idleTime 0");
       },
     },
-    ...(display ? displaySteps : []),
     ...(cache ? [cacheStep(cache)] : []),
   ],
   install: [
@@ -213,6 +191,33 @@ const phases: Record<Phase, Step[]> = {
         }
         run("./install devbox");
       },
+    },
+    {
+      name: "tcc grants",
+      run: () => {
+        run(
+          "sudo -n sqlite3 '/Library/Application Support/com.apple.TCC/TCC.db'",
+          checks
+            .flatMap(query)
+            .filter(({ service }) => service.startsWith("kTCCService"))
+            .map(
+              ({ service, client }) =>
+                `INSERT OR REPLACE INTO access (service,client,client_type,auth_value,auth_reason,auth_version,indirect_object_identifier_type,indirect_object_identifier,flags,last_modified) VALUES ('${service}','${client}',${client.startsWith("/") ? 1 : 0},2,4,1,0,'UNUSED',0,strftime('%s','now'));`,
+            )
+            .join("\n"),
+        );
+        run("sudo -n killall tccd");
+      },
+    },
+    ...(display ? displaySteps : []),
+    {
+      name: "permission checks",
+      run: () =>
+        execFileSync(
+          process.execPath,
+          [join(repo, "scripts/permissions/check.ts"), ...checks],
+          { stdio: "inherit" },
+        ),
     },
   ],
 };

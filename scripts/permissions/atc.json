@@ -1,0 +1,38 @@
+{
+  "auto_table_construction": {
+    "tcc_system": {
+      "query": "SELECT service, client, auth_value, indirect_object_identifier FROM access",
+      "path": "/Library/Application Support/com.apple.TCC/TCC.db",
+      "columns": [
+        "service",
+        "client",
+        "auth_value",
+        "indirect_object_identifier"
+      ]
+    },
+    "tcc_user": {
+      "query": "SELECT service, client, auth_value, indirect_object_identifier FROM access",
+      "path": "/Users/%/Library/Application Support/com.apple.TCC/TCC.db",
+      "columns": [
+        "service",
+        "client",
+        "auth_value",
+        "indirect_object_identifier"
+      ]
+    },
+    "tcc_user_container": {
+      "query": "SELECT service, client, auth_value, indirect_object_identifier FROM access",
+      "path": "/private/var/containers/Data/ProtectedSystem/%/Data/Library/Application Support/com.apple.TCC/TCC.db",
+      "columns": [
+        "service",
+        "client",
+        "auth_value",
+        "indirect_object_identifier"
+      ]
+    }
+  },
+  "views": {
+    "tcc": "SELECT service, client, nullif(indirect_object_identifier, 'UNUSED') AS target, max(CAST(auth_value AS INTEGER)) AS auth_value FROM (SELECT service, client, auth_value, indirect_object_identifier FROM tcc_system UNION ALL SELECT service, client, auth_value, indirect_object_identifier FROM tcc_user_container UNION ALL SELECT service, client, auth_value, indirect_object_identifier FROM tcc_user WHERE NOT EXISTS (SELECT 1 FROM tcc_user_container)) GROUP BY service, client, target",
+    "console_user": "SELECT u.username, u.directory FROM users u JOIN logged_in_users l ON l.user = u.username WHERE l.tty = 'console' LIMIT 1"
+  }
+}
