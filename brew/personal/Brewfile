@@ -155,7 +155,6 @@ cask "keycastr"
 cask "kitty"
 # App to manage software development and track bugs
 cask "linear"
-# Experimental Local Network permission cleanup tool
 cask "dev7a/tap/lnpctl"
 # Optimise your webcam, headset, and Logi Dock for video meetings
 cask "logitune"
