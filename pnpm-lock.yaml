@@ -212,9 +212,6 @@ catalogs:
     node-pty:
       specifier: ^1.1.0
       version: 1.1.0
-    plist:
-      specifier: ^5.0.0
-      version: 5.0.0
     typescript:
       specifier: ^7.0.2
       version: 7.0.2
@@ -238,10 +235,6 @@ patchedDependencies:
 importers:
 
   .:
-    dependencies:
-      plist:
-        specifier: 'catalog:'
-        version: 5.0.0
     devDependencies:
       typescript:
         specifier: 'catalog:'
@@ -1578,10 +1571,6 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@xmldom/xmldom@0.9.12':
-    resolution: {integrity: sha512-5AXjrcMClTryPe9LgZrygpB1lj7s0S9E0+W+AHaVKAVyHanafK86iPSvG5xHVSp/jC+VH1UXu0TAEmY279xH7A==}
-    engines: {node: '>=14.6'}
-
   '@xterm/addon-unicode11@0.9.0':
     resolution: {integrity: sha512-FxDnYcyuXhNl+XSqGZL/t0U9eiNb/q3EWT5rYkQT/zuig8Gz/VagnQANKHdDWFM2lTMk9ly0EFQxxxtZUoRetw==}
 
@@ -2088,10 +2077,6 @@ packages:
     engines: {node: '>=20'}
     hasBin: true
 
-  plist@5.0.0:
-    resolution: {integrity: sha512-20N+g1DvMm/DFRbsvER7tT4wDryq0WunK7VMkDaiJcKNapAnUMkTsAnacFYf8n420F4Hf6/hefgmJRkMb1M0fg==}
-    engines: {node: '>=18'}
-
   pngjs@7.0.0:
     resolution: {integrity: sha512-LKWqWJRhstyYo9pGvgor/ivk2w94eSjE3RGVuzLGlr3NmD8bf7RcYGze1mNdEHRP6TRP6rMuDHk5t44hnTRyow==}
     engines: {node: '>=14.19.0'}
@@ -2324,10 +2309,6 @@ packages:
         optional: true
       utf-8-validate:
         optional: true
-
-  xmlbuilder@15.1.1:
-    resolution: {integrity: sha512-yMqGBqtXyeN1e3TGYvgNgDVZ3j84W4cwkOXQswghol6APgZWaff9lnbvN7MHYJOiXsvGPXtjTYJEiC9J2wv9Eg==}
-    engines: {node: '>=8.0'}
 
   y18n@5.0.8:
     resolution: {integrity: sha512-0pfFzegeDWJHJIAmTLRP2DwHjdF5s7jo9tuztdQxAhINCdvS+3nGINqPd00AphqJR/0LhANUS6/+7SCb98YOfA==}
@@ -3313,8 +3294,6 @@ snapshots:
   '@voidzero-dev/vite-plus-win32-x64-msvc@1.2.0':
     optional: true
 
-  '@xmldom/xmldom@0.9.12': {}
-
   '@xterm/addon-unicode11@0.9.0': {}
 
   '@xterm/headless@6.0.0': {}
@@ -3756,11 +3735,6 @@ snapshots:
       fsevents: 2.3.2
     optional: true
 
-  plist@5.0.0:
-    dependencies:
-      '@xmldom/xmldom': 0.9.12
-      xmlbuilder: 15.1.1
-
   pngjs@7.0.0: {}
 
   postcss@8.5.30:
@@ -4053,8 +4027,6 @@ snapshots:
       strip-ansi: 6.0.1
 
   ws@8.22.0: {}
-
-  xmlbuilder@15.1.1: {}
 
   y18n@5.0.8: {}
 
