@@ -9,7 +9,6 @@ brew "tree"
 brew "pam-reattach"
 brew "wget"
 brew "curl"
-brew "tccutil"
 
 # gh is not in mise: mise reads its token to authenticate GitHub API calls
 # (see zsh/zshrc), so it must exist before the first `mise install`.

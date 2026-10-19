@@ -195,15 +195,17 @@ const phases: Record<Phase, Step[]> = {
     {
       name: "tcc grants",
       run: () => {
-        for (const { service, client } of checks.flatMap(query)) {
-          if (!service.startsWith("kTCCService")) continue;
-          // Apple's /usr/bin/tccutil only resets, and may win on sudo's PATH.
-          execFileSync(
-            "sudo",
-            ["-n", "/opt/homebrew/bin/tccutil", "-s", service, "-i", client],
-            { stdio: "inherit" },
-          );
-        }
+        run(
+          "sudo -n sqlite3 '/Library/Application Support/com.apple.TCC/TCC.db'",
+          checks
+            .flatMap(query)
+            .filter(({ service }) => service.startsWith("kTCCService"))
+            .map(
+              ({ service, client }) =>
+                `INSERT OR REPLACE INTO access (service,client,client_type,auth_value,auth_reason,auth_version,indirect_object_identifier_type,indirect_object_identifier,flags,last_modified) VALUES ('${service}','${client}',${client.startsWith("/") ? 1 : 0},2,4,1,0,'UNUSED',0,strftime('%s','now'));`,
+            )
+            .join("\n"),
+        );
         run("sudo -n killall tccd");
       },
     },

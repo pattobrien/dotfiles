@@ -45,8 +45,8 @@ then TCC grants, the replayd screen-capture approval for
 file per target (`local.sql`, `devbox.sql`, `devbox-display.sql`) through
 osquery, and ask lnpctl for Local Network rules. Each file lists its expected
 grants and settings as a `VALUES` table, and any MISSING row fails the boot. The
-TCC grants step runs `tccutil` for each TCC row those same files return, so the
-grants and the checks share one list. On this Mac,
+TCC grants step writes a system TCC.db row for each TCC row those same files
+return, so the grants and the checks share one list. On this Mac,
 `node scripts/permissions/check.ts local` lists the grants the dotfiles need.
 The replayd approval is what keeps the "vmguest is requesting to bypass the
 system private window picker" dialog from appearing on the first screenshot; TCC
