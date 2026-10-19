@@ -164,6 +164,9 @@ protoc = "latest"
   "macos",
 ] }
 "github:dsully/macos-defaults" = { version = "latest", os = ["macos"] }
+"github:osquery/osquery" = { version = "latest", bin_path = "opt/osquery/lib/osquery.app/Contents/MacOS", os = [
+  "macos",
+] }
 "github:openclaw/gogcli" = { version = "latest", exe = "gog" }
 hcloud = "latest"
 "github:alltuner/mise-completions-sync" = "latest"

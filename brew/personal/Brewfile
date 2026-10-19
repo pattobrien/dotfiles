@@ -1,5 +1,6 @@
 tap "anomalyco/tap", trusted: true
 tap "asmvik/formulae", "https://github.com/asmvik/homebrew-formulae.git", trusted: true
+tap "dev7a/tap", trusted: true
 tap "jurplel/tap"
 tap "felixkratz/formulae"
 tap "koekeishiya/formulae", "https://github.com/asmvik/homebrew-formulae.git", trusted: true
@@ -154,6 +155,8 @@ cask "keycastr"
 cask "kitty"
 # App to manage software development and track bugs
 cask "linear"
+# Experimental Local Network permission cleanup tool
+cask "dev7a/tap/lnpctl"
 # Optimise your webcam, headset, and Logi Dock for video meetings
 cask "logitune"
 # Screen and video recording software
