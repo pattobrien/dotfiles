@@ -24,6 +24,8 @@ brew "docker-compose"
 brew "gcc"
 # GitHub command-line tool
 brew "gh"
+# Distributed revision control system
+brew "git"
 # GNU Privacy Guard (OpenPGP)
 brew "gnupg"
 # Tool for managing apps on iOS devices
