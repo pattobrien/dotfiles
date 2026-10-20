@@ -24,6 +24,11 @@ const state = join(volume, "state");
 const tinycastDev = "com.tinycast.app.dev";
 const vmguest = "/opt/namespace/vmguest";
 const xcode = "/Applications/Xcode_26.6.app";
+const derivedData = join(volume, "DerivedData");
+const signingIdentity = "Tinycast Self-Signed";
+const signingBundle = join(state, "signing/tinycast-self-signed.p12");
+const signingKeychain = join(home, "Library/Keychains/signing.keychain-db");
+const signingPassword = "tinycast";
 
 const volumeDirs = [
   "dev",
@@ -32,6 +37,8 @@ const volumeDirs = [
   "state/gh",
   "state/tinycast-dev",
   "state/tinycast-dev-config",
+  "state/signing",
+  "DerivedData",
 ].map((dir) => join(volume, dir));
 
 const links: Link[] = [
@@ -122,6 +129,42 @@ const phases: Record<Phase, Step[]> = {
       run: () => run("./scripts/brew_bundle.zsh brew/devbox/Brewfile"),
     },
     { name: "xcode", run: () => run(`sudo -n xcode-select -s ${xcode}`) },
+    {
+      name: "derived data",
+      run: () =>
+        run(
+          `defaults write com.apple.dt.Xcode IDECustomDerivedDataLocation ${derivedData}`,
+        ),
+    },
+    {
+      name: "signing identity",
+      run: () => {
+        if (!existsSync(signingBundle)) {
+          run(
+            `openssl req -x509 -newkey rsa:2048 -nodes -days 3650 -keyout /tmp/signing-key.pem -out /tmp/signing-cert.pem -subj "/CN=${signingIdentity}" -addext "basicConstraints=critical,CA:false" -addext "keyUsage=critical,digitalSignature" -addext "extendedKeyUsage=critical,codeSigning"`,
+          );
+          run(
+            `openssl pkcs12 -export -inkey /tmp/signing-key.pem -in /tmp/signing-cert.pem -name "${signingIdentity}" -out "${signingBundle}" -passout pass:${signingPassword}`,
+          );
+          run("rm -f /tmp/signing-key.pem /tmp/signing-cert.pem");
+        }
+        if (existsSync(signingKeychain)) {
+          run(`security delete-keychain ${signingKeychain}`);
+        }
+        run(`security create-keychain -p ${signingPassword} ${signingKeychain}`);
+        run(`security set-keychain-settings ${signingKeychain}`);
+        run(`security unlock-keychain -p ${signingPassword} ${signingKeychain}`);
+        run(
+          `security import "${signingBundle}" -k ${signingKeychain} -P ${signingPassword} -A -T /usr/bin/codesign`,
+        );
+        run(
+          `security set-key-partition-list -S apple-tool:,apple: -s -k ${signingPassword} ${signingKeychain} >/dev/null`,
+        );
+        run(
+          `security list-keychains -d user -s ${signingKeychain} $(security list-keychains -d user | sed 's/"//g')`,
+        );
+      },
+    },
     {
       name: "tcc grants",
       run: () => {

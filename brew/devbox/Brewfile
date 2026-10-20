@@ -14,3 +14,6 @@ brew "curl"
 # (see zsh/zshrc), so it must exist before the first `mise install`.
 brew "gh"
 brew "mise"
+
+# Build tooling
+brew "xcodegen"

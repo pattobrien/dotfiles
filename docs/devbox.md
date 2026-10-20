@@ -20,6 +20,12 @@ volume:
 | `~/Library/Application Support/com.tinycast.app.dev` | `/Volumes/devbox/state/tinycast-dev`        |
 | `~/.config/tinycast-dev`                             | `/Volumes/devbox/state/tinycast-dev-config` |
 
+Xcode's DerivedData is pointed at `/Volumes/devbox/DerivedData` through the
+`IDECustomDerivedDataLocation` default, so incremental builds survive a restart.
+The `Tinycast Self-Signed` identity lives as a `.p12` under
+`/Volumes/devbox/state/signing`, generated on the first boot of a volume and
+imported into a fresh `signing` keychain on every boot.
+
 `GH_CONFIG_DIR` points at `/Volumes/devbox/state/gh`, and `HOMEBREW_CACHE` at
 `/Volumes/devbox/cache/homebrew`. Each boot writes per-step timings to
 `/Volumes/devbox/state/last-boot.json`.

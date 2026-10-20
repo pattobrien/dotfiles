@@ -11,6 +11,7 @@ type Phase = { name: string; run: () => Promise<unknown> };
 
 const devboxCli = join(homedir(), ".local/bin/devbox");
 const dotfiles = "/Volumes/devbox/dev/pattobrien/dotfiles";
+const dotfilesBranch = "devbox";
 const dopplerServiceAccount = "sa-agent-builder";
 const dopplerTokenTtlMs = 7 * 24 * 60 * 60 * 1000;
 // mise renders the global [env] templates, which call doppler, before any exec
@@ -134,7 +135,7 @@ const up = (name: string) =>
         run: () =>
           guest(
             devbox,
-            `if [ -d ${dotfiles}/.git ]; then git -C ${dotfiles} pull --ff-only; else git clone https://github.com/pattobrien/dotfiles.git ${dotfiles}; fi`,
+            `if [ -d ${dotfiles}/.git ]; then git -C ${dotfiles} pull --ff-only; else git clone --branch ${dotfilesBranch} https://github.com/pattobrien/dotfiles.git ${dotfiles}; fi`,
           ),
       },
       {
