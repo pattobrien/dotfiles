@@ -99,6 +99,7 @@
     ~/.local/bin/linear-edit: tools/scripts/src/linear-edit.ts
     ~/.local/bin/claude-otel-headers: tools/scripts/src/claude-otel-headers.ts
     ~/.local/bin/tinycast-install: tools/scripts/src/tinycast-install.ts
+    ~/.local/bin/devbox-mac: tools/scripts/src/devbox-mac.ts
 
 - create:
     - ~/dev

@@ -3,13 +3,17 @@ packages:
   - tests/*
 
 allowBuilds:
+  cpu-features: false
   esbuild: true
   node-pty: true
   protobufjs: false
+  ssh2: false
 
 catalog:
   "@decimalturn/toml-patch": ^3.3.0
+  "@dopplerhq/node-sdk": ^1.3.0
   "@msgpack/msgpack": ^3.1.3
+  "@namespacelabs/sdk": ^1.5.1
   "@opentelemetry/api": ^1.9.1
   "@opentelemetry/exporter-trace-otlp-proto": ^0.221.0
   "@opentelemetry/sdk-node": ^0.221.0
@@ -42,6 +46,7 @@ minimumReleaseAgeExclude:
   - "@voidzero-dev/vite-plus-win32-arm64-msvc@1.2.0"
   - "@voidzero-dev/vite-plus-win32-x64-msvc@1.2.0"
   - vite-plus@1.2.0
+  - "@namespacelabs/sdk@1.5.1"
 
 overrides:
   vite@*: "catalog:"

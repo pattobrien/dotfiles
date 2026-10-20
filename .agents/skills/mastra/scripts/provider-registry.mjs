@@ -43,7 +43,7 @@ function loadRegistry() {
 function extractVersion(name) {
   // Use named capture to grab version-like sequences along with their context.
   // We capture digits separated by dots/hyphens, plus any trailing letter for filtering.
-  const regex = /(\d+(?:[.\-]\d+)*)([a-zA-Z])?/g;
+  const regex = /(\d+(?:[.-]\d+)*)([a-zA-Z])?/g;
   const candidates = [];
   let match;
   while ((match = regex.exec(name)) !== null) {
@@ -56,7 +56,7 @@ function extractVersion(name) {
   // Process candidates: filter and clean up non-version parts
   const processed = [];
   for (const c of candidates) {
-    let parts = c.numStr.split(/[.\-]/).map(Number);
+    let parts = c.numStr.split(/[.-]/).map(Number);
     // If followed by a size suffix (b/B/k/K/m/M/t/T) — e.g. "8b", "70B", "1t" —
     // strip the last numeric part (param count) but keep earlier parts as the version
     if (/^[bBkKmMtT]$/.test(c.suffix)) {
