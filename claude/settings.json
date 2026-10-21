@@ -113,13 +113,10 @@
       "~"
     ]
   },
-  "model": "opus[1m]",
-  "switchModelsOnFlag": false,
+  "model": "opus",
   "enableAllProjectMcpServers": true,
   "disableClaudeAiConnectors": true,
   "skillOverrides": {
-    "swamp": "off",
-    "swamp-getting-started": "off",
     "railpack": "off",
     "anthropic-skills:docs": "off",
     "anthropic-skills:docx": "off",
@@ -174,6 +171,15 @@
             "timeout": 10
           }
         ]
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/bin/sh -c 'rex __internal session-start --agent claude 2>/dev/null || true'",
+            "timeout": 5
+          }
+        ]
       }
     ],
     "PreToolUse": [
@@ -182,7 +188,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "atuin hook claude-code"
+            "command": "/Users/patt/.local/share/mise/installs/atuin/latest/atuin-aarch64-apple-darwin/atuin hook claude-code"
           }
         ]
       }
@@ -193,7 +199,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "atuin hook claude-code"
+            "command": "/Users/patt/.local/share/mise/installs/atuin/latest/atuin-aarch64-apple-darwin/atuin hook claude-code"
           }
         ]
       }
@@ -204,7 +210,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "atuin hook claude-code"
+            "command": "/Users/patt/.local/share/mise/installs/atuin/latest/atuin-aarch64-apple-darwin/atuin hook claude-code"
           }
         ]
       }
@@ -384,6 +390,7 @@
   "theme": "custom:patt",
   "editorMode": "vim",
   "preferredNotifChannel": "notifications_disabled",
+  "switchModelsOnFlag": false,
   "remoteControlAtStartup": true,
   "crossSessionInbound": "accept",
   "agentPushNotifEnabled": true,
