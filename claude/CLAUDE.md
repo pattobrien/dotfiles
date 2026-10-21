@@ -48,8 +48,9 @@ every reference as a markdown link, so I can click it in chat:
   workaround shim as the fix. Find the supported path first — a config option,
   an official SDK method, a provider bump. If only a hack exists, write it and
   say so; review decides.
-- Use the official client for every API: Octokit for GitHub, the provider SDK in
-  Pulumi. Never hand-roll `fetch` + pagination.
+- Use existing typesafe clients for every API: e.g. Octokit for GitHub (or
+  alchemy/distilled github client), the provider SDK in Pulumi. Never hand-roll
+  `fetch` + pagination.
 - Restore my existing tool, or use its built-in config key, before building
   anything custom. If no package exists, drop the feature.
 - No `command -v` guards, silent fallbacks or invented env-var gates; let
@@ -68,8 +69,6 @@ every reference as a markdown link, so I can click it in chat:
   is.
 - Test herdr only in a separate `herdr --session <name>`, never my live session.
 - PR branches go in `herdr worktree create`; the main checkout stays on `main`.
-- Run tests in their own herdr tab, never the Bash tool; never pipe through
-  `tail`.
 
 ## Directories and Repos
 
@@ -82,6 +81,8 @@ every reference as a markdown link, so I can click it in chat:
 - `~/dev/<org-name>/<repo-name>`: non-personal repos, e.g. work orgs
 - `~/dev/exploring/<repo-name>`: place to clone any external repo that needs to
   be explored
+- Upstream PRs from my forks: push commits only; never post PR comments or
+  review replies there. Draft the reply in chat and I post it.
 
 ## Tools
 
@@ -96,7 +97,8 @@ every reference as a markdown link, so I can click it in chat:
 
 ## General Coding Rules
 
-- write scripts in Typescript (Node or Bun), not bash/zsh
+- write repo scripts in Typescript (Node or Bun), not bash/zsh; ad-hoc terminal
+  commands and throwaway measurements may use bash/zsh
 - DO NOT USE EXCESSIVE DOC COMMENTS; well-written code is self-documenting
 - No explanatory or meta comments in any file (code, configs, docs)
 - Prefer dark mode for visual artifacts (HTML pages, mockups, charts).
