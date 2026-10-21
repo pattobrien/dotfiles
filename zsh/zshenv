@@ -23,3 +23,6 @@ alias trail='<<<${(F)path}'
 # is still owned by zshrc, which rebuilds PATH from scratch. mise shims go
 # last: each shim call costs 60-90ms, so an inherited real tool dir must win.
 export PATH="$HOME/Library/pnpm/bin:$HOME/.local/bin:/opt/homebrew/bin:$PATH:$HOME/.local/share/mise/shims"
+
+# Vite+ bin (https://viteplus.dev)
+. "/Users/patt/.vite-plus/env"
