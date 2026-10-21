@@ -114,11 +114,13 @@ DISABLE_AUTO_UPDATE=true
 ZSH_DISABLE_COMPFIX=true
 
 # Rebuild PATH from scratch, keeping only the inherited dirs that nothing below
-# re-adds: kitty's bundle (`kitten`) and nix (/etc/zshrc).
+# re-adds: kitty's bundle (`kitten`), nix (/etc/zshrc), and Rex's `rex` CLI
+# (https://www.superlogical.com/rex/docs/automate/cli#path).
 _inherited_path=($path)
 export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
 path+=(${(M)_inherited_path:#(/Applications/kitty.app/Contents/MacOS|$HOME/.nix-profile/bin|/nix/var/nix/profiles/default/bin)})
 unset _inherited_path
+[[ -n $REX_BIN_DIR ]] && path=($REX_BIN_DIR $path)
 
 # Tool init scripts are sourced from a cache and regenerated whenever the tool's
 # binary or this file is newer than the cache, so neither upgrades nor flag
