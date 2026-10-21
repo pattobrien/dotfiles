@@ -52,7 +52,7 @@ defaultSplitRatio = 1.0
 moveToRootStable = true
 singleWindowFit = "1200x10000"
 smartSplit = false
-splitWidthMultiplier = 1.0
+splitWidthMultiplier = 0.8
 useGlobalGaps = true
 
 [focus]
