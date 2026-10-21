@@ -1,7 +1,7 @@
 tap "anomalyco/tap", trusted: true
 tap "asmvik/formulae", "https://github.com/asmvik/homebrew-formulae.git", trusted: true
-tap "jurplel/tap"
 tap "felixkratz/formulae"
+tap "jurplel/tap"
 tap "koekeishiya/formulae", "https://github.com/asmvik/homebrew-formulae.git", trusted: true
 tap "vjeantet/tap", trusted: true
 # ANother Tool for Language Recognition
@@ -135,8 +135,8 @@ cask "font-geist-mono-nerd-font"
 # Focusrite interface controller for devices of the 4th generation and newer
 cask "focusrite-control-2"
 cask "font-hack-nerd-font"
-cask "font-space-mono"
 cask "font-sketchybar-app-font"
+cask "font-space-mono"
 cask "font-space-mono-nerd-font"
 # Terminal emulator that uses platform-native UI and GPU acceleration
 cask "ghostty"
@@ -166,6 +166,8 @@ cask "ngrok"
 cask "obs"
 # Knowledge base that works on top of a local folder of plain text Markdown files
 cask "obsidian"
+# Tiling window manager with Niri-style scrolling and Dwindle BSP layouts
+cask "omniwm"
 # Bundle with over 30 tools
 cask "parallels-toolbox"
 # Utility to uninstall apps and remove leftover files from old/uninstalled apps
