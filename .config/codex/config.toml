@@ -164,6 +164,12 @@ trust_level = "trusted"
 [projects."/Users/patt/dev/pattobrien/alchemy"]
 trust_level = "trusted"
 
+[projects."/private/tmp/arena-ai-package/candidate-codex"]
+trust_level = "trusted"
+
+[projects."/Users/patt/dev/pattobrien/tinycast"]
+trust_level = "trusted"
+
 [notice]
 fast_default_opt_out = true
 
@@ -250,13 +256,13 @@ NODE_REPL_NODE_MODULE_DIRS = "/Applications/ChatGPT.app/Contents/Resources/cua_n
 NODE_REPL_NODE_PATH = "/Applications/ChatGPT.app/Contents/Resources/cua_node/bin/node"
 NODE_REPL_TRUSTED_CODE_PATHS = "/Users/patt/.codex:/Applications/ChatGPT.app/Contents/Resources/cua_node/lib/node_modules"
 CODEX_HOME = "/Users/patt/.codex"
-BROWSER_USE_AVAILABLE_BACKENDS = "chrome,iab"
+BROWSER_USE_AVAILABLE_BACKENDS = "chrome,iab,mcpapps"
 BROWSER_USE_TINYSKY_ENABLED = "1"
 NODE_REPL_INSTRUCTIONS_USE_CASE_BROWSER = ""
 NODE_REPL_INSTRUCTIONS_USE_CASE_CHROME = ""
 BROWSER_USE_CODEX_APP_BUILD_FLAVOR = "prod"
-BROWSER_USE_CODEX_APP_VERSION = "26.924.51851"
-NODE_REPL_TRUSTED_SERVICES = '{"browser":"/Users/patt/.codex/plugins/cache/openai-bundled/browser/26.924.51851/scripts/browser-service.mjs"}'
+BROWSER_USE_CODEX_APP_VERSION = "26.1013.40934"
+NODE_REPL_TRUSTED_SERVICES = '{"browser":"/Users/patt/.codex/plugins/cache/openai-bundled/browser/26.1013.40934/scripts/browser-service.mjs"}'
 CODEX_CLI_PATH = "/Applications/ChatGPT.app/Contents/Resources/codex-cli/CodexCLI.app/Contents/MacOS/codex"
 
 [mcp_servers.browserless]
@@ -405,6 +411,9 @@ enabled = true
 [plugins."unified-computer-use@openai-bundled"]
 enabled = true
 
+[plugins."code-review@openai-bundled"]
+enabled = true
+
 [tui]
 notifications = ["agent-turn-complete", "approval-requested"]
 notification_condition = "always"
@@ -456,6 +465,12 @@ trusted_hash = "sha256:6a6f42bc3b58d6262db38bfd74d7f340fcca2b09cdb134aad365063f0
 
 [hooks.state."ponytail@ponytail:hooks/claude-codex-hooks.json:subagent_start:0:0"]
 trusted_hash = "sha256:1423b56c1322f96c8f74c51c1e7ae9a047b904c1fa43ee9165d462fd7a6e70ef"
+
+[hooks.state."/Users/patt/.codex/hooks.json:pre_tool_use:0:0"]
+trusted_hash = "sha256:ba3f90c26a8af1dfdc5081cd0818f7e36f06e29590557a4b3a6ad3b0810cba7c"
+
+[hooks.state."/Users/patt/.codex/hooks.json:post_tool_use:0:0"]
+trusted_hash = "sha256:b2b370fed9b0eba0afe774785b3f2120a9a6b9215347965421ef351fb77acdb0"
 
 [[skills.config]]
 name = "vercel:cms"
