@@ -153,7 +153,7 @@ cask "karabiner-elements"
 # Keystroke visualiser
 cask "keycastr"
 # GPU-based terminal emulator
-cask "kitty"
+cask "kitty@nightly"
 # App to manage software development and track bugs
 cask "linear"
 # Optimise your webcam, headset, and Logi Dock for video meetings

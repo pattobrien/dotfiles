@@ -184,7 +184,7 @@ cask "google-chrome"
 # HTTP and GraphQL Client
 cask "insomnia"
 # GPU-based terminal emulator
-cask "kitty"
+cask "kitty@nightly"
 # Administration and development platform for PostgreSQL
 cask "pgadmin4"
 # Collaboration platform for API development

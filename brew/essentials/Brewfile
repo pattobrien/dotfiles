@@ -23,7 +23,7 @@ cask "1password-cli"
 # Editor (pick one or both)
 cask "cursor"
 # cask "visual-studio-code"
-cask "kitty"
+cask "kitty@nightly"
 cask "ghostty"
 
 

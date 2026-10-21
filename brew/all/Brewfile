@@ -214,7 +214,7 @@ cask "homerow"
 # Keyboard customiser
 cask "karabiner-elements"
 # GPU-based terminal emulator
-cask "kitty"
+cask "kitty@nightly"
 # App to manage software development and track bugs
 cask "linear"
 # Optimise your webcam, headset, and Logi Dock for video meetings
