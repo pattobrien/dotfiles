@@ -180,6 +180,24 @@
             "timeout": 5
           }
         ]
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "printf '%s\\n' 'chpwd_functions=(_mise_hook_chpwd)' 'eval \"$(mise hook-env -s zsh)\"' > \"$CLAUDE_ENV_FILE\""
+          }
+        ]
+      }
+    ],
+    "CwdChanged": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "printf '%s\\n' 'chpwd_functions=(_mise_hook_chpwd)' 'eval \"$(mise hook-env -s zsh)\"' > \"$CLAUDE_ENV_FILE\""
+          }
+        ]
       }
     ],
     "PreToolUse": [
