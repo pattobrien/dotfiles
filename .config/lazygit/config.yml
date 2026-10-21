@@ -1,8 +1,6 @@
 os:
-  open:
-    'test -n "$NVIM" && nvim --server "$NVIM" --remote "{{filename}}" || open
-    "{{filename}}"'
+  open: 'test -n "$NVIM" && nvim --server "$NVIM" --remote "{{filename}}" || open "{{filename}}"'
 git:
-  pagers:
+  diffRenderers:
     - colorArg: always
-      pager: delta --dark --paging=never --line-numbers
+      command: delta --dark --paging=never --line-numbers
