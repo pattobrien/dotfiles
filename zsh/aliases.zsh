@@ -31,6 +31,7 @@ alias claude='DOPPLER_TOKEN=$(doppler configure get token --plain) doppler run -
 alias cc="claude"
 alias ccr="claude --resume"
 alias ccf="claude --model \"claude-fable-5-1[1m]\""
+alias pi='DOPPLER_TOKEN=$(doppler configure get token --plain) doppler run -- pi'
 alias ccfr="claude --model \"claude-fable-5-1[1m]\" --resume"
 alias cco="claude --model \"claude-opus-4-8[1m]\""
 alias ccor="claude --model \"claude-opus-4-8[1m]\" --resume"

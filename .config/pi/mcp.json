@@ -1,0 +1,10 @@
+{
+  "mcpServers": {
+    "executor": {
+      "url": "http://127.0.0.1:4312/mcp",
+      "headers": {
+        "Authorization": "Bearer ${EXECUTOR_API_KEY}"
+      }
+    }
+  }
+}
