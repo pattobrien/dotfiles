@@ -70,6 +70,17 @@ every reference as a markdown link, so I can click it in chat:
 - Test herdr only in a separate `herdr --session <name>`, never my live session.
 - PR branches go in `herdr worktree create`; the main checkout stays on `main`.
 
+## Devboxes
+
+- Never create a devbox without `--blueprint`; the blueprint owns size and
+  idle timeout, so never pass `--size`.
+- `devbox shutdown <name> --force` is the last step of every devbox task, and
+  task markers are cleared before any local-only phase.
+- Never build on a devbox what CI already builds; a pushed branch always has a
+  preview artifact, so download it.
+- A Lead reviews the artifacts a Worker produces (video capture, screenshots,
+  logs), never the devbox itself.
+
 ## Directories and Repos
 
 - `~/dev/*`: where all git repositories live
