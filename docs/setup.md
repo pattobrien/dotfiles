@@ -30,7 +30,7 @@ sh ~/dev/pattobrien/dotfiles/install macos
 sh ~/dev/pattobrien/dotfiles/install mise
 sh ~/dev/pattobrien/dotfiles/install xcode
 
-# optional installs (personal, work, runner, server)
+# optional installs
 sh ~/dev/pattobrien/dotfiles/install personal
 
 # VS Code extensions (run after essentials/personal so the `code` CLI exists)
