@@ -703,13 +703,13 @@ data:
       - Blue
       - Purple
       - Gray
-    GoToField: /Users/pattobrien/.pub-cache/hosted/
+    GoToField: /Users/patt/.pub-cache/hosted/
     GoToFieldHistory:
-      - /Users/pattobrien/.pub-cache/hosted
-      - /Users/pattobrien/.sidecar/projects/my_analyzed_codebase/sidecar_analyzer_plugin/sidecar_analyzer_plugin
+      - /Users/patt/.pub-cache/hosted
+      - /Users/patt/.sidecar/projects/my_analyzed_codebase/sidecar_analyzer_plugin/sidecar_analyzer_plugin
       - /private/var/folders/4g/ypl4dsnn1tzg1z6c6wrc2w4c0000gn/T/plugin/sidecar_analyzer_plugin
       - /private/var/folders/4g/ypl4dsnn1tzg1z6c6wrc2w4c0000gn/T/plugin/sidecar_analyzer_plugin/tools/analyzer_plugin
-      - /Users/pattobrien/Library/Developer/Xcode/iOS DeviceSupport/15.4.1
+      - /Users/patt/Library/Developer/Xcode/iOS DeviceSupport/15.4.1
         (19E258) arm64e/Symbols
     ICloudViewSettings:
       ListViewSettings:
@@ -1009,15 +1009,15 @@ data:
     PreviewPaneWidth: 250.0
     RecentMoveAndCopyDestinations:
       - "file:///Applications/"
-      - "file:///Users/pattobrien/Downloads/"
-      - "file:///Users/pattobrien/Documents/Profile%20Pictures/"
-      - "file:///Users/pattobrien/dev/pattobrien/"
-      - "file:///Users/pattobrien/.kube/"
-      - "file:///Users/pattobrien/"
-      - "file:///Users/pattobrien/.ssh/.archive/"
-      - "file:///Users/pattobrien/Downloads/VentureBuilding/"
-      - "file:///Users/pattobrien/dev/security/"
-      - "file:///Users/pattobrien/dev/"
+      - "file:///Users/patt/Downloads/"
+      - "file:///Users/patt/Documents/Profile%20Pictures/"
+      - "file:///Users/patt/dev/pattobrien/"
+      - "file:///Users/patt/.kube/"
+      - "file:///Users/patt/"
+      - "file:///Users/patt/.ssh/.archive/"
+      - "file:///Users/patt/Downloads/VentureBuilding/"
+      - "file:///Users/patt/dev/security/"
+      - "file:///Users/patt/dev/"
     RecentsArrangeGroupViewBy: Date Last Opened
     SearchRecentsSavedViewStyle: Nlsv
     SearchRecentsSavedViewStyleVersion: "%00%00%00%01"
