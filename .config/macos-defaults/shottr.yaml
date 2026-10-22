@@ -32,7 +32,7 @@ data:
     thumbnailClosing: auto
     notificationType: custom
     # --- Saving ---
-    defaultFolder: /Users/patt/Documents/Screenshots
+    defaultFolder: /Users/patt/Screenshots
     fileNameTemplate: SCR-%Y%m%d-%t
     saveFormat: Auto
     autosaveOverwrite: false

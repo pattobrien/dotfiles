@@ -1,0 +1,19 @@
+# Screenshot and screen recording settings
+# Apply with: macos-defaults apply ~/.config/macos-defaults/screencapture.yaml
+#
+# com.apple.screencaptureui (the Cmd+Shift+5 toolbar) keeps its own save path;
+# without it, screen recordings land on the Desktop.
+---
+description: Screenshot and screen recording settings
+sudo: false
+current_host: false
+kill: [SystemUIServer, screencaptureui]
+data:
+  com.apple.screencapture:
+    location: /Users/patt/Screenshots
+    style: window
+    target: file
+  com.apple.screencaptureui:
+    NSNavLastRootDirectory: /Users/patt/Screenshots
+  com.apple.iphonesimulator:
+    ScreenShotSaveLocation: /Users/patt/Screenshots
