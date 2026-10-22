@@ -14,6 +14,8 @@
     "vite-plus": "catalog:"
   },
   "dependencies": {
-    "@decimalturn/toml-patch": "catalog:"
+    "@decimalturn/toml-patch": "catalog:",
+    "@modelcontextprotocol/sdk": "catalog:",
+    "zod": "catalog:"
   }
 }

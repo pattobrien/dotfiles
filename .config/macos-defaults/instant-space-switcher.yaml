@@ -1,8 +1,0 @@
----
-description: InstantSpaceSwitcher settings
-sudo: false
-current_host: false
-kill: [InstantSpaceSwitcher]
-data:
-  com.interversehq.InstantSpaceSwitcher:
-    swipeOverride: true
