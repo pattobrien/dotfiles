@@ -709,8 +709,8 @@ data:
       - /Users/patt/.sidecar/projects/my_analyzed_codebase/sidecar_analyzer_plugin/sidecar_analyzer_plugin
       - /private/var/folders/4g/ypl4dsnn1tzg1z6c6wrc2w4c0000gn/T/plugin/sidecar_analyzer_plugin
       - /private/var/folders/4g/ypl4dsnn1tzg1z6c6wrc2w4c0000gn/T/plugin/sidecar_analyzer_plugin/tools/analyzer_plugin
-      - /Users/patt/Library/Developer/Xcode/iOS DeviceSupport/15.4.1
-        (19E258) arm64e/Symbols
+      - /Users/patt/Library/Developer/Xcode/iOS DeviceSupport/15.4.1 (19E258)
+        arm64e/Symbols
     ICloudViewSettings:
       ListViewSettings:
         iconSize: 16.0

@@ -21,6 +21,9 @@ data:
     # One-finger double-tap: 0=off, 1=smart zoom
     MouseOneFingerDoubleTapGesture: 1
     # Two-finger double-tap: 0=off, 3=mission control
-    MouseTwoFingerDoubleTapGesture: 3
-    # Two-finger horizontal swipe: 0=off, 2=switch pages
-    MouseTwoFingerHorizSwipeGesture: 2
+    MouseTwoFingerDoubleTapGesture: 0
+    # Two-finger horizontal swipe: 0=off, 2=switch full-screen apps and Spaces
+    MouseTwoFingerHorizSwipeGesture: 0
+  com.apple.driver.AppleBluetoothMultitouch.mouse:
+    MouseTwoFingerDoubleTapGesture: 0
+    MouseTwoFingerHorizSwipeGesture: 0

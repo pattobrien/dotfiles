@@ -90,7 +90,7 @@ fingerCount = 3
 invertDirection = true
 mouseMoveModifierKey = "option"
 mouseResizeModifierKey = "option"
-overviewGestureEnabled = false
+overviewGestureEnabled = true
 overviewGestureFingerCount = 4
 scrollEnabled = true
 scrollModifierKey = "optionShift"
@@ -101,8 +101,8 @@ windowMoveEnabled = false
 windowMoveFingerCount = 4
 windowResizeEnabled = false
 windowResizeFingerCount = 3
-workspaceSwipeAxis = "vertical"
-workspaceSwipeEnabled = false
+workspaceSwipeAxis = "horizontal"
+workspaceSwipeEnabled = true
 workspaceSwipeFingerCount = 3
 
 [hiddenBar]
@@ -1069,7 +1069,7 @@ binding = "Hyper+Backslash"
 id = "toggleWorkspaceLayout"
 
 [[hotkeys]]
-binding = "Hyper+O"
+binding = "Control+Up Arrow"
 id = "toggleOverview"
 
 [[hotkeys]]

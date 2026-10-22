@@ -87,3 +87,157 @@ data:
             - 52
             - 21
             - 1441792
+      # Mission Control and Spaces shortcuts (disabled for OmniWM).
+      "32":
+        # Mission Control (Ctrl+Up)
+        enabled: false
+        value:
+          type: standard
+          parameters:
+            - 65535
+            - 126
+            - 8650752
+      "34":
+        # Mission Control (Ctrl+Shift+Up)
+        enabled: false
+        value:
+          type: standard
+          parameters:
+            - 65535
+            - 126
+            - 8781824
+      "33":
+        # Application windows (Ctrl+Down)
+        enabled: false
+        value:
+          type: standard
+          parameters:
+            - 65535
+            - 125
+            - 8650752
+      "35":
+        # Application windows (Ctrl+Shift+Down)
+        enabled: false
+        value:
+          type: standard
+          parameters:
+            - 65535
+            - 125
+            - 8781824
+      "79":
+        # Move left a space (Ctrl+Left)
+        enabled: false
+        value:
+          type: standard
+          parameters:
+            - 65535
+            - 123
+            - 8650752
+      "80":
+        # Move left a space (Ctrl+Shift+Left)
+        enabled: false
+        value:
+          type: standard
+          parameters:
+            - 65535
+            - 123
+            - 8781824
+      "81":
+        # Move right a space (Ctrl+Right)
+        enabled: false
+        value:
+          type: standard
+          parameters:
+            - 65535
+            - 124
+            - 8650752
+      "82":
+        # Move right a space (Ctrl+Shift+Right)
+        enabled: false
+        value:
+          type: standard
+          parameters:
+            - 65535
+            - 124
+            - 8781824
+      "118":
+        # Switch to Desktop 1 (Ctrl+1)
+        enabled: false
+        value:
+          type: standard
+          parameters:
+            - 65535
+            - 18
+            - 262144
+      "119":
+        # Switch to Desktop 2 (Ctrl+2)
+        enabled: false
+        value:
+          type: standard
+          parameters:
+            - 65535
+            - 19
+            - 262144
+      "120":
+        # Switch to Desktop 3 (Ctrl+3)
+        enabled: false
+        value:
+          type: standard
+          parameters:
+            - 65535
+            - 20
+            - 262144
+      "121":
+        # Switch to Desktop 4 (Ctrl+4)
+        enabled: false
+        value:
+          type: standard
+          parameters:
+            - 65535
+            - 21
+            - 262144
+      "122":
+        # Switch to Desktop 5 (Ctrl+5)
+        enabled: false
+        value:
+          type: standard
+          parameters:
+            - 65535
+            - 23
+            - 262144
+      "123":
+        # Switch to Desktop 6 (Ctrl+6)
+        enabled: false
+        value:
+          type: standard
+          parameters:
+            - 65535
+            - 22
+            - 262144
+      "124":
+        # Switch to Desktop 7 (Ctrl+7)
+        enabled: false
+        value:
+          type: standard
+          parameters:
+            - 65535
+            - 26
+            - 262144
+      "125":
+        # Switch to Desktop 8 (Ctrl+8)
+        enabled: false
+        value:
+          type: standard
+          parameters:
+            - 65535
+            - 28
+            - 262144
+      "126":
+        # Switch to Desktop 9 (Ctrl+9)
+        enabled: false
+        value:
+          type: standard
+          parameters:
+            - 65535
+            - 25
+            - 262144

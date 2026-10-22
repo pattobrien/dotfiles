@@ -1,0 +1,69 @@
+{
+  "BTTPresetName" : "Default",
+  "BTTPresetColor" : "235.110000, 98.746200, 216.928160, 255.000000",
+  "BTTPresetUUID" : "2F4DA66A-1876-46F1-8F5D-DFD8039BDE34",
+  "BTTPresetContent" : [
+    {
+      "BTTAppBundleIdentifier" : "BT.G",
+      "BTTAppName" : "Global",
+      "BTTAppAutoInvertIcon" : 1,
+      "BTTTriggers" : [
+        {
+          "BTTLastUpdatedAt" : 1792690964.5539989,
+          "BTTTriggerType" : 5,
+          "BTTTriggerTypeDescriptionReadOnly" : "2 Finger Swipe Left",
+          "BTTTriggerClass" : "BTTTriggerTypeMagicMouse",
+          "BTTUUID" : "6B0D0A2E-0D1C-4C3E-9C11-0A1A57E00001",
+          "BTTPredefinedActionType" : 206,
+          "BTTPredefinedActionName" : "Execute Shell Script  or  Task",
+          "BTTShellTaskActionScript" : "/opt/homebrew/bin/omniwmctl command switch-workspace next",
+          "BTTShellTaskActionConfig" : "/bin/bash:::-c:::-:::",
+          "BTTOrder" : 0
+        },
+        {
+          "BTTLastUpdatedAt" : 1792690964.5539989,
+          "BTTTriggerType" : 6,
+          "BTTTriggerTypeDescriptionReadOnly" : "2 Finger Swipe Right",
+          "BTTTriggerClass" : "BTTTriggerTypeMagicMouse",
+          "BTTUUID" : "6B0D0A2E-0D1C-4C3E-9C11-0A1A57E00002",
+          "BTTPredefinedActionType" : 206,
+          "BTTPredefinedActionName" : "Execute Shell Script  or  Task",
+          "BTTShellTaskActionScript" : "/opt/homebrew/bin/omniwmctl command switch-workspace prev",
+          "BTTShellTaskActionConfig" : "/bin/bash:::-c:::-:::",
+          "BTTOrder" : 0
+        },
+        {
+          "BTTLastUpdatedAt" : 1792690964.5539989,
+          "BTTTriggerType" : 44,
+          "BTTTriggerTypeDescriptionReadOnly" : "2 Finger Double-Tap",
+          "BTTTriggerClass" : "BTTTriggerTypeMagicMouse",
+          "BTTUUID" : "6B0D0A2E-0D1C-4C3E-9C11-0A1A57E00003",
+          "BTTPredefinedActionType" : 206,
+          "BTTPredefinedActionName" : "Execute Shell Script  or  Task",
+          "BTTShellTaskActionScript" : "/opt/homebrew/bin/omniwmctl command toggle-overview",
+          "BTTShellTaskActionConfig" : "/bin/bash:::-c:::-:::",
+          "BTTOrder" : 0
+        }
+      ]
+    },
+    {
+      "BTTAppBundleIdentifier" : "BT.L",
+      "BTTAppName" : "Recently Used",
+      "BTTAppAutoInvertIcon" : 1,
+      "BTTTriggers" : [
+
+      ]
+    },
+    {
+      "BTTAppBundleIdentifier" : "com.apple.finder",
+      "BTTAppName" : "Finder",
+      "BTTAppAutoInvertIcon" : 1,
+      "BTTTriggers" : [
+
+      ]
+    }
+  ],
+  "BTTPresetSnapAreas" : [
+
+  ]
+}

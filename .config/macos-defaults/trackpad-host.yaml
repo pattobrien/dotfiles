@@ -1,0 +1,14 @@
+# Per-host trackpad gestures (the copy System Settings reads)
+# Apply with: macos-defaults apply ~/.config/macos-defaults/trackpad-host.yaml
+---
+description: Per-host trackpad gestures
+sudo: false
+current_host: true
+kill:
+  - cfprefsd
+data:
+  NSGlobalDomain:
+    com.apple.trackpad.threeFingerHorizSwipeGesture: 0
+    com.apple.trackpad.threeFingerVertSwipeGesture: 0
+    com.apple.trackpad.fourFingerHorizSwipeGesture: 0
+    com.apple.trackpad.fourFingerVertSwipeGesture: 0
