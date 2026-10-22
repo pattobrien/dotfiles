@@ -268,6 +268,7 @@ minHeight = 420.0
 minWidth = 500.0
 
 [[appRules]]
+assignToWorkspace = "1"
 bundleId = "com.spotify.client"
 id = "2DE9390B-0DB4-4D0C-9ABA-06F76F1D4EA9"
 minHeight = 600.0
@@ -463,6 +464,14 @@ id = "switchWorkspace.8"
 [[hotkeys]]
 binding = "Hyper+Shift+9"
 id = "moveToWorkspace.8"
+
+[[hotkeys]]
+binding = "Hyper+0"
+id = "switchWorkspace.9"
+
+[[hotkeys]]
+binding = "Hyper+Shift+0"
+id = "moveToWorkspace.9"
 
 [[hotkeys]]
 binding = "Unassigned"
@@ -1077,15 +1086,16 @@ binding = "Unassigned"
 id = "toggleSystemStats"
 
 [[workspaces]]
-id = "AD36F001-C57E-41A5-AC1D-DF5249D007F0"
-layoutType = "default"
+displayName = "🎵"
+id = "3F0C2B7E-9A1D-4C55-8E2F-6B7D1A9C4E10"
+layoutType = "niri"
 name = "1"
 
 [workspaces.monitorAssignment]
 type = "main"
 
 [[workspaces]]
-id = "454CECD4-5E9D-4ED1-95D7-979D48817F5F"
+id = "AD36F001-C57E-41A5-AC1D-DF5249D007F0"
 layoutType = "default"
 name = "2"
 
@@ -1093,7 +1103,7 @@ name = "2"
 type = "main"
 
 [[workspaces]]
-id = "BEB842B5-E894-4791-9FD1-397C3CDD3538"
+id = "454CECD4-5E9D-4ED1-95D7-979D48817F5F"
 layoutType = "default"
 name = "3"
 
@@ -1101,7 +1111,7 @@ name = "3"
 type = "main"
 
 [[workspaces]]
-id = "248AA883-2261-4D45-943C-79C0E46A232B"
+id = "BEB842B5-E894-4791-9FD1-397C3CDD3538"
 layoutType = "default"
 name = "4"
 
@@ -1109,9 +1119,17 @@ name = "4"
 type = "main"
 
 [[workspaces]]
-id = "8B8C45D6-CE9E-41D9-BD50-BE4989D5E3DE"
+id = "248AA883-2261-4D45-943C-79C0E46A232B"
 layoutType = "default"
 name = "5"
+
+[workspaces.monitorAssignment]
+type = "main"
+
+[[workspaces]]
+id = "8B8C45D6-CE9E-41D9-BD50-BE4989D5E3DE"
+layoutType = "default"
+name = "6"
 
 [workspaces.monitorAssignment]
 type = "main"
@@ -1120,7 +1138,7 @@ type = "main"
 displayName = "❤️"
 id = "5953F2BF-A378-4266-91B2-287174C4FA4D"
 layoutType = "default"
-name = "6"
+name = "7"
 
 [workspaces.monitorAssignment]
 type = "secondary"
@@ -1129,7 +1147,7 @@ type = "secondary"
 displayName = "🚀"
 id = "A7D5E104-6985-4516-8ED5-07F144F2A33D"
 layoutType = "default"
-name = "7"
+name = "8"
 
 [workspaces.monitorAssignment]
 type = "secondary"
@@ -1137,7 +1155,7 @@ type = "secondary"
 [[workspaces]]
 id = "0E18F6B0-345A-4078-8B21-33641F07A861"
 layoutType = "default"
-name = "8"
+name = "9"
 
 [workspaces.monitorAssignment]
 type = "main"
@@ -1145,7 +1163,7 @@ type = "main"
 [[workspaces]]
 id = "8D4D711C-2B2F-4FEC-86BF-FA952037738A"
 layoutType = "default"
-name = "9"
+name = "10"
 
 [workspaces.monitorAssignment]
 type = "main"
