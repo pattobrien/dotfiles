@@ -20,6 +20,14 @@ local function is_marker(line)
   return line:match(list_marker) ~= nil or line:match(numbered_marker) ~= nil
 end
 
+local function is_blank_item(line)
+  local rest = line:match(list_marker .. "(.*)$") or line:match(numbered_marker .. "(.*)$")
+  if not rest then
+    return false
+  end
+  return rest:gsub("^%[[ xX]%]", ""):match("^%s*$") ~= nil
+end
+
 local function in_reflowable_prose(buf)
   local parser = vim.treesitter.get_parser(buf, "markdown", { error = false })
   if not parser then
@@ -45,7 +53,7 @@ end
 local function line_is_settled(buf)
   local row = vim.api.nvim_win_get_cursor(0)[1]
   local text = vim.api.nvim_buf_get_lines(buf, row - 1, row, false)[1]:gsub("^%s+", "")
-  if text == "" then
+  if text == "" or is_blank_item(text) then
     return false
   end
   if text:find("%s") then

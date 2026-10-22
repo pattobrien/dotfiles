@@ -49,20 +49,20 @@ test("typed prose, lists and quotes wrap exactly as oxfmt would", async ({
   await key(nvim, "<CR>");
   await type(nvim, LONG_BULLET);
   await key(nvim, "<CR>");
-  await type(nvim, "- short");
-  await key(nvim, "<CR>");
+  await type(nvim, "short");
+  await key(nvim, "<CR><C-t>");
   await type(
     nvim,
-    "  - nested bullet that is long enough to wrap onto a second line and then even onto a third line when we keep typing more",
+    "nested bullet that is long enough to wrap onto a second line and then even onto a third line when we keep typing more",
   );
   await key(nvim, "<CR>");
-  await type(nvim, "- sibling nested after a wrapped nested bullet");
-  await key(nvim, "<CR><CR>");
+  await type(nvim, "sibling nested after a wrapped nested bullet");
+  await key(nvim, "<CR><CR><CR>");
   await type(
     nvim,
     "1. numbered item that is long enough to wrap onto a second line and then even onto a third line when we keep typing more and more words",
   );
-  await key(nvim, "<CR><CR>");
+  await key(nvim, "<CR><CR><CR>");
   await type(
     nvim,
     "> quote that is long enough to wrap onto a second line and then even onto a third line when we keep typing more and more words",
@@ -152,35 +152,35 @@ test("code fences and tables are never wrapped", async ({ nvim }) => {
   );
 });
 
-test("Enter after a wrapped bullet starts the next line at the bullet's column", async ({
+test("Enter after a wrapped bullet starts a sibling bullet at the bullet's column", async ({
   nvim,
 }) => {
   await openMarkdown(
     nvim,
     [
       "- top level item that is long enough to wrap onto a second line when it is",
-      "  typed in full",
+      "  continued in full",
       "  - nested item that is long enough to wrap onto a second line when it is",
-      "    typed in full",
+      "    continued in full",
       "",
     ].join("\n"),
   );
-  await appendAt(nvim, 2, 15);
+  await appendAt(nvim, 2, 19);
   await key(nvim, "<CR>");
-  await type(nvim, "- sibling");
+  await type(nvim, "sibling");
   await key(nvim, "<Esc>");
-  await appendAt(nvim, 5, 17);
+  await appendAt(nvim, 5, 21);
   await key(nvim, "<CR>");
-  await type(nvim, "- nested sibling");
+  await type(nvim, "nested sibling");
   await key(nvim, "<Esc>");
 
   expect(await nvim.getBufferContent()).toBe(
     [
       "- top level item that is long enough to wrap onto a second line when it is",
-      "  typed in full",
+      "  continued in full",
       "- sibling",
       "  - nested item that is long enough to wrap onto a second line when it is",
-      "    typed in full",
+      "    continued in full",
       "  - nested sibling",
     ].join("\n"),
   );
@@ -192,7 +192,7 @@ test("a new bullet typed under a wrapped bullet is not merged into it", async ({
   await openMarkdown(nvim, "");
   await key(nvim, "i");
   await type(nvim, LONG_BULLET);
-  await key(nvim, "<CR>");
+  await key(nvim, "<CR><CR>");
   await type(nvim, "1. numbered right below");
   await key(nvim, "<Esc>");
 
