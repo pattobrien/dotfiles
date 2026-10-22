@@ -115,7 +115,6 @@ xcbeautify = "latest"
 xcodes = "latest"
 mas = "latest"
 ghcup = "latest"
-"github:leoafarias/fvm" = "latest"
 wasmer = "latest"
 
 # Infra, Kubernetes & cloud
