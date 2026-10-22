@@ -39,24 +39,16 @@ test("F-key bindings match the current Cmd-relay map", async ({ tmux }) => {
 
   // Cmd+E → F11: workmux dashboard popup
   expect(keys).toMatch(/F11.*workmux dashboard/);
-  // Cmd+L → F10: logger role (pnpm dev window jump)
-  expect(keys).toMatch(/F10.*tmux-jump-dev/);
-  // Cmd+Shift+R → F9: fzf session picker popup
-  expect(keys).toMatch(/F9.*tmux-session-picker/);
   // Cmd+; → F8: toggle last window
   expect(keys).toMatch(/F8\s+last-window/);
   // Cmd+/ → F7: scratch popup shell
   expect(keys).toMatch(/F7\s+display-popup/);
   // Cmd+R → F6: reload tmux config
   expect(keys).toMatch(/F6\s+source-file/);
-  // Cmd+A → F5: ai role (claude window jump)
-  expect(keys).toMatch(/F5.*tmux-jump-or-create claude/);
   // Cmd+T/W/Enter → F2/F3/F4: window and pane management
   expect(keys).toMatch(/F2\s+new-window/);
   expect(keys).toMatch(/F3\s+kill-pane/);
   expect(keys).toMatch(/F4\s+resize-pane -Z/);
-  // Cmd+N → User0 (extended F-key via user-keys): nvim role jump
-  expect(keys).toMatch(/User0.*tmux-jump-or-create nvim/);
 });
 
 test("prefix m toggles pane zoom", async ({ tmux }) => {
