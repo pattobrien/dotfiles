@@ -1,5 +1,7 @@
 os:
-  open: 'test -n "$NVIM" && nvim --server "$NVIM" --remote "{{filename}}" || open "{{filename}}"'
+  open:
+    'test -n "$NVIM" && nvim --server "$NVIM" --remote "{{filename}}" || open
+    "{{filename}}"'
 git:
   diffRenderers:
     - colorArg: always
