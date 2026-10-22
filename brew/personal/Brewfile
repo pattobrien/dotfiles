@@ -1,6 +1,5 @@
 tap "anomalyco/tap", trusted: true
 tap "asmvik/formulae", "https://github.com/asmvik/homebrew-formulae.git", trusted: true
-tap "felixkratz/formulae"
 tap "jurplel/tap"
 tap "koekeishiya/formulae", "https://github.com/asmvik/homebrew-formulae.git", trusted: true
 tap "vjeantet/tap", trusted: true
@@ -76,8 +75,6 @@ brew "zsh-autosuggestions"
 brew "zsh-syntax-highlighting"
 # Simple hotkey-daemon for macOS.
 brew "koekeishiya/formulae/skhd"
-# Highly customizable macOS status bar replacement
-brew "felixkratz/formulae/sketchybar"
 # Send macOS User Notifications from the command line (used by herdr-focus-notify)
 brew "vjeantet/tap/alerter"
 # Password manager that keeps all passwords secure behind one password
@@ -135,7 +132,6 @@ cask "font-geist-mono-nerd-font"
 # Focusrite interface controller for devices of the 4th generation and newer
 cask "focusrite-control-2"
 cask "font-hack-nerd-font"
-cask "font-sketchybar-app-font"
 cask "font-space-mono"
 cask "font-space-mono-nerd-font"
 # Terminal emulator that uses platform-native UI and GPU acceleration
