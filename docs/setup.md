@@ -69,13 +69,6 @@ cp ~/dev/pattobrien/dotfiles/.config/fluidvoice/parakeet_custom_vocabulary.json 
   ~/Library/Application\ Support/FluidVoice/
 ```
 
-A full snapshot of everything that was installed on the old machine (beyond the
-curated `personal`/`work` profiles) is in `brew/all/Brewfile`:
-
-```sh
-brew bundle --file=~/dev/pattobrien/dotfiles/brew/all/Brewfile
-```
-
 **In the private repo** —
 [`pattobrien/machine-backup`](https://github.com/pattobrien/machine-backup)
 holds anything too sensitive or personal for this public repo:
