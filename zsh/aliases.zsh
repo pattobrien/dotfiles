@@ -27,7 +27,7 @@ alias reload="source ~/.zshrc"
 alias resource="source ~/.zshrc"
 alias rss="source ~/.zshrc"
 
-alias claude="doppler run -p platform -c prd -- claude --allow-dangerously-skip-permissions"
+alias claude='DOPPLER_TOKEN=$(doppler configure get token --plain) doppler run -- claude --allow-dangerously-skip-permissions'
 alias cc="claude"
 alias ccr="claude --resume"
 alias ccf="claude --model \"claude-fable-5-1[1m]\""
