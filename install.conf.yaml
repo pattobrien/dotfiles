@@ -102,6 +102,3 @@
     # Make scripts executable
     - command: chmod +x scripts/*
       description: Making scripts executable
-    # NOTE: tmux (TPM + plugins) is set up in the `essentials` step via
-    # ./scripts/setup_tmux.zsh, because TPM's plugin installer needs the tmux
-    # binary, which isn't installed until then.

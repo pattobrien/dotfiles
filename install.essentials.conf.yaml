@@ -24,8 +24,5 @@
         https://github.com/michakfromparis/zsh-pnpm-completions
         ~/.oh-my-zsh/custom/plugins/zsh-pnpm-completions
       description: Installing pnpm completions
-    # tmux is installed by the Brewfile above, so TPM + plugins can be set up now
-    - command: ./scripts/setup_tmux.zsh
-      description: Setting up tmux plugins (TPM)
     - command: ./scripts/setup_herdr.zsh
       description: Compiling herdr pane terminfo (undercurl)

@@ -9,3 +9,5 @@
       description: Trusting mise config
     - command: mise install
       description: Installing tools from mise config
+    - command: ./scripts/setup_tmux.zsh
+      description: Setting up tmux plugins (TPM)
