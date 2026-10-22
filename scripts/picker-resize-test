@@ -1,7 +1,0 @@
-#!/bin/zsh
-# Test: resize Terminal.app from within using xterm escape sequences
-set -euo pipefail
-
-inner_script="${0:A:h}/picker-resize-inner"
-
-open -a Terminal "$inner_script"
