@@ -1,3 +1,0 @@
--- require('vim-tmux-navigator').setup({
---   disable_when_zoomed = false, -- defaults to true
--- })
