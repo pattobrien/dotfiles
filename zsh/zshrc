@@ -164,8 +164,6 @@ fpath=(${XDG_DATA_HOME:-$HOME/.local/share}/mise-completions/zsh $fpath)
 # bin dirs land in front and the deferred activation records the final PATH.
 source ~/dev/pattobrien/dotfiles/zsh/flutter.zsh
 source ~/dev/pattobrien/dotfiles/zsh/go.zsh
-source ~/dev/pattobrien/dotfiles/zsh/php.zsh
-source ~/dev/pattobrien/dotfiles/zsh/ruby.zsh
 
 export PNPM_HOME="$HOME/Library/pnpm"
 export PATH="$PNPM_HOME/bin:$PATH"

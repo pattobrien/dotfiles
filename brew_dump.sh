@@ -1,1 +1,0 @@
-brew bundle dump --force --describe --file=~/dev/pattobrien/dotfiles/brew/personal/Brewfile

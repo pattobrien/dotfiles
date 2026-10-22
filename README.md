@@ -10,7 +10,7 @@ monorepo for TypeScript tools.
 ### Workspace structure
 
 ```
-tools/scripts     # Standalone TS scripts (linear-edit, claude-otel-headers)
+tools/scripts     # Standalone TS scripts (claude-otel-headers)
 tests/e2e         # Terminal e2e tests (kitty, nvim)
 ```
 

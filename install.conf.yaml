@@ -97,7 +97,6 @@
     ~/.local/bin/herdr-quick-actions-popup: scripts/herdr-quick-actions-popup
     ~/.local/bin/herdr-sound: tools/scripts/src/herdr-sound.ts
     ~/.local/bin/hotspot: scripts/hotspot
-    ~/.local/bin/linear-edit: tools/scripts/src/linear-edit.ts
     ~/.local/bin/claude-otel-headers: tools/scripts/src/claude-otel-headers.ts
     ~/.local/bin/tinycast-install: tools/scripts/src/tinycast-install.ts
 
