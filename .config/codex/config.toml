@@ -9,6 +9,8 @@ check_for_update_on_startup = false
 approvals_reviewer = "user"
 
 service_tier = "default"
+# https://github.com/openai/codex/issues/55486
+model_catalog_json = "~/.codex/model-catalog.json"
 
 notify = [
   "/Users/patt/.codex/computer-use/Codex Computer Use.app/Contents/SharedSupport/SkyComputerUseClient.app/Contents/MacOS/SkyComputerUseClient",

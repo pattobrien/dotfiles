@@ -32,7 +32,7 @@ idiomatic_version_file_enable_tools = ["node", "bun", "pnpm", "python", "go"]
 
 [tools]
 claude-code = "latest"
-codex = "latest"
+codex = { version = "latest", postinstall = "mise run codex:models" }
 lua-language-server = "latest"
 neovim = "latest"
 node = "latest"
@@ -208,6 +208,17 @@ postinstall = [
 [tasks.dotfiles]
 description = "Navigate to dotfiles"
 run = "cd ~/dev/pattobrien/dotfiles && exec $SHELL"
+
+[tasks."codex:models"]
+description = "Refresh the pinned Codex model catalog at ~/.codex/model-catalog.json"
+run = '''
+set -e
+home="$(mktemp -d)"
+ln -s "$HOME/.codex/auth.json" "$home/auth.json"
+CODEX_HOME="$home" codex debug models > "$home/model-catalog.json"
+mv "$home/model-catalog.json" "$HOME/.codex/model-catalog.json"
+rm -rf "$home"
+'''
 
 [tasks."patch:vfox-pulumi"]
 description = "Apply dotfiles/patches to the vfox-pulumi mise plugin (re-run after `mise plugins update`)"
