@@ -64,7 +64,6 @@ node = "latest"
 "npm:turbo" = "latest"
 "npm:vercel" = "latest"
 "npm:wrangler" = "latest"
-"github:voidzero-dev/vite-plus" = "latest"
 pnpm = "latest"
 swift = "latest"
 sentry-cli = "latest"
@@ -187,6 +186,14 @@ docker-cli = "latest"
 # cli stopwatch clock, for timing perf using video recording
 "go:github.com/MHNightCat/tshock" = "latest"
 ffmpeg = "latest"
+
+[tools."github:voidzero-dev/vite-plus"]
+version = "latest"
+postinstall = '''
+cd "$MISE_TOOL_INSTALL_PATH"
+ln -sf vp vpr
+ln -sf vp vpx
+'''
 
 [hooks]
 postinstall = [
