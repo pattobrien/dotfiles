@@ -303,18 +303,6 @@ last_revision = "e2a9a6d5165ac162990b9491eb6b483947736072"
 source_type = "git"
 source = "https://github.com/superultrainc/superwhisper-codex.git"
 
-[marketplaces.worktrunk]
-last_updated = "2026-08-21T01:45:24Z"
-last_revision = "9c37aae5b9af7e5a38306479b2453c919ea7b99c"
-source_type = "git"
-source = "https://github.com/max-sixty/worktrunk.git"
-
-[marketplaces.ponytail]
-last_updated = "2026-08-18T07:30:40Z"
-last_revision = "2ed6c52c9d7e5e56942508591085fd45dea277d3"
-source_type = "git"
-source = "https://github.com/DietrichGebert/ponytail.git"
-
 [marketplaces.iso-24495]
 last_updated = "2026-08-18T07:31:11Z"
 last_revision = "dab0e5b6f54ab1c35bbc22e8ff507284843e8a03"
@@ -402,9 +390,6 @@ enabled = false
 [plugins."github@openai-curated-remote"]
 enabled = false
 
-[plugins."ponytail@ponytail"]
-enabled = false
-
 [plugins."codex-app-tools@openai-bundled"]
 enabled = true
 
@@ -456,15 +441,6 @@ trusted_hash = "sha256:e986cf380780a3ff40357a4332ba667f9a7f7322d7aae2adda2217b64
 
 [hooks.state."/Users/patt/.codex/hooks.json:session_start:0:0"]
 trusted_hash = "sha256:8a71ac0004e4999a492d7f42789e6d25ae396141984b9e0f8659abdb9b2a05b3"
-
-[hooks.state."ponytail@ponytail:hooks/claude-codex-hooks.json:session_start:0:0"]
-trusted_hash = "sha256:5f81d38f47448a1581c08ec877e044d9e04dd6f814dce3f2671f7a8edadd719b"
-
-[hooks.state."ponytail@ponytail:hooks/claude-codex-hooks.json:user_prompt_submit:0:0"]
-trusted_hash = "sha256:6a6f42bc3b58d6262db38bfd74d7f340fcca2b09cdb134aad365063f0bfefca4"
-
-[hooks.state."ponytail@ponytail:hooks/claude-codex-hooks.json:subagent_start:0:0"]
-trusted_hash = "sha256:1423b56c1322f96c8f74c51c1e7ae9a047b904c1fa43ee9165d462fd7a6e70ef"
 
 [hooks.state."/Users/patt/.codex/hooks.json:pre_tool_use:0:0"]
 trusted_hash = "sha256:ba3f90c26a8af1dfdc5081cd0818f7e36f06e29590557a4b3a6ad3b0810cba7c"
@@ -928,26 +904,6 @@ global = "cursor"
 
 [shell_environment_policy.set]
 NODE_REPL_TRUSTED_BROWSER_CLIENT_SHA256S = "e7fc907079d6797973cb63f97d2562c965aad8d33f52fb726005bf6702f30afc"
-
-[[skills.config]]
-name = "ponytail:ponytail-audit"
-enabled = false
-
-[[skills.config]]
-name = "ponytail:ponytail-review"
-enabled = false
-
-[[skills.config]]
-name = "ponytail:ponytail-debt"
-enabled = false
-
-[[skills.config]]
-name = "ponytail:ponytail-gain"
-enabled = false
-
-[[skills.config]]
-name = "ponytail:ponytail-help"
-enabled = false
 
 [[skills.config]]
 name = "tailscale"
