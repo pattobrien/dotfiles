@@ -8,6 +8,7 @@ local markers = {
   "vite.config.mjs",
   "vite.config.cjs",
   ".oxfmtrc.json",
+  ".oxfmtrc.jsonc",
 }
 
 local resolve_vite = [[
@@ -16,6 +17,27 @@ import("vite-plus").then(async ({ resolveConfig }) => {
   process.stdout.write(config.fmt ? String(config.fmt.printWidth ?? 0) : "");
 });
 ]]
+
+local print_width_query = vim.treesitter.query.parse(
+  "json",
+  [[
+  (document (object (pair
+    key: (string (string_content) @key)
+    value: (number) @value
+    (#eq? @key "printWidth"))))
+]]
+)
+
+local function read_rc(config)
+  local text = table.concat(vim.fn.readfile(config), "\n")
+  local root = vim.treesitter.get_string_parser(text, "json"):parse()[1]:root()
+  for id, node in print_width_query:iter_captures(root, text) do
+    if print_width_query.captures[id] == "value" then
+      return tonumber(vim.treesitter.get_node_text(node, text))
+    end
+  end
+  return 0
+end
 
 local cache = {}
 local waiting = {}
@@ -37,9 +59,8 @@ local function resolve_config(config, cb)
     return table.insert(waiting[config], cb)
   end
   waiting[config] = { cb }
-  if vim.fs.basename(config) == ".oxfmtrc.json" then
-    local ok, rc = pcall(vim.json.decode, table.concat(vim.fn.readfile(config), "\n"))
-    return settle(config, ok and type(rc) == "table" and (rc.printWidth or 0) or false)
+  if vim.fs.basename(config):match("^%.oxfmtrc%.jsonc?$") then
+    return settle(config, read_rc(config))
   end
   vim.system({ "node", "-e", resolve_vite, config }, { cwd = vim.fs.dirname(config) }, function(out)
     vim.schedule(function()
@@ -67,13 +88,19 @@ local function find_width(dir, cb)
   end
 end
 
+local function editorconfig_width(buf)
+  local editorconfig = vim.b[buf].editorconfig or {}
+  return tonumber(editorconfig.max_line_length)
+end
+
 local function apply(buf, width)
   if not vim.api.nvim_buf_is_valid(buf) then
     return
   end
   if width == 0 then
-    local editorconfig = vim.b[buf].editorconfig or {}
-    width = tonumber(editorconfig.max_line_length) or 100
+    width = editorconfig_width(buf) or 100
+  elseif not width then
+    width = editorconfig_width(buf)
   end
   vim.b[buf].print_width = width
   if width and vim.bo[buf].filetype == "markdown" then

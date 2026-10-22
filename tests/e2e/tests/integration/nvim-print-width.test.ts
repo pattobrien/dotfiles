@@ -98,3 +98,36 @@ test(".oxfmtrc.json printWidth applies, and buffers without a config keep the de
   await openFile(nvim, path.join(plain, "note.md"));
   await expectWidths(nvim, { textwidth: 80, ruler: "80" });
 });
+
+test(".oxfmtrc.jsonc with comments and trailing commas applies its printWidth", async ({
+  nvim,
+}) => {
+  const dir = await workspace({
+    ".oxfmtrc.jsonc": [
+      "// formatter config",
+      "{",
+      '  "proseWrap": "always", // wrap prose',
+      '  "overrides": [{ "files": ["*.ts"], "options": { "printWidth": 40 } }],',
+      '  "printWidth": 65,',
+      "}",
+      "",
+    ].join("\n"),
+    "note.md": "# Title\n",
+  });
+  await openFile(nvim, path.join(dir, "note.md"));
+  await expectWidths(nvim, { width: 65, textwidth: 65, ruler: "65" });
+});
+
+test("an .editorconfig max_line_length drives the ruler when no formatter config exists", async ({
+  nvim,
+}) => {
+  const dir = await workspace({
+    ".editorconfig": "root = true\n[*]\nmax_line_length = 70\n",
+    "note.md": "# Title\n",
+    "app.ts": "export const x = 1;\n",
+  });
+  await openFile(nvim, path.join(dir, "note.md"));
+  await expectWidths(nvim, { width: 70, textwidth: 70, ruler: "70" });
+  await openFile(nvim, path.join(dir, "app.ts"));
+  await expectWidths(nvim, { width: 70, textwidth: 70, ruler: "70" });
+});
