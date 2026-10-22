@@ -102,6 +102,8 @@
     "deny": [
       "Bash(npm *)",
       "Bash(npx *)",
+      "Bash(nsc create *)",
+      "Bash(nsc cluster create *)",
       "mcp__ide__getDiagnostics",
       "Artifact"
     ],
