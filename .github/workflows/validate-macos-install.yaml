@@ -15,15 +15,6 @@ name: Validate macOS Install
 # app-specific-password secret.
 
 on:
-  pull_request:
-    paths:
-      - "install"
-      - "install*.conf.yaml"
-      - "scripts/**"
-      - "brew/**"
-      - ".config/mise/config.toml"
-      - ".config/macos-defaults/**"
-      - ".github/workflows/validate-macos-install.yaml"
   workflow_dispatch:
 
 # A new push to the PR cancels the in-flight run (macOS runners are slow + paid).
