@@ -184,6 +184,7 @@ docker-cli = "latest"
 "go:github.com/MHNightCat/tshock" = "latest"
 ffmpeg = "latest"
 "npm:executor" = "2.0.0-beta.25"
+"npm:obsidian-headless" = { version = "latest", allow_builds = ["better-sqlite3"] }
 
 [tools."github:voidzero-dev/vite-plus"]
 version = "latest"
@@ -192,6 +193,12 @@ cd "$MISE_TOOL_INSTALL_PATH"
 ln -sf vp vpr
 ln -sf vp vpx
 '''
+
+[bootstrap.services.obsidian-sync-shed-skills]
+scope = "user"
+command = "/opt/homebrew/bin/mise exec npm:obsidian-headless -- ob sync --continuous --path /Users/patt/dev/pattobrien/shed/plugins/patt/skills"
+restart = "always"
+requires_tools = true
 
 [hooks]
 postinstall = [
