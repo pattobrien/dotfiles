@@ -29,3 +29,4 @@ vim.api.nvim_create_autocmd("BufWritePost", {
 })
 
 require("markdown_prose").setup()
+require("print_width").setup()

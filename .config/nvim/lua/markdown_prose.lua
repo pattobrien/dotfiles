@@ -92,7 +92,7 @@ end
 
 function M.attach(buf)
   if vim.bo[buf].textwidth == 0 then
-    vim.bo[buf].textwidth = 80
+    vim.bo[buf].textwidth = vim.b[buf].print_width or 80
   end
   vim.bo[buf].autoindent = true
   vim.bo[buf].smartindent = false
