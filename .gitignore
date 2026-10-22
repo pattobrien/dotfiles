@@ -2,19 +2,13 @@
 .DS_Store
 .pnpm-store
 
-# **/Brewfile.lock.json
-.archive/**/*
 .env*
-# herdr-focus-notify's .env is behavior config (no secrets), keep it synced
-!.config/herdr/plugins/config/herdr-focus-notify/.env
 # herdr-navigator runtime state (update-check timestamp, jump-back target), not config
 .config/herdr/plugins/config/herdr-navigator/update-check
 .config/herdr/plugins/config/herdr-navigator/jump-back-workspace
 # herdr-lazy runtime state (bootstrap marker), not config
 .config/herdr/plugins/config/herdr-lazy/bootstrapped
 .vscode/**/*
-.dart_tool/**/*
-!.config
 claude/**/*.local.*
 claude/skills/synced/
 .claude/worktrees/
@@ -37,8 +31,5 @@ lerna-debug.log*
 
 # Editor
 .idea
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
 *.sw?
+!.config
