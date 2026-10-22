@@ -72,8 +72,8 @@ every reference as a markdown link, so I can click it in chat:
 
 ## Devboxes
 
-- Never create a devbox without `--blueprint`; the blueprint owns size and
-  idle timeout, so never pass `--size`.
+- Never create a devbox without `--blueprint macos-agents`; the blueprint owns
+  size and idle timeout, so never pass `--size`.
 - `devbox shutdown <name> --force` is the last step of every devbox task, and
   task markers are cleared before any local-only phase.
 - Never build on a devbox what CI already builds; a pushed branch always has a
