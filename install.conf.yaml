@@ -61,7 +61,6 @@
     ~/Documents/superwhisper/modes: .config/superwhisper/modes
     ~/.config/karabiner: .config/karabiner
     ~/.config/ghostty: .config/ghostty
-    ~/.config/cmux: .config/cmux
     ~/.config/lazygit: .config/lazygit
     ~/.config/bat: .config/bat
     ~/.config/television: .config/television
