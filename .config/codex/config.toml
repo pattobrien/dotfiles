@@ -14,7 +14,7 @@ notify = [
   "/Users/patt/.codex/computer-use/Codex Computer Use.app/Contents/SharedSupport/SkyComputerUseClient.app/Contents/MacOS/SkyComputerUseClient",
   "turn-ended",
   "--previous-notify",
-  "[\"\\/Users\\/pattobrien\\/dev\\/pattobrien\\/dotfiles\\/.config\\/codex\\/notify.zsh\"]",
+  "[\"\\/Users\\/patt\\/dev\\/pattobrien\\/dotfiles\\/.config\\/codex\\/notify.zsh\"]",
 ]
 
 [projects."/Users/pattobrien/dev/getdots/meagain-bare"]
