@@ -42,8 +42,6 @@
     ~/.config/git: .config/git
     ~/.config/kitty: .config/kitty
     ~/.config/gh: .config/gh
-    ~/.config/yabai: .config/yabai
-    ~/.config/skhd: .config/skhd
     ~/.config/herdr/config.toml: .config/herdr/config.toml
     ~/.config/herdr/plugins/config: .config/herdr/plugins/config
     ~/.config/herdr-automatic-rename: .config/herdr-automatic-rename
@@ -54,7 +52,6 @@
     ~/.config/chat-tui/config.json: .config/chat-tui/config.json
     ~/.config/mise/config.toml: .config/mise/config.toml
     ~/.config/nvim: .config/nvim
-    ~/.config/aerospace: .config/aerospace
     ~/.config/omniwm/settings.toml: .config/omniwm/settings.toml
     ~/.config/tinycast/settings.json: .config/tinycast/settings.json
     ~/Documents/superwhisper/settings: .config/superwhisper/settings

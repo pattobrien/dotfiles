@@ -7,14 +7,6 @@
 - shell:
     - command: ./scripts/setup_omz.zsh
       description: Installing Oh My Zsh
-    # Trust the third-party taps used across all profiles before any brew bundle.
-    # Recent Homebrew refuses to load formulae from untrusted taps; trust is
-    # global + persistent (trust.json), so doing it once here also covers the
-    # personal bundle run later.
-    # koekeishiya/formulae (skhd/yabai) now redirects upstream to asmvik/formulae,
-    # so both names are trusted to cover the redirect on fresh installs.
-    - command: brew trust --tap asmvik/formulae koekeishiya/formulae
-      description: Trusting third-party Homebrew taps
     - command: brew bundle --file brew/essentials/Brewfile
       description: Installing essential packages
     - command: ./scripts/dequarantine.zsh

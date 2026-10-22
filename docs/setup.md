@@ -16,7 +16,7 @@ git clone https://github.com/pattobrien/dotfiles.git ~/dev/pattobrien/dotfiles
 
 NOTE: [`dotbot`](https://github.com/anishathalye/dotbot) is a utility app that
 supports syncing the settings of various applications to dotfiles (e.g. `kitty`,
-`skhd`).
+`nvim`).
 
 ```sh
 # symlink dotfiles into ~ and create ~/dev
