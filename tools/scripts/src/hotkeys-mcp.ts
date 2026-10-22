@@ -26,14 +26,47 @@ type Tool = (typeof tools)[number];
 const section = (path: string, source: string) =>
   `### ${path}\n\n${source.trim()}\n`;
 
+const gestureKeys: Record<string, string> = {
+  mouseMoveModifierKey:
+    "hold this modifier and left-click-drag a tiled window onto another to swap them, in both layouts; on Niri add Shift to insert into a column instead; off disables it",
+  mouseResizeModifierKey:
+    "hold this modifier and right-click-drag a tiled window to resize it",
+  scrollModifierKey:
+    "hold this modifier and scroll the mouse wheel to scroll Niri columns",
+  scrollEnabled:
+    "trackpad column scrolling with fingerCount fingers, and modifier + wheel scrolling",
+  fingerCount: "trackpad column-scroll finger count",
+  workspaceSwipeEnabled:
+    "trackpad swipe with workspaceSwipeFingerCount fingers along workspaceSwipeAxis switches workspace",
+  overviewGestureEnabled:
+    "trackpad swipe up with overviewGestureFingerCount fingers opens Overview, swipe down closes it",
+  windowMoveEnabled:
+    "trackpad-only: drag with windowMoveFingerCount fingers, without clicking, to swap the tiled window under the cursor; unrelated to mouseMoveModifierKey",
+  windowResizeEnabled:
+    "trackpad-only: drag with windowResizeFingerCount fingers, without clicking, to resize the tiled window under the cursor; unrelated to mouseResizeModifierKey",
+};
+
+const annotateGestures = (block: string) =>
+  block
+    .split("\n")
+    .map((line) => {
+      const key = line.split(" = ")[0];
+      const note = gestureKeys[key];
+      return note ? `${line}  # ${note}` : line;
+    })
+    .join("\n");
+
 const omniwm = async () => {
   const source = await readFile(paths.omniwm, "utf8");
   const keep = /^\[(general|gestures)\]|^\[\[hotkeys\]\]/;
-  const blocks = source.split(/\n(?=\[)/).filter((block) => keep.test(block));
-  const hotkeys = blocks.filter(
-    (block) => !block.includes('binding = "Unassigned"'),
-  );
-  return section(paths.omniwm, hotkeys.join("\n"));
+  const blocks = source
+    .split(/\n(?=\[)/)
+    .filter((block) => keep.test(block))
+    .filter((block) => !block.includes('binding = "Unassigned"'))
+    .map((block) =>
+      block.startsWith("[gestures]") ? annotateGestures(block) : block,
+    );
+  return section(paths.omniwm, blocks.join("\n"));
 };
 
 type Keymap = {
