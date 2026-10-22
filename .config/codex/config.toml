@@ -208,7 +208,12 @@ enabled = false
 [apps.connector_20205bf7d4e99a89d7154bb849718324]
 enabled = false
 
+[analytics]
+enabled = false
+
 [features]
+apps = false
+remote_plugin = false
 browser_use = true
 browser_use_external = true
 computer_use = true
@@ -285,30 +290,6 @@ source = "/Users/patt/.codex/.tmp/bundled-marketplaces/openai-bundled"
 source_type = "local"
 source = "/Users/patt/.cache/codex-runtimes/codex-primary-runtime/plugins/openai-primary-runtime"
 
-[marketplaces.RevenueCat]
-last_updated = "2026-08-19T18:32:44Z"
-last_revision = "1c7e6899f1114023adbe15bc301186280004b517"
-source_type = "git"
-source = "https://github.com/RevenueCat/ai-toolkit.git"
-
-[marketplaces.railway-skills]
-last_updated = "2026-05-27T19:03:24Z"
-last_revision = "7718b39037adb6fb33948ff751be7f7086f2da83"
-source_type = "git"
-source = "https://github.com/railwayapp/railway-skills.git"
-
-[marketplaces.superwhisper]
-last_updated = "2026-07-25T08:27:24Z"
-last_revision = "e2a9a6d5165ac162990b9491eb6b483947736072"
-source_type = "git"
-source = "https://github.com/superultrainc/superwhisper-codex.git"
-
-[marketplaces.iso-24495]
-last_updated = "2026-08-18T07:31:11Z"
-last_revision = "dab0e5b6f54ab1c35bbc22e8ff507284843e8a03"
-source_type = "git"
-source = "https://github.com/GaZmagik/iso-24495.git"
-
 [plugins."github@openai-curated"]
 enabled = true
 
@@ -335,9 +316,6 @@ enabled = true
 
 [plugins."spreadsheets@openai-primary-runtime"]
 enabled = false
-
-[plugins."railway@railway-skills"]
-enabled = true
 
 [plugins."sentry@openai-curated"]
 enabled = true
