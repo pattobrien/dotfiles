@@ -12,7 +12,7 @@ return {
   {
     "nvim-treesitter/nvim-treesitter",
     opts = {
-      indent = { enable = true },
+      indent = { enable = true, disable = { "markdown" } },
       ensure_installed = { "json5", "caddy" }, -- hujson, Caddyfile
     },
   },

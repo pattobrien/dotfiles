@@ -27,3 +27,5 @@ vim.api.nvim_create_autocmd("BufWritePost", {
     vim.notify(string.format("%s saved (%dL)", name, lines), vim.log.levels.INFO)
   end,
 })
+
+require("markdown_prose").setup()
