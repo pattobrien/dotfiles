@@ -20,7 +20,10 @@ type LinearAccount =
 
 const bearer = (account: LinearAccount) => ({
   Authorization:
-    "Bearer " + (account.method === "apiKey" ? account.fields.token : account.fields.access_token),
+    "Bearer " +
+    (account.method === "apiKey"
+      ? account.fields.token
+      : account.fields.access_token),
 });
 
 const agent = (scopes: string[]) =>
@@ -40,10 +43,24 @@ const linear = defineProvider({
       label: "Personal API key",
       fields: object({ token: string({ minLength: 1 }) }),
     }),
-    build: agent(["read", "write", "comments:create", "issues:create", "app:mentionable", "app:assignable"]),
-    triage: agent(["read", "write", "comments:create", "issues:create", "app:mentionable"]),
+    build: agent([
+      "read",
+      "write",
+      "comments:create",
+      "issues:create",
+      "app:mentionable",
+      "app:assignable",
+    ]),
+    triage: agent([
+      "read",
+      "write",
+      "comments:create",
+      "issues:create",
+      "app:mentionable",
+    ]),
   },
-  health: (check) => mcpHealth(check, { url, headers: bearer(check.account as LinearAccount) }),
+  health: (check) =>
+    mcpHealth(check, { url, headers: bearer(check.account as LinearAccount) }),
 });
 
 const requirements = { user: { accounts: { identities: linear.many() } } };
@@ -60,7 +77,10 @@ export default defineApp(requirements, async (ctx) => ({
           cache: ctx.cache,
           signal: ctx.signal,
         }),
-        (tool) => (toolAnnotations(tool)?.destructiveHint === true ? always() : undefined),
+        (tool) =>
+          toolAnnotations(tool)?.destructiveHint === true
+            ? always()
+            : undefined,
       ),
     { signal: ctx.signal },
   ),

@@ -1,4 +1,12 @@
-import { defineApp, defineProvider, object, secrets, string, toolAnnotations, withApprovals } from "apps";
+import {
+  defineApp,
+  defineProvider,
+  object,
+  secrets,
+  string,
+  toolAnnotations,
+  withApprovals,
+} from "apps";
 import { mcpHealth, mcpRouter } from "apps/mcp";
 import { always } from "apps/operations/approval";
 
@@ -30,6 +38,7 @@ export default defineApp(requirements, async (ctx) => ({
       cache: ctx.cache,
       signal: ctx.signal,
     }),
-    (tool) => (toolAnnotations(tool)?.readOnlyHint === true ? undefined : always()),
+    (tool) =>
+      toolAnnotations(tool)?.readOnlyHint === true ? undefined : always(),
   ),
 }));
