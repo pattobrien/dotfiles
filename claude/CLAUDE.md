@@ -63,6 +63,12 @@ every reference as a markdown link, so I can click it in chat:
 - If your conclusion contradicts what I said about my own system, check the
   source first.
 
+## Computer Use
+
+- Before opening, focusing, clicking, typing into, or screenshotting anything on
+  my desktop, read
+  `~/dev/pattobrien/notes/memories/dotfiles/no-computer-use-on-patts-desktop.md`.
+
 ## Herdr
 
 - Never launch anything with focus; always `--no-focus`, then tell me where it
