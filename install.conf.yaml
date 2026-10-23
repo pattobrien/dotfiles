@@ -30,7 +30,10 @@
     ~/.pi/agent/AGENTS.md: claude/CLAUDE.md
     ~/.pi/agent/settings.json: .config/pi/settings.json
     ~/.pi/agent/mcp.json: .config/pi/mcp.json
+    ~/.pi/agent/image-placeholder.json: .config/pi/image-placeholder.json
+    ~/.pi/agent/extension-settings/pi-ui-tweaks.json: .config/pi/extension-settings/pi-ui-tweaks.json
     ~/.config/opencode/opencode.jsonc: .config/opencode/opencode.jsonc
+    ~/.config/opencode/cli.json: .config/opencode/cli.json
     ~/.tmux.conf: .config/tmux/.tmux.conf
     ~/.ssh/config: .config/ssh/config
     ~/.hushlogin: hushlogin
