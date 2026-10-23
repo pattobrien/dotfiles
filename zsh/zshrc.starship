@@ -181,3 +181,8 @@ export LINEAR_VCS="git"
 export LINEAR_WORKSPACE="finedesigns"
 # repo .env files hold op:// references, which the CLI would read as the API key
 export LINEAR_IGNORE_ENV_FILE=1
+
+# Vite+ completions and the `vp` function (compdef is available now). The env
+# file also prepends its node/pnpm shims, so it runs on a local one-entry PATH
+# that is discarded; `vp` itself comes from mise.
+() { local PATH=$HOME/.vite-plus/bin; . "$HOME/.vite-plus/env" }
