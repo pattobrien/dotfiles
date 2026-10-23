@@ -26,6 +26,11 @@ data:
     NSAutomaticSpellingCorrectionEnabled: true
     # Show text completion suggestions
     NSAutomaticTextCompletionEnabled: true
+    # Key repeat: 5 = ~75 ms per repeat (stock 6); 12 = ~180 ms initial delay (stock 25)
+    KeyRepeat: 5
+    InitialKeyRepeat: 12
+    # Holding a key repeats it instead of showing the accent popover
+    ApplePressAndHoldEnabled: false
     # Fn key behavior: false=show emoji picker, true=F1-F12 keys
     com.apple.keyboard.fnState: false
     # Mouse tracking speed (0.0 to 3.0)

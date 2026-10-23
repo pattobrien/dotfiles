@@ -92,6 +92,8 @@
     ~/.local/bin/herdr-sound: tools/scripts/src/herdr-sound.ts
     ~/.local/bin/claude-otel-headers: tools/scripts/src/claude-otel-headers.ts
     ~/.local/bin/tinycast-install: tools/scripts/src/tinycast-install.ts
+    ~/.local/bin/apply-licenses: tools/scripts/src/apply-licenses.ts
+    ~/.local/bin/computer-use-guard: tools/scripts/src/computer-use-guard.ts
 
 - create:
     - ~/dev

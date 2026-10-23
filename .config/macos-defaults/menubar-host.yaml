@@ -1,0 +1,10 @@
+# Per-host menu bar settings (ByHost plist)
+# Apply with: macos-defaults apply ~/.config/macos-defaults/menubar-host.yaml
+---
+description: Per-host menu bar settings
+sudo: false
+current_host: true
+kill: [SystemUIServer]
+data:
+  com.apple.Spotlight:
+    MenuItemHidden: true

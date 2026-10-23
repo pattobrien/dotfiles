@@ -2,10 +2,9 @@
 # Apply with: macos-defaults apply ~/.config/macos-defaults/shottr.yaml
 #
 # Not included here:
-# - license key (kc-license): an obfuscated value, NOT the raw key stored in
-#   1Password ("Shottr License"). Install it with Shottr quit:
-#     defaults write cc.ffitch.shottr kc-license "$(gh api repos/pattobrien/machine-backup/contents/shottr/shottr-full.yaml --jq .content | base64 -d | awk '/kc-license:/ {print $2}' | tr -d '"')"
-#   (or paste the raw key from 1Password into Shottr's license field)
+# - license (kc-license, kc-vault): obfuscated values, not the raw key. They live
+#   in the "defaults" section of the 1Password item "Shottr License"; run
+#   `apply-licenses` (tools/scripts/src/apply-licenses.ts) to write them
 # - screenshot folder sandbox bookmark: re-pick the folder in Shottr Preferences
 #   after first launch so the sandboxed app regains write access
 ---

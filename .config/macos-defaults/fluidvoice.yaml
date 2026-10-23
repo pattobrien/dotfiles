@@ -6,6 +6,8 @@
 # - analytics IDs, update-check state, window frames, provider fingerprints: machine state
 # - custom vocabulary: copy .config/fluidvoice/parakeet_custom_vocabulary.json to
 #   ~/Library/Application Support/FluidVoice/ (see README)
+# - MicrophonePriority: plist data (ordered mic list: AirPods Pro #2, AirPods Pro,
+#   iPhone, MacBook mic); re-order in-app
 # - HotkeyShortcutKey: plist *data* type, which macos-defaults apply writes back
 #   as a string. Set it manually instead (hex is JSON:
 #   {"modifierKeyCodes":[61],"keyCode":61,"modifierFlagsRawValue":0} = hold Right Option):
@@ -23,24 +25,33 @@ data:
     PromptModeShortcutEnabled: false
     # --- Speech / AI models ---
     SelectedSpeechModel: parakeet-tdt-v2
-    SelectedProviderID: apple-intelligence
+    SelectedProviderID: fluid-1
     SelectedModelByProvider:
       fluid-1: fluid-1
       "custom:fluid-1": fluid-1
-      apple-intelligence: System Model
     FluidIntelligenceSelectedModelID: fluid-1
+    PrivateAIProviderContextTokenLimit: 4096
     # --- Dictation prompts ---
     SelectedDictationPromptID: __FLUID_1__
     DictationPromptOff: false
     DictationPromptRoutingScope: selectedAppsOnly
     SecondaryDictationPromptOff: true
     SecondaryPromptShortcutRemoved: true
+    # --- Text insertion ---
+    TextInsertionMode: reliablePaste
+    LiteralDictationFormattingEnabled: true
+    PronunciationMatchingEnabled: false
+    UserTypingWPM: 60
     # --- Audio devices (AirPods travel between machines) ---
     PreferredInputDeviceUID: "FC-B2-14-EE-4F-36:input"
     PreferredOutputDeviceUID: "FC-B2-14-EE-4F-36:output"
+    MicrophoneSelectionMode: manual
+    ShowMicrophoneChangeAlerts: false
+    ExperimentalDirectAudioCaptureEnabled: false
     # --- App behavior ---
     LaunchAtStartup: true
     ShowInDock: false
+    ShowMainWindowAtLoginLaunch: false
     IntendedDockVisibility: false
     AutoUpdateCheckEnabled: false
     EnableDebugLogs: true

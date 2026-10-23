@@ -54,14 +54,22 @@ git clone https://github.com/michakfromparis/zsh-pnpm-completions.git
 Settings snapshots from the previous MacBook live in two places:
 
 **In this repo** — `.config/macos-defaults/exports/` has `macos-defaults` YAML
-dumps for Raycast, Shottr, superwhisper, FluidVoice, eul, and BetterTouchTool. Apply each with:
+dumps for Raycast, Shottr, superwhisper, FluidVoice, eul, BetterTouchTool, Rex,
+and KeyCastr. The curated files one level up are the ones to apply:
 
 ```sh
-macos-defaults apply ~/.config/macos-defaults/exports/<app>.yaml
+macos-defaults apply ~/.config/macos-defaults/<app>.yaml
 ```
 
-Then restart the app (or log out/in). Also copy the FluidVoice custom vocabulary
-into place:
+`macos-defaults` has no working dry run (`-d` is accepted but ignored), so every
+`apply` writes and kills the apps in `kill:`. Then restart the app (or log
+out/in). App licenses come from 1Password:
+
+```sh
+apply-licenses
+```
+
+Also copy the FluidVoice custom vocabulary into place:
 
 ```sh
 mkdir -p ~/Library/Application\ Support/FluidVoice
@@ -76,9 +84,8 @@ holds anything too sensitive or personal for this public repo:
 - `raycast/*.rayconfig` — the official Raycast export (extensions, snippets,
   quicklinks, hotkeys, extension tokens). Import via Raycast Settings → Advanced
   → Import. Prefer this over the raycast.yaml defaults dump.
-- `shottr/shottr-full.yaml` — unredacted Shottr defaults **including the license
-  key** (`kc-license`), which is stripped from the public export. Apply this one
-  instead of `exports/shottr.yaml` on a trusted machine.
+- `shottr/shottr-full.yaml` — unredacted Shottr defaults including the license
+  values, which `apply-licenses` now reads from 1Password instead.
 - `chrome/` — Bookmarks, Preferences, and extension ID lists for all three
   profiles, in case Chrome profile sign-in sync misses anything.
 - `superwhisper/` — defaults plist plus agent/database dirs (models re-download

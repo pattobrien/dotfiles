@@ -4,59 +4,102 @@ sudo: false
 current_host: false
 data:
   com.superduper.superwhisper:
-    NSStatusItem Preferred Position Item-0: 408.0
-    NSWindow Frame NSSpellCheckerSpellingPanel: "814 645 431 289 0 0 2560 1410 "
+    KeyboardShortcuts_toggleRecording: '{"carbonModifiers":6400,"carbonKeyCode":63,"mouseButtonNumbers":[]}'
+    NSNavPanelExpandedSizeForOpenMode: "{880, 448}"
+    NSOSPLastRootDirectory: 626f6f6ba8020000000005104000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000088010000040000000303000000000020050000000101000055736572730000000400000001010000706174740900000001010000446f63756d656e74730000000c0000000106000010000000200000002c0000000800000004030000384800000000000008000000040300008355050000000000080000000403000097972100000000000c00000001060000540000006400000074000000080000000004000041befdbe93000000180000000102000002000000000000000f0000000000000000000000000000000000000001050000080000000403000001000000000000000400000003030000f5010000080000000109000066696c653a2f2f2f0c000000010100004d6163696e746f7368204844080000000403000000906293e7000000080000000004000041c816b465800000240000000101000041314141303235332d444635372d344144342d413839442d31443838353746333131383718000000010200008100000001000000ef13000001000000000000000000000001000000010100002f000000d8000000feffffff01000000000000001100000004100000400000000000000005100000840000000000000010100000a800000000000000401000009800000000000000022000007c0100000000000005200000ec0000000000000010200000fc00000000000000112000003001000000000000122000001001000000000000132000002001000000000000202000005c0100000000000030200000c80000000000000001c00000d00000000000000011c00000200000000000000012c00000e00000000000000001d00000c80000000000000010d000000400000000000000
+    NSStatusItem Preferred Position Item-0: 5693.0
+    NSWindow Frame NSSpellCheckerSpellingPanel: "414 376 431 289 0 0 1512 949 "
     NSWindow Frame NSSpellCheckerSubstitutionsPanel2:
-      "692 399 360 150 0 0 2560 1410 "
-    NSWindow Frame SUUpdateAlert: "446 410 620 402 0 0 1512 949 "
+      "692 399 359 150 0 0 1512 949 "
+    NSWindow Frame SUUpdateAlert: "970 756 620 402 0 0 2560 1410 "
+    NSWindow Frame SUUpdateAlert2: "1014 756 585 402 0 0 2560 1440 "
+    S1RankedRegions:
+      - use1
+      - usw
+      - eu
+      - jp
+    S1RegionConfig: 7b22726567696f6e73223a5b7b226964223a226a70222c22686f7374223a2268747470733a5c2f5c2f6a702e6177732e7375706572776869737065722e636f6d227d2c7b226964223a2275736531222c22686f7374223a2268747470733a5c2f5c2f75732e6177732e7375706572776869737065722e636f6d227d2c7b226964223a22757377222c22686f7374223a2268747470733a5c2f5c2f7573772e6177732e7375706572776869737065722e636f6d227d2c7b226964223a226575222c22686f7374223a2268747470733a5c2f5c2f65752e6177732e7375706572776869737065722e636f6d227d5d2c2264656661756c74223a2275736531227d
+    SUEnableAutomaticChecks: false
     SUHasLaunchedBefore: true
-    SULastCheckTime: "2026-07-24T00:44:36.723500013Z"
-    SUUpdateGroupIdentifier: 2751360361
-    activeModeKey: custom
+    SULastCheckTime: "2026-10-14T12:30:38.314017057Z"
+    SUSkippedVersion: 2.19.0
+    SUUpdateGroupIdentifier: 4107953749
+    activeModeKey: default
+    adoptedSystemMeetingModeKey: ""
     alwaysShowMiniRecorder: true
+    appFolderDirectory: /Users/patt/Documents
     completedOnboarding: true
     defaultPlaybackBehavior: duck
-    deviceSelectionCounts:
-      58193D9C-1ABE-43B4-862F-717D00000003: 1
-      "FC-B2-14-EE-4F-36:input": 1
     dismissedOnboardingToasts: "modes.activation,modes.create,vocabulary.firstItem,vocabulary.firstReplacement"
+    globeKeyActionOverriddenFrom: 2
+    globeKeyActionUserReverted: false
     hasLaunchedBefore: true
-    homerowPromoDismissedAt: 1782444034.27636
+    hasTrackedWhisperAnnouncement: true
+    inputStartLatencyMs.58193D9C-1ABE-43B4-862F-717D00000003: 1182
     isMinimized: false
-    lastSelectedModeKey: custom
+    lastSelectedModeKey: pro
     launchOnLogin: true
+    legacyMeetingModesMigrated: true
     licenseValid: false
-    onboardingFirstLaunchDate: 1782413087.273463
+    onboardingFirstLaunchDate: 1785005591.224393
     onboardingProgress: 5
     pushToTalkMigrated: true
-    recordingViewCoordinateX: 541
-    recordingViewCoordinateY: 438
+    recordingViewCoordinateX: 544
+    recordingViewCoordinateY: 459
     recordingViewEnabled: true
     remoteCloudLanguageModels:
       '{"models":[{"id":"gemini-3-flash-preview","name":"Gemini 3.0
-      Flash","description":"Latest Fast and efficient Gemini
-      model","type":"language","engine":"cloud","language":"all","translation":false,"maxTokens":8192,"contextWindow":1000000,"speed":9,"accuracy":9,"provider":"superwhisper","format":"gemini","completionPath":"/gemini/v1/messages","licenseType":"pro","isNew":false,"legacy":true,"deprecated":false},{"id":"gemini-3.1-flash-lite-preview","name":"Gemini
-      3.1 Flash Lite","description":"Most cost-efficient Gemini model, fastest
-      performance for lightweight
-      tasks","type":"language","engine":"cloud","language":"all","translation":false,"maxTokens":8192,"contextWindow":1000000,"speed":10,"accuracy":8,"provider":"superwhisper","format":"gemini","completionPath":"/gemini/v1/messages","licenseType":"pro","isNew":false,"legacy":false,"deprecated":false},{"id":"grok-4-1-fast-non-reasoning","name":"Grok
-      4.1 Fast","description":"xAI frontier multimodal model optimized for
-      high-performance agentic tool
-      calling.","type":"language","engine":"cloud","language":"all","translation":false,"maxTokens":8192,"contextWindow":2000000,"speed":8,"accuracy":9,"provider":"superwhisper","format":"grok","completionPath":"/grok/v1/messages","licenseType":"pro","isNew":false,"legacy":false,"deprecated":true},{"id":"gpt-5.2","name":"GPT-5.2","description":"OpenAI
-      latest model with improved performance and
-      efficiency.","type":"language","engine":"cloud","language":"all","translation":false,"maxTokens":8192,"contextWindow":400000,"speed":9,"accuracy":10,"provider":"superwhisper","format":"openai","completionPath":"/v1/chat/completions","licenseType":"pro","isNew":false,"legacy":true,"deprecated":false},{"id":"claude-sonnet-5","name":"Sonnet
-      5","description":"Anthropic latest model with improved performance and
-      efficiency.","type":"language","engine":"cloud","language":"all","translation":false,"maxTokens":8192,"contextWindow":1000000,"speed":9,"accuracy":10,"provider":"superwhisper","format":"anthropic","completionPath":"/anthropic/v1/messages","licenseType":"pro","isNew":true,"legacy":false,"deprecated":false},{"id":"claude-sonnet-4-6","name":"Sonnet
-      4.6","description":"Previous-generation Anthropic model, balanced
-      performance and
-      efficiency.","type":"language","engine":"cloud","language":"all","translation":false,"maxTokens":8192,"contextWindow":1000000,"speed":9,"accuracy":10,"provider":"superwhisper","format":"anthropic","completionPath":"/anthropic/v1/messages","licenseType":"pro","isNew":false,"legacy":false,"deprecated":false},{"id":"gpt-5.3-chat-latest","name":"GPT-5.3
-      Instant","description":"OpenAI GPT-5.3 instant model used in
-      ChatGPT","type":"language","engine":"cloud","language":"all","translation":false,"maxTokens":8192,"contextWindow":128000,"speed":10,"accuracy":9,"provider":"superwhisper","format":"openai","completionPath":"/v1/chat/completions","licenseType":"pro","isNew":false,"legacy":true,"deprecated":false},{"id":"gpt-5.4-mini","name":"GPT-5.4
-      mini","description":"OpenAI most capable small model, optimized for fast
-      high-throughput
-      pipelines.","type":"language","engine":"cloud","language":"all","translation":false,"maxTokens":8192,"contextWindow":400000,"speed":10,"accuracy":9,"provider":"superwhisper","format":"openai","completionPath":"/v1/chat/completions","licenseType":"pro","isNew":false,"legacy":false,"deprecated":false},{"id":"gpt-5.4-nano","name":"GPT-5.4
-      nano","description":"OpenAI fastest and most efficient model, ideal for
-      classification, extraction, and simple
-      tasks.","type":"language","engine":"cloud","language":"all","translation":false,"maxTokens":8192,"contextWindow":400000,"speed":10,"accuracy":8,"provider":"superwhisper","format":"openai","completionPath":"/v1/chat/completions","licenseType":"pro","isNew":false,"legacy":false,"deprecated":false}]}'
+      Flash","description":"Google''s everyday model. Strong all-rounder for
+      longer
+      dictation.","type":"language","engine":"cloud","language":"all","translation":false,"maxTokens":8192,"contextWindow":1000000,"speed":9,"accuracy":7,"provider":"superwhisper","format":"gemini","completionPath":"/gemini/v1/messages","licenseType":"pro","isNew":false,"legacy":true,"deprecated":false,"dateReleased":"2025-12-17","dateAdded":"2026-01-07"},{"id":"grok-4-1-fast-non-reasoning","name":"Grok
+      4.1 Fast","description":"xAI''s fast model. Great for quick cleanup and
+      short
+      messages.","type":"language","engine":"cloud","language":"all","translation":false,"maxTokens":8192,"contextWindow":2000000,"speed":8,"accuracy":7,"provider":"superwhisper","format":"grok","completionPath":"/grok/v1/messages","licenseType":"pro","isNew":false,"legacy":true,"deprecated":true,"dateReleased":"2025-11-19","dateAdded":"2026-01-07"},{"id":"gpt-5.2","name":"GPT-5.2","description":"OpenAI''s
+      flagship model. Best for complex rewrites and detailed
+      instructions.","type":"language","engine":"cloud","language":"all","translation":false,"maxTokens":8192,"contextWindow":400000,"speed":7,"accuracy":8,"provider":"superwhisper","format":"openai","completionPath":"/v1/chat/completions","licenseType":"pro","isNew":false,"legacy":true,"deprecated":false,"dateReleased":"2025-12-11","dateAdded":"2026-02-05"},{"id":"claude-sonnet-4-6","name":"Sonnet
+      4.6","description":"Anthropic''s balanced model. Best for complex rewrites
+      and detailed
+      instructions.","type":"language","engine":"cloud","language":"all","translation":false,"maxTokens":8192,"contextWindow":1000000,"speed":7,"accuracy":8,"provider":"superwhisper","format":"anthropic","completionPath":"/anthropic/v1/messages","licenseType":"pro","isNew":false,"legacy":true,"deprecated":false,"dateReleased":"2026-02-17","dateAdded":"2026-03-04"},{"id":"gpt-5.3-chat-latest","name":"GPT-5.3
+      Instant","description":"OpenAI''s ChatGPT model. Great for quick cleanup
+      and short
+      messages.","type":"language","engine":"cloud","language":"all","translation":false,"maxTokens":8192,"contextWindow":128000,"speed":8,"accuracy":6,"provider":"superwhisper","format":"openai","completionPath":"/v1/chat/completions","licenseType":"pro","isNew":false,"legacy":true,"deprecated":true,"dateReleased":"2026-03-03","dateAdded":"2026-03-05"},{"id":"gemini-3.1-flash-lite-preview","name":"Gemini
+      3.1 Flash Lite","description":"Google''s lightest model. Best for simple
+      punctuation and
+      formatting.","type":"language","engine":"cloud","language":"all","translation":false,"maxTokens":8192,"contextWindow":1000000,"speed":10,"accuracy":6,"provider":"superwhisper","format":"gemini","completionPath":"/gemini/v1/messages","licenseType":"pro","isNew":false,"legacy":true,"deprecated":true,"dateReleased":"2026-03-03","dateAdded":"2026-03-11"},{"id":"gpt-5.4-mini","name":"GPT-5.4
+      mini","description":"OpenAI''s small model. Good for light cleanup and
+      everyday
+      dictation.","type":"language","engine":"cloud","language":"all","translation":false,"maxTokens":8192,"contextWindow":400000,"speed":10,"accuracy":7,"provider":"superwhisper","format":"openai","completionPath":"/v1/chat/completions","licenseType":"pro","isNew":false,"legacy":true,"deprecated":false,"dateReleased":"2026-03-17","dateAdded":"2026-03-20"},{"id":"gpt-5.4-nano","name":"GPT-5.4
+      nano","description":"OpenAI''s smallest model. Best for simple punctuation
+      and
+      formatting.","type":"language","engine":"cloud","language":"all","translation":false,"maxTokens":8192,"contextWindow":400000,"speed":8,"accuracy":6,"provider":"superwhisper","format":"openai","completionPath":"/v1/chat/completions","licenseType":"pro","isNew":false,"legacy":true,"deprecated":false,"dateReleased":"2026-03-17","dateAdded":"2026-03-20"},{"id":"claude-sonnet-5","name":"Sonnet
+      5","description":"Anthropic''s balanced model. Best for complex rewrites
+      and detailed
+      instructions.","type":"language","engine":"cloud","language":"all","translation":false,"maxTokens":8192,"contextWindow":1000000,"speed":7,"accuracy":8,"provider":"superwhisper","format":"anthropic","completionPath":"/anthropic/v1/messages","licenseType":"pro","isNew":false,"legacy":true,"deprecated":false,"dateReleased":"2026-06-30","dateAdded":"2026-06-30"},{"id":"gemini-3.5-flash-lite","name":"Gemini
+      3.5 Flash Lite","description":"Google''s lightest model. Best for simple
+      punctuation and
+      formatting.","type":"language","engine":"cloud","language":"all","translation":false,"maxTokens":8192,"contextWindow":1000000,"speed":10,"accuracy":7,"provider":"superwhisper","format":"gemini","completionPath":"/gemini/v1/messages","licenseType":"pro","isNew":false,"legacy":false,"deprecated":false,"dateReleased":"2026-07-21","dateAdded":"2026-07-22"},{"id":"gpt-5.6-luna","name":"GPT-5.6
+      Luna","description":"OpenAI''s fast model. Great for quick cleanup and
+      short
+      messages.","type":"language","engine":"cloud","language":"all","translation":false,"maxTokens":8192,"contextWindow":1000000,"speed":8,"accuracy":6,"provider":"superwhisper","format":"openai","completionPath":"/v1/chat/completions","licenseType":"pro","isNew":false,"legacy":true,"deprecated":false,"dateReleased":"2026-07-09","dateAdded":"2026-07-22"},{"id":"gemini-3.7-flash","name":"Gemini
+      3.7 Flash","description":"Google''s everyday model. Strong all-rounder for
+      longer
+      dictation.","type":"language","engine":"cloud","language":"all","translation":false,"maxTokens":8192,"contextWindow":1000000,"speed":9,"accuracy":9,"provider":"superwhisper","format":"gemini","completionPath":"/gemini/v1/messages","licenseType":"pro","isNew":false,"legacy":true,"deprecated":false,"dateReleased":"2026-08-13","dateAdded":"2026-08-20"},{"id":"gemini-3.6-flash","name":"Gemini
+      3.6 Flash","description":"Google''s everyday model. Strong all-rounder for
+      longer
+      dictation.","type":"language","engine":"cloud","language":"all","translation":false,"maxTokens":8192,"contextWindow":1000000,"speed":9,"accuracy":7,"provider":"superwhisper","format":"gemini","completionPath":"/gemini/v1/messages","licenseType":"pro","isNew":false,"legacy":true,"deprecated":false,"dateReleased":"2026-07-21","dateAdded":"2026-09-30"},{"id":"gemini-3.8-flash","name":"Gemini
+      3.8 Flash","description":"Google''s everyday model. Strong all-rounder for
+      longer
+      dictation.","type":"language","engine":"cloud","language":"all","translation":false,"maxTokens":8192,"contextWindow":1000000,"speed":9,"accuracy":9,"provider":"superwhisper","format":"gemini","completionPath":"/gemini/v1/messages","licenseType":"pro","isNew":false,"legacy":false,"deprecated":false,"dateReleased":"2026-09-02","dateAdded":"2026-09-30"},{"id":"claude-sonnet-5-5","name":"Sonnet
+      5.5","description":"Anthropic''s balanced model. Best for complex rewrites
+      and detailed
+      instructions.","type":"language","engine":"cloud","language":"all","translation":false,"maxTokens":8192,"contextWindow":1000000,"speed":7,"accuracy":10,"provider":"superwhisper","format":"anthropic","completionPath":"/anthropic/v1/messages","licenseType":"pro","isNew":false,"legacy":false,"deprecated":false,"dateReleased":"2026-09-28","dateAdded":"2026-09-30"},{"id":"gpt-6-luna","name":"GPT-6
+      Luna","description":"OpenAI''s fast model. Great for quick cleanup and
+      short
+      messages.","type":"language","engine":"cloud","language":"all","translation":false,"maxTokens":8192,"contextWindow":1000000,"speed":8,"accuracy":7,"provider":"superwhisper","format":"openai","completionPath":"/v1/chat/completions","licenseType":"pro","isNew":false,"legacy":false,"deprecated":false,"dateReleased":"2026-09-22","dateAdded":"2026-09-30"},{"id":"claude-haiku-5-5","name":"Haiku
+      5.5","description":"Anthropic''s fast model. Great for quick cleanup and
+      short
+      messages.","type":"language","engine":"cloud","language":"all","translation":false,"maxTokens":8192,"contextWindow":1000000,"speed":9,"accuracy":8,"provider":"superwhisper","format":"anthropic","completionPath":"/anthropic/v1/messages","licenseType":"pro","isNew":false,"legacy":false,"deprecated":false,"dateReleased":"2026-10-07","dateAdded":"2026-10-07"}]}'
+    seenFeatureAnnouncement.whisper: true
     selectedDeviceID: ""
     snapPointID: 10
     soundEffectTheme: classic

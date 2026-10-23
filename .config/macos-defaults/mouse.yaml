@@ -25,5 +25,8 @@ data:
     # Two-finger horizontal swipe: 0=off, 2=switch full-screen apps and Spaces
     MouseTwoFingerHorizSwipeGesture: 0
   com.apple.driver.AppleBluetoothMultitouch.mouse:
+    MouseButtonMode: TwoButton
+    MouseButtonDivision: 55
+    MouseOneFingerDoubleTapGesture: 1
     MouseTwoFingerDoubleTapGesture: 0
     MouseTwoFingerHorizSwipeGesture: 0

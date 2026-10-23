@@ -1,13 +1,33 @@
 # Third-party application settings
 # Apply with: macos-defaults apply ~/.config/macos-defaults/applications.yaml
+#
+# Raycast: extensions, snippets, quicklinks and hotkeys come from the .rayconfig
+# export in pattobrien/machine-backup; this file only pins launcher behavior.
 description: Third-party application settings
 sudo: false
 current_host: false
 kill:
   - Raycast
-# Raycast - https://raycast.com
 data:
   com.raycast.macos:
-    initialSpotlightHotkey: Command-49 # Global hotkey (Command-49 = Cmd+Space)
-    raycastGlobalHotkey: Command-49
-    navigationCommandStyleIdentifierKey: vim # Navigation style: vim, arrows, or emacs
+    # Global hotkey (Option-49 = Opt+Space; Cmd+Space stays with Spotlight)
+    initialSpotlightHotkey: Command-49
+    raycastGlobalHotkey: Option-49
+    # Navigation style: vim, arrows, or emacs
+    navigationCommandStyleIdentifierKey: vim
+    # Window
+    raycastPreferredWindowMode: compact
+    showFavoritesInCompactMode: true
+    popToRootTimeout: 90
+    raycastShouldFollowSystemAppearance: true
+    keepWindowVisibleOnResignKey: false
+    raycastWindowEscapeKeyBehavior: 0
+    raycastAlternativeEscape: false
+    useHyperKeyIcon: false
+    # Quicklinks
+    quicklinks_enableAutoFillLink: false
+    quicklinks_enableQuickSearch: false
+    # Window capture
+    mainWindowCaptureCopyToClipboard: true
+    mainWindowCaptureOpenQuickAccessOverlay: false
+    mainWindowCaptureShowInFinder: false

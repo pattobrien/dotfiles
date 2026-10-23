@@ -1,0 +1,13 @@
+# Window manager (Stage Manager / tiling / desktop) settings
+# Apply with: macos-defaults apply ~/.config/macos-defaults/window-manager.yaml
+---
+description: Window manager settings
+sudo: false
+current_host: false
+kill: [WindowManager]
+data:
+  com.apple.WindowManager:
+    # No gaps between natively tiled windows
+    EnableTiledWindowMargins: false
+    # Hide desktop icons
+    HideDesktop: true

@@ -1,0 +1,23 @@
+# Menu bar item visibility
+# Apply with: macos-defaults apply ~/.config/macos-defaults/menubar.yaml
+#
+# The Spotlight icon is a per-host key; see menubar-host.yaml.
+# Item ordering and the Control Center module list are archived blobs; Thaw
+# owns ordering (thaw/ profile) and the module list is set in System Settings.
+---
+description: Menu bar item visibility
+sudo: false
+current_host: false
+kill: [ControlCenter, SystemUIServer]
+data:
+  com.apple.Siri:
+    StatusMenuVisible: false
+  com.apple.TextInputMenu:
+    visible: false
+  com.apple.controlcenter:
+    NSStatusItem VisibleCC Battery: true
+    NSStatusItem VisibleCC Bluetooth: true
+    NSStatusItem VisibleCC Clock: true
+    NSStatusItem VisibleCC NowPlaying: true
+    NSStatusItem VisibleCC Sound: true
+    NSStatusItem VisibleCC WiFi: true

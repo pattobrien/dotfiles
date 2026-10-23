@@ -1,0 +1,40 @@
+# Rex settings (curated from exports/rex.yaml)
+# Apply with Rex quit: macos-defaults apply ~/.config/macos-defaults/rex.yaml
+#
+# Not included here: window frames, last focused session, program activity log,
+# Sparkle state. Keybindings/actions/servers go in ~/.config/rex/init.lua.
+---
+description: Rex settings
+sudo: false
+current_host: false
+kill: [Rex Beta]
+data:
+  com.superlogical.rex:
+    # --- Appearance ---
+    Workspace.appearance: system
+    Workspace.interfaceStyle: useTheme
+    Workspace.darkThemeID: polar-aurora
+    Workspace.lightThemeID: merino-light
+    Workspace.terminalFontPointSize: 12.0
+    Workspace.shellIconTheme: default
+    # --- Layout ---
+    Workspace.paneDensity: compact
+    Workspace.sidebarPosition: right
+    Workspace.tabStyle: horizontal
+    Workspace.tabsFillAvailableSpace: false
+    Workspace.tabIconCount: 1
+    Workspace.tabIconColorMode: activeTabs
+    Workspace.tabIconTintMode: "off"
+    Workspace.showsPaneHeaders: false
+    Workspace.notificationPosition: bottom-right
+    # --- Panes ---
+    Workspace.inactivePaneFadeMode: both
+    Workspace.tintsPanesWithProgramBackground: true
+    Workspace.usesPaneGlass: false
+    Workspace.usesStandardInactiveWindowPaneStyles: true
+    # --- Server ---
+    rex.developer-mode-enabled: true
+    rex.server.run-mode: bundled
+    rex.server.automatic-restart-enabled: true
+    rex.server.block-plugin-reload-enabled: false
+    rex.server.tailnet-enabled: true

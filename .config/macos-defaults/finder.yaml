@@ -23,7 +23,9 @@ data:
     ShowMountedServersOnDesktop: false
     # Show USB drives etc on desktop
     ShowRemovableMediaOnDesktop: true
-    # New window opens: PfHm=Home, PfDe=Desktop, PfDo=Documents, PfLo=Computer
-    NewWindowTarget: PfAF
+    # New window opens: PfHm=Home, PfDe=Desktop, PfDo=Documents, PfLo=Computer, PfAF=All Files
+    NewWindowTarget: PfHm
     # Group files by: None, Name, Kind, Date, etc.
-    FXPreferredGroupBy: None
+    FXPreferredGroupBy: Kind
+    # Sort order within groups
+    FXArrangeGroupViewBy: Name

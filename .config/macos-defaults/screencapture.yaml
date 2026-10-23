@@ -2,7 +2,8 @@
 # Apply with: macos-defaults apply ~/.config/macos-defaults/screencapture.yaml
 #
 # com.apple.screencaptureui (the Cmd+Shift+5 toolbar) keeps its own save path;
-# without it, screen recordings land on the Desktop.
+# without it, screen recordings land on the Desktop. Its annotation colors and
+# font are plist data blobs and are not included.
 ---
 description: Screenshot and screen recording settings
 sudo: false
@@ -11,9 +12,16 @@ kill: [SystemUIServer, screencaptureui]
 data:
   com.apple.screencapture:
     location: /Users/patt/Screenshots
-    style: window
+    # Last Cmd+Shift+5 mode: display, window, selection
+    style: display
     target: file
+    video: true
   com.apple.screencaptureui:
     NSNavLastRootDirectory: /Users/patt/Screenshots
+    # Markup defaults for screenshot annotations
+    com.apple.AnnotationKit.strokeWidth: 5
+    com.apple.AnnotationKit.arrowHeadStyle: 2
+    com.apple.AnnotationKit.hasShadow: false
+    com.apple.AnnotationKit.strokeIsDashed: false
   com.apple.iphonesimulator:
     ScreenShotSaveLocation: /Users/patt/Screenshots

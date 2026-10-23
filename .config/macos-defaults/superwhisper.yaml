@@ -1,10 +1,9 @@
-# superwhisper settings (curated from exports/superwhisper.yaml, 2026-07 machine migration)
+# superwhisper settings (curated from exports/superwhisper.yaml)
 # Apply with: macos-defaults apply ~/.config/macos-defaults/superwhisper.yaml
 #
 # Not included here:
-# - modes/vocabulary: stored in superwhisper's data folder (~/Documents/superwhisper
-#   by default), not in defaults; recreate in-app or restore from a backup
-# - license: activate in-app (export had licenseValid: false)
+# - modes/vocabulary: ~/Documents/superwhisper (symlinked via install.conf.yaml)
+# - license: activate in-app
 # - Sparkle updater state, window frames, cached model catalog: machine state
 ---
 description: superwhisper settings
@@ -13,14 +12,16 @@ current_host: false
 kill: [superwhisper]
 data:
   com.superduper.superwhisper:
+    # --- Hotkey: Ctrl+Opt+Cmd+Fn (carbon key code 63 = Fn) ---
+    KeyboardShortcuts_toggleRecording: '{"carbonModifiers":6400,"carbonKeyCode":63,"mouseButtonNumbers":[]}'
     # --- Modes ---
-    activeModeKey: custom
-    lastSelectedModeKey: custom
+    activeModeKey: default
+    lastSelectedModeKey: pro
     # --- Recorder UI ---
     alwaysShowMiniRecorder: true
     recordingViewEnabled: true
-    recordingViewCoordinateX: 541
-    recordingViewCoordinateY: 438
+    recordingViewCoordinateX: 544
+    recordingViewCoordinateY: 459
     snapPointID: 10
     soundEffectTheme: classic
     # --- Audio ---
@@ -30,6 +31,8 @@ data:
     defaultPlaybackBehavior: duck
     # --- App behavior ---
     launchOnLogin: true
+    appFolderDirectory: /Users/patt/Documents
+    SUEnableAutomaticChecks: false
     # --- Suppress onboarding / first-run hints ---
     completedOnboarding: true
     hasLaunchedBefore: true

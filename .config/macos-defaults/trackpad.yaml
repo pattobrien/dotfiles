@@ -46,6 +46,8 @@ data:
     FirstClickThreshold: 1
     SecondClickThreshold: 1
   com.apple.driver.AppleBluetoothMultitouch.trackpad:
+    Clicking: true
+    TrackpadRightClick: true
     TrackpadThreeFingerHorizSwipeGesture: 0
     TrackpadThreeFingerVertSwipeGesture: 0
     TrackpadFourFingerHorizSwipeGesture: 0

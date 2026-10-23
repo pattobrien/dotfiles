@@ -1,0 +1,25 @@
+# KeyCastr settings (curated from exports/keycastr.yaml)
+# Apply with: macos-defaults apply ~/.config/macos-defaults/keycastr.yaml
+#
+# Not included here: bezel color (plist data; default black at 0.8 alpha),
+# window frames, Sparkle state.
+---
+description: KeyCastr settings
+sudo: false
+current_host: false
+kill: [KeyCastr]
+data:
+  io.github.keycastr:
+    selectedVisualizer: Default
+    displayIcon: 1
+    default.fontSize: 90.82363884100992
+    default.fadeDelay: 0.1
+    default.fadeDuration: 0.0
+    default.keystrokeDelay: 0.1
+    default.allKeys: true
+    default.allModifiedKeys: false
+    default.commandKeysOnly: false
+    default_displayModifiedCharacters: true
+    mouse.displayOption: 0
+    SUEnableAutomaticChecks: false
+    SUSendProfileInfo: false

@@ -1,0 +1,14 @@
+# Messages.app settings
+# Apply with: macos-defaults apply ~/.config/macos-defaults/messages.yaml
+#
+# The notification sound lives in the usernoted group container as a flags
+# bitfield; set it in System Settings > Notifications > Messages.
+---
+description: Messages settings
+sudo: false
+current_host: false
+kill: [Messages]
+data:
+  com.apple.MobileSMS:
+    PlaySoundsKey: false
+    DeleteVerificationCodes: true
