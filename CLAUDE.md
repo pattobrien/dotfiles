@@ -13,6 +13,8 @@ Personal dotfiles managed with [dotbot](https://github.com/anishathalye/dotbot).
 - After adding/changing a symlink entry in `install.conf.yaml`, run `./install`
   to create the symlink.
 - Kitty is the daily driver; ignore Ghostty.
+- `~/.zshrc` links to `zsh/zshrc.omz` or `zsh/zshrc.starship` (set in
+  `install.conf.yaml`); keep shared changes in sync across both files.
 - Install skills with
   `pnpx skills add <repo> -g --skill <name> --agent claude-code --agent amp -y`.
 - Shed CLIs: `pnpm add -g @pattobrien/<pkg>@latest` in mise `postinstall`.

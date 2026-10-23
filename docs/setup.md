@@ -40,7 +40,19 @@ sh ~/dev/pattobrien/dotfiles/install vscode
 > **Note:** Some macOS settings (e.g. mouse/trackpad scaling, key repeat) only
 > take effect after a logout or restart once the `install macos` step has run.
 
-The zsh config also uses these oh-my-zsh custom plugins, which are plain clones:
+### Shell flavors
+
+`~/.zshrc` links to one of two self-contained files in `zsh/`:
+
+| Flavor   | File                 | Prompt                         | Plugins                             |
+| -------- | -------------------- | ------------------------------ | ----------------------------------- |
+| omz      | `zsh/zshrc.omz`      | powerlevel10k                  | oh-my-zsh (`scripts/setup_omz.zsh`) |
+| starship | `zsh/zshrc.starship` | starship (`zsh/starship.toml`) | antidote (`zsh/zsh_plugins.txt`)    |
+
+To switch, change the `~/.zshrc` target in `install.conf.yaml` and run
+`./install`; open a new shell afterwards.
+
+The omz flavor also uses these oh-my-zsh custom plugins, which are plain clones:
 
 ```sh
 cd ~/.oh-my-zsh/custom/plugins
@@ -48,6 +60,10 @@ git clone https://github.com/Aloxaf/fzf-tab.git
 git clone https://github.com/junegunn/fzf-git.sh.git
 git clone https://github.com/michakfromparis/zsh-pnpm-completions.git
 ```
+
+The starship flavor clones its plugins on first start (into
+`~/Library/Caches/antidote`) and rebuilds the static bundle whenever
+`zsh/zsh_plugins.txt` changes. `antidote update` pulls the clones.
 
 ## 4. Restore app settings (from 2026-07 machine migration)
 

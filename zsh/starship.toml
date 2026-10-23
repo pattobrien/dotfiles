@@ -1,0 +1,86 @@
+"$schema" = 'https://starship.rs/config-schema.json'
+
+add_newline = false
+palette = "catppuccin_mocha"
+
+format = "$directory$git_status$character"
+right_format = "$status$cmd_duration$jobs"
+
+[directory]
+style = "blue"
+repo_root_style = "bold lavender"
+truncate_to_repo = true
+truncation_length = 3
+truncation_symbol = ""
+read_only = " "
+read_only_style = "red"
+format = "[$path]($style)[$read_only]($read_only_style) "
+repo_root_format = "[$before_root_path]($before_root_path_style)[$repo_root]($repo_root_style)[$path]($style)[$read_only]($read_only_style) "
+
+[git_branch]
+disabled = true
+
+[git_status]
+format = "$ahead_behind$stashed$conflicted$staged$modified$untracked"
+ahead = "[⇡$count](green) "
+behind = "[⇣$count](green) "
+diverged = "[⇣$behind_count⇡$ahead_count](green) "
+stashed = "[*$count](green) "
+conflicted = "[~$count](red) "
+staged = "[+$count](peach) "
+modified = "[!$count](peach) "
+untracked = "[?$count](lavender) "
+renamed = ""
+deleted = ""
+ignore_submodules = true
+
+[character]
+success_symbol = "[❯](green)"
+error_symbol = "[❯](red)"
+vimcmd_symbol = "[❮](green)"
+
+[status]
+disabled = false
+style = "red"
+symbol = "✘ "
+format = "[$symbol$status]($style) "
+
+[cmd_duration]
+min_time = 3000
+style = "yellow"
+format = "[$duration]($style) "
+
+[jobs]
+style = "blue"
+symbol = "≡"
+symbol_threshold = 1
+number_threshold = 2
+format = "[$symbol$number]($style) "
+
+[palettes.catppuccin_mocha]
+rosewater = "#f5e0dc"
+flamingo = "#f2cdcd"
+pink = "#f5c2e7"
+mauve = "#cba6f7"
+red = "#f38ba8"
+maroon = "#eba0ac"
+peach = "#fab387"
+yellow = "#f9e2af"
+green = "#a6e3a1"
+teal = "#94e2d5"
+sky = "#89dceb"
+sapphire = "#74c7ec"
+blue = "#89b4fa"
+lavender = "#b4befe"
+text = "#cdd6f4"
+subtext1 = "#bac2de"
+subtext0 = "#a6adc8"
+overlay2 = "#9399b2"
+overlay1 = "#7f849c"
+overlay0 = "#6c7086"
+surface2 = "#585b70"
+surface1 = "#45475a"
+surface0 = "#313244"
+base = "#1e1e2e"
+mantle = "#181825"
+crust = "#11111b"
