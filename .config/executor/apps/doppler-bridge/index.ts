@@ -2,6 +2,7 @@ import {
   defineApp,
   defineProvider,
   object,
+  plain,
   secrets,
   string,
   toolAnnotations,
@@ -10,9 +11,9 @@ import {
 import { mcpHealth, mcpRouter } from "apps/mcp";
 import { always } from "apps/operations/approval";
 
-const url = "http://127.0.0.1:8787/mcp";
+type Bridge = { fields: { url: string; token: string } };
 
-const bearer = (account: { fields: { token: string } }) => ({
+const bearer = (account: Bridge) => ({
   Authorization: "Bearer " + account.fields.token,
 });
 
@@ -21,10 +22,10 @@ const bridge = defineProvider({
   auth: {
     apiKey: secrets({
       label: "Bridge API key",
-      fields: object({ token: string({ minLength: 1 }) }),
+      fields: object({ url: plain(string({ minLength: 1 })), token: string({ minLength: 1 }) }),
     }),
   },
-  health: (check) => mcpHealth(check, { url, headers: bearer(check.account) }),
+  health: (check) => mcpHealth(check, { url: check.account.fields.url, headers: bearer(check.account) }),
 });
 
 const requirements = { app: { accounts: { bridge } } };
@@ -32,7 +33,7 @@ const requirements = { app: { accounts: { bridge } } };
 export default defineApp(requirements, async (ctx) => ({
   tools: withApprovals(
     await mcpRouter({
-      url,
+      url: ctx.app.accounts.bridge.fields.url,
       account: ctx.app.accounts.bridge,
       headers: bearer(ctx.app.accounts.bridge),
       cache: ctx.cache,

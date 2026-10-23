@@ -1,9 +1,11 @@
 {
   "mcpServers": {
     "executor": {
-      "url": "http://127.0.0.1:4312/mcp",
+      "url": "https://executor.finedesigns.io/mcp",
       "headers": {
-        "Authorization": "Bearer ${EXECUTOR_API_KEY}"
+        "Authorization": "Bearer ${EXECUTOR_GARDEN_TOKEN}",
+        "CF-Access-Client-Id": "${EXECUTOR_ACCESS_CLIENT_ID}",
+        "CF-Access-Client-Secret": "${EXECUTOR_ACCESS_CLIENT_SECRET}"
       }
     }
   }
