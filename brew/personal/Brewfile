@@ -103,6 +103,8 @@ cask "chromium"
 cask "claude"
 # Free app that makes your Internet safer
 cask "cloudflare-warp"
+# Background desktop automation driver for AI agents
+cask "cuadriver"
 # OpenAI's coding agent that runs in your terminal
 cask "codex"
 # Node-based image, video and audio generator
