@@ -18,6 +18,7 @@ data:
     NSStatusItem VisibleCC Battery: true
     NSStatusItem VisibleCC Bluetooth: true
     NSStatusItem VisibleCC Clock: true
-    NSStatusItem VisibleCC NowPlaying: true
+    NSStatusItem VisibleCC NowPlaying: false
     NSStatusItem VisibleCC Sound: true
     NSStatusItem VisibleCC WiFi: true
+    NowPlaying: 8

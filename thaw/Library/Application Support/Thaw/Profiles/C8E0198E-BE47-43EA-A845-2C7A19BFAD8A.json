@@ -495,13 +495,13 @@
         "com.FluidApp.app:Item-0",
         "com.superduper.superwhisper:Item-0",
         "com.raycast.macos:extension_herdr_menu-bar__b827eb4a-a2f2-4988-a7b4-c8713ebac833",
-        "com.tinycast.app.overrides:Item-0",
-        "com.cloudflare.1dot1dot1dot1.macos:Item-0"
+        "com.tinycast.app.overrides:Item-0"
       ],
       "visible" : [
         "com.tinycast.app:extension:herdr\/menu-bar",
         "eu.exelban.Stats:Disk_mini",
         "eu.exelban.Stats:RAM_mini",
+        "com.cloudflare.1dot1dot1dot1.macos:Item-0",
         "io.tailscale.ipn.macsys:Item-0",
         "com.apple.controlcenter:Bluetooth",
         "com.apple.controlcenter:WiFi",
@@ -525,7 +525,7 @@
       "com.apple.controlcenter:WiFi" : "visible",
       "com.automattic.beeper.desktop:Item-0" : "hidden",
       "com.barut.OmniWM:omniwm_main" : "hidden",
-      "com.cloudflare.1dot1dot1dot1.macos:Item-0" : "hidden",
+      "com.cloudflare.1dot1dot1dot1.macos:Item-0" : "visible",
       "com.gaosun.eul:eul" : "hidden",
       "com.interversehq.InstantSpaceSwitcher:Item-0" : "hidden",
       "com.raycast.macos:extension_herdr_menu-bar__b827eb4a-a2f2-4988-a7b4-c8713ebac833" : "hidden",
@@ -545,7 +545,7 @@
       "pro.betterdisplay.BetterDisplay:Item-0" : "hidden"
     },
     "newItemsPlacement" : {
-      "anchorIdentifier" : "com.cloudflare.1dot1dot1dot1.macos:Item-0",
+      "anchorIdentifier" : "com.tinycast.app.overrides:Item-0",
       "relation" : "rightOfAnchor",
       "sectionKey" : "hidden"
     },
@@ -574,13 +574,13 @@
         "com.FluidApp.app:Item-0",
         "com.superduper.superwhisper:Item-0",
         "com.raycast.macos:extension_herdr_menu-bar__b827eb4a-a2f2-4988-a7b4-c8713ebac833",
-        "com.tinycast.app.overrides:Item-0",
-        "com.cloudflare.1dot1dot1dot1.macos:Item-0"
+        "com.tinycast.app.overrides:Item-0"
       ],
       "visible" : [
         "com.tinycast.app:extension:herdr\/menu-bar",
         "eu.exelban.Stats:Disk_mini",
         "eu.exelban.Stats:RAM_mini",
+        "com.cloudflare.1dot1dot1dot1.macos:Item-0",
         "io.tailscale.ipn.macsys:Item-0",
         "com.apple.controlcenter:Bluetooth",
         "com.apple.controlcenter:WiFi",
