@@ -31,6 +31,8 @@ export default defineConfig({
       "dotbot",
       ".config/gh/hosts.yml",
       ".config/karabiner",
+      ".config/opencode/cli.json",
+      ".config/pi/settings.json",
       ".config/superwhisper",
       ".config/tinycast/settings.json",
       ".config/vite-plus/config.json",

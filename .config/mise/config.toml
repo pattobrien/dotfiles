@@ -184,7 +184,9 @@ docker-cli = "latest"
 "go:github.com/MHNightCat/tshock" = "latest"
 ffmpeg = "latest"
 "npm:executor" = "2.0.0-beta.25"
-"npm:obsidian-headless" = { version = "latest", allow_builds = ["better-sqlite3"] }
+"npm:obsidian-headless" = { version = "latest", allow_builds = [
+  "better-sqlite3",
+] }
 
 [tools."github:voidzero-dev/vite-plus"]
 version = "latest"
