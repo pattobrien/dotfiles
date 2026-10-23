@@ -24,12 +24,12 @@ data:
     PressAndHoldMode: true
     PromptModeShortcutEnabled: false
     # --- Speech / AI models ---
-    SelectedSpeechModel: parakeet-tdt-v2
+    SelectedSpeechModel: fluid-parakeet-mini
     SelectedProviderID: fluid-1
     SelectedModelByProvider:
-      fluid-1: fluid-1
-      "custom:fluid-1": fluid-1
-    FluidIntelligenceSelectedModelID: fluid-1
+      fluid-1: fluid-1-mini-96k-dflash
+      "custom:fluid-1": fluid-1-mini-96k-dflash
+    FluidIntelligenceSelectedModelID: fluid-1-mini-96k-dflash
     PrivateAIProviderContextTokenLimit: 4096
     # --- Dictation prompts ---
     SelectedDictationPromptID: __FLUID_1__
@@ -54,6 +54,7 @@ data:
     ShowMainWindowAtLoginLaunch: false
     IntendedDockVisibility: false
     AutoUpdateCheckEnabled: false
+    ShowUpdatePopups: false
     EnableDebugLogs: true
     # --- Overlay position ---
     OverlayBottomOffset: 50.0
