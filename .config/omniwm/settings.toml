@@ -110,6 +110,14 @@ enabled = true
 hiddenBundleIDs = []
 rehideIntervalSeconds = 5.0
 
+[[monitors.ranking]]
+displayUUID = "E6CFCBFC-7903-47B5-9EF0-8202E204A7E7"
+name = "DELL U2719D"
+
+[[monitors.ranking]]
+displayUUID = "37D8832A-2D66-02CA-B9F7-8F30A301B230"
+name = "Built-in Retina Display"
+
 [mouseWarp]
 constrainToArrangement = false
 enabled = true
@@ -1141,7 +1149,7 @@ layoutType = "default"
 name = "7"
 
 [workspaces.monitorAssignment]
-type = "secondary"
+type = "main"
 
 [[workspaces]]
 displayName = "🚀"
@@ -1150,15 +1158,16 @@ layoutType = "default"
 name = "8"
 
 [workspaces.monitorAssignment]
-type = "secondary"
+type = "main"
 
 [[workspaces]]
+displayName = "🤖"
 id = "0E18F6B0-345A-4078-8B21-33641F07A861"
 layoutType = "default"
 name = "9"
 
 [workspaces.monitorAssignment]
-type = "main"
+type = "secondary"
 
 [[workspaces]]
 id = "8D4D711C-2B2F-4FEC-86BF-FA952037738A"
@@ -1166,4 +1175,4 @@ layoutType = "default"
 name = "10"
 
 [workspaces.monitorAssignment]
-type = "main"
+type = "secondary"
