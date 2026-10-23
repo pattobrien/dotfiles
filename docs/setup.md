@@ -54,7 +54,7 @@ git clone https://github.com/michakfromparis/zsh-pnpm-completions.git
 Settings snapshots from the previous MacBook live in two places:
 
 **In this repo** — `.config/macos-defaults/exports/` has `macos-defaults` YAML
-dumps for Raycast, Shottr, superwhisper, FluidVoice, and eul. Apply each with:
+dumps for Raycast, Shottr, superwhisper, FluidVoice, eul, and BetterTouchTool. Apply each with:
 
 ```sh
 macos-defaults apply ~/.config/macos-defaults/exports/<app>.yaml

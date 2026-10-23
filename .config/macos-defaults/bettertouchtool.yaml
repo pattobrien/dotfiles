@@ -1,0 +1,20 @@
+# BetterTouchTool settings (curated from exports/bettertouchtool.yaml)
+# Apply with BTT quit: macos-defaults apply ~/.config/macos-defaults/bettertouchtool.yaml
+#
+# Not included here:
+# - triggers (Magic Mouse swipes -> omniwmctl): stored in BTT's SQLite data
+#   store, not defaults; export/import them as a BTT preset
+---
+description: BetterTouchTool settings
+sudo: false
+current_host: false
+kill: [BetterTouchTool]
+data:
+  com.hegenberg.BetterTouchTool:
+    launchOnStartup: true
+    # Magic Mouse gesture sensitivity slider on Basic (lower = easier to trigger)
+    swipeIntensity: 0.44
+    simpleMMSensitivity: 1.0
+    # OmniWM owns window placement
+    windowSnappingEnabled: false
+    alreadyAskedForInitialWindowSnappingSettings: true

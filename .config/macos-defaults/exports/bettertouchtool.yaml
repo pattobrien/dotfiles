@@ -1,0 +1,119 @@
+---
+description: com.hegenberg.BetterTouchTool
+sudo: false
+current_host: false
+data:
+  com.hegenberg.BetterTouchTool:
+    "": true
+    BTTAbnormalTerminationCount: 0
+    BTTAllowDowngrades: false
+    BTTAllowedStatusItemBundleIdentifiersTahoeRefreshNow: true
+    BTTConvertedDevices: true
+    BTTDSVGO: true
+    BTTDefaultsMMZoomAmount: 8
+    BTTDidCheckScreenRecording: true
+    BTTDidCompressOld: true
+    BTTDidRegisterForUpdateStats: "6.970"
+    BTTDidResetInputMonitoring: true
+    BTTDidResetSavedPrefsLayoutAfterSidebarWidthMigration: true
+    BTTDidUpdateBTTRemoteSettings: true
+    BTTDidUpdateVersion: "6.970"
+    BTTDisableListStyleView: true
+    BTTDisabledLegacyUI: true
+    BTTExternalMCPServerPort: 64832
+    BTTForcedHidden: false
+    BTTFormRollout.legacyRemount: 3
+    BTTFormRollout.legacyRemount.lastDate: "2026-10-23T00:03:04.779315948Z"
+    BTTFormRollout.modernMount: 4
+    BTTFormRollout.modernMount.lastDate: "2026-10-22T23:56:02.083274006Z"
+    BTTHashes: "C422AA08A78995C085B515CA4C57D3DF9919D2D3::9D7E11B98A91A3CFC7B601D056E05F5FB430EC7E::84B1AB4B40CAFB6B58D8B89DEC6C6804A97C785D::B38F6CD317E3E2DAEFD1CEF64801D9A91C425D9C::71B9D233CE39FA7773249C7D8BD3CEE083E7D340::74CEC8DDEA2CDB6806FAEE0F56F2497C2F89E809::::"
+    BTTIdentifierX: d5326a7d5ce3bde71562db4e9f2ec186
+    BTTLastClamshellState: true
+    BTTLastConfigWidth: 240.0
+    BTTLastSelectedPreferencesSection: 12
+    BTTLastSelectedTriggerType: 12
+    BTTLastSuccessfullyOpenedDataStore: btt_data_store.version_6_970_build_2026102202
+    BTTLastViewMode: 1
+    BTTMacroPadsCategoryAdded: true
+    BTTMigratedToSQLLite: true
+    BTTNewSidebarWidth: 107.0
+    BTTNormalTermination: false
+    BTTNotchBarFeatureAvailable: false
+    BTTNumberOfStarts: 2
+    BTTOriginalDefaultBrowser: com.google.Chrome
+    BTTOriginalDefaultMailApp: com.apple.mail
+    BTTPrefsWindowFrame: "680 8 1200 1398 0 0 2560 1410 "
+    BTTPreviousVersion: "0"
+    BTTRelaunchRecoveryAttemptTimestamps:
+      - 814406595.077857
+    BTTRemoteDeviceDictionary: {}
+    BTTRemoteEnabled: false
+    BTTSecureInputWarningShown: 1
+    BTTSettingsToOpen: BTTTouchBarSettings
+    BTTShortcutsData: 5b5d
+    BTTStartTime: "2026-10-22T17:42:44.296324968Z"
+    BTTTouchBarVisible: false
+    BTTUpdatedToBTRCapable: true
+    BTTUsageData:
+      2026-10-22:
+        "0::5::206::2 Finger Swipe Left::": 1
+        "0::6::206::2 Finger Swipe Right::": 1
+    BTTWorstCaseNotificationLastCheckDate: "2026-10-22T17:42:15.510200977Z"
+    NSColorPanelMode: "6"
+    NSSplitView Subview Frames BTTMainSplitNew:
+      - "0.000000, 0.000000, 960.000000, 1304.000000, NO, NO"
+      - "0.000000, 0.000000, 180.000000, 292.000000, YES, NO"
+      - "960.000000, 0.000000, 240.000000, 1304.000000, YES, NO"
+      - "960.000000, 0.000000, 240.000000, 1304.000000, NO, NO"
+    NSSplitView Subview Frames NSColorPanelSplitView:
+      - "0.000000, 0.000000, 230.000000, 262.000000, NO, NO"
+      - "0.000000, 263.000000, 230.000000, 67.000000, NO, NO"
+    NSStatusItem Preferred Position AlwaysHiddenFromHere: 50000
+    NSStatusItemInternal Preferred Position AlwaysHiddenFromHere: 50000
+    NSToolbar Configuration BTTPrefsToolbar:
+      TB Is Shown: true
+      TB Icon Size Mode: 1
+      TB Size Mode: 1
+      TB Display Mode: 2
+    NSToolbar Configuration com.apple.NSColorPanel:
+      TB Is Shown: 1
+    NSWindow Frame NSColorPanel: "0 83 250 297 0 0 2560 1410 "
+    SUEnableAutomaticChecks: false
+    SUFeedURL: "https://updates.folivora.ai/highsierra_new.xml"
+    SUHasLaunchedBefore: true
+    SULastCheckTime: "2026-10-22T17:42:46.533445Z"
+    SUUpdateGroupIdentifier: 2064670930
+    alreadyAskedForInitialWindowSnappingSettings: true
+    btt_data_store.version_6_970_build_2026102202: true
+    checkForCrashreports: false
+    checkThreeFingerDistanceForMM3FingerTap: true
+    checkTwoFingerDistanceForMM2FingerTap: false
+    cmdScrollSensitivity: 0.1599999964237213
+    dValues: "70"
+    didRestartAfterEventTapFault: -1
+    launchOnStartup: true
+    mm2TipTapSensitivity: 0.2199999988079071
+    mmTipTapSensitivity: 0.3799999952316284
+    mmTwoFingerClickPressure: 0.25
+    noLiftTwoFingerClick: false
+    onetwoFingerTapTime: 0.3199999928474426
+    savedWindowInformation: 62706c6973743030d4010203040506070a582476657273696f6e592461726368697665725424746f7058246f626a6563747312000186a05f100f4e534b657965644172636869766572d1080954726f6f748001a30b0c1155246e756c6cd20d0e0f105a4e532e6f626a656374735624636c617373a08002d2121314155a24636c6173736e616d655824636c61737365735e4e534d757461626c654172726179a3141617574e534172726179584e534f626a65637408111a24293237494c5153575d626d7475777c87909fa3ab00000000000001010000000000000018000000000000000000000000000000b4
+    scrollBlockWarningShown: true
+    showPrefsAtNextLaunch: false
+    simpleMMSensitivity: 1.0
+    singleFingerMiddleLeft: 0.4000000059604645
+    singleFingerMiddleRight: 0.10000000149011612
+    swipeIntensity: 0.4399999976158142
+    tapPressure12: 0.30000001192092896
+    tapPressure3: 0.18000000715255737
+    threeFingerTapTime: 0.3799999952316284
+    tpThreeFingerDoubleTapDelay: 0.5
+    twoFingerDoubleTapDelay: 0.5
+    useAppleRemotePlugin: false
+    useVerySensitiveTwoFingerTipTaps: true
+    uuidl: ""
+    v054DefaultsChanged: true
+    version: "6.970"
+    windowSnappingEnabled: false
+    zoomSensitivityKeyboard: 0.07000000029802322
+    zoomSensitivityPA: 0.004999999888241291
