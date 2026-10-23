@@ -98,3 +98,16 @@ holds anything too sensitive or personal for this public repo:
 > `ssh-keygen -t ed25519 -N "" -C git-signing -f ~/.ssh/git-signing`, then
 > `gh ssh-key add --type signing -t "<host> git-signing" ~/.ssh/git-signing.pub`
 > and its public key line in `.config/git/allowed_signers`.
+
+## 5. Displays
+
+OmniWM ranks the Dell above the built-in display in
+`.config/omniwm/settings.toml`, so workspaces 1-8 stay on the Dell whether the
+lid is open or closed, and 🤖 (9) and 10 land on the built-in screen when it is
+open. macOS picks its own main display (menu bar, Dock) per display set and is
+not captured by any repo file; with the Dell connected and the lid open, set it
+once with BetterDisplay:
+
+```sh
+betterdisplaycli set -nameLike=DELL -main=on
+```
