@@ -15,8 +15,6 @@ brew "cask"
 brew "clang-format"
 # Get a file from an HTTP, HTTPS or FTP server
 brew "curl"
-# Isolated development environments using Docker
-brew "docker-compose"
 # GNU compiler collection
 brew "gcc"
 # GitHub command-line tool
@@ -162,6 +160,8 @@ cask "obs"
 cask "obsidian"
 # Tiling window manager with Niri-style scrolling and Dwindle BSP layouts
 cask "omniwm"
+# Fast, light, simple Docker containers and Linux machines
+cask "orbstack"
 # Bundle with over 30 tools
 cask "parallels-toolbox"
 # Utility to uninstall apps and remove leftover files from old/uninstalled apps
