@@ -115,7 +115,7 @@
       "~"
     ]
   },
-  "model": "opus",
+  "model": "fable",
   "enableAllProjectMcpServers": true,
   "disableClaudeAiConnectors": true,
   "skillOverrides": {
