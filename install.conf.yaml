@@ -9,8 +9,6 @@
 
 - clean:
     - "~"
-    - "~/.oh-my-zsh/custom/"
-    - "~/.oh-my-zsh/custom/plugins/"
 
 # Back up pre-existing real dotfiles (e.g. a stock ~/.zshenv) before linking.
 - shell:
@@ -37,11 +35,8 @@
     ~/.tmux.conf: .config/tmux/.tmux.conf
     ~/.ssh/config: .config/ssh/config
     ~/.hushlogin: hushlogin
-    # Shell flavor: zsh/zshrc.omz (oh-my-zsh + p10k) or zsh/zshrc.starship
-    # (antidote + starship). Swap the target, then run ./install.
     ~/.zshrc: zsh/zshrc.starship
     ~/.zshenv: zsh/zshenv
-    ~/.p10k.zsh: zsh/p10k.zsh
     ~/.config/starship.toml: zsh/starship.toml
     ~/.actrc: .config/act/.actrc
     ~/.npmrc: .config/npm/npmrc

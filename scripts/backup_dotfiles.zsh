@@ -8,7 +8,6 @@ set -euo pipefail
 managed=(
   .zshrc
   .zshenv
-  .p10k.zsh
   .tmux.conf
   .hushlogin
   .actrc

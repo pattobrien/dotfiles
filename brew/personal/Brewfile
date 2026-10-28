@@ -45,8 +45,6 @@ brew "pam-reattach"
 brew "pkgconf"
 # Tool for managing OCI containers and pods
 brew "podman"
-# Theme for zsh
-brew "powerlevel10k"
 # Command-line tool for the Amazon S3 service
 brew "s3cmd"
 # Organize software neatly under a single directory tree (e.g. /usr/local)
@@ -65,10 +63,6 @@ brew "xcode-build-server"
 brew "zlib"
 # UNIX shell (command interpreter)
 brew "zsh"
-# Fish-like fast/unobtrusive autosuggestions for zsh
-brew "zsh-autosuggestions"
-# Fish shell like syntax highlighting for zsh
-brew "zsh-syntax-highlighting"
 # Send macOS User Notifications from the command line (used by herdr-focus-notify)
 brew "vjeantet/tap/alerter"
 # Password manager that keeps all passwords secure behind one password

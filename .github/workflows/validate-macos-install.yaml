@@ -65,7 +65,7 @@ jobs:
 
       # CI `run:` shells are non-login/non-interactive and never source the
       # dotfiles' zshrc, so Homebrew isn't on PATH for later steps yet. We can't
-      # just `source ~/.zshrc`: it's interactive zsh (p10k, oh-my-zsh, completions)
+      # just `source ~/.zshrc`: it's interactive zsh (starship, antidote, completions)
       # and it's circular — zshrc itself runs `brew shellenv` + `mise activate`,
       # which don't exist mid-install. Instead reuse zshrc's actual mechanism,
       # `brew shellenv`, and persist its result via $GITHUB_PATH/$GITHUB_ENV so it

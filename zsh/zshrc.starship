@@ -5,11 +5,7 @@ export XDG_CACHE_HOME="$HOME/.cache"
 export XDG_DATA_HOME="$HOME/.local/share"
 export XDG_STATE_HOME="$HOME/.local/state"
 
-if [[ -d "/opt/homebrew" ]]; then
-    HOMEBREW_PREFIX="/opt/homebrew"
-else
-    HOMEBREW_PREFIX="/usr/local"
-fi
+HOMEBREW_PREFIX="/opt/homebrew"
 
 # 1Password SSH Agent
 export SSH_AUTH_SOCK="$HOME/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
@@ -20,7 +16,6 @@ if [[ -n $HERDR_SHELL_EXEC ]]; then
   exec ${=_herdr_shell_exec}
 fi
 
-# Shell options previously inherited from oh-my-zsh's lib/.
 HISTFILE="$HOME/.zsh_history"
 HISTSIZE=50000
 SAVEHIST=10000

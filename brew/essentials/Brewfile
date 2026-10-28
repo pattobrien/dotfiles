@@ -1,9 +1,6 @@
 # Shell
 brew "zsh"
-brew "powerlevel10k"
-brew "zsh-autosuggestions"
-brew "zsh-syntax-highlighting"
-# zsh plugin manager for the starship flavor (zsh/zshrc.starship)
+# zsh plugin manager
 brew "antidote"
 
 # Essential CLI tools
