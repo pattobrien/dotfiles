@@ -194,6 +194,8 @@ cask "tailscale-app"
 cask "temurin"
 # Menu bar manager
 cask "thaw"
+# Web browser
+cask "thebrowsercompany-dia"
 # To-do list
 cask "todoist-app"
 # Open-source code editor
@@ -202,6 +204,8 @@ cask "visual-studio-code"
 cask "visual-studio-code@insiders"
 # Native desktop client for WhatsApp
 cask "whatsapp"
+# Gecko based web browser
+cask "zen"
 # Video communication and virtual meeting platform
 cask "zoom"
 mas "GarageBand", id: 682658836
