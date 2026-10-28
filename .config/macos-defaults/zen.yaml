@@ -1,0 +1,41 @@
+# Zen Browser enterprise policies (read from the app.zen-browser.zen defaults domain)
+# Apply with: macos-defaults apply ~/.config/macos-defaults/zen.yaml
+# Policy reference: https://mozilla.github.io/policy-templates/
+---
+description: Zen Browser policies
+sudo: false
+current_host: false
+kill: []
+data:
+  app.zen-browser.zen:
+    EnterprisePoliciesEnabled: true
+    ExtensionSettings:
+      "{d634138d-c276-4fc8-924b-40a0ea21d284}":
+        installation_mode: force_installed
+        install_url: https://addons.mozilla.org/firefox/downloads/latest/1password-x-password-manager/latest.xpi
+        default_area: navbar
+    Preferences:
+      # Dark mode for the browser UI and for web content (0 = dark)
+      browser.theme.content-theme:
+        Value: 0
+        Status: user
+      browser.theme.toolbar-theme:
+        Value: 0
+        Status: user
+      layout.css.prefers-color-scheme.content-override:
+        Value: 0
+        Status: user
+      # Chrome shows the bookmarks bar on every tab
+      browser.toolbars.bookmarks.visibility:
+        Value: always
+        Status: user
+      # 1Password owns passwords and autofill
+      signon.rememberSignons:
+        Value: false
+        Status: user
+      extensions.formautofill.addresses.enabled:
+        Value: false
+        Status: user
+      extensions.formautofill.creditCards.enabled:
+        Value: false
+        Status: user
