@@ -18,11 +18,11 @@ alias reload="source ~/.zshrc"
 alias resource="source ~/.zshrc"
 alias rss="source ~/.zshrc"
 
-alias claude='DOPPLER_TOKEN=$(doppler configure get token --plain) doppler run -- claude --allow-dangerously-skip-permissions'
+alias claude='DOPPLER_TOKEN=$(doppler configure get token --plain) claude --allow-dangerously-skip-permissions'
 alias cc="claude"
 alias ccr="claude --resume"
 alias ccf="claude --model \"claude-fable-5-1[1m]\""
-alias pi='DOPPLER_TOKEN=$(doppler configure get token --plain) doppler run -- pi'
+alias pi='DOPPLER_TOKEN=$(doppler configure get token --plain) pi'
 alias ccfr="claude --model \"claude-fable-5-1[1m]\" --resume"
 alias cco="claude --model \"claude-opus-4-8[1m]\""
 alias ccor="claude --model \"claude-opus-4-8[1m]\" --resume"
