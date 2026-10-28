@@ -21,8 +21,6 @@ alias pnpx="pnpm dlx"
 alias preview="fzf --preview 'bat --color=always {}'" # preview files in fzf
 alias gbr="git branch | fzf | xargs git switch"       # switch to a branch in fzf (also: Ctrl-G Ctrl-B via fzf-git.sh)
 
-alias maestro="maestro-runner --platform ios"
-
 alias reload="source ~/.zshrc"
 alias resource="source ~/.zshrc"
 alias rss="source ~/.zshrc"

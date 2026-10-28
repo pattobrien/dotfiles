@@ -11,3 +11,4 @@ typst = { zsh = "typst completions zsh" }
 neonctl = { zsh = "neonctl completion zsh" }
 cf = { zsh = "cf complete zsh" }
 slack-cli = { zsh = "slack completion zsh" }
+workmux = { zsh = "workmux completions zsh" }
