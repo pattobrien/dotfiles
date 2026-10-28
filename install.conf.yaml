@@ -62,6 +62,7 @@
     ~/.config/ghostty: .config/ghostty
     ~/.config/lazygit: .config/lazygit
     ~/.config/bat: .config/bat
+    ~/.config/fzf/fzfrc: .config/fzf/fzfrc
     ~/.config/television: .config/television
     ~/.config/atuin/config.toml: .config/atuin/config.toml
     ~/.vite-plus/config.json: .config/vite-plus/config.json

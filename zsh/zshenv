@@ -1,28 +1,11 @@
-#!/usr/bin/env zsh
-
-# echo "Running zshenv"
-
-# zshenv runs for interactive and non-interactive shells
-# making it ideal for variables and functions required for
-# both scripts and terminal sessions.
-# However, these should be kept light, since this file will run
-# on every script.
-
-# Check if a command exists
-function exists() {
-  # `command -v` is an alternative to the which command
-  # see: https://stackoverflow.com/a/677212/1341838
-  command -v "$1" 1>/dev/null 2>/dev/null
-}
-
-# Outputs all path variables, with each on a new line
-alias trail='<<<${(F)path}'
-
-# CLI tool dirs, so non-interactive shells (scripts, Hammerspoon, launchd
-# agents) resolve the same tools a terminal does. Interactive PATH ordering
-# is still owned by zshrc, which rebuilds PATH from scratch. mise shims go
-# last: each shim call costs 60-90ms, so an inherited real tool dir must win.
-export PATH="$HOME/.local/share/pnpm/bin:$HOME/.local/bin:/opt/homebrew/bin:$PATH:$HOME/.local/share/mise/shims"
-
-# Vite+ bin (https://viteplus.dev)
-. "/Users/patt/.vite-plus/env"
+# PATH for every shell. The global rc files are skipped: /etc/zprofile's
+# path_helper would put /usr/bin ahead of Homebrew.
+unsetopt global_rcs
+path=(
+  ~/.local/share/pnpm/bin
+  /opt/homebrew/bin /opt/homebrew/sbin
+  /usr/local/bin /usr/bin /bin /usr/sbin /sbin
+  ~/.local/bin
+  ~/.local/share/mise/shims
+)
+[[ -n $REX_BIN_DIR ]] && path=($REX_BIN_DIR $path)

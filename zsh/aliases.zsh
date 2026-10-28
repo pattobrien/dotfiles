@@ -1,3 +1,6 @@
+alias ls='ls -G'
+alias grep='grep --color=auto'
+
 alias k="kubectl"
 
 alias gc="git commit -m"
@@ -7,16 +10,6 @@ alias gp="git pull"
 
 alias pn="pnpm"
 alias pnpx="pnpm dlx"
-
-# alias jq="jq -C"  # always colorize
-
-# alias ls="eza --git-ignore"
-# alias l="ls -la"
-# alias ll="ls -lah"
-
-# alias cat="bat"
-# alias grep="rg"
-# alias find="fd"
 
 alias preview="fzf --preview 'bat --color=always {}'" # preview files in fzf
 alias gbr="git branch | fzf | xargs git switch"       # switch to a branch in fzf (also: Ctrl-G Ctrl-B via fzf-git.sh)

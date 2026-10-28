@@ -11,9 +11,15 @@ PULUMI_VERSION_MISE = "3.253.0"
 # BROWSERLESS_API_KEY = { value = "{{ exec(command='doppler secrets get BROWSERLESS_API_KEY --plain -p platform -c prd', cache_duration='1d') }}", tools = true }
 # BROWSERBASE_API_KEY = { value = "{{ exec(command='doppler secrets get BROWSERBASE_API_KEY --plain -p platform -c prd', cache_duration='1d') }}", tools = true }
 # KERNEL_API_KEY = { value = "{{ exec(command='doppler secrets get KERNEL_API_KEY --plain -p platform -c prd', cache_duration='1d') }}", tools = true }
+LINEAR_ISSUE_SORT = "priority"
+LINEAR_VCS = "git"
+LINEAR_WORKSPACE = "finedesigns"
+LINEAR_IGNORE_ENV_FILE = "1"
 GH_PKG_TOKEN = { value = "{{ exec(command='/opt/homebrew/bin/gh auth token', cache_duration='1d') }}", tools = true }
 
 [settings]
+trusted_config_paths = ["/Users/patt/.dotfiles__worktrees", "/Users/patt/dev/pattobrien"]
+github.credential_command = "gh auth token"
 npm.package_manager = "pnpm"
 pipx.uvx = true
 # native-preview only publishes daily dev builds, all younger than the default min release age
@@ -205,6 +211,7 @@ requires_tools = true
 
 [hooks]
 postinstall = [
+  "rm -rf $HOME/.cache/zsh",
   "misecompsync --new-only --shell zsh",
   "herdr integration install claude",
   "herdr integration install codex",
