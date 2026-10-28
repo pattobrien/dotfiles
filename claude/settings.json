@@ -13,7 +13,16 @@
     "DISABLE_AUTOUPDATER": "1",
     "EDITOR": "nvim",
     "ENABLE_LSP_TOOL": "0",
-    "FORCE_HYPERLINK": "1"
+    "FORCE_HYPERLINK": "1",
+    "OTEL_EXPORTER_OTLP_ENDPOINT": "https://otlp.finedesigns.io",
+    "OTEL_EXPORTER_OTLP_PROTOCOL": "http/protobuf",
+    "OTEL_LOGS_EXPORTER": "otlp",
+    "OTEL_LOG_ASSISTANT_RESPONSES": "1",
+    "OTEL_LOG_TOOL_CONTENT": "1",
+    "OTEL_LOG_TOOL_DETAILS": "1",
+    "OTEL_LOG_USER_PROMPTS": "1",
+    "OTEL_METRICS_EXPORTER": "otlp",
+    "OTEL_TRACES_EXPORTER": "otlp"
   },
   "attribution": {
     "commit": "",
@@ -349,6 +358,7 @@
       }
     }
   },
+  "otelHeadersHelper": "/Users/patt/.local/bin/claude-otel-headers",
   "outputStyle": "Concise",
   "feedbackDrafts": "off",
   "alwaysThinkingEnabled": true,

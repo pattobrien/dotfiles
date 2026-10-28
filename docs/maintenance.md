@@ -11,7 +11,8 @@ behind Cloudflare Access. Its `otelHeadersHelper` runs
 `tools/scripts/src/claude-otel-headers.ts` (linked to
 `~/.local/bin/claude-otel-headers`), which reads the service token
 `OTLP_ACCESS_CLIENT_ID` and `OTLP_ACCESS_CLIENT_SECRET` from Doppler
-`shed/prod`.
+`shed/prod`. Claude Code runs the helper off the startup path, at the first
+export and every 29 minutes after.
 
 ## Brew Dump
 
