@@ -55,6 +55,7 @@
     ~/.config/mise/config.toml: .config/mise/config.toml
     ~/.config/nvim: .config/nvim
     ~/.config/omniwm/settings.toml: .config/omniwm/settings.toml
+    ~/.config/rex/init.lua: .config/rex/init.lua
     ~/.config/tinycast/settings.json: .config/tinycast/settings.json
     ~/Documents/superwhisper/settings: .config/superwhisper/settings
     ~/Documents/superwhisper/modes: .config/superwhisper/modes
@@ -96,6 +97,7 @@
     ~/.local/bin/tinycast-install: tools/scripts/src/tinycast-install.ts
     ~/.local/bin/apply-licenses: tools/scripts/src/apply-licenses.ts
     ~/.local/bin/computer-use-guard: tools/scripts/src/computer-use-guard.ts
+    ~/.local/bin/wda: tools/scripts/src/wda.ts
 
 - create:
     - ~/dev
