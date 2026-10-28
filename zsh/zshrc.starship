@@ -1,10 +1,7 @@
-export XDG_CONFIG_HOME=~/.config
-export XDG_CACHE_HOME=~/.cache
-export XDG_DATA_HOME=~/.local/share
-export XDG_STATE_HOME=~/.local/state
-
 if [[ -n $HERDR_SHELL_EXEC ]]; then
-  _cmd=$HERDR_SHELL_EXEC; unset HERDR_SHELL_EXEC; exec ${=_cmd}
+  _cmd=$HERDR_SHELL_EXEC
+  unset HERDR_SHELL_EXEC
+  exec ${=_cmd}
 fi
 
 HISTFILE=~/.zsh_history HISTSIZE=50000 SAVEHIST=10000
@@ -16,8 +13,12 @@ export FZF_DEFAULT_OPTS_FILE=~/.config/fzf/fzfrc
 # Tool init output is cached until this file changes; mise's postinstall hook
 # clears the cache after upgrades.
 cached() {
-  local f=~/.cache/zsh/$1.zsh; shift
-  [[ $f -nt ~/.zshrc ]] || { mkdir -p ${f:h}; "$@" >| $f }
+  local f=~/.cache/zsh/$1.zsh
+  shift
+  [[ $f -nt ~/.zshrc ]] || {
+    mkdir -p ${f:h}
+    "$@" >|$f
+  }
   source $f
 }
 
@@ -27,10 +28,15 @@ path=(~/.local/share/mise/installs/starship/latest $path)
 cached starship starship init zsh --print-full-init
 
 fpath=(~/.local/share/mise-completions/zsh /opt/homebrew/share/zsh/site-functions $fpath)
-autoload -Uz compinit; compinit -C -d ~/.cache/zsh/zcompdump
+autoload -Uz compinit
+compinit -C -d ~/.cache/zsh/zcompdump
 cached shed ~/.local/share/pnpm/bin/shed --completion
+
 # vp completions; the env file's PATH edits stay local to the function
-() { local PATH=~/.vite-plus/bin; . ~/.vite-plus/env }
+() {
+  local PATH=~/.vite-plus/bin
+  . ~/.vite-plus/env
+}
 source ~/dev/pattobrien/dotfiles/zsh/aliases.zsh
 
 bindkey -v
@@ -45,7 +51,11 @@ cached wt wt config shell init zsh
 source ~/.config/herdr/plugins/github/herdr-automatic-rename-*/shell/hook.zsh
 
 # Cmd+K: kitty.conf sends F12
-clear-scrollback() { clear; printf '\e[3J'; zle reset-prompt }
+clear-scrollback() {
+  clear
+  printf '\e[3J'
+  zle reset-prompt
+}
 zle -N clear-scrollback
 bindkey '\e[24~' clear-scrollback
 
