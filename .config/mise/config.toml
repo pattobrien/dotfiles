@@ -210,6 +210,15 @@ command = "/opt/homebrew/bin/mise exec npm:obsidian-headless -- ob sync --contin
 restart = "always"
 requires_tools = true
 
+[bootstrap.macos.launchd.agents.proctrace]
+program = "/Users/patt/.local/share/mise/installs/bun/latest/bin/bun"
+args = ["/Users/patt/.local/bin/proctrace", "run"]
+run_at_load = true
+keep_alive = true
+process_type = "Background"
+environment = { PATH = "/Users/patt/.local/share/mise/installs/doppler/latest:/usr/bin:/bin", OTEL_EXPORTER_OTLP_ENDPOINT = "https://otlp.finedesigns.io", OTEL_EXPORTER_OTLP_PROTOCOL = "http/protobuf" }
+stderr_path = "~/.local/state/proctrace/proctrace.log"
+
 [hooks]
 postinstall = [
   "rm -rf $HOME/.cache/zsh",

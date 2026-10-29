@@ -97,6 +97,8 @@
     ~/.local/bin/tinycast-install: tools/scripts/src/tinycast-install.ts
     ~/.local/bin/apply-licenses: tools/scripts/src/apply-licenses.ts
     ~/.local/bin/computer-use-guard: tools/scripts/src/computer-use-guard.ts
+    ~/.local/bin/proctrace: tools/scripts/src/proctrace.ts
+    ~/.local/bin/proctrace-install: tools/scripts/src/proctrace-install.ts
     ~/.local/bin/wda: tools/scripts/src/wda.ts
     ~/.local/bin/cua:
       path: /Applications/Cua Spaces.app/Contents/MacOS/cua

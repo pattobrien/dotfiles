@@ -16,6 +16,11 @@
   "dependencies": {
     "@decimalturn/toml-patch": "catalog:",
     "@modelcontextprotocol/sdk": "catalog:",
+    "@opentelemetry/api": "catalog:",
+    "@opentelemetry/core": "catalog:",
+    "@opentelemetry/exporter-trace-otlp-proto": "catalog:",
+    "@opentelemetry/resources": "catalog:",
+    "@opentelemetry/sdk-trace": "catalog:",
     "zod": "catalog:"
   }
 }
