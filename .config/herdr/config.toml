@@ -504,6 +504,9 @@ sidebar_collapsed_mode = "hidden"
 # Capture mouse input for Herdr's mouse UI.
 # Set false to let the terminal handle normal clicks, such as Cmd-clicking URLs.
 # Pane apps like lazygit and btop can still receive mouse when they request it.
+# Since 0.9.4, capture also strips OSC 8 labeled hyperlinks before the host terminal sees them,
+# so kitty shows no hover cursor on Claude Code markdown links. Ctrl-hover / Ctrl-click still works.
+# Tracking: https://github.com/herdrdev/herdr/issues/5272 (fix: https://github.com/herdrdev/herdr/pull/5457)
 # mouse_capture = true
 
 # Automatically copy text selected by mouse drag.
