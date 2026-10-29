@@ -110,6 +110,8 @@ enabled = true
 hiddenBundleIDs = []
 rehideIntervalSeconds = 5.0
 
+[monitors]
+
 [[monitors.ranking]]
 displayUUID = "E6CFCBFC-7903-47B5-9EF0-8202E204A7E7"
 name = "DELL U2719D"
@@ -198,7 +200,7 @@ autoHide = false
 autoHideHideDelayMilliseconds = 0.0
 autoHideRevealDelayMilliseconds = 0.0
 backgroundOpacity = 0.1
-deduplicateAppIcons = false
+deduplicateAppIcons = true
 enabled = true
 excludedBundleIDs = []
 height = 24.0
@@ -320,6 +322,12 @@ layout = "float"
 bundleId = "com.apple.ActivityMonitor"
 id = "C6B1D4A2-6F0E-4E43-9C55-2B1F0E7A1D03"
 layout = "float"
+
+[[appRules]]
+assignToWorkspace = "11"
+bundleId = ""
+id = "46C7A78B-2E96-4600-8FEA-F3CDB0F69AFE"
+titleSubstring = "agents-"
 
 [[hotkeys]]
 binding = "Hyper+S"
@@ -480,6 +488,22 @@ id = "switchWorkspace.9"
 [[hotkeys]]
 binding = "Hyper+Shift+0"
 id = "moveToWorkspace.9"
+
+[[hotkeys]]
+binding = "Unassigned"
+id = "switchWorkspace.10"
+
+[[hotkeys]]
+binding = "Unassigned"
+id = "moveToWorkspace.10"
+
+[[hotkeys]]
+binding = "Unassigned"
+id = "switchWorkspace.11"
+
+[[hotkeys]]
+binding = "Unassigned"
+id = "moveToWorkspace.11"
 
 [[hotkeys]]
 binding = "Unassigned"
@@ -676,6 +700,18 @@ id = "moveColumnToWorkspace.7"
 [[hotkeys]]
 binding = "Unassigned"
 id = "moveColumnToWorkspace.8"
+
+[[hotkeys]]
+binding = "Unassigned"
+id = "moveColumnToWorkspace.9"
+
+[[hotkeys]]
+binding = "Unassigned"
+id = "moveColumnToWorkspace.10"
+
+[[hotkeys]]
+binding = "Unassigned"
+id = "moveColumnToWorkspace.11"
 
 [[hotkeys]]
 binding = "Hyper+Shift+H"
@@ -1111,7 +1147,7 @@ name = "2"
 type = "main"
 
 [[workspaces]]
-id = "454CECD4-5E9D-4ED1-95D7-979D48817F5F"
+id = "BEB842B5-E894-4791-9FD1-397C3CDD3538"
 layoutType = "default"
 name = "3"
 
@@ -1119,7 +1155,7 @@ name = "3"
 type = "main"
 
 [[workspaces]]
-id = "BEB842B5-E894-4791-9FD1-397C3CDD3538"
+id = "248AA883-2261-4D45-943C-79C0E46A232B"
 layoutType = "default"
 name = "4"
 
@@ -1127,17 +1163,9 @@ name = "4"
 type = "main"
 
 [[workspaces]]
-id = "248AA883-2261-4D45-943C-79C0E46A232B"
-layoutType = "default"
-name = "5"
-
-[workspaces.monitorAssignment]
-type = "main"
-
-[[workspaces]]
 id = "8B8C45D6-CE9E-41D9-BD50-BE4989D5E3DE"
 layoutType = "default"
-name = "6"
+name = "5"
 
 [workspaces.monitorAssignment]
 type = "main"
@@ -1146,7 +1174,7 @@ type = "main"
 displayName = "❤️"
 id = "5953F2BF-A378-4266-91B2-287174C4FA4D"
 layoutType = "default"
-name = "7"
+name = "6"
 
 [workspaces.monitorAssignment]
 type = "main"
@@ -1154,6 +1182,14 @@ type = "main"
 [[workspaces]]
 displayName = "🚀"
 id = "A7D5E104-6985-4516-8ED5-07F144F2A33D"
+layoutType = "default"
+name = "7"
+
+[workspaces.monitorAssignment]
+type = "main"
+
+[[workspaces]]
+id = "454CECD4-5E9D-4ED1-95D7-979D48817F5F"
 layoutType = "default"
 name = "8"
 
@@ -1176,3 +1212,12 @@ name = "10"
 
 [workspaces.monitorAssignment]
 type = "secondary"
+
+[[workspaces]]
+displayName = "agents-1"
+id = "EF248554-CFDF-4470-87B6-4DE63B5CAE0A"
+layoutType = "default"
+name = "11"
+
+[workspaces.monitorAssignment]
+type = "tertiary"
