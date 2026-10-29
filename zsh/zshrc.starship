@@ -7,8 +7,6 @@ fi
 HISTFILE=~/.zsh_history HISTSIZE=50000 SAVEHIST=10000
 setopt extended_history hist_ignore_dups hist_ignore_space share_history hist_fcntl_lock
 setopt auto_cd interactivecomments combining_chars
-export EDITOR=nvim
-export FZF_DEFAULT_OPTS_FILE=~/.config/fzf/fzfrc
 
 # Tool init output is cached until this file changes; mise's postinstall hook
 # clears the cache after upgrades.

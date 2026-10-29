@@ -5,6 +5,8 @@ export XDG_CONFIG_HOME=~/.config
 export XDG_CACHE_HOME=~/.cache
 export XDG_DATA_HOME=~/.local/share
 export XDG_STATE_HOME=~/.local/state
+export EDITOR=nvim
+export FZF_DEFAULT_OPTS_FILE=~/.config/fzf/fzfrc
 path=(
   ~/.local/share/pnpm/bin
   /opt/homebrew/bin /opt/homebrew/sbin
