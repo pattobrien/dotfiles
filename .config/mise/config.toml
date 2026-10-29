@@ -135,6 +135,7 @@ kubebuilder = "latest"
 skaffold = "latest"
 kubeconform = "latest"
 awscli = "latest"
+"asdf:mise-plugins/mise-gcloud" = "latest"
 flyctl = "latest"
 act = "latest"
 trufflehog = "latest"
@@ -220,6 +221,7 @@ postinstall = [
   "atuin hook install opencode",
   "atuin hook install pi",
   "pnpm add -g @pattobrien/shed-cli@latest",
+  "zsh -lic exit",
 ]
 
 [tasks.dotfiles]
