@@ -55,6 +55,9 @@ Shortcuts are split across layers, each scoped to a specific context.
 - **Hammerspoon direct hotkeys** — system-wide shortcuts that need scripting
   logic
   - Defined in: `.config/hammerspoon/init.lua`
+  - `Hyper+Space` toggles Tinycast centred over the window OmniWM reports as
+    focused (`omniwmctl query focused-window` → `tinycast://toggle?frame=…`);
+    trial key, moves to Cmd+Space once confirmed
 - **Karabiner** — hardware-level key remaps (Caps Lock → Esc/Ctrl, Right Cmd →
   F18)
   - Defined in: `.config/karabiner/karabiner.json`

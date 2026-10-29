@@ -121,3 +121,29 @@ hs.hotkey.bind({"cmd", "shift"}, "i", function()
     end)
 end)
 
+
+-- App launcher over the focused window (Hyper+Space while on trial; Cmd+Space once shipped)
+-- Asks OmniWM for the focused window and toggles Tinycast centred over it; with no focused
+-- window Tinycast opens at its usual spot. `open -g` keeps the caller frontmost, so Tinycast
+-- still sees it as the paste target.
+local omniwmctl = "/Applications/OmniWM.app/Contents/MacOS/omniwmctl"
+
+local function openInBackground(url)
+    hs.task.new("/usr/bin/open", nil, { "-g", url }):start()
+end
+
+local function tinycastToggleURL(focusedWindowJSON)
+    local ok, reply = pcall(hs.json.decode, focusedWindowJSON)
+    local window = ok and type(reply) == "table" and reply.ok and reply.result.payload.window
+    local frame = type(window) == "table" and window.frame
+    if not frame then return "tinycast://toggle" end
+    return string.format(
+        "tinycast://toggle?frame=%d,%d,%d,%d",
+        frame.x, frame.y, frame.width, frame.height)
+end
+
+hs.hotkey.bind({"ctrl", "alt", "cmd"}, "space", function()
+    hs.task.new(omniwmctl, function(_, stdout)
+        openInBackground(tinycastToggleURL(stdout))
+    end, { "query", "focused-window", "--format", "json" }):start()
+end)
