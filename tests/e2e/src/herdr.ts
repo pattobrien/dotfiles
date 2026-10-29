@@ -3,8 +3,8 @@ import fs from "node:fs/promises";
 import { homedir } from "node:os";
 import path from "node:path";
 
+import Herdr, { HerdrError } from "@pattobrien/herdr-ts-sdk";
 import { execa } from "execa";
-import Herdr, { HerdrError } from "herdr-ts-sdk";
 
 import type { TermBackend } from "./term/backend.ts";
 import type { TermlessSession } from "./term/termless.ts";

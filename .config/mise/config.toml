@@ -6,7 +6,7 @@
 # repo the hook's go.mod-derived values override these.
 GO_VERSION_MISE = "1.25.11"
 PULUMI_VERSION_MISE = "3.253.0"
-# AI_GATEWAY_API_KEY = { value = "{{ exec(command='doppler secrets get AI_GATEWAY_API_KEY --plain -p platform -c prd', cache_duration='1d') }}", tools = true }
+AI_GATEWAY_API_KEY = { value = "{{ exec(command='doppler secrets get AI_GATEWAY_API_KEY --plain -p platform -c prd', cache_duration='1d') }}", tools = true }
 # BROWSERLESS_TOKEN = { value = "{{ exec(command='doppler secrets get BROWSERLESS_TOKEN --plain -p platform -c prd', cache_duration='1d') }}", tools = true }
 # BROWSERLESS_API_KEY = { value = "{{ exec(command='doppler secrets get BROWSERLESS_API_KEY --plain -p platform -c prd', cache_duration='1d') }}", tools = true }
 # BROWSERBASE_API_KEY = { value = "{{ exec(command='doppler secrets get BROWSERBASE_API_KEY --plain -p platform -c prd', cache_duration='1d') }}", tools = true }
@@ -18,7 +18,10 @@ LINEAR_IGNORE_ENV_FILE = "1"
 GH_PKG_TOKEN = { value = "{{ exec(command='/opt/homebrew/bin/gh auth token', cache_duration='1d') }}", tools = true }
 
 [settings]
-trusted_config_paths = ["/Users/patt/.dotfiles__worktrees", "/Users/patt/dev/pattobrien"]
+trusted_config_paths = [
+  "/Users/patt/.dotfiles__worktrees",
+  "/Users/patt/dev/pattobrien",
+]
 github.credential_command = "gh auth token"
 npm.package_manager = "pnpm"
 pipx.uvx = true
@@ -58,6 +61,9 @@ node = "latest"
 "npm:@opencode/cli" = { version = "latest", allow_builds = ["@opencode/cli"] }
 "github:railwayapp/cli" = "latest"
 "npm:@tigrisdata/cli" = "latest"
+"npm:@pattobrien/shed-cli" = { version = "latest", minimum_release_age = "0s" }
+"npm:@pattobrien/agent-browser-plugin-op" = { version = "latest", minimum_release_age = "0s" }
+"npm:@pattobrien/herdr-open-file" = { version = "latest", minimum_release_age = "0s" }
 "npm:@typescript/native-preview" = "latest"
 "npm:codemod" = "latest"
 "npm:eas-cli" = "latest"
@@ -229,7 +235,6 @@ postinstall = [
   "atuin hook install codex",
   "atuin hook install opencode",
   "atuin hook install pi",
-  "pnpm add -g @pattobrien/shed-cli@latest",
   "zsh -lic exit",
 ]
 

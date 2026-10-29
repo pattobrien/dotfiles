@@ -2,7 +2,7 @@ import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 
-import type { PaneId } from "herdr-ts-sdk";
+import type { PaneId } from "@pattobrien/herdr-ts-sdk";
 import { attach, type NeovimClient } from "neovim";
 import { expect } from "vite-plus/test";
 import { z } from "zod";

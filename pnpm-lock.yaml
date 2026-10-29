@@ -188,6 +188,9 @@ catalogs:
     '@opentelemetry/sdk-trace':
       specifier: ^2.10.0
       version: 2.10.0
+    '@pattobrien/herdr-ts-sdk':
+      specifier: ^0.1.0
+      version: 0.1.0
     '@termless/core':
       specifier: 0.8.4
       version: 0.8.4
@@ -257,6 +260,9 @@ importers:
       '@opentelemetry/sdk-node':
         specifier: 'catalog:'
         version: 0.221.0(@opentelemetry/api@1.9.1)
+      '@pattobrien/herdr-ts-sdk':
+        specifier: 'catalog:'
+        version: 0.1.0
       '@termless/core':
         specifier: 'catalog:'
         version: 0.8.4(node-pty@1.1.0)
@@ -287,9 +293,6 @@ importers:
       execa:
         specifier: ^9.6.1
         version: 9.6.1
-      herdr-ts-sdk:
-        specifier: link:/Users/patt/dev/pattobrien/shed/packages/herdr-ts-sdk
-        version: link:../../../shed/packages/herdr-ts-sdk
       neovim:
         specifier: ^5.4.0
         version: 5.4.0
@@ -1111,6 +1114,9 @@ packages:
   '@oxlint/plugins@1.89.0':
     resolution: {integrity: sha512-TJBBNl4KIxbxrSk7gsqlz6iM1kxidfyTizEzfWqXvijF2Ou8/Da58GvjemBVmCmaUamwRij+JwsVc0kpBFuqfg==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
+
+  '@pattobrien/herdr-ts-sdk@0.1.0':
+    resolution: {integrity: sha512-RZZyf6FX/cuIf+HY3UPh3cy3SiMogejABNSJJppe5Vz/vdkUPtYDKd3NQzYmEx4ieDsH2s0o2VQtjWutC9UAGw==, tarball: https://npm.pkg.github.com/download/@pattobrien/herdr-ts-sdk/0.1.0/5564aba7f38ebf78ba8b8cb93b16397b2d284e6f}
 
   '@polka/url@1.0.0-next.29':
     resolution: {integrity: sha512-wwQAWhWSuHaag8c4q/KN/vCoeOJYshAIvMQwD4GpSb3OiZklFfvAgmj0VCBBImRpuF/aFgIRzllXlVX93Jevww==}
@@ -2627,6 +2633,9 @@ packages:
   zod@4.4.3:
     resolution: {integrity: sha512-ytENFjIJFl2UwYglde2jchW2Hwm4GJFLDiSXWdTrJQBIN9Fcyp7n4DhxJEiWNAJMV1/BqWfW/kkg71UDcHJyTQ==}
 
+  zod@4.6.7:
+    resolution: {integrity: sha512-g8W2D2kU6a8untc053fX1uVBKzM7yqAxW/3zwk83+6RyF2+SKOuV+c0wBDhUwzV1PaGapmZH+rmcUzPf+3CGwg==}
+
 snapshots:
 
   '@babel/code-frame@7.29.7':
@@ -3188,6 +3197,10 @@ snapshots:
     optional: true
 
   '@oxlint/plugins@1.89.0': {}
+
+  '@pattobrien/herdr-ts-sdk@0.1.0':
+    dependencies:
+      zod: 4.6.7
 
   '@polka/url@1.0.0-next.29': {}
 
@@ -4664,3 +4677,5 @@ snapshots:
       zod: 4.4.3
 
   zod@4.4.3: {}
+
+  zod@4.6.7: {}

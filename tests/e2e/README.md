@@ -83,9 +83,8 @@ it.
 
 ## Host requirements
 
-- a shed checkout at `~/dev/pattobrien/shed` — `herdr-ts-sdk` is consumed via a
-  pnpm `link:` to it (shed is private, so there's no registry/git install path);
-  run `vp run build` there after pulling SDK changes
+- a `~/.npmrc` with `GH_PKG_TOKEN` — `@pattobrien/herdr-ts-sdk` installs from
+  GitHub Packages
 - kitty installed (`brew install --cask kitty`) — for the `e2e-kitty` tests and
   the optional kitty emulator backend
 - herdr on `PATH` for the herdr behavior tests

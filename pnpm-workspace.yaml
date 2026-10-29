@@ -17,6 +17,7 @@ catalog:
   "@opentelemetry/resources": ^2.10.0
   "@opentelemetry/sdk-node": ^0.221.0
   "@opentelemetry/sdk-trace": ^2.10.0
+  "@pattobrien/herdr-ts-sdk": ^0.1.0
   "@termless/core": 0.8.4
   "@termless/ghostty": 0.8.4
   "@termless/kitty": 0.8.4
@@ -46,6 +47,7 @@ minimumReleaseAgeExclude:
   - "@voidzero-dev/vite-plus-win32-arm64-msvc@1.4.0"
   - "@voidzero-dev/vite-plus-win32-x64-msvc@1.4.0"
   - vite-plus@1.4.0
+  - "@pattobrien/herdr-ts-sdk@0.1.0"
 
 overrides:
   vite@*: "catalog:"
