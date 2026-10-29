@@ -20,10 +20,10 @@ data:
     mru-spaces: false
     # Allow app icons to bounce to get attention (false = disable bouncing)
     no-bouncing: false
-    # App Expose gesture (off; OmniWM Overview owns the swipe up)
-    showAppExposeGestureEnabled: false
-    # Mission Control gesture (off; OmniWM Overview owns the swipe up)
-    showMissionControlGestureEnabled: false
+    # Enable App Expose gesture (swipe down on trackpad to show app windows)
+    showAppExposeGestureEnabled: true
+    # Enable Mission Control gesture
+    showMissionControlGestureEnabled: true
     # Default size of dock icons in pixels
     tilesize: 58.0
     # Hot corner: bottom-right action (1 = disabled)

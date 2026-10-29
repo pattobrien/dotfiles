@@ -8,7 +8,7 @@ kill:
   - cfprefsd
 data:
   NSGlobalDomain:
-    com.apple.trackpad.threeFingerHorizSwipeGesture: 0
-    com.apple.trackpad.threeFingerVertSwipeGesture: 0
-    com.apple.trackpad.fourFingerHorizSwipeGesture: 0
-    com.apple.trackpad.fourFingerVertSwipeGesture: 0
+    com.apple.trackpad.threeFingerHorizSwipeGesture: 2
+    com.apple.trackpad.threeFingerVertSwipeGesture: 2
+    com.apple.trackpad.fourFingerHorizSwipeGesture: 2
+    com.apple.trackpad.fourFingerVertSwipeGesture: 2
