@@ -16,34 +16,6 @@ spoon.ReloadConfiguration:start()
 
 hs.alert.show("Hammerspoon loaded")
 
--- Hammerflow's `cmd:` bindings dispatch through os.execute, which uses /bin/sh and so
--- inherits launchd's minimal PATH rather than the shell environment. Route commands
--- through zsh instead: zshenv exports the CLI tool dirs, so a plain (non-login,
--- non-interactive) zsh resolves tools by bare name in ~10ms. Backgrounded so it
--- never blocks the Hammerspoon main thread.
-local shellExecute = os.execute
-os.execute = function(command)
-    return shellExecute("/bin/zsh -c '" .. command:gsub("'", [['\'']]) .. "' &")
-end
-
--- Load Hammerflow for declarative Leader-key bindings (optional)
-local hammerflowOk, hammerflowErr = pcall(function()
-    hs.loadSpoon("Hammerflow")
-    spoon.Hammerflow.loadFirstValidTomlFile({
-        "hammerflow.toml",
-        "home.toml",
-        "work.toml",
-        "Spoons/Hammerflow.spoon/sample.toml"
-    })
-    if spoon.Hammerflow.auto_reload then
-        hs.loadSpoon("ReloadConfiguration")
-        spoon.ReloadConfiguration:start()
-    end
-end)
-if not hammerflowOk then
-    print("[init.lua] Hammerflow failed to load: " .. tostring(hammerflowErr))
-end
-
 -- Get the tmux session name attached in the focused Kitty window via kitty remote control.
 -- Returns the session name string, or nil if not found.
 local function getKittyTmuxSession()
