@@ -98,6 +98,8 @@
     ~/.local/bin/apply-licenses: tools/scripts/src/apply-licenses.ts
     ~/.local/bin/computer-use-guard: tools/scripts/src/computer-use-guard.ts
     ~/.local/bin/wda: tools/scripts/src/wda.ts
+    ~/.local/bin/cua:
+      path: /Applications/Cua Spaces.app/Contents/MacOS/cua
 
 - create:
     - ~/dev

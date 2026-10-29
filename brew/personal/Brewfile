@@ -33,6 +33,8 @@ brew "lcov"
 brew "less"
 # Postgres C API library
 brew "libpq"
+# Create and manage Apple Silicon-native virtual machines
+brew "lume"
 # Polyglot runtime manager (asdf rust clone)
 brew "mise"
 # OpenShift command-line interface tools
@@ -96,6 +98,7 @@ cask "claude"
 # Free app that makes your Internet safer
 cask "cloudflare-warp"
 # Background desktop automation driver for AI agents
+# Cua Spaces has no cask yet; check occasionally: https://github.com/trycua/cua/issues/2220
 cask "cuadriver"
 # OpenAI's coding agent that runs in your terminal
 cask "codex"
