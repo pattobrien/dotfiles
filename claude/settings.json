@@ -130,6 +130,7 @@
     "anthropic-skills:xlsx": "off",
     "figma-diff": "off",
     "jsonforms-control": "off",
+    "terminal-browser": "off",
     "workmux": "off",
     "worktree": "off",
     "coordinator": "off",
