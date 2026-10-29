@@ -9,6 +9,11 @@ import {
   type TestAttachment,
 } from "vite-plus/test";
 
+import {
+  renderClaudeCodeMessage,
+  type ClaudeCodeRenderOptions,
+  type ClaudeCodeSession,
+} from "../src/claude-code.ts";
 import { createHerdrSession, type HerdrTestSession } from "../src/herdr.ts";
 import { createKittyInstance } from "../src/kitty.ts";
 import { launchNvimInstance, type NvimInstance } from "../src/nvim.ts";
@@ -153,6 +158,32 @@ export const test = base
       return session;
     },
   )
+
+  // Test-scoped: render assistant messages through the real Claude Code TUI
+  // in a throwaway config dir; every session is disposed and its recording
+  // attached on cleanup.
+  .extend("claudeCode", async ({ task }, { onCleanup }) => {
+    const sessions: ClaudeCodeSession[] = [];
+    onCleanup(async () => {
+      for (const session of sessions) {
+        await attachRecording(task, session.term.save());
+        await session.dispose();
+      }
+    });
+    return {
+      async render(
+        assistantText: string,
+        options: ClaudeCodeRenderOptions,
+      ): Promise<ClaudeCodeSession> {
+        const session = await renderClaudeCodeMessage(assistantText, {
+          label: `claude-code ${task.name}`,
+          ...options,
+        });
+        sessions.push(session);
+        return session;
+      },
+    };
+  })
 
   // Worker-scoped: real kitty OS window attached to the tmux fixture.
   .extend("kitty", { scope: "worker" }, async ({ tmux }) => {

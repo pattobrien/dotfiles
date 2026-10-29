@@ -34,6 +34,11 @@ manage anymore (the old `-L e2e-test` tmux server model is retired).
 - `herdr` (test) — isolated named herdr server/session loading the real
   `~/.config/herdr/config.toml`, controlled through `herdr-ts-sdk`, asserted
   through the emulator screen
+- `claudeCode` (test) — `render(assistantText, { waitFor })` resumes a
+  hand-written transcript in the real `claude` TUI under a throwaway
+  `CLAUDE_CONFIG_DIR` (onboarding + trust pre-seeded, no login, hooks, plugins,
+  MCP servers, or API calls); `links()` lists the OSC 8 hyperlinks in the raw
+  PTY stream, since Termless 0.8.4 does not populate `Cell.hyperlink`
 - `kitty` (worker, `e2e-kitty`-tagged tests only) — real kitty window attached
   to the tmux fixture
 
