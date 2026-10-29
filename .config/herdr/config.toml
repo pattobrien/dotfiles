@@ -504,7 +504,7 @@ sidebar_collapsed_mode = "hidden"
 # Capture mouse input for Herdr's mouse UI.
 # Set false to let the terminal handle normal clicks, such as Cmd-clicking URLs.
 # Pane apps like lazygit and btop can still receive mouse when they request it.
-mouse_capture = false
+# mouse_capture = true
 
 # Automatically copy text selected by mouse drag.
 # Set false to keep drag selection visible without copying; double-click still copies a word.

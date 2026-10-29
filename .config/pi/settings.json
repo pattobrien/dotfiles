@@ -10,14 +10,14 @@
   "defaultProvider": "openai-codex",
   "defaultModel": "gpt-6.1-sol",
   "defaultThinkingLevel": "high",
-  "theme": "dark",
+  "theme": "system",
   "enableSkillCommands": true,
   "packages": [
-    "npm:pi-vim",
     "npm:pi-claude-code-ui",
     "npm:@zigai/pi-ui-tweaks",
     "npm:@zichuanlan/pi-image-placeholder",
-    "https://github.com/earendil-works/pi-claude-code"
+    "https://github.com/earendil-works/pi-claude-code",
+    "npm:pi-vim-editor"
   ],
   "toolBackground": "border",
   "readOutputMode": "summary",
@@ -28,5 +28,8 @@
   "bashCollapsedLines": 1,
   "liveToolPreviewLines": 1,
   "groupToolCalls": true,
-  "quietStartup": true
+  "quietStartup": true,
+  "vimEditor": {
+    "clipboard": "unnamedplus"
+  }
 }

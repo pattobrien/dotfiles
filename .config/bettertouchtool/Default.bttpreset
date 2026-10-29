@@ -18,6 +18,8 @@
           "BTTPredefinedActionName" : "Execute Shell Script  or  Task",
           "BTTShellTaskActionScript" : "/opt/homebrew/bin/omniwmctl command switch-workspace next",
           "BTTShellTaskActionConfig" : "/bin/bash:::-c:::-:::",
+          "BTTEnabled" : 0,
+          "BTTEnabled2" : 0,
           "BTTOrder" : 0
         },
         {
@@ -30,6 +32,8 @@
           "BTTPredefinedActionName" : "Execute Shell Script  or  Task",
           "BTTShellTaskActionScript" : "/opt/homebrew/bin/omniwmctl command switch-workspace prev",
           "BTTShellTaskActionConfig" : "/bin/bash:::-c:::-:::",
+          "BTTEnabled" : 0,
+          "BTTEnabled2" : 0,
           "BTTOrder" : 0
         },
         {
@@ -42,6 +46,8 @@
           "BTTPredefinedActionName" : "Execute Shell Script  or  Task",
           "BTTShellTaskActionScript" : "/opt/homebrew/bin/omniwmctl command toggle-overview",
           "BTTShellTaskActionConfig" : "/bin/bash:::-c:::-:::",
+          "BTTEnabled" : 0,
+          "BTTEnabled2" : 0,
           "BTTOrder" : 0
         }
       ]
